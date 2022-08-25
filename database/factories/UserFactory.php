@@ -17,11 +17,19 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $gender = fake()->randomElement(['male', 'female']);
         return [
-            'name' => fake()->name(),
+            'last_name' => fake()->lastName(),
+            'first_name' => fake()->firstName($gender),
+            'middle_name' => fake()->lastName(),
+            'suffix_name' => 'NA',
+            'gender' => substr(Str::ucfirst($gender), 0, 1),
+            'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'contact_number' => fake()->phoneNumber(),
             'email' => fake()->safeEmail(),
+            'password' => 'Password2!',
+            //'password_confirmation' => 'Password2!',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
     }

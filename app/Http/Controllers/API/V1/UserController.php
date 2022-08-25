@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\UserRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -24,13 +25,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param UserRequest $request
+     * @return JsonResponse
      */
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): JsonResponse
     {
         $data = User::create($request->all());
-        return response()->json(['status' => 'Success']);
+        return response()->json(['status' => 'Success', 'data' => $data], 201);
     }
 
     /**
