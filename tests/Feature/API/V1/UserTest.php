@@ -11,18 +11,15 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+
     public function setUp(): void {
         parent::setUp();
         //\Artisan::call('migrate',['-vvv' => true]);
         \Artisan::call('passport:install');
         //\Artisan::call('db:seed',['-vvv' => true]);
     }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_users_can_be_created(): void
+
+    public function test_model_user_can_be_instantiated(): void
     {
         $user = User::factory()->create();
         $this->assertModelExists($user);
@@ -50,14 +47,28 @@ class UserTest extends TestCase
 
     public function test_user_able_to_login()
     {
-        User::factory()->create([
-            'email' => 'testing@testing.test',
+        $details = [
+                'email' => fake()->safeEmail(),
+                'password' => 'Password2!',
+            ];
+        User::factory()->create($details);
+
+        $response = $this->post('api/v1/login', $details);
+        $response->assertOk()
+            ->assertJsonStructure(['token_type','status_code','access_token','user']);
+
+    }
+
+    public function test_multiple_invalid_login_attempts_are_throttled()
+    {
+        $details = [
+            'email' => fake()->safeEmail(),
             'password' => 'Password2!',
-        ]);
-        $response = $this->post('api/v1/login', [
-            'email' => 'testing@testing.test',
-            'password' => 'Password2!',
-        ]);
-        $response->assertOk();
+        ];
+        //User::factory()->create($details);
+        for ($count = 0; $count <= 4; $count++) {
+            $response = $this->post('api/v1/login', $details);
+        }
+        $response->assertRedirect();
     }
 }
