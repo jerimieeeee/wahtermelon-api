@@ -16,7 +16,7 @@ class Municipality extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'psgc_10_digit_code', 'geographic_type', 'geographic_id', 'name', 'income_class', 'population'];
+    protected $fillable = ['code', 'psgc_10_digit_code', 'geographic_type', 'geographic_id', 'name', 'geo_level', 'income_class', 'population'];
 
     /**
      * The attributes that should be hidden for arrays.

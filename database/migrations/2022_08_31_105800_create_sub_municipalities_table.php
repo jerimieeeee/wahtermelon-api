@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sub_municipalities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('psgc_10_digit_code')->unique();
+            $table->string('psgc_10_digit_code')->unique()->nullable();
             $table->unsignedBigInteger('city_id');
             $table->string('name');
             $table->bigInteger('population')->nullable();

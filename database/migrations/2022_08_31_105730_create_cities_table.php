@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('psgc_10_digit_code')->unique();
+            $table->string('psgc_10_digit_code')->unique()->nullable();
             $table->morphs('geographic');
             $table->string('name');
-            $table->string('city_class');
-            $table->string('income_class');
+            $table->string('city_class')->nullable();
+            $table->string('income_class')->nullable();
             $table->bigInteger('population')->nullable();
             $table->timestamps();
         });

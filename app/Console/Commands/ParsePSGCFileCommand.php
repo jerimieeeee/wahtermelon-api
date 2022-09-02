@@ -11,6 +11,8 @@ use App\Models\V1\PSGC\Region;
 use App\Models\V1\PSGC\SubMunicipality;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+use Exception;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ParsePSGCFileCommand extends Command
@@ -38,10 +40,33 @@ class ParsePSGCFileCommand extends Command
      */
     public function handle()
     {
-        // source: https://psa.gov.ph/classification/psgc/
-        $filePath = storage_path('psgc1.xlsx');
+        try {
+            // source: https://psa.gov.ph/classification/psgc/
+            $fileName = $this->choice(
+                'Please choose the file to upload',
+                Storage::disk('upload')->files(),
+            );
+            $filePath = storage_path($fileName);
+            $start = now();
+            $this->info("Reading $fileName file...");
+            $this->truncateTables();
+            $rows = SimpleExcelReader::create($filePath)->getRows()->toArray();
+            $this->info("Uploading data from $fileName to database. Please wait...");
 
-        $rows = SimpleExcelReader::create($filePath)->getRows();
+            $this->withProgressBar($rows, function ($properties) {
+                $this->performTask($properties);
+            });
+
+            $time = $start->diffAsCarbonInterval(now());
+            $this->newLine();
+            $this->info("Processed in $time");
+        } catch (Exception $exception) {
+            $this->error($exception->getMessage());
+        }
+    }
+
+    private function truncateTables()
+    {
         Schema::disableForeignKeyConstraints();
         Region::truncate();
         Province::truncate();
@@ -51,28 +76,34 @@ class ParsePSGCFileCommand extends Command
         SubMunicipality::truncate();
         Barangay::truncate();
         Schema::enableForeignKeyConstraints();
-        $rows->each(function (array $properties) {
-            $data = [
-                'code'         => $properties['Code'],
-                'psgc_10_digit_code'   => $properties['10-digit PSGC'],
-                'name'         => $properties['Name'],
-                'level'        => $properties['Geographic Level'],
-                'city_class'   => $properties['City Class'],
-                'income_class' => $properties["Income\nClassification"],
-                'urban_rural'  => $properties["Urban / Rural\n(based on 2015 Population)"],
-                'population'   => preg_replace('/\D+/', '', $properties["2020 Population"]),
-            ];
+    }
 
-            $data = array_filter($data);
+    private function performTask($properties)
+    {
+        $data = [
+            'code'                  => $properties['Code'],
+            'psgc_10_digit_code'    => $properties['10-digit PSGC'],
+            'name'                  => $properties['Name'],
+            'level'                 => $properties['Geographic Level'],
+            'geo_level'             => $properties['Geographic Level'],
+            'city_class'            => $properties['City Class'],
+            'income_class'          => $properties["Income\nClassification"],
+            'urban_rural'           => $properties["Urban / Rural\n(based on 2015 Population)"],
+            'population'            => preg_replace('/\D+/', '', $properties["2020 Population"]),
+        ];
 
-            if (isset($data['level']) && $data['level'] != 'SGU') {
-                $methods = 'process'.$data['level'];
+        $data = array_filter($data);
 
-                $this->$methods($data);
-            }
-        });
+        if (isset($data['level']) && $data['level'] != 'SGU') {
+            $data['level'] = match ($data['level']) {
+                'Dist' => 'Prov',
+                'City', 'SubMun' => 'Mun',
+                default => $data['level'],
+            };
+            $methods = 'process'.$data['level'];
 
-        return 0;
+            $this->$methods($data);
+        }
     }
 
     private function processReg($data)
@@ -130,9 +161,9 @@ class ParsePSGCFileCommand extends Command
     {
         $geographic = Province::orderBy('id', 'desc')->first();
 
-        if (in_array($data['code'], ['137606000'])) {
+        /*if (in_array($data['code'], ['137606000'])) {
             $geographic = District::orderBy('id', 'desc')->first();
-        }
+        }*/
 
         $data['geographic_type'] = get_class($geographic);
         $data['geographic_id'] = $geographic->id;
@@ -152,4 +183,5 @@ class ParsePSGCFileCommand extends Command
         $data['geographic_id'] = $geographic->id;
         Barangay::create($data);
     }
+
 }

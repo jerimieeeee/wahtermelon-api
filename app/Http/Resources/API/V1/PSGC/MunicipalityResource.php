@@ -23,6 +23,7 @@ class MunicipalityResource extends JsonResource
         return [
             'code'         => $this->code,
             'name'         => $this->name,
+            'geo_level'    => $this->geo_level,
             'income_class' => $this->income_class,
             'population'   => $this->population,
             'barangays'    => BarangayResource::collection($this->whenLoaded('barangays')),

@@ -5,7 +5,7 @@ namespace App\Models\V1\PSGC;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class District extends Model
 {
@@ -40,7 +40,7 @@ class District extends Model
         return $this->morphMany(City::class, 'geographic');
     }
 
-    public function municipalities(): MorphToMany
+    public function municipalities(): MorphMany
     {
         return $this->morphMany(Municipality::class, 'geographic');
     }

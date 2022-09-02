@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('municipalities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('psgc_10_digit_code')->unique();
+            $table->string('psgc_10_digit_code')->unique()->nullable();
             $table->morphs('geographic');
             $table->string('name');
+            $table->string('geo_level');
             $table->string('income_class')->nullable();
             $table->bigInteger('population')->nullable();
             $table->timestamps();

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('regions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('psgc_10_digit_code')->unique();
+            $table->string('psgc_10_digit_code')->unique()->nullable();
             $table->string('name');
             $table->bigInteger('population')->nullable();
             $table->timestamps();

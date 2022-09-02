@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('provinces', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('psgc_10_digit_code')->unique();
+            $table->string('psgc_10_digit_code')->unique()->nullable();
             $table->unsignedBigInteger('region_id');
             $table->string('name');
-            $table->string('income_class');
+            $table->string('income_class')->nullable();
             $table->bigInteger('population')->nullable();
             $table->timestamps();
 
