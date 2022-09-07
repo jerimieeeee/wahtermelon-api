@@ -41,6 +41,16 @@ class Facility extends Model
      */
     protected $hidden = ['id', 'region_id', 'province_id', 'municipality_id', 'barangay_id'];
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'facility_code';
+    }
+
     public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class);

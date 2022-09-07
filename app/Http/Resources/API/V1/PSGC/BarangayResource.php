@@ -63,7 +63,7 @@ class BarangayResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->condition = $request->include != 'barangays'  && ! is_null($request->barangay);
+        $this->condition = $request->include != 'barangays'  && ! is_null($request->barangay) || $request->location == 'show';
 
         list($level1, $level1Resource, $level1Index) = $this->level1();
         list($level2, $level2Resource, $level2Index) = $this->level2($level1);
