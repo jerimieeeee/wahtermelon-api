@@ -51,4 +51,10 @@ class PatientTest extends TestCase
         ]);
         $response->assertCreated();
     }
+
+    public function test_patient_can_show_all_records()
+    {
+        $response = $this->get('api/v1/patient');
+        $response->assertOk();
+    }
 }
