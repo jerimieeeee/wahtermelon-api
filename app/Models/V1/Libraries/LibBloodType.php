@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Models\V1\Libraries;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class LibBloodType extends Model
+{
+    use HasFactory;
+
+    public $primaryKey = 'blood_type';
+    public $incrementing = false;
+    public $keyType = 'string';
+    public $timestamps = false;
+
+}

@@ -1,0 +1,54 @@
+<?php
+
+namespace Tests\Feature\API\V1;
+
+use App\Models\V1\Libraries\LibBloodType;
+use App\Models\V1\Libraries\LibCivilStatus;
+use App\Models\V1\Libraries\LibEducation;
+use App\Models\V1\Libraries\LibOccupation;
+use App\Models\V1\Libraries\LibPwdType;
+use App\Models\V1\Libraries\LibReligion;
+use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\Patient\Patient;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
+use Tests\TestCase;
+
+class PatientTest extends TestCase
+{
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_model_patient_can_be_instantiated(): void
+    {
+        $user = Patient::factory()->create();
+        $this->assertModelExists($user);
+    }
+
+    public function test_patient_can_be_created()
+    {
+        $gender = fake()->randomElement(['male', 'female']);
+        $response = $this->post('api/v1/patient', [
+            'last_name' => fake()->lastName(),
+            'first_name' => fake()->firstName($gender),
+            'middle_name' => $middle = fake()->lastName(),
+            'suffix_name' => $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('suffix_code')->toArray()) : 'NA',
+            'gender' => substr(Str::ucfirst($gender), 0, 1),
+            'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'mothers_name' => fake()->firstName('female') . ' ' . $middle,
+            'mobile_number' => fake()->phoneNumber(),
+            'pwd_status_code' => fake()->randomElement(LibPwdType::pluck('type_code')->toArray()),
+            'indegenous_flag' => fake()->boolean,
+            'blood_type' => fake()->randomElement(LibBloodType::pluck('blood_type')->toArray()),
+            'religion_code' => fake()->randomElement(LibReligion::pluck('religion_code')->toArray()),
+            'occupation_code' => fake()->randomElement(LibOccupation::pluck('occupation_code')->toArray()),
+            'education_id' => fake()->randomElement(LibEducation::pluck('education_id')->toArray()),
+            'civil_status_id' => fake()->randomElement(LibCivilStatus::pluck('status_id')->toArray()),
+            'consent_flag' => fake()->boolean,
+        ]);
+        $response->assertCreated();
+    }
+}
