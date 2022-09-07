@@ -4,6 +4,7 @@ namespace App\Models\V1\PSGC;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Barangay extends Model
@@ -42,5 +43,10 @@ class Barangay extends Model
     public function geographic(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function facility(): HasMany
+    {
+        return $this->hasMany(Facility::class);
     }
 }

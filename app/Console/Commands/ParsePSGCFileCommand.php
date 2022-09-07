@@ -46,7 +46,7 @@ class ParsePSGCFileCommand extends Command
                 'Please choose the file to upload',
                 Storage::disk('upload')->files(),
             );
-            $filePath = storage_path($fileName);
+            $filePath = storage_path('uploads/'.$fileName);
             $start = now();
             $this->info("Reading $fileName file...");
             $this->truncateTables();
