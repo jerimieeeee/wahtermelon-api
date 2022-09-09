@@ -27,6 +27,7 @@ class PatientResource extends JsonResource
             'indegenous_flag' => $this->indegenous_flag,
             'blood_type' => $this->blood_type,
             'religion_code' => $this->religion_code,
+            'religion' => $this->whenLoaded('religion'),
             'occupation_code' => $this->occupation_code,
             'education_id' => $this->education_id,
             'civil_status_id' => $this->civil_status_id,

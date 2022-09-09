@@ -2,11 +2,13 @@
 
 namespace App\Models\V1\Patient;
 
+use App\Models\V1\Libraries\LibReligion;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Patient extends Model
 {
@@ -50,6 +52,11 @@ class Patient extends Model
     public function setMothersNameAttribute($value)
     {
         $this->attributes["mothers_name"] = ucwords(strtolower($value));
+    }
+
+    public function religion(): BelongsTo
+    {
+        return $this->belongsTo(LibReligion::class, 'religion_code', 'religion_code');
     }
 
 }

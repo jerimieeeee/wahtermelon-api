@@ -22,7 +22,7 @@ class PatientController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $columns = ['last_name', 'first_name', 'middle_name'];
-        $patients = QueryBuilder::for(Patient::class)
+        $patients = QueryBuilder::for(Patient::class)->with('religion')
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             });
