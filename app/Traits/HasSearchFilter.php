@@ -72,8 +72,7 @@ trait HasSearchFilter
                 $clause = $key == 0 ? 'where' : 'orWhere';
                 $query->$clause($column, "LIKE", "%$keyword%");
                 //$query->orWhere(DB::raw("SOUNDEX($column)"), "=", soundex($keyword));
-                //$query->orWhereRaw("SOUNDEX($column) = SOUNDEX('$keyword')");
-                $query->orWhereRaw("? = ?",["`SOUNDEX1($column)`","SOUNDEX('$keyword')"]);
+                $query->orWhereRaw("SOUNDEX($column) = SOUNDEX('$keyword')");
 
                 if (!empty($relativeTables)) {
                     $this->filterByRelationship($query, $keyword, $relativeTables);

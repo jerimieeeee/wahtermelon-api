@@ -26,8 +26,6 @@ class PatientController extends Controller
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             });
-        //return $patients->dd();
-            //dd($patients->toSql());
         if ($perPage === 'all') {
             return PatientResource::collection($patients->get());
         }
