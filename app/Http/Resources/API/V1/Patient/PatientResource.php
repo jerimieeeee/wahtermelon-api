@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Resources\API\V1\Patient;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class PatientResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        return [
+            'last_name' => $this->last_name,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'suffix_name' => $this->suffix_name,
+            'birthdate' => !is_null($this->birthdate) ? $this->birthdate->format('Y-m-d') : null,
+            'mothers_name' => $this->mothers_name,
+            'gender' => $this->gender,
+            'mobile_number' => $this->mobile_number,
+            'pwd_status_code' => $this->pwd_status_code,
+            'indegenous_flag' => $this->indegenous_flag,
+            'blood_type' => $this->blood_type,
+            'religion_code' => $this->religion_code,
+            'occupation_code' => $this->occupation_code,
+            'education_id' => $this->education_id,
+            'civil_status_id' => $this->civil_status_id,
+            'consent_flag' => $this->consent_flag,
+            'image_url' => $this->image_url,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+        ];
+    }
+}

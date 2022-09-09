@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\Patient;
 
+use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, HasUuid, HasSearchFilter;
 
     protected $guarded = [
-        'id', 'facility_id'
+        'id',
+        //'facility_id',
     ];
 
     public $incrementing = false;

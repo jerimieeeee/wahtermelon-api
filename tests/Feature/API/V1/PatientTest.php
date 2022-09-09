@@ -10,6 +10,7 @@ use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -32,6 +33,7 @@ class PatientTest extends TestCase
     {
         $gender = fake()->randomElement(['male', 'female']);
         $response = $this->post('api/v1/patient', [
+            'facility_id' => fake()->randomElement(Facility::pluck('id')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => $middle = fake()->lastName(),
