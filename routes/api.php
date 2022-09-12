@@ -71,8 +71,8 @@ Route::prefix('v1')->group(function (){
         Route::get('religions', [\App\Http\Controllers\API\V1\Libraries\LibReligionController::class, 'index'])->name('religions.index');
         Route::get('religions/{id}', [\App\Http\Controllers\API\V1\Libraries\LibReligionController::class, 'show'])->name('religions.show');
 
-        Route::get('suffix-names', [\App\Http\Controllers\API\V1\Libraries\LibReligionController::class, 'index'])->name('suffix-names.index');
-        Route::get('suffix-names/{id}', [\App\Http\Controllers\API\V1\Libraries\LibReligionController::class, 'show'])->name('suffix-names.show');
+        Route::get('suffix-names', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'index'])->name('suffix-names.index');
+        Route::get('suffix-names/{id}', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'show'])->name('suffix-names.show');
     });
 
 });
