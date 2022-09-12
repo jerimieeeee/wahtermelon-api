@@ -9,6 +9,7 @@ use App\Models\V1\Libraries\LibOccupation;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -26,6 +27,7 @@ class PatientFactory extends Factory
     {
         $gender = fake()->randomElement(['male', 'female']);
         return [
+            'facility_id' => fake()->randomElement(Facility::pluck('id')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => $middle = fake()->lastName(),
@@ -34,7 +36,7 @@ class PatientFactory extends Factory
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'mothers_name' => fake()->firstName('female') . ' ' . $middle,
             'mobile_number' => fake()->phoneNumber(),
-            'pwd_status_code' => fake()->randomElement(LibPwdType::pluck('type_code')->toArray()),
+            'pwd_type_code' => fake()->randomElement(LibPwdType::pluck('type_code')->toArray()),
             'indegenous_flag' => fake()->boolean,
             'blood_type' => fake()->randomElement(LibBloodType::pluck('blood_type')->toArray()),
             'religion_code' => fake()->randomElement(LibReligion::pluck('religion_code')->toArray()),

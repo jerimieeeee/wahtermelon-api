@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('mothers_name');
             $table->enum('gender', ['M', 'F']);
             $table->string('mobile_number', 13);
-            $table->char('pwd_status_code')->default('NA');
+            $table->char('pwd_type_code')->default('NA');
             $table->boolean('indegenous_flag')->default(0);
             $table->char('blood_type', 3)->default('NA');
             $table->char('religion_code', 10);
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('suffix_name')->references('suffix_code')->on('lib_suffix_names');
-            $table->foreign('pwd_status_code')->references('type_code')->on('lib_pwd_types');
+            $table->foreign('pwd_type_code')->references('type_code')->on('lib_pwd_types');
             $table->foreign('religion_code')->references('religion_code')->on('lib_religions');
             $table->foreign('occupation_code')->references('occupation_code')->on('lib_occupations');
             $table->foreign('education_id')->references('education_id')->on('lib_education');

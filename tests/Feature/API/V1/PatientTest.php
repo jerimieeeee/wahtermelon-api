@@ -42,7 +42,7 @@ class PatientTest extends TestCase
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'mothers_name' => fake()->firstName('female') . ' ' . $middle,
             'mobile_number' => fake()->phoneNumber(),
-            'pwd_status_code' => fake()->randomElement(LibPwdType::pluck('type_code')->toArray()),
+            'pwd_type_code' => fake()->randomElement(LibPwdType::pluck('type_code')->toArray()),
             'indegenous_flag' => fake()->boolean,
             'blood_type' => fake()->randomElement(LibBloodType::pluck('blood_type')->toArray()),
             'religion_code' => fake()->randomElement(LibReligion::pluck('religion_code')->toArray()),

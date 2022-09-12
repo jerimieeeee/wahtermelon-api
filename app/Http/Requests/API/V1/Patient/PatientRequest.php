@@ -24,6 +24,7 @@ class PatientRequest extends FormRequest
     public function rules()
     {
         return [
+            'facility_id' => 'sometimes|exists:facilities,id',
             'last_name' => 'required',
             'first_name' => 'required',
             'middle_name' => 'nullable',
