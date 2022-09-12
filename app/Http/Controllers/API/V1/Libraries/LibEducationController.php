@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibEducationResource;
+use App\Models\V1\Libraries\LibEducation;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class LibEducationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResource
      */
-    public function index()
+    public function index(): JsonResource
     {
-        //
+        return LibEducationResource::collection(LibEducation::get());
     }
 
     /**
@@ -31,12 +34,13 @@ class LibEducationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param LibEducation $education
+     * @param string $id
+     * @return JsonResource
      */
-    public function show($id)
+    public function show(LibEducation $education, string $id): JsonResource
     {
-        //
+        return new LibEducationResource($education->findOrFail($id));
     }
 
     /**

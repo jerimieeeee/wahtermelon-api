@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibReligionResource;
+use App\Models\V1\Libraries\LibReligion;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class LibReligionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResource
      */
-    public function index()
+    public function index(): JsonResource
     {
-        //
+        return LibReligionResource::collection(LibReligion::get());
     }
 
     /**
@@ -31,12 +34,13 @@ class LibReligionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param LibReligion $religion
+     * @param string $id
+     * @return JsonResource
      */
-    public function show($id)
+    public function show(LibReligion $religion, string $id): JsonResource
     {
-        //
+        return new LibReligionResource($religion->findOrFail($id));
     }
 
     /**

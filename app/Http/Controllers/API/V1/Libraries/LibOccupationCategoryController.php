@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibOccupationCategoryResource;
+use App\Models\V1\Libraries\LibOccupationCategory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class LibOccupationCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResource
      */
-    public function index()
+    public function index(): JsonResource
     {
-        //
+        return LibOccupationCategoryResource::collection(LibOccupationCategory::get());
     }
 
     /**
@@ -31,12 +34,13 @@ class LibOccupationCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param LibOccupationCategory $occupationCategory
+     * @param string $id
+     * @return JsonResource
      */
-    public function show($id)
+    public function show(LibOccupationCategory $occupationCategory, string $id): JsonResource
     {
-        //
+        return new LibOccupationCategoryResource($occupationCategory->findOrFail($id));
     }
 
     /**

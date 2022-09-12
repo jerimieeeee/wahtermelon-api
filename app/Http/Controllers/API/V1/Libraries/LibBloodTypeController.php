@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibBloodTypeResource;
 use App\Models\V1\Libraries\LibBloodType;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class LibBloodTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResource
      */
-    public function index()
+    public function index(): JsonResource
     {
-        return LibBloodType::all();
+        return LibBloodTypeResource::collection(LibBloodType::orderBy('sequence', 'ASC')->get());
     }
 
     /**
@@ -32,12 +34,13 @@ class LibBloodTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param LibBloodType $bloodType
+     * @param string $id
+     * @return JsonResource
      */
-    public function show(LibBloodType $bloodType, $id)
+    public function show(LibBloodType $bloodType, string $id): JsonResource
     {
-        return $bloodType->whereBloodType($id)->first();
+        return new LibBloodTypeResource($bloodType->findOrFail($id));
     }
 
     /**
