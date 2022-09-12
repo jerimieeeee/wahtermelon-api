@@ -9,8 +9,6 @@ use App\Models\V1\Patient\Patient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientController extends Controller
@@ -30,7 +28,9 @@ class PatientController extends Controller
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             })
-            ->allowedIncludes('suffixName', 'pwdType', 'religion');
+            ->allowedIncludes('suffixName', 'pwdType', 'religion')
+            ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')
+            ->allowedSorts('last_name', 'first_name', 'middle_name', 'birthdate');
         if ($perPage === 'all') {
             return PatientResource::collection($patients->get());
         }
