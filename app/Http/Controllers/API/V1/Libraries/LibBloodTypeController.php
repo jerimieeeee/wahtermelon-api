@@ -7,12 +7,20 @@ use App\Http\Resources\API\V1\Libraries\LibBloodTypeResource;
 use App\Models\V1\Libraries\LibBloodType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Patient Module
+ *
+ * APIs for Patient Information
+ * @subgroup Blood Type
+ * @subgroupDescription Do stuff with servers
+ */
 class LibBloodTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @subgroup Blood Type
      * @return JsonResource
      */
     public function index(): JsonResource
@@ -35,12 +43,15 @@ class LibBloodTypeController extends Controller
      * Display the specified resource.
      *
      * @param LibBloodType $bloodType
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibBloodType $bloodType, string $id): JsonResource
+    public function show(LibBloodType $bloodType)
     {
-        return new LibBloodTypeResource($bloodType->findOrFail($id));
+        $query = LibBloodType::where('blood_type', $bloodType->blood_type);
+
+        $id = QueryBuilder::for($query)
+            ->first();
+        return new LibBloodTypeResource($id);
     }
 
     /**
