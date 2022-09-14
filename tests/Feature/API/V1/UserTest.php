@@ -10,14 +10,14 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
+    /*use RefreshDatabase;
 
     public function setUp(): void {
         parent::setUp();
         //\Artisan::call('migrate',['-vvv' => true]);
         \Artisan::call('passport:install');
-        //\Artisan::call('db:seed',['-vvv' => true]);
-    }
+        \Artisan::call('db:seed',['-vvv' => true]);
+    }*/
 
     public function test_model_user_can_be_instantiated(): void
     {

@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\V1\Libraries\LibSuffixName;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Patient\Patient>
  */
 class UserFactory extends Factory
 {
@@ -22,7 +23,7 @@ class UserFactory extends Factory
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => fake()->lastName(),
-            'suffix_name' => 'NA',
+            'suffix_name' => $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : 'NA',
             'gender' => substr(Str::ucfirst($gender), 0, 1),
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'contact_number' => fake()->phoneNumber(),
