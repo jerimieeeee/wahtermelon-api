@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\V1\Libraries\LibMcRiskFactor;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +31,7 @@ class DatabaseSeeder extends Seeder
             LibSuffixNameSeeder::class,
             LibOccupationCategorySeeder::class,
             LibOccupationSeeder::class,
+            LibMcRiskFactorSeeder::class
         ]);
     }
 }
