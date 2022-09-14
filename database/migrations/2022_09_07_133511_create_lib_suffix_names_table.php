@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('lib_suffix_names', function (Blueprint $table) {
             $table->char('code')->primary();
+            $table->unsignedInteger('sequence');
             $table->string('suffix_desc', 20);
         });
     }
