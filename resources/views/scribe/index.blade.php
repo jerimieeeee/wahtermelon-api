@@ -333,8 +333,8 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"ernser.august@example.com\",
-    \"password\": \"quia\"
+    \"email\": \"astark@example.org\",
+    \"password\": \"tenetur\"
 }"
 </code></pre></div>
 
@@ -350,8 +350,8 @@ const headers = {
 };
 
 let body = {
-    "email": "ernser.august@example.com",
-    "password": "quia"
+    "email": "astark@example.org",
+    "password": "tenetur"
 };
 
 fetch(url, {
@@ -411,7 +411,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-login"
-               value="ernser.august@example.com"
+               value="astark@example.org"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -423,7 +423,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-login"
-               value="quia"
+               value="tenetur"
                data-component="body" hidden>
     <br>
 
@@ -447,16 +447,16 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"est\",
-    \"first_name\": \"iusto\",
-    \"suffix_name\": \"ipsa\",
-    \"gender\": \"maxime\",
-    \"birthdate\": \"2022-09-14T13:54:08\",
-    \"contact_number\": \"kknjlzef\",
-    \"email\": \"umann@example.com\",
-    \"tin_number\": \"lidmkiomv\",
-    \"accreditation_number\": \"ev\",
-    \"password\": \"perferendis\"
+    \"last_name\": \"deserunt\",
+    \"first_name\": \"minima\",
+    \"suffix_name\": \"facilis\",
+    \"gender\": \"enim\",
+    \"birthdate\": \"2022-09-14T14:15:47\",
+    \"contact_number\": \"krrviffmseekl\",
+    \"email\": \"wpredovic@example.com\",
+    \"tin_number\": \"oons\",
+    \"accreditation_number\": \"\",
+    \"password\": \"molestiae\"
 }"
 </code></pre></div>
 
@@ -472,16 +472,16 @@ const headers = {
 };
 
 let body = {
-    "last_name": "est",
-    "first_name": "iusto",
-    "suffix_name": "ipsa",
-    "gender": "maxime",
-    "birthdate": "2022-09-14T13:54:08",
-    "contact_number": "kknjlzef",
-    "email": "umann@example.com",
-    "tin_number": "lidmkiomv",
-    "accreditation_number": "ev",
-    "password": "perferendis"
+    "last_name": "deserunt",
+    "first_name": "minima",
+    "suffix_name": "facilis",
+    "gender": "enim",
+    "birthdate": "2022-09-14T14:15:47",
+    "contact_number": "krrviffmseekl",
+    "email": "wpredovic@example.com",
+    "tin_number": "oons",
+    "accreditation_number": "",
+    "password": "molestiae"
 };
 
 fetch(url, {
@@ -541,7 +541,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-register"
-               value="est"
+               value="deserunt"
                data-component="body" hidden>
     <br>
 
@@ -553,7 +553,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-register"
-               value="iusto"
+               value="minima"
                data-component="body" hidden>
     <br>
 
@@ -577,7 +577,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-register"
-               value="ipsa"
+               value="facilis"
                data-component="body" hidden>
     <br>
 
@@ -589,7 +589,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-register"
-               value="maxime"
+               value="enim"
                data-component="body" hidden>
     <br>
 
@@ -601,7 +601,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-register"
-               value="2022-09-14T13:54:08"
+               value="2022-09-14T14:15:47"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date.</p>
@@ -613,7 +613,7 @@ fetch(url, {
                 <input type="text"
                name="contact_number"
                data-endpoint="POSTapi-v1-register"
-               value="kknjlzef"
+               value="krrviffmseekl"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -625,7 +625,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-register"
-               value="umann@example.com"
+               value="wpredovic@example.com"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -661,7 +661,7 @@ fetch(url, {
                 <input type="text"
                name="tin_number"
                data-endpoint="POSTapi-v1-register"
-               value="lidmkiomv"
+               value="oons"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 9 characters.</p>
@@ -673,7 +673,7 @@ fetch(url, {
                 <input type="text"
                name="accreditation_number"
                data-endpoint="POSTapi-v1-register"
-               value="ev"
+               value=""
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 14 characters.</p>
@@ -685,7 +685,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-register"
-               value="perferendis"
+               value="molestiae"
                data-component="body" hidden>
     <br>
 
@@ -1154,20 +1154,20 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"pariatur\",
-    \"first_name\": \"perferendis\",
-    \"suffix_name\": \"vel\",
-    \"birthdate\": \"2000-03-11\",
-    \"mothers_name\": \"perferendis\",
-    \"gender\": \"dignissimos\",
-    \"mobile_number\": \"renqlvs\",
+    \"last_name\": \"dolores\",
+    \"first_name\": \"quia\",
+    \"suffix_name\": \"totam\",
+    \"birthdate\": \"1998-01-23\",
+    \"mothers_name\": \"minus\",
+    \"gender\": \"et\",
+    \"mobile_number\": \"abem\",
     \"indegenous_flag\": true,
-    \"religion_code\": \"dolor\",
-    \"occupation_code\": \"blanditiis\",
-    \"education_code\": \"sequi\",
-    \"civil_status_code\": \"asperiores\",
+    \"religion_code\": \"eveniet\",
+    \"occupation_code\": \"modi\",
+    \"education_code\": \"vel\",
+    \"civil_status_code\": \"repellendus\",
     \"consent_flag\": false,
-    \"image_url\": \"http:\\/\\/www.maggio.net\\/\"
+    \"image_url\": \"http:\\/\\/www.gaylord.com\\/voluptates-qui-totam-in-ut-sapiente-repudiandae-facere-quia.html\"
 }"
 </code></pre></div>
 
@@ -1183,20 +1183,20 @@ const headers = {
 };
 
 let body = {
-    "last_name": "pariatur",
-    "first_name": "perferendis",
-    "suffix_name": "vel",
-    "birthdate": "2000-03-11",
-    "mothers_name": "perferendis",
-    "gender": "dignissimos",
-    "mobile_number": "renqlvs",
+    "last_name": "dolores",
+    "first_name": "quia",
+    "suffix_name": "totam",
+    "birthdate": "1998-01-23",
+    "mothers_name": "minus",
+    "gender": "et",
+    "mobile_number": "abem",
     "indegenous_flag": true,
-    "religion_code": "dolor",
-    "occupation_code": "blanditiis",
-    "education_code": "sequi",
-    "civil_status_code": "asperiores",
+    "religion_code": "eveniet",
+    "occupation_code": "modi",
+    "education_code": "vel",
+    "civil_status_code": "repellendus",
     "consent_flag": false,
-    "image_url": "http:\/\/www.maggio.net\/"
+    "image_url": "http:\/\/www.gaylord.com\/voluptates-qui-totam-in-ut-sapiente-repudiandae-facere-quia.html"
 };
 
 fetch(url, {
@@ -1268,7 +1268,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-patient"
-               value="pariatur"
+               value="dolores"
                data-component="body" hidden>
     <br>
 
@@ -1280,7 +1280,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-patient"
-               value="perferendis"
+               value="quia"
                data-component="body" hidden>
     <br>
 
@@ -1304,7 +1304,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-patient"
-               value="vel"
+               value="totam"
                data-component="body" hidden>
     <br>
 
@@ -1316,7 +1316,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-patient"
-               value="2000-03-11"
+               value="1998-01-23"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.</p>
@@ -1328,7 +1328,7 @@ fetch(url, {
                 <input type="text"
                name="mothers_name"
                data-endpoint="POSTapi-v1-patient"
-               value="perferendis"
+               value="minus"
                data-component="body" hidden>
     <br>
 
@@ -1340,7 +1340,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-patient"
-               value="dignissimos"
+               value="et"
                data-component="body" hidden>
     <br>
 
@@ -1352,7 +1352,7 @@ fetch(url, {
                 <input type="text"
                name="mobile_number"
                data-endpoint="POSTapi-v1-patient"
-               value="renqlvs"
+               value="abem"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -1411,7 +1411,7 @@ fetch(url, {
                 <input type="text"
                name="religion_code"
                data-endpoint="POSTapi-v1-patient"
-               value="dolor"
+               value="eveniet"
                data-component="body" hidden>
     <br>
 
@@ -1423,7 +1423,7 @@ fetch(url, {
                 <input type="text"
                name="occupation_code"
                data-endpoint="POSTapi-v1-patient"
-               value="blanditiis"
+               value="modi"
                data-component="body" hidden>
     <br>
 
@@ -1435,7 +1435,7 @@ fetch(url, {
                 <input type="text"
                name="education_code"
                data-endpoint="POSTapi-v1-patient"
-               value="sequi"
+               value="vel"
                data-component="body" hidden>
     <br>
 
@@ -1447,7 +1447,7 @@ fetch(url, {
                 <input type="text"
                name="civil_status_code"
                data-endpoint="POSTapi-v1-patient"
-               value="asperiores"
+               value="repellendus"
                data-component="body" hidden>
     <br>
 
@@ -1482,7 +1482,7 @@ fetch(url, {
                 <input type="text"
                name="image_url"
                data-endpoint="POSTapi-v1-patient"
-               value="http://www.maggio.net/"
+               value="http://www.gaylord.com/voluptates-qui-totam-in-ut-sapiente-repudiandae-facere-quia.html"
                data-component="body" hidden>
     <br>
 <p>Must be a valid URL.</p>
