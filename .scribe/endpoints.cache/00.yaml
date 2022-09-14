@@ -67,19 +67,19 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: mafalda.hudson@example.net
+        example: emanuel.schneider@example.org
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: eos
+        example: accusamus
         type: string
         custom: []
     cleanBodyParameters:
-      email: mafalda.hudson@example.net
-      password: eos
+      email: emanuel.schneider@example.org
+      password: accusamus
     fileParameters: []
     responses: []
     responseFields: []
@@ -113,14 +113,14 @@ endpoints:
         name: last_name
         description: ''
         required: true
-        example: qui
+        example: praesentium
         type: string
         custom: []
       first_name:
         name: first_name
         description: ''
         required: true
-        example: et
+        example: blanditiis
         type: string
         custom: []
       middle_name:
@@ -134,35 +134,35 @@ endpoints:
         name: suffix_name
         description: ''
         required: true
-        example: beatae
+        example: veritatis
         type: string
         custom: []
       gender:
         name: gender
         description: ''
         required: true
-        example: doloribus
+        example: quia
         type: string
         custom: []
       birthdate:
         name: birthdate
         description: 'Must be a valid date.'
         required: true
-        example: '2022-09-14T15:13:22'
+        example: '2022-09-14T15:57:20'
         type: string
         custom: []
       contact_number:
         name: contact_number
         description: 'Must be at least 11 characters. Must not be greater than 13 characters.'
         required: true
-        example: vulzoyy
+        example: ildyidv
         type: string
         custom: []
       email:
         name: email
         description: 'Must be a valid email address.'
         required: false
-        example: padberg.ada@example.net
+        example: cathy68@example.org
         type: string
         custom: []
       is_active:
@@ -183,34 +183,34 @@ endpoints:
         name: tin_number
         description: 'Must not be greater than 9 characters.'
         required: false
-        example: ''
+        example: cbfwolyv
         type: string
         custom: []
       accreditation_number:
         name: accreditation_number
         description: 'Must not be greater than 14 characters.'
         required: false
-        example: nzdhkm
+        example: rjdbta
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: et
+        example: rem
         type: string
         custom: []
     cleanBodyParameters:
-      last_name: qui
-      first_name: et
-      suffix_name: beatae
-      gender: doloribus
-      birthdate: '2022-09-14T15:13:22'
-      contact_number: vulzoyy
-      email: padberg.ada@example.net
-      tin_number: ''
-      accreditation_number: nzdhkm
-      password: et
+      last_name: praesentium
+      first_name: blanditiis
+      suffix_name: veritatis
+      gender: quia
+      birthdate: '2022-09-14T15:57:20'
+      contact_number: ildyidv
+      email: cathy68@example.org
+      tin_number: cbfwolyv
+      accreditation_number: rjdbta
+      password: rem
     fileParameters: []
     responses: []
     responseFields: []
@@ -245,7 +245,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"last_name":"Bernhard","first_name":"Golden","middle_name":"Cartwright","suffix_code":"III","birthdate":"1972-02-02","mothers_name":"Zita Cartwright","gender":"M","mobile_number":"295-077-011","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"A+","religion_code":"XTIAN","occupation_code":"SVC009","education_code":8,"civil_status_code":"SPRTD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:35:13","updated_at":"2022-09-14 12:35:13"},{"last_name":"Gaylord","first_name":"Jackie","middle_name":"Baumbach","suffix_code":"NA","birthdate":"1994-06-04","mothers_name":"Aliza Baumbach","gender":"F","mobile_number":"015-579-482","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"IGNIK","occupation_code":"SVC001","education_code":7,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"Goyette","first_name":"Benjamin","middle_name":"Feest","suffix_code":"SR","birthdate":"2007-10-21","mothers_name":"Jena Feest","gender":"M","mobile_number":"551-525-749","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"CATHO","occupation_code":"TRANS006","education_code":5,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:01:19","updated_at":"2022-09-14 13:01:19"},{"last_name":"Hagenes","first_name":"Ocie","middle_name":"Jakubowski","suffix_code":"NA","birthdate":"2006-07-07","mothers_name":"Maeve Jakubowski","gender":"F","mobile_number":"846-194-822","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"AGLIP","occupation_code":"UNSP006","education_code":5,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Hegmann","first_name":"Dina","middle_name":"Heaney","suffix_code":"NA","birthdate":"1978-01-25","mothers_name":"Jeanie Heaney","gender":"F","mobile_number":"982-407-289","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"ANGLI","occupation_code":"SVC021","education_code":1,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:26:57","updated_at":"2022-09-14 12:26:57"},{"last_name":"Jacobson","first_name":"Craig","middle_name":"Herzog","suffix_code":"V","birthdate":"1983-10-12","mothers_name":"Alyson Herzog","gender":"M","mobile_number":"393-499-081","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"LRCM","occupation_code":"SVC007","education_code":5,"civil_status_code":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:32:40","updated_at":"2022-09-14 12:32:40"},{"last_name":"Jerde","first_name":"Phoebe","middle_name":"Kessler","suffix_code":"NA","birthdate":"1988-11-19","mothers_name":"Naomie Kessler","gender":"F","mobile_number":"674-728-904","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ANGLI","occupation_code":"TRANS008","education_code":3,"civil_status_code":"CHBTN","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:07:32","updated_at":"2022-09-14 15:07:32"},{"last_name":"Konopelski","first_name":"Joseph","middle_name":"Huels","suffix_code":"II","birthdate":"2002-10-26","mothers_name":"Jaqueline Huels","gender":"M","mobile_number":"645-563-992","pwd_type_code":"LD","indegenous_flag":true,"blood_type_code":"B+","religion_code":"MUSLI","occupation_code":"SVC004","education_code":5,"civil_status_code":"WDWD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:35:12","updated_at":"2022-09-14 12:35:12"},{"last_name":"Kuhn","first_name":"Otilia","middle_name":"Bechtelar","suffix_code":"NA","birthdate":"2003-04-01","mothers_name":"Tina Bechtelar","gender":"F","mobile_number":"845-287-349","pwd_type_code":"CID","indegenous_flag":true,"blood_type_code":"O-","religion_code":"ANGLI","occupation_code":"HEALTH001","education_code":8,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Mccullough","first_name":"Caleigh","middle_name":"Klein","suffix_code":"NA","birthdate":"1989-10-01","mothers_name":"Emelie Klein","gender":"F","mobile_number":"048-972-273","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"MORMO","occupation_code":"HEALTH007","education_code":3,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"O''connell","first_name":"Madison","middle_name":"Blanda","suffix_code":"IV","birthdate":"1994-12-14","mothers_name":"Elyssa Blanda","gender":"M","mobile_number":"132-869-517","pwd_type_code":"VD","indegenous_flag":true,"blood_type_code":"AB+","religion_code":"LUTHR","occupation_code":"SVC006","education_code":8,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:29:17","updated_at":"2022-09-14 12:29:17"},{"last_name":"Pagac","first_name":"Maida","middle_name":"Kunde","suffix_code":"NA","birthdate":"1973-09-05","mothers_name":"Karlee Kunde","gender":"F","mobile_number":"054-596-236","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"O+","religion_code":"XTIAN","occupation_code":"SVC008","education_code":3,"civil_status_code":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 15:07:32","updated_at":"2022-09-14 15:07:32"},{"last_name":"Parisian","first_name":"Jaiden","middle_name":"Okuneva","suffix_code":"II","birthdate":"2003-07-06","mothers_name":"Genesis Okuneva","gender":"M","mobile_number":"709-886-934","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"B+","religion_code":"AGLIP","occupation_code":"SVC033","education_code":7,"civil_status_code":"WDWD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:33:58","updated_at":"2022-09-14 12:33:58"},{"last_name":"Schaefer","first_name":"Alisha","middle_name":"Hackett","suffix_code":"NA","birthdate":"2013-01-10","mothers_name":"Zoe Hackett","gender":"F","mobile_number":"712-338-946","pwd_type_code":"CID","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"LRCM","occupation_code":"SVC034","education_code":6,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:05:56","updated_at":"2022-09-14 13:05:56"},{"last_name":"Strosin","first_name":"Letitia","middle_name":"Streich","suffix_code":"NA","birthdate":"1990-08-29","mothers_name":"Yasmeen Streich","gender":"F","mobile_number":"907-203-883","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"MUSLI","occupation_code":"MAR001","education_code":4,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:33:58","updated_at":"2022-09-14 12:33:58"}],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","prev":null,"next":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2"},"meta":{"current_page":1,"from":1,"last_page":2,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","label":"1","active":true},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"2","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/patient","per_page":15,"to":15,"total":17}}'
+        content: '{"data":[{"last_name":"Beatty","first_name":"Scot","middle_name":"Larkin","suffix_code":"NA","birthdate":"2005-04-24","mothers_name":"Marcelina Larkin","gender":"M","mobile_number":"639-035-595","pwd_type_code":"VD","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"JEWIT","occupation_code":"SVC022","education_code":3,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 15:34:24","updated_at":"2022-09-14 15:34:24"},{"last_name":"Bernhard","first_name":"Golden","middle_name":"Cartwright","suffix_code":"III","birthdate":"1972-02-02","mothers_name":"Zita Cartwright","gender":"M","mobile_number":"295-077-011","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"A+","religion_code":"XTIAN","occupation_code":"SVC009","education_code":8,"civil_status_code":"SPRTD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:35:13","updated_at":"2022-09-14 12:35:13"},{"last_name":"Connelly","first_name":"Theodora","middle_name":"Brakus","suffix_code":"NA","birthdate":"1971-02-13","mothers_name":"Aida Brakus","gender":"F","mobile_number":"360-141-121","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"A-","religion_code":"UNKNO","occupation_code":"SVC049","education_code":2,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:32:28","updated_at":"2022-09-14 15:32:28"},{"last_name":"Denesik","first_name":"Alexandrine","middle_name":"Jacobs","suffix_code":"NA","birthdate":"1999-11-30","mothers_name":"Jaunita Jacobs","gender":"F","mobile_number":"597-031-288","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"NA","religion_code":"EVANG","occupation_code":"SVC038","education_code":8,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:29:17","updated_at":"2022-09-14 15:29:17"},{"last_name":"Gaylord","first_name":"Jackie","middle_name":"Baumbach","suffix_code":"NA","birthdate":"1994-06-04","mothers_name":"Aliza Baumbach","gender":"F","mobile_number":"015-579-482","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"IGNIK","occupation_code":"SVC001","education_code":7,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"Goodwin","first_name":"Bridgette","middle_name":"Johnson","suffix_code":"NA","birthdate":"2001-11-10","mothers_name":"Karine Johnson","gender":"F","mobile_number":"788-203-059","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ALLY","occupation_code":"SVC008","education_code":6,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:34:25","updated_at":"2022-09-14 15:34:25"},{"last_name":"Goyette","first_name":"Benjamin","middle_name":"Feest","suffix_code":"SR","birthdate":"2007-10-21","mothers_name":"Jena Feest","gender":"M","mobile_number":"551-525-749","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"CATHO","occupation_code":"TRANS006","education_code":5,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:01:19","updated_at":"2022-09-14 13:01:19"},{"last_name":"Hagenes","first_name":"Ocie","middle_name":"Jakubowski","suffix_code":"NA","birthdate":"2006-07-07","mothers_name":"Maeve Jakubowski","gender":"F","mobile_number":"846-194-822","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"AGLIP","occupation_code":"UNSP006","education_code":5,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Hegmann","first_name":"Dina","middle_name":"Heaney","suffix_code":"NA","birthdate":"1978-01-25","mothers_name":"Jeanie Heaney","gender":"F","mobile_number":"982-407-289","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"ANGLI","occupation_code":"SVC021","education_code":1,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:26:57","updated_at":"2022-09-14 12:26:57"},{"last_name":"Jacobson","first_name":"Craig","middle_name":"Herzog","suffix_code":"V","birthdate":"1983-10-12","mothers_name":"Alyson Herzog","gender":"M","mobile_number":"393-499-081","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"LRCM","occupation_code":"SVC007","education_code":5,"civil_status_code":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:32:40","updated_at":"2022-09-14 12:32:40"},{"last_name":"Jerde","first_name":"Phoebe","middle_name":"Kessler","suffix_code":"NA","birthdate":"1988-11-19","mothers_name":"Naomie Kessler","gender":"F","mobile_number":"674-728-904","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ANGLI","occupation_code":"TRANS008","education_code":3,"civil_status_code":"CHBTN","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:07:32","updated_at":"2022-09-14 15:07:32"},{"last_name":"Johns","first_name":"Frieda","middle_name":"Wilderman","suffix_code":"NA","birthdate":"2009-08-19","mothers_name":"Katelyn Wilderman","gender":"F","mobile_number":"744-845-875","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"SVDAY","occupation_code":"SVC052","education_code":6,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:55:31","updated_at":"2022-09-14 15:55:31"},{"last_name":"Konopelski","first_name":"Joseph","middle_name":"Huels","suffix_code":"II","birthdate":"2002-10-26","mothers_name":"Jaqueline Huels","gender":"M","mobile_number":"645-563-992","pwd_type_code":"LD","indegenous_flag":true,"blood_type_code":"B+","religion_code":"MUSLI","occupation_code":"SVC004","education_code":5,"civil_status_code":"WDWD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:35:12","updated_at":"2022-09-14 12:35:12"},{"last_name":"Kuhn","first_name":"Otilia","middle_name":"Bechtelar","suffix_code":"NA","birthdate":"2003-04-01","mothers_name":"Tina Bechtelar","gender":"F","mobile_number":"845-287-349","pwd_type_code":"CID","indegenous_flag":true,"blood_type_code":"O-","religion_code":"ANGLI","occupation_code":"HEALTH001","education_code":8,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Luettgen","first_name":"Lue","middle_name":"Franecki","suffix_code":"NA","birthdate":"2015-07-23","mothers_name":"Delfina Franecki","gender":"F","mobile_number":"272-373-817","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"B+","religion_code":"PROTE","occupation_code":"UNSP001","education_code":6,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:23:18","updated_at":"2022-09-14 15:23:18"}],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=3","prev":null,"next":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2"},"meta":{"current_page":1,"from":1,"last_page":3,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","label":"1","active":true},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"2","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=3","label":"3","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/patient","per_page":15,"to":15,"total":31}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -292,14 +292,14 @@ endpoints:
         name: last_name
         description: ''
         required: true
-        example: id
+        example: quibusdam
         type: string
         custom: []
       first_name:
         name: first_name
         description: ''
         required: true
-        example: beatae
+        example: temporibus
         type: string
         custom: []
       middle_name:
@@ -313,35 +313,35 @@ endpoints:
         name: suffix_name
         description: ''
         required: true
-        example: possimus
+        example: eveniet
         type: string
         custom: []
       birthdate:
         name: birthdate
         description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.'
         required: true
-        example: '1999-12-11'
+        example: '1995-08-09'
         type: string
         custom: []
       mothers_name:
         name: mothers_name
         description: ''
         required: true
-        example: sed
+        example: saepe
         type: string
         custom: []
       gender:
         name: gender
         description: ''
         required: true
-        example: alias
+        example: odio
         type: string
         custom: []
       mobile_number:
         name: mobile_number
         description: 'Must be at least 11 characters. Must not be greater than 13 characters.'
         required: true
-        example: ym
+        example: oapdaqts
         type: string
         custom: []
       pwd_status_code:
@@ -369,59 +369,59 @@ endpoints:
         name: religion_code
         description: ''
         required: true
-        example: aut
+        example: deleniti
         type: string
         custom: []
       occupation_code:
         name: occupation_code
         description: ''
         required: true
-        example: ipsum
+        example: sunt
         type: string
         custom: []
       education_code:
         name: education_code
         description: ''
         required: true
-        example: mollitia
+        example: est
         type: string
         custom: []
       civil_status_code:
         name: civil_status_code
         description: ''
         required: true
-        example: sint
+        example: aut
         type: string
         custom: []
       consent_flag:
         name: consent_flag
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         custom: []
       image_url:
         name: image_url
         description: 'Must be a valid URL.'
         required: false
-        example: 'http://larkin.com/'
+        example: 'https://www.treutel.org/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur'
         type: string
         custom: []
     cleanBodyParameters:
-      last_name: id
-      first_name: beatae
-      suffix_name: possimus
-      birthdate: '1999-12-11'
-      mothers_name: sed
-      gender: alias
-      mobile_number: ym
+      last_name: quibusdam
+      first_name: temporibus
+      suffix_name: eveniet
+      birthdate: '1995-08-09'
+      mothers_name: saepe
+      gender: odio
+      mobile_number: oapdaqts
       indegenous_flag: true
-      religion_code: aut
-      occupation_code: ipsum
-      education_code: mollitia
-      civil_status_code: sint
-      consent_flag: false
-      image_url: 'http://larkin.com/'
+      religion_code: deleniti
+      occupation_code: sunt
+      education_code: est
+      civil_status_code: aut
+      consent_flag: true
+      image_url: 'https://www.treutel.org/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur'
     fileParameters: []
     responses: []
     responseFields: []
@@ -1441,1014 +1441,6 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: api/v1/libraries/districts
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display a listing of the resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/districts?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/districts?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/districts?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/districts","per_page":15,"to":null,"total":0}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '54'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: 'api/v1/libraries/districts/{district_code}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display the specified resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      district_code:
-        name: district_code
-        description: ''
-        required: true
-        example: inventore
-        type: string
-        custom: []
-    cleanUrlParameters:
-      district_code: inventore
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\V1\\PSGC\\District] 1",
-              "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
-              "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-              "line": 380,
-              "trace": [
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-                      "line": 356,
-                      "function": "prepareException",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php",
-                      "line": 54,
-                      "function": "render",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
-                      "line": 51,
-                      "function": "render",
-                      "class": "NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 185,
-                      "function": "handleException",
-                      "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 126,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 102,
-                      "function": "handleRequest",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 54,
-                      "function": "handleRequestUsingNamedLimiter",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 726,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 703,
-                      "function": "runRouteWithinStack",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 667,
-                      "function": "runRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 656,
-                      "function": "dispatchToRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 167,
-                      "function": "dispatch",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 141,
-                      "function": "Illuminate\\Foundation\\Http\\{closure}",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php",
-                      "line": 31,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php",
-                      "line": 40,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php",
-                      "line": 27,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php",
-                      "line": 86,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php",
-                      "line": 62,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\HandleCors",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php",
-                      "line": 39,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 142,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 111,
-                      "function": "sendRequestThroughRouter",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 299,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 287,
-                      "function": "callLaravelOrLumenRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 89,
-                      "function": "makeApiCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 45,
-                      "function": "makeResponseCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 35,
-                      "function": "makeResponseCallIfConditionsPass",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 209,
-                      "function": "__invoke",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 166,
-                      "function": "iterateThroughStrategies",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 95,
-                      "function": "fetchResponses",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 122,
-                      "function": "processRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 69,
-                      "function": "extractEndpointsInfoFromLaravelApp",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 47,
-                      "function": "extractEndpointsInfoAndWriteToDisk",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php",
-                      "line": 53,
-                      "function": "get",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 36,
-                      "function": "handle",
-                      "class": "Knuckles\\Scribe\\Commands\\GenerateDocumentation",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php",
-                      "line": 41,
-                      "function": "Illuminate\\Container\\{closure}",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 93,
-                      "function": "unwrapIfClosure",
-                      "class": "Illuminate\\Container\\Util",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 37,
-                      "function": "callBoundMethod",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php",
-                      "line": 651,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 144,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\Container",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php",
-                      "line": 308,
-                      "function": "execute",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 126,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Command\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 1002,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 299,
-                      "function": "doRunCommand",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 171,
-                      "function": "doRun",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php",
-                      "line": 102,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php",
-                      "line": 129,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/artisan",
-                      "line": 37,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Console\\Kernel",
-                      "type": "->"
-                  }
-              ]
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '53'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: api/v1/libraries/cities
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display a listing of the resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/cities?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/cities?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/cities?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/cities","per_page":15,"to":null,"total":0}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '52'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: 'api/v1/libraries/cities/{city_code}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display the specified resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      city_code:
-        name: city_code
-        description: ''
-        required: true
-        example: voluptatem
-        type: string
-        custom: []
-    cleanUrlParameters:
-      city_code: voluptatem
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\V1\\PSGC\\City] 1",
-              "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
-              "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-              "line": 380,
-              "trace": [
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-                      "line": 356,
-                      "function": "prepareException",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php",
-                      "line": 54,
-                      "function": "render",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
-                      "line": 51,
-                      "function": "render",
-                      "class": "NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 185,
-                      "function": "handleException",
-                      "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 126,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 102,
-                      "function": "handleRequest",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 54,
-                      "function": "handleRequestUsingNamedLimiter",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 726,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 703,
-                      "function": "runRouteWithinStack",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 667,
-                      "function": "runRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 656,
-                      "function": "dispatchToRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 167,
-                      "function": "dispatch",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 141,
-                      "function": "Illuminate\\Foundation\\Http\\{closure}",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php",
-                      "line": 31,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php",
-                      "line": 40,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php",
-                      "line": 27,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php",
-                      "line": 86,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php",
-                      "line": 62,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\HandleCors",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php",
-                      "line": 39,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 142,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 111,
-                      "function": "sendRequestThroughRouter",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 299,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 287,
-                      "function": "callLaravelOrLumenRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 89,
-                      "function": "makeApiCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 45,
-                      "function": "makeResponseCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 35,
-                      "function": "makeResponseCallIfConditionsPass",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 209,
-                      "function": "__invoke",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 166,
-                      "function": "iterateThroughStrategies",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 95,
-                      "function": "fetchResponses",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 122,
-                      "function": "processRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 69,
-                      "function": "extractEndpointsInfoFromLaravelApp",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 47,
-                      "function": "extractEndpointsInfoAndWriteToDisk",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php",
-                      "line": 53,
-                      "function": "get",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 36,
-                      "function": "handle",
-                      "class": "Knuckles\\Scribe\\Commands\\GenerateDocumentation",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php",
-                      "line": 41,
-                      "function": "Illuminate\\Container\\{closure}",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 93,
-                      "function": "unwrapIfClosure",
-                      "class": "Illuminate\\Container\\Util",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 37,
-                      "function": "callBoundMethod",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php",
-                      "line": 651,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 144,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\Container",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php",
-                      "line": 308,
-                      "function": "execute",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 126,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Command\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 1002,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 299,
-                      "function": "doRunCommand",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 171,
-                      "function": "doRun",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php",
-                      "line": 102,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php",
-                      "line": 129,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/artisan",
-                      "line": 37,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Console\\Kernel",
-                      "type": "->"
-                  }
-              ]
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '51'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
     uri: api/v1/libraries/municipalities
     metadata:
       groupName: Endpoints
@@ -2477,7 +1469,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '50'
+          x-ratelimit-remaining: '54'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -2940,511 +1932,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '49'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: api/v1/libraries/sub-municipalities
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display a listing of the resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/sub-municipalities?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/sub-municipalities?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/sub-municipalities?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/libraries\/sub-municipalities","per_page":15,"to":null,"total":0}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '48'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: 'api/v1/libraries/sub-municipalities/{subMunicipality_code}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display the specified resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      subMunicipality_code:
-        name: subMunicipality_code
-        description: ''
-        required: true
-        example: qui
-        type: string
-        custom: []
-    cleanUrlParameters:
-      subMunicipality_code: qui
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\V1\\PSGC\\SubMunicipality] 1",
-              "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
-              "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-              "line": 380,
-              "trace": [
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-                      "line": 356,
-                      "function": "prepareException",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php",
-                      "line": 54,
-                      "function": "render",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
-                      "line": 51,
-                      "function": "render",
-                      "class": "NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 185,
-                      "function": "handleException",
-                      "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 126,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 102,
-                      "function": "handleRequest",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 54,
-                      "function": "handleRequestUsingNamedLimiter",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 726,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 703,
-                      "function": "runRouteWithinStack",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 667,
-                      "function": "runRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 656,
-                      "function": "dispatchToRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 167,
-                      "function": "dispatch",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 141,
-                      "function": "Illuminate\\Foundation\\Http\\{closure}",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php",
-                      "line": 31,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php",
-                      "line": 40,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php",
-                      "line": 27,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php",
-                      "line": 86,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php",
-                      "line": 62,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\HandleCors",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php",
-                      "line": 39,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 142,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 111,
-                      "function": "sendRequestThroughRouter",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 299,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 287,
-                      "function": "callLaravelOrLumenRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 89,
-                      "function": "makeApiCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 45,
-                      "function": "makeResponseCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 35,
-                      "function": "makeResponseCallIfConditionsPass",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 209,
-                      "function": "__invoke",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 166,
-                      "function": "iterateThroughStrategies",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 95,
-                      "function": "fetchResponses",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 122,
-                      "function": "processRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 69,
-                      "function": "extractEndpointsInfoFromLaravelApp",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 47,
-                      "function": "extractEndpointsInfoAndWriteToDisk",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php",
-                      "line": 53,
-                      "function": "get",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 36,
-                      "function": "handle",
-                      "class": "Knuckles\\Scribe\\Commands\\GenerateDocumentation",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php",
-                      "line": 41,
-                      "function": "Illuminate\\Container\\{closure}",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 93,
-                      "function": "unwrapIfClosure",
-                      "class": "Illuminate\\Container\\Util",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 37,
-                      "function": "callBoundMethod",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php",
-                      "line": 651,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 144,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\Container",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php",
-                      "line": 308,
-                      "function": "execute",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 126,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Command\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 1002,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 299,
-                      "function": "doRunCommand",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 171,
-                      "function": "doRun",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php",
-                      "line": 102,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php",
-                      "line": 129,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/artisan",
-                      "line": 37,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Console\\Kernel",
-                      "type": "->"
-                  }
-              ]
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '47'
+          x-ratelimit-remaining: '53'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -3485,7 +1973,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '46'
+          x-ratelimit-remaining: '52'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -3948,7 +2436,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '45'
+          x-ratelimit-remaining: '51'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -3989,7 +2477,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '44'
+          x-ratelimit-remaining: '50'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -4452,7 +2940,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '43'
+          x-ratelimit-remaining: '49'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -4493,7 +2981,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '42'
+          x-ratelimit-remaining: '48'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -4956,7 +3444,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '41'
+          x-ratelimit-remaining: '47'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -4997,7 +3485,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '40'
+          x-ratelimit-remaining: '46'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -5460,7 +3948,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '39'
+          x-ratelimit-remaining: '45'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -5501,7 +3989,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '38'
+          x-ratelimit-remaining: '44'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -5550,7 +4038,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '37'
+          x-ratelimit-remaining: '43'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -5591,7 +4079,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '36'
+          x-ratelimit-remaining: '42'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -6054,7 +4542,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '35'
+          x-ratelimit-remaining: '41'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -6095,7 +4583,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '34'
+          x-ratelimit-remaining: '40'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -6558,7 +5046,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '33'
+          x-ratelimit-remaining: '39'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -6599,7 +5087,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '32'
+          x-ratelimit-remaining: '38'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -7062,7 +5550,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '31'
+          x-ratelimit-remaining: '37'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -7103,7 +5591,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '30'
+          x-ratelimit-remaining: '36'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -7566,7 +6054,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '29'
+          x-ratelimit-remaining: '35'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -7607,7 +6095,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '28'
+          x-ratelimit-remaining: '34'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -8070,7 +6558,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '27'
+          x-ratelimit-remaining: '33'
           access-control-allow-origin: '*'
         description: null
         custom: []
