@@ -9,7 +9,7 @@ class LibEducation extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'education_id';
+    public $primaryKey = 'code';
     public $timestamps = false;
 
 }

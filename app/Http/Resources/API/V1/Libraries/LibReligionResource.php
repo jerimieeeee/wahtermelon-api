@@ -15,7 +15,7 @@ class LibReligionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'religion_code' => $this->religion_code,
+            'code' => $this->code,
             'religion_desc' => $this->religion_desc,
         ];
     }

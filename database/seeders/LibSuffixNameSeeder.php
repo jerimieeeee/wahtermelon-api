@@ -16,13 +16,13 @@ class LibSuffixNameSeeder extends Seeder
     public function run()
     {
         LibSuffixName::upsert([
-            ['suffix_code' => 'II', 'suffix_desc' => 'II'],
-            ['suffix_code' => 'III', 'suffix_desc' => 'III'],
-            ['suffix_code' => 'IV', 'suffix_desc' => 'IV'],
-            ['suffix_code' => 'JR', 'suffix_desc' => 'Jr.'],
-            ['suffix_code' => 'NA', 'suffix_desc' => 'Not Applicable'],
-            ['suffix_code' => 'SR', 'suffix_desc' => 'Sr.'],
-            ['suffix_code' => 'V', 'suffix_desc' => 'V']
-        ], ['suffix_code']);
+            ['code' => 'II', 'suffix_desc' => 'II'],
+            ['code' => 'III', 'suffix_desc' => 'III'],
+            ['code' => 'IV', 'suffix_desc' => 'IV'],
+            ['code' => 'JR', 'suffix_desc' => 'Jr.'],
+            ['code' => 'NA', 'suffix_desc' => 'Not Applicable'],
+            ['code' => 'SR', 'suffix_desc' => 'Sr.'],
+            ['code' => 'V', 'suffix_desc' => 'V']
+        ], ['code']);
     }
 }

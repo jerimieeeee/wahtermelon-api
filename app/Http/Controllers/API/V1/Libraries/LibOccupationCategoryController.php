@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibOccupationCategoryResource;
 use App\Models\V1\Libraries\LibOccupationCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibOccupationCategoryController extends Controller
 {
@@ -35,12 +36,14 @@ class LibOccupationCategoryController extends Controller
      * Display the specified resource.
      *
      * @param LibOccupationCategory $occupationCategory
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibOccupationCategory $occupationCategory, string $id): JsonResource
+    public function show(LibOccupationCategory $occupationCategory): JsonResource
     {
-        return new LibOccupationCategoryResource($occupationCategory->findOrFail($id));
+        $query = LibOccupationCategory::where('code', $occupationCategory->code);
+        $occupationCategory = QueryBuilder::for($query)
+            ->first();
+        return new LibOccupationCategoryResource($occupationCategory);
     }
 
     /**

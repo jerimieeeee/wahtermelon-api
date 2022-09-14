@@ -10,13 +10,13 @@ class LibOccupation extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'occupation_code';
+    public $primaryKey = 'code';
     public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;
 
     public function occupationCategory(): BelongsTo
     {
-        return $this->belongsTo(LibOccupationCategory::class, 'category_code', 'category_code');
+        return $this->belongsTo(LibOccupationCategory::class, 'category_code', 'code');
     }
 }

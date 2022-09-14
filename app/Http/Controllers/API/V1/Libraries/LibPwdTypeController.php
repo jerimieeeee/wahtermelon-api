@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibPwdType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibPwdTypeController extends Controller
 {
@@ -36,12 +37,14 @@ class LibPwdTypeController extends Controller
      * Display the specified resource.
      *
      * @param LibPwdType $pwdType
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibPwdType $pwdType, string $id): JsonResource
+    public function show(LibPwdType $pwdType): JsonResource
     {
-        return new LibPwdTypeResource($pwdType->findOrFail($id));
+        $query = LibPwdType::where('code', $pwdType->code);
+        $pwdType = QueryBuilder::for($query)
+            ->first();
+        return new LibPwdTypeResource($pwdType);
     }
 
     /**

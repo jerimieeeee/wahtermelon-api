@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibBloodTypeResource;
 use App\Models\V1\Libraries\LibBloodType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibBloodTypeController extends Controller
 {
@@ -35,12 +36,14 @@ class LibBloodTypeController extends Controller
      * Display the specified resource.
      *
      * @param LibBloodType $bloodType
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibBloodType $bloodType, string $id): JsonResource
+    public function show(LibBloodType $bloodType): JsonResource
     {
-        return new LibBloodTypeResource($bloodType->findOrFail($id));
+        $query = LibBloodType::where('code', $bloodType->code);
+        $bloodType = QueryBuilder::for($query)
+            ->first();
+        return new LibBloodTypeResource($bloodType);
     }
 
     /**

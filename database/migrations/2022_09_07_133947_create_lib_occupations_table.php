@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_occupations', function (Blueprint $table) {
-            $table->char('occupation_code',10)->primary();
+            $table->char('code',10)->primary();
             $table->char('category_code', 10)->index();
             $table->string('occupation_desc', 100);
-            $table->foreign('category_code')->references('category_code')->on('lib_occupation_categories');
+            $table->foreign('category_code')->references('code')->on('lib_occupation_categories');
         });
     }
 

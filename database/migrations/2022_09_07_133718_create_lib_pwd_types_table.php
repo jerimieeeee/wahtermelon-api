@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_pwd_types', function (Blueprint $table) {
-            $table->char('type_code', 5)->primary();
+            $table->char('code', 5)->primary();
             $table->unsignedInteger('sequence');
             $table->string('type_desc', 50);
         });

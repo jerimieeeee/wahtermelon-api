@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibOccupationResource;
 use App\Models\V1\Libraries\LibOccupation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibOccupationController extends Controller
 {
@@ -35,12 +36,14 @@ class LibOccupationController extends Controller
      * Display the specified resource.
      *
      * @param LibOccupation $occupation
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibOccupation $occupation, string $id): JsonResource
+    public function show(LibOccupation $occupation): JsonResource
     {
-        return new LibOccupationResource($occupation->findOrFail($id));
+        $query = LibOccupation::where('code', $occupation->code);
+        $occupation = QueryBuilder::for($query)
+            ->first();
+        return new LibOccupationResource($occupation);
     }
 
     /**

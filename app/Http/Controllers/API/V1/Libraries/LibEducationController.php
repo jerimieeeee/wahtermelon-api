@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibEducationResource;
 use App\Models\V1\Libraries\LibEducation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibEducationController extends Controller
 {
@@ -35,12 +36,14 @@ class LibEducationController extends Controller
      * Display the specified resource.
      *
      * @param LibEducation $education
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibEducation $education, string $id): JsonResource
+    public function show(LibEducation $education): JsonResource
     {
-        return new LibEducationResource($education->findOrFail($id));
+        $query = LibEducation::where('code', $education->code);
+        $education = QueryBuilder::for($query)
+            ->first();
+        return new LibEducationResource($education);
     }
 
     /**

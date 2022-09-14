@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibReligionResource;
 use App\Models\V1\Libraries\LibReligion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibReligionController extends Controller
 {
@@ -35,12 +36,14 @@ class LibReligionController extends Controller
      * Display the specified resource.
      *
      * @param LibReligion $religion
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibReligion $religion, string $id): JsonResource
+    public function show(LibReligion $religion): JsonResource
     {
-        return new LibReligionResource($religion->findOrFail($id));
+        $query = LibReligion::where('code', $religion->code);
+        $religion = QueryBuilder::for($query)
+            ->first();
+        return new LibReligionResource($religion);
     }
 
     /**

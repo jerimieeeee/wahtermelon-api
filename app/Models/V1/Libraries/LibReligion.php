@@ -9,7 +9,7 @@ class LibReligion extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'religion_code';
+    public $primaryKey = 'code';
     public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;

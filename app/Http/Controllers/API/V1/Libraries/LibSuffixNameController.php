@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibSuffixNameResource;
 use App\Models\V1\Libraries\LibSuffixName;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibSuffixNameController extends Controller
 {
@@ -34,12 +35,15 @@ class LibSuffixNameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param LibSuffixName $suffixName
+     * @return JsonResource
      */
-    public function show(LibSuffixName $suffixName, string $id): JsonResource
+    public function show(LibSuffixName $suffixName): JsonResource
     {
-        return new LibSuffixNameResource($suffixName->findOrFail($id));
+        $query = LibSuffixName::where('code', $suffixName->code);
+        $suffixName = QueryBuilder::for($query)
+            ->first();
+        return new LibSuffixNameResource($suffixName);
     }
 
     /**

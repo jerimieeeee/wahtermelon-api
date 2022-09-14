@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibCivilStatusResource;
 use App\Models\V1\Libraries\LibCivilStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LibCivilStatusController extends Controller
 {
@@ -35,12 +36,14 @@ class LibCivilStatusController extends Controller
      * Display the specified resource.
      *
      * @param LibCivilStatus $civilStatus
-     * @param string $id
      * @return JsonResource
      */
-    public function show(LibCivilStatus $civilStatus, string $id): JsonResource
+    public function show(LibCivilStatus $civilStatus): JsonResource
     {
-        return new LibCivilStatusResource($civilStatus->findOrFail($id));
+        $query = LibCivilStatus::where('code', $civilStatus->code);
+        $civilStatus = QueryBuilder::for($query)
+            ->first();
+        return new LibCivilStatusResource($civilStatus);
     }
 
     /**

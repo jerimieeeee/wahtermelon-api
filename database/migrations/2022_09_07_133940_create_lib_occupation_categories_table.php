@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_occupation_categories', function (Blueprint $table) {
-            $table->char('category_code', 10)->primary();
+            $table->char('code', 10)->primary();
             $table->char('category_desc', 100);
         });
     }

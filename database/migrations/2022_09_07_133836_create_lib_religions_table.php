@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_religions', function (Blueprint $table) {
-            $table->char('religion_code', 10)->primary();
+            $table->char('code', 10)->primary();
             $table->string('religion_desc', 100);
         });
     }

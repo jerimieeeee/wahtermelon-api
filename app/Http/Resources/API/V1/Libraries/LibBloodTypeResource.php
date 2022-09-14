@@ -15,7 +15,7 @@ class LibBloodTypeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'blood_type' => $this->blood_type,
+            'code' => $this->code,
         ];
     }
 }

@@ -15,7 +15,7 @@ class LibCivilStatusResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'status_id' => $this->status_id,
+            'code' => $this->code,
             'status_desc' => $this->status_desc,
         ];
     }

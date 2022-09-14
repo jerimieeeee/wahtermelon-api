@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_civil_statuses', function (Blueprint $table) {
-            $table->char('status_id', 10)->primary();
-            $table->char('status_code', 1);
+            $table->char('code', 10)->primary();
+            $table->char('short_code', 1);
             $table->string('status_desc', 50);
         });
     }

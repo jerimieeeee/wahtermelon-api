@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_blood_types', function (Blueprint $table) {
-            $table->char('blood_type')->primary();
+            $table->char('code')->primary();
             $table->unsignedInteger('sequence');
         });
     }

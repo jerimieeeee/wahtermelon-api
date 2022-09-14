@@ -15,7 +15,7 @@ class LibEducationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'education_id' => $this->education_id,
+            'code' => $this->code,
             'education_desc' => $this->education_desc,
         ];
     }

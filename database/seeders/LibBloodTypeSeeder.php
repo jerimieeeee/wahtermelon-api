@@ -16,15 +16,15 @@ class LibBloodTypeSeeder extends Seeder
     public function run()
     {
         LibBloodType::upsert([
-            ['blood_type' => 'A-', 'sequence' => 1],
-            ['blood_type' => 'A+', 'sequence' => 2],
-            ['blood_type' => 'AB-', 'sequence' => 3],
-            ['blood_type' => 'AB+', 'sequence' => 4],
-            ['blood_type' => 'B-', 'sequence' => 5],
-            ['blood_type' => 'B+', 'sequence' => 6],
-            ['blood_type' => 'O-', 'sequence' => 7],
-            ['blood_type' => 'O+', 'sequence' => 8],
-            ['blood_type' => 'NA', 'sequence' => 0],
-        ], ['blood_type']);
+            ['code' => 'A-', 'sequence' => 1],
+            ['code' => 'A+', 'sequence' => 2],
+            ['code' => 'AB-', 'sequence' => 3],
+            ['code' => 'AB+', 'sequence' => 4],
+            ['code' => 'B-', 'sequence' => 5],
+            ['code' => 'B+', 'sequence' => 6],
+            ['code' => 'O-', 'sequence' => 7],
+            ['code' => 'O+', 'sequence' => 8],
+            ['code' => 'NA', 'sequence' => 0],
+        ], ['code']);
     }
 }

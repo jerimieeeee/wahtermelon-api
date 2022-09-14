@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_education', function (Blueprint $table) {
-            $table->id('education_id');
+            $table->id('code');
             $table->string('education_desc', 100);
         });
     }
