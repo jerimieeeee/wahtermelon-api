@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('mcs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
+            $table->foreignId('patient_id')->constrained('patients');
             $table->foreignId('user_id')->constrained();
             $table->date('pre_registration_date');
             $table->date('post_registration_date');
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->date('discharge_date');
             $table->date('delivery_date');
             $table->char('delivery_location',10);
-            // $table->foreignId('barangay_id')->nullable()->constrained();
+            $table->foreignId('barangay_id')->nullable()->constrained();
             $table->unsignedInteger('initial_gravidity')->length(3);
             $table->unsignedInteger('initial_parity')->length(3);
             $table->unsignedInteger('initial_full_term')->length(3);
