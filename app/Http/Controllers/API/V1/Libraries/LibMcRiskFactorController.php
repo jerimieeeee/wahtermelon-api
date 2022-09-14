@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Models\V1\Libraries\LibMcRiskFactor;
 use Illuminate\Http\Request;
 
 class LibMcRiskFactorController extends Controller
@@ -14,7 +15,8 @@ class LibMcRiskFactorController extends Controller
      */
     public function index()
     {
-        //
+        $risk = LibMcRiskFactor::all();
+        return $risk;
     }
 
     /**

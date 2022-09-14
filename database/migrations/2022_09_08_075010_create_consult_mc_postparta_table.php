@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('consult_mc_postparta', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained('mcs');
+            $table->foreignId('mc_id')->constrained();
             // $table->foreignId('consult_id')->constrained();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
             $table->date('postpartum_date');
             $table->unsignedInteger('postpartum_week')->length(3);
             $table->unsignedInteger('visit_sequence')->length(3);

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('consult_mc_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained('mcs');
+            $table->foreignId('mc_id')->constrained();
             // $table->foreignId('consult_id')->constrained();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
             $table->char('service_id',5);
             $table->char('visit_type',10);
             $table->char('visit_status',10);

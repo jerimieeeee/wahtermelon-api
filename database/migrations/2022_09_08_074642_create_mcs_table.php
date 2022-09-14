@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('mcs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained('patients');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
             $table->date('pre_registration_date');
             $table->date('post_registration_date');
             $table->date('lmp_date');

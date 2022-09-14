@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('consult_mc_prenatals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained('mcs');
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('mc_id')->constrained();
+            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
             $table->date('prenatal_date');
             $table->unsignedInteger('aog_weeks')->length(4);
             $table->unsignedInteger('aog_days')->length(3);

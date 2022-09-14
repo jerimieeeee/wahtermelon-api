@@ -73,6 +73,8 @@ Route::prefix('v1')->group(function (){
 
         Route::get('suffix-names', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'index'])->name('suffix-names.index');
         Route::get('suffix-names/{id}', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'show'])->name('suffix-names.show');
+
+        Route::apiResource('libMcRiskFactor', \App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class);
     });
 
 });

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('consult_mc_risks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained('mcs');
+            $table->foreignId('mc_id')->constrained();
             // $table->foreignId('consult_id')->constrained();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
             $table->foreignId('risk_id')->constrained('lib_mc_risk_factors');
             $table->date('date_detected')->nullable();
             $table->timestamps();
