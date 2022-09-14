@@ -41,7 +41,7 @@ return [
                 /*
                  * Match only routes whose domains match this pattern (use * as a wildcard to match any characters). Example: 'api.*'.
                  */
-                'domains' => ['*', 'apiwahtermelong-staging.wah.ph'],
+                'domains' => ['*', 'apiwahtermelon-staging.wah.ph'],
 
                 /*
                  * [Dingo router only] Match only routes registered under this version. Wildcards are not supported.
