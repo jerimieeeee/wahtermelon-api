@@ -9,11 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Patient Module
+ *
+ * APIs for Patient Information
+ * @subgroup Blood Type
+ * @subgroupDescription Do stuff with servers
+ */
 class LibBloodTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @subgroup Blood Type
      * @return JsonResource
      */
     public function index(): JsonResource
