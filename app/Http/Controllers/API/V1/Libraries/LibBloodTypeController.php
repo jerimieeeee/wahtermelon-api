@@ -18,7 +18,10 @@ class LibBloodTypeController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibBloodTypeResource::collection(LibBloodType::orderBy('sequence', 'ASC')->get());
+        $query = QueryBuilder::for(LibBloodType::class)
+            ->defaultSort('sequence')
+            ->allowedSorts('sequence');
+        return LibBloodTypeResource::collection($query->get());
     }
 
     /**

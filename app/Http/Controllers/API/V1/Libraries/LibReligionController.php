@@ -18,7 +18,10 @@ class LibReligionController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibReligionResource::collection(LibReligion::get());
+        $query = QueryBuilder::for(LibReligion::class)
+            ->defaultSort('religion_desc')
+            ->allowedSorts('religion_desc');
+        return LibReligionResource::collection($query->get());
     }
 
     /**
