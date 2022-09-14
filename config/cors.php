@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*', 'https://apiwahtermelon-staging.wah.ph', 'http://apiwahtermelon-staging.wah.ph'],
+    'allowed_origins' => ['*', 'https://apiwahtermelon-staging.wah.ph'],
 
     'allowed_origins_patterns' => [],
 
