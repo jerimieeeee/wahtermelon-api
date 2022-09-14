@@ -19,7 +19,10 @@ class LibPwdTypeController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibPwdTypeResource::collection(LibPwdType::orderBy('sequence', 'ASC')->get());
+        $query = QueryBuilder::for(LibPwdType::class)
+            ->defaultSort('sequence')
+            ->allowedSorts('sequence');
+        return LibPwdTypeResource::collection($query->get());
     }
 
     /**

@@ -18,7 +18,10 @@ class LibOccupationController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibOccupationResource::collection(LibOccupation::get());
+        $query = QueryBuilder::for(LibOccupation::class)
+            ->defaultSort('occupation_desc')
+            ->allowedSorts('occupation_desc');
+        return LibOccupationResource::collection($query->get());
     }
 
     /**

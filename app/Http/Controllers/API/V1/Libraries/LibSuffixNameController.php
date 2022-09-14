@@ -18,7 +18,10 @@ class LibSuffixNameController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibSuffixNameResource::collection(LibSuffixName::get());
+        $query = QueryBuilder::for(LibSuffixName::class)
+            ->defaultSort('sequence')
+            ->allowedSorts('sequence');
+        return LibSuffixNameResource::collection($query->get());
     }
 
     /**
