@@ -8,6 +8,12 @@ use App\Models\V1\PSGC\Region;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries of Philippine Standard Geographic Code (PSGC)
+ *
+ * APIs for PSGC Libraries
+ * @subgroup Region
+ */
 class RegionController extends Controller
 {
     /**
@@ -32,7 +38,8 @@ class RegionController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param Region  $region
+     * @param Region $region
+     * @return RegionResource
      */
     public function show(Request $request, Region $region)
     {

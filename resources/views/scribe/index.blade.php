@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Laravel Documentation</title>
+    <title>WAHtermelon Documentation</title>
 
     <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
 
@@ -85,12 +85,6 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-patient">
                                 <a href="#endpoints-POSTapi-v1-patient">Store a newly created resource in storage.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-regions">
-                                <a href="#endpoints-GETapi-v1-libraries-regions">Display a listing of the resource.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-regions--region_code-">
-                                <a href="#endpoints-GETapi-v1-libraries-regions--region_code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-provinces">
                                 <a href="#endpoints-GETapi-v1-libraries-provinces">Display a listing of the resource.</a>
@@ -178,6 +172,24 @@
                                                                     </ul>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-libraries-of-philippine-standard-geographic-code-psgc" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="libraries-of-philippine-standard-geographic-code-psgc">
+                    <a href="#libraries-of-philippine-standard-geographic-code-psgc">Libraries of Philippine Standard Geographic Code (PSGC)</a>
+                </li>
+                                    <ul id="tocify-subheader-libraries-of-philippine-standard-geographic-code-psgc" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="libraries-of-philippine-standard-geographic-code-psgc-region">
+                                <a href="#libraries-of-philippine-standard-geographic-code-psgc-region">Region</a>
+                            </li>
+                                                            <ul id="tocify-subheader-libraries-of-philippine-standard-geographic-code-psgc-region" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="libraries-of-philippine-standard-geographic-code-psgc-GETapi-v1-libraries-regions">
+                                            <a href="#libraries-of-philippine-standard-geographic-code-psgc-GETapi-v1-libraries-regions">Display a listing of the resource.</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="libraries-of-philippine-standard-geographic-code-psgc-GETapi-v1-libraries-regions--region_code-">
+                                            <a href="#libraries-of-philippine-standard-geographic-code-psgc-GETapi-v1-libraries-regions--region_code-">Display the specified resource.</a>
+                                        </li>
+                                                                    </ul>
+                                                                        </ul>
+                            </ul>
             </div>
 
             <ul class="toc-footer" id="toc-footer">
@@ -186,7 +198,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 13 2022</li>
+        <li>Last updated: September 14 2022</li>
     </ul>
 </div>
 
@@ -321,8 +333,8 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"kristin27@example.net\",
-    \"password\": \"modi\"
+    \"email\": \"zpaucek@example.net\",
+    \"password\": \"vel\"
 }"
 </code></pre></div>
 
@@ -338,8 +350,8 @@ const headers = {
 };
 
 let body = {
-    "email": "kristin27@example.net",
-    "password": "modi"
+    "email": "zpaucek@example.net",
+    "password": "vel"
 };
 
 fetch(url, {
@@ -399,7 +411,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-login"
-               value="kristin27@example.net"
+               value="zpaucek@example.net"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -411,7 +423,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-login"
-               value="modi"
+               value="vel"
                data-component="body" hidden>
     <br>
 
@@ -435,16 +447,16 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"dolores\",
-    \"first_name\": \"nostrum\",
-    \"suffix_name\": \"rem\",
-    \"gender\": \"sit\",
-    \"birthdate\": \"2022-09-13T14:33:40\",
-    \"contact_number\": \"oamnip\",
-    \"email\": \"smith.kody@example.net\",
-    \"tin_number\": \"na\",
-    \"accreditation_number\": \"dxalkafjaj\",
-    \"password\": \"fuga\"
+    \"last_name\": \"eius\",
+    \"first_name\": \"sapiente\",
+    \"suffix_name\": \"est\",
+    \"gender\": \"reprehenderit\",
+    \"birthdate\": \"2022-09-14T10:15:15\",
+    \"contact_number\": \"xuat\",
+    \"email\": \"alfonzo.lind@example.net\",
+    \"tin_number\": \"hpipdgwcj\",
+    \"accreditation_number\": \"nvv\",
+    \"password\": \"enim\"
 }"
 </code></pre></div>
 
@@ -460,16 +472,16 @@ const headers = {
 };
 
 let body = {
-    "last_name": "dolores",
-    "first_name": "nostrum",
-    "suffix_name": "rem",
-    "gender": "sit",
-    "birthdate": "2022-09-13T14:33:40",
-    "contact_number": "oamnip",
-    "email": "smith.kody@example.net",
-    "tin_number": "na",
-    "accreditation_number": "dxalkafjaj",
-    "password": "fuga"
+    "last_name": "eius",
+    "first_name": "sapiente",
+    "suffix_name": "est",
+    "gender": "reprehenderit",
+    "birthdate": "2022-09-14T10:15:15",
+    "contact_number": "xuat",
+    "email": "alfonzo.lind@example.net",
+    "tin_number": "hpipdgwcj",
+    "accreditation_number": "nvv",
+    "password": "enim"
 };
 
 fetch(url, {
@@ -529,7 +541,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-register"
-               value="dolores"
+               value="eius"
                data-component="body" hidden>
     <br>
 
@@ -541,7 +553,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-register"
-               value="nostrum"
+               value="sapiente"
                data-component="body" hidden>
     <br>
 
@@ -565,7 +577,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-register"
-               value="rem"
+               value="est"
                data-component="body" hidden>
     <br>
 
@@ -577,7 +589,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-register"
-               value="sit"
+               value="reprehenderit"
                data-component="body" hidden>
     <br>
 
@@ -589,7 +601,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-register"
-               value="2022-09-13T14:33:40"
+               value="2022-09-14T10:15:15"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date.</p>
@@ -601,7 +613,7 @@ fetch(url, {
                 <input type="text"
                name="contact_number"
                data-endpoint="POSTapi-v1-register"
-               value="oamnip"
+               value="xuat"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -613,7 +625,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-register"
-               value="smith.kody@example.net"
+               value="alfonzo.lind@example.net"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -649,7 +661,7 @@ fetch(url, {
                 <input type="text"
                name="tin_number"
                data-endpoint="POSTapi-v1-register"
-               value="na"
+               value="hpipdgwcj"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 9 characters.</p>
@@ -661,7 +673,7 @@ fetch(url, {
                 <input type="text"
                name="accreditation_number"
                data-endpoint="POSTapi-v1-register"
-               value="dxalkafjaj"
+               value="nvv"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 14 characters.</p>
@@ -673,7 +685,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-register"
-               value="fuga"
+               value="enim"
                data-component="body" hidden>
     <br>
 
@@ -726,13 +738,34 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 32
+x-ratelimit-remaining: 59
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
     &quot;data&quot;: [
+        {
+            &quot;last_name&quot;: &quot;Collins&quot;,
+            &quot;first_name&quot;: &quot;Corene&quot;,
+            &quot;middle_name&quot;: &quot;Konopelski&quot;,
+            &quot;suffix_code&quot;: &quot;NA&quot;,
+            &quot;birthdate&quot;: &quot;1989-01-05&quot;,
+            &quot;mothers_name&quot;: &quot;Gabriella Konopelski&quot;,
+            &quot;gender&quot;: &quot;F&quot;,
+            &quot;mobile_number&quot;: &quot;053-221-621&quot;,
+            &quot;pwd_status_code&quot;: null,
+            &quot;indegenous_flag&quot;: true,
+            &quot;blood_type&quot;: &quot;A+&quot;,
+            &quot;religion_code&quot;: &quot;UNKNO&quot;,
+            &quot;occupation_code&quot;: &quot;SVC002&quot;,
+            &quot;education_id&quot;: 4,
+            &quot;civil_status_id&quot;: &quot;SNGL&quot;,
+            &quot;consent_flag&quot;: false,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 09:49:19&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 09:49:19&quot;
+        },
         {
             &quot;last_name&quot;: &quot;Considine&quot;,
             &quot;first_name&quot;: &quot;Harmon&quot;,
@@ -837,6 +870,27 @@ access-control-allow-origin: *
             &quot;image_url&quot;: null,
             &quot;created_at&quot;: &quot;2022-09-12 15:10:30&quot;,
             &quot;updated_at&quot;: &quot;2022-09-12 15:10:30&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;Lakin&quot;,
+            &quot;first_name&quot;: &quot;Bret&quot;,
+            &quot;middle_name&quot;: &quot;Kuhn&quot;,
+            &quot;suffix_code&quot;: &quot;III&quot;,
+            &quot;birthdate&quot;: &quot;1993-04-26&quot;,
+            &quot;mothers_name&quot;: &quot;Ozella Kuhn&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;222-386-389&quot;,
+            &quot;pwd_status_code&quot;: null,
+            &quot;indegenous_flag&quot;: true,
+            &quot;blood_type&quot;: &quot;A+&quot;,
+            &quot;religion_code&quot;: &quot;CHOG&quot;,
+            &quot;occupation_code&quot;: &quot;SVC009&quot;,
+            &quot;education_id&quot;: 3,
+            &quot;civil_status_id&quot;: &quot;CHBTN&quot;,
+            &quot;consent_flag&quot;: true,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 09:49:18&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 09:49:18&quot;
         },
         {
             &quot;last_name&quot;: &quot;Larkin&quot;,
@@ -1005,39 +1059,18 @@ access-control-allow-origin: *
             &quot;image_url&quot;: null,
             &quot;created_at&quot;: &quot;2022-09-12 17:01:31&quot;,
             &quot;updated_at&quot;: &quot;2022-09-12 17:01:31&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Wiegand&quot;,
-            &quot;first_name&quot;: &quot;Dax&quot;,
-            &quot;middle_name&quot;: &quot;Windler&quot;,
-            &quot;suffix_code&quot;: &quot;IV&quot;,
-            &quot;birthdate&quot;: &quot;2002-12-26&quot;,
-            &quot;mothers_name&quot;: &quot;Ona Windler&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;291-148-926&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;B-&quot;,
-            &quot;religion_code&quot;: &quot;JEWIT&quot;,
-            &quot;occupation_code&quot;: &quot;HEALTH014&quot;,
-            &quot;education_id&quot;: 1,
-            &quot;civil_status_id&quot;: &quot;CHBTN&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 15:10:48&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 15:10:48&quot;
         }
     ],
     &quot;links&quot;: {
         &quot;first&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=1&quot;,
-        &quot;last&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=1&quot;,
+        &quot;last&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;,
         &quot;prev&quot;: null,
-        &quot;next&quot;: null
+        &quot;next&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;
     },
     &quot;meta&quot;: {
         &quot;current_page&quot;: 1,
         &quot;from&quot;: 1,
-        &quot;last_page&quot;: 1,
+        &quot;last_page&quot;: 2,
         &quot;links&quot;: [
             {
                 &quot;url&quot;: null,
@@ -1050,15 +1083,20 @@ access-control-allow-origin: *
                 &quot;active&quot;: true
             },
             {
-                &quot;url&quot;: null,
+                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;,
+                &quot;label&quot;: &quot;2&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;,
                 &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
                 &quot;active&quot;: false
             }
         ],
         &quot;path&quot;: &quot;http://wahtermelon.test/api/v1/patient&quot;,
         &quot;per_page&quot;: 15,
-        &quot;to&quot;: 14,
-        &quot;total&quot;: 14
+        &quot;to&quot;: 15,
+        &quot;total&quot;: 16
     }
 }</code>
  </pre>
@@ -1121,20 +1159,20 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"omnis\",
-    \"first_name\": \"sapiente\",
-    \"suffix_name\": \"sequi\",
-    \"birthdate\": \"2010-03-05\",
-    \"mothers_name\": \"sit\",
-    \"gender\": \"excepturi\",
-    \"mobile_number\": \"e\",
-    \"indegenous_flag\": false,
-    \"religion_code\": \"expedita\",
-    \"occupation_code\": \"unde\",
-    \"education_id\": \"blanditiis\",
-    \"civil_status_id\": \"libero\",
+    \"last_name\": \"expedita\",
+    \"first_name\": \"voluptas\",
+    \"suffix_name\": \"distinctio\",
+    \"birthdate\": \"2004-01-08\",
+    \"mothers_name\": \"voluptas\",
+    \"gender\": \"magni\",
+    \"mobile_number\": \"u\",
+    \"indegenous_flag\": true,
+    \"religion_code\": \"voluptates\",
+    \"occupation_code\": \"ad\",
+    \"education_id\": \"dolore\",
+    \"civil_status_id\": \"sapiente\",
     \"consent_flag\": true,
-    \"image_url\": \"http:\\/\\/www.mitchell.biz\\/quam-modi-porro-delectus.html\"
+    \"image_url\": \"https:\\/\\/yundt.com\\/et-ut-consequatur-pariatur-voluptas-cumque.html\"
 }"
 </code></pre></div>
 
@@ -1150,20 +1188,20 @@ const headers = {
 };
 
 let body = {
-    "last_name": "omnis",
-    "first_name": "sapiente",
-    "suffix_name": "sequi",
-    "birthdate": "2010-03-05",
-    "mothers_name": "sit",
-    "gender": "excepturi",
-    "mobile_number": "e",
-    "indegenous_flag": false,
-    "religion_code": "expedita",
-    "occupation_code": "unde",
-    "education_id": "blanditiis",
-    "civil_status_id": "libero",
+    "last_name": "expedita",
+    "first_name": "voluptas",
+    "suffix_name": "distinctio",
+    "birthdate": "2004-01-08",
+    "mothers_name": "voluptas",
+    "gender": "magni",
+    "mobile_number": "u",
+    "indegenous_flag": true,
+    "religion_code": "voluptates",
+    "occupation_code": "ad",
+    "education_id": "dolore",
+    "civil_status_id": "sapiente",
     "consent_flag": true,
-    "image_url": "http:\/\/www.mitchell.biz\/quam-modi-porro-delectus.html"
+    "image_url": "https:\/\/yundt.com\/et-ut-consequatur-pariatur-voluptas-cumque.html"
 };
 
 fetch(url, {
@@ -1235,7 +1273,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-patient"
-               value="omnis"
+               value="expedita"
                data-component="body" hidden>
     <br>
 
@@ -1247,7 +1285,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-patient"
-               value="sapiente"
+               value="voluptas"
                data-component="body" hidden>
     <br>
 
@@ -1271,7 +1309,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-patient"
-               value="sequi"
+               value="distinctio"
                data-component="body" hidden>
     <br>
 
@@ -1283,7 +1321,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-patient"
-               value="2010-03-05"
+               value="2004-01-08"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.</p>
@@ -1295,7 +1333,7 @@ fetch(url, {
                 <input type="text"
                name="mothers_name"
                data-endpoint="POSTapi-v1-patient"
-               value="sit"
+               value="voluptas"
                data-component="body" hidden>
     <br>
 
@@ -1307,7 +1345,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-patient"
-               value="excepturi"
+               value="magni"
                data-component="body" hidden>
     <br>
 
@@ -1319,7 +1357,7 @@ fetch(url, {
                 <input type="text"
                name="mobile_number"
                data-endpoint="POSTapi-v1-patient"
-               value="e"
+               value="u"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -1378,7 +1416,7 @@ fetch(url, {
                 <input type="text"
                name="religion_code"
                data-endpoint="POSTapi-v1-patient"
-               value="expedita"
+               value="voluptates"
                data-component="body" hidden>
     <br>
 
@@ -1390,7 +1428,7 @@ fetch(url, {
                 <input type="text"
                name="occupation_code"
                data-endpoint="POSTapi-v1-patient"
-               value="unde"
+               value="ad"
                data-component="body" hidden>
     <br>
 
@@ -1402,7 +1440,7 @@ fetch(url, {
                 <input type="text"
                name="education_id"
                data-endpoint="POSTapi-v1-patient"
-               value="blanditiis"
+               value="dolore"
                data-component="body" hidden>
     <br>
 
@@ -1414,7 +1452,7 @@ fetch(url, {
                 <input type="text"
                name="civil_status_id"
                data-endpoint="POSTapi-v1-patient"
-               value="libero"
+               value="sapiente"
                data-component="body" hidden>
     <br>
 
@@ -1449,743 +1487,12 @@ fetch(url, {
                 <input type="text"
                name="image_url"
                data-endpoint="POSTapi-v1-patient"
-               value="http://www.mitchell.biz/quam-modi-porro-delectus.html"
+               value="https://yundt.com/et-ut-consequatur-pariatur-voluptas-cumque.html"
                data-component="body" hidden>
     <br>
 <p>Must be a valid URL.</p>
         </p>
         </form>
-
-                    <h2 id="endpoints-GETapi-v1-libraries-regions">Display a listing of the resource.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-v1-libraries-regions">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/regions" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/regions"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-v1-libraries-regions">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary>
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-x-ratelimit-limit: 60
-x-ratelimit-remaining: 31
-access-control-allow-origin: *
- </code></pre>
-        </details>         <pre>
-
-<code class="language-json">{
-    &quot;data&quot;: [
-        {
-            &quot;code&quot;: &quot;010000000&quot;,
-            &quot;name&quot;: &quot;Region I (Ilocos Region)&quot;,
-            &quot;population&quot;: 5301139
-        },
-        {
-            &quot;code&quot;: &quot;020000000&quot;,
-            &quot;name&quot;: &quot;Region II (Cagayan Valley)&quot;,
-            &quot;population&quot;: 3685744
-        },
-        {
-            &quot;code&quot;: &quot;030000000&quot;,
-            &quot;name&quot;: &quot;Region III (Central Luzon)&quot;,
-            &quot;population&quot;: 12422172
-        },
-        {
-            &quot;code&quot;: &quot;040000000&quot;,
-            &quot;name&quot;: &quot;Region IV-A (CALABARZON)&quot;,
-            &quot;population&quot;: 16195042
-        },
-        {
-            &quot;code&quot;: &quot;170000000&quot;,
-            &quot;name&quot;: &quot;MIMAROPA Region&quot;,
-            &quot;population&quot;: 3228558
-        },
-        {
-            &quot;code&quot;: &quot;050000000&quot;,
-            &quot;name&quot;: &quot;Region V (Bicol Region)&quot;,
-            &quot;population&quot;: 6082165
-        },
-        {
-            &quot;code&quot;: &quot;060000000&quot;,
-            &quot;name&quot;: &quot;Region VI (Western Visayas)&quot;,
-            &quot;population&quot;: 7954723
-        },
-        {
-            &quot;code&quot;: &quot;070000000&quot;,
-            &quot;name&quot;: &quot;Region VII (Central Visayas)&quot;,
-            &quot;population&quot;: 8081988
-        },
-        {
-            &quot;code&quot;: &quot;080000000&quot;,
-            &quot;name&quot;: &quot;Region VIII (Eastern Visayas)&quot;,
-            &quot;population&quot;: 4547150
-        },
-        {
-            &quot;code&quot;: &quot;090000000&quot;,
-            &quot;name&quot;: &quot;Region IX (Zamboanga Peninsula)&quot;,
-            &quot;population&quot;: 3875576
-        },
-        {
-            &quot;code&quot;: &quot;100000000&quot;,
-            &quot;name&quot;: &quot;Region X (Northern Mindanao)&quot;,
-            &quot;population&quot;: 5022768
-        },
-        {
-            &quot;code&quot;: &quot;110000000&quot;,
-            &quot;name&quot;: &quot;Region XI (Davao Region)&quot;,
-            &quot;population&quot;: 5243536
-        },
-        {
-            &quot;code&quot;: &quot;120000000&quot;,
-            &quot;name&quot;: &quot;Region XII (SOCCSKSARGEN)&quot;,
-            &quot;population&quot;: 4901486
-        },
-        {
-            &quot;code&quot;: &quot;130000000&quot;,
-            &quot;name&quot;: &quot;National Capital Region (NCR)&quot;,
-            &quot;population&quot;: 13484462
-        },
-        {
-            &quot;code&quot;: &quot;140000000&quot;,
-            &quot;name&quot;: &quot;Cordillera Administrative Region (CAR)&quot;,
-            &quot;population&quot;: 1797660
-        }
-    ],
-    &quot;links&quot;: {
-        &quot;first&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=1&quot;,
-        &quot;last&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;,
-        &quot;prev&quot;: null,
-        &quot;next&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;
-    },
-    &quot;meta&quot;: {
-        &quot;current_page&quot;: 1,
-        &quot;from&quot;: 1,
-        &quot;last_page&quot;: 2,
-        &quot;links&quot;: [
-            {
-                &quot;url&quot;: null,
-                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
-                &quot;active&quot;: false
-            },
-            {
-                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=1&quot;,
-                &quot;label&quot;: &quot;1&quot;,
-                &quot;active&quot;: true
-            },
-            {
-                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;,
-                &quot;label&quot;: &quot;2&quot;,
-                &quot;active&quot;: false
-            },
-            {
-                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;,
-                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
-                &quot;active&quot;: false
-            }
-        ],
-        &quot;path&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions&quot;,
-        &quot;per_page&quot;: 15,
-        &quot;to&quot;: 15,
-        &quot;total&quot;: 17
-    }
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-v1-libraries-regions" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-regions"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-regions"></code></pre>
-</span>
-<span id="execution-error-GETapi-v1-libraries-regions" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-regions"></code></pre>
-</span>
-<form id="form-GETapi-v1-libraries-regions" data-method="GET"
-      data-path="api/v1/libraries/regions"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-regions', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-regions"
-                    onclick="tryItOut('GETapi-v1-libraries-regions');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-regions"
-                    onclick="cancelTryOut('GETapi-v1-libraries-regions');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-regions" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/regions</code></b>
-        </p>
-                    </form>
-
-                    <h2 id="endpoints-GETapi-v1-libraries-regions--region_code-">Display the specified resource.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-v1-libraries-regions--region_code-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/regions/010000000" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/regions/010000000"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-v1-libraries-regions--region_code-">
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary>
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-x-ratelimit-limit: 60
-x-ratelimit-remaining: 30
-access-control-allow-origin: *
- </code></pre>
-        </details>         <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\PSGC\\Region] 1&quot;,
-    &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
-    &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
-    &quot;line&quot;: 380,
-    &quot;trace&quot;: [
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
-            &quot;line&quot;: 356,
-            &quot;function&quot;: &quot;prepareException&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php&quot;,
-            &quot;line&quot;: 54,
-            &quot;function&quot;: &quot;render&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php&quot;,
-            &quot;line&quot;: 51,
-            &quot;function&quot;: &quot;render&quot;,
-            &quot;class&quot;: &quot;NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 185,
-            &quot;function&quot;: &quot;handleException&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
-            &quot;line&quot;: 126,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
-            &quot;line&quot;: 102,
-            &quot;function&quot;: &quot;handleRequest&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
-            &quot;line&quot;: 54,
-            &quot;function&quot;: &quot;handleRequestUsingNamedLimiter&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 116,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 726,
-            &quot;function&quot;: &quot;then&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 703,
-            &quot;function&quot;: &quot;runRouteWithinStack&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 667,
-            &quot;function&quot;: &quot;runRoute&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 656,
-            &quot;function&quot;: &quot;dispatchToRoute&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
-            &quot;line&quot;: 167,
-            &quot;function&quot;: &quot;dispatch&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 141,
-            &quot;function&quot;: &quot;Illuminate\\Foundation\\Http\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
-            &quot;line&quot;: 21,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php&quot;,
-            &quot;line&quot;: 31,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
-            &quot;line&quot;: 21,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php&quot;,
-            &quot;line&quot;: 40,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TrimStrings&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php&quot;,
-            &quot;line&quot;: 27,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php&quot;,
-            &quot;line&quot;: 86,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php&quot;,
-            &quot;line&quot;: 62,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\HandleCors&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php&quot;,
-            &quot;line&quot;: 39,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\TrustProxies&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 116,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
-            &quot;line&quot;: 142,
-            &quot;function&quot;: &quot;then&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
-            &quot;line&quot;: 111,
-            &quot;function&quot;: &quot;sendRequestThroughRouter&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 299,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 287,
-            &quot;function&quot;: &quot;callLaravelOrLumenRoute&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 89,
-            &quot;function&quot;: &quot;makeApiCall&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 45,
-            &quot;function&quot;: &quot;makeResponseCall&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 35,
-            &quot;function&quot;: &quot;makeResponseCallIfConditionsPass&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
-            &quot;line&quot;: 209,
-            &quot;function&quot;: &quot;__invoke&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
-            &quot;line&quot;: 166,
-            &quot;function&quot;: &quot;iterateThroughStrategies&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
-            &quot;line&quot;: 95,
-            &quot;function&quot;: &quot;fetchResponses&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
-            &quot;line&quot;: 122,
-            &quot;function&quot;: &quot;processRoute&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
-            &quot;line&quot;: 69,
-            &quot;function&quot;: &quot;extractEndpointsInfoFromLaravelApp&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
-            &quot;line&quot;: 47,
-            &quot;function&quot;: &quot;extractEndpointsInfoAndWriteToDisk&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php&quot;,
-            &quot;line&quot;: 53,
-            &quot;function&quot;: &quot;get&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
-            &quot;line&quot;: 36,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Commands\\GenerateDocumentation&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php&quot;,
-            &quot;line&quot;: 41,
-            &quot;function&quot;: &quot;Illuminate\\Container\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
-            &quot;line&quot;: 93,
-            &quot;function&quot;: &quot;unwrapIfClosure&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\Util&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
-            &quot;line&quot;: 37,
-            &quot;function&quot;: &quot;callBoundMethod&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php&quot;,
-            &quot;line&quot;: 651,
-            &quot;function&quot;: &quot;call&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
-            &quot;line&quot;: 144,
-            &quot;function&quot;: &quot;call&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\Container&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php&quot;,
-            &quot;line&quot;: 308,
-            &quot;function&quot;: &quot;execute&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
-            &quot;line&quot;: 126,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Command\\Command&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
-            &quot;line&quot;: 1002,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
-            &quot;line&quot;: 299,
-            &quot;function&quot;: &quot;doRunCommand&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
-            &quot;line&quot;: 171,
-            &quot;function&quot;: &quot;doRun&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php&quot;,
-            &quot;line&quot;: 102,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php&quot;,
-            &quot;line&quot;: 129,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/artisan&quot;,
-            &quot;line&quot;: 37,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Console\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        }
-    ]
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-v1-libraries-regions--region_code-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-regions--region_code-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-regions--region_code-"></code></pre>
-</span>
-<span id="execution-error-GETapi-v1-libraries-regions--region_code-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-regions--region_code-"></code></pre>
-</span>
-<form id="form-GETapi-v1-libraries-regions--region_code-" data-method="GET"
-      data-path="api/v1/libraries/regions/{region_code}"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-regions--region_code-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-regions--region_code-"
-                    onclick="tryItOut('GETapi-v1-libraries-regions--region_code-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-regions--region_code-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-regions--region_code-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-regions--region_code-" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/regions/{region_code}</code></b>
-        </p>
-                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <p>
-                <b><code>region_code</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text"
-               name="region_code"
-               data-endpoint="GETapi-v1-libraries-regions--region_code-"
-               value="010000000"
-               data-component="url" hidden>
-    <br>
-
-            </p>
-                    </form>
 
                     <h2 id="endpoints-GETapi-v1-libraries-provinces">Display a listing of the resource.</h2>
 
@@ -2233,7 +1540,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 29
+x-ratelimit-remaining: 56
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -2478,7 +1785,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 28
+x-ratelimit-remaining: 55
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -2999,7 +2306,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 27
+x-ratelimit-remaining: 54
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -3294,7 +2601,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 26
+x-ratelimit-remaining: 53
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -3815,7 +3122,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 25
+x-ratelimit-remaining: 52
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -4095,7 +3402,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 24
+x-ratelimit-remaining: 51
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -4616,7 +3923,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 23
+x-ratelimit-remaining: 50
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -5304,7 +4611,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 22
+x-ratelimit-remaining: 49
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -5825,7 +5132,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 19
+x-ratelimit-remaining: 46
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -5914,14 +5221,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/civil-statuses/quis" \
+    --get "http://wahtermelon.test/api/v1/libraries/civil-statuses/porro" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/civil-statuses/quis"
+    "http://wahtermelon.test/api/v1/libraries/civil-statuses/porro"
 );
 
 const headers = {
@@ -5947,13 +5254,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 18
+x-ratelimit-remaining: 45
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibCivilStatus] quis&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibCivilStatus] porro&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -6429,7 +5736,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-civil-statuses--id-"
-               value="quis"
+               value="porro"
                data-component="url" hidden>
     <br>
 <p>The ID of the civil status.</p>
@@ -6482,7 +5789,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 17
+x-ratelimit-remaining: 44
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -6579,14 +5886,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/education/dolorum" \
+    --get "http://wahtermelon.test/api/v1/libraries/education/doloribus" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/education/dolorum"
+    "http://wahtermelon.test/api/v1/libraries/education/doloribus"
 );
 
 const headers = {
@@ -6612,13 +5919,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 16
+x-ratelimit-remaining: 43
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibEducation] dolorum&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibEducation] doloribus&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -7094,7 +6401,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-education--id-"
-               value="dolorum"
+               value="doloribus"
                data-component="url" hidden>
     <br>
 <p>The ID of the education.</p>
@@ -7147,7 +6454,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 15
+x-ratelimit-remaining: 42
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -7777,14 +7084,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/occupation-categories/esse" \
+    --get "http://wahtermelon.test/api/v1/libraries/occupation-categories/quod" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/occupation-categories/esse"
+    "http://wahtermelon.test/api/v1/libraries/occupation-categories/quod"
 );
 
 const headers = {
@@ -7810,13 +7117,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 14
+x-ratelimit-remaining: 41
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupationCategory] esse&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupationCategory] quod&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -8292,7 +7599,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-occupation-categories--id-"
-               value="esse"
+               value="quod"
                data-component="url" hidden>
     <br>
 <p>The ID of the occupation category.</p>
@@ -8345,7 +7652,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 13
+x-ratelimit-remaining: 40
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -8905,14 +8212,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/occupations/omnis" \
+    --get "http://wahtermelon.test/api/v1/libraries/occupations/quas" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/occupations/omnis"
+    "http://wahtermelon.test/api/v1/libraries/occupations/quas"
 );
 
 const headers = {
@@ -8938,13 +8245,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 12
+x-ratelimit-remaining: 39
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupation] omnis&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupation] quas&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -9420,7 +8727,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-occupations--id-"
-               value="omnis"
+               value="quas"
                data-component="url" hidden>
     <br>
 <p>The ID of the occupation.</p>
@@ -9473,7 +8780,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 11
+x-ratelimit-remaining: 38
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -9574,14 +8881,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/pwd-types/rerum" \
+    --get "http://wahtermelon.test/api/v1/libraries/pwd-types/sed" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/pwd-types/rerum"
+    "http://wahtermelon.test/api/v1/libraries/pwd-types/sed"
 );
 
 const headers = {
@@ -9607,13 +8914,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 10
+x-ratelimit-remaining: 37
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibPwdType] rerum&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibPwdType] sed&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -10089,7 +9396,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-pwd-types--id-"
-               value="rerum"
+               value="sed"
                data-component="url" hidden>
     <br>
 <p>The ID of the pwd type.</p>
@@ -10142,7 +9449,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 9
+x-ratelimit-remaining: 36
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -10299,14 +9606,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/religions/non" \
+    --get "http://wahtermelon.test/api/v1/libraries/religions/voluptas" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/religions/non"
+    "http://wahtermelon.test/api/v1/libraries/religions/voluptas"
 );
 
 const headers = {
@@ -10332,13 +9639,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 8
+x-ratelimit-remaining: 35
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibReligion] non&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibReligion] voluptas&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -10814,7 +10121,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-religions--id-"
-               value="non"
+               value="voluptas"
                data-component="url" hidden>
     <br>
 <p>The ID of the religion.</p>
@@ -10867,7 +10174,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 7
+x-ratelimit-remaining: 34
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -10960,14 +10267,14 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/suffix-names/enim" \
+    --get "http://wahtermelon.test/api/v1/libraries/suffix-names/ut" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/suffix-names/enim"
+    "http://wahtermelon.test/api/v1/libraries/suffix-names/ut"
 );
 
 const headers = {
@@ -10993,13 +10300,13 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 6
+x-ratelimit-remaining: 33
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibSuffixName] enim&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibSuffixName] ut&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -11475,7 +10782,7 @@ access-control-allow-origin: *
                 <input type="text"
                name="id"
                data-endpoint="GETapi-v1-libraries-suffix-names--id-"
-               value="enim"
+               value="ut"
                data-component="url" hidden>
     <br>
 <p>The ID of the suffix name.</p>
@@ -11536,7 +10843,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 21
+x-ratelimit-remaining: 48
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -11661,7 +10968,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 20
+x-ratelimit-remaining: 47
 access-control-allow-origin: *
  </code></pre>
         </details>         <pre>
@@ -12130,6 +11437,742 @@ access-control-allow-origin: *
                name="bloodType_blood_type"
                data-endpoint="GETapi-v1-libraries-blood-types--bloodType_blood_type-"
                value="A-"
+               data-component="url" hidden>
+    <br>
+
+            </p>
+                    </form>
+
+                <h1 id="libraries-of-philippine-standard-geographic-code-psgc">Libraries of Philippine Standard Geographic Code (PSGC)</h1>
+
+    <p>APIs for PSGC Libraries</p>
+
+                        <h2 id="libraries-of-philippine-standard-geographic-code-psgc-region">Region</h2>
+                                                    <h2 id="libraries-of-philippine-standard-geographic-code-psgc-GETapi-v1-libraries-regions">Display a listing of the resource.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-libraries-regions">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://wahtermelon.test/api/v1/libraries/regions" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://wahtermelon.test/api/v1/libraries/regions"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-libraries-regions">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 58
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;data&quot;: [
+        {
+            &quot;code&quot;: &quot;010000000&quot;,
+            &quot;name&quot;: &quot;Region I (Ilocos Region)&quot;,
+            &quot;population&quot;: 5301139
+        },
+        {
+            &quot;code&quot;: &quot;020000000&quot;,
+            &quot;name&quot;: &quot;Region II (Cagayan Valley)&quot;,
+            &quot;population&quot;: 3685744
+        },
+        {
+            &quot;code&quot;: &quot;030000000&quot;,
+            &quot;name&quot;: &quot;Region III (Central Luzon)&quot;,
+            &quot;population&quot;: 12422172
+        },
+        {
+            &quot;code&quot;: &quot;040000000&quot;,
+            &quot;name&quot;: &quot;Region IV-A (CALABARZON)&quot;,
+            &quot;population&quot;: 16195042
+        },
+        {
+            &quot;code&quot;: &quot;170000000&quot;,
+            &quot;name&quot;: &quot;MIMAROPA Region&quot;,
+            &quot;population&quot;: 3228558
+        },
+        {
+            &quot;code&quot;: &quot;050000000&quot;,
+            &quot;name&quot;: &quot;Region V (Bicol Region)&quot;,
+            &quot;population&quot;: 6082165
+        },
+        {
+            &quot;code&quot;: &quot;060000000&quot;,
+            &quot;name&quot;: &quot;Region VI (Western Visayas)&quot;,
+            &quot;population&quot;: 7954723
+        },
+        {
+            &quot;code&quot;: &quot;070000000&quot;,
+            &quot;name&quot;: &quot;Region VII (Central Visayas)&quot;,
+            &quot;population&quot;: 8081988
+        },
+        {
+            &quot;code&quot;: &quot;080000000&quot;,
+            &quot;name&quot;: &quot;Region VIII (Eastern Visayas)&quot;,
+            &quot;population&quot;: 4547150
+        },
+        {
+            &quot;code&quot;: &quot;090000000&quot;,
+            &quot;name&quot;: &quot;Region IX (Zamboanga Peninsula)&quot;,
+            &quot;population&quot;: 3875576
+        },
+        {
+            &quot;code&quot;: &quot;100000000&quot;,
+            &quot;name&quot;: &quot;Region X (Northern Mindanao)&quot;,
+            &quot;population&quot;: 5022768
+        },
+        {
+            &quot;code&quot;: &quot;110000000&quot;,
+            &quot;name&quot;: &quot;Region XI (Davao Region)&quot;,
+            &quot;population&quot;: 5243536
+        },
+        {
+            &quot;code&quot;: &quot;120000000&quot;,
+            &quot;name&quot;: &quot;Region XII (SOCCSKSARGEN)&quot;,
+            &quot;population&quot;: 4901486
+        },
+        {
+            &quot;code&quot;: &quot;130000000&quot;,
+            &quot;name&quot;: &quot;National Capital Region (NCR)&quot;,
+            &quot;population&quot;: 13484462
+        },
+        {
+            &quot;code&quot;: &quot;140000000&quot;,
+            &quot;name&quot;: &quot;Cordillera Administrative Region (CAR)&quot;,
+            &quot;population&quot;: 1797660
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=1&quot;,
+        &quot;last&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 2,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;,
+                &quot;label&quot;: &quot;2&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions?page=2&quot;,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;http://wahtermelon.test/api/v1/libraries/regions&quot;,
+        &quot;per_page&quot;: 15,
+        &quot;to&quot;: 15,
+        &quot;total&quot;: 17
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-libraries-regions" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-libraries-regions"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-regions"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-libraries-regions" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-regions"></code></pre>
+</span>
+<form id="form-GETapi-v1-libraries-regions" data-method="GET"
+      data-path="api/v1/libraries/regions"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-regions', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-libraries-regions"
+                    onclick="tryItOut('GETapi-v1-libraries-regions');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-libraries-regions"
+                    onclick="cancelTryOut('GETapi-v1-libraries-regions');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-libraries-regions" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/libraries/regions</code></b>
+        </p>
+                    </form>
+
+                    <h2 id="libraries-of-philippine-standard-geographic-code-psgc-GETapi-v1-libraries-regions--region_code-">Display the specified resource.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-libraries-regions--region_code-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://wahtermelon.test/api/v1/libraries/regions/010000000" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://wahtermelon.test/api/v1/libraries/regions/010000000"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-libraries-regions--region_code-">
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 57
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\PSGC\\Region] 1&quot;,
+    &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
+    &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
+    &quot;line&quot;: 380,
+    &quot;trace&quot;: [
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
+            &quot;line&quot;: 356,
+            &quot;function&quot;: &quot;prepareException&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php&quot;,
+            &quot;line&quot;: 54,
+            &quot;function&quot;: &quot;render&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php&quot;,
+            &quot;line&quot;: 51,
+            &quot;function&quot;: &quot;render&quot;,
+            &quot;class&quot;: &quot;NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 185,
+            &quot;function&quot;: &quot;handleException&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
+            &quot;line&quot;: 126,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
+            &quot;line&quot;: 102,
+            &quot;function&quot;: &quot;handleRequest&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
+            &quot;line&quot;: 54,
+            &quot;function&quot;: &quot;handleRequestUsingNamedLimiter&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 116,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 726,
+            &quot;function&quot;: &quot;then&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 703,
+            &quot;function&quot;: &quot;runRouteWithinStack&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 667,
+            &quot;function&quot;: &quot;runRoute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 656,
+            &quot;function&quot;: &quot;dispatchToRoute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
+            &quot;line&quot;: 167,
+            &quot;function&quot;: &quot;dispatch&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 141,
+            &quot;function&quot;: &quot;Illuminate\\Foundation\\Http\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
+            &quot;line&quot;: 21,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php&quot;,
+            &quot;line&quot;: 31,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
+            &quot;line&quot;: 21,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php&quot;,
+            &quot;line&quot;: 40,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TrimStrings&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php&quot;,
+            &quot;line&quot;: 27,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php&quot;,
+            &quot;line&quot;: 86,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php&quot;,
+            &quot;line&quot;: 62,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\HandleCors&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php&quot;,
+            &quot;line&quot;: 39,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\TrustProxies&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 116,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
+            &quot;line&quot;: 142,
+            &quot;function&quot;: &quot;then&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
+            &quot;line&quot;: 111,
+            &quot;function&quot;: &quot;sendRequestThroughRouter&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 299,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 287,
+            &quot;function&quot;: &quot;callLaravelOrLumenRoute&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 89,
+            &quot;function&quot;: &quot;makeApiCall&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 45,
+            &quot;function&quot;: &quot;makeResponseCall&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 35,
+            &quot;function&quot;: &quot;makeResponseCallIfConditionsPass&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
+            &quot;line&quot;: 209,
+            &quot;function&quot;: &quot;__invoke&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
+            &quot;line&quot;: 166,
+            &quot;function&quot;: &quot;iterateThroughStrategies&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
+            &quot;line&quot;: 95,
+            &quot;function&quot;: &quot;fetchResponses&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 122,
+            &quot;function&quot;: &quot;processRoute&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 69,
+            &quot;function&quot;: &quot;extractEndpointsInfoFromLaravelApp&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 47,
+            &quot;function&quot;: &quot;extractEndpointsInfoAndWriteToDisk&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php&quot;,
+            &quot;line&quot;: 53,
+            &quot;function&quot;: &quot;get&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
+            &quot;line&quot;: 36,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Commands\\GenerateDocumentation&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php&quot;,
+            &quot;line&quot;: 41,
+            &quot;function&quot;: &quot;Illuminate\\Container\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
+            &quot;line&quot;: 93,
+            &quot;function&quot;: &quot;unwrapIfClosure&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\Util&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
+            &quot;line&quot;: 37,
+            &quot;function&quot;: &quot;callBoundMethod&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php&quot;,
+            &quot;line&quot;: 651,
+            &quot;function&quot;: &quot;call&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
+            &quot;line&quot;: 144,
+            &quot;function&quot;: &quot;call&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\Container&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php&quot;,
+            &quot;line&quot;: 308,
+            &quot;function&quot;: &quot;execute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
+            &quot;line&quot;: 126,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Command\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
+            &quot;line&quot;: 1002,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
+            &quot;line&quot;: 299,
+            &quot;function&quot;: &quot;doRunCommand&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
+            &quot;line&quot;: 171,
+            &quot;function&quot;: &quot;doRun&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php&quot;,
+            &quot;line&quot;: 102,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php&quot;,
+            &quot;line&quot;: 129,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/artisan&quot;,
+            &quot;line&quot;: 37,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Console\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-libraries-regions--region_code-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-libraries-regions--region_code-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-regions--region_code-"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-libraries-regions--region_code-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-regions--region_code-"></code></pre>
+</span>
+<form id="form-GETapi-v1-libraries-regions--region_code-" data-method="GET"
+      data-path="api/v1/libraries/regions/{region_code}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-regions--region_code-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-libraries-regions--region_code-"
+                    onclick="tryItOut('GETapi-v1-libraries-regions--region_code-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-libraries-regions--region_code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-regions--region_code-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-libraries-regions--region_code-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/libraries/regions/{region_code}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>region_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text"
+               name="region_code"
+               data-endpoint="GETapi-v1-libraries-regions--region_code-"
+               value="010000000"
                data-component="url" hidden>
     <br>
 
