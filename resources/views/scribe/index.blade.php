@@ -113,44 +113,44 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-civil-statuses">
                                 <a href="#endpoints-GETapi-v1-libraries-civil-statuses">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-civil-statuses--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-civil-statuses--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-civil-statuses--civilStatus_code-">
+                                <a href="#endpoints-GETapi-v1-libraries-civil-statuses--civilStatus_code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-education">
                                 <a href="#endpoints-GETapi-v1-libraries-education">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-education--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-education--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-education--code-">
+                                <a href="#endpoints-GETapi-v1-libraries-education--code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-occupation-categories">
                                 <a href="#endpoints-GETapi-v1-libraries-occupation-categories">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-occupation-categories--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-occupation-categories--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-occupation-categories--occupationCategory_code-">
+                                <a href="#endpoints-GETapi-v1-libraries-occupation-categories--occupationCategory_code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-occupations">
                                 <a href="#endpoints-GETapi-v1-libraries-occupations">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-occupations--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-occupations--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-occupations--code-">
+                                <a href="#endpoints-GETapi-v1-libraries-occupations--code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-pwd-types">
                                 <a href="#endpoints-GETapi-v1-libraries-pwd-types">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-pwd-types--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-pwd-types--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-pwd-types--pwdType_code-">
+                                <a href="#endpoints-GETapi-v1-libraries-pwd-types--pwdType_code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-religions">
                                 <a href="#endpoints-GETapi-v1-libraries-religions">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-religions--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-religions--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-religions--code-">
+                                <a href="#endpoints-GETapi-v1-libraries-religions--code-">Display the specified resource.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-suffix-names">
                                 <a href="#endpoints-GETapi-v1-libraries-suffix-names">Display a listing of the resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-suffix-names--id-">
-                                <a href="#endpoints-GETapi-v1-libraries-suffix-names--id-">Display the specified resource.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-libraries-suffix-names--suffixName_code-">
+                                <a href="#endpoints-GETapi-v1-libraries-suffix-names--suffixName_code-">Display the specified resource.</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -166,8 +166,8 @@
                                                                             <li class="tocify-item level-3" data-unique="libraries-for-patient-module-GETapi-v1-libraries-blood-types">
                                             <a href="#libraries-for-patient-module-GETapi-v1-libraries-blood-types">Display a listing of the resource.</a>
                                         </li>
-                                                                            <li class="tocify-item level-3" data-unique="libraries-for-patient-module-GETapi-v1-libraries-blood-types--bloodType_blood_type-">
-                                            <a href="#libraries-for-patient-module-GETapi-v1-libraries-blood-types--bloodType_blood_type-">Display the specified resource.</a>
+                                                                            <li class="tocify-item level-3" data-unique="libraries-for-patient-module-GETapi-v1-libraries-blood-types--bloodType_code-">
+                                            <a href="#libraries-for-patient-module-GETapi-v1-libraries-blood-types--bloodType_code-">Display the specified resource.</a>
                                         </li>
                                                                     </ul>
                                                                         </ul>
@@ -333,8 +333,8 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"zpaucek@example.net\",
-    \"password\": \"vel\"
+    \"email\": \"acronin@example.net\",
+    \"password\": \"vitae\"
 }"
 </code></pre></div>
 
@@ -350,8 +350,8 @@ const headers = {
 };
 
 let body = {
-    "email": "zpaucek@example.net",
-    "password": "vel"
+    "email": "acronin@example.net",
+    "password": "vitae"
 };
 
 fetch(url, {
@@ -411,7 +411,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-login"
-               value="zpaucek@example.net"
+               value="acronin@example.net"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -423,7 +423,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-login"
-               value="vel"
+               value="vitae"
                data-component="body" hidden>
     <br>
 
@@ -447,16 +447,16 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"eius\",
-    \"first_name\": \"sapiente\",
-    \"suffix_name\": \"est\",
-    \"gender\": \"reprehenderit\",
-    \"birthdate\": \"2022-09-14T10:15:15\",
-    \"contact_number\": \"xuat\",
-    \"email\": \"alfonzo.lind@example.net\",
-    \"tin_number\": \"hpipdgwcj\",
-    \"accreditation_number\": \"nvv\",
-    \"password\": \"enim\"
+    \"last_name\": \"porro\",
+    \"first_name\": \"et\",
+    \"suffix_name\": \"quisquam\",
+    \"gender\": \"minus\",
+    \"birthdate\": \"2022-09-14T13:02:53\",
+    \"contact_number\": \"ijrsg\",
+    \"email\": \"nbrekke@example.net\",
+    \"tin_number\": \"fsxxzdxfg\",
+    \"accreditation_number\": \"yjsjzwsz\",
+    \"password\": \"autem\"
 }"
 </code></pre></div>
 
@@ -472,16 +472,16 @@ const headers = {
 };
 
 let body = {
-    "last_name": "eius",
-    "first_name": "sapiente",
-    "suffix_name": "est",
-    "gender": "reprehenderit",
-    "birthdate": "2022-09-14T10:15:15",
-    "contact_number": "xuat",
-    "email": "alfonzo.lind@example.net",
-    "tin_number": "hpipdgwcj",
-    "accreditation_number": "nvv",
-    "password": "enim"
+    "last_name": "porro",
+    "first_name": "et",
+    "suffix_name": "quisquam",
+    "gender": "minus",
+    "birthdate": "2022-09-14T13:02:53",
+    "contact_number": "ijrsg",
+    "email": "nbrekke@example.net",
+    "tin_number": "fsxxzdxfg",
+    "accreditation_number": "yjsjzwsz",
+    "password": "autem"
 };
 
 fetch(url, {
@@ -541,7 +541,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-register"
-               value="eius"
+               value="porro"
                data-component="body" hidden>
     <br>
 
@@ -553,7 +553,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-register"
-               value="sapiente"
+               value="et"
                data-component="body" hidden>
     <br>
 
@@ -577,7 +577,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-register"
-               value="est"
+               value="quisquam"
                data-component="body" hidden>
     <br>
 
@@ -589,7 +589,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-register"
-               value="reprehenderit"
+               value="minus"
                data-component="body" hidden>
     <br>
 
@@ -601,7 +601,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-register"
-               value="2022-09-14T10:15:15"
+               value="2022-09-14T13:02:53"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date.</p>
@@ -613,7 +613,7 @@ fetch(url, {
                 <input type="text"
                name="contact_number"
                data-endpoint="POSTapi-v1-register"
-               value="xuat"
+               value="ijrsg"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -625,7 +625,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-register"
-               value="alfonzo.lind@example.net"
+               value="nbrekke@example.net"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -661,7 +661,7 @@ fetch(url, {
                 <input type="text"
                name="tin_number"
                data-endpoint="POSTapi-v1-register"
-               value="hpipdgwcj"
+               value="fsxxzdxfg"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 9 characters.</p>
@@ -673,7 +673,7 @@ fetch(url, {
                 <input type="text"
                name="accreditation_number"
                data-endpoint="POSTapi-v1-register"
-               value="nvv"
+               value="yjsjzwsz"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 14 characters.</p>
@@ -685,7 +685,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-register"
-               value="enim"
+               value="autem"
                data-component="body" hidden>
     <br>
 
@@ -746,331 +746,247 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;last_name&quot;: &quot;Collins&quot;,
-            &quot;first_name&quot;: &quot;Corene&quot;,
-            &quot;middle_name&quot;: &quot;Konopelski&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1989-01-05&quot;,
-            &quot;mothers_name&quot;: &quot;Gabriella Konopelski&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;053-221-621&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;A+&quot;,
-            &quot;religion_code&quot;: &quot;UNKNO&quot;,
-            &quot;occupation_code&quot;: &quot;SVC002&quot;,
-            &quot;education_id&quot;: 4,
-            &quot;civil_status_id&quot;: &quot;SNGL&quot;,
+            &quot;last_name&quot;: &quot;Bernhard&quot;,
+            &quot;first_name&quot;: &quot;Golden&quot;,
+            &quot;middle_name&quot;: &quot;Cartwright&quot;,
+            &quot;suffix_code&quot;: &quot;III&quot;,
+            &quot;birthdate&quot;: &quot;1972-02-02&quot;,
+            &quot;mothers_name&quot;: &quot;Zita Cartwright&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;295-077-011&quot;,
+            &quot;pwd_type_code&quot;: &quot;NA&quot;,
+            &quot;indegenous_flag&quot;: false,
+            &quot;blood_type_code&quot;: &quot;A+&quot;,
+            &quot;religion_code&quot;: &quot;XTIAN&quot;,
+            &quot;occupation_code&quot;: &quot;SVC009&quot;,
+            &quot;education_code&quot;: 8,
+            &quot;civil_status_code&quot;: &quot;SPRTD&quot;,
             &quot;consent_flag&quot;: false,
             &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-14 09:49:19&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-14 09:49:19&quot;
+            &quot;created_at&quot;: &quot;2022-09-14 12:35:13&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:35:13&quot;
         },
         {
-            &quot;last_name&quot;: &quot;Considine&quot;,
-            &quot;first_name&quot;: &quot;Harmon&quot;,
-            &quot;middle_name&quot;: &quot;Osinski&quot;,
-            &quot;suffix_code&quot;: &quot;SR&quot;,
-            &quot;birthdate&quot;: &quot;1997-02-06&quot;,
-            &quot;mothers_name&quot;: &quot;Cassidy Osinski&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;505-244-220&quot;,
-            &quot;pwd_status_code&quot;: null,
+            &quot;last_name&quot;: &quot;Gaylord&quot;,
+            &quot;first_name&quot;: &quot;Jackie&quot;,
+            &quot;middle_name&quot;: &quot;Baumbach&quot;,
+            &quot;suffix_code&quot;: &quot;NA&quot;,
+            &quot;birthdate&quot;: &quot;1994-06-04&quot;,
+            &quot;mothers_name&quot;: &quot;Aliza Baumbach&quot;,
+            &quot;gender&quot;: &quot;F&quot;,
+            &quot;mobile_number&quot;: &quot;015-579-482&quot;,
+            &quot;pwd_type_code&quot;: &quot;MD&quot;,
             &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;A+&quot;,
-            &quot;religion_code&quot;: &quot;JEWIT&quot;,
-            &quot;occupation_code&quot;: &quot;FOOD004&quot;,
-            &quot;education_id&quot;: 1,
-            &quot;civil_status_id&quot;: &quot;ANLD&quot;,
+            &quot;blood_type_code&quot;: &quot;AB+&quot;,
+            &quot;religion_code&quot;: &quot;IGNIK&quot;,
+            &quot;occupation_code&quot;: &quot;SVC001&quot;,
+            &quot;education_code&quot;: 7,
+            &quot;civil_status_code&quot;: &quot;CHBTN&quot;,
             &quot;consent_flag&quot;: true,
             &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 16:53:47&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 16:53:47&quot;
+            &quot;created_at&quot;: &quot;2022-09-14 12:46:10&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:46:10&quot;
         },
         {
-            &quot;last_name&quot;: &quot;Davis&quot;,
-            &quot;first_name&quot;: &quot;Jerrod&quot;,
+            &quot;last_name&quot;: &quot;Goyette&quot;,
+            &quot;first_name&quot;: &quot;Benjamin&quot;,
+            &quot;middle_name&quot;: &quot;Feest&quot;,
+            &quot;suffix_code&quot;: &quot;SR&quot;,
+            &quot;birthdate&quot;: &quot;2007-10-21&quot;,
+            &quot;mothers_name&quot;: &quot;Jena Feest&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;551-525-749&quot;,
+            &quot;pwd_type_code&quot;: &quot;OD&quot;,
+            &quot;indegenous_flag&quot;: false,
+            &quot;blood_type_code&quot;: &quot;NA&quot;,
+            &quot;religion_code&quot;: &quot;CATHO&quot;,
+            &quot;occupation_code&quot;: &quot;TRANS006&quot;,
+            &quot;education_code&quot;: 5,
+            &quot;civil_status_code&quot;: &quot;SPRTD&quot;,
+            &quot;consent_flag&quot;: true,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 13:01:19&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 13:01:19&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;Hegmann&quot;,
+            &quot;first_name&quot;: &quot;Dina&quot;,
+            &quot;middle_name&quot;: &quot;Heaney&quot;,
+            &quot;suffix_code&quot;: &quot;NA&quot;,
+            &quot;birthdate&quot;: &quot;1978-01-25&quot;,
+            &quot;mothers_name&quot;: &quot;Jeanie Heaney&quot;,
+            &quot;gender&quot;: &quot;F&quot;,
+            &quot;mobile_number&quot;: &quot;982-407-289&quot;,
+            &quot;pwd_type_code&quot;: &quot;NA&quot;,
+            &quot;indegenous_flag&quot;: false,
+            &quot;blood_type_code&quot;: &quot;AB+&quot;,
+            &quot;religion_code&quot;: &quot;ANGLI&quot;,
+            &quot;occupation_code&quot;: &quot;SVC021&quot;,
+            &quot;education_code&quot;: 1,
+            &quot;civil_status_code&quot;: &quot;CHBTN&quot;,
+            &quot;consent_flag&quot;: true,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 12:26:57&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:26:57&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;Jacobson&quot;,
+            &quot;first_name&quot;: &quot;Craig&quot;,
+            &quot;middle_name&quot;: &quot;Herzog&quot;,
+            &quot;suffix_code&quot;: &quot;V&quot;,
+            &quot;birthdate&quot;: &quot;1983-10-12&quot;,
+            &quot;mothers_name&quot;: &quot;Alyson Herzog&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;393-499-081&quot;,
+            &quot;pwd_type_code&quot;: &quot;OD&quot;,
+            &quot;indegenous_flag&quot;: false,
+            &quot;blood_type_code&quot;: &quot;AB-&quot;,
+            &quot;religion_code&quot;: &quot;LRCM&quot;,
+            &quot;occupation_code&quot;: &quot;SVC007&quot;,
+            &quot;education_code&quot;: 5,
+            &quot;civil_status_code&quot;: &quot;ANLD&quot;,
+            &quot;consent_flag&quot;: true,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 12:32:40&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:32:40&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;Konopelski&quot;,
+            &quot;first_name&quot;: &quot;Joseph&quot;,
+            &quot;middle_name&quot;: &quot;Huels&quot;,
+            &quot;suffix_code&quot;: &quot;II&quot;,
+            &quot;birthdate&quot;: &quot;2002-10-26&quot;,
+            &quot;mothers_name&quot;: &quot;Jaqueline Huels&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;645-563-992&quot;,
+            &quot;pwd_type_code&quot;: &quot;LD&quot;,
+            &quot;indegenous_flag&quot;: true,
+            &quot;blood_type_code&quot;: &quot;B+&quot;,
+            &quot;religion_code&quot;: &quot;MUSLI&quot;,
+            &quot;occupation_code&quot;: &quot;SVC004&quot;,
+            &quot;education_code&quot;: 5,
+            &quot;civil_status_code&quot;: &quot;WDWD&quot;,
+            &quot;consent_flag&quot;: true,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 12:35:12&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:35:12&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;Mccullough&quot;,
+            &quot;first_name&quot;: &quot;Caleigh&quot;,
+            &quot;middle_name&quot;: &quot;Klein&quot;,
+            &quot;suffix_code&quot;: &quot;NA&quot;,
+            &quot;birthdate&quot;: &quot;1989-10-01&quot;,
+            &quot;mothers_name&quot;: &quot;Emelie Klein&quot;,
+            &quot;gender&quot;: &quot;F&quot;,
+            &quot;mobile_number&quot;: &quot;048-972-273&quot;,
+            &quot;pwd_type_code&quot;: &quot;NA&quot;,
+            &quot;indegenous_flag&quot;: false,
+            &quot;blood_type_code&quot;: &quot;AB+&quot;,
+            &quot;religion_code&quot;: &quot;MORMO&quot;,
+            &quot;occupation_code&quot;: &quot;HEALTH007&quot;,
+            &quot;education_code&quot;: 3,
+            &quot;civil_status_code&quot;: &quot;MRRD&quot;,
+            &quot;consent_flag&quot;: true,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 12:46:10&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:46:10&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;O&#039;connell&quot;,
+            &quot;first_name&quot;: &quot;Madison&quot;,
+            &quot;middle_name&quot;: &quot;Blanda&quot;,
+            &quot;suffix_code&quot;: &quot;IV&quot;,
+            &quot;birthdate&quot;: &quot;1994-12-14&quot;,
+            &quot;mothers_name&quot;: &quot;Elyssa Blanda&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;132-869-517&quot;,
+            &quot;pwd_type_code&quot;: &quot;VD&quot;,
+            &quot;indegenous_flag&quot;: true,
+            &quot;blood_type_code&quot;: &quot;AB+&quot;,
+            &quot;religion_code&quot;: &quot;LUTHR&quot;,
+            &quot;occupation_code&quot;: &quot;SVC006&quot;,
+            &quot;education_code&quot;: 8,
+            &quot;civil_status_code&quot;: &quot;ANLD&quot;,
+            &quot;consent_flag&quot;: false,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 12:29:17&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:29:17&quot;
+        },
+        {
+            &quot;last_name&quot;: &quot;Parisian&quot;,
+            &quot;first_name&quot;: &quot;Jaiden&quot;,
             &quot;middle_name&quot;: &quot;Okuneva&quot;,
             &quot;suffix_code&quot;: &quot;II&quot;,
-            &quot;birthdate&quot;: &quot;2003-03-18&quot;,
-            &quot;mothers_name&quot;: &quot;Opal Okuneva&quot;,
+            &quot;birthdate&quot;: &quot;2003-07-06&quot;,
+            &quot;mothers_name&quot;: &quot;Genesis Okuneva&quot;,
             &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;846-335-358&quot;,
-            &quot;pwd_status_code&quot;: null,
+            &quot;mobile_number&quot;: &quot;709-886-934&quot;,
+            &quot;pwd_type_code&quot;: &quot;NA&quot;,
             &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;O+&quot;,
-            &quot;religion_code&quot;: &quot;WESLY&quot;,
-            &quot;occupation_code&quot;: &quot;UNSP006&quot;,
-            &quot;education_id&quot;: 6,
-            &quot;civil_status_id&quot;: &quot;MRRD&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 17:01:31&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 17:01:31&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Dibbert&quot;,
-            &quot;first_name&quot;: &quot;Celine&quot;,
-            &quot;middle_name&quot;: &quot;Nolan&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1979-02-21&quot;,
-            &quot;mothers_name&quot;: &quot;Carmella Nolan&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;534-990-755&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;NA&quot;,
-            &quot;religion_code&quot;: &quot;IGNIK&quot;,
-            &quot;occupation_code&quot;: &quot;SVC036&quot;,
-            &quot;education_id&quot;: 1,
-            &quot;civil_status_id&quot;: &quot;MRRD&quot;,
+            &quot;blood_type_code&quot;: &quot;B+&quot;,
+            &quot;religion_code&quot;: &quot;AGLIP&quot;,
+            &quot;occupation_code&quot;: &quot;SVC033&quot;,
+            &quot;education_code&quot;: 7,
+            &quot;civil_status_code&quot;: &quot;WDWD&quot;,
             &quot;consent_flag&quot;: false,
             &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-13 07:58:28&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-13 07:58:28&quot;
+            &quot;created_at&quot;: &quot;2022-09-14 12:33:58&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:33:58&quot;
         },
         {
-            &quot;last_name&quot;: &quot;Emmerich&quot;,
-            &quot;first_name&quot;: &quot;Chelsea&quot;,
-            &quot;middle_name&quot;: &quot;Hammes&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;2002-10-16&quot;,
-            &quot;mothers_name&quot;: &quot;Henriette Hammes&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;489-523-848&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;A+&quot;,
-            &quot;religion_code&quot;: &quot;EVANG&quot;,
-            &quot;occupation_code&quot;: &quot;FOOD003&quot;,
-            &quot;education_id&quot;: 1,
-            &quot;civil_status_id&quot;: &quot;MRRD&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 15:10:48&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 15:10:48&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Kihn&quot;,
-            &quot;first_name&quot;: &quot;Johnpaul&quot;,
-            &quot;middle_name&quot;: &quot;Kuphal&quot;,
-            &quot;suffix_code&quot;: &quot;IV&quot;,
-            &quot;birthdate&quot;: &quot;1984-07-22&quot;,
-            &quot;mothers_name&quot;: &quot;Etha Kuphal&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;123-412-623&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;O+&quot;,
-            &quot;religion_code&quot;: &quot;METOD&quot;,
-            &quot;occupation_code&quot;: &quot;SVC014&quot;,
-            &quot;education_id&quot;: 8,
-            &quot;civil_status_id&quot;: &quot;MRRD&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 15:10:30&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 15:10:30&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Lakin&quot;,
-            &quot;first_name&quot;: &quot;Bret&quot;,
-            &quot;middle_name&quot;: &quot;Kuhn&quot;,
-            &quot;suffix_code&quot;: &quot;III&quot;,
-            &quot;birthdate&quot;: &quot;1993-04-26&quot;,
-            &quot;mothers_name&quot;: &quot;Ozella Kuhn&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;222-386-389&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;A+&quot;,
-            &quot;religion_code&quot;: &quot;CHOG&quot;,
-            &quot;occupation_code&quot;: &quot;SVC009&quot;,
-            &quot;education_id&quot;: 3,
-            &quot;civil_status_id&quot;: &quot;CHBTN&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-14 09:49:18&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-14 09:49:18&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Larkin&quot;,
-            &quot;first_name&quot;: &quot;Jordane&quot;,
-            &quot;middle_name&quot;: &quot;Boyle&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1978-12-30&quot;,
-            &quot;mothers_name&quot;: &quot;Kaitlyn Boyle&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;310-190-797&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;NA&quot;,
-            &quot;religion_code&quot;: &quot;BAPTI&quot;,
-            &quot;occupation_code&quot;: &quot;SVC025&quot;,
-            &quot;education_id&quot;: 5,
-            &quot;civil_status_id&quot;: &quot;CHBTN&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 14:42:01&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 14:42:01&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Lehner&quot;,
-            &quot;first_name&quot;: &quot;Karen&quot;,
-            &quot;middle_name&quot;: &quot;Crona&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1989-08-27&quot;,
-            &quot;mothers_name&quot;: &quot;Trinity Crona&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;877-037-580&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;O+&quot;,
-            &quot;religion_code&quot;: &quot;XTIAN&quot;,
-            &quot;occupation_code&quot;: &quot;HEALTH003&quot;,
-            &quot;education_id&quot;: 7,
-            &quot;civil_status_id&quot;: &quot;ANLD&quot;,
-            &quot;consent_flag&quot;: false,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-13 10:40:14&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-13 10:40:14&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Lesch&quot;,
-            &quot;first_name&quot;: &quot;Olin&quot;,
+            &quot;last_name&quot;: &quot;Strosin&quot;,
+            &quot;first_name&quot;: &quot;Letitia&quot;,
             &quot;middle_name&quot;: &quot;Streich&quot;,
             &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;2012-05-27&quot;,
-            &quot;mothers_name&quot;: &quot;Juana Streich&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;642-971-585&quot;,
-            &quot;pwd_status_code&quot;: null,
+            &quot;birthdate&quot;: &quot;1990-08-29&quot;,
+            &quot;mothers_name&quot;: &quot;Yasmeen Streich&quot;,
+            &quot;gender&quot;: &quot;F&quot;,
+            &quot;mobile_number&quot;: &quot;907-203-883&quot;,
+            &quot;pwd_type_code&quot;: &quot;MD&quot;,
             &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;A+&quot;,
-            &quot;religion_code&quot;: &quot;BAPTI&quot;,
-            &quot;occupation_code&quot;: &quot;SVC008&quot;,
-            &quot;education_id&quot;: 5,
-            &quot;civil_status_id&quot;: &quot;CHBTN&quot;,
-            &quot;consent_flag&quot;: false,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-13 07:58:28&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-13 07:58:28&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Mosciski&quot;,
-            &quot;first_name&quot;: &quot;Bethel&quot;,
-            &quot;middle_name&quot;: &quot;O&#039;connell&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1993-06-19&quot;,
-            &quot;mothers_name&quot;: &quot;Adeline O&#039;connell&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;457-913-687&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;B-&quot;,
-            &quot;religion_code&quot;: &quot;BRNAG&quot;,
-            &quot;occupation_code&quot;: &quot;SVC030&quot;,
-            &quot;education_id&quot;: 2,
-            &quot;civil_status_id&quot;: &quot;MRRD&quot;,
-            &quot;consent_flag&quot;: false,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 16:53:47&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 16:53:47&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Pfannerstill&quot;,
-            &quot;first_name&quot;: &quot;Kaia&quot;,
-            &quot;middle_name&quot;: &quot;Rosenbaum&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1989-04-25&quot;,
-            &quot;mothers_name&quot;: &quot;Vivienne Rosenbaum&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;074-410-327&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;AB-&quot;,
-            &quot;religion_code&quot;: &quot;MORMO&quot;,
-            &quot;occupation_code&quot;: &quot;SVC030&quot;,
-            &quot;education_id&quot;: 7,
-            &quot;civil_status_id&quot;: &quot;WDWD&quot;,
+            &quot;blood_type_code&quot;: &quot;NA&quot;,
+            &quot;religion_code&quot;: &quot;MUSLI&quot;,
+            &quot;occupation_code&quot;: &quot;MAR001&quot;,
+            &quot;education_code&quot;: 4,
+            &quot;civil_status_code&quot;: &quot;SPRTD&quot;,
             &quot;consent_flag&quot;: true,
             &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 14:42:02&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 14:42:02&quot;
+            &quot;created_at&quot;: &quot;2022-09-14 12:33:58&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 12:33:58&quot;
         },
         {
-            &quot;last_name&quot;: &quot;Prohaska&quot;,
-            &quot;first_name&quot;: &quot;Emiliano&quot;,
-            &quot;middle_name&quot;: &quot;Thompson&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;1999-11-26&quot;,
-            &quot;mothers_name&quot;: &quot;Minnie Thompson&quot;,
+            &quot;last_name&quot;: &quot;Torp&quot;,
+            &quot;first_name&quot;: &quot;Maynard&quot;,
+            &quot;middle_name&quot;: &quot;Schamberger&quot;,
+            &quot;suffix_code&quot;: &quot;III&quot;,
+            &quot;birthdate&quot;: &quot;2013-08-11&quot;,
+            &quot;mothers_name&quot;: &quot;Elnora Schamberger&quot;,
             &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;642-278-283&quot;,
-            &quot;pwd_status_code&quot;: null,
+            &quot;mobile_number&quot;: &quot;122-349-792&quot;,
+            &quot;pwd_type_code&quot;: &quot;NA&quot;,
             &quot;indegenous_flag&quot;: false,
-            &quot;blood_type&quot;: &quot;B-&quot;,
-            &quot;religion_code&quot;: &quot;XTIAN&quot;,
-            &quot;occupation_code&quot;: &quot;HEALTH005&quot;,
-            &quot;education_id&quot;: 2,
-            &quot;civil_status_id&quot;: &quot;WDWD&quot;,
+            &quot;blood_type_code&quot;: &quot;O-&quot;,
+            &quot;religion_code&quot;: &quot;BUDDH&quot;,
+            &quot;occupation_code&quot;: &quot;SVC001&quot;,
+            &quot;education_code&quot;: 2,
+            &quot;civil_status_code&quot;: &quot;MRRD&quot;,
             &quot;consent_flag&quot;: false,
             &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 15:10:29&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 15:10:29&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Rice&quot;,
-            &quot;first_name&quot;: &quot;Jaiden&quot;,
-            &quot;middle_name&quot;: &quot;Ratke&quot;,
-            &quot;suffix_code&quot;: &quot;V&quot;,
-            &quot;birthdate&quot;: &quot;1974-12-19&quot;,
-            &quot;mothers_name&quot;: &quot;Delia Ratke&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;668-071-313&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;B+&quot;,
-            &quot;religion_code&quot;: &quot;BRNAG&quot;,
-            &quot;occupation_code&quot;: &quot;SVC028&quot;,
-            &quot;education_id&quot;: 4,
-            &quot;civil_status_id&quot;: &quot;SPRTD&quot;,
-            &quot;consent_flag&quot;: true,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-13 10:40:14&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-13 10:40:14&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Tromp&quot;,
-            &quot;first_name&quot;: &quot;Hilton&quot;,
-            &quot;middle_name&quot;: &quot;Goyette&quot;,
-            &quot;suffix_code&quot;: &quot;JR&quot;,
-            &quot;birthdate&quot;: &quot;2003-11-02&quot;,
-            &quot;mothers_name&quot;: &quot;Sandrine Goyette&quot;,
-            &quot;gender&quot;: &quot;M&quot;,
-            &quot;mobile_number&quot;: &quot;868-380-408&quot;,
-            &quot;pwd_status_code&quot;: null,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type&quot;: &quot;B+&quot;,
-            &quot;religion_code&quot;: &quot;PENTE&quot;,
-            &quot;occupation_code&quot;: &quot;SVC027&quot;,
-            &quot;education_id&quot;: 4,
-            &quot;civil_status_id&quot;: &quot;ANLD&quot;,
-            &quot;consent_flag&quot;: false,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-12 17:01:31&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-12 17:01:31&quot;
+            &quot;created_at&quot;: &quot;2022-09-14 13:01:19&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 13:01:19&quot;
         }
     ],
     &quot;links&quot;: {
         &quot;first&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=1&quot;,
-        &quot;last&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;,
+        &quot;last&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=1&quot;,
         &quot;prev&quot;: null,
-        &quot;next&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;
+        &quot;next&quot;: null
     },
     &quot;meta&quot;: {
         &quot;current_page&quot;: 1,
         &quot;from&quot;: 1,
-        &quot;last_page&quot;: 2,
+        &quot;last_page&quot;: 1,
         &quot;links&quot;: [
             {
                 &quot;url&quot;: null,
@@ -1083,20 +999,15 @@ access-control-allow-origin: *
                 &quot;active&quot;: true
             },
             {
-                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;,
-                &quot;label&quot;: &quot;2&quot;,
-                &quot;active&quot;: false
-            },
-            {
-                &quot;url&quot;: &quot;http://wahtermelon.test/api/v1/patient?page=2&quot;,
+                &quot;url&quot;: null,
                 &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
                 &quot;active&quot;: false
             }
         ],
         &quot;path&quot;: &quot;http://wahtermelon.test/api/v1/patient&quot;,
         &quot;per_page&quot;: 15,
-        &quot;to&quot;: 15,
-        &quot;total&quot;: 16
+        &quot;to&quot;: 11,
+        &quot;total&quot;: 11
     }
 }</code>
  </pre>
@@ -1159,20 +1070,20 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"expedita\",
-    \"first_name\": \"voluptas\",
-    \"suffix_name\": \"distinctio\",
-    \"birthdate\": \"2004-01-08\",
-    \"mothers_name\": \"voluptas\",
-    \"gender\": \"magni\",
-    \"mobile_number\": \"u\",
-    \"indegenous_flag\": true,
-    \"religion_code\": \"voluptates\",
-    \"occupation_code\": \"ad\",
-    \"education_id\": \"dolore\",
-    \"civil_status_id\": \"sapiente\",
+    \"last_name\": \"iste\",
+    \"first_name\": \"repellendus\",
+    \"suffix_name\": \"temporibus\",
+    \"birthdate\": \"2011-02-26\",
+    \"mothers_name\": \"fugiat\",
+    \"gender\": \"accusamus\",
+    \"mobile_number\": \"xwxcty\",
+    \"indegenous_flag\": false,
+    \"religion_code\": \"perferendis\",
+    \"occupation_code\": \"autem\",
+    \"education_code\": \"dolor\",
+    \"civil_status_code\": \"eius\",
     \"consent_flag\": true,
-    \"image_url\": \"https:\\/\\/yundt.com\\/et-ut-consequatur-pariatur-voluptas-cumque.html\"
+    \"image_url\": \"http:\\/\\/russel.com\\/facilis-accusamus-minima-sequi-exercitationem\"
 }"
 </code></pre></div>
 
@@ -1188,20 +1099,20 @@ const headers = {
 };
 
 let body = {
-    "last_name": "expedita",
-    "first_name": "voluptas",
-    "suffix_name": "distinctio",
-    "birthdate": "2004-01-08",
-    "mothers_name": "voluptas",
-    "gender": "magni",
-    "mobile_number": "u",
-    "indegenous_flag": true,
-    "religion_code": "voluptates",
-    "occupation_code": "ad",
-    "education_id": "dolore",
-    "civil_status_id": "sapiente",
+    "last_name": "iste",
+    "first_name": "repellendus",
+    "suffix_name": "temporibus",
+    "birthdate": "2011-02-26",
+    "mothers_name": "fugiat",
+    "gender": "accusamus",
+    "mobile_number": "xwxcty",
+    "indegenous_flag": false,
+    "religion_code": "perferendis",
+    "occupation_code": "autem",
+    "education_code": "dolor",
+    "civil_status_code": "eius",
     "consent_flag": true,
-    "image_url": "https:\/\/yundt.com\/et-ut-consequatur-pariatur-voluptas-cumque.html"
+    "image_url": "http:\/\/russel.com\/facilis-accusamus-minima-sequi-exercitationem"
 };
 
 fetch(url, {
@@ -1273,7 +1184,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-patient"
-               value="expedita"
+               value="iste"
                data-component="body" hidden>
     <br>
 
@@ -1285,7 +1196,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-patient"
-               value="voluptas"
+               value="repellendus"
                data-component="body" hidden>
     <br>
 
@@ -1309,7 +1220,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-patient"
-               value="distinctio"
+               value="temporibus"
                data-component="body" hidden>
     <br>
 
@@ -1321,7 +1232,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-patient"
-               value="2004-01-08"
+               value="2011-02-26"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.</p>
@@ -1333,7 +1244,7 @@ fetch(url, {
                 <input type="text"
                name="mothers_name"
                data-endpoint="POSTapi-v1-patient"
-               value="voluptas"
+               value="fugiat"
                data-component="body" hidden>
     <br>
 
@@ -1345,7 +1256,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-patient"
-               value="magni"
+               value="accusamus"
                data-component="body" hidden>
     <br>
 
@@ -1357,7 +1268,7 @@ fetch(url, {
                 <input type="text"
                name="mobile_number"
                data-endpoint="POSTapi-v1-patient"
-               value="u"
+               value="xwxcty"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -1398,11 +1309,11 @@ fetch(url, {
 
         </p>
                 <p>
-            <b><code>blood_type</code></b>&nbsp;&nbsp;
+            <b><code>blood_type_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
                 <input type="text"
-               name="blood_type"
+               name="blood_type_code"
                data-endpoint="POSTapi-v1-patient"
                value=""
                data-component="body" hidden>
@@ -1416,7 +1327,7 @@ fetch(url, {
                 <input type="text"
                name="religion_code"
                data-endpoint="POSTapi-v1-patient"
-               value="voluptates"
+               value="perferendis"
                data-component="body" hidden>
     <br>
 
@@ -1428,31 +1339,31 @@ fetch(url, {
                 <input type="text"
                name="occupation_code"
                data-endpoint="POSTapi-v1-patient"
-               value="ad"
+               value="autem"
                data-component="body" hidden>
     <br>
 
         </p>
                 <p>
-            <b><code>education_id</code></b>&nbsp;&nbsp;
+            <b><code>education_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="education_id"
+               name="education_code"
                data-endpoint="POSTapi-v1-patient"
-               value="dolore"
+               value="dolor"
                data-component="body" hidden>
     <br>
 
         </p>
                 <p>
-            <b><code>civil_status_id</code></b>&nbsp;&nbsp;
+            <b><code>civil_status_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="civil_status_id"
+               name="civil_status_code"
                data-endpoint="POSTapi-v1-patient"
-               value="sapiente"
+               value="eius"
                data-component="body" hidden>
     <br>
 
@@ -1487,7 +1398,7 @@ fetch(url, {
                 <input type="text"
                name="image_url"
                data-endpoint="POSTapi-v1-patient"
-               value="https://yundt.com/et-ut-consequatur-pariatur-voluptas-cumque.html"
+               value="http://russel.com/facilis-accusamus-minima-sequi-exercitationem"
                data-component="body" hidden>
     <br>
 <p>Must be a valid URL.</p>
@@ -5140,27 +5051,27 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;status_id&quot;: &quot;ANLD&quot;,
+            &quot;code&quot;: &quot;ANLD&quot;,
             &quot;status_desc&quot;: &quot;Annulled&quot;
         },
         {
-            &quot;status_id&quot;: &quot;CHBTN&quot;,
+            &quot;code&quot;: &quot;CHBTN&quot;,
             &quot;status_desc&quot;: &quot;Co-Habitation&quot;
         },
         {
-            &quot;status_id&quot;: &quot;MRRD&quot;,
+            &quot;code&quot;: &quot;MRRD&quot;,
             &quot;status_desc&quot;: &quot;Married&quot;
         },
         {
-            &quot;status_id&quot;: &quot;SNGL&quot;,
+            &quot;code&quot;: &quot;SNGL&quot;,
             &quot;status_desc&quot;: &quot;Single&quot;
         },
         {
-            &quot;status_id&quot;: &quot;SPRTD&quot;,
+            &quot;code&quot;: &quot;SPRTD&quot;,
             &quot;status_desc&quot;: &quot;Separated&quot;
         },
         {
-            &quot;status_id&quot;: &quot;WDWD&quot;,
+            &quot;code&quot;: &quot;WDWD&quot;,
             &quot;status_desc&quot;: &quot;Widowed&quot;
         }
     ]
@@ -5208,27 +5119,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-civil-statuses--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-civil-statuses--civilStatus_code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-civil-statuses--id-">
+<span id="example-requests-GETapi-v1-libraries-civil-statuses--civilStatus_code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/civil-statuses/porro" \
+    --get "http://wahtermelon.test/api/v1/libraries/civil-statuses/ANLD" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/civil-statuses/porro"
+    "http://wahtermelon.test/api/v1/libraries/civil-statuses/ANLD"
 );
 
 const headers = {
@@ -5243,7 +5154,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-civil-statuses--id-">
+<span id="example-responses-GETapi-v1-libraries-civil-statuses--civilStatus_code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -5260,7 +5171,7 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibCivilStatus] porro&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibCivilStatus] 1&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -5288,23 +5199,9 @@ access-control-allow-origin: *
         },
         {
             &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
+            &quot;line&quot;: 185,
             &quot;function&quot;: &quot;handleException&quot;,
             &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
             &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
@@ -5689,57 +5586,57 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-civil-statuses--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-civil-statuses--civilStatus_code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-civil-statuses--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-civil-statuses--civilStatus_code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-civil-statuses--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-civil-statuses--civilStatus_code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-civil-statuses--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-civil-statuses--civilStatus_code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-civil-statuses--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-civil-statuses--civilStatus_code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-civil-statuses--id-" data-method="GET"
-      data-path="api/v1/libraries/civil-statuses/{id}"
+<form id="form-GETapi-v1-libraries-civil-statuses--civilStatus_code-" data-method="GET"
+      data-path="api/v1/libraries/civil-statuses/{civilStatus_code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-civil-statuses--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-civil-statuses--civilStatus_code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-civil-statuses--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-civil-statuses--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-civil-statuses--civilStatus_code-"
+                    onclick="tryItOut('GETapi-v1-libraries-civil-statuses--civilStatus_code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-civil-statuses--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-civil-statuses--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-civil-statuses--civilStatus_code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-civil-statuses--civilStatus_code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-civil-statuses--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-civil-statuses--civilStatus_code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/civil-statuses/{id}</code></b>
+            <b><code>api/v1/libraries/civil-statuses/{civilStatus_code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
+                <b><code>civilStatus_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-civil-statuses--id-"
-               value="porro"
+               name="civilStatus_code"
+               data-endpoint="GETapi-v1-libraries-civil-statuses--civilStatus_code-"
+               value="ANLD"
                data-component="url" hidden>
     <br>
-<p>The ID of the civil status.</p>
+
             </p>
                     </form>
 
@@ -5797,35 +5694,35 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;education_id&quot;: 1,
+            &quot;code&quot;: 1,
             &quot;education_desc&quot;: &quot;Elementary Education&quot;
         },
         {
-            &quot;education_id&quot;: 2,
+            &quot;code&quot;: 2,
             &quot;education_desc&quot;: &quot;High School Education&quot;
         },
         {
-            &quot;education_id&quot;: 3,
+            &quot;code&quot;: 3,
             &quot;education_desc&quot;: &quot;College&quot;
         },
         {
-            &quot;education_id&quot;: 4,
+            &quot;code&quot;: 4,
             &quot;education_desc&quot;: &quot;Postgraduate Program&quot;
         },
         {
-            &quot;education_id&quot;: 5,
+            &quot;code&quot;: 5,
             &quot;education_desc&quot;: &quot;No Formal Education - No Schooling&quot;
         },
         {
-            &quot;education_id&quot;: 6,
+            &quot;code&quot;: 6,
             &quot;education_desc&quot;: &quot;Not Applicable&quot;
         },
         {
-            &quot;education_id&quot;: 7,
+            &quot;code&quot;: 7,
             &quot;education_desc&quot;: &quot;Vocational&quot;
         },
         {
-            &quot;education_id&quot;: 8,
+            &quot;code&quot;: 8,
             &quot;education_desc&quot;: &quot;Others&quot;
         }
     ]
@@ -5873,27 +5770,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-education--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-education--code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-education--id-">
+<span id="example-requests-GETapi-v1-libraries-education--code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/education/doloribus" \
+    --get "http://wahtermelon.test/api/v1/libraries/education/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/education/doloribus"
+    "http://wahtermelon.test/api/v1/libraries/education/1"
 );
 
 const headers = {
@@ -5908,9 +5805,9 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-education--id-">
+<span id="example-responses-GETapi-v1-libraries-education--code-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary>
@@ -5925,486 +5822,64 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibEducation] doloribus&quot;,
-    &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
-    &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
-    &quot;line&quot;: 380,
-    &quot;trace&quot;: [
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
-            &quot;line&quot;: 356,
-            &quot;function&quot;: &quot;prepareException&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php&quot;,
-            &quot;line&quot;: 54,
-            &quot;function&quot;: &quot;render&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Exceptions\\Handler&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php&quot;,
-            &quot;line&quot;: 51,
-            &quot;function&quot;: &quot;render&quot;,
-            &quot;class&quot;: &quot;NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
-            &quot;function&quot;: &quot;handleException&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
-            &quot;line&quot;: 126,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
-            &quot;line&quot;: 102,
-            &quot;function&quot;: &quot;handleRequest&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
-            &quot;line&quot;: 54,
-            &quot;function&quot;: &quot;handleRequestUsingNamedLimiter&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 116,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 726,
-            &quot;function&quot;: &quot;then&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 703,
-            &quot;function&quot;: &quot;runRouteWithinStack&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 667,
-            &quot;function&quot;: &quot;runRoute&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
-            &quot;line&quot;: 656,
-            &quot;function&quot;: &quot;dispatchToRoute&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
-            &quot;line&quot;: 167,
-            &quot;function&quot;: &quot;dispatch&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 141,
-            &quot;function&quot;: &quot;Illuminate\\Foundation\\Http\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
-            &quot;line&quot;: 21,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php&quot;,
-            &quot;line&quot;: 31,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
-            &quot;line&quot;: 21,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php&quot;,
-            &quot;line&quot;: 40,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TrimStrings&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php&quot;,
-            &quot;line&quot;: 27,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php&quot;,
-            &quot;line&quot;: 86,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php&quot;,
-            &quot;line&quot;: 62,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\HandleCors&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php&quot;,
-            &quot;line&quot;: 39,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\TrustProxies&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 116,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
-            &quot;line&quot;: 142,
-            &quot;function&quot;: &quot;then&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
-            &quot;line&quot;: 111,
-            &quot;function&quot;: &quot;sendRequestThroughRouter&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 299,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 287,
-            &quot;function&quot;: &quot;callLaravelOrLumenRoute&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 89,
-            &quot;function&quot;: &quot;makeApiCall&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 45,
-            &quot;function&quot;: &quot;makeResponseCall&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
-            &quot;line&quot;: 35,
-            &quot;function&quot;: &quot;makeResponseCallIfConditionsPass&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
-            &quot;line&quot;: 209,
-            &quot;function&quot;: &quot;__invoke&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
-            &quot;line&quot;: 166,
-            &quot;function&quot;: &quot;iterateThroughStrategies&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
-            &quot;line&quot;: 95,
-            &quot;function&quot;: &quot;fetchResponses&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
-            &quot;line&quot;: 122,
-            &quot;function&quot;: &quot;processRoute&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
-            &quot;line&quot;: 69,
-            &quot;function&quot;: &quot;extractEndpointsInfoFromLaravelApp&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
-            &quot;line&quot;: 47,
-            &quot;function&quot;: &quot;extractEndpointsInfoAndWriteToDisk&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php&quot;,
-            &quot;line&quot;: 53,
-            &quot;function&quot;: &quot;get&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
-            &quot;line&quot;: 36,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Knuckles\\Scribe\\Commands\\GenerateDocumentation&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php&quot;,
-            &quot;line&quot;: 41,
-            &quot;function&quot;: &quot;Illuminate\\Container\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
-            &quot;line&quot;: 93,
-            &quot;function&quot;: &quot;unwrapIfClosure&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\Util&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
-            &quot;line&quot;: 37,
-            &quot;function&quot;: &quot;callBoundMethod&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php&quot;,
-            &quot;line&quot;: 651,
-            &quot;function&quot;: &quot;call&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
-            &quot;type&quot;: &quot;::&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
-            &quot;line&quot;: 144,
-            &quot;function&quot;: &quot;call&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Container\\Container&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php&quot;,
-            &quot;line&quot;: 308,
-            &quot;function&quot;: &quot;execute&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
-            &quot;line&quot;: 126,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Command\\Command&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
-            &quot;line&quot;: 1002,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
-            &quot;line&quot;: 299,
-            &quot;function&quot;: &quot;doRunCommand&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
-            &quot;line&quot;: 171,
-            &quot;function&quot;: &quot;doRun&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php&quot;,
-            &quot;line&quot;: 102,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php&quot;,
-            &quot;line&quot;: 129,
-            &quot;function&quot;: &quot;run&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Console\\Application&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/artisan&quot;,
-            &quot;line&quot;: 37,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Foundation\\Console\\Kernel&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        }
-    ]
+    &quot;data&quot;: {
+        &quot;code&quot;: 1,
+        &quot;education_desc&quot;: &quot;Elementary Education&quot;
+    }
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-education--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-education--code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-education--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-education--code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-education--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-education--code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-education--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-education--code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-education--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-education--code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-education--id-" data-method="GET"
-      data-path="api/v1/libraries/education/{id}"
+<form id="form-GETapi-v1-libraries-education--code-" data-method="GET"
+      data-path="api/v1/libraries/education/{code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-education--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-education--code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-education--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-education--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-education--code-"
+                    onclick="tryItOut('GETapi-v1-libraries-education--code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-education--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-education--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-education--code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-education--code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-education--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-education--code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/education/{id}</code></b>
+            <b><code>api/v1/libraries/education/{code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+                <b><code>code</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
-                <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-education--id-"
-               value="doloribus"
+                <input type="number"
+               name="code"
+               data-endpoint="GETapi-v1-libraries-education--code-"
+               value="1"
                data-component="url" hidden>
     <br>
-<p>The ID of the education.</p>
+
             </p>
                     </form>
 
@@ -6462,565 +5937,565 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;category_code&quot;: &quot;AGRI&quot;,
+            &quot;code&quot;: &quot;AGRI&quot;,
             &quot;category_desc&quot;: &quot;Agriculture&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;AGRI001&quot;,
+                    &quot;code&quot;: &quot;AGRI001&quot;,
                     &quot;category_code&quot;: &quot;AGRI&quot;,
                     &quot;occupation_desc&quot;: &quot;Farmer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;AGRI002&quot;,
+                    &quot;code&quot;: &quot;AGRI002&quot;,
                     &quot;category_code&quot;: &quot;AGRI&quot;,
                     &quot;occupation_desc&quot;: &quot;Fisherman&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;EDUC&quot;,
+            &quot;code&quot;: &quot;EDUC&quot;,
             &quot;category_desc&quot;: &quot;Education&quot;,
             &quot;occupation&quot;: []
         },
         {
-            &quot;category_code&quot;: &quot;FOOD&quot;,
+            &quot;code&quot;: &quot;FOOD&quot;,
             &quot;category_desc&quot;: &quot;Industry&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;FOOD001&quot;,
+                    &quot;code&quot;: &quot;FOOD001&quot;,
                     &quot;category_code&quot;: &quot;FOOD&quot;,
                     &quot;occupation_desc&quot;: &quot;Supervisor&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;FOOD002&quot;,
+                    &quot;code&quot;: &quot;FOOD002&quot;,
                     &quot;category_code&quot;: &quot;FOOD&quot;,
                     &quot;occupation_desc&quot;: &quot;Service Engineer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;FOOD003&quot;,
+                    &quot;code&quot;: &quot;FOOD003&quot;,
                     &quot;category_code&quot;: &quot;FOOD&quot;,
                     &quot;occupation_desc&quot;: &quot;Engineer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;FOOD004&quot;,
+                    &quot;code&quot;: &quot;FOOD004&quot;,
                     &quot;category_code&quot;: &quot;FOOD&quot;,
                     &quot;occupation_desc&quot;: &quot;Accountant&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;GOVT&quot;,
+            &quot;code&quot;: &quot;GOVT&quot;,
             &quot;category_desc&quot;: &quot;Government&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;GOVT&quot;,
+                    &quot;code&quot;: &quot;GOVT&quot;,
                     &quot;category_code&quot;: &quot;GOVT&quot;,
                     &quot;occupation_desc&quot;: &quot;Govt Employee&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;GOVT001&quot;,
+                    &quot;code&quot;: &quot;GOVT001&quot;,
                     &quot;category_code&quot;: &quot;GOVT&quot;,
                     &quot;occupation_desc&quot;: &quot;Employee&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;GOVT002&quot;,
+                    &quot;code&quot;: &quot;GOVT002&quot;,
                     &quot;category_code&quot;: &quot;GOVT&quot;,
                     &quot;occupation_desc&quot;: &quot;Public School Teacher&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;HEALTH&quot;,
+            &quot;code&quot;: &quot;HEALTH&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH001&quot;,
+                    &quot;code&quot;: &quot;HEALTH001&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Physician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH002&quot;,
+                    &quot;code&quot;: &quot;HEALTH002&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Nurse&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH003&quot;,
+                    &quot;code&quot;: &quot;HEALTH003&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Midwife&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH004&quot;,
+                    &quot;code&quot;: &quot;HEALTH004&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Physical Therapist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH005&quot;,
+                    &quot;code&quot;: &quot;HEALTH005&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Respiratory Therapist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH006&quot;,
+                    &quot;code&quot;: &quot;HEALTH006&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;X-Ray Technician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH007&quot;,
+                    &quot;code&quot;: &quot;HEALTH007&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Nurse Aide&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH008&quot;,
+                    &quot;code&quot;: &quot;HEALTH008&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Dentist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH009&quot;,
+                    &quot;code&quot;: &quot;HEALTH009&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Medical Technologist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH010&quot;,
+                    &quot;code&quot;: &quot;HEALTH010&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Pharmacist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH011&quot;,
+                    &quot;code&quot;: &quot;HEALTH011&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Dental Technician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH012&quot;,
+                    &quot;code&quot;: &quot;HEALTH012&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Reflexologist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH013&quot;,
+                    &quot;code&quot;: &quot;HEALTH013&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Pharmacist Aide&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH014&quot;,
+                    &quot;code&quot;: &quot;HEALTH014&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Paramedic&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;HEALTH015&quot;,
+                    &quot;code&quot;: &quot;HEALTH015&quot;,
                     &quot;category_code&quot;: &quot;HEALTH&quot;,
                     &quot;occupation_desc&quot;: &quot;Caregiver&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;MAR&quot;,
+            &quot;code&quot;: &quot;MAR&quot;,
             &quot;category_desc&quot;: &quot;Maritime&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;MAR001&quot;,
+                    &quot;code&quot;: &quot;MAR001&quot;,
                     &quot;category_code&quot;: &quot;MAR&quot;,
                     &quot;occupation_desc&quot;: &quot;Seaman&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;MFG&quot;,
+            &quot;code&quot;: &quot;MFG&quot;,
             &quot;category_desc&quot;: &quot;Manufacturing&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;MFG001&quot;,
+                    &quot;code&quot;: &quot;MFG001&quot;,
                     &quot;category_code&quot;: &quot;MFG&quot;,
                     &quot;occupation_desc&quot;: &quot;Merchandiser&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;RETL&quot;,
+            &quot;code&quot;: &quot;RETL&quot;,
             &quot;category_desc&quot;: &quot;Retail&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;RETL001&quot;,
+                    &quot;code&quot;: &quot;RETL001&quot;,
                     &quot;category_code&quot;: &quot;RETL&quot;,
                     &quot;occupation_desc&quot;: &quot;Vendor&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;RETL002&quot;,
+                    &quot;code&quot;: &quot;RETL002&quot;,
                     &quot;category_code&quot;: &quot;RETL&quot;,
                     &quot;occupation_desc&quot;: &quot;Promo Girl&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;RETL003&quot;,
+                    &quot;code&quot;: &quot;RETL003&quot;,
                     &quot;category_code&quot;: &quot;RETL&quot;,
                     &quot;occupation_desc&quot;: &quot;Cashier&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;SVC&quot;,
+            &quot;code&quot;: &quot;SVC&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;SVC 24&quot;,
+                    &quot;code&quot;: &quot;SVC 24&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Janitor&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC001&quot;,
+                    &quot;code&quot;: &quot;SVC001&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Employee&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC002&quot;,
+                    &quot;code&quot;: &quot;SVC002&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Private School Teacher&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC003&quot;,
+                    &quot;code&quot;: &quot;SVC003&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Saleslady&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC004&quot;,
+                    &quot;code&quot;: &quot;SVC004&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Barber&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC005&quot;,
+                    &quot;code&quot;: &quot;SVC005&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Masseur&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC006&quot;,
+                    &quot;code&quot;: &quot;SVC006&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Factory Worker&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC007&quot;,
+                    &quot;code&quot;: &quot;SVC007&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Painter&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC008&quot;,
+                    &quot;code&quot;: &quot;SVC008&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Welder&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC009&quot;,
+                    &quot;code&quot;: &quot;SVC009&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Beautician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC010&quot;,
+                    &quot;code&quot;: &quot;SVC010&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Laundrywoman&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC011&quot;,
+                    &quot;code&quot;: &quot;SVC011&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Cook&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC012&quot;,
+                    &quot;code&quot;: &quot;SVC012&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Guest Relations Officer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC013&quot;,
+                    &quot;code&quot;: &quot;SVC013&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Streetsweeper&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC014&quot;,
+                    &quot;code&quot;: &quot;SVC014&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Garbage collector&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC015&quot;,
+                    &quot;code&quot;: &quot;SVC015&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Messenger&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC016&quot;,
+                    &quot;code&quot;: &quot;SVC016&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Social Worker&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC017&quot;,
+                    &quot;code&quot;: &quot;SVC017&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Laborer, skilled&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC018&quot;,
+                    &quot;code&quot;: &quot;SVC018&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Laborer, unskilled&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC019&quot;,
+                    &quot;code&quot;: &quot;SVC019&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Security Guard&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC020&quot;,
+                    &quot;code&quot;: &quot;SVC020&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Service Crew&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC021&quot;,
+                    &quot;code&quot;: &quot;SVC021&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Housemaid&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC022&quot;,
+                    &quot;code&quot;: &quot;SVC022&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Family Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC023&quot;,
+                    &quot;code&quot;: &quot;SVC023&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Company Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC024&quot;,
+                    &quot;code&quot;: &quot;SVC024&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Salesman&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC025&quot;,
+                    &quot;code&quot;: &quot;SVC025&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Carpenter&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC026&quot;,
+                    &quot;code&quot;: &quot;SVC026&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Gardener&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC027&quot;,
+                    &quot;code&quot;: &quot;SVC027&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Actor&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC028&quot;,
+                    &quot;code&quot;: &quot;SVC028&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Actress&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC029&quot;,
+                    &quot;code&quot;: &quot;SVC029&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Bartender&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC030&quot;,
+                    &quot;code&quot;: &quot;SVC030&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Policeman&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC031&quot;,
+                    &quot;code&quot;: &quot;SVC031&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Policewoman&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC032&quot;,
+                    &quot;code&quot;: &quot;SVC032&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Soldier&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC033&quot;,
+                    &quot;code&quot;: &quot;SVC033&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Macho Dancer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC034&quot;,
+                    &quot;code&quot;: &quot;SVC034&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Bouncer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC035&quot;,
+                    &quot;code&quot;: &quot;SVC035&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Aircon Technician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC036&quot;,
+                    &quot;code&quot;: &quot;SVC036&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Waiter&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC037&quot;,
+                    &quot;code&quot;: &quot;SVC037&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Butcher&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC038&quot;,
+                    &quot;code&quot;: &quot;SVC038&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Artist&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC039&quot;,
+                    &quot;code&quot;: &quot;SVC039&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Technician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC040&quot;,
+                    &quot;code&quot;: &quot;SVC040&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Dispatcher&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC041&quot;,
+                    &quot;code&quot;: &quot;SVC041&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Electrician&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC042&quot;,
+                    &quot;code&quot;: &quot;SVC042&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Machine Operator&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC043&quot;,
+                    &quot;code&quot;: &quot;SVC043&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Mason&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC044&quot;,
+                    &quot;code&quot;: &quot;SVC044&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Fireman&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC045&quot;,
+                    &quot;code&quot;: &quot;SVC045&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Domestic Helper&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC046&quot;,
+                    &quot;code&quot;: &quot;SVC046&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Roomboy&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC047&quot;,
+                    &quot;code&quot;: &quot;SVC047&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;OFW&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC048&quot;,
+                    &quot;code&quot;: &quot;SVC048&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Entertainer&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC049&quot;,
+                    &quot;code&quot;: &quot;SVC049&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Helper&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC050&quot;,
+                    &quot;code&quot;: &quot;SVC050&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Manager&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC051&quot;,
+                    &quot;code&quot;: &quot;SVC051&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Clerk&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC052&quot;,
+                    &quot;code&quot;: &quot;SVC052&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Administrator&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;SVC053&quot;,
+                    &quot;code&quot;: &quot;SVC053&quot;,
                     &quot;category_code&quot;: &quot;SVC&quot;,
                     &quot;occupation_desc&quot;: &quot;Sewer&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;TOUR&quot;,
+            &quot;code&quot;: &quot;TOUR&quot;,
             &quot;category_desc&quot;: &quot;Tourism&quot;,
             &quot;occupation&quot;: []
         },
         {
-            &quot;category_code&quot;: &quot;TRANS&quot;,
+            &quot;code&quot;: &quot;TRANS&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS001&quot;,
+                    &quot;code&quot;: &quot;TRANS001&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Jeepney Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS002&quot;,
+                    &quot;code&quot;: &quot;TRANS002&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Taxi Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS003&quot;,
+                    &quot;code&quot;: &quot;TRANS003&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Bus Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS004&quot;,
+                    &quot;code&quot;: &quot;TRANS004&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Truck Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS005&quot;,
+                    &quot;code&quot;: &quot;TRANS005&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Bus Conductor&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS006&quot;,
+                    &quot;code&quot;: &quot;TRANS006&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Tricycle Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS007&quot;,
+                    &quot;code&quot;: &quot;TRANS007&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Pedicab Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS008&quot;,
+                    &quot;code&quot;: &quot;TRANS008&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Calesa Driver&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;TRANS009&quot;,
+                    &quot;code&quot;: &quot;TRANS009&quot;,
                     &quot;category_code&quot;: &quot;TRANS&quot;,
                     &quot;occupation_desc&quot;: &quot;Ambulance Driver&quot;
                 }
             ]
         },
         {
-            &quot;category_code&quot;: &quot;UNSP&quot;,
+            &quot;code&quot;: &quot;UNSP&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation&quot;: [
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP&quot;,
+                    &quot;code&quot;: &quot;UNSP&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;Housewife&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP001&quot;,
+                    &quot;code&quot;: &quot;UNSP001&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;Unspecified&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP002&quot;,
+                    &quot;code&quot;: &quot;UNSP002&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;Businessman&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP003&quot;,
+                    &quot;code&quot;: &quot;UNSP003&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;Retired&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP004&quot;,
+                    &quot;code&quot;: &quot;UNSP004&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;Student&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP005&quot;,
+                    &quot;code&quot;: &quot;UNSP005&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;Photograper&quot;
                 },
                 {
-                    &quot;occupation_code&quot;: &quot;UNSP006&quot;,
+                    &quot;code&quot;: &quot;UNSP006&quot;,
                     &quot;category_code&quot;: &quot;UNSP&quot;,
                     &quot;occupation_desc&quot;: &quot;None&quot;
                 }
@@ -7071,27 +6546,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-occupation-categories--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-occupation-categories--occupationCategory_code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-occupation-categories--id-">
+<span id="example-requests-GETapi-v1-libraries-occupation-categories--occupationCategory_code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/occupation-categories/quod" \
+    --get "http://wahtermelon.test/api/v1/libraries/occupation-categories/AGRI" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/occupation-categories/quod"
+    "http://wahtermelon.test/api/v1/libraries/occupation-categories/AGRI"
 );
 
 const headers = {
@@ -7106,7 +6581,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-occupation-categories--id-">
+<span id="example-responses-GETapi-v1-libraries-occupation-categories--occupationCategory_code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -7123,7 +6598,7 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupationCategory] quod&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupationCategory] 1&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -7151,23 +6626,9 @@ access-control-allow-origin: *
         },
         {
             &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
+            &quot;line&quot;: 185,
             &quot;function&quot;: &quot;handleException&quot;,
             &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
             &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
@@ -7552,57 +7013,57 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-occupation-categories--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-occupation-categories--occupationCategory_code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-occupation-categories--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-occupation-categories--occupationCategory_code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-occupation-categories--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-occupation-categories--occupationCategory_code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-occupation-categories--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-occupation-categories--occupationCategory_code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-occupation-categories--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-occupation-categories--occupationCategory_code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-occupation-categories--id-" data-method="GET"
-      data-path="api/v1/libraries/occupation-categories/{id}"
+<form id="form-GETapi-v1-libraries-occupation-categories--occupationCategory_code-" data-method="GET"
+      data-path="api/v1/libraries/occupation-categories/{occupationCategory_code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-occupation-categories--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-occupation-categories--occupationCategory_code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-occupation-categories--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-occupation-categories--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-occupation-categories--occupationCategory_code-"
+                    onclick="tryItOut('GETapi-v1-libraries-occupation-categories--occupationCategory_code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-occupation-categories--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-occupation-categories--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-occupation-categories--occupationCategory_code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-occupation-categories--occupationCategory_code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-occupation-categories--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-occupation-categories--occupationCategory_code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/occupation-categories/{id}</code></b>
+            <b><code>api/v1/libraries/occupation-categories/{occupationCategory_code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
+                <b><code>occupationCategory_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-occupation-categories--id-"
-               value="quod"
+               name="occupationCategory_code"
+               data-endpoint="GETapi-v1-libraries-occupation-categories--occupationCategory_code-"
+               value="AGRI"
                data-component="url" hidden>
     <br>
-<p>The ID of the occupation category.</p>
+
             </p>
                     </form>
 
@@ -7660,497 +7121,497 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;occupation_code&quot;: &quot;AGRI001&quot;,
+            &quot;code&quot;: &quot;AGRI001&quot;,
             &quot;category_desc&quot;: &quot;Agriculture&quot;,
             &quot;occupation_desc&quot;: &quot;Farmer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;AGRI002&quot;,
+            &quot;code&quot;: &quot;AGRI002&quot;,
             &quot;category_desc&quot;: &quot;Agriculture&quot;,
             &quot;occupation_desc&quot;: &quot;Fisherman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;FOOD001&quot;,
+            &quot;code&quot;: &quot;FOOD001&quot;,
             &quot;category_desc&quot;: &quot;Industry&quot;,
             &quot;occupation_desc&quot;: &quot;Supervisor&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;FOOD002&quot;,
+            &quot;code&quot;: &quot;FOOD002&quot;,
             &quot;category_desc&quot;: &quot;Industry&quot;,
             &quot;occupation_desc&quot;: &quot;Service Engineer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;FOOD003&quot;,
+            &quot;code&quot;: &quot;FOOD003&quot;,
             &quot;category_desc&quot;: &quot;Industry&quot;,
             &quot;occupation_desc&quot;: &quot;Engineer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;FOOD004&quot;,
+            &quot;code&quot;: &quot;FOOD004&quot;,
             &quot;category_desc&quot;: &quot;Industry&quot;,
             &quot;occupation_desc&quot;: &quot;Accountant&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;GOVT&quot;,
+            &quot;code&quot;: &quot;GOVT&quot;,
             &quot;category_desc&quot;: &quot;Government&quot;,
             &quot;occupation_desc&quot;: &quot;Govt Employee&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;GOVT001&quot;,
+            &quot;code&quot;: &quot;GOVT001&quot;,
             &quot;category_desc&quot;: &quot;Government&quot;,
             &quot;occupation_desc&quot;: &quot;Employee&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;GOVT002&quot;,
+            &quot;code&quot;: &quot;GOVT002&quot;,
             &quot;category_desc&quot;: &quot;Government&quot;,
             &quot;occupation_desc&quot;: &quot;Public School Teacher&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH001&quot;,
+            &quot;code&quot;: &quot;HEALTH001&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Physician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH002&quot;,
+            &quot;code&quot;: &quot;HEALTH002&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Nurse&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH003&quot;,
+            &quot;code&quot;: &quot;HEALTH003&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Midwife&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH004&quot;,
+            &quot;code&quot;: &quot;HEALTH004&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Physical Therapist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH005&quot;,
+            &quot;code&quot;: &quot;HEALTH005&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Respiratory Therapist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH006&quot;,
+            &quot;code&quot;: &quot;HEALTH006&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;X-Ray Technician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH007&quot;,
+            &quot;code&quot;: &quot;HEALTH007&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Nurse Aide&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH008&quot;,
+            &quot;code&quot;: &quot;HEALTH008&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Dentist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH009&quot;,
+            &quot;code&quot;: &quot;HEALTH009&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Medical Technologist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH010&quot;,
+            &quot;code&quot;: &quot;HEALTH010&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Pharmacist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH011&quot;,
+            &quot;code&quot;: &quot;HEALTH011&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Dental Technician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH012&quot;,
+            &quot;code&quot;: &quot;HEALTH012&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Reflexologist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH013&quot;,
+            &quot;code&quot;: &quot;HEALTH013&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Pharmacist Aide&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH014&quot;,
+            &quot;code&quot;: &quot;HEALTH014&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Paramedic&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;HEALTH015&quot;,
+            &quot;code&quot;: &quot;HEALTH015&quot;,
             &quot;category_desc&quot;: &quot;Health&quot;,
             &quot;occupation_desc&quot;: &quot;Caregiver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;MAR001&quot;,
+            &quot;code&quot;: &quot;MAR001&quot;,
             &quot;category_desc&quot;: &quot;Maritime&quot;,
             &quot;occupation_desc&quot;: &quot;Seaman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;MFG001&quot;,
+            &quot;code&quot;: &quot;MFG001&quot;,
             &quot;category_desc&quot;: &quot;Manufacturing&quot;,
             &quot;occupation_desc&quot;: &quot;Merchandiser&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;RETL001&quot;,
+            &quot;code&quot;: &quot;RETL001&quot;,
             &quot;category_desc&quot;: &quot;Retail&quot;,
             &quot;occupation_desc&quot;: &quot;Vendor&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;RETL002&quot;,
+            &quot;code&quot;: &quot;RETL002&quot;,
             &quot;category_desc&quot;: &quot;Retail&quot;,
             &quot;occupation_desc&quot;: &quot;Promo Girl&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;RETL003&quot;,
+            &quot;code&quot;: &quot;RETL003&quot;,
             &quot;category_desc&quot;: &quot;Retail&quot;,
             &quot;occupation_desc&quot;: &quot;Cashier&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC 24&quot;,
+            &quot;code&quot;: &quot;SVC 24&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Janitor&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC001&quot;,
+            &quot;code&quot;: &quot;SVC001&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Employee&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC002&quot;,
+            &quot;code&quot;: &quot;SVC002&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Private School Teacher&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC003&quot;,
+            &quot;code&quot;: &quot;SVC003&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Saleslady&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC004&quot;,
+            &quot;code&quot;: &quot;SVC004&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Barber&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC005&quot;,
+            &quot;code&quot;: &quot;SVC005&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Masseur&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC006&quot;,
+            &quot;code&quot;: &quot;SVC006&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Factory Worker&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC007&quot;,
+            &quot;code&quot;: &quot;SVC007&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Painter&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC008&quot;,
+            &quot;code&quot;: &quot;SVC008&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Welder&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC009&quot;,
+            &quot;code&quot;: &quot;SVC009&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Beautician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC010&quot;,
+            &quot;code&quot;: &quot;SVC010&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Laundrywoman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC011&quot;,
+            &quot;code&quot;: &quot;SVC011&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Cook&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC012&quot;,
+            &quot;code&quot;: &quot;SVC012&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Guest Relations Officer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC013&quot;,
+            &quot;code&quot;: &quot;SVC013&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Streetsweeper&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC014&quot;,
+            &quot;code&quot;: &quot;SVC014&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Garbage collector&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC015&quot;,
+            &quot;code&quot;: &quot;SVC015&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Messenger&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC016&quot;,
+            &quot;code&quot;: &quot;SVC016&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Social Worker&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC017&quot;,
+            &quot;code&quot;: &quot;SVC017&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Laborer, skilled&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC018&quot;,
+            &quot;code&quot;: &quot;SVC018&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Laborer, unskilled&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC019&quot;,
+            &quot;code&quot;: &quot;SVC019&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Security Guard&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC020&quot;,
+            &quot;code&quot;: &quot;SVC020&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Service Crew&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC021&quot;,
+            &quot;code&quot;: &quot;SVC021&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Housemaid&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC022&quot;,
+            &quot;code&quot;: &quot;SVC022&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Family Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC023&quot;,
+            &quot;code&quot;: &quot;SVC023&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Company Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC024&quot;,
+            &quot;code&quot;: &quot;SVC024&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Salesman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC025&quot;,
+            &quot;code&quot;: &quot;SVC025&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Carpenter&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC026&quot;,
+            &quot;code&quot;: &quot;SVC026&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Gardener&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC027&quot;,
+            &quot;code&quot;: &quot;SVC027&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Actor&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC028&quot;,
+            &quot;code&quot;: &quot;SVC028&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Actress&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC029&quot;,
+            &quot;code&quot;: &quot;SVC029&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Bartender&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC030&quot;,
+            &quot;code&quot;: &quot;SVC030&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Policeman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC031&quot;,
+            &quot;code&quot;: &quot;SVC031&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Policewoman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC032&quot;,
+            &quot;code&quot;: &quot;SVC032&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Soldier&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC033&quot;,
+            &quot;code&quot;: &quot;SVC033&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Macho Dancer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC034&quot;,
+            &quot;code&quot;: &quot;SVC034&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Bouncer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC035&quot;,
+            &quot;code&quot;: &quot;SVC035&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Aircon Technician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC036&quot;,
+            &quot;code&quot;: &quot;SVC036&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Waiter&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC037&quot;,
+            &quot;code&quot;: &quot;SVC037&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Butcher&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC038&quot;,
+            &quot;code&quot;: &quot;SVC038&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Artist&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC039&quot;,
+            &quot;code&quot;: &quot;SVC039&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Technician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC040&quot;,
+            &quot;code&quot;: &quot;SVC040&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Dispatcher&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC041&quot;,
+            &quot;code&quot;: &quot;SVC041&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Electrician&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC042&quot;,
+            &quot;code&quot;: &quot;SVC042&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Machine Operator&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC043&quot;,
+            &quot;code&quot;: &quot;SVC043&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Mason&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC044&quot;,
+            &quot;code&quot;: &quot;SVC044&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Fireman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC045&quot;,
+            &quot;code&quot;: &quot;SVC045&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Domestic Helper&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC046&quot;,
+            &quot;code&quot;: &quot;SVC046&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Roomboy&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC047&quot;,
+            &quot;code&quot;: &quot;SVC047&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;OFW&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC048&quot;,
+            &quot;code&quot;: &quot;SVC048&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Entertainer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC049&quot;,
+            &quot;code&quot;: &quot;SVC049&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Helper&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC050&quot;,
+            &quot;code&quot;: &quot;SVC050&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Manager&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC051&quot;,
+            &quot;code&quot;: &quot;SVC051&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Clerk&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC052&quot;,
+            &quot;code&quot;: &quot;SVC052&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Administrator&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;SVC053&quot;,
+            &quot;code&quot;: &quot;SVC053&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Sewer&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS001&quot;,
+            &quot;code&quot;: &quot;TRANS001&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Jeepney Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS002&quot;,
+            &quot;code&quot;: &quot;TRANS002&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Taxi Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS003&quot;,
+            &quot;code&quot;: &quot;TRANS003&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Bus Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS004&quot;,
+            &quot;code&quot;: &quot;TRANS004&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Truck Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS005&quot;,
+            &quot;code&quot;: &quot;TRANS005&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Bus Conductor&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS006&quot;,
+            &quot;code&quot;: &quot;TRANS006&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Tricycle Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS007&quot;,
+            &quot;code&quot;: &quot;TRANS007&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Pedicab Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS008&quot;,
+            &quot;code&quot;: &quot;TRANS008&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Calesa Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;TRANS009&quot;,
+            &quot;code&quot;: &quot;TRANS009&quot;,
             &quot;category_desc&quot;: &quot;Transport&quot;,
             &quot;occupation_desc&quot;: &quot;Ambulance Driver&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP&quot;,
+            &quot;code&quot;: &quot;UNSP&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Housewife&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP001&quot;,
+            &quot;code&quot;: &quot;UNSP001&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Unspecified&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP002&quot;,
+            &quot;code&quot;: &quot;UNSP002&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Businessman&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP003&quot;,
+            &quot;code&quot;: &quot;UNSP003&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Retired&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP004&quot;,
+            &quot;code&quot;: &quot;UNSP004&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Student&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP005&quot;,
+            &quot;code&quot;: &quot;UNSP005&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Photograper&quot;
         },
         {
-            &quot;occupation_code&quot;: &quot;UNSP006&quot;,
+            &quot;code&quot;: &quot;UNSP006&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;None&quot;
         }
@@ -8199,27 +7660,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-occupations--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-occupations--code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-occupations--id-">
+<span id="example-requests-GETapi-v1-libraries-occupations--code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/occupations/quas" \
+    --get "http://wahtermelon.test/api/v1/libraries/occupations/AGRI001" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/occupations/quas"
+    "http://wahtermelon.test/api/v1/libraries/occupations/AGRI001"
 );
 
 const headers = {
@@ -8234,7 +7695,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-occupations--id-">
+<span id="example-responses-GETapi-v1-libraries-occupations--code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -8251,7 +7712,7 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupation] quas&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibOccupation] 1&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -8279,23 +7740,9 @@ access-control-allow-origin: *
         },
         {
             &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
+            &quot;line&quot;: 185,
             &quot;function&quot;: &quot;handleException&quot;,
             &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
             &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
@@ -8680,57 +8127,57 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-occupations--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-occupations--code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-occupations--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-occupations--code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-occupations--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-occupations--code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-occupations--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-occupations--code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-occupations--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-occupations--code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-occupations--id-" data-method="GET"
-      data-path="api/v1/libraries/occupations/{id}"
+<form id="form-GETapi-v1-libraries-occupations--code-" data-method="GET"
+      data-path="api/v1/libraries/occupations/{code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-occupations--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-occupations--code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-occupations--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-occupations--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-occupations--code-"
+                    onclick="tryItOut('GETapi-v1-libraries-occupations--code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-occupations--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-occupations--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-occupations--code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-occupations--code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-occupations--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-occupations--code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/occupations/{id}</code></b>
+            <b><code>api/v1/libraries/occupations/{code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
+                <b><code>code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-occupations--id-"
-               value="quas"
+               name="code"
+               data-endpoint="GETapi-v1-libraries-occupations--code-"
+               value="AGRI001"
                data-component="url" hidden>
     <br>
-<p>The ID of the occupation.</p>
+
             </p>
                     </form>
 
@@ -8788,39 +8235,39 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;type_code&quot;: &quot;NA&quot;,
+            &quot;code&quot;: &quot;NA&quot;,
             &quot;type_desc&quot;: &quot;Not Applicable&quot;
         },
         {
-            &quot;type_code&quot;: &quot;CID&quot;,
+            &quot;code&quot;: &quot;CID&quot;,
             &quot;type_desc&quot;: &quot;Chronic Illness&quot;
         },
         {
-            &quot;type_code&quot;: &quot;CD&quot;,
+            &quot;code&quot;: &quot;CD&quot;,
             &quot;type_desc&quot;: &quot;Communication Disability&quot;
         },
         {
-            &quot;type_code&quot;: &quot;LD&quot;,
+            &quot;code&quot;: &quot;LD&quot;,
             &quot;type_desc&quot;: &quot;Learning Disability&quot;
         },
         {
-            &quot;type_code&quot;: &quot;MD&quot;,
+            &quot;code&quot;: &quot;MD&quot;,
             &quot;type_desc&quot;: &quot;Mental Disability&quot;
         },
         {
-            &quot;type_code&quot;: &quot;OD&quot;,
+            &quot;code&quot;: &quot;OD&quot;,
             &quot;type_desc&quot;: &quot;Orthopedic Disability&quot;
         },
         {
-            &quot;type_code&quot;: &quot;PD&quot;,
+            &quot;code&quot;: &quot;PD&quot;,
             &quot;type_desc&quot;: &quot;Psychosocial Disability&quot;
         },
         {
-            &quot;type_code&quot;: &quot;VD&quot;,
+            &quot;code&quot;: &quot;VD&quot;,
             &quot;type_desc&quot;: &quot;Visual Disability&quot;
         },
         {
-            &quot;type_code&quot;: &quot;UN&quot;,
+            &quot;code&quot;: &quot;UN&quot;,
             &quot;type_desc&quot;: &quot;Undefined&quot;
         }
     ]
@@ -8868,27 +8315,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-pwd-types--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-pwd-types--pwdType_code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-pwd-types--id-">
+<span id="example-requests-GETapi-v1-libraries-pwd-types--pwdType_code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/pwd-types/sed" \
+    --get "http://wahtermelon.test/api/v1/libraries/pwd-types/CD" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/pwd-types/sed"
+    "http://wahtermelon.test/api/v1/libraries/pwd-types/CD"
 );
 
 const headers = {
@@ -8903,7 +8350,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-pwd-types--id-">
+<span id="example-responses-GETapi-v1-libraries-pwd-types--pwdType_code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -8920,7 +8367,7 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibPwdType] sed&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibPwdType] 1&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -8948,23 +8395,9 @@ access-control-allow-origin: *
         },
         {
             &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
+            &quot;line&quot;: 185,
             &quot;function&quot;: &quot;handleException&quot;,
             &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
             &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
@@ -9349,57 +8782,57 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-pwd-types--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-pwd-types--pwdType_code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-pwd-types--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-pwd-types--pwdType_code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-pwd-types--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-pwd-types--pwdType_code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-pwd-types--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-pwd-types--pwdType_code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-pwd-types--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-pwd-types--pwdType_code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-pwd-types--id-" data-method="GET"
-      data-path="api/v1/libraries/pwd-types/{id}"
+<form id="form-GETapi-v1-libraries-pwd-types--pwdType_code-" data-method="GET"
+      data-path="api/v1/libraries/pwd-types/{pwdType_code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-pwd-types--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-pwd-types--pwdType_code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-pwd-types--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-pwd-types--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-pwd-types--pwdType_code-"
+                    onclick="tryItOut('GETapi-v1-libraries-pwd-types--pwdType_code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-pwd-types--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-pwd-types--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-pwd-types--pwdType_code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-pwd-types--pwdType_code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-pwd-types--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-pwd-types--pwdType_code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/pwd-types/{id}</code></b>
+            <b><code>api/v1/libraries/pwd-types/{pwdType_code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
+                <b><code>pwdType_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-pwd-types--id-"
-               value="sed"
+               name="pwdType_code"
+               data-endpoint="GETapi-v1-libraries-pwd-types--pwdType_code-"
+               value="CD"
                data-component="url" hidden>
     <br>
-<p>The ID of the pwd type.</p>
+
             </p>
                     </form>
 
@@ -9457,95 +8890,95 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;religion_code&quot;: &quot;AGLIP&quot;,
+            &quot;code&quot;: &quot;AGLIP&quot;,
             &quot;religion_desc&quot;: &quot;Aglipay&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;ALLY&quot;,
+            &quot;code&quot;: &quot;ALLY&quot;,
             &quot;religion_desc&quot;: &quot;Alliance of Bible Christian Communities&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;ANGLI&quot;,
+            &quot;code&quot;: &quot;ANGLI&quot;,
             &quot;religion_desc&quot;: &quot;Anglican&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;BAPTI&quot;,
+            &quot;code&quot;: &quot;BAPTI&quot;,
             &quot;religion_desc&quot;: &quot;Baptist&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;BRNAG&quot;,
+            &quot;code&quot;: &quot;BRNAG&quot;,
             &quot;religion_desc&quot;: &quot;Born Again Christian&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;BUDDH&quot;,
+            &quot;code&quot;: &quot;BUDDH&quot;,
             &quot;religion_desc&quot;: &quot;Buddhism&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;CATHO&quot;,
+            &quot;code&quot;: &quot;CATHO&quot;,
             &quot;religion_desc&quot;: &quot;Catholic&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;CHOG&quot;,
+            &quot;code&quot;: &quot;CHOG&quot;,
             &quot;religion_desc&quot;: &quot;Church of God&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;EVANG&quot;,
+            &quot;code&quot;: &quot;EVANG&quot;,
             &quot;religion_desc&quot;: &quot;Evangelical&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;IGNIK&quot;,
+            &quot;code&quot;: &quot;IGNIK&quot;,
             &quot;religion_desc&quot;: &quot;Iglesia ni Cristo&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;JEWIT&quot;,
+            &quot;code&quot;: &quot;JEWIT&quot;,
             &quot;religion_desc&quot;: &quot;Jehovahs Witness&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;LRCM&quot;,
+            &quot;code&quot;: &quot;LRCM&quot;,
             &quot;religion_desc&quot;: &quot;Life Renewal Christian Ministry&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;LUTHR&quot;,
+            &quot;code&quot;: &quot;LUTHR&quot;,
             &quot;religion_desc&quot;: &quot;Lutheran&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;METOD&quot;,
+            &quot;code&quot;: &quot;METOD&quot;,
             &quot;religion_desc&quot;: &quot;Methodist&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;MORMO&quot;,
+            &quot;code&quot;: &quot;MORMO&quot;,
             &quot;religion_desc&quot;: &quot;LDS-Mormons&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;MUSLI&quot;,
+            &quot;code&quot;: &quot;MUSLI&quot;,
             &quot;religion_desc&quot;: &quot;Islam&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;PENTE&quot;,
+            &quot;code&quot;: &quot;PENTE&quot;,
             &quot;religion_desc&quot;: &quot;Pentecostal&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;PROTE&quot;,
+            &quot;code&quot;: &quot;PROTE&quot;,
             &quot;religion_desc&quot;: &quot;Protestant&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;SVDAY&quot;,
+            &quot;code&quot;: &quot;SVDAY&quot;,
             &quot;religion_desc&quot;: &quot;Seventh Day Adventist&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;UCCP&quot;,
+            &quot;code&quot;: &quot;UCCP&quot;,
             &quot;religion_desc&quot;: &quot;UCCP&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;UNKNO&quot;,
+            &quot;code&quot;: &quot;UNKNO&quot;,
             &quot;religion_desc&quot;: &quot;Unknown&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;WESLY&quot;,
+            &quot;code&quot;: &quot;WESLY&quot;,
             &quot;religion_desc&quot;: &quot;Wesleyan&quot;
         },
         {
-            &quot;religion_code&quot;: &quot;XTIAN&quot;,
+            &quot;code&quot;: &quot;XTIAN&quot;,
             &quot;religion_desc&quot;: &quot;Christian&quot;
         }
     ]
@@ -9593,27 +9026,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-religions--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-religions--code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-religions--id-">
+<span id="example-requests-GETapi-v1-libraries-religions--code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/religions/voluptas" \
+    --get "http://wahtermelon.test/api/v1/libraries/religions/AGLIP" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/religions/voluptas"
+    "http://wahtermelon.test/api/v1/libraries/religions/AGLIP"
 );
 
 const headers = {
@@ -9628,7 +9061,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-religions--id-">
+<span id="example-responses-GETapi-v1-libraries-religions--code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -9645,7 +9078,7 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibReligion] voluptas&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibReligion] 1&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -9673,23 +9106,9 @@ access-control-allow-origin: *
         },
         {
             &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
+            &quot;line&quot;: 185,
             &quot;function&quot;: &quot;handleException&quot;,
             &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
             &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
@@ -10074,57 +9493,57 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-religions--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-religions--code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-religions--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-religions--code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-religions--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-religions--code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-religions--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-religions--code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-religions--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-religions--code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-religions--id-" data-method="GET"
-      data-path="api/v1/libraries/religions/{id}"
+<form id="form-GETapi-v1-libraries-religions--code-" data-method="GET"
+      data-path="api/v1/libraries/religions/{code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-religions--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-religions--code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-religions--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-religions--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-religions--code-"
+                    onclick="tryItOut('GETapi-v1-libraries-religions--code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-religions--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-religions--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-religions--code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-religions--code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-religions--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-religions--code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/religions/{id}</code></b>
+            <b><code>api/v1/libraries/religions/{code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
+                <b><code>code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-religions--id-"
-               value="voluptas"
+               name="code"
+               data-endpoint="GETapi-v1-libraries-religions--code-"
+               value="AGLIP"
                data-component="url" hidden>
     <br>
-<p>The ID of the religion.</p>
+
             </p>
                     </form>
 
@@ -10182,31 +9601,31 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;suffix_code&quot;: &quot;II&quot;,
+            &quot;code&quot;: &quot;II&quot;,
             &quot;suffix_desc&quot;: &quot;II&quot;
         },
         {
-            &quot;suffix_code&quot;: &quot;III&quot;,
+            &quot;code&quot;: &quot;III&quot;,
             &quot;suffix_desc&quot;: &quot;III&quot;
         },
         {
-            &quot;suffix_code&quot;: &quot;IV&quot;,
+            &quot;code&quot;: &quot;IV&quot;,
             &quot;suffix_desc&quot;: &quot;IV&quot;
         },
         {
-            &quot;suffix_code&quot;: &quot;JR&quot;,
+            &quot;code&quot;: &quot;JR&quot;,
             &quot;suffix_desc&quot;: &quot;Jr.&quot;
         },
         {
-            &quot;suffix_code&quot;: &quot;NA&quot;,
+            &quot;code&quot;: &quot;NA&quot;,
             &quot;suffix_desc&quot;: &quot;Not Applicable&quot;
         },
         {
-            &quot;suffix_code&quot;: &quot;SR&quot;,
+            &quot;code&quot;: &quot;SR&quot;,
             &quot;suffix_desc&quot;: &quot;Sr.&quot;
         },
         {
-            &quot;suffix_code&quot;: &quot;V&quot;,
+            &quot;code&quot;: &quot;V&quot;,
             &quot;suffix_desc&quot;: &quot;V&quot;
         }
     ]
@@ -10254,27 +9673,27 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="endpoints-GETapi-v1-libraries-suffix-names--id-">Display the specified resource.</h2>
+                    <h2 id="endpoints-GETapi-v1-libraries-suffix-names--suffixName_code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-suffix-names--id-">
+<span id="example-requests-GETapi-v1-libraries-suffix-names--suffixName_code-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://wahtermelon.test/api/v1/libraries/suffix-names/ut" \
+    --get "http://wahtermelon.test/api/v1/libraries/suffix-names/II" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://wahtermelon.test/api/v1/libraries/suffix-names/ut"
+    "http://wahtermelon.test/api/v1/libraries/suffix-names/II"
 );
 
 const headers = {
@@ -10289,7 +9708,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-suffix-names--id-">
+<span id="example-responses-GETapi-v1-libraries-suffix-names--suffixName_code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -10306,7 +9725,7 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibSuffixName] ut&quot;,
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\V1\\Libraries\\LibSuffixName] 1&quot;,
     &quot;exception&quot;: &quot;Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException&quot;,
     &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php&quot;,
     &quot;line&quot;: 380,
@@ -10334,23 +9753,9 @@ access-control-allow-origin: *
         },
         {
             &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 143,
+            &quot;line&quot;: 185,
             &quot;function&quot;: &quot;handleException&quot;,
             &quot;class&quot;: &quot;Illuminate\\Routing\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
-            &quot;line&quot;: 50,
-            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
-            &quot;type&quot;: &quot;-&gt;&quot;
-        },
-        {
-            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
-            &quot;line&quot;: 180,
-            &quot;function&quot;: &quot;handle&quot;,
-            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
             &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
@@ -10735,57 +10140,57 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-suffix-names--id-" hidden>
+<span id="execution-results-GETapi-v1-libraries-suffix-names--suffixName_code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-suffix-names--id-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-suffix-names--suffixName_code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-suffix-names--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-suffix-names--suffixName_code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-suffix-names--id-" hidden>
+<span id="execution-error-GETapi-v1-libraries-suffix-names--suffixName_code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-suffix-names--id-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-suffix-names--suffixName_code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-suffix-names--id-" data-method="GET"
-      data-path="api/v1/libraries/suffix-names/{id}"
+<form id="form-GETapi-v1-libraries-suffix-names--suffixName_code-" data-method="GET"
+      data-path="api/v1/libraries/suffix-names/{suffixName_code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-suffix-names--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-suffix-names--suffixName_code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-suffix-names--id-"
-                    onclick="tryItOut('GETapi-v1-libraries-suffix-names--id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-suffix-names--suffixName_code-"
+                    onclick="tryItOut('GETapi-v1-libraries-suffix-names--suffixName_code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-suffix-names--id-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-suffix-names--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-suffix-names--suffixName_code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-suffix-names--suffixName_code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-suffix-names--id-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-suffix-names--suffixName_code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/suffix-names/{id}</code></b>
+            <b><code>api/v1/libraries/suffix-names/{suffixName_code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
+                <b><code>suffixName_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="id"
-               data-endpoint="GETapi-v1-libraries-suffix-names--id-"
-               value="ut"
+               name="suffixName_code"
+               data-endpoint="GETapi-v1-libraries-suffix-names--suffixName_code-"
+               value="II"
                data-component="url" hidden>
     <br>
-<p>The ID of the suffix name.</p>
+
             </p>
                     </form>
 
@@ -10851,31 +10256,31 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;blood_type&quot;: &quot;NA&quot;
+            &quot;code&quot;: &quot;NA&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;A-&quot;
+            &quot;code&quot;: &quot;A-&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;A+&quot;
+            &quot;code&quot;: &quot;A+&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;AB-&quot;
+            &quot;code&quot;: &quot;AB-&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;AB+&quot;
+            &quot;code&quot;: &quot;AB+&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;B-&quot;
+            &quot;code&quot;: &quot;B-&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;B+&quot;
+            &quot;code&quot;: &quot;B+&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;O-&quot;
+            &quot;code&quot;: &quot;O-&quot;
         },
         {
-            &quot;blood_type&quot;: &quot;O+&quot;
+            &quot;code&quot;: &quot;O+&quot;
         }
     ]
 }</code>
@@ -10922,14 +10327,14 @@ access-control-allow-origin: *
         </p>
                     </form>
 
-                    <h2 id="libraries-for-patient-module-GETapi-v1-libraries-blood-types--bloodType_blood_type-">Display the specified resource.</h2>
+                    <h2 id="libraries-for-patient-module-GETapi-v1-libraries-blood-types--bloodType_code-">Display the specified resource.</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-libraries-blood-types--bloodType_blood_type-">
+<span id="example-requests-GETapi-v1-libraries-blood-types--bloodType_code-">
 <blockquote>Example request:</blockquote>
 
 
@@ -10957,7 +10362,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-libraries-blood-types--bloodType_blood_type-">
+<span id="example-responses-GETapi-v1-libraries-blood-types--bloodType_code-">
             <blockquote>
             <p>Example response (404):</p>
         </blockquote>
@@ -11389,53 +10794,53 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-libraries-blood-types--bloodType_blood_type-" hidden>
+<span id="execution-results-GETapi-v1-libraries-blood-types--bloodType_code-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-libraries-blood-types--bloodType_blood_type-"></span>:
+                id="execution-response-status-GETapi-v1-libraries-blood-types--bloodType_code-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-blood-types--bloodType_blood_type-"></code></pre>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-libraries-blood-types--bloodType_code-"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-libraries-blood-types--bloodType_blood_type-" hidden>
+<span id="execution-error-GETapi-v1-libraries-blood-types--bloodType_code-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-libraries-blood-types--bloodType_blood_type-"></code></pre>
+    <pre><code id="execution-error-message-GETapi-v1-libraries-blood-types--bloodType_code-"></code></pre>
 </span>
-<form id="form-GETapi-v1-libraries-blood-types--bloodType_blood_type-" data-method="GET"
-      data-path="api/v1/libraries/blood-types/{bloodType_blood_type}"
+<form id="form-GETapi-v1-libraries-blood-types--bloodType_code-" data-method="GET"
+      data-path="api/v1/libraries/blood-types/{bloodType_code}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-blood-types--bloodType_blood_type-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-libraries-blood-types--bloodType_code-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-libraries-blood-types--bloodType_blood_type-"
-                    onclick="tryItOut('GETapi-v1-libraries-blood-types--bloodType_blood_type-');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-libraries-blood-types--bloodType_code-"
+                    onclick="tryItOut('GETapi-v1-libraries-blood-types--bloodType_code-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-libraries-blood-types--bloodType_blood_type-"
-                    onclick="cancelTryOut('GETapi-v1-libraries-blood-types--bloodType_blood_type-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-libraries-blood-types--bloodType_code-"
+                    onclick="cancelTryOut('GETapi-v1-libraries-blood-types--bloodType_code-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-libraries-blood-types--bloodType_blood_type-" hidden>Send Request 💥
+                    id="btn-executetryout-GETapi-v1-libraries-blood-types--bloodType_code-" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/libraries/blood-types/{bloodType_blood_type}</code></b>
+            <b><code>api/v1/libraries/blood-types/{bloodType_code}</code></b>
         </p>
                     <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
-                <b><code>bloodType_blood_type</code></b>&nbsp;&nbsp;
+                <b><code>bloodType_code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="bloodType_blood_type"
-               data-endpoint="GETapi-v1-libraries-blood-types--bloodType_blood_type-"
+               name="bloodType_code"
+               data-endpoint="GETapi-v1-libraries-blood-types--bloodType_code-"
                value="A-"
                data-component="url" hidden>
     <br>

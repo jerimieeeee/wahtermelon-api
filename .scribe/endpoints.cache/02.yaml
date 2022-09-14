@@ -33,7 +33,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"blood_type":"NA"},{"blood_type":"A-"},{"blood_type":"A+"},{"blood_type":"AB-"},{"blood_type":"AB+"},{"blood_type":"B-"},{"blood_type":"B+"},{"blood_type":"O-"},{"blood_type":"O+"}]}'
+        content: '{"data":[{"code":"NA"},{"code":"A-"},{"code":"A+"},{"code":"AB-"},{"code":"AB+"},{"code":"B-"},{"code":"B+"},{"code":"O-"},{"code":"O+"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -51,7 +51,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/blood-types/{bloodType_blood_type}'
+    uri: 'api/v1/libraries/blood-types/{bloodType_code}'
     metadata:
       groupName: 'Libraries for Patient Module'
       groupDescription: |-
@@ -67,15 +67,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      bloodType_blood_type:
-        name: bloodType_blood_type
+      bloodType_code:
+        name: bloodType_code
         description: ''
         required: true
         example: A-
         type: string
         custom: []
     cleanUrlParameters:
-      bloodType_blood_type: A-
+      bloodType_code: A-
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -65,19 +65,19 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: zpaucek@example.net
+        example: acronin@example.net
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: vel
+        example: vitae
         type: string
         custom: []
     cleanBodyParameters:
-      email: zpaucek@example.net
-      password: vel
+      email: acronin@example.net
+      password: vitae
     fileParameters: []
     responses: []
     responseFields: []
@@ -111,14 +111,14 @@ endpoints:
         name: last_name
         description: ''
         required: true
-        example: eius
+        example: porro
         type: string
         custom: []
       first_name:
         name: first_name
         description: ''
         required: true
-        example: sapiente
+        example: et
         type: string
         custom: []
       middle_name:
@@ -132,35 +132,35 @@ endpoints:
         name: suffix_name
         description: ''
         required: true
-        example: est
+        example: quisquam
         type: string
         custom: []
       gender:
         name: gender
         description: ''
         required: true
-        example: reprehenderit
+        example: minus
         type: string
         custom: []
       birthdate:
         name: birthdate
         description: 'Must be a valid date.'
         required: true
-        example: '2022-09-14T10:15:15'
+        example: '2022-09-14T13:02:53'
         type: string
         custom: []
       contact_number:
         name: contact_number
         description: 'Must be at least 11 characters. Must not be greater than 13 characters.'
         required: true
-        example: xuat
+        example: ijrsg
         type: string
         custom: []
       email:
         name: email
         description: 'Must be a valid email address.'
         required: false
-        example: alfonzo.lind@example.net
+        example: nbrekke@example.net
         type: string
         custom: []
       is_active:
@@ -181,34 +181,34 @@ endpoints:
         name: tin_number
         description: 'Must not be greater than 9 characters.'
         required: false
-        example: hpipdgwcj
+        example: fsxxzdxfg
         type: string
         custom: []
       accreditation_number:
         name: accreditation_number
         description: 'Must not be greater than 14 characters.'
         required: false
-        example: nvv
+        example: yjsjzwsz
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: enim
+        example: autem
         type: string
         custom: []
     cleanBodyParameters:
-      last_name: eius
-      first_name: sapiente
-      suffix_name: est
-      gender: reprehenderit
-      birthdate: '2022-09-14T10:15:15'
-      contact_number: xuat
-      email: alfonzo.lind@example.net
-      tin_number: hpipdgwcj
-      accreditation_number: nvv
-      password: enim
+      last_name: porro
+      first_name: et
+      suffix_name: quisquam
+      gender: minus
+      birthdate: '2022-09-14T13:02:53'
+      contact_number: ijrsg
+      email: nbrekke@example.net
+      tin_number: fsxxzdxfg
+      accreditation_number: yjsjzwsz
+      password: autem
     fileParameters: []
     responses: []
     responseFields: []
@@ -243,7 +243,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"last_name":"Collins","first_name":"Corene","middle_name":"Konopelski","suffix_code":"NA","birthdate":"1989-01-05","mothers_name":"Gabriella Konopelski","gender":"F","mobile_number":"053-221-621","pwd_status_code":null,"indegenous_flag":true,"blood_type":"A+","religion_code":"UNKNO","occupation_code":"SVC002","education_id":4,"civil_status_id":"SNGL","consent_flag":false,"image_url":null,"created_at":"2022-09-14 09:49:19","updated_at":"2022-09-14 09:49:19"},{"last_name":"Considine","first_name":"Harmon","middle_name":"Osinski","suffix_code":"SR","birthdate":"1997-02-06","mothers_name":"Cassidy Osinski","gender":"M","mobile_number":"505-244-220","pwd_status_code":null,"indegenous_flag":false,"blood_type":"A+","religion_code":"JEWIT","occupation_code":"FOOD004","education_id":1,"civil_status_id":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-12 16:53:47","updated_at":"2022-09-12 16:53:47"},{"last_name":"Davis","first_name":"Jerrod","middle_name":"Okuneva","suffix_code":"II","birthdate":"2003-03-18","mothers_name":"Opal Okuneva","gender":"M","mobile_number":"846-335-358","pwd_status_code":null,"indegenous_flag":true,"blood_type":"O+","religion_code":"WESLY","occupation_code":"UNSP006","education_id":6,"civil_status_id":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-12 17:01:31","updated_at":"2022-09-12 17:01:31"},{"last_name":"Dibbert","first_name":"Celine","middle_name":"Nolan","suffix_code":"NA","birthdate":"1979-02-21","mothers_name":"Carmella Nolan","gender":"F","mobile_number":"534-990-755","pwd_status_code":null,"indegenous_flag":false,"blood_type":"NA","religion_code":"IGNIK","occupation_code":"SVC036","education_id":1,"civil_status_id":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-13 07:58:28","updated_at":"2022-09-13 07:58:28"},{"last_name":"Emmerich","first_name":"Chelsea","middle_name":"Hammes","suffix_code":"NA","birthdate":"2002-10-16","mothers_name":"Henriette Hammes","gender":"F","mobile_number":"489-523-848","pwd_status_code":null,"indegenous_flag":false,"blood_type":"A+","religion_code":"EVANG","occupation_code":"FOOD003","education_id":1,"civil_status_id":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-12 15:10:48","updated_at":"2022-09-12 15:10:48"},{"last_name":"Kihn","first_name":"Johnpaul","middle_name":"Kuphal","suffix_code":"IV","birthdate":"1984-07-22","mothers_name":"Etha Kuphal","gender":"M","mobile_number":"123-412-623","pwd_status_code":null,"indegenous_flag":true,"blood_type":"O+","religion_code":"METOD","occupation_code":"SVC014","education_id":8,"civil_status_id":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-12 15:10:30","updated_at":"2022-09-12 15:10:30"},{"last_name":"Lakin","first_name":"Bret","middle_name":"Kuhn","suffix_code":"III","birthdate":"1993-04-26","mothers_name":"Ozella Kuhn","gender":"M","mobile_number":"222-386-389","pwd_status_code":null,"indegenous_flag":true,"blood_type":"A+","religion_code":"CHOG","occupation_code":"SVC009","education_id":3,"civil_status_id":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 09:49:18","updated_at":"2022-09-14 09:49:18"},{"last_name":"Larkin","first_name":"Jordane","middle_name":"Boyle","suffix_code":"NA","birthdate":"1978-12-30","mothers_name":"Kaitlyn Boyle","gender":"F","mobile_number":"310-190-797","pwd_status_code":null,"indegenous_flag":true,"blood_type":"NA","religion_code":"BAPTI","occupation_code":"SVC025","education_id":5,"civil_status_id":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-12 14:42:01","updated_at":"2022-09-12 14:42:01"},{"last_name":"Lehner","first_name":"Karen","middle_name":"Crona","suffix_code":"NA","birthdate":"1989-08-27","mothers_name":"Trinity Crona","gender":"F","mobile_number":"877-037-580","pwd_status_code":null,"indegenous_flag":false,"blood_type":"O+","religion_code":"XTIAN","occupation_code":"HEALTH003","education_id":7,"civil_status_id":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-13 10:40:14","updated_at":"2022-09-13 10:40:14"},{"last_name":"Lesch","first_name":"Olin","middle_name":"Streich","suffix_code":"NA","birthdate":"2012-05-27","mothers_name":"Juana Streich","gender":"M","mobile_number":"642-971-585","pwd_status_code":null,"indegenous_flag":false,"blood_type":"A+","religion_code":"BAPTI","occupation_code":"SVC008","education_id":5,"civil_status_id":"CHBTN","consent_flag":false,"image_url":null,"created_at":"2022-09-13 07:58:28","updated_at":"2022-09-13 07:58:28"},{"last_name":"Mosciski","first_name":"Bethel","middle_name":"O''connell","suffix_code":"NA","birthdate":"1993-06-19","mothers_name":"Adeline O''connell","gender":"F","mobile_number":"457-913-687","pwd_status_code":null,"indegenous_flag":true,"blood_type":"B-","religion_code":"BRNAG","occupation_code":"SVC030","education_id":2,"civil_status_id":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-12 16:53:47","updated_at":"2022-09-12 16:53:47"},{"last_name":"Pfannerstill","first_name":"Kaia","middle_name":"Rosenbaum","suffix_code":"NA","birthdate":"1989-04-25","mothers_name":"Vivienne Rosenbaum","gender":"F","mobile_number":"074-410-327","pwd_status_code":null,"indegenous_flag":true,"blood_type":"AB-","religion_code":"MORMO","occupation_code":"SVC030","education_id":7,"civil_status_id":"WDWD","consent_flag":true,"image_url":null,"created_at":"2022-09-12 14:42:02","updated_at":"2022-09-12 14:42:02"},{"last_name":"Prohaska","first_name":"Emiliano","middle_name":"Thompson","suffix_code":"NA","birthdate":"1999-11-26","mothers_name":"Minnie Thompson","gender":"M","mobile_number":"642-278-283","pwd_status_code":null,"indegenous_flag":false,"blood_type":"B-","religion_code":"XTIAN","occupation_code":"HEALTH005","education_id":2,"civil_status_id":"WDWD","consent_flag":false,"image_url":null,"created_at":"2022-09-12 15:10:29","updated_at":"2022-09-12 15:10:29"},{"last_name":"Rice","first_name":"Jaiden","middle_name":"Ratke","suffix_code":"V","birthdate":"1974-12-19","mothers_name":"Delia Ratke","gender":"M","mobile_number":"668-071-313","pwd_status_code":null,"indegenous_flag":true,"blood_type":"B+","religion_code":"BRNAG","occupation_code":"SVC028","education_id":4,"civil_status_id":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-13 10:40:14","updated_at":"2022-09-13 10:40:14"},{"last_name":"Tromp","first_name":"Hilton","middle_name":"Goyette","suffix_code":"JR","birthdate":"2003-11-02","mothers_name":"Sandrine Goyette","gender":"M","mobile_number":"868-380-408","pwd_status_code":null,"indegenous_flag":true,"blood_type":"B+","religion_code":"PENTE","occupation_code":"SVC027","education_id":4,"civil_status_id":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-12 17:01:31","updated_at":"2022-09-12 17:01:31"}],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","prev":null,"next":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2"},"meta":{"current_page":1,"from":1,"last_page":2,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","label":"1","active":true},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"2","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/patient","per_page":15,"to":15,"total":16}}'
+        content: '{"data":[{"last_name":"Bernhard","first_name":"Golden","middle_name":"Cartwright","suffix_code":"III","birthdate":"1972-02-02","mothers_name":"Zita Cartwright","gender":"M","mobile_number":"295-077-011","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"A+","religion_code":"XTIAN","occupation_code":"SVC009","education_code":8,"civil_status_code":"SPRTD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:35:13","updated_at":"2022-09-14 12:35:13"},{"last_name":"Gaylord","first_name":"Jackie","middle_name":"Baumbach","suffix_code":"NA","birthdate":"1994-06-04","mothers_name":"Aliza Baumbach","gender":"F","mobile_number":"015-579-482","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"IGNIK","occupation_code":"SVC001","education_code":7,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"Goyette","first_name":"Benjamin","middle_name":"Feest","suffix_code":"SR","birthdate":"2007-10-21","mothers_name":"Jena Feest","gender":"M","mobile_number":"551-525-749","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"CATHO","occupation_code":"TRANS006","education_code":5,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:01:19","updated_at":"2022-09-14 13:01:19"},{"last_name":"Hegmann","first_name":"Dina","middle_name":"Heaney","suffix_code":"NA","birthdate":"1978-01-25","mothers_name":"Jeanie Heaney","gender":"F","mobile_number":"982-407-289","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"ANGLI","occupation_code":"SVC021","education_code":1,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:26:57","updated_at":"2022-09-14 12:26:57"},{"last_name":"Jacobson","first_name":"Craig","middle_name":"Herzog","suffix_code":"V","birthdate":"1983-10-12","mothers_name":"Alyson Herzog","gender":"M","mobile_number":"393-499-081","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"LRCM","occupation_code":"SVC007","education_code":5,"civil_status_code":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:32:40","updated_at":"2022-09-14 12:32:40"},{"last_name":"Konopelski","first_name":"Joseph","middle_name":"Huels","suffix_code":"II","birthdate":"2002-10-26","mothers_name":"Jaqueline Huels","gender":"M","mobile_number":"645-563-992","pwd_type_code":"LD","indegenous_flag":true,"blood_type_code":"B+","religion_code":"MUSLI","occupation_code":"SVC004","education_code":5,"civil_status_code":"WDWD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:35:12","updated_at":"2022-09-14 12:35:12"},{"last_name":"Mccullough","first_name":"Caleigh","middle_name":"Klein","suffix_code":"NA","birthdate":"1989-10-01","mothers_name":"Emelie Klein","gender":"F","mobile_number":"048-972-273","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"MORMO","occupation_code":"HEALTH007","education_code":3,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"O''connell","first_name":"Madison","middle_name":"Blanda","suffix_code":"IV","birthdate":"1994-12-14","mothers_name":"Elyssa Blanda","gender":"M","mobile_number":"132-869-517","pwd_type_code":"VD","indegenous_flag":true,"blood_type_code":"AB+","religion_code":"LUTHR","occupation_code":"SVC006","education_code":8,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:29:17","updated_at":"2022-09-14 12:29:17"},{"last_name":"Parisian","first_name":"Jaiden","middle_name":"Okuneva","suffix_code":"II","birthdate":"2003-07-06","mothers_name":"Genesis Okuneva","gender":"M","mobile_number":"709-886-934","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"B+","religion_code":"AGLIP","occupation_code":"SVC033","education_code":7,"civil_status_code":"WDWD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:33:58","updated_at":"2022-09-14 12:33:58"},{"last_name":"Strosin","first_name":"Letitia","middle_name":"Streich","suffix_code":"NA","birthdate":"1990-08-29","mothers_name":"Yasmeen Streich","gender":"F","mobile_number":"907-203-883","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"MUSLI","occupation_code":"MAR001","education_code":4,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:33:58","updated_at":"2022-09-14 12:33:58"},{"last_name":"Torp","first_name":"Maynard","middle_name":"Schamberger","suffix_code":"III","birthdate":"2013-08-11","mothers_name":"Elnora Schamberger","gender":"M","mobile_number":"122-349-792","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O-","religion_code":"BUDDH","occupation_code":"SVC001","education_code":2,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 13:01:19","updated_at":"2022-09-14 13:01:19"}],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/patient","per_page":15,"to":11,"total":11}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -290,14 +290,14 @@ endpoints:
         name: last_name
         description: ''
         required: true
-        example: expedita
+        example: iste
         type: string
         custom: []
       first_name:
         name: first_name
         description: ''
         required: true
-        example: voluptas
+        example: repellendus
         type: string
         custom: []
       middle_name:
@@ -311,35 +311,35 @@ endpoints:
         name: suffix_name
         description: ''
         required: true
-        example: distinctio
+        example: temporibus
         type: string
         custom: []
       birthdate:
         name: birthdate
         description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.'
         required: true
-        example: '2004-01-08'
+        example: '2011-02-26'
         type: string
         custom: []
       mothers_name:
         name: mothers_name
         description: ''
         required: true
-        example: voluptas
+        example: fugiat
         type: string
         custom: []
       gender:
         name: gender
         description: ''
         required: true
-        example: magni
+        example: accusamus
         type: string
         custom: []
       mobile_number:
         name: mobile_number
         description: 'Must be at least 11 characters. Must not be greater than 13 characters.'
         required: true
-        example: u
+        example: xwxcty
         type: string
         custom: []
       pwd_status_code:
@@ -353,11 +353,11 @@ endpoints:
         name: indegenous_flag
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         custom: []
-      blood_type:
-        name: blood_type
+      blood_type_code:
+        name: blood_type_code
         description: ''
         required: false
         example: null
@@ -367,28 +367,28 @@ endpoints:
         name: religion_code
         description: ''
         required: true
-        example: voluptates
+        example: perferendis
         type: string
         custom: []
       occupation_code:
         name: occupation_code
         description: ''
         required: true
-        example: ad
+        example: autem
         type: string
         custom: []
-      education_id:
-        name: education_id
+      education_code:
+        name: education_code
         description: ''
         required: true
-        example: dolore
+        example: dolor
         type: string
         custom: []
-      civil_status_id:
-        name: civil_status_id
+      civil_status_code:
+        name: civil_status_code
         description: ''
         required: true
-        example: sapiente
+        example: eius
         type: string
         custom: []
       consent_flag:
@@ -402,24 +402,24 @@ endpoints:
         name: image_url
         description: 'Must be a valid URL.'
         required: false
-        example: 'https://yundt.com/et-ut-consequatur-pariatur-voluptas-cumque.html'
+        example: 'http://russel.com/facilis-accusamus-minima-sequi-exercitationem'
         type: string
         custom: []
     cleanBodyParameters:
-      last_name: expedita
-      first_name: voluptas
-      suffix_name: distinctio
-      birthdate: '2004-01-08'
-      mothers_name: voluptas
-      gender: magni
-      mobile_number: u
-      indegenous_flag: true
-      religion_code: voluptates
-      occupation_code: ad
-      education_id: dolore
-      civil_status_id: sapiente
+      last_name: iste
+      first_name: repellendus
+      suffix_name: temporibus
+      birthdate: '2011-02-26'
+      mothers_name: fugiat
+      gender: accusamus
+      mobile_number: xwxcty
+      indegenous_flag: false
+      religion_code: perferendis
+      occupation_code: autem
+      education_code: dolor
+      civil_status_code: eius
       consent_flag: true
-      image_url: 'https://yundt.com/et-ut-consequatur-pariatur-voluptas-cumque.html'
+      image_url: 'http://russel.com/facilis-accusamus-minima-sequi-exercitationem'
     fileParameters: []
     responses: []
     responseFields: []
@@ -2470,7 +2470,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"status_id":"ANLD","status_desc":"Annulled"},{"status_id":"CHBTN","status_desc":"Co-Habitation"},{"status_id":"MRRD","status_desc":"Married"},{"status_id":"SNGL","status_desc":"Single"},{"status_id":"SPRTD","status_desc":"Separated"},{"status_id":"WDWD","status_desc":"Widowed"}]}'
+        content: '{"data":[{"code":"ANLD","status_desc":"Annulled"},{"code":"CHBTN","status_desc":"Co-Habitation"},{"code":"MRRD","status_desc":"Married"},{"code":"SNGL","status_desc":"Single"},{"code":"SPRTD","status_desc":"Separated"},{"code":"WDWD","status_desc":"Widowed"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2488,7 +2488,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/civil-statuses/{id}'
+    uri: 'api/v1/libraries/civil-statuses/{civilStatus_code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -2502,15 +2502,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the civil status.'
+      civilStatus_code:
+        name: civilStatus_code
+        description: ''
         required: true
-        example: porro
+        example: ANLD
         type: string
         custom: []
     cleanUrlParameters:
-      id: porro
+      civilStatus_code: ANLD
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2521,7 +2521,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibCivilStatus] porro",
+              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibCivilStatus] 1",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
               "line": 380,
@@ -2549,23 +2549,9 @@ endpoints:
                   },
                   {
                       "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
+                      "line": 185,
                       "function": "handleException",
                       "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
                       "type": "->"
                   },
                   {
@@ -2988,7 +2974,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"education_id":1,"education_desc":"Elementary Education"},{"education_id":2,"education_desc":"High School Education"},{"education_id":3,"education_desc":"College"},{"education_id":4,"education_desc":"Postgraduate Program"},{"education_id":5,"education_desc":"No Formal Education - No Schooling"},{"education_id":6,"education_desc":"Not Applicable"},{"education_id":7,"education_desc":"Vocational"},{"education_id":8,"education_desc":"Others"}]}'
+        content: '{"data":[{"code":1,"education_desc":"Elementary Education"},{"code":2,"education_desc":"High School Education"},{"code":3,"education_desc":"College"},{"code":4,"education_desc":"Postgraduate Program"},{"code":5,"education_desc":"No Formal Education - No Schooling"},{"code":6,"education_desc":"Not Applicable"},{"code":7,"education_desc":"Vocational"},{"code":8,"education_desc":"Others"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3006,7 +2992,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/education/{id}'
+    uri: 'api/v1/libraries/education/{code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -3020,15 +3006,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the education.'
+      code:
+        name: code
+        description: ''
         required: true
-        example: doloribus
-        type: string
+        example: 1
+        type: integer
         custom: []
     cleanUrlParameters:
-      id: doloribus
+      code: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3036,436 +3022,8 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibEducation] doloribus",
-              "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
-              "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-              "line": 380,
-              "trace": [
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
-                      "line": 356,
-                      "function": "prepareException",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php",
-                      "line": 54,
-                      "function": "render",
-                      "class": "Illuminate\\Foundation\\Exceptions\\Handler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
-                      "line": 51,
-                      "function": "render",
-                      "class": "NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
-                      "function": "handleException",
-                      "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 126,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 102,
-                      "function": "handleRequest",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
-                      "line": 54,
-                      "function": "handleRequestUsingNamedLimiter",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 726,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 703,
-                      "function": "runRouteWithinStack",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 667,
-                      "function": "runRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
-                      "line": 656,
-                      "function": "dispatchToRoute",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 167,
-                      "function": "dispatch",
-                      "class": "Illuminate\\Routing\\Router",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 141,
-                      "function": "Illuminate\\Foundation\\Http\\{closure}",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php",
-                      "line": 31,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
-                      "line": 21,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php",
-                      "line": 40,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php",
-                      "line": 27,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php",
-                      "line": 86,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php",
-                      "line": 62,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\HandleCors",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php",
-                      "line": 39,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 116,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 142,
-                      "function": "then",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
-                      "line": 111,
-                      "function": "sendRequestThroughRouter",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 299,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Http\\Kernel",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 287,
-                      "function": "callLaravelOrLumenRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 89,
-                      "function": "makeApiCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 45,
-                      "function": "makeResponseCall",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
-                      "line": 35,
-                      "function": "makeResponseCallIfConditionsPass",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 209,
-                      "function": "__invoke",
-                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 166,
-                      "function": "iterateThroughStrategies",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
-                      "line": 95,
-                      "function": "fetchResponses",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 122,
-                      "function": "processRoute",
-                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 69,
-                      "function": "extractEndpointsInfoFromLaravelApp",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
-                      "line": 47,
-                      "function": "extractEndpointsInfoAndWriteToDisk",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php",
-                      "line": 53,
-                      "function": "get",
-                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 36,
-                      "function": "handle",
-                      "class": "Knuckles\\Scribe\\Commands\\GenerateDocumentation",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php",
-                      "line": 41,
-                      "function": "Illuminate\\Container\\{closure}",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 93,
-                      "function": "unwrapIfClosure",
-                      "class": "Illuminate\\Container\\Util",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
-                      "line": 37,
-                      "function": "callBoundMethod",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php",
-                      "line": 651,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\BoundMethod",
-                      "type": "::"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 144,
-                      "function": "call",
-                      "class": "Illuminate\\Container\\Container",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php",
-                      "line": 308,
-                      "function": "execute",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
-                      "line": 126,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Command\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 1002,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Command",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 299,
-                      "function": "doRunCommand",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
-                      "line": 171,
-                      "function": "doRun",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php",
-                      "line": 102,
-                      "function": "run",
-                      "class": "Symfony\\Component\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php",
-                      "line": 129,
-                      "function": "run",
-                      "class": "Illuminate\\Console\\Application",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/artisan",
-                      "line": 37,
-                      "function": "handle",
-                      "class": "Illuminate\\Foundation\\Console\\Kernel",
-                      "type": "->"
-                  }
-              ]
-          }
+        status: 200
+        content: '{"data":{"code":1,"education_desc":"Elementary Education"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3506,7 +3064,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"category_code":"AGRI","category_desc":"Agriculture","occupation":[{"occupation_code":"AGRI001","category_code":"AGRI","occupation_desc":"Farmer"},{"occupation_code":"AGRI002","category_code":"AGRI","occupation_desc":"Fisherman"}]},{"category_code":"EDUC","category_desc":"Education","occupation":[]},{"category_code":"FOOD","category_desc":"Industry","occupation":[{"occupation_code":"FOOD001","category_code":"FOOD","occupation_desc":"Supervisor"},{"occupation_code":"FOOD002","category_code":"FOOD","occupation_desc":"Service Engineer"},{"occupation_code":"FOOD003","category_code":"FOOD","occupation_desc":"Engineer"},{"occupation_code":"FOOD004","category_code":"FOOD","occupation_desc":"Accountant"}]},{"category_code":"GOVT","category_desc":"Government","occupation":[{"occupation_code":"GOVT","category_code":"GOVT","occupation_desc":"Govt Employee"},{"occupation_code":"GOVT001","category_code":"GOVT","occupation_desc":"Employee"},{"occupation_code":"GOVT002","category_code":"GOVT","occupation_desc":"Public School Teacher"}]},{"category_code":"HEALTH","category_desc":"Health","occupation":[{"occupation_code":"HEALTH001","category_code":"HEALTH","occupation_desc":"Physician"},{"occupation_code":"HEALTH002","category_code":"HEALTH","occupation_desc":"Nurse"},{"occupation_code":"HEALTH003","category_code":"HEALTH","occupation_desc":"Midwife"},{"occupation_code":"HEALTH004","category_code":"HEALTH","occupation_desc":"Physical Therapist"},{"occupation_code":"HEALTH005","category_code":"HEALTH","occupation_desc":"Respiratory Therapist"},{"occupation_code":"HEALTH006","category_code":"HEALTH","occupation_desc":"X-Ray Technician"},{"occupation_code":"HEALTH007","category_code":"HEALTH","occupation_desc":"Nurse Aide"},{"occupation_code":"HEALTH008","category_code":"HEALTH","occupation_desc":"Dentist"},{"occupation_code":"HEALTH009","category_code":"HEALTH","occupation_desc":"Medical Technologist"},{"occupation_code":"HEALTH010","category_code":"HEALTH","occupation_desc":"Pharmacist"},{"occupation_code":"HEALTH011","category_code":"HEALTH","occupation_desc":"Dental Technician"},{"occupation_code":"HEALTH012","category_code":"HEALTH","occupation_desc":"Reflexologist"},{"occupation_code":"HEALTH013","category_code":"HEALTH","occupation_desc":"Pharmacist Aide"},{"occupation_code":"HEALTH014","category_code":"HEALTH","occupation_desc":"Paramedic"},{"occupation_code":"HEALTH015","category_code":"HEALTH","occupation_desc":"Caregiver"}]},{"category_code":"MAR","category_desc":"Maritime","occupation":[{"occupation_code":"MAR001","category_code":"MAR","occupation_desc":"Seaman"}]},{"category_code":"MFG","category_desc":"Manufacturing","occupation":[{"occupation_code":"MFG001","category_code":"MFG","occupation_desc":"Merchandiser"}]},{"category_code":"RETL","category_desc":"Retail","occupation":[{"occupation_code":"RETL001","category_code":"RETL","occupation_desc":"Vendor"},{"occupation_code":"RETL002","category_code":"RETL","occupation_desc":"Promo Girl"},{"occupation_code":"RETL003","category_code":"RETL","occupation_desc":"Cashier"}]},{"category_code":"SVC","category_desc":"Service","occupation":[{"occupation_code":"SVC 24","category_code":"SVC","occupation_desc":"Janitor"},{"occupation_code":"SVC001","category_code":"SVC","occupation_desc":"Employee"},{"occupation_code":"SVC002","category_code":"SVC","occupation_desc":"Private School Teacher"},{"occupation_code":"SVC003","category_code":"SVC","occupation_desc":"Saleslady"},{"occupation_code":"SVC004","category_code":"SVC","occupation_desc":"Barber"},{"occupation_code":"SVC005","category_code":"SVC","occupation_desc":"Masseur"},{"occupation_code":"SVC006","category_code":"SVC","occupation_desc":"Factory Worker"},{"occupation_code":"SVC007","category_code":"SVC","occupation_desc":"Painter"},{"occupation_code":"SVC008","category_code":"SVC","occupation_desc":"Welder"},{"occupation_code":"SVC009","category_code":"SVC","occupation_desc":"Beautician"},{"occupation_code":"SVC010","category_code":"SVC","occupation_desc":"Laundrywoman"},{"occupation_code":"SVC011","category_code":"SVC","occupation_desc":"Cook"},{"occupation_code":"SVC012","category_code":"SVC","occupation_desc":"Guest Relations Officer"},{"occupation_code":"SVC013","category_code":"SVC","occupation_desc":"Streetsweeper"},{"occupation_code":"SVC014","category_code":"SVC","occupation_desc":"Garbage collector"},{"occupation_code":"SVC015","category_code":"SVC","occupation_desc":"Messenger"},{"occupation_code":"SVC016","category_code":"SVC","occupation_desc":"Social Worker"},{"occupation_code":"SVC017","category_code":"SVC","occupation_desc":"Laborer, skilled"},{"occupation_code":"SVC018","category_code":"SVC","occupation_desc":"Laborer, unskilled"},{"occupation_code":"SVC019","category_code":"SVC","occupation_desc":"Security Guard"},{"occupation_code":"SVC020","category_code":"SVC","occupation_desc":"Service Crew"},{"occupation_code":"SVC021","category_code":"SVC","occupation_desc":"Housemaid"},{"occupation_code":"SVC022","category_code":"SVC","occupation_desc":"Family Driver"},{"occupation_code":"SVC023","category_code":"SVC","occupation_desc":"Company Driver"},{"occupation_code":"SVC024","category_code":"SVC","occupation_desc":"Salesman"},{"occupation_code":"SVC025","category_code":"SVC","occupation_desc":"Carpenter"},{"occupation_code":"SVC026","category_code":"SVC","occupation_desc":"Gardener"},{"occupation_code":"SVC027","category_code":"SVC","occupation_desc":"Actor"},{"occupation_code":"SVC028","category_code":"SVC","occupation_desc":"Actress"},{"occupation_code":"SVC029","category_code":"SVC","occupation_desc":"Bartender"},{"occupation_code":"SVC030","category_code":"SVC","occupation_desc":"Policeman"},{"occupation_code":"SVC031","category_code":"SVC","occupation_desc":"Policewoman"},{"occupation_code":"SVC032","category_code":"SVC","occupation_desc":"Soldier"},{"occupation_code":"SVC033","category_code":"SVC","occupation_desc":"Macho Dancer"},{"occupation_code":"SVC034","category_code":"SVC","occupation_desc":"Bouncer"},{"occupation_code":"SVC035","category_code":"SVC","occupation_desc":"Aircon Technician"},{"occupation_code":"SVC036","category_code":"SVC","occupation_desc":"Waiter"},{"occupation_code":"SVC037","category_code":"SVC","occupation_desc":"Butcher"},{"occupation_code":"SVC038","category_code":"SVC","occupation_desc":"Artist"},{"occupation_code":"SVC039","category_code":"SVC","occupation_desc":"Technician"},{"occupation_code":"SVC040","category_code":"SVC","occupation_desc":"Dispatcher"},{"occupation_code":"SVC041","category_code":"SVC","occupation_desc":"Electrician"},{"occupation_code":"SVC042","category_code":"SVC","occupation_desc":"Machine Operator"},{"occupation_code":"SVC043","category_code":"SVC","occupation_desc":"Mason"},{"occupation_code":"SVC044","category_code":"SVC","occupation_desc":"Fireman"},{"occupation_code":"SVC045","category_code":"SVC","occupation_desc":"Domestic Helper"},{"occupation_code":"SVC046","category_code":"SVC","occupation_desc":"Roomboy"},{"occupation_code":"SVC047","category_code":"SVC","occupation_desc":"OFW"},{"occupation_code":"SVC048","category_code":"SVC","occupation_desc":"Entertainer"},{"occupation_code":"SVC049","category_code":"SVC","occupation_desc":"Helper"},{"occupation_code":"SVC050","category_code":"SVC","occupation_desc":"Manager"},{"occupation_code":"SVC051","category_code":"SVC","occupation_desc":"Clerk"},{"occupation_code":"SVC052","category_code":"SVC","occupation_desc":"Administrator"},{"occupation_code":"SVC053","category_code":"SVC","occupation_desc":"Sewer"}]},{"category_code":"TOUR","category_desc":"Tourism","occupation":[]},{"category_code":"TRANS","category_desc":"Transport","occupation":[{"occupation_code":"TRANS001","category_code":"TRANS","occupation_desc":"Jeepney Driver"},{"occupation_code":"TRANS002","category_code":"TRANS","occupation_desc":"Taxi Driver"},{"occupation_code":"TRANS003","category_code":"TRANS","occupation_desc":"Bus Driver"},{"occupation_code":"TRANS004","category_code":"TRANS","occupation_desc":"Truck Driver"},{"occupation_code":"TRANS005","category_code":"TRANS","occupation_desc":"Bus Conductor"},{"occupation_code":"TRANS006","category_code":"TRANS","occupation_desc":"Tricycle Driver"},{"occupation_code":"TRANS007","category_code":"TRANS","occupation_desc":"Pedicab Driver"},{"occupation_code":"TRANS008","category_code":"TRANS","occupation_desc":"Calesa Driver"},{"occupation_code":"TRANS009","category_code":"TRANS","occupation_desc":"Ambulance Driver"}]},{"category_code":"UNSP","category_desc":"Unspecified","occupation":[{"occupation_code":"UNSP","category_code":"UNSP","occupation_desc":"Housewife"},{"occupation_code":"UNSP001","category_code":"UNSP","occupation_desc":"Unspecified"},{"occupation_code":"UNSP002","category_code":"UNSP","occupation_desc":"Businessman"},{"occupation_code":"UNSP003","category_code":"UNSP","occupation_desc":"Retired"},{"occupation_code":"UNSP004","category_code":"UNSP","occupation_desc":"Student"},{"occupation_code":"UNSP005","category_code":"UNSP","occupation_desc":"Photograper"},{"occupation_code":"UNSP006","category_code":"UNSP","occupation_desc":"None"}]}]}'
+        content: '{"data":[{"code":"AGRI","category_desc":"Agriculture","occupation":[{"code":"AGRI001","category_code":"AGRI","occupation_desc":"Farmer"},{"code":"AGRI002","category_code":"AGRI","occupation_desc":"Fisherman"}]},{"code":"EDUC","category_desc":"Education","occupation":[]},{"code":"FOOD","category_desc":"Industry","occupation":[{"code":"FOOD001","category_code":"FOOD","occupation_desc":"Supervisor"},{"code":"FOOD002","category_code":"FOOD","occupation_desc":"Service Engineer"},{"code":"FOOD003","category_code":"FOOD","occupation_desc":"Engineer"},{"code":"FOOD004","category_code":"FOOD","occupation_desc":"Accountant"}]},{"code":"GOVT","category_desc":"Government","occupation":[{"code":"GOVT","category_code":"GOVT","occupation_desc":"Govt Employee"},{"code":"GOVT001","category_code":"GOVT","occupation_desc":"Employee"},{"code":"GOVT002","category_code":"GOVT","occupation_desc":"Public School Teacher"}]},{"code":"HEALTH","category_desc":"Health","occupation":[{"code":"HEALTH001","category_code":"HEALTH","occupation_desc":"Physician"},{"code":"HEALTH002","category_code":"HEALTH","occupation_desc":"Nurse"},{"code":"HEALTH003","category_code":"HEALTH","occupation_desc":"Midwife"},{"code":"HEALTH004","category_code":"HEALTH","occupation_desc":"Physical Therapist"},{"code":"HEALTH005","category_code":"HEALTH","occupation_desc":"Respiratory Therapist"},{"code":"HEALTH006","category_code":"HEALTH","occupation_desc":"X-Ray Technician"},{"code":"HEALTH007","category_code":"HEALTH","occupation_desc":"Nurse Aide"},{"code":"HEALTH008","category_code":"HEALTH","occupation_desc":"Dentist"},{"code":"HEALTH009","category_code":"HEALTH","occupation_desc":"Medical Technologist"},{"code":"HEALTH010","category_code":"HEALTH","occupation_desc":"Pharmacist"},{"code":"HEALTH011","category_code":"HEALTH","occupation_desc":"Dental Technician"},{"code":"HEALTH012","category_code":"HEALTH","occupation_desc":"Reflexologist"},{"code":"HEALTH013","category_code":"HEALTH","occupation_desc":"Pharmacist Aide"},{"code":"HEALTH014","category_code":"HEALTH","occupation_desc":"Paramedic"},{"code":"HEALTH015","category_code":"HEALTH","occupation_desc":"Caregiver"}]},{"code":"MAR","category_desc":"Maritime","occupation":[{"code":"MAR001","category_code":"MAR","occupation_desc":"Seaman"}]},{"code":"MFG","category_desc":"Manufacturing","occupation":[{"code":"MFG001","category_code":"MFG","occupation_desc":"Merchandiser"}]},{"code":"RETL","category_desc":"Retail","occupation":[{"code":"RETL001","category_code":"RETL","occupation_desc":"Vendor"},{"code":"RETL002","category_code":"RETL","occupation_desc":"Promo Girl"},{"code":"RETL003","category_code":"RETL","occupation_desc":"Cashier"}]},{"code":"SVC","category_desc":"Service","occupation":[{"code":"SVC 24","category_code":"SVC","occupation_desc":"Janitor"},{"code":"SVC001","category_code":"SVC","occupation_desc":"Employee"},{"code":"SVC002","category_code":"SVC","occupation_desc":"Private School Teacher"},{"code":"SVC003","category_code":"SVC","occupation_desc":"Saleslady"},{"code":"SVC004","category_code":"SVC","occupation_desc":"Barber"},{"code":"SVC005","category_code":"SVC","occupation_desc":"Masseur"},{"code":"SVC006","category_code":"SVC","occupation_desc":"Factory Worker"},{"code":"SVC007","category_code":"SVC","occupation_desc":"Painter"},{"code":"SVC008","category_code":"SVC","occupation_desc":"Welder"},{"code":"SVC009","category_code":"SVC","occupation_desc":"Beautician"},{"code":"SVC010","category_code":"SVC","occupation_desc":"Laundrywoman"},{"code":"SVC011","category_code":"SVC","occupation_desc":"Cook"},{"code":"SVC012","category_code":"SVC","occupation_desc":"Guest Relations Officer"},{"code":"SVC013","category_code":"SVC","occupation_desc":"Streetsweeper"},{"code":"SVC014","category_code":"SVC","occupation_desc":"Garbage collector"},{"code":"SVC015","category_code":"SVC","occupation_desc":"Messenger"},{"code":"SVC016","category_code":"SVC","occupation_desc":"Social Worker"},{"code":"SVC017","category_code":"SVC","occupation_desc":"Laborer, skilled"},{"code":"SVC018","category_code":"SVC","occupation_desc":"Laborer, unskilled"},{"code":"SVC019","category_code":"SVC","occupation_desc":"Security Guard"},{"code":"SVC020","category_code":"SVC","occupation_desc":"Service Crew"},{"code":"SVC021","category_code":"SVC","occupation_desc":"Housemaid"},{"code":"SVC022","category_code":"SVC","occupation_desc":"Family Driver"},{"code":"SVC023","category_code":"SVC","occupation_desc":"Company Driver"},{"code":"SVC024","category_code":"SVC","occupation_desc":"Salesman"},{"code":"SVC025","category_code":"SVC","occupation_desc":"Carpenter"},{"code":"SVC026","category_code":"SVC","occupation_desc":"Gardener"},{"code":"SVC027","category_code":"SVC","occupation_desc":"Actor"},{"code":"SVC028","category_code":"SVC","occupation_desc":"Actress"},{"code":"SVC029","category_code":"SVC","occupation_desc":"Bartender"},{"code":"SVC030","category_code":"SVC","occupation_desc":"Policeman"},{"code":"SVC031","category_code":"SVC","occupation_desc":"Policewoman"},{"code":"SVC032","category_code":"SVC","occupation_desc":"Soldier"},{"code":"SVC033","category_code":"SVC","occupation_desc":"Macho Dancer"},{"code":"SVC034","category_code":"SVC","occupation_desc":"Bouncer"},{"code":"SVC035","category_code":"SVC","occupation_desc":"Aircon Technician"},{"code":"SVC036","category_code":"SVC","occupation_desc":"Waiter"},{"code":"SVC037","category_code":"SVC","occupation_desc":"Butcher"},{"code":"SVC038","category_code":"SVC","occupation_desc":"Artist"},{"code":"SVC039","category_code":"SVC","occupation_desc":"Technician"},{"code":"SVC040","category_code":"SVC","occupation_desc":"Dispatcher"},{"code":"SVC041","category_code":"SVC","occupation_desc":"Electrician"},{"code":"SVC042","category_code":"SVC","occupation_desc":"Machine Operator"},{"code":"SVC043","category_code":"SVC","occupation_desc":"Mason"},{"code":"SVC044","category_code":"SVC","occupation_desc":"Fireman"},{"code":"SVC045","category_code":"SVC","occupation_desc":"Domestic Helper"},{"code":"SVC046","category_code":"SVC","occupation_desc":"Roomboy"},{"code":"SVC047","category_code":"SVC","occupation_desc":"OFW"},{"code":"SVC048","category_code":"SVC","occupation_desc":"Entertainer"},{"code":"SVC049","category_code":"SVC","occupation_desc":"Helper"},{"code":"SVC050","category_code":"SVC","occupation_desc":"Manager"},{"code":"SVC051","category_code":"SVC","occupation_desc":"Clerk"},{"code":"SVC052","category_code":"SVC","occupation_desc":"Administrator"},{"code":"SVC053","category_code":"SVC","occupation_desc":"Sewer"}]},{"code":"TOUR","category_desc":"Tourism","occupation":[]},{"code":"TRANS","category_desc":"Transport","occupation":[{"code":"TRANS001","category_code":"TRANS","occupation_desc":"Jeepney Driver"},{"code":"TRANS002","category_code":"TRANS","occupation_desc":"Taxi Driver"},{"code":"TRANS003","category_code":"TRANS","occupation_desc":"Bus Driver"},{"code":"TRANS004","category_code":"TRANS","occupation_desc":"Truck Driver"},{"code":"TRANS005","category_code":"TRANS","occupation_desc":"Bus Conductor"},{"code":"TRANS006","category_code":"TRANS","occupation_desc":"Tricycle Driver"},{"code":"TRANS007","category_code":"TRANS","occupation_desc":"Pedicab Driver"},{"code":"TRANS008","category_code":"TRANS","occupation_desc":"Calesa Driver"},{"code":"TRANS009","category_code":"TRANS","occupation_desc":"Ambulance Driver"}]},{"code":"UNSP","category_desc":"Unspecified","occupation":[{"code":"UNSP","category_code":"UNSP","occupation_desc":"Housewife"},{"code":"UNSP001","category_code":"UNSP","occupation_desc":"Unspecified"},{"code":"UNSP002","category_code":"UNSP","occupation_desc":"Businessman"},{"code":"UNSP003","category_code":"UNSP","occupation_desc":"Retired"},{"code":"UNSP004","category_code":"UNSP","occupation_desc":"Student"},{"code":"UNSP005","category_code":"UNSP","occupation_desc":"Photograper"},{"code":"UNSP006","category_code":"UNSP","occupation_desc":"None"}]}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3524,7 +3082,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/occupation-categories/{id}'
+    uri: 'api/v1/libraries/occupation-categories/{occupationCategory_code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -3538,15 +3096,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the occupation category.'
+      occupationCategory_code:
+        name: occupationCategory_code
+        description: ''
         required: true
-        example: quod
+        example: AGRI
         type: string
         custom: []
     cleanUrlParameters:
-      id: quod
+      occupationCategory_code: AGRI
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3557,7 +3115,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibOccupationCategory] quod",
+              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibOccupationCategory] 1",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
               "line": 380,
@@ -3585,23 +3143,9 @@ endpoints:
                   },
                   {
                       "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
+                      "line": 185,
                       "function": "handleException",
                       "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
                       "type": "->"
                   },
                   {
@@ -4024,7 +3568,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"occupation_code":"AGRI001","category_desc":"Agriculture","occupation_desc":"Farmer"},{"occupation_code":"AGRI002","category_desc":"Agriculture","occupation_desc":"Fisherman"},{"occupation_code":"FOOD001","category_desc":"Industry","occupation_desc":"Supervisor"},{"occupation_code":"FOOD002","category_desc":"Industry","occupation_desc":"Service Engineer"},{"occupation_code":"FOOD003","category_desc":"Industry","occupation_desc":"Engineer"},{"occupation_code":"FOOD004","category_desc":"Industry","occupation_desc":"Accountant"},{"occupation_code":"GOVT","category_desc":"Government","occupation_desc":"Govt Employee"},{"occupation_code":"GOVT001","category_desc":"Government","occupation_desc":"Employee"},{"occupation_code":"GOVT002","category_desc":"Government","occupation_desc":"Public School Teacher"},{"occupation_code":"HEALTH001","category_desc":"Health","occupation_desc":"Physician"},{"occupation_code":"HEALTH002","category_desc":"Health","occupation_desc":"Nurse"},{"occupation_code":"HEALTH003","category_desc":"Health","occupation_desc":"Midwife"},{"occupation_code":"HEALTH004","category_desc":"Health","occupation_desc":"Physical Therapist"},{"occupation_code":"HEALTH005","category_desc":"Health","occupation_desc":"Respiratory Therapist"},{"occupation_code":"HEALTH006","category_desc":"Health","occupation_desc":"X-Ray Technician"},{"occupation_code":"HEALTH007","category_desc":"Health","occupation_desc":"Nurse Aide"},{"occupation_code":"HEALTH008","category_desc":"Health","occupation_desc":"Dentist"},{"occupation_code":"HEALTH009","category_desc":"Health","occupation_desc":"Medical Technologist"},{"occupation_code":"HEALTH010","category_desc":"Health","occupation_desc":"Pharmacist"},{"occupation_code":"HEALTH011","category_desc":"Health","occupation_desc":"Dental Technician"},{"occupation_code":"HEALTH012","category_desc":"Health","occupation_desc":"Reflexologist"},{"occupation_code":"HEALTH013","category_desc":"Health","occupation_desc":"Pharmacist Aide"},{"occupation_code":"HEALTH014","category_desc":"Health","occupation_desc":"Paramedic"},{"occupation_code":"HEALTH015","category_desc":"Health","occupation_desc":"Caregiver"},{"occupation_code":"MAR001","category_desc":"Maritime","occupation_desc":"Seaman"},{"occupation_code":"MFG001","category_desc":"Manufacturing","occupation_desc":"Merchandiser"},{"occupation_code":"RETL001","category_desc":"Retail","occupation_desc":"Vendor"},{"occupation_code":"RETL002","category_desc":"Retail","occupation_desc":"Promo Girl"},{"occupation_code":"RETL003","category_desc":"Retail","occupation_desc":"Cashier"},{"occupation_code":"SVC 24","category_desc":"Service","occupation_desc":"Janitor"},{"occupation_code":"SVC001","category_desc":"Service","occupation_desc":"Employee"},{"occupation_code":"SVC002","category_desc":"Service","occupation_desc":"Private School Teacher"},{"occupation_code":"SVC003","category_desc":"Service","occupation_desc":"Saleslady"},{"occupation_code":"SVC004","category_desc":"Service","occupation_desc":"Barber"},{"occupation_code":"SVC005","category_desc":"Service","occupation_desc":"Masseur"},{"occupation_code":"SVC006","category_desc":"Service","occupation_desc":"Factory Worker"},{"occupation_code":"SVC007","category_desc":"Service","occupation_desc":"Painter"},{"occupation_code":"SVC008","category_desc":"Service","occupation_desc":"Welder"},{"occupation_code":"SVC009","category_desc":"Service","occupation_desc":"Beautician"},{"occupation_code":"SVC010","category_desc":"Service","occupation_desc":"Laundrywoman"},{"occupation_code":"SVC011","category_desc":"Service","occupation_desc":"Cook"},{"occupation_code":"SVC012","category_desc":"Service","occupation_desc":"Guest Relations Officer"},{"occupation_code":"SVC013","category_desc":"Service","occupation_desc":"Streetsweeper"},{"occupation_code":"SVC014","category_desc":"Service","occupation_desc":"Garbage collector"},{"occupation_code":"SVC015","category_desc":"Service","occupation_desc":"Messenger"},{"occupation_code":"SVC016","category_desc":"Service","occupation_desc":"Social Worker"},{"occupation_code":"SVC017","category_desc":"Service","occupation_desc":"Laborer, skilled"},{"occupation_code":"SVC018","category_desc":"Service","occupation_desc":"Laborer, unskilled"},{"occupation_code":"SVC019","category_desc":"Service","occupation_desc":"Security Guard"},{"occupation_code":"SVC020","category_desc":"Service","occupation_desc":"Service Crew"},{"occupation_code":"SVC021","category_desc":"Service","occupation_desc":"Housemaid"},{"occupation_code":"SVC022","category_desc":"Service","occupation_desc":"Family Driver"},{"occupation_code":"SVC023","category_desc":"Service","occupation_desc":"Company Driver"},{"occupation_code":"SVC024","category_desc":"Service","occupation_desc":"Salesman"},{"occupation_code":"SVC025","category_desc":"Service","occupation_desc":"Carpenter"},{"occupation_code":"SVC026","category_desc":"Service","occupation_desc":"Gardener"},{"occupation_code":"SVC027","category_desc":"Service","occupation_desc":"Actor"},{"occupation_code":"SVC028","category_desc":"Service","occupation_desc":"Actress"},{"occupation_code":"SVC029","category_desc":"Service","occupation_desc":"Bartender"},{"occupation_code":"SVC030","category_desc":"Service","occupation_desc":"Policeman"},{"occupation_code":"SVC031","category_desc":"Service","occupation_desc":"Policewoman"},{"occupation_code":"SVC032","category_desc":"Service","occupation_desc":"Soldier"},{"occupation_code":"SVC033","category_desc":"Service","occupation_desc":"Macho Dancer"},{"occupation_code":"SVC034","category_desc":"Service","occupation_desc":"Bouncer"},{"occupation_code":"SVC035","category_desc":"Service","occupation_desc":"Aircon Technician"},{"occupation_code":"SVC036","category_desc":"Service","occupation_desc":"Waiter"},{"occupation_code":"SVC037","category_desc":"Service","occupation_desc":"Butcher"},{"occupation_code":"SVC038","category_desc":"Service","occupation_desc":"Artist"},{"occupation_code":"SVC039","category_desc":"Service","occupation_desc":"Technician"},{"occupation_code":"SVC040","category_desc":"Service","occupation_desc":"Dispatcher"},{"occupation_code":"SVC041","category_desc":"Service","occupation_desc":"Electrician"},{"occupation_code":"SVC042","category_desc":"Service","occupation_desc":"Machine Operator"},{"occupation_code":"SVC043","category_desc":"Service","occupation_desc":"Mason"},{"occupation_code":"SVC044","category_desc":"Service","occupation_desc":"Fireman"},{"occupation_code":"SVC045","category_desc":"Service","occupation_desc":"Domestic Helper"},{"occupation_code":"SVC046","category_desc":"Service","occupation_desc":"Roomboy"},{"occupation_code":"SVC047","category_desc":"Service","occupation_desc":"OFW"},{"occupation_code":"SVC048","category_desc":"Service","occupation_desc":"Entertainer"},{"occupation_code":"SVC049","category_desc":"Service","occupation_desc":"Helper"},{"occupation_code":"SVC050","category_desc":"Service","occupation_desc":"Manager"},{"occupation_code":"SVC051","category_desc":"Service","occupation_desc":"Clerk"},{"occupation_code":"SVC052","category_desc":"Service","occupation_desc":"Administrator"},{"occupation_code":"SVC053","category_desc":"Service","occupation_desc":"Sewer"},{"occupation_code":"TRANS001","category_desc":"Transport","occupation_desc":"Jeepney Driver"},{"occupation_code":"TRANS002","category_desc":"Transport","occupation_desc":"Taxi Driver"},{"occupation_code":"TRANS003","category_desc":"Transport","occupation_desc":"Bus Driver"},{"occupation_code":"TRANS004","category_desc":"Transport","occupation_desc":"Truck Driver"},{"occupation_code":"TRANS005","category_desc":"Transport","occupation_desc":"Bus Conductor"},{"occupation_code":"TRANS006","category_desc":"Transport","occupation_desc":"Tricycle Driver"},{"occupation_code":"TRANS007","category_desc":"Transport","occupation_desc":"Pedicab Driver"},{"occupation_code":"TRANS008","category_desc":"Transport","occupation_desc":"Calesa Driver"},{"occupation_code":"TRANS009","category_desc":"Transport","occupation_desc":"Ambulance Driver"},{"occupation_code":"UNSP","category_desc":"Unspecified","occupation_desc":"Housewife"},{"occupation_code":"UNSP001","category_desc":"Unspecified","occupation_desc":"Unspecified"},{"occupation_code":"UNSP002","category_desc":"Unspecified","occupation_desc":"Businessman"},{"occupation_code":"UNSP003","category_desc":"Unspecified","occupation_desc":"Retired"},{"occupation_code":"UNSP004","category_desc":"Unspecified","occupation_desc":"Student"},{"occupation_code":"UNSP005","category_desc":"Unspecified","occupation_desc":"Photograper"},{"occupation_code":"UNSP006","category_desc":"Unspecified","occupation_desc":"None"}]}'
+        content: '{"data":[{"code":"AGRI001","category_desc":"Agriculture","occupation_desc":"Farmer"},{"code":"AGRI002","category_desc":"Agriculture","occupation_desc":"Fisherman"},{"code":"FOOD001","category_desc":"Industry","occupation_desc":"Supervisor"},{"code":"FOOD002","category_desc":"Industry","occupation_desc":"Service Engineer"},{"code":"FOOD003","category_desc":"Industry","occupation_desc":"Engineer"},{"code":"FOOD004","category_desc":"Industry","occupation_desc":"Accountant"},{"code":"GOVT","category_desc":"Government","occupation_desc":"Govt Employee"},{"code":"GOVT001","category_desc":"Government","occupation_desc":"Employee"},{"code":"GOVT002","category_desc":"Government","occupation_desc":"Public School Teacher"},{"code":"HEALTH001","category_desc":"Health","occupation_desc":"Physician"},{"code":"HEALTH002","category_desc":"Health","occupation_desc":"Nurse"},{"code":"HEALTH003","category_desc":"Health","occupation_desc":"Midwife"},{"code":"HEALTH004","category_desc":"Health","occupation_desc":"Physical Therapist"},{"code":"HEALTH005","category_desc":"Health","occupation_desc":"Respiratory Therapist"},{"code":"HEALTH006","category_desc":"Health","occupation_desc":"X-Ray Technician"},{"code":"HEALTH007","category_desc":"Health","occupation_desc":"Nurse Aide"},{"code":"HEALTH008","category_desc":"Health","occupation_desc":"Dentist"},{"code":"HEALTH009","category_desc":"Health","occupation_desc":"Medical Technologist"},{"code":"HEALTH010","category_desc":"Health","occupation_desc":"Pharmacist"},{"code":"HEALTH011","category_desc":"Health","occupation_desc":"Dental Technician"},{"code":"HEALTH012","category_desc":"Health","occupation_desc":"Reflexologist"},{"code":"HEALTH013","category_desc":"Health","occupation_desc":"Pharmacist Aide"},{"code":"HEALTH014","category_desc":"Health","occupation_desc":"Paramedic"},{"code":"HEALTH015","category_desc":"Health","occupation_desc":"Caregiver"},{"code":"MAR001","category_desc":"Maritime","occupation_desc":"Seaman"},{"code":"MFG001","category_desc":"Manufacturing","occupation_desc":"Merchandiser"},{"code":"RETL001","category_desc":"Retail","occupation_desc":"Vendor"},{"code":"RETL002","category_desc":"Retail","occupation_desc":"Promo Girl"},{"code":"RETL003","category_desc":"Retail","occupation_desc":"Cashier"},{"code":"SVC 24","category_desc":"Service","occupation_desc":"Janitor"},{"code":"SVC001","category_desc":"Service","occupation_desc":"Employee"},{"code":"SVC002","category_desc":"Service","occupation_desc":"Private School Teacher"},{"code":"SVC003","category_desc":"Service","occupation_desc":"Saleslady"},{"code":"SVC004","category_desc":"Service","occupation_desc":"Barber"},{"code":"SVC005","category_desc":"Service","occupation_desc":"Masseur"},{"code":"SVC006","category_desc":"Service","occupation_desc":"Factory Worker"},{"code":"SVC007","category_desc":"Service","occupation_desc":"Painter"},{"code":"SVC008","category_desc":"Service","occupation_desc":"Welder"},{"code":"SVC009","category_desc":"Service","occupation_desc":"Beautician"},{"code":"SVC010","category_desc":"Service","occupation_desc":"Laundrywoman"},{"code":"SVC011","category_desc":"Service","occupation_desc":"Cook"},{"code":"SVC012","category_desc":"Service","occupation_desc":"Guest Relations Officer"},{"code":"SVC013","category_desc":"Service","occupation_desc":"Streetsweeper"},{"code":"SVC014","category_desc":"Service","occupation_desc":"Garbage collector"},{"code":"SVC015","category_desc":"Service","occupation_desc":"Messenger"},{"code":"SVC016","category_desc":"Service","occupation_desc":"Social Worker"},{"code":"SVC017","category_desc":"Service","occupation_desc":"Laborer, skilled"},{"code":"SVC018","category_desc":"Service","occupation_desc":"Laborer, unskilled"},{"code":"SVC019","category_desc":"Service","occupation_desc":"Security Guard"},{"code":"SVC020","category_desc":"Service","occupation_desc":"Service Crew"},{"code":"SVC021","category_desc":"Service","occupation_desc":"Housemaid"},{"code":"SVC022","category_desc":"Service","occupation_desc":"Family Driver"},{"code":"SVC023","category_desc":"Service","occupation_desc":"Company Driver"},{"code":"SVC024","category_desc":"Service","occupation_desc":"Salesman"},{"code":"SVC025","category_desc":"Service","occupation_desc":"Carpenter"},{"code":"SVC026","category_desc":"Service","occupation_desc":"Gardener"},{"code":"SVC027","category_desc":"Service","occupation_desc":"Actor"},{"code":"SVC028","category_desc":"Service","occupation_desc":"Actress"},{"code":"SVC029","category_desc":"Service","occupation_desc":"Bartender"},{"code":"SVC030","category_desc":"Service","occupation_desc":"Policeman"},{"code":"SVC031","category_desc":"Service","occupation_desc":"Policewoman"},{"code":"SVC032","category_desc":"Service","occupation_desc":"Soldier"},{"code":"SVC033","category_desc":"Service","occupation_desc":"Macho Dancer"},{"code":"SVC034","category_desc":"Service","occupation_desc":"Bouncer"},{"code":"SVC035","category_desc":"Service","occupation_desc":"Aircon Technician"},{"code":"SVC036","category_desc":"Service","occupation_desc":"Waiter"},{"code":"SVC037","category_desc":"Service","occupation_desc":"Butcher"},{"code":"SVC038","category_desc":"Service","occupation_desc":"Artist"},{"code":"SVC039","category_desc":"Service","occupation_desc":"Technician"},{"code":"SVC040","category_desc":"Service","occupation_desc":"Dispatcher"},{"code":"SVC041","category_desc":"Service","occupation_desc":"Electrician"},{"code":"SVC042","category_desc":"Service","occupation_desc":"Machine Operator"},{"code":"SVC043","category_desc":"Service","occupation_desc":"Mason"},{"code":"SVC044","category_desc":"Service","occupation_desc":"Fireman"},{"code":"SVC045","category_desc":"Service","occupation_desc":"Domestic Helper"},{"code":"SVC046","category_desc":"Service","occupation_desc":"Roomboy"},{"code":"SVC047","category_desc":"Service","occupation_desc":"OFW"},{"code":"SVC048","category_desc":"Service","occupation_desc":"Entertainer"},{"code":"SVC049","category_desc":"Service","occupation_desc":"Helper"},{"code":"SVC050","category_desc":"Service","occupation_desc":"Manager"},{"code":"SVC051","category_desc":"Service","occupation_desc":"Clerk"},{"code":"SVC052","category_desc":"Service","occupation_desc":"Administrator"},{"code":"SVC053","category_desc":"Service","occupation_desc":"Sewer"},{"code":"TRANS001","category_desc":"Transport","occupation_desc":"Jeepney Driver"},{"code":"TRANS002","category_desc":"Transport","occupation_desc":"Taxi Driver"},{"code":"TRANS003","category_desc":"Transport","occupation_desc":"Bus Driver"},{"code":"TRANS004","category_desc":"Transport","occupation_desc":"Truck Driver"},{"code":"TRANS005","category_desc":"Transport","occupation_desc":"Bus Conductor"},{"code":"TRANS006","category_desc":"Transport","occupation_desc":"Tricycle Driver"},{"code":"TRANS007","category_desc":"Transport","occupation_desc":"Pedicab Driver"},{"code":"TRANS008","category_desc":"Transport","occupation_desc":"Calesa Driver"},{"code":"TRANS009","category_desc":"Transport","occupation_desc":"Ambulance Driver"},{"code":"UNSP","category_desc":"Unspecified","occupation_desc":"Housewife"},{"code":"UNSP001","category_desc":"Unspecified","occupation_desc":"Unspecified"},{"code":"UNSP002","category_desc":"Unspecified","occupation_desc":"Businessman"},{"code":"UNSP003","category_desc":"Unspecified","occupation_desc":"Retired"},{"code":"UNSP004","category_desc":"Unspecified","occupation_desc":"Student"},{"code":"UNSP005","category_desc":"Unspecified","occupation_desc":"Photograper"},{"code":"UNSP006","category_desc":"Unspecified","occupation_desc":"None"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -4042,7 +3586,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/occupations/{id}'
+    uri: 'api/v1/libraries/occupations/{code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -4056,15 +3600,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the occupation.'
+      code:
+        name: code
+        description: ''
         required: true
-        example: quas
+        example: AGRI001
         type: string
         custom: []
     cleanUrlParameters:
-      id: quas
+      code: AGRI001
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4075,7 +3619,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibOccupation] quas",
+              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibOccupation] 1",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
               "line": 380,
@@ -4103,23 +3647,9 @@ endpoints:
                   },
                   {
                       "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
+                      "line": 185,
                       "function": "handleException",
                       "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
                       "type": "->"
                   },
                   {
@@ -4542,7 +4072,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"type_code":"NA","type_desc":"Not Applicable"},{"type_code":"CID","type_desc":"Chronic Illness"},{"type_code":"CD","type_desc":"Communication Disability"},{"type_code":"LD","type_desc":"Learning Disability"},{"type_code":"MD","type_desc":"Mental Disability"},{"type_code":"OD","type_desc":"Orthopedic Disability"},{"type_code":"PD","type_desc":"Psychosocial Disability"},{"type_code":"VD","type_desc":"Visual Disability"},{"type_code":"UN","type_desc":"Undefined"}]}'
+        content: '{"data":[{"code":"NA","type_desc":"Not Applicable"},{"code":"CID","type_desc":"Chronic Illness"},{"code":"CD","type_desc":"Communication Disability"},{"code":"LD","type_desc":"Learning Disability"},{"code":"MD","type_desc":"Mental Disability"},{"code":"OD","type_desc":"Orthopedic Disability"},{"code":"PD","type_desc":"Psychosocial Disability"},{"code":"VD","type_desc":"Visual Disability"},{"code":"UN","type_desc":"Undefined"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -4560,7 +4090,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/pwd-types/{id}'
+    uri: 'api/v1/libraries/pwd-types/{pwdType_code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -4574,15 +4104,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the pwd type.'
+      pwdType_code:
+        name: pwdType_code
+        description: ''
         required: true
-        example: sed
+        example: CD
         type: string
         custom: []
     cleanUrlParameters:
-      id: sed
+      pwdType_code: CD
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4593,7 +4123,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibPwdType] sed",
+              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibPwdType] 1",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
               "line": 380,
@@ -4621,23 +4151,9 @@ endpoints:
                   },
                   {
                       "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
+                      "line": 185,
                       "function": "handleException",
                       "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
                       "type": "->"
                   },
                   {
@@ -5060,7 +4576,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"religion_code":"AGLIP","religion_desc":"Aglipay"},{"religion_code":"ALLY","religion_desc":"Alliance of Bible Christian Communities"},{"religion_code":"ANGLI","religion_desc":"Anglican"},{"religion_code":"BAPTI","religion_desc":"Baptist"},{"religion_code":"BRNAG","religion_desc":"Born Again Christian"},{"religion_code":"BUDDH","religion_desc":"Buddhism"},{"religion_code":"CATHO","religion_desc":"Catholic"},{"religion_code":"CHOG","religion_desc":"Church of God"},{"religion_code":"EVANG","religion_desc":"Evangelical"},{"religion_code":"IGNIK","religion_desc":"Iglesia ni Cristo"},{"religion_code":"JEWIT","religion_desc":"Jehovahs Witness"},{"religion_code":"LRCM","religion_desc":"Life Renewal Christian Ministry"},{"religion_code":"LUTHR","religion_desc":"Lutheran"},{"religion_code":"METOD","religion_desc":"Methodist"},{"religion_code":"MORMO","religion_desc":"LDS-Mormons"},{"religion_code":"MUSLI","religion_desc":"Islam"},{"religion_code":"PENTE","religion_desc":"Pentecostal"},{"religion_code":"PROTE","religion_desc":"Protestant"},{"religion_code":"SVDAY","religion_desc":"Seventh Day Adventist"},{"religion_code":"UCCP","religion_desc":"UCCP"},{"religion_code":"UNKNO","religion_desc":"Unknown"},{"religion_code":"WESLY","religion_desc":"Wesleyan"},{"religion_code":"XTIAN","religion_desc":"Christian"}]}'
+        content: '{"data":[{"code":"AGLIP","religion_desc":"Aglipay"},{"code":"ALLY","religion_desc":"Alliance of Bible Christian Communities"},{"code":"ANGLI","religion_desc":"Anglican"},{"code":"BAPTI","religion_desc":"Baptist"},{"code":"BRNAG","religion_desc":"Born Again Christian"},{"code":"BUDDH","religion_desc":"Buddhism"},{"code":"CATHO","religion_desc":"Catholic"},{"code":"CHOG","religion_desc":"Church of God"},{"code":"EVANG","religion_desc":"Evangelical"},{"code":"IGNIK","religion_desc":"Iglesia ni Cristo"},{"code":"JEWIT","religion_desc":"Jehovahs Witness"},{"code":"LRCM","religion_desc":"Life Renewal Christian Ministry"},{"code":"LUTHR","religion_desc":"Lutheran"},{"code":"METOD","religion_desc":"Methodist"},{"code":"MORMO","religion_desc":"LDS-Mormons"},{"code":"MUSLI","religion_desc":"Islam"},{"code":"PENTE","religion_desc":"Pentecostal"},{"code":"PROTE","religion_desc":"Protestant"},{"code":"SVDAY","religion_desc":"Seventh Day Adventist"},{"code":"UCCP","religion_desc":"UCCP"},{"code":"UNKNO","religion_desc":"Unknown"},{"code":"WESLY","religion_desc":"Wesleyan"},{"code":"XTIAN","religion_desc":"Christian"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -5078,7 +4594,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/religions/{id}'
+    uri: 'api/v1/libraries/religions/{code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -5092,15 +4608,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the religion.'
+      code:
+        name: code
+        description: ''
         required: true
-        example: voluptas
+        example: AGLIP
         type: string
         custom: []
     cleanUrlParameters:
-      id: voluptas
+      code: AGLIP
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -5111,7 +4627,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibReligion] voluptas",
+              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibReligion] 1",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
               "line": 380,
@@ -5139,23 +4655,9 @@ endpoints:
                   },
                   {
                       "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
+                      "line": 185,
                       "function": "handleException",
                       "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
                       "type": "->"
                   },
                   {
@@ -5578,7 +5080,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"suffix_code":"II","suffix_desc":"II"},{"suffix_code":"III","suffix_desc":"III"},{"suffix_code":"IV","suffix_desc":"IV"},{"suffix_code":"JR","suffix_desc":"Jr."},{"suffix_code":"NA","suffix_desc":"Not Applicable"},{"suffix_code":"SR","suffix_desc":"Sr."},{"suffix_code":"V","suffix_desc":"V"}]}'
+        content: '{"data":[{"code":"II","suffix_desc":"II"},{"code":"III","suffix_desc":"III"},{"code":"IV","suffix_desc":"IV"},{"code":"JR","suffix_desc":"Jr."},{"code":"NA","suffix_desc":"Not Applicable"},{"code":"SR","suffix_desc":"Sr."},{"code":"V","suffix_desc":"V"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -5596,7 +5098,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/v1/libraries/suffix-names/{id}'
+    uri: 'api/v1/libraries/suffix-names/{suffixName_code}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -5610,15 +5112,15 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
-        name: id
-        description: 'The ID of the suffix name.'
+      suffixName_code:
+        name: suffixName_code
+        description: ''
         required: true
-        example: ut
+        example: II
         type: string
         custom: []
     cleanUrlParameters:
-      id: ut
+      suffixName_code: II
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -5629,7 +5131,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibSuffixName] ut",
+              "message": "No query results for model [App\\Models\\V1\\Libraries\\LibSuffixName] 1",
               "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
               "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
               "line": 380,
@@ -5657,23 +5159,9 @@ endpoints:
                   },
                   {
                       "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 143,
+                      "line": 185,
                       "function": "handleException",
                       "class": "Illuminate\\Routing\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
-                      "line": 50,
-                      "function": "Illuminate\\Pipeline\\{closure}",
-                      "class": "Illuminate\\Pipeline\\Pipeline",
-                      "type": "->"
-                  },
-                  {
-                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
-                      "line": 180,
-                      "function": "handle",
-                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
                       "type": "->"
                   },
                   {
