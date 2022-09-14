@@ -309,8 +309,8 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"emanuel.schneider@example.org\",
-    \"password\": \"accusamus\"
+    \"email\": \"sally31@example.com\",
+    \"password\": \"saepe\"
 }"
 </code></pre></div>
 
@@ -326,8 +326,8 @@ const headers = {
 };
 
 let body = {
-    "email": "emanuel.schneider@example.org",
-    "password": "accusamus"
+    "email": "sally31@example.com",
+    "password": "saepe"
 };
 
 fetch(url, {
@@ -387,7 +387,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-login"
-               value="emanuel.schneider@example.org"
+               value="sally31@example.com"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -399,7 +399,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-login"
-               value="accusamus"
+               value="saepe"
                data-component="body" hidden>
     <br>
 
@@ -423,16 +423,16 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"praesentium\",
-    \"first_name\": \"blanditiis\",
-    \"suffix_name\": \"veritatis\",
-    \"gender\": \"quia\",
-    \"birthdate\": \"2022-09-14T15:57:20\",
-    \"contact_number\": \"ildyidv\",
-    \"email\": \"cathy68@example.org\",
-    \"tin_number\": \"cbfwolyv\",
-    \"accreditation_number\": \"rjdbta\",
-    \"password\": \"rem\"
+    \"last_name\": \"vero\",
+    \"first_name\": \"neque\",
+    \"suffix_name\": \"animi\",
+    \"gender\": \"est\",
+    \"birthdate\": \"2022-09-14T16:30:39\",
+    \"contact_number\": \"ragjw\",
+    \"email\": \"flatley.coy@example.com\",
+    \"tin_number\": \"x\",
+    \"accreditation_number\": \"jedj\",
+    \"password\": \"voluptatem\"
 }"
 </code></pre></div>
 
@@ -448,16 +448,16 @@ const headers = {
 };
 
 let body = {
-    "last_name": "praesentium",
-    "first_name": "blanditiis",
-    "suffix_name": "veritatis",
-    "gender": "quia",
-    "birthdate": "2022-09-14T15:57:20",
-    "contact_number": "ildyidv",
-    "email": "cathy68@example.org",
-    "tin_number": "cbfwolyv",
-    "accreditation_number": "rjdbta",
-    "password": "rem"
+    "last_name": "vero",
+    "first_name": "neque",
+    "suffix_name": "animi",
+    "gender": "est",
+    "birthdate": "2022-09-14T16:30:39",
+    "contact_number": "ragjw",
+    "email": "flatley.coy@example.com",
+    "tin_number": "x",
+    "accreditation_number": "jedj",
+    "password": "voluptatem"
 };
 
 fetch(url, {
@@ -517,7 +517,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-register"
-               value="praesentium"
+               value="vero"
                data-component="body" hidden>
     <br>
 
@@ -529,7 +529,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-register"
-               value="blanditiis"
+               value="neque"
                data-component="body" hidden>
     <br>
 
@@ -553,7 +553,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-register"
-               value="veritatis"
+               value="animi"
                data-component="body" hidden>
     <br>
 
@@ -565,7 +565,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-register"
-               value="quia"
+               value="est"
                data-component="body" hidden>
     <br>
 
@@ -577,7 +577,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-register"
-               value="2022-09-14T15:57:20"
+               value="2022-09-14T16:30:39"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date.</p>
@@ -589,7 +589,7 @@ fetch(url, {
                 <input type="text"
                name="contact_number"
                data-endpoint="POSTapi-v1-register"
-               value="ildyidv"
+               value="ragjw"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -601,7 +601,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-v1-register"
-               value="cathy68@example.org"
+               value="flatley.coy@example.com"
                data-component="body" hidden>
     <br>
 <p>Must be a valid email address.</p>
@@ -637,7 +637,7 @@ fetch(url, {
                 <input type="text"
                name="tin_number"
                data-endpoint="POSTapi-v1-register"
-               value="cbfwolyv"
+               value="x"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 9 characters.</p>
@@ -649,7 +649,7 @@ fetch(url, {
                 <input type="text"
                name="accreditation_number"
                data-endpoint="POSTapi-v1-register"
-               value="rjdbta"
+               value="jedj"
                data-component="body" hidden>
     <br>
 <p>Must not be greater than 14 characters.</p>
@@ -661,7 +661,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-v1-register"
-               value="rem"
+               value="voluptatem"
                data-component="body" hidden>
     <br>
 
@@ -890,6 +890,27 @@ access-control-allow-origin: *
             &quot;updated_at&quot;: &quot;2022-09-14 13:06:55&quot;
         },
         {
+            &quot;last_name&quot;: &quot;Harvey&quot;,
+            &quot;first_name&quot;: &quot;Josh&quot;,
+            &quot;middle_name&quot;: &quot;Cole&quot;,
+            &quot;suffix_code&quot;: &quot;V&quot;,
+            &quot;birthdate&quot;: &quot;1971-08-23&quot;,
+            &quot;mothers_name&quot;: &quot;Virginia Cole&quot;,
+            &quot;gender&quot;: &quot;M&quot;,
+            &quot;mobile_number&quot;: &quot;152-181-108&quot;,
+            &quot;pwd_type_code&quot;: &quot;CID&quot;,
+            &quot;indegenous_flag&quot;: true,
+            &quot;blood_type_code&quot;: &quot;NA&quot;,
+            &quot;religion_code&quot;: &quot;EVANG&quot;,
+            &quot;occupation_code&quot;: &quot;MAR001&quot;,
+            &quot;education_code&quot;: 8,
+            &quot;civil_status_code&quot;: &quot;MRRD&quot;,
+            &quot;consent_flag&quot;: false,
+            &quot;image_url&quot;: null,
+            &quot;created_at&quot;: &quot;2022-09-14 16:05:32&quot;,
+            &quot;updated_at&quot;: &quot;2022-09-14 16:05:32&quot;
+        },
+        {
             &quot;last_name&quot;: &quot;Hegmann&quot;,
             &quot;first_name&quot;: &quot;Dina&quot;,
             &quot;middle_name&quot;: &quot;Heaney&quot;,
@@ -1014,27 +1035,6 @@ access-control-allow-origin: *
             &quot;image_url&quot;: null,
             &quot;created_at&quot;: &quot;2022-09-14 13:06:55&quot;,
             &quot;updated_at&quot;: &quot;2022-09-14 13:06:55&quot;
-        },
-        {
-            &quot;last_name&quot;: &quot;Luettgen&quot;,
-            &quot;first_name&quot;: &quot;Lue&quot;,
-            &quot;middle_name&quot;: &quot;Franecki&quot;,
-            &quot;suffix_code&quot;: &quot;NA&quot;,
-            &quot;birthdate&quot;: &quot;2015-07-23&quot;,
-            &quot;mothers_name&quot;: &quot;Delfina Franecki&quot;,
-            &quot;gender&quot;: &quot;F&quot;,
-            &quot;mobile_number&quot;: &quot;272-373-817&quot;,
-            &quot;pwd_type_code&quot;: &quot;NA&quot;,
-            &quot;indegenous_flag&quot;: true,
-            &quot;blood_type_code&quot;: &quot;B+&quot;,
-            &quot;religion_code&quot;: &quot;PROTE&quot;,
-            &quot;occupation_code&quot;: &quot;UNSP001&quot;,
-            &quot;education_code&quot;: 6,
-            &quot;civil_status_code&quot;: &quot;ANLD&quot;,
-            &quot;consent_flag&quot;: false,
-            &quot;image_url&quot;: null,
-            &quot;created_at&quot;: &quot;2022-09-14 15:23:18&quot;,
-            &quot;updated_at&quot;: &quot;2022-09-14 15:23:18&quot;
         }
     ],
     &quot;links&quot;: {
@@ -1077,7 +1077,7 @@ access-control-allow-origin: *
         &quot;path&quot;: &quot;http://wahtermelon.test/api/v1/patient&quot;,
         &quot;per_page&quot;: 15,
         &quot;to&quot;: 15,
-        &quot;total&quot;: 31
+        &quot;total&quot;: 33
     }
 }</code>
  </pre>
@@ -1140,20 +1140,20 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"last_name\": \"quibusdam\",
-    \"first_name\": \"temporibus\",
-    \"suffix_name\": \"eveniet\",
-    \"birthdate\": \"1995-08-09\",
-    \"mothers_name\": \"saepe\",
-    \"gender\": \"odio\",
-    \"mobile_number\": \"oapdaqts\",
-    \"indegenous_flag\": true,
-    \"religion_code\": \"deleniti\",
-    \"occupation_code\": \"sunt\",
-    \"education_code\": \"est\",
-    \"civil_status_code\": \"aut\",
-    \"consent_flag\": true,
-    \"image_url\": \"https:\\/\\/www.treutel.org\\/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur\"
+    \"last_name\": \"et\",
+    \"first_name\": \"libero\",
+    \"suffix_name\": \"fuga\",
+    \"birthdate\": \"2010-01-29\",
+    \"mothers_name\": \"hic\",
+    \"gender\": \"illum\",
+    \"mobile_number\": \"xs\",
+    \"indegenous_flag\": false,
+    \"religion_code\": \"aut\",
+    \"occupation_code\": \"sit\",
+    \"education_code\": \"et\",
+    \"civil_status_code\": \"et\",
+    \"consent_flag\": false,
+    \"image_url\": \"http:\\/\\/www.koelpin.com\\/dolorum-et-ea-necessitatibus-tenetur-non-eligendi-dolor.html\"
 }"
 </code></pre></div>
 
@@ -1169,20 +1169,20 @@ const headers = {
 };
 
 let body = {
-    "last_name": "quibusdam",
-    "first_name": "temporibus",
-    "suffix_name": "eveniet",
-    "birthdate": "1995-08-09",
-    "mothers_name": "saepe",
-    "gender": "odio",
-    "mobile_number": "oapdaqts",
-    "indegenous_flag": true,
-    "religion_code": "deleniti",
-    "occupation_code": "sunt",
-    "education_code": "est",
-    "civil_status_code": "aut",
-    "consent_flag": true,
-    "image_url": "https:\/\/www.treutel.org\/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur"
+    "last_name": "et",
+    "first_name": "libero",
+    "suffix_name": "fuga",
+    "birthdate": "2010-01-29",
+    "mothers_name": "hic",
+    "gender": "illum",
+    "mobile_number": "xs",
+    "indegenous_flag": false,
+    "religion_code": "aut",
+    "occupation_code": "sit",
+    "education_code": "et",
+    "civil_status_code": "et",
+    "consent_flag": false,
+    "image_url": "http:\/\/www.koelpin.com\/dolorum-et-ea-necessitatibus-tenetur-non-eligendi-dolor.html"
 };
 
 fetch(url, {
@@ -1254,7 +1254,7 @@ fetch(url, {
                 <input type="text"
                name="last_name"
                data-endpoint="POSTapi-v1-patient"
-               value="quibusdam"
+               value="et"
                data-component="body" hidden>
     <br>
 
@@ -1266,7 +1266,7 @@ fetch(url, {
                 <input type="text"
                name="first_name"
                data-endpoint="POSTapi-v1-patient"
-               value="temporibus"
+               value="libero"
                data-component="body" hidden>
     <br>
 
@@ -1290,7 +1290,7 @@ fetch(url, {
                 <input type="text"
                name="suffix_name"
                data-endpoint="POSTapi-v1-patient"
-               value="eveniet"
+               value="fuga"
                data-component="body" hidden>
     <br>
 
@@ -1302,7 +1302,7 @@ fetch(url, {
                 <input type="text"
                name="birthdate"
                data-endpoint="POSTapi-v1-patient"
-               value="1995-08-09"
+               value="2010-01-29"
                data-component="body" hidden>
     <br>
 <p>Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.</p>
@@ -1314,7 +1314,7 @@ fetch(url, {
                 <input type="text"
                name="mothers_name"
                data-endpoint="POSTapi-v1-patient"
-               value="saepe"
+               value="hic"
                data-component="body" hidden>
     <br>
 
@@ -1326,7 +1326,7 @@ fetch(url, {
                 <input type="text"
                name="gender"
                data-endpoint="POSTapi-v1-patient"
-               value="odio"
+               value="illum"
                data-component="body" hidden>
     <br>
 
@@ -1338,7 +1338,7 @@ fetch(url, {
                 <input type="text"
                name="mobile_number"
                data-endpoint="POSTapi-v1-patient"
-               value="oapdaqts"
+               value="xs"
                data-component="body" hidden>
     <br>
 <p>Must be at least 11 characters. Must not be greater than 13 characters.</p>
@@ -1397,7 +1397,7 @@ fetch(url, {
                 <input type="text"
                name="religion_code"
                data-endpoint="POSTapi-v1-patient"
-               value="deleniti"
+               value="aut"
                data-component="body" hidden>
     <br>
 
@@ -1409,7 +1409,7 @@ fetch(url, {
                 <input type="text"
                name="occupation_code"
                data-endpoint="POSTapi-v1-patient"
-               value="sunt"
+               value="sit"
                data-component="body" hidden>
     <br>
 
@@ -1421,7 +1421,7 @@ fetch(url, {
                 <input type="text"
                name="education_code"
                data-endpoint="POSTapi-v1-patient"
-               value="est"
+               value="et"
                data-component="body" hidden>
     <br>
 
@@ -1433,7 +1433,7 @@ fetch(url, {
                 <input type="text"
                name="civil_status_code"
                data-endpoint="POSTapi-v1-patient"
-               value="aut"
+               value="et"
                data-component="body" hidden>
     <br>
 
@@ -1468,7 +1468,7 @@ fetch(url, {
                 <input type="text"
                name="image_url"
                data-endpoint="POSTapi-v1-patient"
-               value="https://www.treutel.org/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur"
+               value="http://www.koelpin.com/dolorum-et-ea-necessitatibus-tenetur-non-eligendi-dolor.html"
                data-component="body" hidden>
     <br>
 <p>Must be a valid URL.</p>
@@ -8568,284 +8568,9 @@ access-control-allow-origin: *
 <code class="language-json">{
     &quot;data&quot;: [
         {
-            &quot;code&quot;: &quot;AGRI001&quot;,
-            &quot;category_desc&quot;: &quot;Agriculture&quot;,
-            &quot;occupation_desc&quot;: &quot;Farmer&quot;
-        },
-        {
-            &quot;code&quot;: &quot;AGRI002&quot;,
-            &quot;category_desc&quot;: &quot;Agriculture&quot;,
-            &quot;occupation_desc&quot;: &quot;Fisherman&quot;
-        },
-        {
-            &quot;code&quot;: &quot;FOOD001&quot;,
-            &quot;category_desc&quot;: &quot;Industry&quot;,
-            &quot;occupation_desc&quot;: &quot;Supervisor&quot;
-        },
-        {
-            &quot;code&quot;: &quot;FOOD002&quot;,
-            &quot;category_desc&quot;: &quot;Industry&quot;,
-            &quot;occupation_desc&quot;: &quot;Service Engineer&quot;
-        },
-        {
-            &quot;code&quot;: &quot;FOOD003&quot;,
-            &quot;category_desc&quot;: &quot;Industry&quot;,
-            &quot;occupation_desc&quot;: &quot;Engineer&quot;
-        },
-        {
             &quot;code&quot;: &quot;FOOD004&quot;,
             &quot;category_desc&quot;: &quot;Industry&quot;,
             &quot;occupation_desc&quot;: &quot;Accountant&quot;
-        },
-        {
-            &quot;code&quot;: &quot;GOVT&quot;,
-            &quot;category_desc&quot;: &quot;Government&quot;,
-            &quot;occupation_desc&quot;: &quot;Govt Employee&quot;
-        },
-        {
-            &quot;code&quot;: &quot;GOVT001&quot;,
-            &quot;category_desc&quot;: &quot;Government&quot;,
-            &quot;occupation_desc&quot;: &quot;Employee&quot;
-        },
-        {
-            &quot;code&quot;: &quot;GOVT002&quot;,
-            &quot;category_desc&quot;: &quot;Government&quot;,
-            &quot;occupation_desc&quot;: &quot;Public School Teacher&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH001&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Physician&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH002&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Nurse&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH003&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Midwife&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH004&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Physical Therapist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH005&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Respiratory Therapist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH006&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;X-Ray Technician&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH007&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Nurse Aide&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH008&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Dentist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH009&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Medical Technologist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH010&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Pharmacist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH011&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Dental Technician&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH012&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Reflexologist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH013&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Pharmacist Aide&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH014&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Paramedic&quot;
-        },
-        {
-            &quot;code&quot;: &quot;HEALTH015&quot;,
-            &quot;category_desc&quot;: &quot;Health&quot;,
-            &quot;occupation_desc&quot;: &quot;Caregiver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;MAR001&quot;,
-            &quot;category_desc&quot;: &quot;Maritime&quot;,
-            &quot;occupation_desc&quot;: &quot;Seaman&quot;
-        },
-        {
-            &quot;code&quot;: &quot;MFG001&quot;,
-            &quot;category_desc&quot;: &quot;Manufacturing&quot;,
-            &quot;occupation_desc&quot;: &quot;Merchandiser&quot;
-        },
-        {
-            &quot;code&quot;: &quot;RETL001&quot;,
-            &quot;category_desc&quot;: &quot;Retail&quot;,
-            &quot;occupation_desc&quot;: &quot;Vendor&quot;
-        },
-        {
-            &quot;code&quot;: &quot;RETL002&quot;,
-            &quot;category_desc&quot;: &quot;Retail&quot;,
-            &quot;occupation_desc&quot;: &quot;Promo Girl&quot;
-        },
-        {
-            &quot;code&quot;: &quot;RETL003&quot;,
-            &quot;category_desc&quot;: &quot;Retail&quot;,
-            &quot;occupation_desc&quot;: &quot;Cashier&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC 24&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Janitor&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC001&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Employee&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC002&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Private School Teacher&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC003&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Saleslady&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC004&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Barber&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC005&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Masseur&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC006&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Factory Worker&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC007&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Painter&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC008&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Welder&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC009&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Beautician&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC010&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Laundrywoman&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC011&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Cook&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC012&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Guest Relations Officer&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC013&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Streetsweeper&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC014&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Garbage collector&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC015&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Messenger&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC016&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Social Worker&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC017&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Laborer, skilled&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC018&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Laborer, unskilled&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC019&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Security Guard&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC020&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Service Crew&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC021&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Housemaid&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC022&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Family Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC023&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Company Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC024&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Salesman&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC025&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Carpenter&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC026&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Gardener&quot;
         },
         {
             &quot;code&quot;: &quot;SVC027&quot;,
@@ -8858,9 +8583,334 @@ access-control-allow-origin: *
             &quot;occupation_desc&quot;: &quot;Actress&quot;
         },
         {
+            &quot;code&quot;: &quot;SVC052&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Administrator&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC035&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Aircon Technician&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS009&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Ambulance Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC038&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Artist&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC004&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Barber&quot;
+        },
+        {
             &quot;code&quot;: &quot;SVC029&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
             &quot;occupation_desc&quot;: &quot;Bartender&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC009&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Beautician&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC034&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Bouncer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS005&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Bus Conductor&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS003&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Bus Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;UNSP002&quot;,
+            &quot;category_desc&quot;: &quot;Unspecified&quot;,
+            &quot;occupation_desc&quot;: &quot;Businessman&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC037&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Butcher&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS008&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Calesa Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH015&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Caregiver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC025&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Carpenter&quot;
+        },
+        {
+            &quot;code&quot;: &quot;RETL003&quot;,
+            &quot;category_desc&quot;: &quot;Retail&quot;,
+            &quot;occupation_desc&quot;: &quot;Cashier&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC051&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Clerk&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC023&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Company Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC011&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Cook&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH011&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Dental Technician&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH008&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Dentist&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC040&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Dispatcher&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC045&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Domestic Helper&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC041&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Electrician&quot;
+        },
+        {
+            &quot;code&quot;: &quot;GOVT001&quot;,
+            &quot;category_desc&quot;: &quot;Government&quot;,
+            &quot;occupation_desc&quot;: &quot;Employee&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC001&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Employee&quot;
+        },
+        {
+            &quot;code&quot;: &quot;FOOD003&quot;,
+            &quot;category_desc&quot;: &quot;Industry&quot;,
+            &quot;occupation_desc&quot;: &quot;Engineer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC048&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Entertainer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC006&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Factory Worker&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC022&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Family Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;AGRI001&quot;,
+            &quot;category_desc&quot;: &quot;Agriculture&quot;,
+            &quot;occupation_desc&quot;: &quot;Farmer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC044&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Fireman&quot;
+        },
+        {
+            &quot;code&quot;: &quot;AGRI002&quot;,
+            &quot;category_desc&quot;: &quot;Agriculture&quot;,
+            &quot;occupation_desc&quot;: &quot;Fisherman&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC014&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Garbage collector&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC026&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Gardener&quot;
+        },
+        {
+            &quot;code&quot;: &quot;GOVT&quot;,
+            &quot;category_desc&quot;: &quot;Government&quot;,
+            &quot;occupation_desc&quot;: &quot;Govt Employee&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC012&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Guest Relations Officer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC049&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Helper&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC021&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Housemaid&quot;
+        },
+        {
+            &quot;code&quot;: &quot;UNSP&quot;,
+            &quot;category_desc&quot;: &quot;Unspecified&quot;,
+            &quot;occupation_desc&quot;: &quot;Housewife&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC 24&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Janitor&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS001&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Jeepney Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC017&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Laborer, skilled&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC018&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Laborer, unskilled&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC010&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Laundrywoman&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC042&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Machine Operator&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC033&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Macho Dancer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC050&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Manager&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC043&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Mason&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC005&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Masseur&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH009&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Medical Technologist&quot;
+        },
+        {
+            &quot;code&quot;: &quot;MFG001&quot;,
+            &quot;category_desc&quot;: &quot;Manufacturing&quot;,
+            &quot;occupation_desc&quot;: &quot;Merchandiser&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC015&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Messenger&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH003&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Midwife&quot;
+        },
+        {
+            &quot;code&quot;: &quot;UNSP006&quot;,
+            &quot;category_desc&quot;: &quot;Unspecified&quot;,
+            &quot;occupation_desc&quot;: &quot;None&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH002&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Nurse&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH007&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Nurse Aide&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC047&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;OFW&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC007&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Painter&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH014&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Paramedic&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS007&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Pedicab Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH010&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Pharmacist&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH013&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Pharmacist Aide&quot;
+        },
+        {
+            &quot;code&quot;: &quot;UNSP005&quot;,
+            &quot;category_desc&quot;: &quot;Unspecified&quot;,
+            &quot;occupation_desc&quot;: &quot;Photograper&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH004&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Physical Therapist&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH001&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Physician&quot;
         },
         {
             &quot;code&quot;: &quot;SVC030&quot;,
@@ -8873,174 +8923,29 @@ access-control-allow-origin: *
             &quot;occupation_desc&quot;: &quot;Policewoman&quot;
         },
         {
-            &quot;code&quot;: &quot;SVC032&quot;,
+            &quot;code&quot;: &quot;SVC002&quot;,
             &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Soldier&quot;
+            &quot;occupation_desc&quot;: &quot;Private School Teacher&quot;
         },
         {
-            &quot;code&quot;: &quot;SVC033&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Macho Dancer&quot;
+            &quot;code&quot;: &quot;RETL002&quot;,
+            &quot;category_desc&quot;: &quot;Retail&quot;,
+            &quot;occupation_desc&quot;: &quot;Promo Girl&quot;
         },
         {
-            &quot;code&quot;: &quot;SVC034&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Bouncer&quot;
+            &quot;code&quot;: &quot;GOVT002&quot;,
+            &quot;category_desc&quot;: &quot;Government&quot;,
+            &quot;occupation_desc&quot;: &quot;Public School Teacher&quot;
         },
         {
-            &quot;code&quot;: &quot;SVC035&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Aircon Technician&quot;
+            &quot;code&quot;: &quot;HEALTH012&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Reflexologist&quot;
         },
         {
-            &quot;code&quot;: &quot;SVC036&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Waiter&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC037&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Butcher&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC038&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Artist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC039&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Technician&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC040&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Dispatcher&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC041&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Electrician&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC042&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Machine Operator&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC043&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Mason&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC044&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Fireman&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC045&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Domestic Helper&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC046&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Roomboy&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC047&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;OFW&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC048&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Entertainer&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC049&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Helper&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC050&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Manager&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC051&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Clerk&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC052&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Administrator&quot;
-        },
-        {
-            &quot;code&quot;: &quot;SVC053&quot;,
-            &quot;category_desc&quot;: &quot;Service&quot;,
-            &quot;occupation_desc&quot;: &quot;Sewer&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS001&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Jeepney Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS002&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Taxi Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS003&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Bus Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS004&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Truck Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS005&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Bus Conductor&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS006&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Tricycle Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS007&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Pedicab Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS008&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Calesa Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;TRANS009&quot;,
-            &quot;category_desc&quot;: &quot;Transport&quot;,
-            &quot;occupation_desc&quot;: &quot;Ambulance Driver&quot;
-        },
-        {
-            &quot;code&quot;: &quot;UNSP&quot;,
-            &quot;category_desc&quot;: &quot;Unspecified&quot;,
-            &quot;occupation_desc&quot;: &quot;Housewife&quot;
-        },
-        {
-            &quot;code&quot;: &quot;UNSP001&quot;,
-            &quot;category_desc&quot;: &quot;Unspecified&quot;,
-            &quot;occupation_desc&quot;: &quot;Unspecified&quot;
-        },
-        {
-            &quot;code&quot;: &quot;UNSP002&quot;,
-            &quot;category_desc&quot;: &quot;Unspecified&quot;,
-            &quot;occupation_desc&quot;: &quot;Businessman&quot;
+            &quot;code&quot;: &quot;HEALTH005&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;Respiratory Therapist&quot;
         },
         {
             &quot;code&quot;: &quot;UNSP003&quot;,
@@ -9048,19 +8953,114 @@ access-control-allow-origin: *
             &quot;occupation_desc&quot;: &quot;Retired&quot;
         },
         {
+            &quot;code&quot;: &quot;SVC046&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Roomboy&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC003&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Saleslady&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC024&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Salesman&quot;
+        },
+        {
+            &quot;code&quot;: &quot;MAR001&quot;,
+            &quot;category_desc&quot;: &quot;Maritime&quot;,
+            &quot;occupation_desc&quot;: &quot;Seaman&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC019&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Security Guard&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC020&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Service Crew&quot;
+        },
+        {
+            &quot;code&quot;: &quot;FOOD002&quot;,
+            &quot;category_desc&quot;: &quot;Industry&quot;,
+            &quot;occupation_desc&quot;: &quot;Service Engineer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC053&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Sewer&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC016&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Social Worker&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC032&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Soldier&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC013&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Streetsweeper&quot;
+        },
+        {
             &quot;code&quot;: &quot;UNSP004&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
             &quot;occupation_desc&quot;: &quot;Student&quot;
         },
         {
-            &quot;code&quot;: &quot;UNSP005&quot;,
-            &quot;category_desc&quot;: &quot;Unspecified&quot;,
-            &quot;occupation_desc&quot;: &quot;Photograper&quot;
+            &quot;code&quot;: &quot;FOOD001&quot;,
+            &quot;category_desc&quot;: &quot;Industry&quot;,
+            &quot;occupation_desc&quot;: &quot;Supervisor&quot;
         },
         {
-            &quot;code&quot;: &quot;UNSP006&quot;,
+            &quot;code&quot;: &quot;TRANS002&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Taxi Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC039&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Technician&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS006&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Tricycle Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;TRANS004&quot;,
+            &quot;category_desc&quot;: &quot;Transport&quot;,
+            &quot;occupation_desc&quot;: &quot;Truck Driver&quot;
+        },
+        {
+            &quot;code&quot;: &quot;UNSP001&quot;,
             &quot;category_desc&quot;: &quot;Unspecified&quot;,
-            &quot;occupation_desc&quot;: &quot;None&quot;
+            &quot;occupation_desc&quot;: &quot;Unspecified&quot;
+        },
+        {
+            &quot;code&quot;: &quot;RETL001&quot;,
+            &quot;category_desc&quot;: &quot;Retail&quot;,
+            &quot;occupation_desc&quot;: &quot;Vendor&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC036&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Waiter&quot;
+        },
+        {
+            &quot;code&quot;: &quot;SVC008&quot;,
+            &quot;category_desc&quot;: &quot;Service&quot;,
+            &quot;occupation_desc&quot;: &quot;Welder&quot;
+        },
+        {
+            &quot;code&quot;: &quot;HEALTH006&quot;,
+            &quot;category_desc&quot;: &quot;Health&quot;,
+            &quot;occupation_desc&quot;: &quot;X-Ray Technician&quot;
         }
     ]
 }</code>
@@ -10365,6 +10365,10 @@ access-control-allow-origin: *
             &quot;religion_desc&quot;: &quot;Catholic&quot;
         },
         {
+            &quot;code&quot;: &quot;XTIAN&quot;,
+            &quot;religion_desc&quot;: &quot;Christian&quot;
+        },
+        {
             &quot;code&quot;: &quot;CHOG&quot;,
             &quot;religion_desc&quot;: &quot;Church of God&quot;
         },
@@ -10377,8 +10381,16 @@ access-control-allow-origin: *
             &quot;religion_desc&quot;: &quot;Iglesia ni Cristo&quot;
         },
         {
+            &quot;code&quot;: &quot;MUSLI&quot;,
+            &quot;religion_desc&quot;: &quot;Islam&quot;
+        },
+        {
             &quot;code&quot;: &quot;JEWIT&quot;,
             &quot;religion_desc&quot;: &quot;Jehovahs Witness&quot;
+        },
+        {
+            &quot;code&quot;: &quot;MORMO&quot;,
+            &quot;religion_desc&quot;: &quot;LDS-Mormons&quot;
         },
         {
             &quot;code&quot;: &quot;LRCM&quot;,
@@ -10391,14 +10403,6 @@ access-control-allow-origin: *
         {
             &quot;code&quot;: &quot;METOD&quot;,
             &quot;religion_desc&quot;: &quot;Methodist&quot;
-        },
-        {
-            &quot;code&quot;: &quot;MORMO&quot;,
-            &quot;religion_desc&quot;: &quot;LDS-Mormons&quot;
-        },
-        {
-            &quot;code&quot;: &quot;MUSLI&quot;,
-            &quot;religion_desc&quot;: &quot;Islam&quot;
         },
         {
             &quot;code&quot;: &quot;PENTE&quot;,
@@ -10423,10 +10427,6 @@ access-control-allow-origin: *
         {
             &quot;code&quot;: &quot;WESLY&quot;,
             &quot;religion_desc&quot;: &quot;Wesleyan&quot;
-        },
-        {
-            &quot;code&quot;: &quot;XTIAN&quot;,
-            &quot;religion_desc&quot;: &quot;Christian&quot;
         }
     ]
 }</code>
@@ -11031,7 +11031,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-libraries-suffix-names">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (500):</p>
         </blockquote>
                 <details class="annotation">
             <summary>
@@ -11046,34 +11046,521 @@ access-control-allow-origin: *
         </details>         <pre>
 
 <code class="language-json">{
-    &quot;data&quot;: [
+    &quot;message&quot;: &quot;SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;sequence&#039; in &#039;order clause&#039; (SQL: select * from `lib_suffix_names` order by `sequence` asc)&quot;,
+    &quot;exception&quot;: &quot;Illuminate\\Database\\QueryException&quot;,
+    &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Connection.php&quot;,
+    &quot;line&quot;: 759,
+    &quot;trace&quot;: [
         {
-            &quot;code&quot;: &quot;II&quot;,
-            &quot;suffix_desc&quot;: &quot;II&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Connection.php&quot;,
+            &quot;line&quot;: 719,
+            &quot;function&quot;: &quot;runQueryCallback&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Connection&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
-            &quot;code&quot;: &quot;III&quot;,
-            &quot;suffix_desc&quot;: &quot;III&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Connection.php&quot;,
+            &quot;line&quot;: 421,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Connection&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
-            &quot;code&quot;: &quot;IV&quot;,
-            &quot;suffix_desc&quot;: &quot;IV&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php&quot;,
+            &quot;line&quot;: 2636,
+            &quot;function&quot;: &quot;select&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Connection&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
-            &quot;code&quot;: &quot;JR&quot;,
-            &quot;suffix_desc&quot;: &quot;Jr.&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php&quot;,
+            &quot;line&quot;: 2624,
+            &quot;function&quot;: &quot;runSelect&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Query\\Builder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
-            &quot;code&quot;: &quot;NA&quot;,
-            &quot;suffix_desc&quot;: &quot;Not Applicable&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php&quot;,
+            &quot;line&quot;: 3160,
+            &quot;function&quot;: &quot;Illuminate\\Database\\Query\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Query\\Builder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
-            &quot;code&quot;: &quot;SR&quot;,
-            &quot;suffix_desc&quot;: &quot;Sr.&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php&quot;,
+            &quot;line&quot;: 2625,
+            &quot;function&quot;: &quot;onceWithColumns&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Query\\Builder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         },
         {
-            &quot;code&quot;: &quot;V&quot;,
-            &quot;suffix_desc&quot;: &quot;V&quot;
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php&quot;,
+            &quot;line&quot;: 699,
+            &quot;function&quot;: &quot;get&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Query\\Builder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php&quot;,
+            &quot;line&quot;: 683,
+            &quot;function&quot;: &quot;getModels&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Eloquent\\Builder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php&quot;,
+            &quot;line&quot;: 23,
+            &quot;function&quot;: &quot;get&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Database\\Eloquent\\Builder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/spatie/laravel-query-builder/src/QueryBuilder.php&quot;,
+            &quot;line&quot;: 105,
+            &quot;function&quot;: &quot;forwardCallTo&quot;,
+            &quot;class&quot;: &quot;Spatie\\QueryBuilder\\QueryBuilder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/app/Http/Controllers/API/V1/Libraries/LibSuffixNameController.php&quot;,
+            &quot;line&quot;: 24,
+            &quot;function&quot;: &quot;__call&quot;,
+            &quot;class&quot;: &quot;Spatie\\QueryBuilder\\QueryBuilder&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Controller.php&quot;,
+            &quot;line&quot;: 54,
+            &quot;function&quot;: &quot;index&quot;,
+            &quot;class&quot;: &quot;App\\Http\\Controllers\\API\\V1\\Libraries\\LibSuffixNameController&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php&quot;,
+            &quot;line&quot;: 45,
+            &quot;function&quot;: &quot;callAction&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Controller&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Route.php&quot;,
+            &quot;line&quot;: 261,
+            &quot;function&quot;: &quot;dispatch&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\ControllerDispatcher&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Route.php&quot;,
+            &quot;line&quot;: 204,
+            &quot;function&quot;: &quot;runController&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Route&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 725,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Route&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 141,
+            &quot;function&quot;: &quot;Illuminate\\Routing\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php&quot;,
+            &quot;line&quot;: 50,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\SubstituteBindings&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
+            &quot;line&quot;: 126,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
+            &quot;line&quot;: 102,
+            &quot;function&quot;: &quot;handleRequest&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php&quot;,
+            &quot;line&quot;: 54,
+            &quot;function&quot;: &quot;handleRequestUsingNamedLimiter&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Middleware\\ThrottleRequests&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 116,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 726,
+            &quot;function&quot;: &quot;then&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 703,
+            &quot;function&quot;: &quot;runRouteWithinStack&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 667,
+            &quot;function&quot;: &quot;runRoute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php&quot;,
+            &quot;line&quot;: 656,
+            &quot;function&quot;: &quot;dispatchToRoute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
+            &quot;line&quot;: 167,
+            &quot;function&quot;: &quot;dispatch&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Routing\\Router&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 141,
+            &quot;function&quot;: &quot;Illuminate\\Foundation\\Http\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
+            &quot;line&quot;: 21,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php&quot;,
+            &quot;line&quot;: 31,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php&quot;,
+            &quot;line&quot;: 21,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php&quot;,
+            &quot;line&quot;: 40,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\TrimStrings&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php&quot;,
+            &quot;line&quot;: 27,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php&quot;,
+            &quot;line&quot;: 86,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php&quot;,
+            &quot;line&quot;: 62,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\HandleCors&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php&quot;,
+            &quot;line&quot;: 39,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 180,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Http\\Middleware\\TrustProxies&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php&quot;,
+            &quot;line&quot;: 116,
+            &quot;function&quot;: &quot;Illuminate\\Pipeline\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
+            &quot;line&quot;: 142,
+            &quot;function&quot;: &quot;then&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Pipeline\\Pipeline&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php&quot;,
+            &quot;line&quot;: 111,
+            &quot;function&quot;: &quot;sendRequestThroughRouter&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 299,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Http\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 287,
+            &quot;function&quot;: &quot;callLaravelOrLumenRoute&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 89,
+            &quot;function&quot;: &quot;makeApiCall&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 45,
+            &quot;function&quot;: &quot;makeResponseCall&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php&quot;,
+            &quot;line&quot;: 35,
+            &quot;function&quot;: &quot;makeResponseCallIfConditionsPass&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
+            &quot;line&quot;: 209,
+            &quot;function&quot;: &quot;__invoke&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
+            &quot;line&quot;: 166,
+            &quot;function&quot;: &quot;iterateThroughStrategies&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php&quot;,
+            &quot;line&quot;: 95,
+            &quot;function&quot;: &quot;fetchResponses&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 122,
+            &quot;function&quot;: &quot;processRoute&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Extracting\\Extractor&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 69,
+            &quot;function&quot;: &quot;extractEndpointsInfoFromLaravelApp&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php&quot;,
+            &quot;line&quot;: 47,
+            &quot;function&quot;: &quot;extractEndpointsInfoAndWriteToDisk&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php&quot;,
+            &quot;line&quot;: 53,
+            &quot;function&quot;: &quot;get&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
+            &quot;line&quot;: 36,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Knuckles\\Scribe\\Commands\\GenerateDocumentation&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php&quot;,
+            &quot;line&quot;: 41,
+            &quot;function&quot;: &quot;Illuminate\\Container\\{closure}&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
+            &quot;line&quot;: 93,
+            &quot;function&quot;: &quot;unwrapIfClosure&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\Util&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php&quot;,
+            &quot;line&quot;: 37,
+            &quot;function&quot;: &quot;callBoundMethod&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php&quot;,
+            &quot;line&quot;: 651,
+            &quot;function&quot;: &quot;call&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\BoundMethod&quot;,
+            &quot;type&quot;: &quot;::&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
+            &quot;line&quot;: 144,
+            &quot;function&quot;: &quot;call&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Container\\Container&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php&quot;,
+            &quot;line&quot;: 308,
+            &quot;function&quot;: &quot;execute&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php&quot;,
+            &quot;line&quot;: 126,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Command\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
+            &quot;line&quot;: 1002,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Command&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
+            &quot;line&quot;: 299,
+            &quot;function&quot;: &quot;doRunCommand&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php&quot;,
+            &quot;line&quot;: 171,
+            &quot;function&quot;: &quot;doRun&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php&quot;,
+            &quot;line&quot;: 102,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Symfony\\Component\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php&quot;,
+            &quot;line&quot;: 129,
+            &quot;function&quot;: &quot;run&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Console\\Application&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
+        },
+        {
+            &quot;file&quot;: &quot;/Users/noel/Project/wahtermelon/artisan&quot;,
+            &quot;line&quot;: 37,
+            &quot;function&quot;: &quot;handle&quot;,
+            &quot;class&quot;: &quot;Illuminate\\Foundation\\Console\\Kernel&quot;,
+            &quot;type&quot;: &quot;-&gt;&quot;
         }
     ]
 }</code>

@@ -67,19 +67,19 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: emanuel.schneider@example.org
+        example: sally31@example.com
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: accusamus
+        example: saepe
         type: string
         custom: []
     cleanBodyParameters:
-      email: emanuel.schneider@example.org
-      password: accusamus
+      email: sally31@example.com
+      password: saepe
     fileParameters: []
     responses: []
     responseFields: []
@@ -113,14 +113,14 @@ endpoints:
         name: last_name
         description: ''
         required: true
-        example: praesentium
+        example: vero
         type: string
         custom: []
       first_name:
         name: first_name
         description: ''
         required: true
-        example: blanditiis
+        example: neque
         type: string
         custom: []
       middle_name:
@@ -134,35 +134,35 @@ endpoints:
         name: suffix_name
         description: ''
         required: true
-        example: veritatis
+        example: animi
         type: string
         custom: []
       gender:
         name: gender
         description: ''
         required: true
-        example: quia
+        example: est
         type: string
         custom: []
       birthdate:
         name: birthdate
         description: 'Must be a valid date.'
         required: true
-        example: '2022-09-14T15:57:20'
+        example: '2022-09-14T16:30:39'
         type: string
         custom: []
       contact_number:
         name: contact_number
         description: 'Must be at least 11 characters. Must not be greater than 13 characters.'
         required: true
-        example: ildyidv
+        example: ragjw
         type: string
         custom: []
       email:
         name: email
         description: 'Must be a valid email address.'
         required: false
-        example: cathy68@example.org
+        example: flatley.coy@example.com
         type: string
         custom: []
       is_active:
@@ -183,34 +183,34 @@ endpoints:
         name: tin_number
         description: 'Must not be greater than 9 characters.'
         required: false
-        example: cbfwolyv
+        example: x
         type: string
         custom: []
       accreditation_number:
         name: accreditation_number
         description: 'Must not be greater than 14 characters.'
         required: false
-        example: rjdbta
+        example: jedj
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: rem
+        example: voluptatem
         type: string
         custom: []
     cleanBodyParameters:
-      last_name: praesentium
-      first_name: blanditiis
-      suffix_name: veritatis
-      gender: quia
-      birthdate: '2022-09-14T15:57:20'
-      contact_number: ildyidv
-      email: cathy68@example.org
-      tin_number: cbfwolyv
-      accreditation_number: rjdbta
-      password: rem
+      last_name: vero
+      first_name: neque
+      suffix_name: animi
+      gender: est
+      birthdate: '2022-09-14T16:30:39'
+      contact_number: ragjw
+      email: flatley.coy@example.com
+      tin_number: x
+      accreditation_number: jedj
+      password: voluptatem
     fileParameters: []
     responses: []
     responseFields: []
@@ -245,7 +245,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"last_name":"Beatty","first_name":"Scot","middle_name":"Larkin","suffix_code":"NA","birthdate":"2005-04-24","mothers_name":"Marcelina Larkin","gender":"M","mobile_number":"639-035-595","pwd_type_code":"VD","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"JEWIT","occupation_code":"SVC022","education_code":3,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 15:34:24","updated_at":"2022-09-14 15:34:24"},{"last_name":"Bernhard","first_name":"Golden","middle_name":"Cartwright","suffix_code":"III","birthdate":"1972-02-02","mothers_name":"Zita Cartwright","gender":"M","mobile_number":"295-077-011","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"A+","religion_code":"XTIAN","occupation_code":"SVC009","education_code":8,"civil_status_code":"SPRTD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:35:13","updated_at":"2022-09-14 12:35:13"},{"last_name":"Connelly","first_name":"Theodora","middle_name":"Brakus","suffix_code":"NA","birthdate":"1971-02-13","mothers_name":"Aida Brakus","gender":"F","mobile_number":"360-141-121","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"A-","religion_code":"UNKNO","occupation_code":"SVC049","education_code":2,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:32:28","updated_at":"2022-09-14 15:32:28"},{"last_name":"Denesik","first_name":"Alexandrine","middle_name":"Jacobs","suffix_code":"NA","birthdate":"1999-11-30","mothers_name":"Jaunita Jacobs","gender":"F","mobile_number":"597-031-288","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"NA","religion_code":"EVANG","occupation_code":"SVC038","education_code":8,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:29:17","updated_at":"2022-09-14 15:29:17"},{"last_name":"Gaylord","first_name":"Jackie","middle_name":"Baumbach","suffix_code":"NA","birthdate":"1994-06-04","mothers_name":"Aliza Baumbach","gender":"F","mobile_number":"015-579-482","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"IGNIK","occupation_code":"SVC001","education_code":7,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"Goodwin","first_name":"Bridgette","middle_name":"Johnson","suffix_code":"NA","birthdate":"2001-11-10","mothers_name":"Karine Johnson","gender":"F","mobile_number":"788-203-059","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ALLY","occupation_code":"SVC008","education_code":6,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:34:25","updated_at":"2022-09-14 15:34:25"},{"last_name":"Goyette","first_name":"Benjamin","middle_name":"Feest","suffix_code":"SR","birthdate":"2007-10-21","mothers_name":"Jena Feest","gender":"M","mobile_number":"551-525-749","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"CATHO","occupation_code":"TRANS006","education_code":5,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:01:19","updated_at":"2022-09-14 13:01:19"},{"last_name":"Hagenes","first_name":"Ocie","middle_name":"Jakubowski","suffix_code":"NA","birthdate":"2006-07-07","mothers_name":"Maeve Jakubowski","gender":"F","mobile_number":"846-194-822","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"AGLIP","occupation_code":"UNSP006","education_code":5,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Hegmann","first_name":"Dina","middle_name":"Heaney","suffix_code":"NA","birthdate":"1978-01-25","mothers_name":"Jeanie Heaney","gender":"F","mobile_number":"982-407-289","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"ANGLI","occupation_code":"SVC021","education_code":1,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:26:57","updated_at":"2022-09-14 12:26:57"},{"last_name":"Jacobson","first_name":"Craig","middle_name":"Herzog","suffix_code":"V","birthdate":"1983-10-12","mothers_name":"Alyson Herzog","gender":"M","mobile_number":"393-499-081","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"LRCM","occupation_code":"SVC007","education_code":5,"civil_status_code":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:32:40","updated_at":"2022-09-14 12:32:40"},{"last_name":"Jerde","first_name":"Phoebe","middle_name":"Kessler","suffix_code":"NA","birthdate":"1988-11-19","mothers_name":"Naomie Kessler","gender":"F","mobile_number":"674-728-904","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ANGLI","occupation_code":"TRANS008","education_code":3,"civil_status_code":"CHBTN","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:07:32","updated_at":"2022-09-14 15:07:32"},{"last_name":"Johns","first_name":"Frieda","middle_name":"Wilderman","suffix_code":"NA","birthdate":"2009-08-19","mothers_name":"Katelyn Wilderman","gender":"F","mobile_number":"744-845-875","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"SVDAY","occupation_code":"SVC052","education_code":6,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:55:31","updated_at":"2022-09-14 15:55:31"},{"last_name":"Konopelski","first_name":"Joseph","middle_name":"Huels","suffix_code":"II","birthdate":"2002-10-26","mothers_name":"Jaqueline Huels","gender":"M","mobile_number":"645-563-992","pwd_type_code":"LD","indegenous_flag":true,"blood_type_code":"B+","religion_code":"MUSLI","occupation_code":"SVC004","education_code":5,"civil_status_code":"WDWD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:35:12","updated_at":"2022-09-14 12:35:12"},{"last_name":"Kuhn","first_name":"Otilia","middle_name":"Bechtelar","suffix_code":"NA","birthdate":"2003-04-01","mothers_name":"Tina Bechtelar","gender":"F","mobile_number":"845-287-349","pwd_type_code":"CID","indegenous_flag":true,"blood_type_code":"O-","religion_code":"ANGLI","occupation_code":"HEALTH001","education_code":8,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Luettgen","first_name":"Lue","middle_name":"Franecki","suffix_code":"NA","birthdate":"2015-07-23","mothers_name":"Delfina Franecki","gender":"F","mobile_number":"272-373-817","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"B+","religion_code":"PROTE","occupation_code":"UNSP001","education_code":6,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:23:18","updated_at":"2022-09-14 15:23:18"}],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=3","prev":null,"next":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2"},"meta":{"current_page":1,"from":1,"last_page":3,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","label":"1","active":true},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"2","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=3","label":"3","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/patient","per_page":15,"to":15,"total":31}}'
+        content: '{"data":[{"last_name":"Beatty","first_name":"Scot","middle_name":"Larkin","suffix_code":"NA","birthdate":"2005-04-24","mothers_name":"Marcelina Larkin","gender":"M","mobile_number":"639-035-595","pwd_type_code":"VD","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"JEWIT","occupation_code":"SVC022","education_code":3,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 15:34:24","updated_at":"2022-09-14 15:34:24"},{"last_name":"Bernhard","first_name":"Golden","middle_name":"Cartwright","suffix_code":"III","birthdate":"1972-02-02","mothers_name":"Zita Cartwright","gender":"M","mobile_number":"295-077-011","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"A+","religion_code":"XTIAN","occupation_code":"SVC009","education_code":8,"civil_status_code":"SPRTD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 12:35:13","updated_at":"2022-09-14 12:35:13"},{"last_name":"Connelly","first_name":"Theodora","middle_name":"Brakus","suffix_code":"NA","birthdate":"1971-02-13","mothers_name":"Aida Brakus","gender":"F","mobile_number":"360-141-121","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"A-","religion_code":"UNKNO","occupation_code":"SVC049","education_code":2,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:32:28","updated_at":"2022-09-14 15:32:28"},{"last_name":"Denesik","first_name":"Alexandrine","middle_name":"Jacobs","suffix_code":"NA","birthdate":"1999-11-30","mothers_name":"Jaunita Jacobs","gender":"F","mobile_number":"597-031-288","pwd_type_code":"NA","indegenous_flag":true,"blood_type_code":"NA","religion_code":"EVANG","occupation_code":"SVC038","education_code":8,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:29:17","updated_at":"2022-09-14 15:29:17"},{"last_name":"Gaylord","first_name":"Jackie","middle_name":"Baumbach","suffix_code":"NA","birthdate":"1994-06-04","mothers_name":"Aliza Baumbach","gender":"F","mobile_number":"015-579-482","pwd_type_code":"MD","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"IGNIK","occupation_code":"SVC001","education_code":7,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:46:10","updated_at":"2022-09-14 12:46:10"},{"last_name":"Goodwin","first_name":"Bridgette","middle_name":"Johnson","suffix_code":"NA","birthdate":"2001-11-10","mothers_name":"Karine Johnson","gender":"F","mobile_number":"788-203-059","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ALLY","occupation_code":"SVC008","education_code":6,"civil_status_code":"ANLD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:34:25","updated_at":"2022-09-14 15:34:25"},{"last_name":"Goyette","first_name":"Benjamin","middle_name":"Feest","suffix_code":"SR","birthdate":"2007-10-21","mothers_name":"Jena Feest","gender":"M","mobile_number":"551-525-749","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"NA","religion_code":"CATHO","occupation_code":"TRANS006","education_code":5,"civil_status_code":"SPRTD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:01:19","updated_at":"2022-09-14 13:01:19"},{"last_name":"Hagenes","first_name":"Ocie","middle_name":"Jakubowski","suffix_code":"NA","birthdate":"2006-07-07","mothers_name":"Maeve Jakubowski","gender":"F","mobile_number":"846-194-822","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"AGLIP","occupation_code":"UNSP006","education_code":5,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"},{"last_name":"Harvey","first_name":"Josh","middle_name":"Cole","suffix_code":"V","birthdate":"1971-08-23","mothers_name":"Virginia Cole","gender":"M","mobile_number":"152-181-108","pwd_type_code":"CID","indegenous_flag":true,"blood_type_code":"NA","religion_code":"EVANG","occupation_code":"MAR001","education_code":8,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 16:05:32","updated_at":"2022-09-14 16:05:32"},{"last_name":"Hegmann","first_name":"Dina","middle_name":"Heaney","suffix_code":"NA","birthdate":"1978-01-25","mothers_name":"Jeanie Heaney","gender":"F","mobile_number":"982-407-289","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"AB+","religion_code":"ANGLI","occupation_code":"SVC021","education_code":1,"civil_status_code":"CHBTN","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:26:57","updated_at":"2022-09-14 12:26:57"},{"last_name":"Jacobson","first_name":"Craig","middle_name":"Herzog","suffix_code":"V","birthdate":"1983-10-12","mothers_name":"Alyson Herzog","gender":"M","mobile_number":"393-499-081","pwd_type_code":"OD","indegenous_flag":false,"blood_type_code":"AB-","religion_code":"LRCM","occupation_code":"SVC007","education_code":5,"civil_status_code":"ANLD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:32:40","updated_at":"2022-09-14 12:32:40"},{"last_name":"Jerde","first_name":"Phoebe","middle_name":"Kessler","suffix_code":"NA","birthdate":"1988-11-19","mothers_name":"Naomie Kessler","gender":"F","mobile_number":"674-728-904","pwd_type_code":"NA","indegenous_flag":false,"blood_type_code":"O+","religion_code":"ANGLI","occupation_code":"TRANS008","education_code":3,"civil_status_code":"CHBTN","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:07:32","updated_at":"2022-09-14 15:07:32"},{"last_name":"Johns","first_name":"Frieda","middle_name":"Wilderman","suffix_code":"NA","birthdate":"2009-08-19","mothers_name":"Katelyn Wilderman","gender":"F","mobile_number":"744-845-875","pwd_type_code":"OD","indegenous_flag":true,"blood_type_code":"AB-","religion_code":"SVDAY","occupation_code":"SVC052","education_code":6,"civil_status_code":"MRRD","consent_flag":false,"image_url":null,"created_at":"2022-09-14 15:55:31","updated_at":"2022-09-14 15:55:31"},{"last_name":"Konopelski","first_name":"Joseph","middle_name":"Huels","suffix_code":"II","birthdate":"2002-10-26","mothers_name":"Jaqueline Huels","gender":"M","mobile_number":"645-563-992","pwd_type_code":"LD","indegenous_flag":true,"blood_type_code":"B+","religion_code":"MUSLI","occupation_code":"SVC004","education_code":5,"civil_status_code":"WDWD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 12:35:12","updated_at":"2022-09-14 12:35:12"},{"last_name":"Kuhn","first_name":"Otilia","middle_name":"Bechtelar","suffix_code":"NA","birthdate":"2003-04-01","mothers_name":"Tina Bechtelar","gender":"F","mobile_number":"845-287-349","pwd_type_code":"CID","indegenous_flag":true,"blood_type_code":"O-","religion_code":"ANGLI","occupation_code":"HEALTH001","education_code":8,"civil_status_code":"MRRD","consent_flag":true,"image_url":null,"created_at":"2022-09-14 13:06:55","updated_at":"2022-09-14 13:06:55"}],"links":{"first":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","last":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=3","prev":null,"next":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2"},"meta":{"current_page":1,"from":1,"last_page":3,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=1","label":"1","active":true},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"2","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=3","label":"3","active":false},{"url":"http:\/\/wahtermelon.test\/api\/v1\/patient?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/wahtermelon.test\/api\/v1\/patient","per_page":15,"to":15,"total":33}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -292,14 +292,14 @@ endpoints:
         name: last_name
         description: ''
         required: true
-        example: quibusdam
+        example: et
         type: string
         custom: []
       first_name:
         name: first_name
         description: ''
         required: true
-        example: temporibus
+        example: libero
         type: string
         custom: []
       middle_name:
@@ -313,35 +313,35 @@ endpoints:
         name: suffix_name
         description: ''
         required: true
-        example: eveniet
+        example: fuga
         type: string
         custom: []
       birthdate:
         name: birthdate
         description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>tomorrow</code>.'
         required: true
-        example: '1995-08-09'
+        example: '2010-01-29'
         type: string
         custom: []
       mothers_name:
         name: mothers_name
         description: ''
         required: true
-        example: saepe
+        example: hic
         type: string
         custom: []
       gender:
         name: gender
         description: ''
         required: true
-        example: odio
+        example: illum
         type: string
         custom: []
       mobile_number:
         name: mobile_number
         description: 'Must be at least 11 characters. Must not be greater than 13 characters.'
         required: true
-        example: oapdaqts
+        example: xs
         type: string
         custom: []
       pwd_status_code:
@@ -355,7 +355,7 @@ endpoints:
         name: indegenous_flag
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         custom: []
       blood_type_code:
@@ -369,59 +369,59 @@ endpoints:
         name: religion_code
         description: ''
         required: true
-        example: deleniti
+        example: aut
         type: string
         custom: []
       occupation_code:
         name: occupation_code
         description: ''
         required: true
-        example: sunt
+        example: sit
         type: string
         custom: []
       education_code:
         name: education_code
         description: ''
         required: true
-        example: est
+        example: et
         type: string
         custom: []
       civil_status_code:
         name: civil_status_code
         description: ''
         required: true
-        example: aut
+        example: et
         type: string
         custom: []
       consent_flag:
         name: consent_flag
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         custom: []
       image_url:
         name: image_url
         description: 'Must be a valid URL.'
         required: false
-        example: 'https://www.treutel.org/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur'
+        example: 'http://www.koelpin.com/dolorum-et-ea-necessitatibus-tenetur-non-eligendi-dolor.html'
         type: string
         custom: []
     cleanBodyParameters:
-      last_name: quibusdam
-      first_name: temporibus
-      suffix_name: eveniet
-      birthdate: '1995-08-09'
-      mothers_name: saepe
-      gender: odio
-      mobile_number: oapdaqts
-      indegenous_flag: true
-      religion_code: deleniti
-      occupation_code: sunt
-      education_code: est
-      civil_status_code: aut
-      consent_flag: true
-      image_url: 'https://www.treutel.org/praesentium-repellat-rerum-inventore-est-corrupti-corporis-pariatur'
+      last_name: et
+      first_name: libero
+      suffix_name: fuga
+      birthdate: '2010-01-29'
+      mothers_name: hic
+      gender: illum
+      mobile_number: xs
+      indegenous_flag: false
+      religion_code: aut
+      occupation_code: sit
+      education_code: et
+      civil_status_code: et
+      consent_flag: false
+      image_url: 'http://www.koelpin.com/dolorum-et-ea-necessitatibus-tenetur-non-eligendi-dolor.html'
     fileParameters: []
     responses: []
     responseFields: []
@@ -4578,7 +4578,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"code":"AGRI001","category_desc":"Agriculture","occupation_desc":"Farmer"},{"code":"AGRI002","category_desc":"Agriculture","occupation_desc":"Fisherman"},{"code":"FOOD001","category_desc":"Industry","occupation_desc":"Supervisor"},{"code":"FOOD002","category_desc":"Industry","occupation_desc":"Service Engineer"},{"code":"FOOD003","category_desc":"Industry","occupation_desc":"Engineer"},{"code":"FOOD004","category_desc":"Industry","occupation_desc":"Accountant"},{"code":"GOVT","category_desc":"Government","occupation_desc":"Govt Employee"},{"code":"GOVT001","category_desc":"Government","occupation_desc":"Employee"},{"code":"GOVT002","category_desc":"Government","occupation_desc":"Public School Teacher"},{"code":"HEALTH001","category_desc":"Health","occupation_desc":"Physician"},{"code":"HEALTH002","category_desc":"Health","occupation_desc":"Nurse"},{"code":"HEALTH003","category_desc":"Health","occupation_desc":"Midwife"},{"code":"HEALTH004","category_desc":"Health","occupation_desc":"Physical Therapist"},{"code":"HEALTH005","category_desc":"Health","occupation_desc":"Respiratory Therapist"},{"code":"HEALTH006","category_desc":"Health","occupation_desc":"X-Ray Technician"},{"code":"HEALTH007","category_desc":"Health","occupation_desc":"Nurse Aide"},{"code":"HEALTH008","category_desc":"Health","occupation_desc":"Dentist"},{"code":"HEALTH009","category_desc":"Health","occupation_desc":"Medical Technologist"},{"code":"HEALTH010","category_desc":"Health","occupation_desc":"Pharmacist"},{"code":"HEALTH011","category_desc":"Health","occupation_desc":"Dental Technician"},{"code":"HEALTH012","category_desc":"Health","occupation_desc":"Reflexologist"},{"code":"HEALTH013","category_desc":"Health","occupation_desc":"Pharmacist Aide"},{"code":"HEALTH014","category_desc":"Health","occupation_desc":"Paramedic"},{"code":"HEALTH015","category_desc":"Health","occupation_desc":"Caregiver"},{"code":"MAR001","category_desc":"Maritime","occupation_desc":"Seaman"},{"code":"MFG001","category_desc":"Manufacturing","occupation_desc":"Merchandiser"},{"code":"RETL001","category_desc":"Retail","occupation_desc":"Vendor"},{"code":"RETL002","category_desc":"Retail","occupation_desc":"Promo Girl"},{"code":"RETL003","category_desc":"Retail","occupation_desc":"Cashier"},{"code":"SVC 24","category_desc":"Service","occupation_desc":"Janitor"},{"code":"SVC001","category_desc":"Service","occupation_desc":"Employee"},{"code":"SVC002","category_desc":"Service","occupation_desc":"Private School Teacher"},{"code":"SVC003","category_desc":"Service","occupation_desc":"Saleslady"},{"code":"SVC004","category_desc":"Service","occupation_desc":"Barber"},{"code":"SVC005","category_desc":"Service","occupation_desc":"Masseur"},{"code":"SVC006","category_desc":"Service","occupation_desc":"Factory Worker"},{"code":"SVC007","category_desc":"Service","occupation_desc":"Painter"},{"code":"SVC008","category_desc":"Service","occupation_desc":"Welder"},{"code":"SVC009","category_desc":"Service","occupation_desc":"Beautician"},{"code":"SVC010","category_desc":"Service","occupation_desc":"Laundrywoman"},{"code":"SVC011","category_desc":"Service","occupation_desc":"Cook"},{"code":"SVC012","category_desc":"Service","occupation_desc":"Guest Relations Officer"},{"code":"SVC013","category_desc":"Service","occupation_desc":"Streetsweeper"},{"code":"SVC014","category_desc":"Service","occupation_desc":"Garbage collector"},{"code":"SVC015","category_desc":"Service","occupation_desc":"Messenger"},{"code":"SVC016","category_desc":"Service","occupation_desc":"Social Worker"},{"code":"SVC017","category_desc":"Service","occupation_desc":"Laborer, skilled"},{"code":"SVC018","category_desc":"Service","occupation_desc":"Laborer, unskilled"},{"code":"SVC019","category_desc":"Service","occupation_desc":"Security Guard"},{"code":"SVC020","category_desc":"Service","occupation_desc":"Service Crew"},{"code":"SVC021","category_desc":"Service","occupation_desc":"Housemaid"},{"code":"SVC022","category_desc":"Service","occupation_desc":"Family Driver"},{"code":"SVC023","category_desc":"Service","occupation_desc":"Company Driver"},{"code":"SVC024","category_desc":"Service","occupation_desc":"Salesman"},{"code":"SVC025","category_desc":"Service","occupation_desc":"Carpenter"},{"code":"SVC026","category_desc":"Service","occupation_desc":"Gardener"},{"code":"SVC027","category_desc":"Service","occupation_desc":"Actor"},{"code":"SVC028","category_desc":"Service","occupation_desc":"Actress"},{"code":"SVC029","category_desc":"Service","occupation_desc":"Bartender"},{"code":"SVC030","category_desc":"Service","occupation_desc":"Policeman"},{"code":"SVC031","category_desc":"Service","occupation_desc":"Policewoman"},{"code":"SVC032","category_desc":"Service","occupation_desc":"Soldier"},{"code":"SVC033","category_desc":"Service","occupation_desc":"Macho Dancer"},{"code":"SVC034","category_desc":"Service","occupation_desc":"Bouncer"},{"code":"SVC035","category_desc":"Service","occupation_desc":"Aircon Technician"},{"code":"SVC036","category_desc":"Service","occupation_desc":"Waiter"},{"code":"SVC037","category_desc":"Service","occupation_desc":"Butcher"},{"code":"SVC038","category_desc":"Service","occupation_desc":"Artist"},{"code":"SVC039","category_desc":"Service","occupation_desc":"Technician"},{"code":"SVC040","category_desc":"Service","occupation_desc":"Dispatcher"},{"code":"SVC041","category_desc":"Service","occupation_desc":"Electrician"},{"code":"SVC042","category_desc":"Service","occupation_desc":"Machine Operator"},{"code":"SVC043","category_desc":"Service","occupation_desc":"Mason"},{"code":"SVC044","category_desc":"Service","occupation_desc":"Fireman"},{"code":"SVC045","category_desc":"Service","occupation_desc":"Domestic Helper"},{"code":"SVC046","category_desc":"Service","occupation_desc":"Roomboy"},{"code":"SVC047","category_desc":"Service","occupation_desc":"OFW"},{"code":"SVC048","category_desc":"Service","occupation_desc":"Entertainer"},{"code":"SVC049","category_desc":"Service","occupation_desc":"Helper"},{"code":"SVC050","category_desc":"Service","occupation_desc":"Manager"},{"code":"SVC051","category_desc":"Service","occupation_desc":"Clerk"},{"code":"SVC052","category_desc":"Service","occupation_desc":"Administrator"},{"code":"SVC053","category_desc":"Service","occupation_desc":"Sewer"},{"code":"TRANS001","category_desc":"Transport","occupation_desc":"Jeepney Driver"},{"code":"TRANS002","category_desc":"Transport","occupation_desc":"Taxi Driver"},{"code":"TRANS003","category_desc":"Transport","occupation_desc":"Bus Driver"},{"code":"TRANS004","category_desc":"Transport","occupation_desc":"Truck Driver"},{"code":"TRANS005","category_desc":"Transport","occupation_desc":"Bus Conductor"},{"code":"TRANS006","category_desc":"Transport","occupation_desc":"Tricycle Driver"},{"code":"TRANS007","category_desc":"Transport","occupation_desc":"Pedicab Driver"},{"code":"TRANS008","category_desc":"Transport","occupation_desc":"Calesa Driver"},{"code":"TRANS009","category_desc":"Transport","occupation_desc":"Ambulance Driver"},{"code":"UNSP","category_desc":"Unspecified","occupation_desc":"Housewife"},{"code":"UNSP001","category_desc":"Unspecified","occupation_desc":"Unspecified"},{"code":"UNSP002","category_desc":"Unspecified","occupation_desc":"Businessman"},{"code":"UNSP003","category_desc":"Unspecified","occupation_desc":"Retired"},{"code":"UNSP004","category_desc":"Unspecified","occupation_desc":"Student"},{"code":"UNSP005","category_desc":"Unspecified","occupation_desc":"Photograper"},{"code":"UNSP006","category_desc":"Unspecified","occupation_desc":"None"}]}'
+        content: '{"data":[{"code":"FOOD004","category_desc":"Industry","occupation_desc":"Accountant"},{"code":"SVC027","category_desc":"Service","occupation_desc":"Actor"},{"code":"SVC028","category_desc":"Service","occupation_desc":"Actress"},{"code":"SVC052","category_desc":"Service","occupation_desc":"Administrator"},{"code":"SVC035","category_desc":"Service","occupation_desc":"Aircon Technician"},{"code":"TRANS009","category_desc":"Transport","occupation_desc":"Ambulance Driver"},{"code":"SVC038","category_desc":"Service","occupation_desc":"Artist"},{"code":"SVC004","category_desc":"Service","occupation_desc":"Barber"},{"code":"SVC029","category_desc":"Service","occupation_desc":"Bartender"},{"code":"SVC009","category_desc":"Service","occupation_desc":"Beautician"},{"code":"SVC034","category_desc":"Service","occupation_desc":"Bouncer"},{"code":"TRANS005","category_desc":"Transport","occupation_desc":"Bus Conductor"},{"code":"TRANS003","category_desc":"Transport","occupation_desc":"Bus Driver"},{"code":"UNSP002","category_desc":"Unspecified","occupation_desc":"Businessman"},{"code":"SVC037","category_desc":"Service","occupation_desc":"Butcher"},{"code":"TRANS008","category_desc":"Transport","occupation_desc":"Calesa Driver"},{"code":"HEALTH015","category_desc":"Health","occupation_desc":"Caregiver"},{"code":"SVC025","category_desc":"Service","occupation_desc":"Carpenter"},{"code":"RETL003","category_desc":"Retail","occupation_desc":"Cashier"},{"code":"SVC051","category_desc":"Service","occupation_desc":"Clerk"},{"code":"SVC023","category_desc":"Service","occupation_desc":"Company Driver"},{"code":"SVC011","category_desc":"Service","occupation_desc":"Cook"},{"code":"HEALTH011","category_desc":"Health","occupation_desc":"Dental Technician"},{"code":"HEALTH008","category_desc":"Health","occupation_desc":"Dentist"},{"code":"SVC040","category_desc":"Service","occupation_desc":"Dispatcher"},{"code":"SVC045","category_desc":"Service","occupation_desc":"Domestic Helper"},{"code":"SVC041","category_desc":"Service","occupation_desc":"Electrician"},{"code":"GOVT001","category_desc":"Government","occupation_desc":"Employee"},{"code":"SVC001","category_desc":"Service","occupation_desc":"Employee"},{"code":"FOOD003","category_desc":"Industry","occupation_desc":"Engineer"},{"code":"SVC048","category_desc":"Service","occupation_desc":"Entertainer"},{"code":"SVC006","category_desc":"Service","occupation_desc":"Factory Worker"},{"code":"SVC022","category_desc":"Service","occupation_desc":"Family Driver"},{"code":"AGRI001","category_desc":"Agriculture","occupation_desc":"Farmer"},{"code":"SVC044","category_desc":"Service","occupation_desc":"Fireman"},{"code":"AGRI002","category_desc":"Agriculture","occupation_desc":"Fisherman"},{"code":"SVC014","category_desc":"Service","occupation_desc":"Garbage collector"},{"code":"SVC026","category_desc":"Service","occupation_desc":"Gardener"},{"code":"GOVT","category_desc":"Government","occupation_desc":"Govt Employee"},{"code":"SVC012","category_desc":"Service","occupation_desc":"Guest Relations Officer"},{"code":"SVC049","category_desc":"Service","occupation_desc":"Helper"},{"code":"SVC021","category_desc":"Service","occupation_desc":"Housemaid"},{"code":"UNSP","category_desc":"Unspecified","occupation_desc":"Housewife"},{"code":"SVC 24","category_desc":"Service","occupation_desc":"Janitor"},{"code":"TRANS001","category_desc":"Transport","occupation_desc":"Jeepney Driver"},{"code":"SVC017","category_desc":"Service","occupation_desc":"Laborer, skilled"},{"code":"SVC018","category_desc":"Service","occupation_desc":"Laborer, unskilled"},{"code":"SVC010","category_desc":"Service","occupation_desc":"Laundrywoman"},{"code":"SVC042","category_desc":"Service","occupation_desc":"Machine Operator"},{"code":"SVC033","category_desc":"Service","occupation_desc":"Macho Dancer"},{"code":"SVC050","category_desc":"Service","occupation_desc":"Manager"},{"code":"SVC043","category_desc":"Service","occupation_desc":"Mason"},{"code":"SVC005","category_desc":"Service","occupation_desc":"Masseur"},{"code":"HEALTH009","category_desc":"Health","occupation_desc":"Medical Technologist"},{"code":"MFG001","category_desc":"Manufacturing","occupation_desc":"Merchandiser"},{"code":"SVC015","category_desc":"Service","occupation_desc":"Messenger"},{"code":"HEALTH003","category_desc":"Health","occupation_desc":"Midwife"},{"code":"UNSP006","category_desc":"Unspecified","occupation_desc":"None"},{"code":"HEALTH002","category_desc":"Health","occupation_desc":"Nurse"},{"code":"HEALTH007","category_desc":"Health","occupation_desc":"Nurse Aide"},{"code":"SVC047","category_desc":"Service","occupation_desc":"OFW"},{"code":"SVC007","category_desc":"Service","occupation_desc":"Painter"},{"code":"HEALTH014","category_desc":"Health","occupation_desc":"Paramedic"},{"code":"TRANS007","category_desc":"Transport","occupation_desc":"Pedicab Driver"},{"code":"HEALTH010","category_desc":"Health","occupation_desc":"Pharmacist"},{"code":"HEALTH013","category_desc":"Health","occupation_desc":"Pharmacist Aide"},{"code":"UNSP005","category_desc":"Unspecified","occupation_desc":"Photograper"},{"code":"HEALTH004","category_desc":"Health","occupation_desc":"Physical Therapist"},{"code":"HEALTH001","category_desc":"Health","occupation_desc":"Physician"},{"code":"SVC030","category_desc":"Service","occupation_desc":"Policeman"},{"code":"SVC031","category_desc":"Service","occupation_desc":"Policewoman"},{"code":"SVC002","category_desc":"Service","occupation_desc":"Private School Teacher"},{"code":"RETL002","category_desc":"Retail","occupation_desc":"Promo Girl"},{"code":"GOVT002","category_desc":"Government","occupation_desc":"Public School Teacher"},{"code":"HEALTH012","category_desc":"Health","occupation_desc":"Reflexologist"},{"code":"HEALTH005","category_desc":"Health","occupation_desc":"Respiratory Therapist"},{"code":"UNSP003","category_desc":"Unspecified","occupation_desc":"Retired"},{"code":"SVC046","category_desc":"Service","occupation_desc":"Roomboy"},{"code":"SVC003","category_desc":"Service","occupation_desc":"Saleslady"},{"code":"SVC024","category_desc":"Service","occupation_desc":"Salesman"},{"code":"MAR001","category_desc":"Maritime","occupation_desc":"Seaman"},{"code":"SVC019","category_desc":"Service","occupation_desc":"Security Guard"},{"code":"SVC020","category_desc":"Service","occupation_desc":"Service Crew"},{"code":"FOOD002","category_desc":"Industry","occupation_desc":"Service Engineer"},{"code":"SVC053","category_desc":"Service","occupation_desc":"Sewer"},{"code":"SVC016","category_desc":"Service","occupation_desc":"Social Worker"},{"code":"SVC032","category_desc":"Service","occupation_desc":"Soldier"},{"code":"SVC013","category_desc":"Service","occupation_desc":"Streetsweeper"},{"code":"UNSP004","category_desc":"Unspecified","occupation_desc":"Student"},{"code":"FOOD001","category_desc":"Industry","occupation_desc":"Supervisor"},{"code":"TRANS002","category_desc":"Transport","occupation_desc":"Taxi Driver"},{"code":"SVC039","category_desc":"Service","occupation_desc":"Technician"},{"code":"TRANS006","category_desc":"Transport","occupation_desc":"Tricycle Driver"},{"code":"TRANS004","category_desc":"Transport","occupation_desc":"Truck Driver"},{"code":"UNSP001","category_desc":"Unspecified","occupation_desc":"Unspecified"},{"code":"RETL001","category_desc":"Retail","occupation_desc":"Vendor"},{"code":"SVC036","category_desc":"Service","occupation_desc":"Waiter"},{"code":"SVC008","category_desc":"Service","occupation_desc":"Welder"},{"code":"HEALTH006","category_desc":"Health","occupation_desc":"X-Ray Technician"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -5586,7 +5586,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"code":"AGLIP","religion_desc":"Aglipay"},{"code":"ALLY","religion_desc":"Alliance of Bible Christian Communities"},{"code":"ANGLI","religion_desc":"Anglican"},{"code":"BAPTI","religion_desc":"Baptist"},{"code":"BRNAG","religion_desc":"Born Again Christian"},{"code":"BUDDH","religion_desc":"Buddhism"},{"code":"CATHO","religion_desc":"Catholic"},{"code":"CHOG","religion_desc":"Church of God"},{"code":"EVANG","religion_desc":"Evangelical"},{"code":"IGNIK","religion_desc":"Iglesia ni Cristo"},{"code":"JEWIT","religion_desc":"Jehovahs Witness"},{"code":"LRCM","religion_desc":"Life Renewal Christian Ministry"},{"code":"LUTHR","religion_desc":"Lutheran"},{"code":"METOD","religion_desc":"Methodist"},{"code":"MORMO","religion_desc":"LDS-Mormons"},{"code":"MUSLI","religion_desc":"Islam"},{"code":"PENTE","religion_desc":"Pentecostal"},{"code":"PROTE","religion_desc":"Protestant"},{"code":"SVDAY","religion_desc":"Seventh Day Adventist"},{"code":"UCCP","religion_desc":"UCCP"},{"code":"UNKNO","religion_desc":"Unknown"},{"code":"WESLY","religion_desc":"Wesleyan"},{"code":"XTIAN","religion_desc":"Christian"}]}'
+        content: '{"data":[{"code":"AGLIP","religion_desc":"Aglipay"},{"code":"ALLY","religion_desc":"Alliance of Bible Christian Communities"},{"code":"ANGLI","religion_desc":"Anglican"},{"code":"BAPTI","religion_desc":"Baptist"},{"code":"BRNAG","religion_desc":"Born Again Christian"},{"code":"BUDDH","religion_desc":"Buddhism"},{"code":"CATHO","religion_desc":"Catholic"},{"code":"XTIAN","religion_desc":"Christian"},{"code":"CHOG","religion_desc":"Church of God"},{"code":"EVANG","religion_desc":"Evangelical"},{"code":"IGNIK","religion_desc":"Iglesia ni Cristo"},{"code":"MUSLI","religion_desc":"Islam"},{"code":"JEWIT","religion_desc":"Jehovahs Witness"},{"code":"MORMO","religion_desc":"LDS-Mormons"},{"code":"LRCM","religion_desc":"Life Renewal Christian Ministry"},{"code":"LUTHR","religion_desc":"Lutheran"},{"code":"METOD","religion_desc":"Methodist"},{"code":"PENTE","religion_desc":"Pentecostal"},{"code":"PROTE","religion_desc":"Protestant"},{"code":"SVDAY","religion_desc":"Seventh Day Adventist"},{"code":"UCCP","religion_desc":"UCCP"},{"code":"UNKNO","religion_desc":"Unknown"},{"code":"WESLY","religion_desc":"Wesleyan"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -6089,8 +6089,527 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 200
-        content: '{"data":[{"code":"II","suffix_desc":"II"},{"code":"III","suffix_desc":"III"},{"code":"IV","suffix_desc":"IV"},{"code":"JR","suffix_desc":"Jr."},{"code":"NA","suffix_desc":"Not Applicable"},{"code":"SR","suffix_desc":"Sr."},{"code":"V","suffix_desc":"V"}]}'
+        status: 500
+        content: |-
+          {
+              "message": "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'sequence' in 'order clause' (SQL: select * from `lib_suffix_names` order by `sequence` asc)",
+              "exception": "Illuminate\\Database\\QueryException",
+              "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
+              "line": 759,
+              "trace": [
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
+                      "line": 719,
+                      "function": "runQueryCallback",
+                      "class": "Illuminate\\Database\\Connection",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
+                      "line": 421,
+                      "function": "run",
+                      "class": "Illuminate\\Database\\Connection",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+                      "line": 2636,
+                      "function": "select",
+                      "class": "Illuminate\\Database\\Connection",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+                      "line": 2624,
+                      "function": "runSelect",
+                      "class": "Illuminate\\Database\\Query\\Builder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+                      "line": 3160,
+                      "function": "Illuminate\\Database\\Query\\{closure}",
+                      "class": "Illuminate\\Database\\Query\\Builder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+                      "line": 2625,
+                      "function": "onceWithColumns",
+                      "class": "Illuminate\\Database\\Query\\Builder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php",
+                      "line": 699,
+                      "function": "get",
+                      "class": "Illuminate\\Database\\Query\\Builder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php",
+                      "line": 683,
+                      "function": "getModels",
+                      "class": "Illuminate\\Database\\Eloquent\\Builder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php",
+                      "line": 23,
+                      "function": "get",
+                      "class": "Illuminate\\Database\\Eloquent\\Builder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/spatie/laravel-query-builder/src/QueryBuilder.php",
+                      "line": 105,
+                      "function": "forwardCallTo",
+                      "class": "Spatie\\QueryBuilder\\QueryBuilder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/app/Http/Controllers/API/V1/Libraries/LibSuffixNameController.php",
+                      "line": 24,
+                      "function": "__call",
+                      "class": "Spatie\\QueryBuilder\\QueryBuilder",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Controller.php",
+                      "line": 54,
+                      "function": "index",
+                      "class": "App\\Http\\Controllers\\API\\V1\\Libraries\\LibSuffixNameController",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php",
+                      "line": 45,
+                      "function": "callAction",
+                      "class": "Illuminate\\Routing\\Controller",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Route.php",
+                      "line": 261,
+                      "function": "dispatch",
+                      "class": "Illuminate\\Routing\\ControllerDispatcher",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Route.php",
+                      "line": 204,
+                      "function": "runController",
+                      "class": "Illuminate\\Routing\\Route",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+                      "line": 725,
+                      "function": "run",
+                      "class": "Illuminate\\Routing\\Route",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 141,
+                      "function": "Illuminate\\Routing\\{closure}",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
+                      "line": 50,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
+                      "line": 126,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
+                      "line": 102,
+                      "function": "handleRequest",
+                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
+                      "line": 54,
+                      "function": "handleRequestUsingNamedLimiter",
+                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 116,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+                      "line": 726,
+                      "function": "then",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+                      "line": 703,
+                      "function": "runRouteWithinStack",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+                      "line": 667,
+                      "function": "runRoute",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+                      "line": 656,
+                      "function": "dispatchToRoute",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+                      "line": 167,
+                      "function": "dispatch",
+                      "class": "Illuminate\\Routing\\Router",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 141,
+                      "function": "Illuminate\\Foundation\\Http\\{closure}",
+                      "class": "Illuminate\\Foundation\\Http\\Kernel",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
+                      "line": 21,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php",
+                      "line": 31,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
+                      "line": 21,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php",
+                      "line": 40,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php",
+                      "line": 27,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php",
+                      "line": 86,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php",
+                      "line": 62,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Http\\Middleware\\HandleCors",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php",
+                      "line": 39,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 180,
+                      "function": "handle",
+                      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+                      "line": 116,
+                      "function": "Illuminate\\Pipeline\\{closure}",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+                      "line": 142,
+                      "function": "then",
+                      "class": "Illuminate\\Pipeline\\Pipeline",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+                      "line": 111,
+                      "function": "sendRequestThroughRouter",
+                      "class": "Illuminate\\Foundation\\Http\\Kernel",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
+                      "line": 299,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Http\\Kernel",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
+                      "line": 287,
+                      "function": "callLaravelOrLumenRoute",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
+                      "line": 89,
+                      "function": "makeApiCall",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
+                      "line": 45,
+                      "function": "makeResponseCall",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Strategies/Responses/ResponseCalls.php",
+                      "line": 35,
+                      "function": "makeResponseCallIfConditionsPass",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
+                      "line": 209,
+                      "function": "__invoke",
+                      "class": "Knuckles\\Scribe\\Extracting\\Strategies\\Responses\\ResponseCalls",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
+                      "line": 166,
+                      "function": "iterateThroughStrategies",
+                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Extracting/Extractor.php",
+                      "line": 95,
+                      "function": "fetchResponses",
+                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
+                      "line": 122,
+                      "function": "processRoute",
+                      "class": "Knuckles\\Scribe\\Extracting\\Extractor",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
+                      "line": 69,
+                      "function": "extractEndpointsInfoFromLaravelApp",
+                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/GroupedEndpoints/GroupedEndpointsFromApp.php",
+                      "line": 47,
+                      "function": "extractEndpointsInfoAndWriteToDisk",
+                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/knuckleswtf/scribe/src/Commands/GenerateDocumentation.php",
+                      "line": 53,
+                      "function": "get",
+                      "class": "Knuckles\\Scribe\\GroupedEndpoints\\GroupedEndpointsFromApp",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+                      "line": 36,
+                      "function": "handle",
+                      "class": "Knuckles\\Scribe\\Commands\\GenerateDocumentation",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Util.php",
+                      "line": 41,
+                      "function": "Illuminate\\Container\\{closure}",
+                      "class": "Illuminate\\Container\\BoundMethod",
+                      "type": "::"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+                      "line": 93,
+                      "function": "unwrapIfClosure",
+                      "class": "Illuminate\\Container\\Util",
+                      "type": "::"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+                      "line": 37,
+                      "function": "callBoundMethod",
+                      "class": "Illuminate\\Container\\BoundMethod",
+                      "type": "::"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Container/Container.php",
+                      "line": 651,
+                      "function": "call",
+                      "class": "Illuminate\\Container\\BoundMethod",
+                      "type": "::"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
+                      "line": 144,
+                      "function": "call",
+                      "class": "Illuminate\\Container\\Container",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Command/Command.php",
+                      "line": 308,
+                      "function": "execute",
+                      "class": "Illuminate\\Console\\Command",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Command.php",
+                      "line": 126,
+                      "function": "run",
+                      "class": "Symfony\\Component\\Console\\Command\\Command",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
+                      "line": 1002,
+                      "function": "run",
+                      "class": "Illuminate\\Console\\Command",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
+                      "line": 299,
+                      "function": "doRunCommand",
+                      "class": "Symfony\\Component\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/symfony/console/Application.php",
+                      "line": 171,
+                      "function": "doRun",
+                      "class": "Symfony\\Component\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Console/Application.php",
+                      "line": 102,
+                      "function": "run",
+                      "class": "Symfony\\Component\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php",
+                      "line": 129,
+                      "function": "run",
+                      "class": "Illuminate\\Console\\Application",
+                      "type": "->"
+                  },
+                  {
+                      "file": "/Users/noel/Project/wahtermelon/artisan",
+                      "line": 37,
+                      "function": "handle",
+                      "class": "Illuminate\\Foundation\\Console\\Kernel",
+                      "type": "->"
+                  }
+              ]
+          }
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
