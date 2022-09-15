@@ -23,8 +23,8 @@ class RegionController extends Controller
      *
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
-     * @apiResourceCollection App\Http\Resources\API\V1\PSGC\RegionResource
-     * @apiResourceModel App\Models\V1\PSGC\Region
+     * @queryParam include string Relationship to view: e.g. provinces Example: provinces
+     * @responseFile 200 responses/regions.get.json
      * @param Request $request
      * @return ResourceCollection
      */
@@ -42,15 +42,16 @@ class RegionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Region resource.
      *
      * @urlParam region_code string Region code. Example: 010000000
-     * @apiResource App\Http\Resources\API\V1\PSGC\RegionResource
-     * @apiResourceModel App\Models\V1\PSGC\Region
+     * @queryParam include string Relationship to view: e.g. provinces Example: provinces
+     * @responseFile 200 responses/region.get.json
      * @param Request $request
-     * @param Region  $region
+     * @param Region $region
+     * @return RegionResource
      */
-    public function show(Request $request, Region $region)
+    public function show(Request $request, Region $region): RegionResource
     {
         $query = Region::where('id', $region->id);
 

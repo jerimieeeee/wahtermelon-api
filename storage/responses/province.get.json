@@ -1,0 +1,13 @@
+{
+    "data": {
+        "code": "012800000",
+        "name": "Ilocos Norte",
+        "income_class": "1st",
+        "population": 609588,
+        "region": {
+            "code": "010000000",
+            "name": "Region I (Ilocos Region)",
+            "population": 5301139
+        }
+    }
+}
