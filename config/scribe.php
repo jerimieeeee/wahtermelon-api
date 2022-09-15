@@ -344,7 +344,7 @@ INTRO
      * - 'logo' => 'img/logo.png' // for `laravel` type
      *
      */
-    'logo' => false,
+    'logo' => 'https://nxtcld.wah.ph/index.php/s/xKckBDjyx2o9RF4/preview',
 
     'examples' => [
         /*
