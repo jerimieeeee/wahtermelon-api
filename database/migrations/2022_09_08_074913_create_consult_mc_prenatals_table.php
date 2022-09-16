@@ -27,9 +27,9 @@ return new class extends Migration
             $table->unsignedInteger('bp_systolic')->length(3);
             $table->unsignedInteger('bp_diastolic')->length(3);
             $table->unsignedInteger('fundic_height')->length(3);
-            $table->char('fetal_presentation_id',10);
+            $table->char('presentation_code',10)->constrained();
             $table->unsignedInteger('fhr')->length(3);
-            $table->char('fhr_location_id',5);
+            $table->char('location_code',5)->constrained();
             $table->boolean('private')->default('0');
             $table->softDeletes();
             $table->timestamps();

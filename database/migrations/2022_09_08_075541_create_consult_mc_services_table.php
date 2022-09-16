@@ -23,7 +23,7 @@ return new class extends Migration
             $table->char('visit_type',10);
             $table->char('visit_status',10);
             $table->date('service_date');
-            $table->integer('service_qty',false,true)->length(6)->nullable();
+            $table->unsignedInteger('service_qty')->length(6)->nullable();
             $table->boolean('positive_result');
             $table->boolean('intake_penicillin');
             $table->softDeletes();
