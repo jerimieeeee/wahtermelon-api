@@ -15,7 +15,7 @@ class FacilityResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'facility_code' => $this->facility_code,
+            'code' => $this->code,
             'facility_name' => $this->facility_name,
             'facility_major_type' => $this->facility_major_type,
             'health_facility_type' => $this->health_facility_type,
