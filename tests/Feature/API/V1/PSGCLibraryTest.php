@@ -76,7 +76,7 @@ class PSGCLibraryTest extends TestCase
 
     public function test_can_view_specific_facility(): void
     {
-        $code = fake()->randomElement(Facility::pluck('facility_code')->toArray());
+        $code = fake()->randomElement(Facility::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/facilities/'.$code);
         $response->assertStatus(200);
     }
