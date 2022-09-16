@@ -1,0 +1,36 @@
+{
+    "data": {
+        "facility_code": "DOH000000000000001",
+        "facility_name": "PIDDIG DISTRICT HOSPITAL",
+        "facility_major_type": "Health Facility",
+        "health_facility_type": "Infirmary",
+        "ownership_classification": "Government",
+        "ownership_sub_classification": "Local Government Unit",
+        "service_capability": null,
+        "bed_capacity": 15,
+        "barangay": {
+            "code": "012818003",
+            "name": "Anao (Pob.)",
+            "urban_rural": "R",
+            "population": 1234
+        },
+        "municipality": {
+            "code": "012818000",
+            "name": "Piddig",
+            "geo_level": "Mun",
+            "income_class": "3rd",
+            "population": 22475
+        },
+        "province": {
+            "code": "012800000",
+            "name": "Ilocos Norte",
+            "income_class": "1st",
+            "population": 609588
+        },
+        "region": {
+            "code": "010000000",
+            "name": "Region I (Ilocos Region)",
+            "population": 5301139
+        }
+    }
+}
