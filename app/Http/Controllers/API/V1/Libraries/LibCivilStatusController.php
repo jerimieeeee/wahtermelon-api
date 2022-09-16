@@ -18,7 +18,10 @@ class LibCivilStatusController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibCivilStatusResource::collection(LibCivilStatus::get());
+        $query = QueryBuilder::for(LibCivilStatus::class)
+            ->defaultSort('code')
+            ->allowedSorts('code');
+        return LibCivilStatusResource::collection($query->get());
     }
 
     /**

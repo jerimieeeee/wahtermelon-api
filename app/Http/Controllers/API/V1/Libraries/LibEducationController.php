@@ -18,7 +18,10 @@ class LibEducationController extends Controller
      */
     public function index(): JsonResource
     {
-        return LibEducationResource::collection(LibEducation::get());
+        $query = QueryBuilder::for(LibEducation::class)
+            ->defaultSort('code')
+            ->allowedSorts('code');
+        return LibEducationResource::collection($query->get());
     }
 
     /**
