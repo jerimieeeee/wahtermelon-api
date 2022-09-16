@@ -6,17 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibOccupationCategoryResource;
 use App\Models\V1\Libraries\LibOccupationCategory;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Personal Information
+ *
+ * APIs for managing libraries
+ * @subgroup Occupation Categories
+ * @subgroupDescription List of occupation categories.
+ */
 class LibOccupationCategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Occupation Category resource.
      *
-     * @return JsonResource
+     * @queryParam sort string Sort the code of Occupation Categories. Add hyphen (-) to descend the list: e.g. -code. Example: code
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibOccupationCategoryResource
+     * @apiResourceModel App\Models\V1\Libraries\LibOccupationCategory
+     * @return ResourceCollection
      */
-    public function index(): JsonResource
+    public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibOccupationCategory::class)
             ->defaultSort('code')
@@ -36,12 +46,14 @@ class LibOccupationCategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Occupation Category resource.
      *
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibOccupationCategoryResource
+     * @apiResourceModel App\Models\V1\Libraries\LibOccupationCategory
      * @param LibOccupationCategory $occupationCategory
-     * @return JsonResource
+     * @return LibOccupationCategoryResource
      */
-    public function show(LibOccupationCategory $occupationCategory): JsonResource
+    public function show(LibOccupationCategory $occupationCategory): LibOccupationCategoryResource
     {
         $query = LibOccupationCategory::where('code', $occupationCategory->code);
         $occupationCategory = QueryBuilder::for($query)

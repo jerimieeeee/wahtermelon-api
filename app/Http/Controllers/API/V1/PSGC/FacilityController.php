@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Libraries
+ * @group Libraries for Address Information
  *
  * APIs for managing libraries
  * @subgroup Facilities

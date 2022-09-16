@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Libraries
+ * @group Libraries for Address Information
  *
  * APIs for managing libraries
  * @subgroup Barangays
@@ -19,7 +19,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class BarangayController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Barangay resource.
      *
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
@@ -41,7 +41,7 @@ class BarangayController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Barangay resource.
      *
      * @urlParam barangay_code string Barangay code. Example: 012801001
      * @responseFile 200 responses/barangay.get.json

@@ -6,17 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibOccupationResource;
 use App\Models\V1\Libraries\LibOccupation;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Personal Information
+ *
+ * APIs for managing libraries
+ * @subgroup Occupations
+ * @subgroupDescription List of occupations.
+ */
 class LibOccupationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Occupation resource.
      *
-     * @return JsonResource
+     * @queryParam sort string Sort the occupation_desc of Occupations. Add hyphen (-) to descend the list: e.g. -occupation_desc. Example: occupation_desc
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibOccupationResource
+     * @apiResourceModel App\Models\V1\Libraries\LibOccupation
+     * @return ResourceCollection
      */
-    public function index(): JsonResource
+    public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibOccupation::class)
             ->defaultSort('occupation_desc')
@@ -36,12 +46,14 @@ class LibOccupationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Occupation resource.
      *
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibOccupationResource
+     * @apiResourceModel App\Models\V1\Libraries\LibOccupation
      * @param LibOccupation $occupation
-     * @return JsonResource
+     * @return LibOccupationResource
      */
-    public function show(LibOccupation $occupation): JsonResource
+    public function show(LibOccupation $occupation): LibOccupationResource
     {
         $query = LibOccupation::where('code', $occupation->code);
         $occupation = QueryBuilder::for($query)

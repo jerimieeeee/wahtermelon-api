@@ -6,17 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibReligionResource;
 use App\Models\V1\Libraries\LibReligion;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Personal Information
+ *
+ * APIs for managing libraries
+ * @subgroup Religions
+ * @subgroupDescription List of religions.
+ */
 class LibReligionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Religion resource.
      *
-     * @return JsonResource
+     * @queryParam sort string Sort the religion_desc of Occupations. Add hyphen (-) to descend the list: e.g. -religion_desc. Example: religion_desc
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibReligionResource
+     * @apiResourceModel App\Models\V1\Libraries\LibReligion
+     * @return ResourceCollection
      */
-    public function index(): JsonResource
+    public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibReligion::class)
             ->defaultSort('religion_desc')
@@ -36,12 +46,14 @@ class LibReligionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Religion resource.
      *
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibReligionResource
+     * @apiResourceModel App\Models\V1\Libraries\LibReligion
      * @param LibReligion $religion
-     * @return JsonResource
+     * @return LibReligionResource
      */
-    public function show(LibReligion $religion): JsonResource
+    public function show(LibReligion $religion): LibReligionResource
     {
         $query = LibReligion::where('code', $religion->code);
         $religion = QueryBuilder::for($query)

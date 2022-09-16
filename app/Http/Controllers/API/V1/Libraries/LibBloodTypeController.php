@@ -6,17 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibBloodTypeResource;
 use App\Models\V1\Libraries\LibBloodType;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Personal Information
+ *
+ * APIs for managing libraries
+ * @subgroup Blood Types
+ * @subgroupDescription List of blood types.
+ */
 class LibBloodTypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Blood Type resource.
      *
-     * @return JsonResource
+     * @queryParam sort string Sort the sequence of blood types. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibBloodTypeResource
+     * @apiResourceModel App\Models\V1\Libraries\LibBloodType
+     * @return ResourceCollection
      */
-    public function index(): JsonResource
+    public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibBloodType::class)
             ->defaultSort('sequence')
@@ -36,12 +46,14 @@ class LibBloodTypeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Blood Type resource.
      *
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibBloodTypeResource
+     * @apiResourceModel App\Models\V1\Libraries\LibBloodType
      * @param LibBloodType $bloodType
-     * @return JsonResource
+     * @return LibBloodTypeResource
      */
-    public function show(LibBloodType $bloodType): JsonResource
+    public function show(LibBloodType $bloodType): LibBloodTypeResource
     {
         $query = LibBloodType::where('code', $bloodType->code);
         $bloodType = QueryBuilder::for($query)
