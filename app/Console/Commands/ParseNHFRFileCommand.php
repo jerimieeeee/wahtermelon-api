@@ -60,7 +60,7 @@ class ParseNHFRFileCommand extends Command
     private function performTask($properties)
     {
         $data = [
-            'facility_code'                 => $properties['Health Facility Code'],
+            'code'                          => $properties['Health Facility Code'],
             'short_code'                    => $properties['Health Facility Code Short'],
             'facility_name'                 => $properties['Facility Name'],
             'old_facility_name_1'           => !empty(trim($properties['Old Health Facility Name 1'])) ? $properties['Old Health Facility Name 1'] : null,

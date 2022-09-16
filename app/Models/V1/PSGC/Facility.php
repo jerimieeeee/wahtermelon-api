@@ -16,7 +16,7 @@ class Facility extends Model
      * @var array
      */
     protected $fillable = [
-        'facility_code',
+        'code',
         'short_code',
         'facility_name',
         'old_facility_name_1',
@@ -48,7 +48,7 @@ class Facility extends Model
      */
     public function getRouteKeyName()
     {
-        return 'facility_code';
+        return 'code';
     }
 
     public function region(): BelongsTo
