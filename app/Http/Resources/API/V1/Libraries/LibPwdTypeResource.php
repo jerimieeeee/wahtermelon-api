@@ -15,7 +15,7 @@ class LibPwdTypeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'type_code' => $this->type_code,
+            'code' => $this->code,
             'type_desc' => $this->type_desc
         ];
     }

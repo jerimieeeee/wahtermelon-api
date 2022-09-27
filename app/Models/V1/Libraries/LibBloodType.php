@@ -9,7 +9,7 @@ class LibBloodType extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'blood_type';
+    public $primaryKey = 'code';
     public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;

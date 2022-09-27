@@ -16,13 +16,16 @@ class LibSuffixNameSeeder extends Seeder
     public function run()
     {
         LibSuffixName::upsert([
-            ['suffix_code' => 'II', 'suffix_desc' => 'II'],
-            ['suffix_code' => 'III', 'suffix_desc' => 'III'],
-            ['suffix_code' => 'IV', 'suffix_desc' => 'IV'],
-            ['suffix_code' => 'JR', 'suffix_desc' => 'Jr.'],
-            ['suffix_code' => 'NA', 'suffix_desc' => 'Not Applicable'],
-            ['suffix_code' => 'SR', 'suffix_desc' => 'Sr.'],
-            ['suffix_code' => 'V', 'suffix_desc' => 'V']
-        ], ['suffix_code']);
+            ['code' => 'II', 'suffix_desc' => 'II', 'sequence' => 3],
+            ['code' => 'III', 'suffix_desc' => 'III', 'sequence' => 4],
+            ['code' => 'IV', 'suffix_desc' => 'IV', 'sequence' => 5],
+            ['code' => 'JR', 'suffix_desc' => 'Jr.', 'sequence' => 2],
+            ['code' => 'NA', 'suffix_desc' => 'Not Applicable', 'sequence' => 0],
+            ['code' => 'SR', 'suffix_desc' => 'Sr.', 'sequence' => 1],
+            ['code' => 'V', 'suffix_desc' => 'V', 'sequence' => 6],
+            ['code' => 'VI', 'suffix_desc' => 'VI', 'sequence' => 7],
+            ['code' => 'VII', 'suffix_desc' => 'VII', 'sequence' => 8],
+            ['code' => 'VIII', 'suffix_desc' => 'VIII', 'sequence' => 9],
+        ], ['code']);
     }
 }

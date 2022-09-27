@@ -58,17 +58,17 @@ class Patient extends Model
 
     public function suffixName(): BelongsTo
     {
-        return $this->belongsTo(LibSuffixName::class, 'suffix_name', 'suffix_code');
+        return $this->belongsTo(LibSuffixName::class, 'suffix_name', 'code');
     }
 
     public function pwdType(): BelongsTo
     {
-        return $this->belongsTo(LibPwdType::class, 'pwd_type_code', 'type_code');
+        return $this->belongsTo(LibPwdType::class, 'pwd_type_code', 'code');
     }
 
     public function religion(): BelongsTo
     {
-        return $this->belongsTo(LibReligion::class, 'religion_code', 'religion_code');
+        return $this->belongsTo(LibReligion::class, 'religion_code', 'code');
     }
 
 }

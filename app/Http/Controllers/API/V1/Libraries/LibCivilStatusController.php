@@ -6,18 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibCivilStatusResource;
 use App\Models\V1\Libraries\LibCivilStatus;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Personal Information
+ *
+ * APIs for managing libraries
+ * @subgroup Civil Statuses
+ * @subgroupDescription List of civil statuses.
+ */
 class LibCivilStatusController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Civil Status resource.
      *
-     * @return JsonResource
+     * @queryParam sort string Sort the code of Civil Statuses. Add hyphen (-) to descend the list: e.g. -code. Example: code
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibCivilStatusResource
+     * @apiResourceModel App\Models\V1\Libraries\LibCivilStatus
+     * @return ResourceCollection
      */
-    public function index(): JsonResource
+    public function index(): ResourceCollection
     {
-        return LibCivilStatusResource::collection(LibCivilStatus::get());
+        $query = QueryBuilder::for(LibCivilStatus::class)
+            ->defaultSort('code')
+            ->allowedSorts('code');
+        return LibCivilStatusResource::collection($query->get());
     }
 
     /**
@@ -32,15 +46,19 @@ class LibCivilStatusController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Civil Status resource.
      *
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibCivilStatusResource
+     * @apiResourceModel App\Models\V1\Libraries\LibCivilStatus
      * @param LibCivilStatus $civilStatus
-     * @param string $id
-     * @return JsonResource
+     * @return LibCivilStatusResource
      */
-    public function show(LibCivilStatus $civilStatus, string $id): JsonResource
+    public function show(LibCivilStatus $civilStatus): LibCivilStatusResource
     {
-        return new LibCivilStatusResource($civilStatus->findOrFail($id));
+        $query = LibCivilStatus::where('code', $civilStatus->code);
+        $civilStatus = QueryBuilder::for($query)
+            ->first();
+        return new LibCivilStatusResource($civilStatus);
     }
 
     /**

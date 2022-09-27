@@ -6,18 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibEducationResource;
 use App\Models\V1\Libraries\LibEducation;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Personal Information
+ *
+ * APIs for managing libraries
+ * @subgroup Education
+ * @subgroupDescription List of education.
+ */
 class LibEducationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Education resource.
      *
-     * @return JsonResource
+     * @queryParam sort string Sort the code of Eduction. Add hyphen (-) to descend the list: e.g. -code. Example: code
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibEducationResource
+     * @apiResourceModel App\Models\V1\Libraries\LibEducation
+     * @return ResourceCollection
      */
-    public function index(): JsonResource
+    public function index(): ResourceCollection
     {
-        return LibEducationResource::collection(LibEducation::get());
+        $query = QueryBuilder::for(LibEducation::class)
+            ->defaultSort('code')
+            ->allowedSorts('code');
+        return LibEducationResource::collection($query->get());
     }
 
     /**
@@ -32,15 +46,19 @@ class LibEducationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Education resource.
      *
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibEducationResource
+     * @apiResourceModel App\Models\V1\Libraries\LibEducation
      * @param LibEducation $education
-     * @param string $id
-     * @return JsonResource
+     * @return LibEducationResource
      */
-    public function show(LibEducation $education, string $id): JsonResource
+    public function show(LibEducation $education): LibEducationResource
     {
-        return new LibEducationResource($education->findOrFail($id));
+        $query = LibEducation::where('code', $education->code);
+        $education = QueryBuilder::for($query)
+            ->first();
+        return new LibEducationResource($education);
     }
 
     /**

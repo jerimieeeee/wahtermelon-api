@@ -15,7 +15,7 @@ class LibSuffixNameResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'suffix_code' => $this->suffix_code,
+            'code' => $this->code,
             'suffix_desc' => $this->suffix_desc,
         ];
     }

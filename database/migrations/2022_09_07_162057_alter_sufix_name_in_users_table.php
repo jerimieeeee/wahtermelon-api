@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('suffix_name')->references('suffix_code')->on('lib_suffix_names');
+            $table->foreign('suffix_name')->references('code')->on('lib_suffix_names');
         });
     }
 

@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_suffix_names', function (Blueprint $table) {
-            $table->char('suffix_code')->primary();
+            $table->char('code')->primary();
+            $table->unsignedInteger('sequence');
             $table->string('suffix_desc', 20);
         });
     }

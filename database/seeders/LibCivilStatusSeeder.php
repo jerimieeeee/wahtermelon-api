@@ -16,12 +16,12 @@ class LibCivilStatusSeeder extends Seeder
     public function run()
     {
         LibCivilStatus::upsert([
-            ['status_id' => 'ANLD', 'status_code' => 'A', 'status_desc' => 'Annulled'],
-            ['status_id' => 'CHBTN', 'status_code' => 'C', 'status_desc' => 'Co-Habitation'],
-            ['status_id' => 'MRRD', 'status_code' => 'M', 'status_desc' => 'Married'],
-            ['status_id' => 'SNGL', 'status_code' => 'S', 'status_desc' => 'Single'],
-            ['status_id' => 'SPRTD', 'status_code' => 'X', 'status_desc' => 'Separated'],
-            ['status_id' => 'WDWD', 'status_code' => 'W', 'status_desc' => 'Widowed'],
-        ], ['status_id']);
+            ['code' => 'ANLD', 'short_code' => 'A', 'status_desc' => 'Annulled'],
+            ['code' => 'CHBTN', 'short_code' => 'C', 'status_desc' => 'Co-Habitation'],
+            ['code' => 'MRRD', 'short_code' => 'M', 'status_desc' => 'Married'],
+            ['code' => 'SNGL', 'short_code' => 'S', 'status_desc' => 'Single'],
+            ['code' => 'SPRTD', 'short_code' => 'X', 'status_desc' => 'Separated'],
+            ['code' => 'WDWD', 'short_code' => 'W', 'status_desc' => 'Widowed'],
+        ], ['code']);
     }
 }

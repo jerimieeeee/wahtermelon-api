@@ -8,18 +8,31 @@ use App\Http\Resources\API\V1\Patient\PatientResource;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Personal Information Management
+ *
+ * APIs for managing patient information
+ * @subgroup Patient
+ * @subgroupDescription Patient management.
+ */
 class PatientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Patient resource.
      *
+     * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
+     * @queryParam sort string Sort last_name, first_name, middle_name, birthdate of the patient. Add hyphen (-) to descend the list: e.g. last_name,birthdate. Example: last_name
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientResource
+     * @apiResourceModel App\Models\V1\Patient\Patient paginate=15
      * @param Request $request
-     * @return JsonResource
+     * @return ResourceCollection
      */
-    public function index(Request $request): JsonResource
+    public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
@@ -30,7 +43,7 @@ class PatientController extends Controller
             })
             ->allowedIncludes('suffixName', 'pwdType', 'religion')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')
-            ->allowedSorts('last_name', 'first_name', 'middle_name', 'birthdate');
+            ->allowedSorts(['last_name', 'first_name', 'middle_name', 'birthdate']);
         if ($perPage === 'all') {
             return PatientResource::collection($patients->get());
         }
@@ -39,15 +52,18 @@ class PatientController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Patient resource in storage.
      *
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Patient\PatientResource
+     * @apiResourceModel App\Models\V1\Patient\Patient
      * @param PatientRequest $request
      * @return JsonResponse
      */
     public function store(PatientRequest $request): JsonResponse
     {
         $data = Patient::create($request->validated());
-        return response()->json(['status' => 'Success', 'data' => $data], 201);
+        return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 
     /**

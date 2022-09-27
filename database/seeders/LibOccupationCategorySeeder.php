@@ -16,18 +16,18 @@ class LibOccupationCategorySeeder extends Seeder
     public function run()
     {
         LibOccupationCategory::upsert([
-            ['category_code' => 'AGRI', 'category_desc' => 'Agriculture'],
-            ['category_code' => 'EDUC', 'category_desc' => 'Education'],
-            ['category_code' => 'FOOD', 'category_desc' => 'Industry'],
-            ['category_code' => 'GOVT', 'category_desc' => 'Government'],
-            ['category_code' => 'HEALTH', 'category_desc' => 'Health'],
-            ['category_code' => 'MAR', 'category_desc' => 'Maritime'],
-            ['category_code' => 'MFG', 'category_desc' => 'Manufacturing'],
-            ['category_code' => 'RETL', 'category_desc' => 'Retail'],
-            ['category_code' => 'SVC', 'category_desc' => 'Service'],
-            ['category_code' => 'TOUR', 'category_desc' => 'Tourism'],
-            ['category_code' => 'TRANS', 'category_desc' => 'Transport'],
-            ['category_code' => 'UNSP', 'category_desc' => 'Unspecified']
+            ['code' => 'AGRI', 'category_desc' => 'Agriculture'],
+            ['code' => 'EDUC', 'category_desc' => 'Education'],
+            ['code' => 'FOOD', 'category_desc' => 'Industry'],
+            ['code' => 'GOVT', 'category_desc' => 'Government'],
+            ['code' => 'HEALTH', 'category_desc' => 'Health'],
+            ['code' => 'MAR', 'category_desc' => 'Maritime'],
+            ['code' => 'MFG', 'category_desc' => 'Manufacturing'],
+            ['code' => 'RETL', 'category_desc' => 'Retail'],
+            ['code' => 'SVC', 'category_desc' => 'Service'],
+            ['code' => 'TOUR', 'category_desc' => 'Tourism'],
+            ['code' => 'TRANS', 'category_desc' => 'Transport'],
+            ['code' => 'UNSP', 'category_desc' => 'Unspecified']
         ], ['category_desc']);
     }
 }

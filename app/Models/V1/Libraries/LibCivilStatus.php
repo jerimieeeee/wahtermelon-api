@@ -9,7 +9,7 @@ class LibCivilStatus extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'status_id';
+    public $primaryKey = 'code';
     public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;

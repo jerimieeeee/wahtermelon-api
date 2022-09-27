@@ -9,7 +9,7 @@ class LibSuffixName extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'suffix_code';
+    public $primaryKey = 'code';
     public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;

@@ -27,21 +27,21 @@ return new class extends Migration
             $table->string('mobile_number', 13);
             $table->char('pwd_type_code')->default('NA');
             $table->boolean('indegenous_flag')->default(0);
-            $table->char('blood_type', 3)->default('NA');
+            $table->char('blood_type_code', 3)->default('NA');
             $table->char('religion_code', 10);
             $table->char('occupation_code', 10);
-            $table->unsignedBigInteger('education_id');
-            $table->char('civil_status_id', 10);
+            $table->unsignedBigInteger('education_code');
+            $table->char('civil_status_code', 10);
             $table->boolean('consent_flag')->default(0);
             $table->string('image_url')->nullable();
             $table->timestamps();
 
-            $table->foreign('suffix_name')->references('suffix_code')->on('lib_suffix_names');
-            $table->foreign('pwd_type_code')->references('type_code')->on('lib_pwd_types');
-            $table->foreign('religion_code')->references('religion_code')->on('lib_religions');
-            $table->foreign('occupation_code')->references('occupation_code')->on('lib_occupations');
-            $table->foreign('education_id')->references('education_id')->on('lib_education');
-            $table->foreign('civil_status_id')->references('status_id')->on('lib_civil_statuses');
+            $table->foreign('suffix_name')->references('code')->on('lib_suffix_names');
+            $table->foreign('pwd_type_code')->references('code')->on('lib_pwd_types');
+            $table->foreign('religion_code')->references('code')->on('lib_religions');
+            $table->foreign('occupation_code')->references('code')->on('lib_occupations');
+            $table->foreign('education_code')->references('code')->on('lib_education');
+            $table->foreign('civil_status_code')->references('code')->on('lib_civil_statuses');
         });
     }
 

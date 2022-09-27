@@ -29,7 +29,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_blood_types(): void
     {
-        $code = fake()->randomElement(LibBloodType::pluck('blood_type')->toArray());
+        $code = fake()->randomElement(LibBloodType::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/blood-types/'.$code);
         $response->assertStatus(200);
     }
@@ -42,7 +42,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_civil_status(): void
     {
-        $code = fake()->randomElement(LibCivilStatus::pluck('status_id')->toArray());
+        $code = fake()->randomElement(LibCivilStatus::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/civil-statuses/'.$code);
         $response->assertStatus(200);
     }
@@ -55,7 +55,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_education(): void
     {
-        $code = fake()->randomElement(LibEducation::pluck('education_id')->toArray());
+        $code = fake()->randomElement(LibEducation::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/education/'.$code);
         $response->assertStatus(200);
     }
@@ -68,7 +68,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_occupation_category(): void
     {
-        $code = fake()->randomElement(LibOccupationCategory::pluck('category_code')->toArray());
+        $code = fake()->randomElement(LibOccupationCategory::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/occupation-categories/'.$code);
         $response->assertStatus(200);
     }
@@ -81,7 +81,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_occupations(): void
     {
-        $code = fake()->randomElement(LibOccupation::pluck('occupation_code')->toArray());
+        $code = fake()->randomElement(LibOccupation::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/occupations/'.$code);
         $response->assertStatus(200);
     }
@@ -94,7 +94,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_pwd_types(): void
     {
-        $code = fake()->randomElement(LibPwdType::pluck('type_code')->toArray());
+        $code = fake()->randomElement(LibPwdType::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/pwd-types/'.$code);
         $response->assertStatus(200);
     }
@@ -107,7 +107,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_religion(): void
     {
-        $code = fake()->randomElement(LibReligion::pluck('religion_code')->toArray());
+        $code = fake()->randomElement(LibReligion::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/religions/'.$code);
         $response->assertStatus(200);
     }
@@ -120,7 +120,7 @@ class PatientLibraryTest extends TestCase
 
     public function test_can_view_specific_suffix_name(): void
     {
-        $code = fake()->randomElement(LibSuffixName::pluck('suffix_code')->toArray());
+        $code = fake()->randomElement(LibSuffixName::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/suffix-names/'.$code);
         $response->assertStatus(200);
     }

@@ -15,7 +15,7 @@ class LibOccupationCategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'category_code' => $this->category_code,
+            'code' => $this->code,
             'category_desc' => $this->category_desc,
             'occupation' => $this->occupation,
         ];
