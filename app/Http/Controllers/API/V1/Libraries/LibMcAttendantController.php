@@ -3,85 +3,47 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibMcAttendantResource;
 use App\Models\V1\Libraries\LibMcAttendant;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Maternal Care
+ *
+ * APIs for managing libraries
+ * @subgroup Attendant
+ * @subgroupDescription List of attendants.
+ */
 class LibMcAttendantController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Attendant resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibMcAttendantResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcAttendant
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(): ResourceCollection
     {
-        $att = LibMcAttendant::all();
-        return $att;
+        $query = QueryBuilder::for(LibMcAttendant::class);
+        return LibMcAttendantResource::collection($query->get());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified Attendant resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibMcAttendantResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcAttendant
+     * @param LibMcAttendant $attendant
+     * @return LibMcAttendantResource
      */
-    public function create()
+    public function show(LibMcAttendant $attendant): LibMcAttendantResource
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $query = LibMcAttendant::where('code', $attendant->code);
+        $attendant = QueryBuilder::for($query)
+            ->first();
+        return new LibMcAttendantResource($attendant);
     }
 }

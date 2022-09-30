@@ -27,7 +27,7 @@ class PatientLibraryTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_view_specific_blood_types(): void
+    public function test_can_view_specific_blood_type(): void
     {
         $code = fake()->randomElement(LibBloodType::pluck('code')->toArray());
         $response = $this->get('api/v1/libraries/blood-types/'.$code);

@@ -3,85 +3,47 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibMcDeliveryLocationResource;
 use App\Models\V1\Libraries\LibMcDeliveryLocation;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Maternal Care
+ *
+ * APIs for managing libraries
+ * @subgroup Delivery Location
+ * @subgroupDescription List of delivery locations.
+ */
 class LibMcDeliveryLocationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Delivery Location resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibMcDeliveryLocationResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcDeliveryLocation
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(): ResourceCollection
     {
-        $del = LibMcDeliveryLocation::all();
-        return $del;
+        $query = QueryBuilder::for(LibMcDeliveryLocation::class);
+        return LibMcDeliveryLocationResource::collection($query->get());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified Delivery Location resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibMcDeliveryLocationResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcDeliveryLocation
+     * @param LibMcDeliveryLocation $deliveryLocation
+     * @return LibMcDeliveryLocationResource
      */
-    public function create()
+    public function show(LibMcDeliveryLocation $deliveryLocation): LibMcDeliveryLocationResource
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $query = LibMcDeliveryLocation::where('code', $deliveryLocation->code);
+        $deliveryLocation = QueryBuilder::for($query)
+            ->first();
+        return new LibMcDeliveryLocationResource($deliveryLocation);
     }
 }

@@ -3,41 +3,47 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibMcRiskFactorResource;
 use App\Models\V1\Libraries\LibMcRiskFactor;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Maternal Care
+ *
+ * APIs for managing libraries
+ * @subgroup Risk Factor
+ * @subgroupDescription List of Risk Factors.
+ */
 class LibMcRiskFactorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Risk Factor resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibMcRiskFactorResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcRiskFactor
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(): ResourceCollection
     {
-        $risk = LibMcRiskFactor::all();
-        return $risk;
+        $query = QueryBuilder::for(LibMcRiskFactor::class);
+        return LibMcRiskFactorResource::collection($query->get());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display the specified Risk Factor resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibMcRiskFactorResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcRiskFactor
+     * @param LibMcRiskFactor $riskFactor
+     * @return LibMcRiskFactorResource
      */
-    public function store(Request $request)
+    public function show(LibMcRiskFactor $riskFactor): LibMcRiskFactorResource
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $query = LibMcRiskFactor::where('id', $riskFactor->id);
+        $riskFactor = QueryBuilder::for($query)
+            ->first();
+        return new LibMcRiskFactorResource($riskFactor);
     }
 }

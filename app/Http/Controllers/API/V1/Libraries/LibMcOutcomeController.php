@@ -3,85 +3,47 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibMcOutcomeResource;
 use App\Models\V1\Libraries\LibMcOutcome;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Maternal Care
+ *
+ * APIs for managing libraries
+ * @subgroup Outcome
+ * @subgroupDescription List of outcomes.
+ */
 class LibMcOutcomeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Outcome resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibMcOutcomeResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcOutcome
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(): ResourceCollection
     {
-        $out = LibMcOutcome::all();
-        return $out;
+        $query = QueryBuilder::for(LibMcOutcome::class);
+        return LibMcOutcomeResource::collection($query->get());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified Outcome resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibMcOutcomeResource
+     * @apiResourceModel App\Models\V1\Libraries\LibMcOutcome
+     * @param LibMcOutcome $outcome
+     * @return LibMcOutcomeResource
      */
-    public function create()
+    public function show(LibMcOutcome $outcome): LibMcOutcomeResource
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $query = LibMcOutcome::where('code', $outcome->code);
+        $outcome = QueryBuilder::for($query)
+            ->first();
+        return new LibMcOutcomeResource($outcome);
     }
 }
