@@ -9,10 +9,9 @@ class LibMcPresentation extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
+    public $primaryKey = 'code';
+    public $incrementing = false;
+    public $keyType = 'string';
     public $timestamps = false;
 
-    protected $guarded = [
-        'id',
-    ];
 }

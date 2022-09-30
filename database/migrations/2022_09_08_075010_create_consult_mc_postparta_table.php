@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('consult_mc_postparta', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained();
+            $table->uuid('patient_mc_id');
             // $table->foreignId('consult_id')->constrained();
-            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
             $table->date('postpartum_date');
-            $table->unsignedInteger('postpartum_week')->length(3);
-            $table->unsignedInteger('visit_sequence')->length(3);
+            $table->unsignedInteger('postpartum_week');
+            $table->unsignedInteger('visit_sequence');
             $table->char('visit_type',10);
             $table->boolean('breastfeeding')->default('0');
             $table->boolean('family_planning')->default('0');
@@ -30,12 +30,14 @@ return new class extends Migration
             $table->boolean('vaginal_bleeding')->default('0');
             $table->boolean('pallor')->default('0');
             $table->boolean('cord_ok')->default('0');
-            $table->unsignedInteger('patient_age')->length(3);
-            $table->unsignedInteger('patient_height')->length(3);
-            $table->unsignedInteger('bp_systolic')->length(3);
-            $table->unsignedInteger('bp_diastolic')->length(3);
+            $table->unsignedInteger('patient_age');
+            $table->unsignedInteger('patient_height');
+            $table->unsignedInteger('bp_systolic');
+            $table->unsignedInteger('bp_diastolic');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
         });
     }
 

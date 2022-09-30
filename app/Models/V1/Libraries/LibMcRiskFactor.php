@@ -15,4 +15,9 @@ class LibMcRiskFactor extends Model
     protected $guarded = [
         'id',
     ];
+
+    protected $casts = [
+        'hospital_flag' => 'boolean',
+        'monitor_flag' => 'boolean',
+    ];
 }

@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lib_mc_del_locs', function (Blueprint $table) {
-            $table->char('del_loc_code')->primary();
-            $table->string('del_loc_name');
+        Schema::create('lib_mc_pregnancy_terminations', function (Blueprint $table) {
+            $table->char('code')->primary();
+            $table->string('desc');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lib_mc_del_locs');
+        Schema::dropIfExists('lib_mc_pregnancy_terminations');
     }
 };

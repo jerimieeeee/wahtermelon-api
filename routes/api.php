@@ -72,11 +72,11 @@ Route::prefix('v1')->group(function (){
         Route::get('religions/{religion}', [\App\Http\Controllers\API\V1\Libraries\LibReligionController::class, 'show'])->name('religions.show');
 
         Route::get('suffix-names', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'index'])->name('suffix-names.index');
-        Route::get('suffix-names/{id}', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'show'])->name('suffix-names.show');
+        Route::get('suffix-names/{suffixName}', [\App\Http\Controllers\API\V1\Libraries\LibSuffixNameController::class, 'show'])->name('suffix-names.show');
 
         Route::apiResource('libMcRiskFactor', \App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class);
         Route::apiResource('libMcAttendant', \App\Http\Controllers\API\V1\Libraries\LibMcAttendantController::class);
-        Route::apiResource('libMcDelLoc', \App\Http\Controllers\API\V1\Libraries\LibMcDelLocController::class);
+        Route::apiResource('libMcDelLoc', \App\Http\Controllers\API\V1\Libraries\LibMcDeliveryLocationController::class);
         Route::apiResource('libMcLocation', \App\Http\Controllers\API\V1\Libraries\LibMcLocationController::class);
         Route::apiResource('libMcOutcome', \App\Http\Controllers\API\V1\Libraries\LibMcOutcomeController::class);
         Route::apiResource('libMcPresentation', \App\Http\Controllers\API\V1\Libraries\LibMcPresentationController::class);

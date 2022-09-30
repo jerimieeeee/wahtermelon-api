@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Libraries\LibMcDelLoc;
+use App\Models\V1\Libraries\LibMcDeliveryLocation;
 use Illuminate\Http\Request;
 
-class LibMcDelLocController extends Controller
+class LibMcDeliveryLocationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class LibMcDelLocController extends Controller
      */
     public function index()
     {
-        $del = LibMcDelLoc::all();
+        $del = LibMcDeliveryLocation::all();
         return $del;
     }
 

@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_mc_attendants', function (Blueprint $table) {
-            $table->char('attendant_code')->primary();
-            $table->string('attendant_name');
+            $table->char('code')->primary();
+            $table->string('desc');
         });
     }
 

@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibMcPresentation;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class LibMcPresentationSeeder extends Seeder
 {
@@ -14,15 +14,11 @@ class LibMcPresentationSeeder extends Seeder
      */
     public function run()
     {
-
-        DB::table('lib_mc_presentations')->delete();
-        DB::table('lib_mc_presentations')
-      ->insert([
-      ['presentation_code' => 'CEPH', 'presentation_name' => 'Cephalic'],
-      ['presentation_code' => 'BREECH', 'presentation_name' => 'Breech'],
-      ['presentation_code' => 'TRANS', 'presentation_name' => 'Transverse'],
-      ['presentation_code' => 'MASS', 'presentation_name'=> 'Mass Palpable - NA']
-      ]);
-
+        LibMcPresentation::upsert([
+            ['code' => 'CEPH', 'desc' => 'Cephalic'],
+            ['code' => 'BREECH', 'desc' => 'Breech'],
+            ['code' => 'TRANS', 'desc' => 'Transverse'],
+            ['code' => 'MASS', 'desc'=> 'Mass Palpable - NA']
+        ], ['desc']);
     }
 }

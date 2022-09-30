@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('consult_mc_vaccines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained();
+            $table->uuid('patient_mc_id');
             // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patients_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->date('vaccine_date');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
         });
     }
 

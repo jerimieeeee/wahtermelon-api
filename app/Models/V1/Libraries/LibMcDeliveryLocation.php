@@ -5,14 +5,12 @@ namespace App\Models\V1\Libraries;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LibMcDelLoc extends Model
+class LibMcDeliveryLocation extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
+    public $primaryKey = 'code';
+    public $incrementing = false;
+    public $keyType = 'string';
     public $timestamps = false;
-
-    protected $guarded = [
-        'id',
-    ];
 }

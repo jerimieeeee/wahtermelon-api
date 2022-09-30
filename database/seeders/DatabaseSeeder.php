@@ -32,11 +32,12 @@ class DatabaseSeeder extends Seeder
             LibOccupationCategorySeeder::class,
             LibOccupationSeeder::class,
             LibMcRiskFactorSeeder::class,
-            LibMcDelLocSeeder::class,
+            LibMcDeliveryLocationSeeder::class,
             LibMcOutcomeSeeder::class,
             LibMcLocationSeeder::class,
             LibMcAttendantSeeder::class,
-            LibMcPresentationSeeder::class
+            LibMcPresentationSeeder::class,
+            LibMcPregnancyTerminationSeeder::class,
         ]);
     }
 }

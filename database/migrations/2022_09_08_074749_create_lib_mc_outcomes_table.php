@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_mc_outcomes', function (Blueprint $table) {
-            $table->char('outcome_code')->primary();
-            $table->string('outcode_name');
+            $table->char('code')->primary();
+            $table->string('desc');
         });
     }
 

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('lib_mc_risk_factors', function (Blueprint $table) {
             $table->id();
             $table->string('risk_name');
-            $table->boolean('hospital_flag');
-            $table->boolean('monitor_flag');
+            $table->boolean('hospital_flag')->default(0);
+            $table->boolean('monitor_flag')->default(0);
         });
     }
 

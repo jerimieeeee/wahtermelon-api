@@ -15,24 +15,26 @@ return new class extends Migration
     {
         Schema::create('consult_mc_prenatals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained();
-            $table->foreignUuid('patients_id')->constrained();
+            $table->uuid('patient_mc_id');
+            $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
             $table->date('prenatal_date');
-            $table->unsignedInteger('aog_weeks')->length(4);
-            $table->unsignedInteger('aog_days')->length(3);
-            $table->unsignedInteger('trimester')->length(2);
-            $table->unsignedInteger('visit_sequence')->length(3);
+            $table->unsignedInteger('aog_weeks');
+            $table->unsignedInteger('aog_days');
+            $table->unsignedInteger('trimester');
+            $table->unsignedInteger('visit_sequence');
             $table->decimal('patient_weight',3,2);
-            $table->unsignedInteger('bp_systolic')->length(3);
-            $table->unsignedInteger('bp_diastolic')->length(3);
-            $table->unsignedInteger('fundic_height')->length(3);
+            $table->unsignedInteger('bp_systolic');
+            $table->unsignedInteger('bp_diastolic');
+            $table->unsignedInteger('fundic_height');
             $table->char('presentation_code',10)->constrained();
-            $table->unsignedInteger('fhr')->length(3);
+            $table->unsignedInteger('fhr');
             $table->char('location_code',5)->constrained();
             $table->boolean('private')->default('0');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
         });
     }
 

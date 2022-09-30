@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('consult_mc_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mc_id')->constrained();
+            $table->uuid('patient_mc_id');
             // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patients_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
@@ -23,11 +23,13 @@ return new class extends Migration
             $table->char('visit_type',10);
             $table->char('visit_status',10);
             $table->date('service_date');
-            $table->unsignedInteger('service_qty')->length(6)->nullable();
+            $table->unsignedInteger('service_qty')->nullable();
             $table->boolean('positive_result');
             $table->boolean('intake_penicillin');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
         });
     }
 

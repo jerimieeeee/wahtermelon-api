@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class McController extends Controller
+class PatientMcController extends Controller
 {
     /**
      * Display a listing of the resource.
