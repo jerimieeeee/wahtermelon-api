@@ -59,4 +59,11 @@ class PatientTest extends TestCase
         $response = $this->get('api/v1/patient');
         $response->assertOk();
     }
+
+    public function test_patient_can_show_specific_record()
+    {
+        $id = fake()->randomElement(Patient::pluck('id')->toArray());
+        $response = $this->get("api/v1/patient/$id");
+        $response->assertOk();
+    }
 }

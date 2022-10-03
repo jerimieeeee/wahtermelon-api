@@ -69,12 +69,17 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Patient\PatientResource
+     * @apiResourceModel App\Models\V1\Patient\Patient
+     * @param Patient $patient
+     * @return PatientResource
      */
-    public function show($id)
+    public function show(Patient $patient): PatientResource
     {
-        //
+        $query = Patient::where('id', $patient->id);
+        $patient = QueryBuilder::for($query)
+            ->first();
+        return new PatientResource($patient);
     }
 
     /**
