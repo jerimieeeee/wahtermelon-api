@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lib_suffix_names', function (Blueprint $table) {
-            $table->char('code')->primary();
-            $table->unsignedInteger('sequence');
-            $table->string('suffix_desc', 20);
+        Schema::create('lib_icd10s', function (Blueprint $table) {
+            $table->string('icd10_code', 50)->primary();
+            $table->string('icd10_desc', 255);
+            $table->integer('notifiable_cat')->nullable();
+            $table->string('notifiable_name', 100)->nullable();
+            $table->boolean('is_morbidity')->nullable();
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lib_suffix_names');
+        Schema::dropIfExists('lib_icd10s');
     }
 };

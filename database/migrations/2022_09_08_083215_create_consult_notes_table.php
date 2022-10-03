@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('consult_ccdev_vaccines', function (Blueprint $table) {
+        Schema::create('consult_notes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_ccdev_id');
+            $table->unsignedBigInteger('consult_id')->constrained;
             $table->integer('patient_id');
             $table->integer('user_id');
-            $table->string('vaccine_id', 10)->constrained();
-            $table->date('vaccine_date');
+            $table->string('complaint', 255);
+            $table->text('history', 65535);
+            $table->string('physical_exam', 255);
+            $table->string('plan', 255);
+            // $table->char('sms_plan_info', 1);
+            // $table->date('sms_send_date');
             $table->timestamps();
 
-            $table->foreign('vaccine_id')->references('vaccine_id')->on('lib_vaccines');
+            $table->foreign('consult_id')->references('id')->on('consults');
         });
     }
 
@@ -33,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consult_ccdev_vaccines');
+        Schema::dropIfExists('consult_notes');
     }
 };
