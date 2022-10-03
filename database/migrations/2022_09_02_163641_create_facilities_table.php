@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code')->unique();
+            $table->string('facility_code')->unique();
             $table->string('short_code')->unique();
             $table->string('facility_name');
             $table->string('old_facility_name_1')->nullable();
