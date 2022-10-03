@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesComplaint;
+use Exception;
 use Illuminate\Http\Request;
 
 class ConsultNotesComplaintController extends Controller
@@ -26,8 +27,34 @@ class ConsultNotesComplaintController extends Controller
      */
     public function store(Request $request)
     {
-        $data = ConsultNotesComplaint::create($request->all());
-        return $data;
+        try{
+            $complaint = $request->input('complaint');
+            $complaint_array = [];
+            foreach($complaint as $value){
+                $data = ConsultNotesComplaint::firstOrNew(['consult_id' => $request->input('consult_id'), 'complaint_id' => $value, 'complaint_date' => now()->format('Y/m/d')]);
+                $data->notes_id = $request->input('notes_id');
+                $data->consult_id = $request->input('consult_id');
+                $data->patient_id = $request->input('patient_id');
+                $data->user_id = $request->input('user_id');
+                $data->complaint_id = $value;
+            $data->save();
+            array_push($complaint_array, $value);
+            }
+
+            ConsultNotesComplaint::whereNotIn('complaint_id', $complaint_array)
+            ->where('consult_id', '=', $data->consult_id )
+            ->delete();
+
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'Complaint Successfully Saved',
+            ]);
+            }catch(Exception $error) {
+                return response()->json([
+                    'status_code' => 500,
+                    'message' => 'Complaint Saving Error',
+                ]);
+            }
     }
 
     /**

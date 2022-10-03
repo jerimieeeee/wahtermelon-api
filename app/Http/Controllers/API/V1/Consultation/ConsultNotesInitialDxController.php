@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
+use Exception;
 use Illuminate\Http\Request;
 
 class ConsultNotesInitialDxController extends Controller
@@ -26,8 +27,24 @@ class ConsultNotesInitialDxController extends Controller
      */
     public function store(Request $request)
     {
-        $data = ConsultNotesInitialDx::create($request->all());
-        return $data;
+            $initialdx = $request->input('idx');
+            $initialdx_array = [];
+            foreach($initialdx as $value){
+                $data = ConsultNotesInitialDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'class_id' => $value,]);
+                $data->user_id = $request->input('user_id');
+                $data->dx_remarks = $request->input('dx_remarks');
+                $data->class_id = $value;
+            $data->save();
+            array_push($initialdx_array, $value);
+            }
+            ConsultNotesInitialDx::whereNotIn('class_id', $initialdx_array)
+            ->where('class_id', '=', $data->class_id )
+            ->delete();
+
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'Initial Dx Successfully Saved',
+            ]);
     }
 
     /**

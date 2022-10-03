@@ -30,6 +30,10 @@ Route::prefix('v1')->group(function (){
     Route::post('childcare-vaccine', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'store']);
     Route::get('childcare-vaccine/{id}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'show']);
 
+    //Consultation APIs
+    Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
+    Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');
