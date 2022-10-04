@@ -20,7 +20,7 @@ class LibPeController extends Controller
 {
 
     /**
-     * Display a listing of the PEs resource.
+     * Display a listing of the Physical Exams resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibPeResource
      * @apiResourceModel App\Models\V1\Libraries\LibPe
@@ -44,7 +44,7 @@ class LibPeController extends Controller
     }
 
     /**
-     * Display the specified Diagnoses resource.
+     * Display the specified Physical Exams resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibPeResource
      * @apiResourceModel App\Models\V1\Libraries\LibPe

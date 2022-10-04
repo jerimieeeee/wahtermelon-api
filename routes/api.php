@@ -33,6 +33,8 @@ Route::prefix('v1')->group(function (){
     //Consultation APIs
     Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
     Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
+    Route::post('consult-fdx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'store']);
+    Route::post('consult-fdx/{id}', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'destroy']);
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');

@@ -27,8 +27,16 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function store(Request $request)
     {
-        $data = ConsultNotesFinalDx::create($request->all());
-        return $data;
+
+        $finaldx = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request['notes_id'], 'icd10_code' => $request['icd10_code']]);
+          $finaldx->user_id = $request['user_id'];
+          $finaldx->dx_remarks = $request['dx_remarks'];
+        $finaldx->save();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Final Dx Successfully Saved',
+        ]);
     }
 
     /**
@@ -52,8 +60,8 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ConsultNotesFinalDx::findorfail($id)->update($request->all());
-        return response()->json('Consult Notes Final Dx Successfully Updated');
+        // ConsultNotesFinalDx::findorfail($id)->update($request->all());
+        // return response()->json('Consult Notes Final Dx Successfully Updated');
     }
 
     /**
@@ -64,6 +72,11 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ConsultNotesFinalDx::find($id)->delete();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Final Dx Successfully Deleted',
+        ]);
     }
 }
