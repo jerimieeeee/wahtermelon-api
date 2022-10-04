@@ -8,13 +8,25 @@ use App\Models\V1\Libraries\LibPe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @group Libraries for Consultation
+ *
+ * APIs for managing libraries
+ * @subgroup PEs
+ * @subgroupDescription List of PEs.
+ */
+
 class LibPeController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of the PEs resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibPeResource
+     * @apiResourceModel App\Models\V1\Libraries\LibPe
+     * @return ResourceCollection
      */
+
     public function index()
     {
         return LibPeResource::collection(LibPe::orderBy('category_id', 'ASC')->get());
@@ -32,10 +44,12 @@ class LibPeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Diagnoses resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibPeResource
+     * @apiResourceModel App\Models\V1\Libraries\LibPe
+     * @param LibPe $pe_id
+     * @return LibPeResource
      */
     public function show(LibPe $pe_id, string $id): JsonResource
     {

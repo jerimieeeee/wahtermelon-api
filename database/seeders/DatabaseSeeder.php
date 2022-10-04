@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\LibVaccineSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,14 +20,27 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             LibBloodTypeSeeder::class,
+            LibPeSeeder::class,
+            LibVaccineSeeder::class,
             LibCivilStatusSeeder::class,
+            LibComplaintSeeder::class,
+            LibDiagnosisSeeder::class,
             LibEducationSeeder::class,
+            LibIcd10NotifiableSeeder::class,
+            LibIcd10Seeder::class,
             LibPwdTypeSeeder::class,
             LibReligionSeeder::class,
             LibSuffixNameSeeder::class,
             LibOccupationCategorySeeder::class,
             LibOccupationSeeder::class,
-            LibVaccineSeeder::class,
+            LibMcRiskFactorSeeder::class,
+            LibMcDeliveryLocationSeeder::class,
+            LibMcOutcomeSeeder::class,
+            LibMcLocationSeeder::class,
+            LibMcAttendantSeeder::class,
+            LibMcPresentationSeeder::class,
+            LibMcPregnancyTerminationSeeder::class,
+
         ]);
     }
 }

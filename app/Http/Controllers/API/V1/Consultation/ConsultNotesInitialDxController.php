@@ -38,7 +38,7 @@ class ConsultNotesInitialDxController extends Controller
             array_push($initialdx_array, $value);
             }
             ConsultNotesInitialDx::whereNotIn('class_id', $initialdx_array)
-            ->where('class_id', '=', $data->class_id )
+            ->where('notes_id', '=', $data->notes_id )
             ->delete();
 
             return response()->json([

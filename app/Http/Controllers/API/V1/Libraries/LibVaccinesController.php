@@ -10,12 +10,22 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Libraries for Vaccines
+ *
+ * APIs for managing libraries
+ * @subgroup Childcare vaccines
+ * @subgroupDescription List of Childcare vaccines.
+ */
+
 class LibVaccinesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Childcare vaccine resource.
      *
-     * @return \Illuminate\Http\Response
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibVaccineResource
+     * @apiResourceModel App\Models\V1\Libraries\LibVaccine
+     * @return ResourceCollection
      */
     public function index()
     {
@@ -37,10 +47,12 @@ class LibVaccinesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Child resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibVaccineResource
+     * @apiResourceModel App\Models\V1\Libraries\LibVaccine
+     * @param LibVaccine $vaccine_id
+     * @return LibVaccineResource
      */
     public function show(LibVaccine $vaccine_id, string $id): JsonResource
     {

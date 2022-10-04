@@ -16,11 +16,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @subgroupDescription List of ICD10s.
  */
 
-
 class LibIcd10Controller extends Controller
 {
     /**
-     * Display a listing of the Diagnoses resource.
+     * Display a listing of the Icd10s resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibIcd10Resource
      * @apiResourceModel App\Models\V1\Libraries\LibIcd10
