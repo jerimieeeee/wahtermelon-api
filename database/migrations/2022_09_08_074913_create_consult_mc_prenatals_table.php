@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('consult_mc_prenatals', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('patient_mc_id');
-            $table->foreignUuid('patient_id')->constrained();
-            $table->foreignUuid('user_id')->constrained();
-            $table->date('prenatal_date');
+            $table->uuid('id')->index()->primary();
+            $table->string('facility_code')->index();
+            $table->uuid('patient_mc_id')->index();
+            $table->foreignUuid('patient_id')->index()->constrained();
+            $table->foreignUuid('user_id')->index()->constrained();
+            $table->date('prenatal_date')->index();
             $table->unsignedInteger('aog_weeks');
             $table->unsignedInteger('aog_days');
             $table->unsignedInteger('trimester');
@@ -27,14 +28,17 @@ return new class extends Migration
             $table->unsignedInteger('bp_systolic');
             $table->unsignedInteger('bp_diastolic');
             $table->unsignedInteger('fundic_height');
-            $table->char('presentation_code',10)->constrained();
+            $table->char('presentation_code',10)->index();
             $table->unsignedInteger('fhr');
-            $table->char('location_code',5)->constrained();
+            $table->char('location_code',5)->index();
             $table->boolean('private')->default('0');
             $table->softDeletes();
             $table->timestamps();
 
+            $table->foreign('facility_code')->references('code')->on('facilities');
             $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
+            $table->foreign('presentation_code')->references('code')->on('lib_mc_presentations');
+            $table->foreign('location_code')->references('code')->on('lib_mc_locations');
         });
     }
 

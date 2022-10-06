@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('consult_mc_postparta', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->index()->primary();
+            $table->string('facility_code')->index();
             $table->uuid('patient_mc_id');
             // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patient_id')->constrained();
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
+            $table->foreign('facility_code')->references('code')->on('facilities');
             $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
         });
     }

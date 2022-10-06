@@ -14,9 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('patient_mc', function (Blueprint $table) {
-            $table->uuid('id')->primary()->index();
-            $table->foreignUuid('patients_id')->constrained();
-            $table->foreignUuid('user_id')->constrained();
+            $table->uuid('id')->index()->primary();
+            $table->string('facility_code')->index();
+            $table->foreignUuid('patients_id')->index()->constrained();
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->date('pre_registration_date')->index();
             $table->date('post_registration_date')->index();
             $table->date('lmp_date')->index();
@@ -59,6 +60,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
+            $table->foreign('facility_code')->references('code')->on('facilities');
             $table->foreign('delivery_location_code')->references('code')->on('lib_mc_delivery_locations');
             $table->foreign('barangay_code')->references('code')->on('barangays');
             $table->foreign('outcome_code')->references('code')->on('lib_mc_outcomes');
