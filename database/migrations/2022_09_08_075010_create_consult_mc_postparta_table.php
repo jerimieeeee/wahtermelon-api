@@ -17,10 +17,9 @@ return new class extends Migration
             $table->uuid('id')->index()->primary();
             $table->string('facility_code')->index();
             $table->uuid('patient_mc_id');
-            // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
-            $table->date('postpartum_date');
+            $table->date('postpartum_date')->index();
             $table->unsignedInteger('postpartum_week');
             $table->unsignedInteger('visit_sequence');
             $table->char('visit_type',10);
@@ -31,8 +30,8 @@ return new class extends Migration
             $table->boolean('vaginal_bleeding')->default('0');
             $table->boolean('pallor')->default('0');
             $table->boolean('cord_ok')->default('0');
-            $table->unsignedInteger('patient_age');
             $table->unsignedInteger('patient_height');
+            $table->unsignedInteger('patient_weight');
             $table->unsignedInteger('bp_systolic');
             $table->unsignedInteger('bp_diastolic');
             $table->softDeletes();

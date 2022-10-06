@@ -24,12 +24,13 @@ return new class extends Migration
             $table->unsignedInteger('aog_days');
             $table->unsignedInteger('trimester');
             $table->unsignedInteger('visit_sequence');
-            $table->decimal('patient_weight',3,2);
-            $table->unsignedInteger('bp_systolic');
-            $table->unsignedInteger('bp_diastolic');
-            $table->unsignedInteger('fundic_height');
+            $table->decimal('patient_height',3,2)->nullable();
+            $table->decimal('patient_weight',3,2)->nullable();
+            $table->unsignedInteger('bp_systolic')->nullable();
+            $table->unsignedInteger('bp_diastolic')->nullable();
+            $table->unsignedInteger('fundic_height')->nullable();
             $table->char('presentation_code',10)->index();
-            $table->unsignedInteger('fhr');
+            $table->unsignedInteger('fhr')->nullable();
             $table->char('location_code',5)->index();
             $table->boolean('private')->default('0');
             $table->softDeletes();

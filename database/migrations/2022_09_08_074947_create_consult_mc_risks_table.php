@@ -17,11 +17,11 @@ return new class extends Migration
             $table->uuid('id')->index()->primary();
             $table->string('facility_code')->index();
             $table->uuid('patient_mc_id');
-            // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->foreignId('risk_id')->constrained('lib_mc_risk_factors');
             $table->date('date_detected')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('facility_code')->references('code')->on('facilities');

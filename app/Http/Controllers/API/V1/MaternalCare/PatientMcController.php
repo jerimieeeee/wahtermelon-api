@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
+use App\Models\V1\MaternalCare\PatientMc;
 use Illuminate\Http\Request;
 
 class PatientMcController extends Controller
@@ -18,16 +19,6 @@ class PatientMcController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +26,8 @@ class PatientMcController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = PatientMc::create($request->all());
+        return $data;
     }
 
     /**
@@ -45,17 +37,6 @@ class PatientMcController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

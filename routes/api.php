@@ -97,5 +97,11 @@ Route::prefix('v1')->group(function (){
         Route::get('mc-risk-factors/{riskFactor}', [\App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class, 'show'])->name('mc-risk-factors.show');
     });
 
+    Route::prefix('maternal-care')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcController::class)
+            ->group(function() {
+                Route::post('mc-records', 'store');
+            });
+    });
 });
 
