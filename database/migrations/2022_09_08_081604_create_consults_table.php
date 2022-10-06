@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('consult_done');
             // $table->boolean('old_data', 1);
             // $table->boolean('pdf_created', 1);
-            $table->string('pHospitalTransmittalNo', 20);
+            // $table->string('pHospitalTransmittalNo', 20);
             $table->char('ptgroup', 2);
         });
     }

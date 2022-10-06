@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('bfed_month4');
             $table->boolean('bfed_month5');
             $table->boolean('bfed_month6');
-            $table->date('ebf_date');
+            $table->date('ebf_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

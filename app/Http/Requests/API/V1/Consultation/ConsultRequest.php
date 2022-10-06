@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\Consultation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConsultNotesComplaintRequest extends FormRequest
+class ConsultRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,27 +24,12 @@ class ConsultNotesComplaintRequest extends FormRequest
     public function rules()
     {
         return [
-            'notes_id' => 'required',
-            'consult_id' => 'required',
             'patient_id' => 'required',
-            'complaint_id' => 'required',
-            'complaint_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'user_id' => 'required',
+            'consult_end' => 'required|date|date_format:Y-m-d',
+            'physician_id' => 'required',
+            'consult_done' => 'required',
+            'pt_group' => 'required',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'complaint_date.before' => 'The complaint date must not be future date.'
-        ];
-    }
-
-
-    public function bodyParameters()
-    {
-
-    }
-
-
 }
