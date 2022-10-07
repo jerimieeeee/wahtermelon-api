@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('patient_mc', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
             $table->string('facility_code')->index();
-            $table->foreignUuid('patients_id')->index()->constrained();
+            $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->date('pre_registration_date')->nullable()->index();
             $table->date('post_registration_date')->nullable()->index();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->dateTime('admission_date')->nullable()->index();
             $table->dateTime('discharge_date')->nullable()->index();
             $table->dateTime('delivery_date')->nullable()->index();
-            $table->char('delivery_location_code',10)->index();
+            $table->char('delivery_location_code',10)->nullable()->index();
             $table->string('barangay_code')->nullable()->index();
             $table->unsignedInteger('initial_gravidity')->default(0);
             $table->unsignedInteger('initial_parity')->default(0);
@@ -43,20 +43,20 @@ return new class extends Migration
             $table->unsignedInteger('preterm')->default(0);
             $table->unsignedInteger('abortion')->default(0);
             $table->unsignedInteger('livebirths')->default(0);
-            $table->char('outcome_code',10)->index();
-            $table->boolean('healthy_baby');
+            $table->char('outcome_code',10)->nullable()->index();
+            $table->boolean('healthy_baby')->nullable();
             $table->decimal('birth_weight',3,2)->nullable();
-            $table->char('attendant_code',5)->index();
-            $table->boolean('breastfeeding');
+            $table->char('attendant_code',5)->nullable()->index();
+            $table->boolean('breastfeeding')->nullable();
             $table->date('breastfed_date')->nullable()->index();
             $table->unsignedInteger('patient_age');
             $table->unsignedInteger('patient_height');
             $table->boolean('end_pregnancy')->default('0');
-            $table->string('prenatal_remarks');
-            $table->string('postpartum_remarks');
+            $table->string('prenatal_remarks')->nullable();
+            $table->string('postpartum_remarks')->nullable();
             $table->date('pregnancy_termination_date')->nullable();
-            $table->char('pregnancy_termination_code')->index();
-            $table->string('pregnancy_termination_cause');
+            $table->char('pregnancy_termination_code')->nullable()->index();
+            $table->string('pregnancy_termination_cause')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

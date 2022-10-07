@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\MaternalCare\PatientMcRequest;
 use App\Models\V1\MaternalCare\PatientMc;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class PatientMcController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PatientMcRequest $request)
     {
         $data = PatientMc::create($request->all());
         return $data;
