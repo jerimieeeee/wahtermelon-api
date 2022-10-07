@@ -18,8 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('patient_id')->constrained();
             $table->integer('user_id');
             $table->dateTime('visit_date');
-            $table->dateTime('visit_end');
-            $table->char('visit_ended');
+            $table->boolean('visit_ended');
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('ccdevs');

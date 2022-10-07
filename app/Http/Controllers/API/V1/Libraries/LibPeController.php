@@ -12,8 +12,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @group Libraries for Consultation
  *
  * APIs for managing libraries
- * @subgroup PEs
- * @subgroupDescription List of PEs.
+ * @subgroup Physical Exams
+ * @subgroupDescription List of Physical Exams.
  */
 
 class LibPeController extends Controller
