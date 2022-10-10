@@ -97,6 +97,12 @@ Route::prefix('v1')->group(function (){
         Route::get('icd10', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'index']);
         Route::get('icd10/{id}', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'show']);
 
+        //Childcare Libraries
+        Route::get('vaccine', [\App\Http\Controllers\API\V1\Libraries\LibVaccinesController::class, 'index']);
+        Route::get('vaccine/{id}', [\App\Http\Controllers\API\V1\Libraries\LibVaccinesController::class, 'show']);
+
+        Route::get('reason', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'index']);
+        Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);
     });
 
 });

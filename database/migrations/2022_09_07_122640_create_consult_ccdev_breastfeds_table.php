@@ -24,10 +24,12 @@ return new class extends Migration
             $table->boolean('bfed_month4')->nullable();
             $table->boolean('bfed_month5')->nullable();
             $table->boolean('bfed_month6')->nullable();
-            $table->string('reason')->nullable();
+            $table->unsignedBigInteger('reason_id')->nullable();
             $table->date('ebf_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('reason_id')->references('reason_id')->on('lib_ebf_reasons');
         });
     }
 

@@ -23,7 +23,7 @@ class ConsultNotesComplaintController extends Controller
      * Store a newly created Consultation Complaints resource in storage.
      *
      * @apiResourceAdditional status=Success
-     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultatNotesComplaintResource
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesComplaintResource
      * @apiResourceModel App\Models\V1\Consultation\ConsultNotesComplaint
      * @param ConsultNotesComplaintRequest $request
      * @return JsonResponse
