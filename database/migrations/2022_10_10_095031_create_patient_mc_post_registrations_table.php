@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('patient_mc_post_registrations', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
-            $table->uuid('patient_mc_id')->index();
+            $table->foreignUuid('patient_mc_id')->index()->constrained('patient_mc');
             $table->string('facility_code')->index();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->date('post_registration_date')->index();
@@ -34,13 +34,15 @@ return new class extends Migration
             $table->boolean('healthy_baby');
             $table->decimal('birth_weight',3,2);
             $table->char('attendant_code',5)->index();
-            $table->boolean('breastfeeding');
-            $table->date('breastfed_date')->index();
+            $table->boolean('breastfeeding')->default(0);
+            $table->date('breastfed_date')->nullable()->index();
             $table->boolean('end_pregnancy')->default('0');
             $table->text('postpartum_remarks')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
+            //$table->foreign('patient_mc_id')->references('id')->on('patient_mc');
+            $table->foreign('facility_code')->references('code')->on('facilities');
             $table->foreign('delivery_location_code')->references('code')->on('lib_mc_delivery_locations');
             $table->foreign('barangay_code')->references('code')->on('barangays');
             $table->foreign('outcome_code')->references('code')->on('lib_mc_outcomes');

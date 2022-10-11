@@ -102,6 +102,14 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
                 Route::post('mc-records', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPreRegistrationController::class)
+            ->group(function() {
+                Route::post('mc-preregistrations', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPostRegistrationController::class)
+            ->group(function() {
+                Route::post('mc-postregistrations', 'store');
+            });
     });
 });
 

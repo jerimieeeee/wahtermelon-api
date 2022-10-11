@@ -2,6 +2,8 @@
 
 namespace App\Models\V1\MaternalCare;
 
+use App\Models\User;
+use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;
 use DateTimeInterface;
@@ -20,21 +22,12 @@ class PatientMc extends Model
         'id'
     ];
 
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     protected $casts = [
-        'pre_registration_date' => 'date:Y-m-d',
-        'post_registration_date' => 'date:Y-m-d',
-        'lmp_date' => 'date:Y-m-d',
-        'edc_date' => 'date:Y-m-d',
-        'trimester1_date' => 'date:Y-m-d',
-        'trimester2_date' => 'date:Y-m-d',
-        'trimester3_date' => 'date:Y-m-d',
-        'postpartum_date' => 'date:Y-m-d',
-        'admission_date' => 'datetime:Y-m-d H:i:s',
-        'discharge_date' => 'datetime:Y-m-d H:i:s',
-        'delivery_date' => 'datetime:Y-m-d H:i:s',
-        'healthy_baby' => 'boolean',
-        'breastfeeding' => 'boolean',
-        'end_pregnancy' => 'boolean',
+        'pregnancy_termination_date' => 'date:Y-m-d',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -44,6 +37,26 @@ class PatientMc extends Model
 
     public function facility()
     {
-        $this->belongsTo(Facility::class, 'facility_code', 'code');
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function preRegister()
+    {
+        return $this->hasOne(PatientMcPreRegistration::class);
+    }
+
+    public function postRegister()
+    {
+        return $this->hasOne(PatientMcPostRegistration::class);
     }
 }
