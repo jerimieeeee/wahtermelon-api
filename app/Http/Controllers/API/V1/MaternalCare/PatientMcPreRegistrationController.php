@@ -28,16 +28,16 @@ class PatientMcPreRegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        //return Patient::with('patientMc')->get();
+        /*//return Patient::with('patientMc')->get();
         return $a = PatientMcPostRegistration::with(['patientMc'])->first();
         //return $a->patientMcPostRegistration;
-        return $mc = PatientMc::with('patientMcPostRegistration')->first();
-        return $mc = PatientMc::withWhereHas('patientMcPostRegistration', function($query) {
+        return $mc = PatientMc::with('patientMcPostRegistration')->first();*/
+        return $mc = PatientMc::withWhereHas('postRegister', function($query) {
             $query->where('end_pregnancy', false);
         })->first();
-        if(!$mc){
+        /*if(!$mc){
             return $mc = PatientMc::create($request->all());
-        }
+        }*/
 
     }
 
