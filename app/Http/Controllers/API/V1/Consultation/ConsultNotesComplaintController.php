@@ -18,7 +18,6 @@ class ConsultNotesComplaintController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created Consultation Complaints resource in storage.
      *
@@ -28,7 +27,6 @@ class ConsultNotesComplaintController extends Controller
      * @param ConsultNotesComplaintRequest $request
      * @return JsonResponse
      */
-
     public function store(Request $request)
     {
         try{

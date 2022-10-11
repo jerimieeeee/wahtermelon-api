@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Childcare;
 use App\Http\Controllers\Controller;
 use App\Models\V1\Childcare\ConsultCcdevs;
 use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\Childcare\ConsultCcdevRequest;
 
 class ConsultCcdevController extends Controller
 {
@@ -19,10 +20,13 @@ class ConsultCcdevController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation Complaints resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevResource
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdev
+     * @param ConsultCcdevRequest $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {

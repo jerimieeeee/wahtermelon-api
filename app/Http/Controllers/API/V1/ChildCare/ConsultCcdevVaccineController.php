@@ -7,6 +7,7 @@ use App\Models\V1\Childcare\ConsultCcdevVaccines;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\Childcare\ConsultCcdevVaccineRequest;
 
 class ConsultCcdevVaccineController extends Controller
 {
@@ -21,10 +22,13 @@ class ConsultCcdevVaccineController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation Complaints resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevVaccineResource
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevVaccine
+     * @param ConsultCcdevVaccineRequest $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {

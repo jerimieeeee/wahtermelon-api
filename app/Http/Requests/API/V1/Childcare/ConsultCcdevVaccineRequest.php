@@ -24,7 +24,11 @@ class ConsultCcdevVaccineRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'patient_ccdev_id' => 'required|exists:ccdevs,id',
+            'patient_id' => 'required|exists:patients,id',
+            'user_id' => 'required|exists:users,id',
+            'vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
+            'vaccine_date' => 'required|date|date_format:Y-m-d',
         ];
     }
 }

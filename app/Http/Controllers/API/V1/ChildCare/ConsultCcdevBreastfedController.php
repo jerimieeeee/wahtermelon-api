@@ -15,14 +15,17 @@ class ConsultCcdevBreastfedController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation Complaints resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevBreastfedResource
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevBreastfed
+     * @param ConsultCcdevBreasfedRequest $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
