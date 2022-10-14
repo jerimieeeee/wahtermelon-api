@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ccdevs', function (Blueprint $table) {
+        Schema::create('patient_ccdevs', function (Blueprint $table) {
             $table->id();
-            $table->integer('patient_id');
-            $table->integer('user_id');
+            $table->foreignUuid('patient_id')->constrained()->index();
+            $table->foreignUuid('user_id');
             $table->decimal('birth_weight');
-            $table->integer('mothers_id');
+            $table->foreignUuid('mothers_id');
             $table->boolean('ccdev_ended');
             $table->dateTime('admission_date');
             $table->dateTime('discharge_date');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ccdevs');
+        Schema::dropIfExists('patient_ccdevs');
     }
 };

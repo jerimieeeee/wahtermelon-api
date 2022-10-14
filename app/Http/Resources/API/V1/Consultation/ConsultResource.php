@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Childcare;
+namespace App\Http\Resources\API\V1\Consultation;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ConsultCcdevResource extends JsonResource
+class ConsultResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,11 @@ class ConsultCcdevResource extends JsonResource
         return [
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
-            'visit_ended' => $this->visit_ended,
-            'visit_date' => $this->visit_date?->format('Y-m-d'),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+            'physician_id' => $this->physician_id,
+            'is_pregnant' => $this->is_pregnant,
+            'ptgroup' => $this->ptgroup,
         ];
     }
 }

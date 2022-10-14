@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\Request;
 
+/**
+ * @group Consultation Information Management
+ *
+ * APIs for managing Patient Consultation Notes information
+ * @subgroup Patient Consultation Notes
+ * @subgroupDescription Patient Consultation Notes management.
+ */
 class ConsultNotesController extends Controller
 {
     /**

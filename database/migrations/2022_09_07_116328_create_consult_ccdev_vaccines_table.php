@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('consult_ccdev_vaccines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_ccdev_id');
-            $table->integer('patient_id');
-            $table->integer('user_id');
+            $table->foreignUuid('patient_id');
+            $table->foreignUuid('user_id');
             $table->string('vaccine_id', 10)->constrained();
-            $table->date('vaccine_date');
+            $table->date('vaccine_date')->nullable();
             $table->timestamps();
 
             $table->foreign('vaccine_id')->references('vaccine_id')->on('lib_vaccines');

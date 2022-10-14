@@ -6,23 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ccdev extends Model
+class PatientCcdev extends Model
 {
-    protected $primaryKey = 'id';
+    use SoftDeletes;
 
     protected $guarded = ['id',];
-    use SoftDeletes;
 
 
     public function consultccdevservice(){
 
-        return $this->hasOne(Ccdev::class);
+        return $this->hasOne(PatientCcdev::class);
 
     }
 
     public function consultccdev(){
 
-        return $this->hasOne(Ccdev::class);
+        return $this->hasOne(PatientCcdev::class);
 
     }
 }

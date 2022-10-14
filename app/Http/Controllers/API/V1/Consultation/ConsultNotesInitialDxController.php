@@ -6,7 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
 
+/**
+ * @group Consultation Information Management
+ *
+ * APIs for managing Patient Consultation Final Dx information
+ * @subgroup Patient Consultation Final Dx
+ * @subgroupDescription Patient Consultation Final Dx management.
+ */
 class ConsultNotesInitialDxController extends Controller
 {
     /**
@@ -20,10 +28,13 @@ class ConsultNotesInitialDxController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation Initial Dx resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesInitialDxResource
+     * @apiResourceModel App\Models\V1\Consultation\ConsultNotesInitialDx
+     * @param ConsultNotesInitialDxRequest $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {

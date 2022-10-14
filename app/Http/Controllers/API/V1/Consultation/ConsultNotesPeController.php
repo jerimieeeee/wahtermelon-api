@@ -5,7 +5,15 @@ namespace App\Http\Controllers\API\V1\Consultation;
 use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesPe;
 use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesPeRequest;
 
+/**
+ * @group Consultation Information Management
+ *
+ * APIs for managing Patient Consultation Physical Exam information
+ * @subgroup Patient Patient Consultation Physical Exam
+ * @subgroupDescription Patient Consultation Physical Exam.
+ */
 class ConsultNotesPeController extends Controller
 {
     /**
@@ -19,10 +27,13 @@ class ConsultNotesPeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation Physical Exam resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesPeResource
+     * @apiResourceModel App\Models\V1\Consultation\ConsultNotesPe
+     * @param ConsultNotesPeRequest $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {

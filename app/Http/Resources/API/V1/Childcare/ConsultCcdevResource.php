@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Childcare;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ConsultCcdevVaccineResource extends JsonResource
+class ConsultCcdevResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,12 @@ class ConsultCcdevVaccineResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'patient_ccdev_id' => $this->patient_ccdev_id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
-            'vaccine_id' => $this->vaccine_id,
-            'vaccine_date' => $this->vaccine_date?->format('Y-m-d'),
-            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+            'visit_date' => $this->visit_date->format('Y-m-d'),
+            'visit_ended' => $this->visit_ended,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }

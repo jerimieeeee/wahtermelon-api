@@ -10,7 +10,7 @@ class ConsultCcdevVaccines extends Model
     use HasFactory;
 
     protected $primaryKey = 'id';
-
+    protected $dates = ['vaccine_date'];
     protected $guarded = [
         'id',
     ];

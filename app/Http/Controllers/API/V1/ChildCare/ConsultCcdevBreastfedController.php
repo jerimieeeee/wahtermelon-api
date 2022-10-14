@@ -6,6 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Childcare\ConsultCcdevBreastfeds;
 use Illuminate\Http\Request;
 
+/**
+ * @group Childcare Breastfed Management
+ *
+ * APIs for managing Childcare Breastfed information
+ * @subgroup Childcare Breastfed
+ * @subgroupDescription Childcare Breastfed management.
+ */
+
 class ConsultCcdevBreastfedController extends Controller
 {
     /**
@@ -19,11 +27,11 @@ class ConsultCcdevBreastfedController extends Controller
     }
 
     /**
-     * Store a newly created Consultation Complaints resource in storage.
+     * Store a newly created Childcare Breastfed resource in storage.
      *
      * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevBreastfedResource
-     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevBreastfed
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevBreastfeds
      * @param ConsultCcdevBreasfedRequest $request
      * @return JsonResponse
      */

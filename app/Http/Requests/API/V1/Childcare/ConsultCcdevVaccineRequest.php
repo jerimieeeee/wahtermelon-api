@@ -28,7 +28,7 @@ class ConsultCcdevVaccineRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
-            'vaccine_date' => 'required|date|date_format:Y-m-d',
+            'vaccine_date' => 'nullable|date|date_format:Y-m-d',
         ];
     }
 }

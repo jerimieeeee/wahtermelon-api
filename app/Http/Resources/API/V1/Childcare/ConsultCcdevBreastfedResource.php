@@ -25,10 +25,10 @@ class ConsultCcdevBreastfedResource extends JsonResource
             'bfed_month5' => $this->bfed_month5,
             'bfed_month6' => $this->bfed_month6,
             'reason_id' => $this->reason_id,
-            'ebf_date' => $this->ebf_date?->format('Y-m-d'),
-            'deleted_at' => $this->deleted_at?->format('Y-m-d'),
-            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+            'ebf_date' => $this->ebf_date->format('Y-m-d'),
+            'deleted_at' => $this->deleted_at->format('Y-m-d'),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }

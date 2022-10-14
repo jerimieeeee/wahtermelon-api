@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('patient_id');
             $table->integer('user_id');
             $table->string('complaint', 255);
-            $table->text('history', 65535);
+            $table->text('history', 255);
             $table->string('physical_exam', 255);
             $table->string('plan', 255);
             // $table->char('sms_plan_info', 1);

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Childcare;
+namespace App\Http\Resources\API\V1\Consultation;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CcdevResource extends JsonResource
+class ConsultNotesInitialDxResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +15,10 @@ class CcdevResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'patient_id' => $this->patient_id,
+            'notes_id' => $this->notes_id,
             'user_id' => $this->user_id,
-            'birth_weight' => $this->birth_weight,
-            'mothers_id' => $this->mothers_id,
-            'ccdev_ended' => $this->ccdev_ended,
-            'admission_date' => $this->admission_date?->format('Y-m-d'),
-            'discharge_date' => $this->discharge_date?->format('Y-m-d'),
-            'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
+            'class_id' => $this->class_id,
+            'dx_remarks' => $this->dx_remarks,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

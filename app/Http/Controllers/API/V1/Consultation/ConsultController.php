@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\Consult;
 use Illuminate\Http\Request;
 
+/**
+ * @group Consultation Information Management
+ *
+ * APIs for managing Patient Consultation information
+ * @subgroup Patient Consultation
+ * @subgroupDescription Patient Consultation management.
+ */
 class ConsultController extends Controller
 {
     /**

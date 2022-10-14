@@ -9,6 +9,14 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevVaccineRequest;
 
+/**
+ * @group Childcare Vaccine Management
+ *
+ * APIs for managing Childcare Vaccine information
+ * @subgroup Childcare Vaccine
+ * @subgroupDescription Childcare Vaccine management.
+ */
+
 class ConsultCcdevVaccineController extends Controller
 {
     /**
@@ -22,11 +30,11 @@ class ConsultCcdevVaccineController extends Controller
     }
 
     /**
-     * Store a newly created Consultation Complaints resource in storage.
+     * Store a newly created Childcare Vaccine resource in storage.
      *
      * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevVaccineResource
-     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevVaccine
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevVaccines
      * @param ConsultCcdevVaccineRequest $request
      * @return JsonResponse
      */
@@ -51,7 +59,7 @@ class ConsultCcdevVaccineController extends Controller
             ->delete();
 
             return response()->json([
-                'status_code' => 200,
+                'status_code' => 201,
                 'message' => 'Vaccine Successfully Saved',
             ]);
             }catch(Exception $error) {

@@ -7,6 +7,14 @@ use App\Models\V1\Childcare\ConsultCcdevs;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevRequest;
 
+/**
+ * @group Childcare Consultation Management
+ *
+ * APIs for managing Childcare Consultation information
+ * @subgroup Childcare Consultation
+ * @subgroupDescription Childcare Consultation management.
+ */
+
 class ConsultCcdevController extends Controller
 {
     /**
@@ -20,11 +28,11 @@ class ConsultCcdevController extends Controller
     }
 
     /**
-     * Store a newly created Consultation Complaints resource in storage.
+     * Store a newly created Childcare Consultation resource in storage.
      *
      * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevResource
-     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdev
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevs
      * @param ConsultCcdevRequest $request
      * @return JsonResponse
      */

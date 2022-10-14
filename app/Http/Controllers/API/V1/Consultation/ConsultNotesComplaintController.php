@@ -7,6 +7,13 @@ use App\Models\V1\Consultation\ConsultNotesComplaint;
 use Exception;
 use Illuminate\Http\Request;
 
+/**
+ * @group Consultation Chief Complaint Management
+ *
+ * APIs for managing Patient Consultation Chief Complaint information
+ * @subgroup Patient Consultation Chief Complaint
+ * @subgroupDescription Patient Consultation Chief Complaint.
+ */
 class ConsultNotesComplaintController extends Controller
 {
     /**
@@ -18,6 +25,7 @@ class ConsultNotesComplaintController extends Controller
     {
         //
     }
+
     /**
      * Store a newly created Consultation Complaints resource in storage.
      *

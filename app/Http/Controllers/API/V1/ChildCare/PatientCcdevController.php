@@ -4,10 +4,17 @@ namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\V1\Childcare\Ccdev as Ccdev;
-use App\Http\Requests\API\V1\Childcare\CcdevRequest;
+use App\Models\V1\Childcare\PatientCcdev;
+use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
 
-class CcdevController extends Controller
+/**
+ * @group Childcare Information Management
+ *
+ * APIs for managing Childcare Patient information
+ * @subgroup Childcare Patient
+ * @subgroupDescription Childcare Patient management.
+ */
+class PatientCcdevController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,17 +27,17 @@ class CcdevController extends Controller
     }
 
     /**
-     * Store a newly created Consultation Complaints resource in storage.
+     * Store a newly created Patient Childcare resource in storage.
      *
      * @apiResourceAdditional status=Success
-     * @apiResource 201 App\Http\Resources\API\V1\Childcare\CcdevResource
-     * @apiResourceModel App\Models\V1\Childcare\Ccdev
-     * @param CcdevRequest $request
+     * @apiResource 201 App\Http\Resources\API\V1\Childcare\PatientCcdevResource
+     * @apiResourceModel App\Models\V1\Childcare\PatientCcdev
+     * @param PatientCcdevRequest $request
      * @return JsonResponse
      */
     public function store(Request $request)
     {
-        $data = Ccdev::create($request->all());
+        $data = PatientCcdev::create($request->all());
         return $data;
     }
 
@@ -42,7 +49,7 @@ class CcdevController extends Controller
      */
     public function show($id)
     {
-        $data = Ccdev::where('patient_id', '=', $id)->get();
+        $data = PatientCcdev::where('patient_id', '=', $id)->get();
     }
 
     /**
@@ -54,7 +61,7 @@ class CcdevController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Ccdev::findorfail($id)->update($request->all());
+        PatientCcdev::findorfail($id)->update($request->all());
         return response()->json('Patient Child Care Successfully Updated');
     }
 

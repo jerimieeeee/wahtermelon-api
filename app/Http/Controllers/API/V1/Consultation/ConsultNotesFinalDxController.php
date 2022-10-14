@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesFinalDxRequest;
 
+/**
+ * @group Consultation Information Management
+ *
+ * APIs for managing Patient Consultation Final Dx information
+ * @subgroup Patient Consultation Final Dx
+ * @subgroupDescription Patient Consultation Final Dx management.
+ */
 class ConsultNotesFinalDxController extends Controller
 {
     /**
@@ -20,10 +27,13 @@ class ConsultNotesFinalDxController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation Final Dx resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesFinalDxResource
+     * @apiResourceModel App\Models\V1\Consultation\ConsultNotesFinalDx
+     * @param ConsultNotesFinalDxRequest $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {

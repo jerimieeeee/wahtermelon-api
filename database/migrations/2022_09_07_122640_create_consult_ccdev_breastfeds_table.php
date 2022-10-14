@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('consult_ccdev_breastfeds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ccdevs_id')->constrained();
-            $table->integer('patient_id');
-            $table->integer('user_id');
+            $table->foreignId('patient_ccdevs_id')->constrained();
+            $table->foreignUuid('patient_id');
+            $table->foreignUuid('user_id');
             $table->boolean('bfed_month1')->nullable();
             $table->boolean('bfed_month2')->nullable();
             $table->boolean('bfed_month3')->nullable();
