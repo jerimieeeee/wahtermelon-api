@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('consult_notes_final_dxes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('notes_id')->constrained;
-            $table->integer('user_id');
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->string('icd10_code', 50);
             $table->string('dx_remarks', 255);
             $table->timestamps();

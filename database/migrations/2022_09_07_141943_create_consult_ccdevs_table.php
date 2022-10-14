@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('consult_ccdev_services', function (Blueprint $table) {
+        Schema::create('consult_ccdevs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_ccdevs_id')->constrained();
-            $table->foreignUuid('patient_id');
-            $table->foreignUuid('user_id');
-            $table->string('service_id');
-            $table->date('service_date');
+            $table->foreignUuid('patient_id')->index()->constrained();
+            $table->foreignUuid('user_id')->index()->constrained();
+            $table->dateTime('visit_date');
+            $table->boolean('visit_ended');
             $table->timestamps();
+
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consult_ccdev_services');
+        Schema::dropIfExists('consult_ccdevs');
     }
 };

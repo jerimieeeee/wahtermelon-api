@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('consult_notes_initial_dxes', function (Blueprint $table) {
             $table->unsignedBigInteger('notes_id')->constrained;
-            $table->integer('user_id');
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->integer('class_id');
             $table->string('dx_remarks', 255);
             $table->timestamps();

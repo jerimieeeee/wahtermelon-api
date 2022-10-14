@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('consult_notes_pes', function (Blueprint $table) {
             $table->unsignedBigInteger('notes_id')->constrained();
-            $table->integer('user_id');
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->string('remarks', 255);
             $table->string('breast_screen', 10);
             $table->string('breast_remarks', 255);

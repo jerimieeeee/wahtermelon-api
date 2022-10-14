@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('consult_notes_complaints', function (Blueprint $table) {
             $table->unsignedBigInteger('notes_id')->constrained();
             $table->integer('consult_id');
-            $table->integer('patient_id');
+            $table->foreignUuid('patient_id')->index()->constrained();
             $table->string('complaint_id');
             $table->date('complaint_date');
-            $table->integer('user_id');
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->timestamps();
 
             $table->foreign('notes_id')->references('id')->on('consult_notes');

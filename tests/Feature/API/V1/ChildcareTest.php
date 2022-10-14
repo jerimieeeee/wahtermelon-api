@@ -31,6 +31,7 @@ class ChildcareTest extends TestCase
             'mothers_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'admission_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'discharge_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'nbs_filter' => fake()->regexify('[0-9]{10}')
         ]);
         $response->assertCreated();
     }
@@ -74,10 +75,10 @@ class ChildcareTest extends TestCase
                  'patient_ccdev_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
                  'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
                  'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-                 'vaccine_id' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
-                 'vaccine_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+                 'vaccines' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
+                 'vaccine_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
              ]);
-             $response->assertOk();
+             $response->assertCreated();
          }
 
 }

@@ -55,10 +55,6 @@ class CcdevRequest extends FormRequest
                 'description' => 'ID of mother',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'ccdev_ended' => [
-                'description' => 'ccdev ended?',
-                'example' => fake()->boolean(),
-            ],
             'admission_date' => [
                 'description' => 'Date of Admission',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
@@ -66,6 +62,10 @@ class CcdevRequest extends FormRequest
             'discharge_date' => [
                 'description' => 'Date of Discharge',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            ],
+            'nbs_filter' => [
+                'description' => 'New born screen filter number',
+                'example' => fake()->regexify('[0-9]{10}')
             ],
         ];
 

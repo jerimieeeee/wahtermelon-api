@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('consult_notes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('consult_id')->constrained;
-            $table->integer('patient_id');
-            $table->integer('user_id');
+            $table->foreignUuid('patient_id')->index()->constrained();
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->string('complaint', 255);
             $table->text('history', 255);
             $table->string('physical_exam', 255);

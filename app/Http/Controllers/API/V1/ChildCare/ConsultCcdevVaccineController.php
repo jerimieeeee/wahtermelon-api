@@ -59,9 +59,10 @@ class ConsultCcdevVaccineController extends Controller
             ->delete();
 
             return response()->json([
-                'status_code' => 201,
+                // 'status_code' => 200,
                 'message' => 'Vaccine Successfully Saved',
-            ]);
+            ], 201);
+
             }catch(Exception $error) {
                 return response()->json([
                     'status_code' => 500,

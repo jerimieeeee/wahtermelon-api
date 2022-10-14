@@ -15,15 +15,17 @@ return new class extends Migration
     {
         Schema::create('patient_ccdevs', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('patient_id')->constrained()->index();
-            $table->foreignUuid('user_id');
+            $table->foreignUuid('patient_id')->index()->constrained();
+            $table->foreignUuid('user_id')->index()->constrained();
             $table->decimal('birth_weight');
-            $table->foreignUuid('mothers_id');
-            $table->boolean('ccdev_ended');
+            $table->uuid('mothers_id')->index()->constrained();
             $table->dateTime('admission_date');
             $table->dateTime('discharge_date');
+            $table->string('nbs_filter', 50);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('mothers_id')->references('id')->on('patients');
         });
     }
 

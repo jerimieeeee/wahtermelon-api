@@ -22,6 +22,7 @@ class PatientCcdevResource extends JsonResource
             'ccdev_ended' => $this->ccdev_ended,
             'admission_date' => !is_null($this->admission_date) ? $this->admission_date->format('Y-m-d') : null,
             'discharge_date' => !is_null($this->discharge_date) ? $this->discharge_date->format('Y-m-d') : null,
+            'nbs_filter' => $this->nbs_filter,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
