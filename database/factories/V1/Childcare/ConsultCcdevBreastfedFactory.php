@@ -4,6 +4,7 @@ namespace Database\Factories\V1\Childcare;
 
 use App\Models\User;
 use App\Models\V1\Childcare\Ccdev;
+use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibEbfReason;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +22,7 @@ class ConsultCcdevBreastfedFactory extends Factory
     public function definition()
     {
         return [
-            'ccdevs_id' => fake()->randomElement(Ccdev::pluck('id')->toArray()),
+            'ccdevs_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'bfed_month1' => fake()->boolean,
