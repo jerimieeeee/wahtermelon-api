@@ -4,6 +4,7 @@ namespace App\Http\Requests\API\V1\Childcare;
 
 use App\Models\User;
 use App\Models\V1\Childcare\Ccdev;
+use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -46,7 +47,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
         return [
             'ccdev_id' => [
                 'description' => 'ID of ccdev.',
-                'example' => fake()->randomElement(Ccdev::pluck('id')->toArray()),
+                'example' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             ],
             'patient_id' => [
                 'description' => 'ID of patient',

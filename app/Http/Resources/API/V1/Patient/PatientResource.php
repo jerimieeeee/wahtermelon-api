@@ -36,6 +36,7 @@ class PatientResource extends JsonResource
             'civil_status_code' => $this->civil_status_code,
             'consent_flag' => $this->consent_flag,
             'image_url' => $this->image_url,
+            'deleted_at' => $this->created_at->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

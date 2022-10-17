@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\API\V1;
 
+use App\Models\User;
 use App\Models\V1\Libraries\LibBloodType;
 use App\Models\V1\Libraries\LibCivilStatus;
 use App\Models\V1\Libraries\LibEducation;
@@ -9,6 +10,7 @@ use App\Models\V1\Libraries\LibOccupation;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -65,5 +67,15 @@ class PatientTest extends TestCase
         $id = fake()->randomElement(Patient::pluck('id')->toArray());
         $response = $this->get("api/v1/patient/$id");
         $response->assertOk();
+    }
+
+    public function test_patient_vaccine_can_be_created()
+    {
+        $response = $this->post('api/v1/patient-vaccine', [
+            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'vaccine_id' => fake()->randomElement(LibVaccine::pluck('id')->toArray()),
+            'vaccine_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+        ]);
     }
 }
