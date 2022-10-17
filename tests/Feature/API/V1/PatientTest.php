@@ -68,14 +68,4 @@ class PatientTest extends TestCase
         $response = $this->get("api/v1/patient/$id");
         $response->assertOk();
     }
-
-    public function test_patient_vaccine_can_be_created()
-    {
-        $response = $this->post('api/v1/patient-vaccine', [
-            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'vaccine_id' => fake()->randomElement(LibVaccine::pluck('id')->toArray()),
-            'vaccine_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
-        ]);
-    }
 }

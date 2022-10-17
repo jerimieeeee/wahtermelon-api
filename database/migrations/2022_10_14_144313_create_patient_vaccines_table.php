@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('vaccine_id', 10)->index()->constrained();
             $table->date('vaccine_date')->nullable();
-            $table->char('pt_group', 4)->index();
+            // $table->char('pt_group', 4)->index();
             $table->softDeletes();
             $table->timestamps();
 

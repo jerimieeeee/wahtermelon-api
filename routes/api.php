@@ -24,7 +24,11 @@ Route::prefix('v1')->group(function (){
     Route::post('register', [\App\Http\Controllers\API\V1\UserController::class, 'store']);
 
     Route::get('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'index'])->name('patient.index');
+    Route::get('patient/{patient}', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'show'])->name('patient.show');
     Route::post('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'store'])->name('patient.store');
+
+    //Patient Vaccines API
+    Route::post('patient-vaccine', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'store']);
 
     //Childcare APIs
     Route::post('childcare-patient', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'store']);
