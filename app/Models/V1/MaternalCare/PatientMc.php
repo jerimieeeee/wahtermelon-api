@@ -59,4 +59,14 @@ class PatientMc extends Model
     {
         return $this->hasOne(PatientMcPostRegistration::class);
     }
+
+    public function prenatal()
+    {
+        return $this->hasMany(ConsultMcPrenatal::class);
+    }
+
+    public function postpartum()
+    {
+        return $this->hasOne(ConsultMcPostpartum::class);
+    }
 }

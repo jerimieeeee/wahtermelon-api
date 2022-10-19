@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
+use App\Models\V1\MaternalCare\PatientMc;
+use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
 
 class ConsultMcPrenatalController extends Controller
@@ -18,24 +20,17 @@ class ConsultMcPrenatalController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, MaternalCareRecordService $maternalCareRecordService)
     {
-        //
+        $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
+        if($mc) {
+            return PatientMc::find($mc->id)->prenatal()->updateOrCreate(['patient_mc_id' => $mc->id],$request->all());
+        }
     }
 
     /**
@@ -45,17 +40,6 @@ class ConsultMcPrenatalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

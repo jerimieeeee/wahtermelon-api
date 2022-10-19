@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
+use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
+use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
 
 class PatientMcPostRegistrationController extends Controller
@@ -24,9 +26,15 @@ class PatientMcPostRegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, MaternalCareRecordService $maternalCareRecordService)
     {
-        return $data = PatientMcPostRegistration::create($request->all());
+        //return $data = PatientMcPostRegistration::create($request->all());
+        $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
+        if(!$mc){
+            $mc = PatientMc::create($request-> all());
+            return $mc->postRegister()->create($request->all());
+        }
+        return PatientMc::find($mc->id)->postRegister()->updateOrCreate(['patient_mc_id' => $mc->id],$request->all());
     }
 
     /**
