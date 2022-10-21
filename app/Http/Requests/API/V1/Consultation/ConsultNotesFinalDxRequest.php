@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests\API\V1\Consultation;
 
+use App\Models\User;
+use App\Models\V1\Consultation\ConsultNotes;
+use App\Models\V1\Libraries\LibDiagnosis;
+use App\Models\V1\Libraries\LibIcd10;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultNotesFinalDxRequest extends FormRequest
@@ -29,5 +33,28 @@ class ConsultNotesFinalDxRequest extends FormRequest
             'icd10_code' => 'required',
             'dx_remarks' => 'required',
         ];
+    }
+
+    public function bodyParameters()
+    {
+        return [
+            'notes_id' => [
+                'description' => 'ID of consult notes.',
+                'example' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
+            ],
+            'user_id' => [
+                'description' => 'ID of user',
+                'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            ],
+            'icd10_code' => [
+                'description' => 'Icd10 code of Final Dx',
+                'example' => fake()->randomElement(LibIcd10::pluck('id')->toArray()),
+            ],
+            'dx_remarks' => [
+                'description' => 'Remarks of Final Dx',
+                'example' => fake()->sentence(),
+            ],
+        ];
+
     }
 }

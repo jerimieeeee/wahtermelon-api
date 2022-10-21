@@ -21,7 +21,7 @@ class ConsultResource extends JsonResource
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
             'physician_id' => $this->physician_id,
             'is_pregnant' => $this->is_pregnant,
-            'ptgroup' => $this->ptgroup,
+            'pt_group' => $this->pt_group,
         ];
     }
 }

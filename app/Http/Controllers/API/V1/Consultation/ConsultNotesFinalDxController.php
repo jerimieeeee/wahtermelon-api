@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesFinalDxRequest;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Consultation Information Management
@@ -35,7 +36,7 @@ class ConsultNotesFinalDxController extends Controller
      * @param ConsultNotesFinalDxRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultNotesFinalDx $request) : JsonResponse
     {
 
         $finaldx = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request['notes_id'], 'icd10_code' => $request['icd10_code']]);
@@ -44,7 +45,7 @@ class ConsultNotesFinalDxController extends Controller
         $finaldx->save();
 
         return response()->json([
-            'status_code' => 200,
+            'status_code' => 201,
             'message' => 'Final Dx Successfully Saved',
         ]);
     }

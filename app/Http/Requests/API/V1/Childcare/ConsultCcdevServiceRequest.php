@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\Childcare;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConsultCcdevServicesRequest extends FormRequest
+class ConsultCcdevServiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

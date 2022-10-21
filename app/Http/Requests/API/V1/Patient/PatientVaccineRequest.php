@@ -31,7 +31,7 @@ class PatientVaccineRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
             'vaccine_date' => 'nullable|date|date_format:Y-m-d',
-            // 'pt_group' => 'required|exists:lib_vaccines,vaccine_id',
+            'pt_group' => 'nullable',
         ];
     }
 
@@ -58,6 +58,10 @@ class PatientVaccineRequest extends FormRequest
             //     'description' => 'Patient group',
             //     'example' => fake()->randomElement(['cc','mc', 'ncd']),
             // ],
+            'pt_group' => [
+                'description' => 'Patient group',
+                'example' => null,
+            ],
         ];
     }
 }

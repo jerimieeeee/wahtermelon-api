@@ -11,4 +11,8 @@ class ConsultNotes extends Model
 
     protected $primaryKey = 'id';
     protected $guarded = ['id',];
+
+    public function notes_complaint(){
+        return $this->hasMany(ConsultNotesComplaint::class);
+    }
 }

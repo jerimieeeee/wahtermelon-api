@@ -7,9 +7,9 @@ use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PatientCcdev>
  */
-class CcdevFactory extends Factory
+class PatientCcdevFactory extends Factory
 {
     /**
      * Define the model's default state.

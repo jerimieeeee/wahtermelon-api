@@ -18,4 +18,8 @@ class ConsultNotesComplaint extends Model
       'user_id',
     ];
 
+    public function consult_notes(){
+        return $this->hasMany(ConsultNotes::class);
+    }
+
 }

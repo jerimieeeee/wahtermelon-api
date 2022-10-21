@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API\V1\Childcare;
 
 use App\Models\User;
-use App\Models\V1\Childcare\Ccdev;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,7 +27,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
     public function rules()
     {
         return [
-            'ccdevs_id' => 'required|exists:ccdevs,id',
+            'patient_ccdevs_id' => 'required|exists:patient_ccdevs,id',
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'bfed_month1' => 'boolean|nullable',
@@ -45,7 +44,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
     public function bodyParameters()
     {
         return [
-            'ccdev_id' => [
+            'patient_ccdevs_id' => [
                 'description' => 'ID of ccdev.',
                 'example' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             ],

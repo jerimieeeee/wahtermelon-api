@@ -4,15 +4,13 @@ namespace Database\Factories\V1\Consultation;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Consultation\ConsultNotes;
-use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Consultation\ConsultNotesComplaint>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Consultation\ConsultNotes>
  */
-class ConsultNotesComplaintFactory extends Factory
+class ConsultNotesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -22,12 +20,15 @@ class ConsultNotesComplaintFactory extends Factory
     public function definition()
     {
         return [
-            'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'complaint_id' => fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'complaint' => fake()->sentence(),
+            'history' => fake()->sentence(),
+            'physical_exam' => fake()->sentence(),
             'complaint_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            // 'pt_group' => null,
         ];
     }
 }

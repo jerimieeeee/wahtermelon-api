@@ -28,12 +28,12 @@ class ConsultNotesComplaintRequest extends FormRequest
     public function rules()
     {
         return [
-            'notes_id' => 'required',
-            'consult_id' => 'required',
-            'patient_id' => 'required',
-            'complaint_id' => 'required',
-            'complaint_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
-            'user_id' => 'required',
+            'notes_id' => 'required|exists:consult_notes,id',
+            'consult_id' => 'required|exists:consults,id',
+            'patient_id' => 'required|exists:patients,id',
+            'complaint_id' => 'required|exists:lib_complaints,complaint_id',
+            'complaint_date' => 'required|date|date_format:Y-m-d',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 

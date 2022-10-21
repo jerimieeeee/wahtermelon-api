@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotes;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -31,10 +32,10 @@ class ConsultNotesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ConsultNotes $request) : JsonResponse
     {
         $data = ConsultNotes::create($request->all());
-        return $data;
+        return response()->json(['data' => $data], 201);
     }
 
     /**

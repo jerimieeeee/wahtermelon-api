@@ -1,27 +1,25 @@
 <?php
 
-namespace Database\Factories\V1\Childcare;
+namespace Tests\Feature\API\V1;
 
 use App\Models\User;
-use App\Models\V1\Childcare\Ccdev;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibEbfReason;
 use App\Models\V1\Patient\Patient;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Childcare>
- */
-class ConsultCcdevBreastfedFactory extends Factory
+class ChildcareBreastfedTest extends TestCase
 {
     /**
-     * Define the model's default state.
+     * A basic feature test example.
      *
-     * @return array<string, mixed>
+     * @return void
      */
-    public function definition()
+    public function test_childcare_breastfed_can_be_created()
     {
-        return [
+        $response = $this->post('api/v1/childcare-breastfed', [
             'patient_ccdevs_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -33,6 +31,7 @@ class ConsultCcdevBreastfedFactory extends Factory
             'bfed_month6' => fake()->boolean,
             'reason_id' => fake()->randomElement(LibEbfReason::pluck('reason_id')->toArray()),
             'ebf_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
-        ];
+        ]);
+        $response->assertCreated();
     }
 }

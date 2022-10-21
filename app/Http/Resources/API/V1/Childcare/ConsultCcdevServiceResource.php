@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Childcare;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ConsultCcdevServicesResource extends JsonResource
+class ConsultCcdevServiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

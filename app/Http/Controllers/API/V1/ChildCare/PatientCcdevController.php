@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Childcare Information Management
@@ -35,17 +36,19 @@ class PatientCcdevController extends Controller
      * @param PatientCcdevRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(PatientCcdevRequest $request) : JsonResponse
     {
         $data = PatientCcdev::create($request->all());
-        return $data;
+        return response()->json(['data' => $data], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Childcare\PatientCcdevResource
+     * @apiResourceModel App\Models\V1\Childcare\PatientCcdev
+     * @param PatientCcdev $patientccdev
+     * @return PatientCcdevResource
      */
     public function show($id)
     {

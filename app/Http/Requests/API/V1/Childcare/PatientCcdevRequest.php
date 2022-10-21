@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CcdevRequest extends FormRequest
+class PatientCcdevRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class CcdevRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'birth_weight' => 'required',
-            'mothers_id' => 'required|exists:patient,id',
+            'mothers_id' => 'required|exists:patients,id',
             'ccdev_ended' => 'required|boolean',
             'admission_date' => 'required|date|date_format:Y-m-d',
             'discharge_date' => 'required|date|date_format:Y-m-d',

@@ -5,10 +5,8 @@ namespace App\Http\Controllers\API\V1\Libraries;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibVaccineResource;
 use App\Models\V1\Libraries\LibVaccine;
-use Database\Seeders\LibVaccineSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Libraries for Vaccines
@@ -18,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @subgroupDescription List of Childcare vaccines.
  */
 
-class LibVaccinesController extends Controller
+class LibVaccineController extends Controller
 {
     /**
      * Display a listing of the Childcare vaccine resource.

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\API\V1\Consultation;
 
+use App\Models\User;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultRequest extends FormRequest
@@ -31,5 +33,36 @@ class ConsultRequest extends FormRequest
             'consult_done' => 'required',
             'pt_group' => 'required',
         ];
+    }
+
+    public function bodyParameters()
+    {
+        return [
+            'patient_id' => [
+                'description' => 'ID of patient.',
+                'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
+            ],
+            'user_id' => [
+                'description' => 'ID of user',
+                'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            ],
+            'consult_end' => [
+                'description' => 'Date Consult ended',
+                'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            ],
+            'physician_id' => [
+                'description' => 'ID of Physician',
+                'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            ],
+            'is_pregnant' => [
+                'description' => 'Is patient pregnant?',
+                'is_pregnant' => fake()->boolean,
+            ],
+            'pt_group' => [
+                'description' => 'Patient Group',
+                'example' => fake()->randomElement(['mc','ncd','cc']),
+            ],
+        ];
+
     }
 }

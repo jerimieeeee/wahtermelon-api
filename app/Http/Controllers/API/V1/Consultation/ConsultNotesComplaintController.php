@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesComplaintRequest;
 use App\Models\V1\Consultation\ConsultNotesComplaint;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -35,7 +37,7 @@ class ConsultNotesComplaintController extends Controller
      * @param ConsultNotesComplaintRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultNotesComplaintRequest $request) : JsonResponse
     {
         try{
             $complaint = $request->input('complaint');
@@ -76,7 +78,7 @@ class ConsultNotesComplaintController extends Controller
     public function show($id)
     {
         $data = ConsultNotesComplaint::findOrFail($id);
-        return $data;
+        return response()->json(['data' => $data], 201);
     }
 
     /**

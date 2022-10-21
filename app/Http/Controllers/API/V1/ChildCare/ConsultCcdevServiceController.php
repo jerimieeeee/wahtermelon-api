@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Childcare\ConsultCcdevServices;
+use App\Models\V1\Childcare\ConsultCcdevService;
 use Illuminate\Http\Request;
 
-class ConsultCcdevServicesController extends Controller
+class ConsultCcdevServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class ConsultCcdevServicesController extends Controller
      */
     public function store(Request $request)
     {
-        $data = ConsultCcdevServices::create($request->all());
+        $data = ConsultCcdevService::create($request->all());
         return $data;
     }
 
@@ -50,7 +50,7 @@ class ConsultCcdevServicesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ConsultCcdevServices::findorfail($id)->update($request->all());
+        ConsultCcdevService::findorfail($id)->update($request->all());
         return response()->json('Successfully Updated');
     }
 

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Childcare\ConsultCcdevs;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevRequest;
+use App\Models\V1\Childcare\ConsultCcdev;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Childcare Consultation Management
@@ -32,14 +33,14 @@ class ConsultCcdevController extends Controller
      *
      * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevResource
-     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevs
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdev
      * @param ConsultCcdevRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultCcdevRequest $request) : JsonResponse
     {
-        $data = ConsultCcdevs::create($request->all());
-        return $data;
+        $data = ConsultCcdev::create($request->all());
+        return response()->json(['data' => $data], 201);
     }
 
     /**
@@ -62,7 +63,7 @@ class ConsultCcdevController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ConsultCcdevs::findorfail($id)->update($request->all());
+        ConsultCcdev::findorfail($id)->update($request->all());
         return response()->json('Successfully Updated');
     }
 

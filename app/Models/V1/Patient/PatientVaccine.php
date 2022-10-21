@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PatientVaccine extends Model
 {
-    protected $dates = ['vaccine_date'];
     protected $guarded = [
         'id',
+    ];
+
+    protected $casts = [
+        'vaccine_date' => 'date:Y-m-d',
     ];
 }

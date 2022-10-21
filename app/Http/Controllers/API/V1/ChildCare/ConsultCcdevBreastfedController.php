@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Childcare\ConsultCcdevBreastfeds;
+use App\Http\Requests\API\V1\Childcare\ConsultCcdevBreastfedRequest;
+use App\Models\V1\Childcare\ConsultCcdevBreastfed;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -31,14 +33,14 @@ class ConsultCcdevBreastfedController extends Controller
      *
      * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevBreastfedResource
-     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevBreastfeds
-     * @param ConsultCcdevBreasfedRequest $request
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevBreastfed
+     * @param ConsultCcdevBreastfedRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultCcdevBreastfedRequest $request) : JsonResponse
     {
-        $data = ConsultCcdevBreastfeds::create($request->all());
-        return $data;
+        $data = ConsultCcdevBreastfed::create($request->all());
+        return response()->json(['data' => $data], 201);
     }
 
     /**
@@ -49,7 +51,7 @@ class ConsultCcdevBreastfedController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = ConsultCcdevBreastfed::where('ccdev_id', '=', $id)->get();
     }
 
     /**
@@ -61,7 +63,7 @@ class ConsultCcdevBreastfedController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ConsultCcdevBreastfeds::findorfail($id)->update($request->all());
+        ConsultCcdevBreastfed::findorfail($id)->update($request->all());
         return response()->json('Patient Child Care Successfully Updated');
     }
 

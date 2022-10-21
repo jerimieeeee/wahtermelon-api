@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientCcdev extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $guarded = ['id',];
+
+    protected $casts = [
+        'admission_date' => 'date:Y-m-d',
+        'discharge_date' => 'date:Y-m-d',
+    ];
 
 
     public function consultccdevservice(){
@@ -23,5 +28,10 @@ class PatientCcdev extends Model
 
         return $this->hasOne(PatientCcdev::class);
 
+    }
+
+    public function patient(){
+
+        return $this->belongsTo(Patient::class);
     }
 }

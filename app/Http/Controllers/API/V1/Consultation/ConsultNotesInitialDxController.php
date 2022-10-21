@@ -7,6 +7,7 @@ use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Consultation Information Management
@@ -36,7 +37,7 @@ class ConsultNotesInitialDxController extends Controller
      * @param ConsultNotesInitialDxRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultNotesInitialDx $request) : JsonResponse
     {
             $initialdx = $request->input('idx');
             $initialdx_array = [];

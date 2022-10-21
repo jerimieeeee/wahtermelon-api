@@ -33,16 +33,16 @@ Route::prefix('v1')->group(function (){
     //Childcare APIs
     Route::post('childcare-patient', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'store']);
     Route::post('childcare-consult', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'store']);
-    Route::post('childcare-vaccine', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'store']);
-    Route::get('childcare-vaccine/{id}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'show']);
+    // Route::post('childcare-vaccine', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'store']);
+    // Route::get('childcare-vaccine/{id}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'show']);
     Route::post('childcare-breastfed', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class, 'store']);
 
     //Consultation APIs
-    Route::post('consult', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'store']);
-    Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
-    Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
-    Route::post('consult-fdx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'store']);
-    Route::post('consult-fdx/{id}', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'destroy']);
+    // Route::post('consult', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'store']);
+    // Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
+    // Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
+    // Route::post('consult-fdx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'store']);
+    // Route::post('consult-fdx/{id}', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'destroy']);
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -104,8 +104,8 @@ Route::prefix('v1')->group(function (){
         Route::get('icd10/{id}', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'show']);
 
         //Childcare Libraries
-        Route::get('vaccine', [\App\Http\Controllers\API\V1\Libraries\LibVaccinesController::class, 'index']);
-        Route::get('vaccine/{id}', [\App\Http\Controllers\API\V1\Libraries\LibVaccinesController::class, 'show']);
+        Route::get('vaccine', [\App\Http\Controllers\API\V1\Libraries\LibVaccineController::class, 'index']);
+        Route::get('vaccine/{id}', [\App\Http\Controllers\API\V1\Libraries\LibVaccineController::class, 'show']);
 
         Route::get('reason', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'index']);
         Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);

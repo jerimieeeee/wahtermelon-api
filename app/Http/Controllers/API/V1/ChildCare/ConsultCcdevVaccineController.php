@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Childcare\ConsultCcdevVaccines;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevVaccineRequest;
+use App\Models\V1\Childcare\ConsultCcdevVaccine;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Childcare Vaccine Management
@@ -34,17 +35,17 @@ class ConsultCcdevVaccineController extends Controller
      *
      * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevVaccineResource
-     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevVaccines
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevVaccine
      * @param ConsultCcdevVaccineRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultCcdevVaccineRequest $request) : JsonResponse
     {
         try{
             $vaccine = $request->input('vaccines');
             $vaccine_array = [];
             foreach($vaccine as $key => $value){
-                $data = ConsultCcdevVaccines::firstOrNew(['patient_ccdev_id' => $request->input('patient_ccdev_id'), 'vaccine_id' => $value]);
+                $data = ConsultCcdevVaccine::firstOrNew(['patient_ccdev_id' => $request->input('patient_ccdev_id'), 'vaccine_id' => $value]);
                 $data->patient_id = $request->input('patient_id');
                 $data->patient_ccdev_id = $request->input('patient_ccdev_id');
                 $data->user_id = $request->input('user_id');
@@ -54,7 +55,7 @@ class ConsultCcdevVaccineController extends Controller
             array_push($vaccine_array, $value);
 
             }
-            ConsultCcdevVaccines::whereNotIn('vaccine_id', $vaccine_array)
+            ConsultCcdevVaccine::whereNotIn('vaccine_id', $vaccine_array)
             ->where('patient_ccdev_id', '=', $data->patient_ccdev_id )
             ->delete();
 
@@ -80,7 +81,7 @@ class ConsultCcdevVaccineController extends Controller
      */
     public function show($id)
     {
-        return ConsultCcdevVaccines::where('patient_id', '=', $id)
+        return ConsultCcdevVaccine::where('patient_id', '=', $id)
         ->get();
 
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesPe;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesPeRequest;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Consultation Information Management
@@ -35,7 +36,7 @@ class ConsultNotesPeController extends Controller
      * @param ConsultNotesPeRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultNotesPe $request) : JsonResponse
     {
         $data = ConsultNotesPe::create($request->all());
         return $data;

@@ -71,4 +71,9 @@ class Patient extends Model
         return $this->belongsTo(LibReligion::class, 'religion_code', 'code');
     }
 
+    public function patientccdev(){
+
+        return $this->hasOne(PatientCcdev::class);
+
+    }
 }
