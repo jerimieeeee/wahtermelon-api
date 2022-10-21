@@ -12,14 +12,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @group Libraries for Vaccines
  *
  * APIs for managing libraries
- * @subgroup Childcare vaccines
- * @subgroupDescription List of Childcare vaccines.
+ * @subgroup Vaccines
+ * @subgroupDescription List of Vaccines.
  */
 
 class LibVaccineController extends Controller
 {
     /**
-     * Display a listing of the Childcare vaccine resource.
+     * Display a listing of the Vaccine resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibVaccineResource
      * @apiResourceModel App\Models\V1\Libraries\LibVaccine
@@ -45,7 +45,7 @@ class LibVaccineController extends Controller
     }
 
     /**
-     * Display the specified Child resource.
+     * Display the specified Vaccine resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibVaccineResource
      * @apiResourceModel App\Models\V1\Libraries\LibVaccine
