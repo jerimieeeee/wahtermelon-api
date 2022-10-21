@@ -110,6 +110,10 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
                 Route::post('mc-postregistrations', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPrenatalController::class)
+            ->group(function() {
+                Route::post('mc-prenatal', 'store');
+            });
     });
 });
 
