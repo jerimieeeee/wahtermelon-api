@@ -50,7 +50,7 @@ class PatientCcdevRequest extends FormRequest
             ],
             'birth_weight' => [
                 'description' => 'birth weight of patient',
-                'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
+                'example' => fake()->randomFloat(2, 2, 5),
             ],
             'mothers_id' => [
                 'description' => 'ID of mother',
