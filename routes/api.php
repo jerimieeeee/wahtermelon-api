@@ -32,10 +32,13 @@ Route::prefix('v1')->group(function (){
 
     //Childcare APIs
     Route::post('childcare-patient', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'store']);
+    Route::get('childcare-patient/{patientccdev}', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'show'])->name('chilcare-patient.show');
+
     Route::post('childcare-consult', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'store']);
-    // Route::post('childcare-vaccine', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'store']);
-    // Route::get('childcare-vaccine/{id}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevVaccineController::class, 'show']);
+    Route::get('childcare-consult/{consultccdev}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'show'])->name('childcare-consult.show');
+
     Route::post('childcare-breastfed', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class, 'store']);
+    Route::get('childcare-breastfed/{consultccdevbfed}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class, 'show'])->name('childcare-breastfed.show');
 
     //Consultation APIs
     // Route::post('consult', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'store']);

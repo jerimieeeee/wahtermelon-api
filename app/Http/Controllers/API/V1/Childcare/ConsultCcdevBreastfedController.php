@@ -4,9 +4,13 @@ namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevBreastfedRequest;
+use App\Http\Resources\API\V1\Childcare\ConsultCcdevBreastfedResource;
+use App\Http\Resources\API\V1\Childcare\ConsultCcdevResource;
+use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @group Childcare Breastfed Management
@@ -46,12 +50,15 @@ class ConsultCcdevBreastfedController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Childcare\ConsultCcdevBreastfedResource
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevBreastfed
+     * @param ConsultCcdevBreastfed $consultccdevbreastfed
+     * @return ConsultCcdevBreastfedResource
      */
-    public function show($id)
+    public function show(ConsultCcdevBreastfed $consultccdevbfed): ConsultCcdevBreastfedResource
     {
-        $data = ConsultCcdevBreastfed::where('ccdev_id', '=', $id)->get();
+        ConsultCcdevBreastfed::where('id', $consultccdevbfed->id);
+        return new ConsultCcdevBreastfedResource($consultccdevbfed);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -24,5 +25,12 @@ class ChildcareConsultTest extends TestCase
             'visit_ended' => fake()->boolean,
         ]);
         $response->assertCreated();
+    }
+
+    public function test_child_care_consult_can_show_specific_record()
+    {
+        $id = fake()->randomElement(ConsultCcdev::pluck('id')->toArray());
+        $response = $this->get("api/v1/childcare-consult/$id");
+        $response->assertOk();
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibEbfReason;
 use App\Models\V1\Patient\Patient;
@@ -34,4 +35,13 @@ class ChildcareBreastfedTest extends TestCase
         ]);
         $response->assertCreated();
     }
+
+    public function test_child_care_breastfed_can_show_specific_record()
+    {
+        $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('id')->toArray());
+        $response = $this->get("api/v1/childcare-breastfed/$id");
+        $response->assertOk();
+    }
+
+
 }

@@ -36,7 +36,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
             'bfed_month4' => 'boolean|nullable',
             'bfed_month5' => 'boolean|nullable',
             'bfed_month6' => 'boolean|nullable',
-            'reason' => 'nullable',
+            'reason' => 'nullable|exists:lib_ebf_reasons,reason_id',
             'ebf_date' => 'date|date_format:Y-m-d|nullable',
         ];
     }

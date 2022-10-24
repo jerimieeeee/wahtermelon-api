@@ -18,11 +18,11 @@ class PatientCcdev extends Model
     ];
 
 
-    public function consultccdevservice(){
+    // public function consultccdevservice(){
 
-        return $this->hasOne(PatientCcdev::class);
+    //     return $this->hasOne(PatientCcdev::class);
 
-    }
+    // }
 
     public function consultccdev(){
 
@@ -33,5 +33,11 @@ class PatientCcdev extends Model
     public function patient(){
 
         return $this->belongsTo(Patient::class);
+    }
+
+    public function consultccdevbfed(){
+
+        return $this->hasOne(ConsultCcdevBreastfed::class);
+
     }
 }

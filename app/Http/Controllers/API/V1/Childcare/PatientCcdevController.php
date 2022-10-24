@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
+use App\Http\Resources\API\V1\Childcare\PatientCcdevResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @group Childcare Information Management
@@ -50,9 +52,10 @@ class PatientCcdevController extends Controller
      * @param PatientCcdev $patientccdev
      * @return PatientCcdevResource
      */
-    public function show($id)
+    public function show(PatientCcdev $patientccdev): PatientCcdevResource
     {
-        $data = PatientCcdev::where('patient_id', '=', $id)->get();
+        PatientCcdev::where('id', $patientccdev->id);
+        return new PatientCcdevResource($patientccdev);
     }
 
     /**

@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConsultCcdevBreastfed extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $guarded = ['id',];
 
-    //protected $dates = ['deleted_at'];
+    // protected $dates = ['deleted_at'];
 
     protected $casts = [
         'ebf_date' => 'date:Y-m-d',
@@ -23,5 +22,10 @@ class ConsultCcdevBreastfed extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function patientccdev(){
+
+        return $this->belongsTo(PatientCcdev::class);
     }
 }

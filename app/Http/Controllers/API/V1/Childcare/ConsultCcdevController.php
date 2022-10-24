@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API\V1\Childcare;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevRequest;
+use App\Http\Resources\API\V1\Childcare\ConsultCcdevResource;
 use App\Models\V1\Childcare\ConsultCcdev;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @group Childcare Consultation Management
@@ -46,12 +48,15 @@ class ConsultCcdevController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Childcare\ConsultCcdevResource
+     * @apiResourceModel App\Models\V1\Childcare\ConsultCcdev
+     * @param ConsultCcdev $consultccdev
+     * @return ConsultCcdevResource
      */
-    public function show($id)
+    public function show(ConsultCcdev $consultccdev): ConsultCcdevResource
     {
-        //
+        ConsultCcdev::where('id', $consultccdev->id);
+        return new ConsultCcdevResource($consultccdev);
     }
 
     /**
