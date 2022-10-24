@@ -33,6 +33,7 @@ class PatientCcdevRequest extends FormRequest
             'ccdev_ended' => 'required|boolean',
             'admission_date' => 'required|date|date_format:Y-m-d',
             'discharge_date' => 'required|date|date_format:Y-m-d',
+            'nbs_filter' => 'required',
         ];
     }
 
