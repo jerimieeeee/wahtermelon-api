@@ -17,13 +17,6 @@ class PatientCcdev extends Model
         'discharge_date' => 'date:Y-m-d',
     ];
 
-
-    // public function consultccdevservice(){
-
-    //     return $this->hasOne(PatientCcdev::class);
-
-    // }
-
     public function consultccdev(){
 
         return $this->hasOne(PatientCcdev::class);

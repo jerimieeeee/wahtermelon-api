@@ -33,7 +33,7 @@ class PatientChildcareTest extends TestCase
 
     public function test_child_care_patient_can_show_specific_record()
     {
-        $id = fake()->randomElement(PatientCcdev::pluck('id')->toArray());
+        $id = fake()->randomElement(PatientCcdev::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/childcare-patient/$id");
         $response->assertOk();
     }

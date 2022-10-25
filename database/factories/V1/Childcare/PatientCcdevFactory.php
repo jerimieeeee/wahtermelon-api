@@ -21,7 +21,7 @@ class PatientCcdevFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'birth_weight' => fake()->randomFloat(),
+            'birth_weight' => fake()->randomFloat(2, 2, 5),
             'ccdev_ended' => fake()->boolean,
             'mothers_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'admission_date' => fake()->date($format = 'Y-m-d H:i:s', $max = 'now'),

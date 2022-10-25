@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('notes_id')->constrained;
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->string('icd10_code', 50);
-            $table->string('dx_remarks', 255);
+            $table->string('icd10_code', 50)->nullable();
+            $table->string('dx_remarks', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('notes_id')->references('id')->on('consult_notes');

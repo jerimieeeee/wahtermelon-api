@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\Childcare;
 
 use App\Models\User;
+use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -42,7 +43,7 @@ class PatientCcdevRequest extends FormRequest
         return [
             'patient_id' => [
                 'description' => 'ID of patient',
-                'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
+                'example' => fake()->randomElement(Patient::pluck('patient_id')->toArray()),
             ],
             'user_id' => [
                 'description' => 'ID of user',

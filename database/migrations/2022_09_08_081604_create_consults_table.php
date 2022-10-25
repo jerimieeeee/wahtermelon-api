@@ -18,13 +18,10 @@ return new class extends Migration
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->uuid('user_id')->index()->constrained();
             $table->timestamps();
-            $table->dateTime('consult_end');
-            $table->foreignUuid('physician_id');
-            $table->boolean('is_pregnant');
-            $table->boolean('consult_done');
-            // $table->boolean('old_data', 1);
-            // $table->boolean('pdf_created', 1);
-            // $table->string('pHospitalTransmittalNo', 20);
+            $table->dateTime('consult_end')->nullable();
+            $table->foreignUuid('physician_id')->nullable();
+            $table->boolean('is_pregnant')->nullable();
+            $table->boolean('consult_done')->nullable();
             $table->char('pt_group', 2);
 
             $table->foreign('physician_id')->references('id')->on('users');

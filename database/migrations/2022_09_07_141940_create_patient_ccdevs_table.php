@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->decimal('birth_weight');
+            $table->boolean('ccdev_ended');
             $table->uuid('mothers_id')->index()->constrained();
             $table->dateTime('admission_date');
             $table->dateTime('discharge_date');

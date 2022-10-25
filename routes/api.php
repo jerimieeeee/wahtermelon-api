@@ -32,7 +32,7 @@ Route::prefix('v1')->group(function (){
 
     //Childcare APIs
     Route::post('childcare-patient', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'store']);
-    Route::get('childcare-patient/{patientccdev}', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'show'])->name('chilcare-patient.show');
+    Route::get('childcare-patient/{patient_ccdev_id}', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'show'])->name('childcare-patient.show');
 
     Route::post('childcare-consult', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'store']);
     Route::get('childcare-consult/{consultccdev}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'show'])->name('childcare-consult.show');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Consultation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,7 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request) : JsonResponse
     {
         $data = Consult::create($request->all());
+        $data = ConsultNotes::create($request->only('consult_id', 'patient_id', 'user_id'));
         return response()->json(['data' => $data], 201);
     }
 

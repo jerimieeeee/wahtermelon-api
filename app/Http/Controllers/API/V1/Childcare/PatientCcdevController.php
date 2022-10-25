@@ -52,10 +52,11 @@ class PatientCcdevController extends Controller
      * @param PatientCcdev $patientccdev
      * @return PatientCcdevResource
      */
-    public function show(PatientCcdev $patientccdev): PatientCcdevResource
+
+    public function show($id): PatientCcdevResource
     {
-        PatientCcdev::where('id', $patientccdev->id);
-        return new PatientCcdevResource($patientccdev);
+        $patient_ccdev_id = PatientCcdev::where('patient_id', $id)->first();
+        return new PatientCcdevResource($patient_ccdev_id);
     }
 
     /**
