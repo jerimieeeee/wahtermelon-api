@@ -25,6 +25,7 @@ class ConsultationTest extends TestCase
             'consult_done' => fake()->boolean(),
             'pt_group' => fake()->randomElement(['mc','ncd','cc']),
 
+
         ]);
         $response->assertCreated();
     }

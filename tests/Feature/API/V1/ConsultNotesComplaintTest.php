@@ -21,6 +21,18 @@ class ConsultNotesComplaintTest extends TestCase
      */
     public function test_consultation_chief_complaint_can_be_created()
     {
+        //Create Consult and Consult Notes
+        $response = $this->post('api/v1/consult', [
+            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'physician_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'consult_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'is_pregnant' => fake()->boolean(),
+            'consult_done' => fake()->boolean(),
+            'pt_group' => fake()->randomElement(['mc','ncd','cc']),
+
+        ]);
+
         $response = $this->post('api/v1/complaint', [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
