@@ -41,10 +41,12 @@ Route::prefix('v1')->group(function (){
     Route::get('childcare-breastfed/{consultccdevbfed}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class, 'show'])->name('childcare-breastfed.show');
 
     //Consultation APIs
-    // Route::post('consult', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'store']);
-    // Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
-    // Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
-    // Route::post('consult-fdx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'store']);
+    Route::post('consult', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'store']);
+    Route::get('consult/{consult_id}', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'show'])->name('consult.show');
+    Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
+    Route::get('complaint/{consult_id}', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'show'])->name('complaint.show');
+    Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
+    Route::post('consult-fdx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'store']);
     // Route::post('consult-fdx/{id}', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'destroy']);
 
     Route::prefix('libraries')->group(function () {

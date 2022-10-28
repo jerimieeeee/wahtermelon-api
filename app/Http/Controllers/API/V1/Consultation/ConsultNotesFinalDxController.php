@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesFinalDxRequest;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -36,18 +37,34 @@ class ConsultNotesFinalDxController extends Controller
      * @param ConsultNotesFinalDxRequest $request
      * @return JsonResponse
      */
-    public function store(ConsultNotesFinalDx $request) : JsonResponse
+    public function store(ConsultNotesFinalDxRequest $request) : JsonResponse
     {
+        try{
+            $fdx = $request->input('fdx');
+            $fdx_array = [];
+            foreach($fdx as $key => $value){
+                $data = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'icd10_code' => $value]);
+                $data->user_id = $request->input('user_id');
+                $data->icd10_code = $value;
+                $data->fdx_remark = $request->input('fdx_remark')[$key] == null ? null : ($request->input('fdx_remark')[$key]);
+            $data->save();
+            array_push($fdx_array, $value);
+            }
+            ConsultNotesFinalDx::whereNotIn('icd10_code', $fdx_array)
+            ->where('notes_id', '=', $data->notes_id )
+            ->delete();
 
-        $finaldx = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request['notes_id'], 'icd10_code' => $request['icd10_code']]);
-          $finaldx->user_id = $request['user_id'];
-          $finaldx->dx_remarks = $request['dx_remarks'];
-        $finaldx->save();
+            return response()->json([
+                'message' => 'Final Dx Successfully Saved',
+            ], 201);
 
-        return response()->json([
-            'status_code' => 201,
-            'message' => 'Final Dx Successfully Saved',
-        ]);
+            }catch(Exception $error) {
+                return response()->json([
+                    'status_code' => 500,
+                    'message' => 'Final Dx Saving Error',
+                    'error' => $error,
+                ]);
+            }
     }
 
     /**

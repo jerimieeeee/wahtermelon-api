@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\Consultation;
 
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Patient\Patient;
@@ -31,8 +32,7 @@ class ConsultNotesComplaintRequest extends FormRequest
             'notes_id' => 'required|exists:consult_notes,id',
             'consult_id' => 'required|exists:consults,id',
             'patient_id' => 'required|exists:patients,id',
-            'complaint_id' => 'required|exists:lib_complaints,complaint_id',
-            'complaint_date' => 'required|date|date_format:Y-m-d',
+            'complaints' => 'array|required|exists:lib_complaints,complaint_id',
             'user_id' => 'required|exists:users,id',
         ];
     }
@@ -44,7 +44,6 @@ class ConsultNotesComplaintRequest extends FormRequest
         ];
     }
 
-
     public function bodyParameters()
     {
         return [
@@ -54,7 +53,7 @@ class ConsultNotesComplaintRequest extends FormRequest
             ],
             'consult_id' => [
                 'description' => 'ID of consultation',
-                'example' => fake()->randomElement(LibComplaint::pluck('id')->toArray()),
+                'example' => fake()->randomElement(Consult::pluck('id')->toArray()),
             ],
             'patient_id' => [
                 'description' => 'ID of patient.',
@@ -62,11 +61,7 @@ class ConsultNotesComplaintRequest extends FormRequest
             ],
             'complaint_id' => [
                 'description' => 'ID of complaint library',
-                'example' => fake()->randomElement(LibComplaint::pluck('id')->toArray()),
-            ],
-            'complaint_date' => [
-                'description' => 'Date of complaint.',
-                'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
+                'example' => fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
             ],
             'user_id' => [
                 'description' => 'ID of user',

@@ -21,4 +21,12 @@ class Consult extends Model
   protected $primaryKey = 'id';
   protected $guarded = ['id',];
 
+  protected $casts = [
+    'consult_date' => 'date:Y-m-d',
+];
+
+public function consult_notes(){
+    return $this->hasOne(ConsultNotes::class, 'consult_id', 'id');
+}
+
 }

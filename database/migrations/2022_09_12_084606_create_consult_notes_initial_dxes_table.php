@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('consult_notes_initial_dxes', function (Blueprint $table) {
-            $table->unsignedBigInteger('notes_id')->constrained;
+            $table->id();
+            $table->unsignedBigInteger('notes_id')->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->integer('class_id')->nullable();
-            $table->string('dx_remarks', 255)->nullable();
+            $table->integer('class_id')->constrained();
+            $table->string('idx_remark', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('notes_id')->references('id')->on('consult_notes');
+            $table->foreign('class_id')->references('class_id')->on('lib_diagnoses');
         });
     }
 

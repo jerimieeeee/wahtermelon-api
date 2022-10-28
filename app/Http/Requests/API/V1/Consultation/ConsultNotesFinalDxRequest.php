@@ -28,10 +28,10 @@ class ConsultNotesFinalDxRequest extends FormRequest
     public function rules()
     {
         return [
-            'notes_id' => 'required',
-            'user_id' => 'required',
-            'icd10_code' => 'required',
-            'dx_remarks' => 'required',
+            'notes_id' => 'required|exists:consult_notes,id',
+            'user_id' => 'required|exists:users,id',
+            'fdx' => 'array|required|exists:lib_icd10s,icd10_code',
+            'fdx_remark' => 'array|nullable',
         ];
     }
 
@@ -48,9 +48,9 @@ class ConsultNotesFinalDxRequest extends FormRequest
             ],
             'icd10_code' => [
                 'description' => 'Icd10 code of Final Dx',
-                'example' => fake()->randomElement(LibIcd10::pluck('id')->toArray()),
+                'example' => fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
             ],
-            'dx_remarks' => [
+            'fdx_remark' => [
                 'description' => 'Remarks of Final Dx',
                 'example' => fake()->sentence(),
             ],

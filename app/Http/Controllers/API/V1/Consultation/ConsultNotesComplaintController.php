@@ -4,10 +4,13 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesComplaintRequest;
+use App\Http\Resources\API\V1\Consultation\ConsultNotesResource;
+use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Consultation\ConsultNotesComplaint;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @group Consultation Chief Complaint Management
@@ -40,12 +43,11 @@ class ConsultNotesComplaintController extends Controller
     public function store(ConsultNotesComplaintRequest $request) : JsonResponse
     {
         try{
-            $complaint = $request->input('complaint');
+            $complaint = $request->input('complaints');
             $complaint_array = [];
             foreach($complaint as $value){
-                $data = ConsultNotesComplaint::firstOrNew(['consult_id' => $request->input('consult_id'), 'complaint_id' => $value, 'complaint_date' => now()->format('Y/m/d')]);
+                $data = ConsultNotesComplaint::firstOrNew(['consult_id' => $request->input('consult_id'), 'complaint_id' => $value]);
                 $data->notes_id = $request->input('notes_id');
-                $data->consult_id = $request->input('consult_id');
                 $data->patient_id = $request->input('patient_id');
                 $data->user_id = $request->input('user_id');
                 $data->complaint_id = $value;
@@ -57,16 +59,25 @@ class ConsultNotesComplaintController extends Controller
             ->where('consult_id', '=', $data->consult_id )
             ->delete();
 
-            return response()->json([
-                'status_code' => 200,
-                'message' => 'Complaint Successfully Saved',
-            ]);
+            //Consult Notes Saving
+            $data1 = $request->input('notes_complaint');
+            DB::table('consult_notes')
+            ->where(['id' => $data->notes_id])
+                ->update(['complaint' => $data1]);
+
+                return response()->json([
+                    'message' => 'Child Complaint Successfully Saved',
+                ], 201);
             }catch(Exception $error) {
                 return response()->json([
                     'status_code' => 500,
                     'message' => 'Complaint Saving Error',
                 ]);
             }
+
+            // $notes_id = $request->input('notes_id');
+            // ConsultNotes::create($request->only('complaint'))
+            // ->where('id', '=', $notes_id->notes_id )->update();
     }
 
     /**
@@ -75,10 +86,10 @@ class ConsultNotesComplaintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ConsultNotes $consult_id): ConsultNotesResource
     {
-        $data = ConsultNotesComplaint::findOrFail($id);
-        return response()->json(['data' => $data], 201);
+        ConsultNotes::where('id', $consult_id->id);
+        return new ConsultNotesResource($consult_id);
     }
 
     /**

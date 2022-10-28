@@ -18,9 +18,9 @@ class ConsultNotesFinalDxResource extends JsonResource
             'notes_id' => $this->notes_id,
             'user_id' => $this->user_id,
             'icd10_code' => $this->icd10_code,
-            'dx_remarks' => $this->dx_remarks,
-            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+            'fdx_remark' => $this->fdx_remark,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }

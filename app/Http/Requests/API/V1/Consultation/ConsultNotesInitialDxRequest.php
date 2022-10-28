@@ -27,10 +27,10 @@ class ConsultNotesInitialDxRequest extends FormRequest
     public function rules()
     {
         return [
-            'notes_id' => 'required',
-            'user_id' => 'required',
-            'class_id' => 'required',
-            'dx_remarks' => 'nullable',
+            'notes_id' => 'required|exists:consult_notes,id',
+            'user_id' => 'required|exists:users,id',
+            'idx' => 'array|required|exists:lib_diagnoses,class_id',
+            'idx_remark' => 'array|nullable',
         ];
     }
 
@@ -46,10 +46,10 @@ class ConsultNotesInitialDxRequest extends FormRequest
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
             ],
             'class_id' => [
-                'description' => 'class id code of diagnoses',
-                'example' => fake()->randomElement(LibDiagnosis::pluck('id')->toArray()),
+                'description' => 'class id of diagnoses',
+                'example' => fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
             ],
-            'dx_remarks' => [
+            'idx_remark' => [
                 'description' => 'Remarks of Initial Dx',
                 'example' => fake()->sentence(),
             ],

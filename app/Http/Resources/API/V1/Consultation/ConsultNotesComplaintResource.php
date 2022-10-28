@@ -20,9 +20,9 @@ class ConsultNotesComplaintResource extends JsonResource
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
             'complaint_id' => $this->complaint_id,
-            'complaint_date' => $this->complaint_date?->format('Y-m-d'),
-            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+            // 'complaint_date' => $this->complaint_date?->format('Y-m-d'),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }

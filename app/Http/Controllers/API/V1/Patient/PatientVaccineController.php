@@ -40,7 +40,6 @@ class PatientVaccineController extends Controller
                 $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y/m/d');
             $data->save();
             array_push($vaccine_array, $value);
-
             }
             PatientVaccine::whereNotIn('vaccine_id', $vaccine_array)
             ->where('patient_id', '=', $data->patient_id )

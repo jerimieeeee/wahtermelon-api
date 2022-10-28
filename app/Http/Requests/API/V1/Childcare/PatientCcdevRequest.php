@@ -43,7 +43,7 @@ class PatientCcdevRequest extends FormRequest
         return [
             'patient_id' => [
                 'description' => 'ID of patient',
-                'example' => fake()->randomElement(Patient::pluck('patient_id')->toArray()),
+                'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
             'user_id' => [
                 'description' => 'ID of user',

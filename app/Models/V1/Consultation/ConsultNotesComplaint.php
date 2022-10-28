@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ConsultNotesComplaint extends Model
 {
     protected $table='consult_notes_complaints';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
       'notes_id',

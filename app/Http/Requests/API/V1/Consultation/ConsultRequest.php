@@ -26,10 +26,11 @@ class ConsultRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_id' => 'required',
-            'user_id' => 'required',
-            'consult_end' => 'required|date|date_format:Y-m-d',
-            'physician_id' => 'required',
+            'patient_id' => 'required|exists:patients,id',
+            'user_id' => 'required|exists:users,id',
+            'consult_date' => 'required|date|date_format:Y-m-d',
+            'physician_id' => 'required|exists:users,id',
+            'is_pregnant' => 'required',
             'consult_done' => 'required',
             'pt_group' => 'required',
         ];
@@ -46,8 +47,8 @@ class ConsultRequest extends FormRequest
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
             ],
-            'consult_end' => [
-                'description' => 'Date Consult ended',
+            'consult_date' => [
+                'description' => 'Date Consult',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
             ],
             'physician_id' => [
@@ -57,6 +58,10 @@ class ConsultRequest extends FormRequest
             'is_pregnant' => [
                 'description' => 'Is patient pregnant?',
                 'is_pregnant' => fake()->boolean,
+            ],
+            'consult_done' => [
+                'description' => 'Is consult done?',
+                'consult_done' => fake()->boolean,
             ],
             'pt_group' => [
                 'description' => 'Patient Group',

@@ -21,11 +21,11 @@ class ConsultFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'consult_end' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'consult_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'physician_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'is_pregnant' => fake()->boolean,
-            // 'pt_group' => fake()->randomElement(['cc','mc', 'ncd']),
-            'pt_group' => null,
+            'consult_done' => fake()->boolean,
+            'pt_group' => fake()->randomElement(['cc','mc', 'ncd']),
         ];
     }
 }

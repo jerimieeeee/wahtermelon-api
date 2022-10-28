@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
+use App\Http\Resources\API\V1\Consultation\ConsultResource;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\JsonResponse;
@@ -34,10 +35,9 @@ class ConsultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConsultRequest $request) : JsonResponse
+    public function store(ConsultRequest $request)
     {
-        $data = Consult::create($request->all());
-        $data = ConsultNotes::create($request->only('consult_id', 'patient_id', 'user_id'));
+        $data = Consult::create($request->validated())->consult_notes()->create($request->validated());
         return response()->json(['data' => $data], 201);
     }
 
@@ -47,10 +47,10 @@ class ConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Consult $consult_id): ConsultResource
     {
-        $data = Consult::findOrFail($id);
-        return $data;
+        Consult::where('id', $consult_id->id);
+        return new ConsultResource($consult_id);
     }
 
     /**

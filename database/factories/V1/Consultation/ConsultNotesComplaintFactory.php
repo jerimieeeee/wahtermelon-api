@@ -25,8 +25,8 @@ class ConsultNotesComplaintFactory extends Factory
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'complaint_id' => fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
-            'complaint_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'complaints' => [fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray())],
+            // 'complaint_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
         ];
     }
