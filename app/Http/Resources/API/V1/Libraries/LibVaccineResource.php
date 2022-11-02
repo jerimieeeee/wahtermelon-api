@@ -18,8 +18,9 @@ class LibVaccineResource extends JsonResource
 
             'vaccine_id' => $this->vaccine_id,
             'vaccine_name' => $this->vaccine_name,
+            'vaccine_interval' => $this->vaccine_interval,
+            'vaccine_module' => $this->vaccine_module,
             'vaccine_desc' => $this->vaccine_desc,
-
         ];
 
     }

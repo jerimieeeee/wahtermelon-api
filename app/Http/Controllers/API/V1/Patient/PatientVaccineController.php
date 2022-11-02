@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\API\V1\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
 use App\Models\V1\Patient\PatientVaccine;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
+
+/**
+ * @group Patient Vaccine Management
+ *
+ * APIs for managing Patient Vaccine information
+ * @subgroup Patient Vaccine
+ * @subgroupDescription Patient Vaccine management.
+ */
 
 class PatientVaccineController extends Controller
 {
@@ -21,20 +32,21 @@ class PatientVaccineController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Patient Vaccine resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Patient\PatientVaccineResource
+     * @apiResourceModel App\Models\V1\Patient\PatientVaccine
+     * @param PatientVaccineRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(PatientVaccineRequest $request): JsonResponse
     {
         try{
             $vaccine = $request->input('vaccines');
             $vaccine_array = [];
             foreach($vaccine as $key => $value){
                 $data = PatientVaccine::firstOrNew(['patient_id' => $request->input('patient_id'), 'vaccine_id' => $value]);
-                // $data->patient_id = $request->input('patient_id');
-                // $data->patient_ccdev_id = $request->input('patient_ccdev_id');
                 $data->user_id = $request->input('user_id');
                 $data->vaccine_id = $value;
                 $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y/m/d');
@@ -46,7 +58,6 @@ class PatientVaccineController extends Controller
             ->delete();
 
             return response()->json([
-                // 'status_code' => 200,
                 'message' => 'Vaccine Successfully Saved',
             ], 201);
 

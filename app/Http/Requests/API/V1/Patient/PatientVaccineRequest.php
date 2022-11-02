@@ -48,7 +48,7 @@ class PatientVaccineRequest extends FormRequest
             ],
             'vaccine_id' => [
                 'description' => 'ID of Vaccine',
-                'example' => fake()->randomElement(LibVaccine::pluck('id')->toArray()),
+                'example' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
             ],
             'vaccine_date' => [
                 'description' => 'Date of Vaccine',
