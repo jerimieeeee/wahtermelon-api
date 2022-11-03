@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibEbfReason;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,15 +16,13 @@ class LibEbfReasonSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('lib_ebf_reasons')->delete();
-        DB::table('lib_ebf_reasons')
-        ->insert([
+        LibEbfReason::upsert([
           ['desc' => 'Infant nutrition'],
           ['desc' => 'Maternal illness '],
           ['desc' => 'Infant illness'],
           ['desc' => 'Lactation and milk-pumping problems'],
           ['desc' => 'Mother returns to work'],
           ['desc' => 'Introduced water or solid food'],
-        ]);
+        ], ['id']);
     }
 }

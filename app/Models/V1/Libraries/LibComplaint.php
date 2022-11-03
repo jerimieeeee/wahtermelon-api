@@ -12,4 +12,5 @@ class LibComplaint extends Model
     protected $primaryKey = 'complaint_id';
     public $incrementing = 'false';
     public $keyType = 'string';
+    public $timestamps = false;
 }

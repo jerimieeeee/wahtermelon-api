@@ -29,9 +29,8 @@ class PatientVaccineRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
-            'vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
-            'vaccine_date' => 'nullable|date|date_format:Y-m-d',
-            'pt_group' => 'nullable',
+            'vaccines' => 'array|required|exists:lib_vaccines,vaccine_id',
+            // 'vaccine_date' => 'array|nullable',
         ];
     }
 
@@ -50,17 +49,9 @@ class PatientVaccineRequest extends FormRequest
                 'description' => 'ID of Vaccine',
                 'example' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
             ],
-            'vaccine_date' => [
+            'vaccines_date' => [
                 'description' => 'Date of Vaccine',
-                'example' => fake()->date($format = 'Y-m-d'),
-            ],
-            // 'pt_group' => [
-            //     'description' => 'Patient group',
-            //     'example' => fake()->randomElement(['cc','mc', 'ncd']),
-            // ],
-            'pt_group' => [
-                'description' => 'Patient group',
-                'example' => null,
+                'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
             ],
         ];
     }

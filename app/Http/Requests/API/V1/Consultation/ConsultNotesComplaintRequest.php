@@ -37,13 +37,6 @@ class ConsultNotesComplaintRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'complaint_date.before' => 'The complaint date must not be future date.'
-        ];
-    }
-
     public function bodyParameters()
     {
         return [

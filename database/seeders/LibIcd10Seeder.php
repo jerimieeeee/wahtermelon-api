@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibIcd10;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,7 @@ class LibIcd10Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('lib_icd10s')->delete();
-        DB::table('lib_icd10s')
-        ->insert([
+        LibIcd10::upsert([
           ['icd10_code' => 'A00', 'icd10_desc' => 'Cholera'],
           ['icd10_code' => 'A00.0', 'icd10_desc' => 'Cholera due to Vibrio cholerae 01, biovar cholera (CLASSIC CHOLERA)'],
           ['icd10_code' => 'A00.1', 'icd10_desc' => 'Cholera due to Vibrio cholerae 01, biovar eltor (CHOLERA ELTOR)'],
@@ -1518,10 +1517,9 @@ class LibIcd10Seeder extends Seeder
           ['icd10_code' => 'D07.6', 'icd10_desc' => 'Carcinoma in situ of other and unspecified male genital organs'],
           ['icd10_code' => 'D09', 'icd10_desc' => 'Carcinoma in situ of other and unspecified sites'],
           ['icd10_code' => 'D09.0', 'icd10_desc' => 'Carcinoma in situ of bladder']
-        ]);
+        ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+        LibIcd10::upsert([
         ['icd10_code' => 'D09.1', 'icd10_desc' => 'Carcinoma in situ of other and unspecified urinary organs'],
         ['icd10_code' => 'D09.2', 'icd10_desc' => 'Carcinoma in situ of eye'],
         ['icd10_code' => 'D09.3', 'icd10_desc' => 'Carcinoma in situ of thyroid and other endocrine glands'],
@@ -3022,10 +3020,9 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'G63.5', 'icd10_desc' => 'Polyneuropathy in systemic connective tissue disorders (M30-M35+)'],
         ['icd10_code' => 'G63.6', 'icd10_desc' => 'Polyneuropathy in other musculoskeletal disorders (M00-M25+, M40-M96+)'],
         ['icd10_code' => 'G63.8', 'icd10_desc' => 'Polyneuropathy in other diseases classified elsewhere'],
-        ]);
+    ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+    LibIcd10::upsert([
         ['icd10_code' => 'G64', 'icd10_desc' => 'Other disorders of peripheral nervous system'],
         ['icd10_code' => 'G65', 'icd10_desc' => 'Sequelae of inflammatory and toxic polyneuropathies'],
         ['icd10_code' => 'G65.0', 'icd10_desc' => 'Sequelae of Guillain-Barre syndrome'],
@@ -4526,10 +4523,9 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'K31.0', 'icd10_desc' => 'Acute dilatation of stomach'],
         ['icd10_code' => 'K31.1', 'icd10_desc' => 'Adult hypertrophic pyloric stenosis'],
         ['icd10_code' => 'K31.2', 'icd10_desc' => 'Hourglass stricture and stenosis of stomach'],
-        ]);
+    ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+    LibIcd10::upsert([
         ['icd10_code' => 'K31.3', 'icd10_desc' => 'Pylorospasm, not elsewhere classified'],
         ['icd10_code' => 'K31.4', 'icd10_desc' => 'Gastric diverticulum'],
         ['icd10_code' => 'K31.5', 'icd10_desc' => 'Obstruction of duodenum'],
@@ -6030,10 +6026,9 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'N22', 'icd10_desc' => 'Calculus of urinary tract in diseases classified elsewhere'],
         ['icd10_code' => 'N22.0', 'icd10_desc' => 'Urinary calculus in schistosomiasis [bilharziasis] (B65.-+)'],
         ['icd10_code' => 'N22.8', 'icd10_desc' => 'Calculus of urinary tract in other diseases classified elsewhere'],
-        ]);
+    ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+    LibIcd10::upsert([
         ['icd10_code' => 'N23', 'icd10_desc' => 'Unspecified renal colic'],
         ['icd10_code' => 'N25', 'icd10_desc' => 'Disorders resulting from impaired renal tubular function'],
         ['icd10_code' => 'N25.0', 'icd10_desc' => 'Renal osteodystrophy'],
@@ -7534,10 +7529,9 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'Q39.8', 'icd10_desc' => 'Other congenital malformations of esophagus'],
         ['icd10_code' => 'Q39.9', 'icd10_desc' => 'Congenital malformation of esophagus, unspecified'],
         ['icd10_code' => 'Q40', 'icd10_desc' => 'Other congenital malformations of upper alimentary tract'],
-        ]);
+    ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+    LibIcd10::upsert([
         ['icd10_code' => 'Q40.0', 'icd10_desc' => 'Congenital hypertrophic pyloric stenosis'],
         ['icd10_code' => 'Q40.1', 'icd10_desc' => 'Congenital hiatus hernia'],
         ['icd10_code' => 'Q40.2', 'icd10_desc' => 'Other specified congenital malformations of stomach'],
@@ -9038,10 +9032,9 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'T02.2', 'icd10_desc' => 'Fractures involving multiple regions of one upper limb'],
         ['icd10_code' => 'T02.3', 'icd10_desc' => 'Fractures involving multiple regions of one lower limb'],
         ['icd10_code' => 'T02.4', 'icd10_desc' => 'Fractures involving multiple regions of both upper limbs'],
-        ]);
+    ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+    LibIcd10::upsert([
         ['icd10_code' => 'T02.5', 'icd10_desc' => 'Fractures involving multiple regions of both lower limbs'],
         ['icd10_code' => 'T02.6', 'icd10_desc' => 'Fractures involving multiple regions of upper limb(s) with lower limb(s)'],
         ['icd10_code' => 'T02.7', 'icd10_desc' => 'Fractures involving thorax with lower back and pelvis with limb(s)'],
@@ -10542,10 +10535,9 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'Y63', 'icd10_desc' => 'FAILURE IN DOSAGE DURING SURGICAL AND MEDICAL CARE'],
         ['icd10_code' => 'Y63.0', 'icd10_desc' => 'EXCESSIVE AMOUNT OF BLOOD OR OTHER FLUID GIVEN DURING TRANSFUSION OR INFUSION'],
         ['icd10_code' => 'Y63.1', 'icd10_desc' => 'INCORRECT DILUTION OF FLUID USED DURING INFUSION'],
-        ]);
+    ], ['icd10_code']);
 
-    DB::table('lib_icd10s')
-      ->insert([
+    LibIcd10::upsert([
         ['icd10_code' => 'Y63.2', 'icd10_desc' => 'OVERDOSE OF RADIATION GIVEN DURING THERAPY'],
         ['icd10_code' => 'Y63.3', 'icd10_desc' => 'INADVERTENT EXPOSURE OF PATIENT TO RADIATION DURING MEDICAL CARE'],
         ['icd10_code' => 'Y63.4', 'icd10_desc' => 'FAILURE IN DOSAGE IN ELECTROSHOCK OR INSULIN- SHOCK THERAPY'],
@@ -11352,7 +11344,6 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'Z99.3', 'icd10_desc' => 'Dependence on wheelchair'],
         ['icd10_code' => 'Z99.8', 'icd10_desc' => 'Dependence on other enabling machines and devices'],
         ['icd10_code' => 'Z99.9', 'icd10_desc' => 'Dependence on unspecified enabling machine and device'],
-
-      ]);
+        ], ['icd10_code']);
     }
 }

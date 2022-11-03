@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibPe;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,7 @@ class LibPeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('lib_pes')->delete();
-        DB::table('lib_pes')
-        ->insert([
+        LibPe::upsert([
           ['category_id' => 'SKIN','pe_id' => 'SKIN01', 'pe_desc' => 'Pallor'],
           ['category_id' => 'SKIN','pe_id' => 'SKIN02', 'pe_desc' => 'Rashes'],
           ['category_id' => 'SKIN','pe_id' => 'SKIN03', 'pe_desc' => 'Jaundice'],
@@ -50,6 +49,6 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity'],
           ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait'],
           ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses']
-        ]);
+        ], ['category_id']);
     }
 }

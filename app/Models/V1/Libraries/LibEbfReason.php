@@ -12,4 +12,5 @@ class LibEbfReason extends Model
     protected $primaryKey = 'reason_id';
     public $incrementing = 'false';
     public $keyType = 'string';
+    public $timestamps = false;
 }

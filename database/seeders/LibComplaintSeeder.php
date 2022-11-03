@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibComplaint;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,7 @@ class LibComplaintSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('lib_complaints')->delete();
-        DB::table('lib_complaints')
-        ->insert([
+        LibComplaint::upsert([
           ['complaint_id' => 'ABDPAIN', 'complaint_desc' => 'Abdominal Pain', 'complaint_active' => 1],
           ['complaint_id' => 'ABSCESS', 'complaint_desc' => 'Abscess Formation', 'complaint_active' => 1],
           ['complaint_id' => 'AME', 'complaint_desc' => 'Amenorrhea', 'complaint_active' => 1],
@@ -112,6 +111,6 @@ class LibComplaintSeeder extends Seeder
           ['complaint_id' => 'WND', 'complaint_desc' => 'Lacerated Wound', 'complaint_active' => 0],
           ['complaint_id' => 'WOUND', 'complaint_desc' => 'Wound', 'complaint_active' => 1],
           ['complaint_id' => 'WTRY STOOL', 'complaint_desc' => 'Watery Stool', 'complaint_active' => 0]
-        ]);
+        ], ['complaint_id']);
     }
 }

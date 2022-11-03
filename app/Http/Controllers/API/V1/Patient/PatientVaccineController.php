@@ -46,10 +46,10 @@ class PatientVaccineController extends Controller
             $vaccine = $request->input('vaccines');
             $vaccine_array = [];
             foreach($vaccine as $key => $value){
-                $data = PatientVaccine::firstOrNew(['patient_id' => $request->input('patient_id'), 'vaccine_id' => $value]);
+                $data = PatientVaccine::firstOrNew(['patient_id' => $request->input('patient_id') , 'vaccine_id' => $value]);
                 $data->user_id = $request->input('user_id');
                 $data->vaccine_id = $value;
-                $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y/m/d');
+                $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y-m-d');
             $data->save();
             array_push($vaccine_array, $value);
             }

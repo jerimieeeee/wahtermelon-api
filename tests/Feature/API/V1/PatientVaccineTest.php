@@ -24,7 +24,6 @@ class PatientVaccineTest extends TestCase
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'vaccines' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
             'vaccine_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
-            'pt_group' => null,
         ]);
         $response->assertCreated();
     }

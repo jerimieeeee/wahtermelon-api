@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibVaccine;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,7 @@ class LibVaccineSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('lib_vaccines')->delete();
-        DB::table('lib_vaccines')
-        ->insert([
+        LibVaccine::upsert([
           ['vaccine_id' => 'BCG',     'vaccine_name' => 'BCG Vaccine',                    'vaccine_interval' => '1',  'vaccine_module' => 'ccdev',  'vaccine_desc' => 'BCG Vaccine'],
           ['vaccine_id' => 'CPV',     'vaccine_name' => 'Varicella Vaccine',              'vaccine_interval' => '1',  'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Varicella (Chickenpox) Vaccine'],
           ['vaccine_id' => 'DPT1',    'vaccine_name' => 'DPT1',                           'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'DPT Vaccine 1st Dose'],
@@ -67,6 +66,6 @@ class LibVaccineSeeder extends Seeder
           ['vaccine_id' => 'TT3',     'vaccine_name' => 'TT3 Vaccine',                  'vaccine_interval' => '0',   'vaccine_module' => 'mc',     'vaccine_desc' => 'Tetanus Toxoid 3'],
           ['vaccine_id' => 'TT4',     'vaccine_name' => 'TT4 Vaccine',                  'vaccine_interval' => '0',   'vaccine_module' => 'mc',     'vaccine_desc' => 'Tetanus Toxoid 4'],
           ['vaccine_id' => 'TT5',     'vaccine_name' => 'TT5 Vaccine',                  'vaccine_interval' => '0',   'vaccine_module' => 'mc',     'vaccine_desc' => 'Tetanus Toxoid 5']
-        ]);
+        ], ['vaccine_id']);
     }
 }

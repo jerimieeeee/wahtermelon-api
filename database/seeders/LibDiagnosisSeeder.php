@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibDiagnosis;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,7 @@ class LibDiagnosisSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('lib_diagnoses')->delete();
-        DB::table('lib_diagnoses')
-        ->insert([
+        LibDiagnosis::upsert([
           ['class_id' => '1', 'class_name' => 'Dehydration, Severe', 'icd10' => 'A09', 'notifiable_flag' => 0, 'morbidity_flag' => '1'],
           ['class_id' => '3', 'class_name' => 'Diarrhea, with no dehydration', 'icd10' => 'A09', 'notifiable_flag' => 0, 'morbidity_flag' => '1'],
           ['class_id' => '4', 'class_name' => 'Dehydration, Mild', 'icd10' => 'A09', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
@@ -2333,6 +2332,6 @@ class LibDiagnosisSeeder extends Seeder
           ['class_id' => '2359', 'class_name' => 'hyperuricemia', 'icd10' => '', 'notifiable_flag' => 0, 'morbidity_flag' => 0],
           ['class_id' => '2360', 'class_name' => 'Systolic Hypertension', 'icd10' => '', 'notifiable_flag' => 0, 'morbidity_flag' => 0],
           ['class_id' => '2361', 'class_name' => 'Hypocalemia', 'icd10' => '', 'notifiable_flag' => 0, 'morbidity_flag' => 0],
-        ]);
+        ], ['class_id']);
     }
 }

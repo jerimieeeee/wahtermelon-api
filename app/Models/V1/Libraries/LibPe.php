@@ -12,4 +12,5 @@ class LibPe extends Model
     protected $primaryKey = 'pe_id';
     public $incrementing = 'false';
     public $keyType = 'string';
+    public $timestamps = false;
 }

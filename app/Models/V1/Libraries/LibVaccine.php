@@ -12,4 +12,5 @@ class LibVaccine extends Model
     protected $primaryKey = 'vaccine_id';
     public $incrementing = 'false';
     public $keyType = 'string';
+    public $timestamps = false;
 }
