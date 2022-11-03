@@ -29,6 +29,15 @@ class ConsultMcPrenatalRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'prenatal_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'patient_height' => 'required|numeric',
+            'patient_weight' => 'required|numeric',
+            'bp_systolic' => 'required|numeric',
+            'bp_diastolic' => 'required|numeric',
+            'fundic_height' => 'numeric',
+            'presentation_code' => 'required|exists:lib_mc_presentations,code',
+            'fhr' => 'numeric',
+            'location_code' => 'required|exists:lib_mc_locations,code',
+            'private' => 'boolean'
         ];
     }
 }

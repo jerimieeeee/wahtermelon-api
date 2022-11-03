@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('consult_mc_postparta', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
             $table->string('facility_code')->index();
-            $table->uuid('patient_mc_id');
+            $table->foreignUuid('patient_mc_id')->index()->constrained('patient_mc');
             $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
             $table->date('postpartum_date')->index();
@@ -38,7 +38,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('facility_code')->references('code')->on('facilities');
-            $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
         });
     }
 
