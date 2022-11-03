@@ -20,7 +20,7 @@ class ConsultMcPrenatalFactory extends Factory
      */
     public function definition()
     {
-        $mcId = PatientMcPreRegistration::select('id', 'patient_id', 'lmp_date', 'trimester1', 'trimester2')->inRandomOrder()->first();
+        $mcId = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->inRandomOrder()->first();
         $numberOfDays = $mcId->lmp_date->diff(today())->days;
         $weeks = intval(($numberOfDays)/7);
         $remainingDays = $numberOfDays % 7;
