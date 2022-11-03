@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('vaccine_id', 10)->index()->constrained();
             $table->date('vaccine_date')->nullable();
             $table->char('pt_group', 4)->index()->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('vaccine_id')->references('vaccine_id')->on('lib_vaccines');
