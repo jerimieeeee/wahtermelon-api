@@ -17,6 +17,9 @@ return new class extends Migration
 
             Schema::table('patient_vaccines', function (Blueprint $table) {
                 $table->dropColumn('pt_group');
+                $table->unsignedBigInteger('status_id')->nullable()->index()->constrained()->after('vaccine_date');
+
+                $table->foreign('status_id')->references('status_id')->on('lib_vaccine_statuses');
             });
         }
     }
@@ -28,9 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('patient_vaccines', function($table) {
-            $table->char('pt_group', 4);
-        });
-
+        //
     }
 };

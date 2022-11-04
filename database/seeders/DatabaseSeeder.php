@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             LibBloodTypeSeeder::class,
             LibPeSeeder::class,
             LibVaccineSeeder::class,
+            LibVaccineStatusSeeder::class,
             LibCivilStatusSeeder::class,
             LibComplaintSeeder::class,
             LibDiagnosisSeeder::class,

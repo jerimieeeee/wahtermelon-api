@@ -4,6 +4,7 @@ namespace Tests\Feature\API\V1;
 
 use App\Models\User;
 use App\Models\V1\Libraries\LibVaccine;
+use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;
 use Database\Seeders\LibVaccineSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,6 +25,7 @@ class PatientVaccineTest extends TestCase
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'vaccines' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
             'vaccine_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
+            'status_id' => [fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray())],
         ]);
         $response->assertCreated();
     }

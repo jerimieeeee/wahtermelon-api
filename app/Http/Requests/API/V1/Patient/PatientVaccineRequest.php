@@ -3,7 +3,9 @@
 namespace App\Http\Requests\API\V1\Patient;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibPatientVaccineStatus;
 use App\Models\V1\Libraries\LibVaccine;
+use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +32,8 @@ class PatientVaccineRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'vaccines' => 'array|required|exists:lib_vaccines,vaccine_id',
-            // 'vaccine_date' => 'array|nullable',
+            'vaccine_date' => 'array|nullable',
+            'status_id' => 'array|required|exists:lib_vaccine_statuses,status_id',
         ];
     }
 
@@ -52,6 +55,10 @@ class PatientVaccineRequest extends FormRequest
             'vaccines_date' => [
                 'description' => 'Date of Vaccine',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            ],
+            'status_id' => [
+                'description' => 'Status of Vaccine',
+                'example' => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),
             ],
         ];
     }

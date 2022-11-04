@@ -48,14 +48,15 @@ class PatientVaccineController extends Controller
             foreach($vaccine as $key => $value){
                 $data = PatientVaccine::firstOrNew(['patient_id' => $request->input('patient_id') , 'vaccine_id' => $value]);
                 $data->user_id = $request->input('user_id');
+                $data->status_id = $request->input('status_id')[$key] == null ? null : ($request->input('status_id')[$key]);
                 $data->vaccine_id = $value;
                 $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y-m-d');
             $data->save();
             array_push($vaccine_array, $value);
             }
-            PatientVaccine::whereNotIn('vaccine_id', $vaccine_array)
-            ->where('patient_id', '=', $data->patient_id )
-            ->delete();
+            // PatientVaccine::whereNotIn('vaccine_id', $vaccine_array)
+            // ->where('patient_id', '=', $data->patient_id )
+            // ->forceDelete();
 
             return response()->json([
                 'message' => 'Vaccine Successfully Saved',
@@ -90,7 +91,9 @@ class PatientVaccineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            // PatientVaccine::whereNotIn('vaccine_id', $vaccine_array)
+            // ->where('patient_id', '=', $data->patient_id )
+            // ->update();
     }
 
     /**
