@@ -19,7 +19,7 @@ class ConsultMcPrenatalRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
-        $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->inRandomOrder()->first();
+        $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->where('patient_mc_id', request()->patient_mc_id)->first();
         $numberOfDays = $mc->lmp_date->diff(today())->days;
         $weeks = intval(($numberOfDays)/7);
         $remainingDays = $numberOfDays % 7;
