@@ -91,9 +91,8 @@ class PatientVaccineController extends Controller
      */
     public function update(Request $request, $id)
     {
-            // PatientVaccine::whereNotIn('vaccine_id', $vaccine_array)
-            // ->where('patient_id', '=', $data->patient_id )
-            // ->update();
+        PatientVaccine::findorfail($id)->update($request->all());
+        return response()->json('Vaccine Successfully Updated');
     }
 
     /**

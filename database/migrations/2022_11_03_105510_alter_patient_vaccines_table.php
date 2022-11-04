@@ -31,6 +31,10 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('patient_vaccines', function (Blueprint $table) {
+            $table->dropForeign(['status_id']);
+            $table->dropColumn('status_id');
+            $table->string('pt_group')->after('vaccine_date');
+        });
     }
 };
