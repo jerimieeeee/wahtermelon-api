@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\MaternalCare;
 
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultMcPrenatalRequest extends FormRequest
@@ -17,28 +18,30 @@ class ConsultMcPrenatalRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation(): void
+    public function validatedWithCasts()
     {
         if(!isset(request()->patient_mc_id)) {
             return;
         }
         $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->where('patient_mc_id', request()->patient_mc_id)->first();
-        $numberOfDays = $mc->lmp_date->diff(request()->prenatal_date)->days;
-        $weeks = floatval(($numberOfDays)/7);
-        $remainingDays = $numberOfDays % 7;
-        if(request()->prenatal_date <= $mc->trimester1_date) {
-            $trimester = 1;
-        } else if(request()->prenatal_date > $mc->trimester1_date && request()->prenatal_date <= $mc->trimester2_date) {
-            $trimester = 2;
-        } else{
-            $trimester = 3;
+        if($mc) {
+            $numberOfDays = $mc->lmp_date->diff(request()->prenatal_date)->days;
+            $weeks = floatval(($numberOfDays) / 7);
+            $remainingDays = $numberOfDays % 7;
+            if (request()->prenatal_date <= $mc->trimester1_date) {
+                $trimester = 1;
+            } else if (request()->prenatal_date > $mc->trimester1_date && request()->prenatal_date <= $mc->trimester2_date) {
+                $trimester = 2;
+            } else {
+                $trimester = 3;
+            }
+            return $this->safe()->merge([
+                'aog_weeks' => $weeks,
+                'aog_days' => $remainingDays,
+                'trimester' => $trimester,
+                'visit_sequence' => 0,
+            ]);
         }
-        $this->merge([
-            'aog_weeks' => $weeks,
-            'aog_days' => $remainingDays,
-            'trimester' => $trimester,
-            'visit_sequence' => 0,
-        ]);
     }
 
     /**
@@ -54,10 +57,7 @@ class ConsultMcPrenatalRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'prenatal_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
-            'aog_weeks' => 'required|numeric',
-            'aog_days' => 'required|numeric',
-            'trimester' => 'required|numeric',
-            'visit_sequence' => 'required|numeric',
+
             'patient_height' => 'required|numeric',
             'patient_weight' => 'required|numeric',
             'bp_systolic' => 'required|numeric',
@@ -67,6 +67,16 @@ class ConsultMcPrenatalRequest extends FormRequest
             'fhr' => 'numeric',
             'location_code' => 'required|exists:lib_mc_locations,code',
             'private' => 'boolean'
+        ];
+    }
+
+    public function bodyParameters()
+    {
+        return [
+            'facility_code' => [
+                'description' => 'ID of facility library',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            ],
         ];
     }
 }

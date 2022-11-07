@@ -2,6 +2,7 @@
 
 namespace App\Services\MaternalCare;
 
+use App\Models\V1\MaternalCare\ConsultMcPrenatal;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
@@ -28,6 +29,19 @@ class MaternalCareRecordService
             ->wherePatientId($request['patient_id'])
             ->latest('post_registration', 'pre_registration')
             ->first();
+    }
+
+    /**
+     * @param string $request
+     * @return void
+     */
+    public function updateVisitSequence(string $request)
+    {
+        $prenatals = ConsultMcPrenatal::where('patient_mc_id', $request)->orderBy('prenatal_date', 'ASC')->get();
+        $prenatals->map(function ($item, $key) {
+            $item->update(['visit_sequence' =>  $key + 1]);
+        });
+        return $prenatals;
     }
 
 }

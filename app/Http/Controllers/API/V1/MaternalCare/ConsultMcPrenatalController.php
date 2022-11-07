@@ -33,7 +33,10 @@ class ConsultMcPrenatalController extends Controller
         if($mc) {
             return PatientMc::find($mc->id)->prenatal()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validated());
         }*/
-        return ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date],$request->validated());
+        //return $request->validated();
+        ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date], $request->validatedWithCasts());
+        $mc = new MaternalCareRecordService();
+        return $mc->updateVisitSequence($request->patient_mc_id);
     }
 
     /**
