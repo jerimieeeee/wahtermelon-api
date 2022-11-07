@@ -35,14 +35,15 @@ class PatientVaccineTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        PatientVaccine::factory()->create();
+        $patientvax = PatientVaccine::factory()->create();
 
         // $this->assertCount(1, PatientVaccine::all());
         // $patientvax = PatientVaccine::first();
-        $patientvax = PatientVaccine::first();
 
         $response = $this->post('api/v1/patient-vaccine/'. $patientvax->id, [
 
+            'patient_id' => $patientvax->patient_id,
+            'user_id' => $patientvax->user_id,
             'vaccine_id' => 'BCG',
             'vaccine_date' => '2022-01-03',
             'status_id' => '3'
