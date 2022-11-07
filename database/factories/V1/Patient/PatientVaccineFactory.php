@@ -22,10 +22,9 @@ class PatientVaccineFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'vaccine_id' => fake()->randomElement(LibVaccine::pluck('id')->toArray()),
-            'vaccines_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'vaccine_id' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
+            'vaccine_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             // 'pt_group' => fake()->randomElement(['cc','mc', 'ncd']),
-            'pt_group' => null,
         ];
     }
 }

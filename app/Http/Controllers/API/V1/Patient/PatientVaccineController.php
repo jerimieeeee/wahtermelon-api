@@ -43,7 +43,7 @@ class PatientVaccineController extends Controller
     public function store(PatientVaccineRequest $request): JsonResponse
     {
         try{
-            $vaccine = $request->input('vaccines');
+            $vaccine = $request->input('vaccine_id');
             $vaccine_array = [];
             foreach($vaccine as $key => $value){
                 $data = PatientVaccine::firstOrNew(['patient_id' => $request->input('patient_id') , 'vaccine_id' => $value]);
@@ -101,8 +101,9 @@ class PatientVaccineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        PatientVaccine::findorfail($id)->forceDelete($request->all());
+        return response()->json('Vaccine Successfully Deleted');
     }
 }

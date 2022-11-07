@@ -31,7 +31,7 @@ class PatientVaccineRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
-            'vaccines' => 'array|required|exists:lib_vaccines,vaccine_id',
+            'vaccine_id' => 'array|required|exists:lib_vaccines,vaccine_id',
             'vaccine_date' => 'array|nullable',
             'status_id' => 'array|required|exists:lib_vaccine_statuses,status_id',
         ];

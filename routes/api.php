@@ -29,6 +29,8 @@ Route::prefix('v1')->group(function (){
 
     //Patient Vaccines API
     Route::post('patient-vaccine', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'store'])->name('patient-vaccine.store');
+    Route::post('patient-vaccine/{id}', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'update'])->name('patient-vaccine.update');
+    // Route::post('patient-vaccine/{id}', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'destroy'])->name('patient-vaccine.destroy');
 
     //Childcare APIs
     Route::post('childcare-patient', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'store']);
