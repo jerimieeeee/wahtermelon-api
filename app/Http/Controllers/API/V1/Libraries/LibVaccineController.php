@@ -27,9 +27,6 @@ class LibVaccineController extends Controller
      */
     public function index()
     {
-        // $LibLVaccine = LibVaccine::all();
-        // return $LibLVaccine;
-
         return LibVaccineResource::collection(LibVaccine::orderBy('vaccine_id', 'ASC')->get());
     }
 
@@ -55,13 +52,6 @@ class LibVaccineController extends Controller
     public function show(LibVaccine $vaccine_id, string $id): JsonResource
     {
         return new LibVaccineResource($vaccine_id->findOrFail($id));
-
-
-        // $query = LibVaccine::where('code', $vaccine_id->code);
-        // $vaccine = QueryBuilder::for($query)
-        //     ->first();
-        // return new LibVaccineResource($vaccine);
-
 
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
+use App\Http\Requests\API\V1\Patient\PatientVaccineUpdateRequest;
 use App\Models\V1\Patient\PatientVaccine;
 use Carbon\Carbon;
 use Exception;
@@ -89,7 +90,7 @@ class PatientVaccineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientVaccineUpdateRequest $request, $id): JsonResponse
     {
         PatientVaccine::findorfail($id)->update($request->all());
         return response()->json('Vaccine Successfully Updated');

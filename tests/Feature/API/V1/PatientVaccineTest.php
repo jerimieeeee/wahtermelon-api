@@ -19,17 +19,17 @@ class PatientVaccineTest extends TestCase
      *
      * @return void
      */
-    // public function test_patient_vaccine_can_be_created()
-    // {
-    //     $response = $this->post('api/v1/patient-vaccine', [
-    //         'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-    //         'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-    //         'vaccine_id' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
-    //         'vaccine_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
-    //         'status_id' => [fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray())],
-    //     ]);
-    //     $response->assertCreated();
-    // }
+    public function test_patient_vaccine_can_be_created()
+    {
+        $response = $this->post('api/v1/patient-vaccine', [
+            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'vaccine_id' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
+            'vaccine_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
+            'status_id' => [fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray())],
+        ]);
+        $response->assertCreated();
+    }
 
     public function test_patient_vaccine_can_be_updated()
     {
