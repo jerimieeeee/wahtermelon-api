@@ -19,6 +19,7 @@ class LibVaccineSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         LibVaccine::truncate();
+        Schema::enableForeignKeyConstraints();
 
         LibVaccine::upsert([
           ['vaccine_id' => 'BCG',     'vaccine_name' => 'BCG Vaccine',                    'vaccine_interval' => '1',  'vaccine_module' => 'ccdev',  'vaccine_desc' => 'BCG Vaccine'],
