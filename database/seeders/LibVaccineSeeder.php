@@ -6,7 +6,7 @@ use App\Models\V1\Libraries\LibVaccine;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Schema;
 
 class LibVaccineSeeder extends Seeder
 {
@@ -17,6 +17,9 @@ class LibVaccineSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        LibVaccine::truncate();
+
         LibVaccine::upsert([
           ['vaccine_id' => 'BCG',     'vaccine_name' => 'BCG Vaccine',                    'vaccine_interval' => '1',  'vaccine_module' => 'ccdev',  'vaccine_desc' => 'BCG Vaccine'],
           ['vaccine_id' => 'CPV',     'vaccine_name' => 'Varicella Vaccine',              'vaccine_interval' => '1',  'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Varicella (Chickenpox) Vaccine'],
@@ -30,7 +33,7 @@ class LibVaccineSeeder extends Seeder
 
           ['vaccine_id' => 'HEPB',    'vaccine_name' => 'Hepa at Birth',                  'vaccine_interval' => '1',  'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepa at Birth'],
 
-          ['vaccine_id' => 'HEPB',   'vaccine_name' => 'HEPB',                            'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepatitis B'],
+          ['vaccine_id' => 'HEPBV',   'vaccine_name' => 'HEPB',                            'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepatitis B Vaccine'],
         //   ['vaccine_id' => 'HEPB1',   'vaccine_name' => 'HB1',                            'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepatitis B Vaccine 1st Dose'],
         //   ['vaccine_id' => 'HEPB2',   'vaccine_name' => 'HB2',                            'vaccine_interval' => '70', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepatitis B Vaccine 2nd Dose'],
         //   ['vaccine_id' => 'HEPB3',   'vaccine_name' => 'HB3',                            'vaccine_interval' => '98', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepatitis B Vaccine 3rd Dose'],
