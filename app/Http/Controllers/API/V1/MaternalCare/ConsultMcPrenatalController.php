@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\ConsultMcPrenatalRequest;
+use App\Models\V1\MaternalCare\ConsultMcPrenatal;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
@@ -28,10 +29,11 @@ class ConsultMcPrenatalController extends Controller
      */
     public function store(ConsultMcPrenatalRequest $request, MaternalCareRecordService $maternalCareRecordService)
     {
-        $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
+        /*$mc = $maternalCareRecordService->getLatestMcRecord($request->validated());
         if($mc) {
-            return PatientMc::find($mc->id)->prenatal()->updateOrCreate(['patient_mc_id' => $mc->id],$request->all());
-        }
+            return PatientMc::find($mc->id)->prenatal()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validated());
+        }*/
+        return ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date],$request->validated());
     }
 
     /**

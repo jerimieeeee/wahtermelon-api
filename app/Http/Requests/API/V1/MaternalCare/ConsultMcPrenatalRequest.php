@@ -19,9 +19,12 @@ class ConsultMcPrenatalRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
+        if(!isset(request()->patient_mc_id)) {
+            return;
+        }
         $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->where('patient_mc_id', request()->patient_mc_id)->first();
-        $numberOfDays = $mc->lmp_date->diff(today())->days;
-        $weeks = intval(($numberOfDays)/7);
+        $numberOfDays = $mc->lmp_date->diff(request()->prenatal_date)->days;
+        $weeks = floatval(($numberOfDays)/7);
         $remainingDays = $numberOfDays % 7;
         if(request()->prenatal_date <= $mc->trimester1_date) {
             $trimester = 1;
@@ -34,7 +37,7 @@ class ConsultMcPrenatalRequest extends FormRequest
             'aog_weeks' => $weeks,
             'aog_days' => $remainingDays,
             'trimester' => $trimester,
-            'visit_sequence' => 1,
+            'visit_sequence' => 0,
         ]);
     }
 
@@ -51,6 +54,10 @@ class ConsultMcPrenatalRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'prenatal_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'aog_weeks' => 'required|numeric',
+            'aog_days' => 'required|numeric',
+            'trimester' => 'required|numeric',
+            'visit_sequence' => 'required|numeric',
             'patient_height' => 'required|numeric',
             'patient_weight' => 'required|numeric',
             'bp_systolic' => 'required|numeric',
