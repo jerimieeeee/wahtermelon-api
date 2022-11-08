@@ -27,29 +27,58 @@ Route::prefix('v1')->group(function (){
     Route::get('patient/{patient}', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'show'])->name('patient.show');
     Route::post('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'store'])->name('patient.store');
 
-    //Patient Vaccines API
-    Route::post('patient-vaccine', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'store'])->name('patient-vaccine.store');
-    Route::post('patient-vaccine/{id}', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'update'])->name('patient-vaccine.update');
-    // Route::post('patient-vaccine/{id}', [\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class, 'destroy'])->name('patient-vaccine.destroy');
+    //Patient Vaccines APIs
+    Route::prefix('patient')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
+        ->group(function() {
+            Route::post('vaccines', 'store');
+            Route::get('vaccines/{id}', 'update');
+            Route::post('vaccines/{id}', 'destroy');
+        });
 
     //Childcare APIs
-    Route::post('childcare-patient', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'store']);
-    Route::get('childcare-patient/{patient_ccdev_id}', [\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class, 'show'])->name('childcare-patient.show');
+    Route::prefix('child-care')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class)
+        ->group(function() {
+            Route::post('cc-records', 'store');
+            Route::get('cc-records/{patient_ccdev_id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)
+        ->group(function() {
+            Route::post('cc-consult', 'store');
+            Route::get('cc-consult/{consultccdev}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
+        ->group(function() {
+            Route::post('cc-breastfed', 'store');
+            Route::get('cc-breastfed/{consultccdevbfed}', 'show');
+        });
 
-    Route::post('childcare-consult', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'store']);
-    Route::get('childcare-consult/{consultccdev}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class, 'show'])->name('childcare-consult.show');
-
-    Route::post('childcare-breastfed', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class, 'store']);
-    Route::get('childcare-breastfed/{consultccdevbfed}', [\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class, 'show'])->name('childcare-breastfed.show');
+    });
 
     //Consultation APIs
-    Route::post('consult', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'store']);
-    Route::get('consult/{consult_id}', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'show'])->name('consult.show');
-    Route::post('complaint', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class, 'store']);
-    Route::get('complaint/{consult_id}', [\App\Http\Controllers\API\V1\Consultation\ConsultController::class, 'show'])->name('complaint.show');
-    Route::post('consult-idx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class, 'store']);
-    Route::post('consult-fdx', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'store']);
-    // Route::post('consult-fdx/{id}', [\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class, 'destroy']);
+    Route::prefix('consultation')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
+        ->group(function() {
+            Route::post('cn-records', 'store');
+            Route::get('cn-records/{consult_id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
+        ->group(function() {
+            Route::post('cn-complaint', 'store');
+            // Route::get('cn-complaint/{consult_id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class)
+        ->group(function() {
+            Route::post('cn-idx', 'store');
+            // Route::get('cn-idx/{id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class)
+        ->group(function() {
+            Route::post('cn-fdx', 'store');
+            // Route::get('cn-fdx/{id}', 'show');
+        });
+    });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -139,5 +168,5 @@ Route::prefix('v1')->group(function (){
         Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);
     });
 
+    });
 });
-

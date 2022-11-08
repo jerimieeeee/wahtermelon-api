@@ -16,7 +16,7 @@ class ConsultNotesFinalDxTest extends TestCase
      */
     public function test_consultation_final_dx_can_be_created()
     {
-        $response = $this->post('api/v1/consult-fdx', [
+        $response = $this->post('api/v1/consultation/cn-fdx', [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'fdx' => [fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray())],

@@ -16,7 +16,7 @@ class ConsultationTest extends TestCase
      */
     public function test_consultation_can_be_created()
     {
-        $response = $this->post('api/v1/consult', [
+        $response = $this->post('api/v1/consultation/cn-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'physician_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -24,8 +24,6 @@ class ConsultationTest extends TestCase
             'is_pregnant' => fake()->boolean(),
             'consult_done' => fake()->boolean(),
             'pt_group' => fake()->randomElement(['mc','ncd','cc']),
-
-
         ]);
         $response->assertCreated();
     }
@@ -33,7 +31,7 @@ class ConsultationTest extends TestCase
     public function test_consultation_can_show_specific_record()
     {
         $id = fake()->randomElement(Consult::pluck('id')->toArray());
-        $response = $this->get("api/v1/consult/$id");
+        $response = $this->get("api/v1/consultation/cn-records/$id");
         $response->assertOk();
     }
 }

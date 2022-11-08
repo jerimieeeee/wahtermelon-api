@@ -18,7 +18,7 @@ class ChildcareConsultTest extends TestCase
      */
     public function test_childcare_consult_can_be_created()
     {
-        $response = $this->post('api/v1/childcare-consult', [
+        $response = $this->post('api/v1/child-care/cc-consult', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'visit_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
@@ -30,7 +30,7 @@ class ChildcareConsultTest extends TestCase
     public function test_child_care_consult_can_show_specific_record()
     {
         $id = fake()->randomElement(ConsultCcdev::pluck('id')->toArray());
-        $response = $this->get("api/v1/childcare-consult/$id");
+        $response = $this->get("api/v1/child-care/cc-consult/$id");
         $response->assertOk();
     }
 }

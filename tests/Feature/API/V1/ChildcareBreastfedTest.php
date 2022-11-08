@@ -66,7 +66,7 @@ class ChildcareBreastfedTest extends TestCase
             'consent_flag' => fake()->boolean,
         ]);
 
-             $response = $this->post('api/v1/childcare-patient', [
+             $response = $this->post('api/v1/child-care/cc-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'birth_weight' => fake()->randomFloat(2, 0, 1),
@@ -78,7 +78,7 @@ class ChildcareBreastfedTest extends TestCase
         ]);
 
             //Create Bfed
-            $response = $this->post('api/v1/childcare-breastfed', [
+            $response = $this->post('api/v1/child-care/cc-breastfed', [
             'patient_ccdevs_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
