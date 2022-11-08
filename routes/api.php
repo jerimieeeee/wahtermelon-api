@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function (){
             Route::get('vaccines/{id}', 'update');
             Route::post('vaccines/{id}', 'destroy');
         });
+    });
 
     //Childcare APIs
     Route::prefix('child-care')->group(function () {
@@ -166,7 +167,5 @@ Route::prefix('v1')->group(function (){
 
         Route::get('reason', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'index']);
         Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);
-    });
-
     });
 });

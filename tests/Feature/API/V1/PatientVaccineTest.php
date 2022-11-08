@@ -21,7 +21,7 @@ class PatientVaccineTest extends TestCase
      */
     public function test_patient_vaccine_can_be_created()
     {
-        $response = $this->post('api/v1/patient-vaccine', [
+        $response = $this->post('api/v1/patient/vaccines', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'vaccine_id' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
@@ -40,7 +40,7 @@ class PatientVaccineTest extends TestCase
         // $this->assertCount(1, PatientVaccine::all());
         // $patientvax = PatientVaccine::first();
 
-        $response = $this->post('api/v1/patient-vaccine/'. $patientvax->id, [
+        $response = $this->post('api/v1/patient/vaccines/'. $patientvax->id, [
 
             'patient_id' => $patientvax->patient_id,
             'user_id' => $patientvax->user_id,
