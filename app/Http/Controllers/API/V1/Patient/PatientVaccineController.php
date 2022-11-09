@@ -74,7 +74,7 @@ class PatientVaccineController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Patient\PatientVaccineResource
      * @apiResourceModel App\Models\V1\Patient\PatientVaccine
@@ -100,7 +100,7 @@ class PatientVaccineController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
