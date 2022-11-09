@@ -7,6 +7,7 @@ use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use http\Env\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class MaternalCareRecordService
 {
@@ -33,9 +34,9 @@ class MaternalCareRecordService
 
     /**
      * @param string $request
-     * @return void
+     * @return Collection
      */
-    public function updateVisitSequence(string $request)
+    public function updateVisitSequence(string $request): Collection
     {
         $prenatals = ConsultMcPrenatal::where('patient_mc_id', $request)->orderBy('prenatal_date', 'ASC')->get();
         $prenatals->map(function ($item, $key) {

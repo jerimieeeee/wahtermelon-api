@@ -17,16 +17,28 @@ class PatientMcPreRegistrationRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation(): void
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function validatedWithCasts(): array
     {
         $lmp = new Carbon(request()->lmp_date);
-        $this->merge([
+        return array_merge($this->validated(), [
             'edc_date' =>  $lmp->clone()->addDays(280)->format('Y-m-d'),
             'trimester1_date' => $lmp->clone()->addDays(84)->format('Y-m-d'),
             'trimester2_date' => $lmp->clone()->addDays(189)->format('Y-m-d'),
             'trimester3_date' => $lmp->clone()->addDays(280)->format('Y-m-d'),
             'postpartum_date' => $lmp->clone()->addDays(322)->format('Y-m-d'),
         ]);
+        /*$this->merge([
+            'edc_date' =>  $lmp->clone()->addDays(280)->format('Y-m-d'),
+            'trimester1_date' => $lmp->clone()->addDays(84)->format('Y-m-d'),
+            'trimester2_date' => $lmp->clone()->addDays(189)->format('Y-m-d'),
+            'trimester3_date' => $lmp->clone()->addDays(280)->format('Y-m-d'),
+            'postpartum_date' => $lmp->clone()->addDays(322)->format('Y-m-d'),
+        ]);*/
     }
 
     /**
@@ -42,6 +54,12 @@ class PatientMcPreRegistrationRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'pre_registration_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'lmp_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'initial_gravidity' => 'required|numeric',
+            'initial_parity' => 'required|numeric',
+            'initial_full_term' => 'required|numeric',
+            'initial_preterm' => 'required|numeric',
+            'initial_abortion' => 'required|numeric',
+            'initial_livebirths' => 'required|numeric',
         ];
     }
 }

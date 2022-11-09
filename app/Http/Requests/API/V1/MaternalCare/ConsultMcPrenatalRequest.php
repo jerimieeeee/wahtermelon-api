@@ -35,6 +35,7 @@ class ConsultMcPrenatalRequest extends FormRequest
         $numberOfDays = $mc->lmp_date->diff(request()->prenatal_date)->days;
         $weeks = floatval(($numberOfDays) / 7);
         $remainingDays = $numberOfDays % 7;
+
         if (request()->prenatal_date <= $mc->trimester1_date) {
             $trimester = 1;
         } else if (request()->prenatal_date > $mc->trimester1_date && request()->prenatal_date <= $mc->trimester2_date) {
@@ -63,7 +64,6 @@ class ConsultMcPrenatalRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'prenatal_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
-
             'patient_height' => 'required|numeric',
             'patient_weight' => 'required|numeric',
             'bp_systolic' => 'required|numeric',

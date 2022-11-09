@@ -31,6 +31,12 @@ class PatientMcPreRegistration extends Model
         'trimester2_date' => 'date:Y-m-d',
         'trimester3_date' => 'date:Y-m-d',
         'postpartum_date' => 'date:Y-m-d',
+        'initial_gravidity' => 'integer',
+        'initial_parity' => 'integer',
+        'initial_full_term' => 'integer',
+        'initial_preterm' => 'integer',
+        'initial_abortion' => 'integer',
+        'initial_livebirths' => 'integer',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
