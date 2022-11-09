@@ -28,6 +28,7 @@ class MaternalCareRecordService
             ])
             ->havingRaw('(end_pregnancy = 0 OR end_pregnancy IS NULL) AND ((pre_registration IS NULL AND post_registration IS NOT NULL) OR (pre_registration IS NOT NULL AND post_registration IS NULL) OR (pre_registration IS NOT NULL AND post_registration IS NOT NULL))')
             ->wherePatientId($request['patient_id'])
+            ->whereNull('pregnancy_termination_code')
             ->latest('post_registration', 'pre_registration')
             ->first();
     }
