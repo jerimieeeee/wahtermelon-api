@@ -18,7 +18,7 @@ class PatientChildcareTest extends TestCase
     // Childcare Patient
     public function test_childcare_patient_can_be_created()
     {
-        $response = $this->post('api/v1/childcare-patient', [
+        $response = $this->post('api/v1/child-care/cc-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'birth_weight' => fake()->randomFloat(2, 0, 1),
@@ -34,7 +34,7 @@ class PatientChildcareTest extends TestCase
     public function test_child_care_patient_can_show_specific_record()
     {
         $id = fake()->randomElement(PatientCcdev::pluck('patient_id')->toArray());
-        $response = $this->get("api/v1/childcare-patient/$id");
+        $response = $this->get("api/v1/child-care/cc-records/$id");
         $response->assertOk();
     }
 
