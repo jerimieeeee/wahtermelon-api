@@ -32,7 +32,8 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
         ->group(function() {
             Route::post('vaccines', 'store');
-            Route::get('vaccines/{id}', 'update');
+            Route::get('vaccines-records/{patientvaccine}', 'show');
+            Route::post('vaccines/{id}', 'update');
             Route::post('vaccines/{id}', 'destroy');
         });
     });

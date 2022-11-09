@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Patient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
 use App\Http\Requests\API\V1\Patient\PatientVaccineUpdateRequest;
+use App\Http\Resources\API\V1\Patient\PatientVaccineResource;
 use App\Models\V1\Patient\PatientVaccine;
 use Carbon\Carbon;
 use Exception;
@@ -75,12 +76,14 @@ class PatientVaccineController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Patient\PatientVaccineResource
+     * @apiResourceModel App\Models\V1\Patient\PatientVaccine
+     * @param PatientVaccine $patientvaccine
+     * @return PatientVaccineResource
      */
     public function show($id)
     {
-        //
+        return PatientVaccine::where('patient_id', '=', $id)->get();
     }
 
     /**
