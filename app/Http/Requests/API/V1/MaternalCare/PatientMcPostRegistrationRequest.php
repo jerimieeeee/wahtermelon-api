@@ -28,6 +28,25 @@ class PatientMcPostRegistrationRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'post_registration_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'admission_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
+            'discharge_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
+            'delivery_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
+            'delivery_location_code' => 'required|exists:lib_mc_delivery_locations,code',
+            'barangay_code' => 'required|exists:barangays,code',
+            'gravidity' => 'required|numeric',
+            'parity' => 'required|numeric',
+            'full_term' => 'required|numeric',
+            'preterm' => 'required|numeric',
+            'abortion' => 'required|numeric',
+            'livebirths' => 'required|numeric',
+            'outcome_code' => 'required|exists:lib_mc_outcomes,code',
+            'healthy_baby' => 'required|boolean',
+            'birth_weight' => 'required|numeric',
+            'attendant_code' => 'required|exists:lib_mc_attendants,code',
+            'breastfeeding' => 'required|boolean',
+            'breastfed_date' => 'required_if:breastfeeding,true|date|date_format:Y-m-d|before:tomorrow',
+            'end_pregnancy' => 'boolean',
+            'postpartum_remarks' => 'string|nullable'
         ];
     }
 }

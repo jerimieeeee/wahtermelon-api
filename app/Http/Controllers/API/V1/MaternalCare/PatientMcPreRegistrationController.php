@@ -33,7 +33,7 @@ class PatientMcPreRegistrationController extends Controller
     {
         $mc = $maternalCareRecordService->getLatestMcRecord($request->validated());
         if(!$mc){
-            $mc = PatientMc::create($request->all());
+            $mc = PatientMc::create($request->validatedWithCasts());
             return $mc->preRegister()->create($request->validatedWithCasts());
         }
         return PatientMc::find($mc->id)->preRegister()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validatedWithCasts());

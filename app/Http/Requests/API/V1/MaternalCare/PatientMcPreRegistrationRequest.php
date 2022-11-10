@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\MaternalCare;
 
+use App\Models\V1\Patient\Patient;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +26,10 @@ class PatientMcPreRegistrationRequest extends FormRequest
     public function validatedWithCasts(): array
     {
         $lmp = new Carbon(request()->lmp_date);
+        $patient = Patient::find(request()->patient_id);
+        $age = $patient->birthdate->diff(request()->pre_registration_date)->y;
         return array_merge($this->validated(), [
+            'patient_age' => $age,
             'edc_date' =>  $lmp->clone()->addDays(280)->format('Y-m-d'),
             'trimester1_date' => $lmp->clone()->addDays(84)->format('Y-m-d'),
             'trimester2_date' => $lmp->clone()->addDays(189)->format('Y-m-d'),

@@ -100,7 +100,7 @@ Route::prefix('v1')->group(function (){
     Route::prefix('maternal-care')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcController::class)
             ->group(function() {
-                Route::post('mc-records', 'store');
+                //Route::post('mc-records', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPreRegistrationController::class)
             ->group(function() {
