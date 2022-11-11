@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\API\V1\MaternalCare;
 
+use App\Models\V1\Patient\Patient;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientMcPostRegistrationRequest extends FormRequest
@@ -14,6 +16,20 @@ class PatientMcPostRegistrationRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function validatedWithCasts(): array
+    {
+        $patient = Patient::find(request()->patient_id);
+        $age = $patient->birthdate->diff(request()->post_registration_date)->y;
+        return array_merge($this->validated(), [
+            'patient_age' => $age,
+        ]);
     }
 
     /**

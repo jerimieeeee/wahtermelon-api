@@ -32,10 +32,10 @@ class PatientMcPostRegistrationController extends Controller
         //return $data = PatientMcPostRegistration::create($request->all());
         $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
         if(!$mc){
-            $mc = PatientMc::create($request-> all());
-            return $mc->postRegister()->create($request->all());
+            $mc = PatientMc::create($request-> validatedWithCasts());
+            return $mc->postRegister()->create($request->validated());
         }
-        return PatientMc::find($mc->id)->postRegister()->updateOrCreate(['patient_mc_id' => $mc->id],$request->all());
+        return PatientMc::find($mc->id)->postRegister()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validated());
     }
 
     /**
