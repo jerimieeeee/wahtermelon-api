@@ -30,8 +30,8 @@ class ConsultNotesFinalDxRequest extends FormRequest
         return [
             'notes_id' => 'required|exists:consult_notes,id',
             'user_id' => 'required|exists:users,id',
-            'fdx' => 'array|required|exists:lib_icd10s,icd10_code',
-            'fdx_remark' => 'array|nullable',
+            'fdx.*.icd10_code' => 'required|exists:lib_icd10s,icd10_code',
+            'fdx.*.fdx_remark' => 'nullable',
         ];
     }
 

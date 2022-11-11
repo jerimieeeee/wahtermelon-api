@@ -39,32 +39,23 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function store(ConsultNotesFinalDxRequest $request) : JsonResponse
     {
-        try{
-            $fdx = $request->input('fdx');
-            $fdx_array = [];
-            foreach($fdx as $key => $value){
-                $data = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'icd10_code' => $value]);
-                $data->user_id = $request->input('user_id');
-                $data->icd10_code = $value;
-                $data->fdx_remark = $request->input('fdx_remark')[$key] == null ? null : ($request->input('fdx_remark')[$key]);
-            $data->save();
-            array_push($fdx_array, $value);
-            }
-            ConsultNotesFinalDx::whereNotIn('icd10_code', $fdx_array)
-            ->where('notes_id', '=', $data->notes_id )
-            ->delete();
+        $fdx = $request->input('fdx');
+        foreach($fdx as $value){
+            ConsultNotesFinalDx::updateOrCreate(['notes_id' => $request->notes_id, 'icd10_code' => $value['icd10_code'], 'fdx_remark' => $value['fdx_remark']],
+            ['notes_id' => $request->input('notes_id'),'user_id' => $request->input('user_id')] + $value);
+        }
 
-            return response()->json([
-                'message' => 'Final Dx Successfully Saved',
-            ], 201);
+        $patientfdx = ConsultNotesFinalDx::where('notes_id', '=', $request->notes_id)
+        ->orderBy('notes_id', 'ASC')
+        ->orderBy('id', 'ASC')
+        ->orderBy('icd10_code', 'ASC')
+        ->get();
 
-            }catch(Exception $error) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Final Dx Saving Error',
-                    'error' => $error,
-                ]);
-            }
+        return response()->json([
+            'message' => 'Final Dx Successfully Saved',
+            'data' => $patientfdx
+        ], 201);
+
     }
 
     /**
@@ -75,8 +66,11 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function show($id)
     {
-        $data = ConsultNotesFinalDx::findOrFail($id);
-        return $data;
+        return ConsultNotesFinalDx::where('notes_id', '=', $id)
+        ->orderBy('id', 'asc')
+        ->orderBy('notes_id', 'asc')
+        ->orderBy('icd10_code', 'asc')
+        ->get();
     }
 
     /**
@@ -100,11 +94,7 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function destroy($id)
     {
-        ConsultNotesFinalDx::find($id)->delete();
-
-        return response()->json([
-            'status_code' => 200,
-            'message' => 'Final Dx Successfully Deleted',
-        ]);
+        ConsultNotesFinalDx::findorfail($id)->delete();
+        return response()->json('Final Dx successfully deleted');
     }
 }

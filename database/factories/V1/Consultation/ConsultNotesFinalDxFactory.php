@@ -22,7 +22,7 @@ class ConsultNotesFinalDxFactory extends Factory
         return [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'icd10_code' => fake()->randomElement(LibIcd10::pluck('id')->toArray()),
+            'icd10_code' => fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
             'fdx_remark' => fake()->sentence(),
         ];
     }

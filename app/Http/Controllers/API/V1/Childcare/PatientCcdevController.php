@@ -53,10 +53,11 @@ class PatientCcdevController extends Controller
      * @return PatientCcdevResource
      */
 
-    public function show($id): PatientCcdevResource
+    public function show($id)
     {
-        $patient_ccdev_id = PatientCcdev::where('patient_id', $id)->first();
-        return new PatientCcdevResource($patient_ccdev_id);
+        return PatientCcdev::where('patient_id', '=', $id)
+        ->orderBy('admission_date', 'asc')
+        ->get();
     }
 
     /**
@@ -66,7 +67,7 @@ class PatientCcdevController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientCcdevRequest $request, $id)
     {
         PatientCcdev::findorfail($id)->update($request->all());
         return response()->json('Patient Child Care Successfully Updated');

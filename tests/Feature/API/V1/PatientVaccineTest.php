@@ -24,10 +24,20 @@ class PatientVaccineTest extends TestCase
         $response = $this->post('api/v1/patient/vaccines', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'vaccine_id' => [fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray())],
-            'vaccine_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
-            'status_id' => [fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray())],
+            "vaccines" => [
+                [
+                    "vaccine_id" => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
+                    "vaccine_date" => fake()->date($format = 'Y-m-d', $max = 'now'),
+                    "status_id" => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),
+                ],
+                [
+                    "vaccine_id" => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
+                    "vaccine_date" => fake()->date($format = 'Y-m-d', $max = 'now'),
+                    "status_id" => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),
+                ],
+            ]
         ]);
+
         $response->assertCreated();
     }
 
@@ -36,9 +46,6 @@ class PatientVaccineTest extends TestCase
         $this->withoutExceptionHandling();
 
         $patientvax = PatientVaccine::factory()->create();
-
-        // $this->assertCount(1, PatientVaccine::all());
-        // $patientvax = PatientVaccine::first();
 
         $response = $this->post('api/v1/patient/vaccines/'. $patientvax->id, [
 
@@ -49,6 +56,16 @@ class PatientVaccineTest extends TestCase
             'status_id' => '3'
 
         ]);
+        $response->assertSessionHasNoErrors();
+    }
+
+    public function test_patient_vaccine_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        $fdx = PatientVaccine::factory()->create();
+
+        $response = $this->delete('api/v1/patient/vaccines/'. $fdx->id, []);
         $response->assertSessionHasNoErrors();
     }
 }

@@ -15,6 +15,7 @@ class PatientCcdevResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
             'birth_weight' => $this->birth_weight,

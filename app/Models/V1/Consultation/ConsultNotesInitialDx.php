@@ -25,4 +25,9 @@ class ConsultNotesInitialDx extends Model
     {
         return $this->belongsTo(LibDiagnosis::class, 'class_id', 'code');
     }
+
+    public function Consult_notes(): BelongsTo
+    {
+        return $this->belongsTo(ConsultNotes::class, 'notes_id', 'code');
+    }
 }

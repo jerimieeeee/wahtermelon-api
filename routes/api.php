@@ -34,7 +34,7 @@ Route::prefix('v1')->group(function (){
             Route::post('vaccines', 'store');
             Route::get('vaccines-records/{patientvaccine}', 'show');
             Route::post('vaccines/{id}', 'update');
-            Route::post('vaccines/{id}', 'destroy');
+            Route::delete('vaccines/{id}', 'destroy');
         });
     });
 
@@ -43,7 +43,8 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class)
         ->group(function() {
             Route::post('cc-records', 'store');
-            Route::get('cc-records/{patient_ccdev_id}', 'show');
+            Route::post('cc-records/{patient_ccdev_id}', 'update');
+            Route::get('cc-records/{patient_id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)
         ->group(function() {
@@ -73,12 +74,14 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class)
         ->group(function() {
             Route::post('cn-idx', 'store');
-            // Route::get('cn-idx/{id}', 'show');
+            Route::delete('cn-idx/{id}', 'destroy');
+            Route::get('cn-idx/{id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class)
         ->group(function() {
             Route::post('cn-fdx', 'store');
-            // Route::get('cn-fdx/{id}', 'show');
+            Route::get('cn-fdx/{id}', 'show');
+            Route::delete('cn-fdx/{id}', 'destroy');
         });
     });
 

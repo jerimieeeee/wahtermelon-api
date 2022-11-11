@@ -7,6 +7,7 @@ use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
+use App\Http\Resources\API\V1\Consultation\ConsultNotesInitialDxResource;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
@@ -40,32 +41,23 @@ class ConsultNotesInitialDxController extends Controller
      */
     public function store(ConsultNotesInitialDxRequest $request) : JsonResponse
     {
-        try{
             $idx = $request->input('idx');
-            $idx_array = [];
-            foreach($idx as $key => $value){
-                $data = ConsultNotesInitialDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'class_id' => $value]);
-                $data->user_id = $request->input('user_id');
-                $data->class_id = $value;
-                $data->idx_remark = $request->input('idx_remark')[$key] == null ? null : ($request->input('idx_remark')[$key]);
-            $data->save();
-            array_push($idx_array, $value);
+            foreach($idx as $value){
+                ConsultNotesInitialDx::updateOrCreate(['notes_id' => $request->notes_id, 'class_id' => $value['class_id'], 'idx_remark' => $value['idx_remark']],
+                ['notes_id' => $request->input('notes_id'),'user_id' => $request->input('user_id')] + $value);
             }
-            ConsultNotesInitialDx::whereNotIn('class_id', $idx_array)
-            ->where('notes_id', '=', $data->notes_id )
-            ->delete();
+
+            $patientidx = ConsultNotesInitialDx::where('notes_id', '=', $request->notes_id)
+            ->orderBy('notes_id', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->orderBy('class_id', 'ASC')
+            ->get();
 
             return response()->json([
                 'message' => 'Initial Dx Successfully Saved',
+                'data' => $patientidx
             ], 201);
 
-            }catch(Exception $error) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Initial Dx Saving Error',
-                    'error' => $error,
-                ]);
-            }
 }
 
     /**
@@ -76,8 +68,11 @@ class ConsultNotesInitialDxController extends Controller
      */
     public function show($id)
     {
-        $data = ConsultNotesInitialDx::findOrFail($id);
-        return $data;
+        return ConsultNotesInitialDx::where('notes_id', '=', $id)
+        ->orderBy('id', 'asc')
+        ->orderBy('notes_id', 'asc')
+        ->orderBy('class_id', 'asc')
+        ->get();
     }
 
     /**
@@ -89,8 +84,8 @@ class ConsultNotesInitialDxController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ConsultNotesInitialDx::findorfail($id)->update($request->all());
-        return response()->json('Consult Notes Initial Dx Successfully Updated');
+        // ConsultNotesInitialDx::findorfail($id)->update($request->all());
+        // return response()->json('Consult Notes Initial Dx Successfully Updated');
     }
 
     /**
@@ -101,6 +96,7 @@ class ConsultNotesInitialDxController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ConsultNotesInitialDx::findorfail($id)->delete();
+        return response()->json('Initial Dx successfully deleted');
     }
 }

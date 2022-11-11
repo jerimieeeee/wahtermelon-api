@@ -44,32 +44,18 @@ class PatientVaccineController extends Controller
      */
     public function store(PatientVaccineRequest $request): JsonResponse
     {
-        try{
-            $vaccine = $request->input('vaccine_id');
-            $vaccine_array = [];
-            foreach($vaccine as $key => $value){
-                $data = PatientVaccine::create(['patient_id' => $request->input('patient_id') , 'vaccine_id' => $value,'user_id' => $request->input('user_id')]);
-                $data->status_id = $request->input('status_id')[$key] == null ? null : ($request->input('status_id')[$key]);
-                $data->vaccine_id = $value;
-                $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y-m-d');
-            $data->save();
-            array_push($vaccine_array, $value);
+            $vaccine = $request->input('vaccines');
+            foreach($vaccine as $value){
+                PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
+                ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
             }
-            // PatientVaccine::whereNotIn('vaccine_id', $vaccine_array)
-            // ->where('patient_id', '=', $data->patient_id )
-            // ->forceDelete();
+
+            $patientvaccines = PatientVaccine::where('patient_id', '=', $request->patient_id)->orderBy('vaccine_date', 'ASC')->get();
 
             return response()->json([
                 'message' => 'Vaccine Successfully Saved',
+                'data' => $patientvaccines
             ], 201);
-
-            }catch(Exception $error) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Vaccine Saving Error',
-                    'error' => $error,
-                ]);
-            }
     }
 
     /**
@@ -82,7 +68,11 @@ class PatientVaccineController extends Controller
      */
     public function show($id)
     {
-        return PatientVaccine::where('patient_id', '=', $id)->get();
+        return PatientVaccine::where('patient_id', '=', $id)
+        ->orderBy('vaccine_id', 'asc')
+        ->orderBy('vaccine_date', 'asc')
+        ->orderBy('status_id', 'asc')
+        ->get();
     }
 
     /**
