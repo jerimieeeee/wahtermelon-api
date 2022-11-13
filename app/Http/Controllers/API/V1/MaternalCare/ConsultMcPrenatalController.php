@@ -27,7 +27,7 @@ class ConsultMcPrenatalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConsultMcPrenatalRequest $request, MaternalCareRecordService $maternalCareRecordService)
+    public function store(ConsultMcPrenatalRequest $request)
     {
         /*$mc = $maternalCareRecordService->getLatestMcRecord($request->validated());
         if($mc) {
@@ -36,7 +36,7 @@ class ConsultMcPrenatalController extends Controller
         //return $request->validatedWithCasts();
         ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date], $request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
-        return $mc->updateVisitSequence($request->patient_mc_id);
+        return $mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date');
     }
 
     /**

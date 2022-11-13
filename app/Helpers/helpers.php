@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if(!function_exists('get_aog')) {
     /**
     * @param date $lmp_date
@@ -10,7 +12,7 @@ if(!function_exists('get_aog')) {
     function get_aog($lmp_date, $visit_date)
     {
         $numberOfDays = $lmp_date->diff($visit_date)->days;
-        $weeks = floatval(($numberOfDays) / 7);
+        $weeks = floor(($numberOfDays) / 7);
         $remainingDays = $numberOfDays % 7;
 
         return array($weeks,$remainingDays);
@@ -36,6 +38,21 @@ if(!function_exists('get_trimester')) {
             $trimester = 3;
         }
         return $trimester;
+    }
+
+}
+
+if(!function_exists('get_postpartum_week')) {
+    /**
+     * @param date $visit_date
+     * @param date $delivery_date
+     * @return integer
+    */
+
+    function get_postpartum_week($visit_date, $delivery_date)
+    {
+        $visit_date = Carbon::parse($visit_date);
+        return $visit_date->diffInWeeks(Carbon::parse($delivery_date)->format('Y-m-d'));
     }
 
 }

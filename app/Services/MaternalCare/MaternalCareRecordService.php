@@ -37,13 +37,14 @@ class MaternalCareRecordService
      * @param string $request
      * @return Collection
      */
-    public function updateVisitSequence(string $request): Collection
+    public function updateVisitSequence(string $request, string $model, string $column): Collection
     {
-        $prenatals = ConsultMcPrenatal::where('patient_mc_id', $request)->orderBy('prenatal_date', 'ASC')->get();
-        $prenatals->map(function ($item, $key) {
+        $model = app('App\\Models\\V1\\MaternalCare\\' . $model);
+        $visitSequence = $model::where('patient_mc_id', $request)->orderBy($column, 'ASC')->get();
+        $visitSequence->map(function ($item, $key) {
             $item->update(['visit_sequence' =>  $key + 1]);
         });
-        return $prenatals;
+        return $visitSequence;
     }
 
 }
