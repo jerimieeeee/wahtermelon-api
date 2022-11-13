@@ -3,7 +3,9 @@
 namespace Database\Factories\V1\MaternalCare;
 
 use App\Models\User;
-use App\Models\V1\MaternalCare\PatientMcPreRegistration;
+use App\Models\V1\Libraries\LibMcLocation;
+use App\Models\V1\Libraries\LibMcPresentation;
+use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,20 +22,21 @@ class ConsultMcPrenatalFactory extends Factory
      */
     public function definition()
     {
-        $mcId = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->inRandomOrder()->first();
-        $numberOfDays = $mcId->lmp_date->diff(today())->days;
-        $weeks = intval(($numberOfDays)/7);
-        $remainingDays = $numberOfDays % 7;
-        //dd($weeks);
         return [
-            'patient_mc_id' => $mcId,
+            'patient_mc_id' => fake()->randomElement(PatientMc::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'prenatal_date' => today()->format('Y-m-d'),
-            'aog_weeks' => $weeks,
-            'aog_days' => $remainingDays,
-            'trimester' => '1',
+            'prenatal_date' => fake()->date('Y-m-d'),
+            'presentation_code' => fake()->randomElement(LibMcPresentation::pluck('code')->toArray()),
+            'location_code' =>fake()->randomElement(LibMcLocation::pluck('code')->toArray()),
+            'patient_height' =>fake()->numberBetween(100, 200),
+            'patient_weight' => fake()->numberBetween(40, 200),
+            'bp_systolic' => fake()->numberBetween(100, 200),
+            'bp_diastolic' => fake()->numberBetween(70, 100),
+            'fundic_height' => fake()->numberBetween(0, 50),
+            'fhr' => fake()->numberBetween(0, 50),
+            'private' => fake()->boolean(),
         ];
     }
 }

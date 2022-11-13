@@ -32,17 +32,9 @@ class ConsultMcPrenatalRequest extends FormRequest
     {
         $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->where('patient_mc_id', request()->patient_mc_id)->first();
 
-        $numberOfDays = $mc->lmp_date->diff(request()->prenatal_date)->days;
-        $weeks = floatval(($numberOfDays) / 7);
-        $remainingDays = $numberOfDays % 7;
+        list($weeks,$remainingDays) = get_aog($mc->lmp_date, request()->prenatal_date);
+        $trimester = get_trimester(request()->prenatal_date, $mc->trimester1_date, $mc->trimester2_date);
 
-        if (request()->prenatal_date <= $mc->trimester1_date) {
-            $trimester = 1;
-        } else if (request()->prenatal_date > $mc->trimester1_date && request()->prenatal_date <= $mc->trimester2_date) {
-            $trimester = 2;
-        } else {
-            $trimester = 3;
-        }
         return array_merge($this->validated(), [
             'aog_weeks' => $weeks,
             'aog_days' => $remainingDays,
