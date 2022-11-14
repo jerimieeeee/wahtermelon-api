@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models\V1\Childcare;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class PatientCcdev extends Model
+{
+    use SoftDeletes, HasFactory;
+
+    protected $guarded = ['id',];
+
+    protected $casts = [
+        'admission_date' => 'date:Y-m-d',
+        'discharge_date' => 'date:Y-m-d',
+    ];
+
+    public function consultccdev(){
+
+        return $this->hasOne(PatientCcdev::class);
+
+    }
+
+    public function patient(){
+
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function consultccdevbfed(){
+
+        return $this->hasOne(ConsultCcdevBreastfed::class);
+
+    }
+}

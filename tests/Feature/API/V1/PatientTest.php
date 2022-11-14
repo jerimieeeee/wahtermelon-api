@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\API\V1;
 
+use App\Models\User;
 use App\Models\V1\Libraries\LibBloodType;
 use App\Models\V1\Libraries\LibCivilStatus;
 use App\Models\V1\Libraries\LibEducation;
@@ -9,6 +10,7 @@ use App\Models\V1\Libraries\LibOccupation;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;

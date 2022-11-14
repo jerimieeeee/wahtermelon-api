@@ -78,4 +78,10 @@ class Patient extends Model
         return $this->hasMany(PatientMc::class);
     }
 
+    public function patientccdev(){
+
+        return $this->hasOne(PatientCcdev::class);
+
+    }
+
 }

@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,64 @@ Route::prefix('v1')->group(function (){
     Route::get('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'index'])->name('patient.index');
     Route::get('patient/{patient}', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'show'])->name('patient.show');
     Route::post('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'store'])->name('patient.store');
+
+    //Patient Vaccines APIs
+    Route::prefix('patient')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
+        ->group(function() {
+            Route::post('vaccines', 'store');
+            Route::get('vaccines-records/{patientvaccine}', 'show');
+            Route::post('vaccines/{id}', 'update');
+            Route::delete('vaccines/{id}', 'destroy');
+        });
+    });
+
+    //Childcare APIs
+    Route::prefix('child-care')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class)
+        ->group(function() {
+            Route::post('cc-records', 'store');
+            Route::post('cc-records/{patient_ccdev_id}', 'update');
+            Route::get('cc-records/{patient_id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)
+        ->group(function() {
+            Route::post('cc-consult', 'store');
+            Route::get('cc-consult/{consultccdev}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
+        ->group(function() {
+            Route::post('cc-breastfed', 'store');
+            Route::get('cc-breastfed/{consultccdevbfed}', 'show');
+        });
+
+    });
+
+    //Consultation APIs
+    Route::prefix('consultation')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
+        ->group(function() {
+            Route::post('cn-records', 'store');
+            Route::get('cn-records/{consult_id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
+        ->group(function() {
+            Route::post('cn-complaint', 'store');
+            // Route::get('cn-complaint/{consult_id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class)
+        ->group(function() {
+            Route::post('cn-idx', 'store');
+            Route::delete('cn-idx/{id}', 'destroy');
+            Route::get('cn-idx/{id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class)
+        ->group(function() {
+            Route::post('cn-fdx', 'store');
+            Route::get('cn-fdx/{id}', 'show');
+            Route::delete('cn-fdx/{id}', 'destroy');
+        });
+    });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -98,6 +157,24 @@ Route::prefix('v1')->group(function (){
 
         Route::get('mc-visit-type', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'index'])->name('mc-visit-type.index');
         Route::get('mc-visit-type/{visitType}', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'show'])->name('mc-visit-type.show');
+    
+        //Consultation Libraries
+        Route::get('complaint', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'index']);
+        Route::get('complaint/{id}', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'show']);
+        Route::get('pe', [\App\Http\Controllers\API\V1\Libraries\LibPeController::class, 'index']);
+        Route::get('pe/{id}', [\App\Http\Controllers\API\V1\Libraries\LibPeController::class, 'show']);
+        Route::get('diagnosis', [\App\Http\Controllers\API\V1\Libraries\LibDiagnosisController::class, 'index']);
+        Route::get('diagnosis/{id}', [\App\Http\Controllers\API\V1\Libraries\LibDiagnosisController::class, 'show']);
+        Route::get('icd10', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'index']);
+        Route::get('icd10/{id}', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'show']);
+
+        //Childcare Libraries
+        Route::get('vaccine', [\App\Http\Controllers\API\V1\Libraries\LibVaccineController::class, 'index']);
+        Route::get('vaccine/{id}', [\App\Http\Controllers\API\V1\Libraries\LibVaccineController::class, 'show']);
+
+        Route::get('reason', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'index']);
+        Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);
+
     });
 
     Route::prefix('maternal-care')->group(function () {
@@ -124,4 +201,3 @@ Route::prefix('v1')->group(function (){
             });
     });
 });
-
