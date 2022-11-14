@@ -9,6 +9,8 @@ use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
 use App\Http\Resources\API\V1\Childcare\PatientCcdevResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Childcare Information Management
@@ -38,10 +40,23 @@ class PatientCcdevController extends Controller
      * @param PatientCcdevRequest $request
      * @return JsonResponse
      */
-    public function store(PatientCcdevRequest $request) : JsonResponse
+    public function store(PatientCcdevRequest $request)
     {
-        $data = PatientCcdev::create($request->all());
-        return response()->json(['data' => $data], 201);
+        // $data = PatientCcdev::firstOrCreate($request->all());
+        // return response()->json(['data' => $data], 201);
+
+        // $count = DB::table('patient_ccdevs')->distinct('patient_id')->count('patient_id');
+        // return $count;
+        // $data = PatientCcdev::where('patient_id', $request->patient_id)->get();
+
+        // if($data->count($count)){
+        //     // PatientCcdev::update($request->all());
+        //     PatientCcdev::where('patient_id', $data->patient_id)->update($request->all());
+        //     }else{
+        //         PatientCcdev::Create($request->all());
+        //     }
+
+        // return response()->json(['data' => $data], 201);
     }
 
     /**
@@ -53,11 +68,14 @@ class PatientCcdevController extends Controller
      * @return PatientCcdevResource
      */
 
-    public function show($id)
+    public function show(PatientCcdev $patientccdev)
     {
-        return PatientCcdev::where('patient_id', '=', $id)
-        ->orderBy('admission_date', 'asc')
-        ->get();
+        $query = PatientCcdev::where('id', $patientccdev->id);
+
+        $patientccdev = QueryBuilder::for($query)
+            ->first();
+
+        return new PatientCcdevResource($patientccdev);
     }
 
     /**

@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
 use App\Http\Requests\API\V1\Patient\PatientVaccineUpdateRequest;
 use App\Http\Resources\API\V1\Patient\PatientVaccineResource;
+use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Patient\PatientVaccine;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Patient Vaccine Management
@@ -24,14 +27,31 @@ use Illuminate\Http\Request;
 class PatientVaccineController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Patient Vaccines resource.
      *
-     * @return \Illuminate\Http\Response
+     * @queryParam filter[search] string Filter by vaccine_id, vaccine_date.
+     * @queryParam sort string Sort vaccine_id, vaccine_id, of the patient.
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientResource
+     * @apiResourceModel App\Models\V1\Patient\Patient paginate=15
+     * @param Request $request
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(Request $request): ResourceCollection
     {
-        //
-    }
+        // $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $columns = ['vaccine_id', 'vaccine_date'];
+        $patientvaccines = QueryBuilder::for(PatientVaccine::class)
+            ->when(isset($request->filter['search']), function($q) use($request, $columns) {
+                $q->search($request->filter['search'], $columns);
+            })
+            // ->allowedIncludes('suffixName', 'pwdType', 'religion')
+            ->defaultSort('vaccine_id', 'vaccine_date')
+            ->allowedSorts(['vaccine_id', 'vaccine_date']);
+            return PatientVaccineResource::collection($patientvaccines->get());
+        }
+
+        // return PatientResource::collection($patients->paginate($perPage));
 
     /**
      * Store a newly created Patient Vaccine resource in storage.
@@ -66,13 +86,14 @@ class PatientVaccineController extends Controller
      * @param PatientVaccine $patientvaccine
      * @return PatientVaccineResource
      */
-    public function show($id)
+    public function show(PatientVaccine $patientvaccine)
     {
-        return PatientVaccine::where('patient_id', '=', $id)
-        ->orderBy('vaccine_id', 'asc')
-        ->orderBy('vaccine_date', 'asc')
-        ->orderBy('status_id', 'asc')
+        $query = PatientVaccine::with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])->where('patient_id', $patientvaccine->patient_id)
+        ->orderBy('vaccine_date', 'desc')
         ->get();
+
+        return PatientVaccineResource::collection($query);
+
     }
 
     /**

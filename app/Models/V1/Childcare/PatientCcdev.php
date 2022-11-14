@@ -10,12 +10,22 @@ class PatientCcdev extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $guarded = ['id',];
+    protected $fillable = ['patient_id', 'user_id', 'birth_weight', 'ccdev_ended', 'mothers_id', 'admission_date', 'discharge_date', 'nbs_filter'];
 
     protected $casts = [
         'admission_date' => 'date:Y-m-d',
         'discharge_date' => 'date:Y-m-d',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'patient_id';
+    }
 
     public function consultccdev(){
 
@@ -25,7 +35,7 @@ class PatientCcdev extends Model
 
     public function patient(){
 
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Patient::class, 'patient_id') ;
     }
 
     public function consultccdevbfed(){

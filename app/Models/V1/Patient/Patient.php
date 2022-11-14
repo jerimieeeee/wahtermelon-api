@@ -76,4 +76,9 @@ class Patient extends Model
         return $this->hasOne(PatientCcdev::class);
 
     }
+    public function patientvaccine(){
+
+        return $this->hasMany(PatientVaccine::class);
+
+    }
 }

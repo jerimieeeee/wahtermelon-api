@@ -32,6 +32,7 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
         ->group(function() {
             Route::post('vaccines', 'store');
+            Route::get('vaccines-records', 'index');
             Route::get('vaccines-records/{patientvaccine}', 'show');
             Route::post('vaccines/{id}', 'update');
             Route::delete('vaccines/{id}', 'destroy');
@@ -44,13 +45,13 @@ Route::prefix('v1')->group(function (){
         ->group(function() {
             Route::post('cc-records', 'store');
             Route::post('cc-records/{patient_ccdev_id}', 'update');
-            Route::get('cc-records/{patient_id}', 'show');
+            Route::get('cc-records/{patientccdev}', 'show');
         });
-        Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)
-        ->group(function() {
-            Route::post('cc-consult', 'store');
-            Route::get('cc-consult/{consultccdev}', 'show');
-        });
+        // Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)
+        // ->group(function() {
+        //     Route::post('cc-consult', 'store');
+        //     Route::get('cc-consult/{consultccdev}', 'show');
+        // });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
         ->group(function() {
             Route::post('cc-breastfed', 'store');

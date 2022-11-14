@@ -37,7 +37,16 @@ class ConsultController extends Controller
      */
     public function store(ConsultRequest $request)
     {
-        $data = Consult::create($request->validated())->consult_notes()->create($request->validated());
+
+
+        $data = Consult::query()
+        ->when(request('pt_group') == 'cn', function ($q) use($request){
+            return $q->create($request->validated())->consult_notes()->create($request->validated());
+        })
+        ->when(request('pt_group') != 'cn', function ($q) use($request){
+            return $q->create($request->validated());
+        });
+
         return response()->json(['data' => $data], 201);
     }
 
