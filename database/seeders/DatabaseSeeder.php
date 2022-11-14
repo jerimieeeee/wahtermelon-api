@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             LibMcAttendantSeeder::class,
             LibMcPresentationSeeder::class,
             LibMcPregnancyTerminationSeeder::class,
+            LibMcVisitTypeSeeder::class,
         ]);
     }
 }

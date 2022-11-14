@@ -95,11 +95,15 @@ Route::prefix('v1')->group(function (){
 
         Route::get('mc-risk-factors', [\App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class, 'index'])->name('mc-risk-factors.index');
         Route::get('mc-risk-factors/{riskFactor}', [\App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class, 'show'])->name('mc-risk-factors.show');
+
+        Route::get('mc-visit-type', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'index'])->name('mc-visit-type.index');
+        Route::get('mc-visit-type/{visitType}', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'show'])->name('mc-visit-type.show');
     });
 
     Route::prefix('maternal-care')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcController::class)
             ->group(function() {
+                Route::get('mc-records', 'index');
                 //Route::post('mc-records', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPreRegistrationController::class)

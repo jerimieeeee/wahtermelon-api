@@ -11,6 +11,13 @@ use App\Models\V1\Patient\Patient;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
 
+/**
+ * @group Maternal Care Management
+ *
+ * APIs for managing maternal care information
+ * @subgroup Pre Registration
+ * @subgroupDescription Pre Registration management.
+ */
 class PatientMcPreRegistrationController extends Controller
 {
     /**

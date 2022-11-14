@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedInteger('aog_days');
             $table->unsignedInteger('trimester');
             $table->unsignedInteger('visit_sequence');
-            $table->decimal('patient_height',3,2)->nullable();
-            $table->decimal('patient_weight',3,2)->nullable();
+            $table->decimal('patient_height',5,2)->nullable();
+            $table->decimal('patient_weight',5,2)->nullable();
             $table->unsignedInteger('bp_systolic')->nullable();
             $table->unsignedInteger('bp_diastolic')->nullable();
             $table->unsignedInteger('fundic_height')->nullable();

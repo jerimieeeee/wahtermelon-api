@@ -3,6 +3,7 @@
 namespace App\Models\V1\MaternalCare;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibMcPregnancyTermination;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;
@@ -68,5 +69,10 @@ class PatientMc extends Model
     public function postpartum()
     {
         return $this->hasOne(ConsultMcPostpartum::class);
+    }
+
+    public function pregnancyTermination()
+    {
+        return $this->belongsTo(LibMcPregnancyTermination::class);
     }
 }

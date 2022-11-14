@@ -3,7 +3,11 @@
 namespace App\Models\V1\MaternalCare;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibMcAttendant;
+use App\Models\V1\Libraries\LibMcDeliveryLocation;
+use App\Models\V1\Libraries\LibMcOutcome;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;
 use DateTimeInterface;
@@ -24,6 +28,7 @@ class PatientMcPostRegistration extends Model
     protected $keyType = 'string';
 
     protected $casts = [
+        'post_registration_date' => 'date:Y-m-d',
         'admission_date' => 'datetime:Y-m-d H:i:s',
         'discharge_date' => 'datetime:Y-m-d H:i:s',
         'delivery_date' => 'datetime:Y-m-d H:i:s',
@@ -50,5 +55,25 @@ class PatientMcPostRegistration extends Model
     public function patientMc()
     {
         return $this->belongsTo(PatientMc::class, 'patient_mc_id', 'id');
+    }
+
+    public function deliveryLocation()
+    {
+        return $this->belongsTo(LibMcDeliveryLocation::class);
+    }
+
+    public function outcome()
+    {
+        return $this->belongsTo(LibMcOutcome::class);
+    }
+
+    public function attendant()
+    {
+        return $this->belongsTo(LibMcAttendant::class);
+    }
+
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
     }
 }

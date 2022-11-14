@@ -9,6 +9,13 @@ use App\Models\V1\MaternalCare\PatientMc;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
 
+/**
+ * @group Maternal Care Management
+ *
+ * APIs for managing maternal care information
+ * @subgroup Prenatal Visit
+ * @subgroupDescription Prenatal visit management.
+ */
 class ConsultMcPrenatalController extends Controller
 {
     /**

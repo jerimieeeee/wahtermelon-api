@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\PatientMcRequest;
+use App\Http\Resources\API\V1\MaternalCare\PatientMcResource;
 use App\Models\V1\MaternalCare\PatientMc;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PatientMcController extends Controller
@@ -12,11 +14,12 @@ class PatientMcController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $data = PatientMc::with('preRegister', 'postRegister')->get();
+        return PatientMcResource::collection($data)->response();
     }
 
     /**

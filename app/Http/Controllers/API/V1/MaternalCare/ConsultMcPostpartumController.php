@@ -8,6 +8,13 @@ use App\Models\V1\MaternalCare\ConsultMcPostpartum;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
 
+/**
+ * @group Maternal Care Management
+ *
+ * APIs for managing maternal care information
+ * @subgroup Postpartum Visit
+ * @subgroupDescription Postpartum visit management.
+ */
 class ConsultMcPostpartumController extends Controller
 {
     /**
