@@ -155,6 +155,9 @@ Route::prefix('v1')->group(function (){
         Route::get('mc-risk-factors', [\App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class, 'index'])->name('mc-risk-factors.index');
         Route::get('mc-risk-factors/{riskFactor}', [\App\Http\Controllers\API\V1\Libraries\LibMcRiskFactorController::class, 'show'])->name('mc-risk-factors.show');
 
+        Route::get('mc-visit-type', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'index'])->name('mc-visit-type.index');
+        Route::get('mc-visit-type/{visitType}', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'show'])->name('mc-visit-type.show');
+    
         //Consultation Libraries
         Route::get('complaint', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'index']);
         Route::get('complaint/{id}', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'show']);
@@ -171,5 +174,30 @@ Route::prefix('v1')->group(function (){
 
         Route::get('reason', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'index']);
         Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);
+
+    });
+
+    Route::prefix('maternal-care')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcController::class)
+            ->group(function() {
+                Route::get('mc-records', 'index');
+                //Route::post('mc-records', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPreRegistrationController::class)
+            ->group(function() {
+                Route::post('mc-preregistrations', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPostRegistrationController::class)
+            ->group(function() {
+                Route::post('mc-postregistrations', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPrenatalController::class)
+            ->group(function() {
+                Route::post('mc-prenatal', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPostpartumController::class)
+            ->group(function() {
+                Route::post('mc-postpartum', 'store');
+            });
     });
 });

@@ -5,12 +5,14 @@ namespace App\Models\V1\Patient;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\MaternalCare\PatientMc;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patient extends Model
 {
@@ -71,9 +73,15 @@ class Patient extends Model
         return $this->belongsTo(LibReligion::class, 'religion_code', 'code');
     }
 
+    public function patientMc(): HasMany
+    {
+        return $this->hasMany(PatientMc::class);
+    }
+
     public function patientccdev(){
 
         return $this->hasOne(PatientCcdev::class);
 
     }
+
 }

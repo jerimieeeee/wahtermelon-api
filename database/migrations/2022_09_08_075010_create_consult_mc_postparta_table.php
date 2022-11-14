@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('consult_mc_postparta', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('patient_mc_id');
-            // $table->foreignId('consult_id')->constrained();
+            $table->uuid('id')->index()->primary();
+            $table->string('facility_code')->index();
+            $table->foreignUuid('patient_mc_id')->index()->constrained('patient_mc');
             $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
-            $table->date('postpartum_date');
+            $table->date('postpartum_date')->index();
             $table->unsignedInteger('postpartum_week');
             $table->unsignedInteger('visit_sequence');
             $table->char('visit_type',10);
@@ -30,14 +30,14 @@ return new class extends Migration
             $table->boolean('vaginal_bleeding')->default('0');
             $table->boolean('pallor')->default('0');
             $table->boolean('cord_ok')->default('0');
-            $table->unsignedInteger('patient_age');
             $table->unsignedInteger('patient_height');
+            $table->unsignedInteger('patient_weight');
             $table->unsignedInteger('bp_systolic');
             $table->unsignedInteger('bp_diastolic');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('patient_mc_id')->references('id')->on('patient_mc');
+            $table->foreign('facility_code')->references('code')->on('facilities');
         });
     }
 
