@@ -3,21 +3,17 @@
 namespace App\Models\V1\MaternalCare;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibMcPregnancyTermination;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;
 use DateTimeInterface;
-use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientMc extends Model
+class PatientMcPreRegistration extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuid;
-
-    protected $table = 'patient_mc';
+    use HasFactory, SoftDeletes, HasUuid;
 
     protected $guarded = [
         'id'
@@ -28,7 +24,19 @@ class PatientMc extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'pregnancy_termination_date' => 'date:Y-m-d',
+        'pre_registration_date' => 'date:Y-m-d',
+        'lmp_date' => 'date:Y-m-d',
+        'edc_date' => 'date:Y-m-d',
+        'trimester1_date' => 'date:Y-m-d',
+        'trimester2_date' => 'date:Y-m-d',
+        'trimester3_date' => 'date:Y-m-d',
+        'postpartum_date' => 'date:Y-m-d',
+        'initial_gravidity' => 'integer',
+        'initial_parity' => 'integer',
+        'initial_full_term' => 'integer',
+        'initial_preterm' => 'integer',
+        'initial_abortion' => 'integer',
+        'initial_livebirths' => 'integer',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -51,28 +59,8 @@ class PatientMc extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function preRegister()
+    public function patientMc()
     {
-        return $this->hasOne(PatientMcPreRegistration::class);
-    }
-
-    public function postRegister()
-    {
-        return $this->hasOne(PatientMcPostRegistration::class);
-    }
-
-    public function prenatal()
-    {
-        return $this->hasMany(ConsultMcPrenatal::class);
-    }
-
-    public function postpartum()
-    {
-        return $this->hasOne(ConsultMcPostpartum::class);
-    }
-
-    public function pregnancyTermination()
-    {
-        return $this->belongsTo(LibMcPregnancyTermination::class);
+        return $this->belongsTo(PatientMc::class);
     }
 }

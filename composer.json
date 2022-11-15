@@ -6,7 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+<<<<<<< HEAD
         "doctrine/dbal": "^3.5",
+=======
+        "dyrynda/laravel-cascade-soft-deletes": "^4.2",
+>>>>>>> c0a27268a32606b19f5aac07e61f69145ed0201c
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/passport": "^11.0",
@@ -30,7 +34,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

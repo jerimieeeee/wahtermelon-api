@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\MaternalCare\PatientMcRequest;
+use App\Http\Resources\API\V1\MaternalCare\PatientMcResource;
+use App\Models\V1\MaternalCare\PatientMc;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PatientMcController extends Controller
@@ -10,21 +14,12 @@ class PatientMcController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = PatientMc::with('preRegister', 'postRegister')->get();
+        return PatientMcResource::collection($data)->response();
     }
 
     /**
@@ -33,9 +28,10 @@ class PatientMcController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PatientMcRequest $request)
     {
-        //
+        $data = PatientMc::create($request->all());
+        return $data;
     }
 
     /**
@@ -45,17 +41,6 @@ class PatientMcController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

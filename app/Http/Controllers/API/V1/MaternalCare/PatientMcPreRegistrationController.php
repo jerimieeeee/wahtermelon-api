@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\MaternalCare\ConsultMcPrenatalRequest;
-use App\Models\V1\MaternalCare\ConsultMcPrenatal;
+use App\Http\Requests\API\V1\MaternalCare\PatientMcPreRegistrationRequest;
 use App\Models\V1\MaternalCare\PatientMc;
+use App\Models\V1\MaternalCare\PatientMcPostRegistration;
+use App\Models\V1\MaternalCare\PatientMcPreRegistration;
+use App\Models\V1\Patient\Patient;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
 
@@ -13,10 +15,10 @@ use Illuminate\Http\Request;
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
- * @subgroup Prenatal Visit
- * @subgroupDescription Prenatal visit management.
+ * @subgroup Pre Registration
+ * @subgroupDescription Pre Registration management.
  */
-class ConsultMcPrenatalController extends Controller
+class PatientMcPreRegistrationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,16 +36,14 @@ class ConsultMcPrenatalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConsultMcPrenatalRequest $request)
+    public function store(PatientMcPreRegistrationRequest $request, MaternalCareRecordService $maternalCareRecordService)
     {
-        /*$mc = $maternalCareRecordService->getLatestMcRecord($request->validated());
-        if($mc) {
-            return PatientMc::find($mc->id)->prenatal()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validated());
-        }*/
-        //return $request->validatedWithCasts();
-        ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date], $request->validatedWithCasts());
-        $mc = new MaternalCareRecordService();
-        return $mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date');
+        $mc = $maternalCareRecordService->getLatestMcRecord($request->validated());
+        if(!$mc){
+            $mc = PatientMc::create($request->validatedWithCasts());
+            return $mc->preRegister()->create($request->validatedWithCasts());
+        }
+        return PatientMc::find($mc->id)->preRegister()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validatedWithCasts());
     }
 
     /**
