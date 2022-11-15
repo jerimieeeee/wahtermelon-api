@@ -4,12 +4,13 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\PatientMcPreRegistrationRequest;
+use App\Http\Resources\API\V1\MaternalCare\PatientMcPreRegistrationResource;
 use App\Models\V1\MaternalCare\PatientMc;
-use App\Models\V1\MaternalCare\PatientMcPostRegistration;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use App\Models\V1\Patient\Patient;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * @group Maternal Care Management
@@ -49,24 +50,24 @@ class PatientMcPreRegistrationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PatientMcPreRegistration $preRegistration
+     * @return PatientMcPreRegistrationResource
      */
-    public function show($id)
+    public function show(PatientMcPreRegistration $preRegistration): PatientMcPreRegistrationResource
     {
-        //
+        return new PatientMcPreRegistrationResource($preRegistration);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PatientMcPreRegistrationRequest $request
+     * @param PatientMcPreRegistration $preRegistration
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientMcPreRegistrationRequest $request, PatientMcPreRegistration $preRegistration)
     {
-        //
+        return $preRegistration->update($request->validatedWithCasts());
     }
 
     /**

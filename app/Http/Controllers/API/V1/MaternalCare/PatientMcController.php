@@ -9,6 +9,13 @@ use App\Models\V1\MaternalCare\PatientMc;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @group Maternal Care Management
+ *
+ * APIs for managing maternal care information
+ * @subgroup Maternal Care Record
+ * @subgroupDescription Maternal care management.
+ */
 class PatientMcController extends Controller
 {
     /**
@@ -18,7 +25,7 @@ class PatientMcController extends Controller
      */
     public function index(): JsonResponse
     {
-        $data = PatientMc::with('preRegister', 'postRegister')->get();
+        $data = PatientMc::with('preRegister', 'postRegister', 'prenatal', 'postpartum')->get();
         return PatientMcResource::collection($data)->response();
     }
 
@@ -40,9 +47,9 @@ class PatientMcController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PatientMc $mc)
     {
-        //
+        return new PatientMcResource($mc->loadMissing('preRegister', 'postRegister', 'prenatal', 'postpartum'));
     }
 
     /**

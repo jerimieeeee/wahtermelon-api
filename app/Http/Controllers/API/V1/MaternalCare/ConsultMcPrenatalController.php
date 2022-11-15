@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\ConsultMcPrenatalRequest;
+use App\Http\Resources\API\V1\MaternalCare\ConsultMcPrenatalResource;
 use App\Models\V1\MaternalCare\ConsultMcPrenatal;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * @group Maternal Care Management
@@ -49,12 +51,12 @@ class ConsultMcPrenatalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ConsultMcPrenatal $mcPrenatal
+     * @return ConsultMcPrenatalResource
      */
-    public function show($id)
+    public function show(ConsultMcPrenatal $mcPrenatal): ConsultMcPrenatalResource
     {
-        //
+        return new ConsultMcPrenatalResource($mcPrenatal);
     }
 
     /**

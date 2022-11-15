@@ -157,7 +157,7 @@ Route::prefix('v1')->group(function (){
 
         Route::get('mc-visit-type', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'index'])->name('mc-visit-type.index');
         Route::get('mc-visit-type/{visitType}', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'show'])->name('mc-visit-type.show');
-    
+
         //Consultation Libraries
         Route::get('complaint', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'index']);
         Route::get('complaint/{id}', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'show']);
@@ -181,22 +181,29 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcController::class)
             ->group(function() {
                 Route::get('mc-records', 'index');
+                Route::get('mc-records/{mc}', 'show');
                 //Route::post('mc-records', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPreRegistrationController::class)
             ->group(function() {
+                Route::get('mc-preregistrations/{preRegistration}', 'show');
                 Route::post('mc-preregistrations', 'store');
+                Route::put('mc-preregistrations/{preRegistration}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPostRegistrationController::class)
             ->group(function() {
+                Route::get('mc-postregistrations/{postRegistration}', 'show');
                 Route::post('mc-postregistrations', 'store');
+                Route::put('mc-postregistrations/{postRegistration}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPrenatalController::class)
             ->group(function() {
+                Route::get('mc-prenatal/{mcPrenatal}', 'show');
                 Route::post('mc-prenatal', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPostpartumController::class)
             ->group(function() {
+                Route::get('mc-postpartum/{mcPostpartum}', 'show');
                 Route::post('mc-postpartum', 'store');
             });
     });

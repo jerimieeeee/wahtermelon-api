@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\PatientMcPostRegistrationRequest;
+use App\Http\Resources\API\V1\MaternalCare\PatientMcPostRegistrationResource;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * @group Maternal Care Management
@@ -48,24 +50,24 @@ class PatientMcPostRegistrationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PatientMcPostRegistration $postRegistration
+     * @return PatientMcPostRegistrationResource
      */
-    public function show($id)
+    public function show(PatientMcPostRegistration $postRegistration): PatientMcPostRegistrationResource
     {
-        //
+        return new PatientMcPostRegistrationResource($postRegistration);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PatientMcPostRegistrationRequest $request
+     * @param PatientMcPostRegistration $postRegistration
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientMcPostRegistrationRequest $request, PatientMcPostRegistration $postRegistration)
     {
-        //
+        return $postRegistration->update($request->validatedWithCasts());
     }
 
     /**

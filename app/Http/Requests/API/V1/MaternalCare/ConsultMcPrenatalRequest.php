@@ -51,7 +51,7 @@ class ConsultMcPrenatalRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_mc_id' => 'required|exists:patient_mc,id',
+            'patient_mc_id' => 'required|exists:patient_mc_pre_registrations,patient_mc_id',
             'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
@@ -73,7 +73,7 @@ class ConsultMcPrenatalRequest extends FormRequest
         return [
             'patient_mc_id' => [
                 'description' => 'ID of maternal care record',
-                'example' => fake()->randomElement(PatientMc::pluck('id')->toArray()),
+                'example' => fake()->randomElement(PatientMcPreRegistration::pluck('patient_mc_id')->toArray()),
             ],
             'facility_code' => [
                 'description' => 'ID of facility library',

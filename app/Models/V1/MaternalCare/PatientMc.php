@@ -68,7 +68,7 @@ class PatientMc extends Model
 
     public function postpartum()
     {
-        return $this->hasOne(ConsultMcPostpartum::class);
+        return $this->hasMany(ConsultMcPostpartum::class);
     }
 
     public function pregnancyTermination()
