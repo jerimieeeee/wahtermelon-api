@@ -30,10 +30,10 @@ class PatientMcController extends Controller
         {
             $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
             if(!$mc) {
-                return 'WALA';
+                return response()->json(['message' => 'No existing or pending record.'], 404);
             }
 
-            return new PatientMcResource(PatientMc::find($mc->id)->with('preRegister', 'postRegister', 'prenatal', 'postpartum')->first());
+            return new PatientMcResource(PatientMc::find($mc->id)->loadMissing('preRegister', 'postRegister', 'prenatal', 'postpartum'));
 
         }
 
