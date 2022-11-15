@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\PatientMcRequest;
 use App\Http\Resources\API\V1\MaternalCare\PatientMcResource;
 use App\Models\V1\MaternalCare\PatientMc;
+use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,19 @@ class PatientMcController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request, MaternalCareRecordService $maternalCareRecordService)
     {
+        if($request->type == 'latest')
+        {
+            $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
+            if(!$mc) {
+                return 'WALA';
+            }
+
+            return new PatientMcResource(PatientMc::find($mc->id)->with('preRegister', 'postRegister', 'prenatal', 'postpartum')->first());
+
+        }
+
         $data = PatientMc::with('preRegister', 'postRegister', 'prenatal', 'postpartum')->get();
         return PatientMcResource::collection($data)->response();
     }
