@@ -44,7 +44,7 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class)
         ->group(function() {
             Route::post('cc-records', 'store');
-            Route::post('cc-records/{patient_ccdev_id}', 'update');
+            // Route::post('cc-records/{patient_ccdev_id}', 'update');
             Route::get('cc-records/{patientccdev}', 'show');
         });
         // Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)

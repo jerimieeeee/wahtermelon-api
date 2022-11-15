@@ -11,6 +11,7 @@ use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Childcare Breastfed Management
@@ -41,9 +42,9 @@ class ConsultCcdevBreastfedController extends Controller
      * @param ConsultCcdevBreastfedRequest $request
      * @return JsonResponse
      */
-    public function store(ConsultCcdevBreastfedRequest $request) : JsonResponse
+    public function store(ConsultCcdevBreastfedRequest $request)
     {
-        $data = ConsultCcdevBreastfed::create($request->all());
+        $data = ConsultCcdev::updateOrCreate(['patient_id' => $request->patient_id],$request->all());
         return response()->json(['data' => $data], 201);
     }
 
@@ -55,10 +56,14 @@ class ConsultCcdevBreastfedController extends Controller
      * @param ConsultCcdevBreastfed $consultccdevbreastfed
      * @return ConsultCcdevBreastfedResource
      */
-    public function show(ConsultCcdevBreastfed $consultccdevbfed): ConsultCcdevBreastfedResource
+    public function show(ConsultCcdev $patientccdevbfed)
     {
-        ConsultCcdevBreastfed::where('id', $consultccdevbfed->id);
-        return new ConsultCcdevBreastfedResource($consultccdevbfed);
+        $query = ConsultCcdev::where('id', $patientccdevbfed->id);
+
+        $patientccdevbfed = QueryBuilder::for($query)
+            ->first();
+
+        return new ConsultCcdevResource($patientccdevbfed);
     }
 
     /**
@@ -70,8 +75,8 @@ class ConsultCcdevBreastfedController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ConsultCcdevBreastfed::findorfail($id)->update($request->all());
-        return response()->json('Patient Child Care Successfully Updated');
+        // ConsultCcdevBreastfed::findorfail($id)->update($request->all());
+        // return response()->json('Patient Child Care Successfully Updated');
     }
 
     /**

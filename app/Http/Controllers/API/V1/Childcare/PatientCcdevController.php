@@ -42,21 +42,8 @@ class PatientCcdevController extends Controller
      */
     public function store(PatientCcdevRequest $request)
     {
-        // $data = PatientCcdev::firstOrCreate($request->all());
-        // return response()->json(['data' => $data], 201);
-
-        // $count = DB::table('patient_ccdevs')->distinct('patient_id')->count('patient_id');
-        // return $count;
-        // $data = PatientCcdev::where('patient_id', $request->patient_id)->get();
-
-        // if($data->count($count)){
-        //     // PatientCcdev::update($request->all());
-        //     PatientCcdev::where('patient_id', $data->patient_id)->update($request->all());
-        //     }else{
-        //         PatientCcdev::Create($request->all());
-        //     }
-
-        // return response()->json(['data' => $data], 201);
+        $data = PatientCcdev::updateOrCreate(['patient_id' => $request->patient_id],$request->all());
+        return response()->json(['data' => $data], 201);
     }
 
     /**
@@ -87,8 +74,8 @@ class PatientCcdevController extends Controller
      */
     public function update(PatientCcdevRequest $request, $id)
     {
-        PatientCcdev::findorfail($id)->update($request->all());
-        return response()->json('Patient Child Care Successfully Updated');
+        // PatientCcdev::findorfail($id)->update($request->all());
+        // return response()->json('Patient Child Care Successfully Updated');
     }
 
     /**

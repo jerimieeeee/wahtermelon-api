@@ -19,6 +19,11 @@ class ConsultCcdevBreastfed extends Model
         'ebf_date' => 'date:Y-m-d',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'patient_id';
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
