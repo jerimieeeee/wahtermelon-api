@@ -27,6 +27,8 @@ class PatientVitalsFactory extends Factory
             'patient_temp' => fake()->numberBetween(35, 40),
             'patient_height' => fake()->numberBetween(100, 200),
             'patient_weight' => fake()->numberBetween(40, 200),
+            'patient_head_circumference' => fake()->numberBetween(0, 30),
+            'patient_skinfold_thickness' => fake()->numberBetween(0, 30),
             'bp_systolic' => fake()->numberBetween(100, 200),
             'bp_diastolic' => fake()->numberBetween(70, 100),
             'patient_heart_rate' => fake()->numberBetween(60, 100),
