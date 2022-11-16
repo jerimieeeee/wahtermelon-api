@@ -28,6 +28,8 @@ class PatientVitalsResource extends JsonResource
             'patient_temp' => $this->patient_temp,
             'patient_height' => $this->patient_height,
             'patient_weight' => $this->patient_weight,
+            'patient_head_circumference' => $this->patient_head_circumference,
+            'patient_skinfold_thickness' => $this->patient_skinfold_thickness,
             'bp_systolic' => $this->bp_systolic,
             'bp_diastolic' => $this->bp_diastolic,
             'patient_heart_rate' => $this->patient_heart_rate,

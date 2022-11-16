@@ -50,6 +50,8 @@ class PatientVitalsRequest extends FormRequest
             'patient_temp' => 'nullable|numeric',
             'patient_height' => 'nullable|numeric',
             'patient_weight' => 'nullable|numeric',
+            'patient_head_circumference' => 'nullable|numeric',
+            'patient_skinfold_thickness' => 'nullable|numeric',
             'bp_systolic' => 'required_with:bp_diastolic|numeric',
             'bp_diastolic' => 'required_with:bp_systolic|numeric',
             'patient_heart_rate' => 'nullable|numeric',
@@ -88,6 +90,12 @@ class PatientVitalsRequest extends FormRequest
             ],
             'patient_weight' => [
                 'example' => fake()->numberBetween(40, 200)
+            ],
+            'patient_head_circumference' => [
+                'example' => fake()->numberBetween(0, 30)
+            ],
+            'patient_skinfold_thickness' => [
+                'example' => fake()->numberBetween(0, 30)
             ],
             'bp_systolic' => [
                 'example' => fake()->numberBetween(100, 200)
