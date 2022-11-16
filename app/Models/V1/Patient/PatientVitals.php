@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Models\V1\MaternalCare;
+namespace App\Models\V1\Patient;
 
 use App\Models\User;
-use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConsultMcPostpartum extends Model
+class PatientVitals extends Model
 {
-    use HasFactory, SoftDeletes, HasUuid;
+    use HasFactory, HasUuid;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;
@@ -24,14 +22,7 @@ class ConsultMcPostpartum extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'postpartum_date' => 'date:Y-m-d',
-        'breastfeeding' => 'boolean',
-        'family_planning' => 'boolean',
-        'fever' => 'boolean',
-        'vaginal_infection' => 'boolean',
-        'vaginal_bleeding' => 'boolean',
-        'pallor' => 'boolean',
-        'cord_ok' => 'boolean',
+        'vitals_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -52,10 +43,5 @@ class ConsultMcPostpartum extends Model
     public function patient()
     {
         return $this->belongsTo(Patient::class);
-    }
-
-    public function patientMc()
-    {
-        return $this->belongsTo(PatientMc::class);
     }
 }

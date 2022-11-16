@@ -63,12 +63,12 @@ class PatientMc extends Model
 
     public function prenatal()
     {
-        return $this->hasMany(ConsultMcPrenatal::class);
+        return $this->hasMany(ConsultMcPrenatal::class)->orderBy('prenatal_date', 'DESC');
     }
 
     public function postpartum()
     {
-        return $this->hasOne(ConsultMcPostpartum::class);
+        return $this->hasMany(ConsultMcPostpartum::class)->orderBy('postpartum_date', 'DESC');
     }
 
     public function pregnancyTermination()

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\MaternalCare\ConsultMcPostpartumRequest;
+use App\Http\Resources\API\V1\MaternalCare\ConsultMcPostpartumResource;
 use App\Models\V1\MaternalCare\ConsultMcPostpartum;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * @group Maternal Care Management
@@ -43,12 +45,12 @@ class ConsultMcPostpartumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ConsultMcPostpartum $mcPostpartum
+     * @return ConsultMcPostpartumResource
      */
-    public function show($id)
+    public function show(ConsultMcPostpartum $mcPostpartum): ConsultMcPostpartumResource
     {
-        //
+        return new ConsultMcPostpartumResource($mcPostpartum);
     }
 
     /**

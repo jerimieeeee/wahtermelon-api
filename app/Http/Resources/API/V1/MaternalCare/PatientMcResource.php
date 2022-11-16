@@ -30,6 +30,8 @@ class PatientMcResource extends JsonResource
             'pregnancy_termination_cause' => $this->pregnancy_termination_cause,
             'pre_registration' => $this->when($this->relationLoaded('preRegister'), new PatientMcPreRegistrationResource($this->preRegister)),
             'post_registration' => $this->when($this->relationLoaded('postRegister'), new PatientMcPostRegistrationResource($this->postRegister)),
+            'prenatal_visit' => $this->when($this->relationLoaded('prenatal'), ConsultMcPrenatalResource::collection($this->prenatal)),
+            'postpartum_visit' => $this->when($this->relationLoaded('postpartum'), ConsultMcPostpartumResource::collection($this->postpartum)),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
