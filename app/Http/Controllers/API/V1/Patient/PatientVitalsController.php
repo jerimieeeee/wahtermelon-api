@@ -22,8 +22,10 @@ class PatientVitalsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @queryParam sort string Sort vitals_date. Add hyphen (-) to descend the list: e.g. vitals_date. Example: -vitals_date
      * @queryParam patient_id string Patient to view.
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientVitalsResource
+     * @apiResourceModel App\Models\V1\Patient\PatientVitals paginate=15
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
@@ -33,7 +35,9 @@ class PatientVitalsController extends Controller
                 ->when(isset($request->patient_id), function($query) use($request){
                     return $query->wherePatientId($request->patient_id);
                 });
-        $vitals = QueryBuilder::for($query);
+        $vitals = QueryBuilder::for($query)
+                ->defaultSort('-vitals_date')
+                ->allowedSorts('vitals_date');
 
         if ($perPage == 'all') {
             return PatientVitalsResource::collection($vitals->get());
