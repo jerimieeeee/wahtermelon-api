@@ -30,7 +30,7 @@ class ConsultationTest extends TestCase
 
     public function test_consultation_can_show_specific_record()
     {
-        $id = fake()->randomElement(Consult::pluck('id')->toArray());
+        $id = fake()->randomElement(Consult::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/consultation/cn-records/$id");
         $response->assertOk();
     }

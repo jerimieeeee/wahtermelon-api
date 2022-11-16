@@ -25,6 +25,11 @@ class Consult extends Model
     'consult_date' => 'date:Y-m-d',
 ];
 
+public function getRouteKeyName()
+{
+    return 'patient_id';
+}
+
 public function consult_notes(){
     return $this->hasOne(ConsultNotes::class, 'consult_id', 'id');
 }

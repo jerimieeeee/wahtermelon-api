@@ -15,7 +15,7 @@ class ConsultCcdevBreastfedResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'patient_ccdevs_id' => $this->patient_ccdevs_id,
+            'patient_ccdev_id' => $this->patient_ccdev_id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
             'bfed_month1' => $this->bfed_month1,

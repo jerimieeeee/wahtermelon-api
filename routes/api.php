@@ -55,7 +55,7 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
         ->group(function() {
             Route::post('cc-breastfed', 'store');
-            Route::get('cc-breastfed/{consultccdevbfed}', 'show');
+            Route::get('cc-breastfed/{patientccdevbfed}', 'show');
         });
 
     });
@@ -65,7 +65,8 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
         ->group(function() {
             Route::post('cn-records', 'store');
-            Route::get('cn-records/{consult_id}', 'show');
+            Route::post('cn-records/{id}', 'update');
+            Route::get('cn-records/{consult}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
         ->group(function() {
@@ -158,7 +159,7 @@ Route::prefix('v1')->group(function (){
 
         Route::get('mc-visit-type', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'index'])->name('mc-visit-type.index');
         Route::get('mc-visit-type/{visitType}', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'show'])->name('mc-visit-type.show');
-    
+
         //Consultation Libraries
         Route::get('complaint', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'index']);
         Route::get('complaint/{id}', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'show']);

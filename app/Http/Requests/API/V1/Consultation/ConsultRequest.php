@@ -30,8 +30,8 @@ class ConsultRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'consult_date' => 'required|date|date_format:Y-m-d',
             'physician_id' => 'required|exists:users,id',
-            'is_pregnant' => 'required',
-            'consult_done' => 'required',
+            'is_pregnant' => 'required|boolean',
+            'consult_done' => 'required|boolean',
             'pt_group' => 'required',
         ];
     }

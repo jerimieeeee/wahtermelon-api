@@ -79,7 +79,7 @@ class ChildcareBreastfedTest extends TestCase
 
             //Create Bfed
             $response = $this->post('api/v1/child-care/cc-breastfed', [
-            'patient_ccdevs_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
+            'patient_ccdev_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'bfed_month1' => fake()->boolean,
@@ -94,12 +94,12 @@ class ChildcareBreastfedTest extends TestCase
         $response->assertCreated();
     }
 
-    // public function test_child_care_breastfed_can_show_specific_record()
-    // {
-    //     $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('id')->toArray());
-    //     $response = $this->get("api/v1/childcare-breastfed/$id");
-    //     $response->assertOk();
-    // }
+    public function test_childcare_breastfed_can_show_specific_record()
+    {
+        $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('patient_id')->toArray());
+        $response = $this->get("api/v1/child-care/cc-breastfed/$id");
+        $response->assertOk();
+    }
 
 
 }

@@ -4,11 +4,14 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
+use App\Http\Resources\API\V1\Childcare\ConsultCcdevResource;
 use App\Http\Resources\API\V1\Consultation\ConsultResource;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Consultation Information Management
@@ -37,12 +40,13 @@ class ConsultController extends Controller
      */
     public function store(ConsultRequest $request)
     {
+        $request['consult_done'] = 0;
         $data = Consult::query()
         ->when(request('pt_group') == 'cn', function ($q) use($request){
             return $q->create($request->validated())->consult_notes()->create($request->validated());
         })
         ->when(request('pt_group') != 'cn', function ($q) use($request){
-            return $q->create($request->validated());
+            return $q->create($request->except(['physician_id', 'is_pregnant']));
         });
 
         return response()->json(['data' => $data], 201);
@@ -54,10 +58,16 @@ class ConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Consult $consult_id): ConsultResource
+    public function show(Consult $consult, Request $request)
     {
-        Consult::where('id', $consult_id->id);
-        return new ConsultResource($consult_id);
+        $query = Consult::where('patient_id', $consult->patient_id)
+        ->where('pt_group', $request->pt_group)
+        ->where('consult_done', '=', 0)
+        ->get();
+
+
+        return ConsultResource::collection($query);
+
     }
 
     /**
@@ -67,10 +77,11 @@ class ConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultRequest $request, $id)
     {
-        Consult::findorfail($id)->update($request->all());
-        return response()->json('Consult Successfully Updated');
+        Consult::findorfail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant']));
+        $data = Consult::findorfail($id);
+        return response()->json(['data' => $data], 201);
     }
 
     /**

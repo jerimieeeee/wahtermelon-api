@@ -22,7 +22,7 @@ class ConsultCcdevBreastfedFactory extends Factory
     public function definition()
     {
         return [
-            'patient_ccdevs_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
+            'patient_ccdev_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'bfed_month1' => fake()->boolean,

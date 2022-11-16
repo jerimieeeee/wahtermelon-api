@@ -27,7 +27,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_ccdevs_id' => 'required|exists:patient_ccdevs,id',
+            'patient_ccdev_id' => 'required|exists:patient_ccdevs,id',
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
             'bfed_month1' => 'boolean|nullable',
@@ -44,7 +44,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
     public function bodyParameters()
     {
         return [
-            'patient_ccdevs_id' => [
+            'patient_ccdev_id' => [
                 'description' => 'ID of ccdev.',
                 'example' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             ],

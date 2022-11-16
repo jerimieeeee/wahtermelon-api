@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use App\Models\V1\Libraries\LibBloodType;
 use App\Models\V1\Libraries\LibCivilStatus;
 use App\Models\V1\Libraries\LibEducation;
@@ -64,7 +65,7 @@ class PatientTest extends TestCase
 
     public function test_patient_can_show_specific_record()
     {
-        $id = fake()->randomElement(Patient::pluck('id')->toArray());
+        $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/patient/$id");
         $response->assertOk();
     }

@@ -44,7 +44,7 @@ class ConsultCcdevBreastfedController extends Controller
      */
     public function store(ConsultCcdevBreastfedRequest $request)
     {
-        $data = ConsultCcdev::updateOrCreate(['patient_id' => $request->patient_id],$request->all());
+        $data = ConsultCcdevBreastfed::updateOrCreate(['patient_id' => $request->patient_id],$request->all());
         return response()->json(['data' => $data], 201);
     }
 
@@ -56,14 +56,14 @@ class ConsultCcdevBreastfedController extends Controller
      * @param ConsultCcdevBreastfed $consultccdevbreastfed
      * @return ConsultCcdevBreastfedResource
      */
-    public function show(ConsultCcdev $patientccdevbfed)
+    public function show(ConsultCcdevBreastfed $patientccdevbfed)
     {
-        $query = ConsultCcdev::where('id', $patientccdevbfed->id);
+        $query = ConsultCcdevBreastfed::where('id', $patientccdevbfed->id);
 
         $patientccdevbfed = QueryBuilder::for($query)
             ->first();
 
-        return new ConsultCcdevResource($patientccdevbfed);
+        return new ConsultCcdevBreastfedResource($patientccdevbfed);
     }
 
     /**
