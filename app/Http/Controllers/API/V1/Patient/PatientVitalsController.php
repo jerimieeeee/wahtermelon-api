@@ -23,13 +23,17 @@ class PatientVitalsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @queryParam patient_id string Patient to view.
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
-        $vitals = QueryBuilder::for(PatientVitals::class);
+        $query = PatientVitals::query()
+                ->when(isset($request->patient_id), function($query) use($request){
+                    return $query->wherePatientId($request->patient_id);
+                });
+        $vitals = QueryBuilder::for($query);
 
         if ($perPage == 'all') {
             return PatientVitalsResource::collection($vitals->get());
@@ -56,9 +60,9 @@ class PatientVitalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PatientVitals $vitals)
     {
-        //
+        return new PatientVitalsResource($vitals);
     }
 
     /**
@@ -68,9 +72,10 @@ class PatientVitalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientVitalsRequest $request, PatientVitals $vitals)
     {
-        //
+        $vitals->update($request->validated());
+        return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
