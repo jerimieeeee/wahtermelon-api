@@ -9,6 +9,8 @@ use App\Models\V1\MaternalCare\PatientMc;
 use App\Services\MaternalCare\MaternalCareRecordService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Maternal Care Management
@@ -22,19 +24,37 @@ class PatientMcController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @queryParam type string Type of query. To view all records of patient: e.g. type=all. To view the latest record of patient: e.g. type=latest. Example: latest
+     * @queryParam patient_id string Patient to view.
+     * @apiResourceCollection App\Http\Resources\API\V1\MaternalCare\PatientMcResource
+     * @apiResourceModel App\Models\V1\MaternalCare\PatientMc
+     * @param Request $request
+     * @param MaternalCareRecordService $maternalCareRecordService
+     * @return JsonResponse|PatientMcResource|ResourceCollection
      */
-    public function index(Request $request, MaternalCareRecordService $maternalCareRecordService)
+    public function index(Request $request, MaternalCareRecordService $maternalCareRecordService): JsonResponse|PatientMcResource|ResourceCollection
     {
         if($request->type == 'latest')
         {
             $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
             if(!$mc) {
-                return response()->json(['message' => 'No existing or pending record.'], 404);
+                return response()->json(['message' => 'No existing or pending record.'], 200);
             }
+            $query = PatientMc::where('id', $mc->id);
+            $patientMc = QueryBuilder::for($query)
+                ->with('preRegister', 'postRegister', 'prenatal', 'postpartum')
+                ->first();
+            return  new PatientMcResource($patientMc);
 
-            return new PatientMcResource(PatientMc::find($mc->id)->loadMissing('preRegister', 'postRegister', 'prenatal', 'postpartum'));
+        }
 
+        if($request->type == 'all')
+        {
+            $query = PatientMc::where('patient_id', $request->patient_id);
+            $patientMc = QueryBuilder::for($query)
+                ->with('preRegister', 'postRegister', 'prenatal', 'postpartum')
+                ->get();
+            return PatientMcResource::collection($patientMc->sortByDesc('preRegister.pre_registration_date')->sortBy('postRegister.post_registration_date'));
         }
 
         $data = PatientMc::with('preRegister', 'postRegister', 'prenatal', 'postpartum')->get();
