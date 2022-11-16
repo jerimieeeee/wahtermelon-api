@@ -21,7 +21,7 @@ class PatientVaccineTest extends TestCase
      */
     public function test_patient_vaccine_can_be_created()
     {
-        $response = $this->post('api/v1/patient/vaccines', [
+        $response = $this->post('api/v1/patient-vaccines/vaccines', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             "vaccines" => [
@@ -47,7 +47,7 @@ class PatientVaccineTest extends TestCase
 
         $patientvax = PatientVaccine::factory()->create();
 
-        $response = $this->post('api/v1/patient/vaccines/'. $patientvax->id, [
+        $response = $this->post('api/v1/patient-vaccines/vaccines/'. $patientvax->id, [
 
             'patient_id' => $patientvax->patient_id,
             'user_id' => $patientvax->user_id,
@@ -65,7 +65,7 @@ class PatientVaccineTest extends TestCase
 
         $fdx = PatientVaccine::factory()->create();
 
-        $response = $this->delete('api/v1/patient/vaccines/'. $fdx->id, []);
+        $response = $this->delete('api/v1/patient-vaccines/vaccines/'. $fdx->id, []);
         $response->assertSessionHasNoErrors();
     }
 }
