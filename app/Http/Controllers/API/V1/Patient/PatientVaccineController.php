@@ -29,27 +29,30 @@ class PatientVaccineController extends Controller
     /**
      * Display a listing of the Patient Vaccines resource.
      *
-     * @queryParam filter[search] string Filter by vaccine_id, vaccine_date.
-     * @queryParam sort string Sort vaccine_id, vaccine_id, of the patient.
-     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientResource
-     * @apiResourceModel App\Models\V1\Patient\Patient paginate=15
+     * @queryParam sort string Sort vaccine_id, vaccine_date, of the patient. Example: -vaccine_id
+     * @queryParam patient_id string Patient to view.
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientVaccineResource
+     * @apiResourceModel App\Models\V1\Patient\PatientVaccine paginate=15
      * @param Request $request
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
-        // $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $query = PatientVaccine::query()
+                ->when(isset($request->patient_id), function($query) use($request){
+                    return $query->wherePatientId($request->patient_id);
+                });
+        $vaccines = QueryBuilder::for($query)
+                ->defaultSort('-vaccine_date', '-vaccine_id')
+                ->allowedSorts(['vaccine_date', 'vaccine_id']);
 
-        $columns = ['vaccine_id', 'vaccine_date'];
-        $patientvaccines = QueryBuilder::for(PatientVaccine::class)
-            ->when(isset($request->filter['search']), function($q) use($request, $columns) {
-                $q->search($request->filter['search'], $columns);
-            })
-            // ->allowedIncludes('suffixName', 'pwdType', 'religion')
-            ->defaultSort('vaccine_id', 'vaccine_date')
-            ->allowedSorts(['vaccine_id', 'vaccine_date']);
-            return PatientVaccineResource::collection($patientvaccines->get());
+        if ($perPage == 'all') {
+            return PatientVaccineResource::collection($vaccines->get());
         }
+
+        return PatientVaccineResource::collection($vaccines->paginate($perPage));
+    }
 
         // return PatientResource::collection($patients->paginate($perPage));
 

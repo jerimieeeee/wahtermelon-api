@@ -28,7 +28,7 @@ Route::prefix('v1')->group(function (){
     Route::post('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'store'])->name('patient.store');
 
     //Patient Vaccines APIs
-    Route::prefix('patient')->group(function () {
+    Route::prefix('patient-vaccines')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
         ->group(function() {
             Route::post('vaccines', 'store');
