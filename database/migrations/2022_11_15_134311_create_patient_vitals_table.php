@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index()->constrained();
             $table->foreignId('consult_id')->nullable()->index()->constrained();
             $table->dateTime('vitals_date')->index();
-            $table->unsignedInteger('patient_age_years')->index()->nullable();
-            $table->unsignedInteger('patient_age_months')->index()->nullable();
+            $table->unsignedInteger('patient_age_years')->nullable()->index();
+            $table->unsignedInteger('patient_age_months')->nullable()->index();
             $table->decimal('patient_temp',10,1)->nullable()->index();
             $table->decimal('patient_height',10,2)->nullable()->index();
             $table->decimal('patient_weight',10,2)->nullable()->index();
