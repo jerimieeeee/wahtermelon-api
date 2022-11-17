@@ -67,7 +67,7 @@ if(!function_exists('compute_bmi')) {
     function compute_bmi(float $weight, float $height): array
     {
         $height = $height / 100;
-        $bmi = $weight / ($height * $height);
+        $bmi = number_format($weight / ($height * $height),1);
         $bmiClass = "";
         if ($bmi < 18.5) {
             $bmiClass = "Underweight";

@@ -29,7 +29,7 @@ class PatientVitalsResource extends JsonResource
             'patient_height' => $this->patient_height,
             'patient_weight' => $this->patient_weight,
             'patient_bmi' => $this->patient_bmi,
-            'patient_bmi_class' => $this->patient_bmi,
+            'patient_bmi_class' => $this->patient_bmi_class,
             'patient_weight_for_age' => $this->patient_weight_for_age,
             'patient_height_for_age' => $this->patient_height_for_age,
             'patient_weight_for_height' => $this->patient_weight_for_height,
