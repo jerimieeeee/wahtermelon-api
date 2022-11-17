@@ -58,7 +58,7 @@ class ConsultCcdevBreastfedController extends Controller
      */
     public function show(ConsultCcdevBreastfed $patientccdevbfed)
     {
-        $query = ConsultCcdevBreastfed::where('id', $patientccdevbfed->id);
+        $query = ConsultCcdevBreastfed::with(['ebfreasons:reason_id,desc'])->where('id', $patientccdevbfed->id);
 
         $patientccdevbfed = QueryBuilder::for($query)
             ->first();

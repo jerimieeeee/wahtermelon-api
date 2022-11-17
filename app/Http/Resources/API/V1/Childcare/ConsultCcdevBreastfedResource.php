@@ -25,6 +25,7 @@ class ConsultCcdevBreastfedResource extends JsonResource
             'bfed_month5' => $this->bfed_month5,
             'bfed_month6' => $this->bfed_month6,
             'reason_id' => $this->reason_id,
+            'ebfreasons' => $this->ebfreasons,
             'ebf_date' => !is_null($this->ebf_date) ? $this->ebf_date->format('Y-m-d') : null,
             'deleted_at' => !is_null ($this->deleted_at) ? $this->deleted_at->format('Y-m-d H:i:s') : null,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
