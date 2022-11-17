@@ -43,6 +43,9 @@ class DatabaseSeeder extends Seeder
             LibMcPregnancyTerminationSeeder::class,
             LibMcVisitTypeSeeder::class,
             LibEbfReasonSeeder::class,
+            LibWeightForAgeSeeder::class,
+            LibWeightForHeightSeeder::class,
+            LibLengthHeightForAgeSeeder::class,
         ]);
     }
 }

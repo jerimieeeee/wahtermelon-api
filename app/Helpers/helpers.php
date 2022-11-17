@@ -56,3 +56,33 @@ if(!function_exists('get_postpartum_week')) {
     }
 
 }
+
+if(!function_exists('compute_bmi')) {
+    /**
+     * @param float $weight
+     * @param float $height
+     * @return array
+     */
+
+    function compute_bmi(float $weight, float $height): array
+    {
+        $height = $height / 100;
+        $bmi = $weight / ($height * $height);
+        $bmiClass = "";
+        if ($bmi < 18.5) {
+            $bmiClass = "Underweight";
+            $obesity = "N";
+        } else if ($bmi >= 18.5 && $bmi < 23) {
+            $bmiClass = "Normal";
+            $obesity = "N";
+        } else if ($bmi >= 23 && $bmi < 25) {
+            $bmiClass = "Overweight";
+            $obesity = "N";
+        } else if ($bmi >= 25) {
+            $bmiClass = "Obese";
+            $obesity = "Y";
+        }
+        return array($bmi, $bmiClass);
+    }
+
+}

@@ -27,8 +27,12 @@ class PatientVitalsRequest extends FormRequest
     public function validatedWithCasts(): array
     {
         $patient = Patient::find(request()->patient_id);
+        $gender = $patient->gender;
         $years = $patient->birthdate->diffInYears(request()->vitals_date);
         $months = $patient->birthdate->diffInMonths(request()->vitals_date);
+        if($years > 6 && isset(request()->patient_weight) && request()->patient_height) {
+            list($bmi, $bmiClass) = compute_bmi(request()->patient_weight, request()->patient_height);
+        }
         return array_merge($this->validated(), [
             'patient_age_years' => $years,
             'patient_age_months' => $months
