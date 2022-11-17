@@ -18,3 +18,4 @@ yarn-error.log
 resources/docs/
 resources/views/scribe/
 .scribe/
+public/vendor/scribe/
