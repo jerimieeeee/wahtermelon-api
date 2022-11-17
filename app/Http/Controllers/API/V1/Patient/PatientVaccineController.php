@@ -39,7 +39,7 @@ class PatientVaccineController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = PatientVaccine::query()
+        $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
                 ->when(isset($request->patient_id), function($query) use($request){
                     return $query->wherePatientId($request->patient_id);
                 });
