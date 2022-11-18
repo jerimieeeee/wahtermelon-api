@@ -20,7 +20,7 @@ class ConsultationTest extends TestCase
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'physician_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'consult_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'consult_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),
             'is_pregnant' => fake()->boolean(),
             'consult_done' => fake()->boolean(),
             'pt_group' => fake()->randomElement(['mc','ncd','cc']),

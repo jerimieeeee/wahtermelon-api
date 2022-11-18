@@ -36,6 +36,9 @@ class PatientVitalsRequest extends FormRequest
             $patientBmi = new PatientVitalsService();
             list($weight, $height, $bmi, $bmiClass) = $patientBmi->get_patient_bmi();
         }
+        if($months < 72) {
+
+        }
         return array_merge($this->validated(), [
             'patient_bmi' => ($height != null && $weight != null) ? $bmi : null,
             'patient_bmi_class' => ($height != null && $weight != null) ? $bmiClass : null,

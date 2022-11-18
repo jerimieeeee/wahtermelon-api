@@ -22,7 +22,9 @@ class Consult extends Model
   protected $guarded = ['id',];
 
   protected $casts = [
-    'consult_date' => 'date:Y-m-d',
+    'consult_date' => 'datetime:Y-m-d H:i:s',
+    'is_pregnant' => 'boolean',
+    'consult_done' => 'boolean'
 ];
 
 public function getRouteKeyName()

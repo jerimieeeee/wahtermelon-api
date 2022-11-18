@@ -2,6 +2,7 @@
 
 namespace App\Services\Patient;
 
+use App\Models\V1\Libraries\LibWeightForAge;
 use App\Models\V1\Patient\PatientVitals;
 
 class PatientVitalsService
@@ -54,6 +55,11 @@ class PatientVitalsService
             list($bmi, $bmiClass) = compute_bmi($weight, $height);
         }
         return array($weight, $height, $bmi, $bmiClass);
+    }
+
+    public function get_weight_for_age($ageMonth, $gender, $weight, $height)
+    {
+        $weightForAge = LibWeightForAge::query();
     }
 
 }
