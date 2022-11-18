@@ -24,6 +24,7 @@ class ConsultResource extends JsonResource
             'consult_date' => $this->consult_date->format('Y-m-d H:i:s'),
             'physician_id' => $this->when(!$this->relationLoaded('physician'),$this->physician_id),
             'physician' => $this->whenLoaded('physician'),
+            'vitals' => $this->when($this->relationLoaded('vitals'), PatientVitalsResource::collection($this->vitals)),
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,

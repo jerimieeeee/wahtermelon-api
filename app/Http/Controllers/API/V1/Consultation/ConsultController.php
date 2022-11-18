@@ -40,7 +40,7 @@ class ConsultController extends Controller
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', '=', $request->patient_id);
             })
-            ->with('user', 'patient', 'physician')
+            ->with('user', 'patient', 'physician', 'vitals')
 
             ->where('consult_done', '=', $request->consult_done ?? 0);
 

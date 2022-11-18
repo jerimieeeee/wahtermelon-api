@@ -60,4 +60,15 @@ class Consult extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function vitals()
+    {
+        return $this->hasMany(PatientVitals::class, 'patient_id', 'patient_id')
+                ->selectRaw('patient_vitals.*')
+                ->join('consults', function($join){
+                    $join->on(DB::raw("consults.patient_id"), "=", DB::raw("patient_vitals.patient_id"));
+                    $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
+                })
+                ->orderBy('vitals_date', 'DESC');
+    }
+
 }
