@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             LibWeightForAgeSeeder::class,
             LibWeightForHeightSeeder::class,
             LibLengthHeightForAgeSeeder::class,
+            LibFamilyRoleSeeder::class,
         ]);
     }
 }
