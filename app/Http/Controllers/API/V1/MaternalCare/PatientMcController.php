@@ -42,7 +42,7 @@ class PatientMcController extends Controller
             }
             $query = PatientMc::where('id', $mc->id);
             $patientMc = QueryBuilder::for($query)
-                ->with('preRegister', 'postRegister', 'prenatal', 'postpartum')
+                ->with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')
                 ->first();
             return  new PatientMcResource($patientMc);
 
@@ -52,12 +52,12 @@ class PatientMcController extends Controller
         {
             $query = PatientMc::where('patient_id', $request->patient_id);
             $patientMc = QueryBuilder::for($query)
-                ->with('preRegister', 'postRegister', 'prenatal', 'postpartum')
+                ->with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')
                 ->get();
             return PatientMcResource::collection($patientMc->sortByDesc('preRegister.pre_registration_date')->sortBy('postRegister.post_registration_date'));
         }
 
-        $data = PatientMc::with('preRegister', 'postRegister', 'prenatal', 'postpartum')->get();
+        $data = PatientMc::with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')->get();
         return PatientMcResource::collection($data)->response();
     }
 
@@ -81,7 +81,7 @@ class PatientMcController extends Controller
      */
     public function show(PatientMc $mc)
     {
-        return new PatientMcResource($mc->loadMissing('preRegister', 'postRegister', 'prenatal', 'postpartum'));
+        return new PatientMcResource($mc->loadMissing('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor'));
     }
 
     /**

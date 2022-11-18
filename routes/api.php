@@ -129,6 +129,12 @@ Route::prefix('v1')->group(function (){
                 Route::get('mc-postpartum/{mcPostpartum}', 'show');
                 Route::post('mc-postpartum', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcRiskController::class)
+            ->group(function() {
+                //Route::get('mc-risk-factors/{mcRisk}', 'show');
+                Route::get('mc-risk-factors', 'index');
+                Route::post('mc-risk-factors', 'store');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

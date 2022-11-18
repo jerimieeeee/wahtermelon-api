@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignUuid('patient_mc_id')->index()->constrained('patient_mc');
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->foreignId('risk_id')->constrained('lib_mc_risk_factors');
+            $table->foreignId('risk_id')->index()->constrained('lib_mc_risk_factors');
             $table->date('date_detected')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -17,8 +17,9 @@ class ConsultResource extends JsonResource
         return [
             'id' => $this->id,
             'patient_id' => $this->patient_id,
-            'user_id' => $this->user_id,
-            'physician_id' => $this->physician_id,
+            'user_id' => $this->user,
+            'consult_date' => $this->consult_date->format('Y-m-d H:i:s'),
+            'physician_id' => $this->physician,
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,

@@ -75,4 +75,9 @@ class PatientMc extends Model
     {
         return $this->belongsTo(LibMcPregnancyTermination::class);
     }
+
+    public function riskFactor()
+    {
+        return $this->hasMany(ConsultMcRisk::class);
+    }
 }
