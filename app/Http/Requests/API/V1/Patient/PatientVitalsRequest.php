@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Facility;
+use App\Services\Patient\PatientVitalsService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientVitalsRequest extends FormRequest
@@ -32,50 +33,8 @@ class PatientVitalsRequest extends FormRequest
         $years = $patient->birthdate->diffInYears(request()->vitals_date);
         $months = $patient->birthdate->diffInMonths(request()->vitals_date);
         if($years > 6) {
-            if(isset(request()->patient_height) && isset(request()->patient_weight)) {
-                $height = request()->patient_height;
-                $weight = request()->patient_weight;
-            } else if(isset(request()->patient_height) && !isset(request()->patient_weight)) {
-                $data = PatientVitals::select('patient_weight')
-                        ->wherePatientId(request()->patient_id)
-                        ->whereNotNull('patient_weight')
-                        ->orderBy('vitals_date', 'DESC')
-                        ->first();
-                $height = request()->patient_height;
-                $weight = $data ? $data->patient_weight : null;
-
-            } else if(!isset(request()->patient_height) && isset(request()->patient_weight)) {
-                $data = PatientVitals::select('patient_height')
-                    ->wherePatientId(request()->patient_id)
-                    ->whereNotNull('patient_height')
-                    ->orderBy('vitals_date', 'DESC')
-                    ->first();
-                $height = $data ? $data->patient_height : null;
-                $weight = request()->patient_weight;
-
-            } else {
-                $data = PatientVitals::select('patient_height', 'patient_weight')->addSelect([
-                        'patient_height' => PatientVitals::select('patient_height')
-                            ->whereColumn('patient_id', 'patient_vitals.patient_id')
-                            ->whereNotNull('patient_height')
-                            ->orderBy('vitals_date', 'DESC')->limit(1),
-                        'patient_weight' => PatientVitals::select('patient_weight')
-                            ->whereColumn('patient_id', 'patient_vitals.patient_id')
-                            ->whereNotNull('patient_weight')
-                            ->orderBy('vitals_date', 'DESC')->limit(1),
-                    ])
-                    ->wherePatientId(request()->patient_id)->havingRaw('patient_height IS NOT NULL AND patient_weight IS NOT NULL')
-                    ->orderBy('vitals_date', 'DESC')
-                    ->first();
-                $height = $data ? $data->patient_height : null;
-                $weight = $data ? $data->patient_weight : null;
-            }
-            if($weight != null && $height != null) {
-                list($bmi, $bmiClass) = compute_bmi($weight, $height);
-                //dd($bmiClass);
-            }
-
-            //dd($bmi);
+            $patientBmi = new PatientVitalsService();
+            list($weight, $height, $bmi, $bmiClass) = $patientBmi->get_patient_bmi();
         }
         return array_merge($this->validated(), [
             'patient_bmi' => ($height != null && $weight != null) ? $bmi : null,
