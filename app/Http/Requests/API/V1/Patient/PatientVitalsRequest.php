@@ -34,16 +34,37 @@ class PatientVitalsRequest extends FormRequest
         $months = $patient->birthdate->diffInMonths(request()->vitals_date);
         $patientVitals = new PatientVitalsService();
         if($years > 6) {
-
             list($weight, $height, $bmi, $bmiClass) = $patientVitals->get_patient_bmi();
+        } else{
+            $height = "";
+            $weight = "";
         }
         if($months < 72) {
-            $weightForAge = $patientVitals->get_weight_for_age($months, $gender, request()->patient_weight);
-            dd($weightForAge->wt_class);
+            if(isset(request()->patient_weight)) {
+                $weightForAge = $patientVitals->get_weight_for_age($months, $gender, request()->patient_weight);
+                $weightForAgeClass = $weightForAge ? $weightForAge->wt_class : null;
+            }
+            if(isset(request()->patient_height)) {
+                $heightForAge = $patientVitals->get_height_for_age($months, $gender, request()->patient_height);
+                $heightForAgeClass = $heightForAge ? $heightForAge->lt_class : null;
+            }
+            if(isset(request()->patient_weight) && isset(request()->patient_height)) {
+                $weightForHeight = $patientVitals->get_weight_for_height($months, $gender, request()->patient_weight, request()->patient_height);
+                $weightForHeightClass = $weightForHeight ? $weightForHeight->wt_class : null;
+            }
+
+        } else {
+            $weightForAge = "";
+            $heightForAge = "";
+            $weightForHeight = "";
         }
+
         return array_merge($this->validated(), [
             'patient_bmi' => ($height != null && $weight != null) ? $bmi : null,
             'patient_bmi_class' => ($height != null && $weight != null) ? $bmiClass : null,
+            'patient_weight_for_age' => $weightForAge != null ? $weightForAgeClass : null,
+            'patient_height_for_age' => $heightForAge != null ? $heightForAgeClass : null,
+            'patient_weight_for_height' => $weightForHeight != null ? $weightForHeightClass : null,
             'patient_age_years' => $years,
             'patient_age_months' => $months
         ]);

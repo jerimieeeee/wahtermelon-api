@@ -33,8 +33,8 @@ class ConsultMcPrenatalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ConsultMcPrenatalRequest $request
+     * @return Response
      */
     public function store(ConsultMcPrenatalRequest $request)
     {
@@ -45,7 +45,7 @@ class ConsultMcPrenatalController extends Controller
         //return $request->validatedWithCasts();
         ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date], $request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
-        return $mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date');
+        return ConsultMcPrenatalResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date'));
     }
 
     /**

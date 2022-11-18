@@ -35,16 +35,18 @@ class MaternalCareRecordService
 
     /**
      * @param string $request
-     * @return Collection
+     * @param string $model
+     * @param string $column
+     * @return mixed
      */
-    public function updateVisitSequence(string $request, string $model, string $column): Collection
+    public function updateVisitSequence(string $request, string $model, string $column)
     {
         $model = app('App\\Models\\V1\\MaternalCare\\' . $model);
         $visitSequence = $model::where('patient_mc_id', $request)->orderBy($column, 'ASC')->get();
         $visitSequence->map(function ($item, $key) {
             $item->update(['visit_sequence' =>  $key + 1]);
         });
-        return $visitSequence;
+        return $model::where('patient_mc_id', $request)->orderBy($column, 'DESC')->get();
     }
 
 }

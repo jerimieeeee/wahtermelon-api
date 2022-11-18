@@ -2,7 +2,9 @@
 
 namespace App\Services\Patient;
 
+use App\Models\V1\Libraries\LibLengthHeightForAge;
 use App\Models\V1\Libraries\LibWeightForAge;
+use App\Models\V1\Libraries\LibWeightForHeight;
 use App\Models\V1\Patient\PatientVitals;
 
 class PatientVitalsService
@@ -47,6 +49,7 @@ class PatientVitalsService
             ])
                 ->wherePatientId(request()->patient_id)->havingRaw('patient_height IS NOT NULL AND patient_weight IS NOT NULL')
                 ->orderBy('vitals_date', 'DESC')
+                ->toBase()
                 ->first();
             $height = $data ? $data->patient_height : null;
             $weight = $data ? $data->patient_weight : null;
@@ -57,7 +60,7 @@ class PatientVitalsService
         return array($weight, $height, $bmi, $bmiClass);
     }
 
-    public function get_weight_for_age($ageMonth, $gender, $weight = "", $height = "")
+    public function get_weight_for_age($ageMonth, $gender, $weight)
     {
         $weightForAge = LibWeightForAge::query()
             ->whereAgeMonth($ageMonth)
@@ -71,8 +74,48 @@ class PatientVitalsService
                     ELSE ? BETWEEN weight_min AND weight_max
                 END)
             ", [$weight, $weight, $weight])
+            ->toBase()
             ->first();
         return $weightForAge;
+    }
+
+    public function get_height_for_age($ageMonth, $gender, $height)
+    {
+        $heightForAge = LibLengthHeightForAge::query()
+            ->whereAgeMonth($ageMonth)
+            ->whereGender($gender)
+            ->whereRaw("
+                (CASE
+                    WHEN length_min = length_max AND lt_class = 'Severely Stunted'
+                    THEN ? <= length_max
+                    WHEN length_min = length_max AND lt_class = 'Tall'
+                    THEN ? >= length_max
+                    ELSE ? BETWEEN length_min AND length_max
+                END)
+            ", [$height, $height, $height])
+            ->toBase()
+            ->first();
+        return $heightForAge;
+    }
+
+    public function get_weight_for_height($ageMonth, $gender, $weight, $height)
+    {
+        $weightForHeight = LibWeightForHeight::query()
+            ->whereRaw("? BETWEEN age_min AND age_max", $ageMonth)
+            ->whereGender($gender)
+            ->whereRaw("height_cm = (CEILING(? / 0.5) * 0.5)", $height)
+            ->whereRaw("
+                (CASE
+                    WHEN weight_min = weight_max AND wt_class = 'Severely Wasted'
+                    THEN ? <= weight_max
+                    WHEN weight_min = weight_max AND wt_class = 'Obese'
+                    THEN ? >= weight_max
+                    ELSE ? BETWEEN weight_min AND weight_max
+                END)
+            ", [$weight, $weight, $weight])
+            ->toBase()
+            ->first();
+        return $weightForHeight;
     }
 
 }

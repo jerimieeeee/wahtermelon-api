@@ -39,7 +39,7 @@ class ConsultMcPostpartumController extends Controller
     {
         ConsultMcPostpartum::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'postpartum_date' => $request->postpartum_date], $request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
-        return $mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPostpartum', 'postpartum_date');
+        return ConsultMcPostpartumResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPostpartum', 'postpartum_date'));
     }
 
     /**
