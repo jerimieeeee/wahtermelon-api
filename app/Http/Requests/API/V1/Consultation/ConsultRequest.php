@@ -49,7 +49,7 @@ class ConsultRequest extends FormRequest
             ],
             'consult_date' => [
                 'description' => 'Date Consult',
-                'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),
             ],
             'physician_id' => [
                 'description' => 'ID of Physician',
