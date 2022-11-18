@@ -24,12 +24,25 @@ class ConsultController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @queryParam patient_id Identification code of the patient.
+     * @queryParam pt_group Patient group. Example: cn
+     * @queryParam consult_done Consultation Status. Example: 1
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Consult::query()
+            ->when(isset($request->pt_group), function($q) use($request){
+                $q->where('pt_group', $request->pt_group);
+            })
+            ->when(isset($request->patient_id), function($q) use($request){
+                $q->where('patient_id', '=', $request->patient_id);
+            })
+            ->where('consult_done', '=', $request->consult_done ?? 0)
+            ->get();
+
+
+        return ConsultResource::collection($query);
     }
 
     /**
@@ -54,15 +67,18 @@ class ConsultController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * @queryParam pt_group Patient group. Example: cn
+     * @queryParam consult_done Consultation Status. Example: 1
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Consult $consult, Request $request)
     {
         $query = Consult::where('patient_id', $consult->patient_id)
-        ->where('pt_group', $request->pt_group)
-        ->where('consult_done', '=', 0)
+            ->when(isset($request->pt_group), function($q) use($request){
+                $q->where('pt_group', $request->pt_group);
+            })
+        ->where('consult_done', '=', $request->consult_done ?? 0)
         ->get();
 
 

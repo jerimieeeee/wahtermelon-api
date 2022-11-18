@@ -57,9 +57,22 @@ class PatientVitalsService
         return array($weight, $height, $bmi, $bmiClass);
     }
 
-    public function get_weight_for_age($ageMonth, $gender, $weight, $height)
+    public function get_weight_for_age($ageMonth, $gender, $weight = "", $height = "")
     {
-        $weightForAge = LibWeightForAge::query();
+        $weightForAge = LibWeightForAge::query()
+            ->whereAgeMonth($ageMonth)
+            ->whereGender($gender)
+            ->whereRaw("
+                (CASE
+                    WHEN weight_min = weight_max AND wt_class = 'Severely Underweight'
+                    THEN ? <= weight_max
+                    WHEN weight_min = weight_max AND wt_class = 'Overweight'
+                    THEN ? >= weight_max
+                    ELSE ? BETWEEN weight_min AND weight_max
+                END)
+            ", [$weight, $weight, $weight])
+            ->first();
+        return $weightForAge;
     }
 
 }

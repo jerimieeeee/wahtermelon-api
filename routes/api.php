@@ -78,6 +78,7 @@ Route::prefix('v1')->group(function (){
             Route::post('cn-records', 'store');
             Route::post('cn-records/{id}', 'update');
             Route::get('cn-records/{consult}', 'show');
+            Route::get('cn-records', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
         ->group(function() {

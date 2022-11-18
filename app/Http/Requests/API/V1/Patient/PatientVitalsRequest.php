@@ -32,12 +32,14 @@ class PatientVitalsRequest extends FormRequest
         $gender = $patient->gender;
         $years = $patient->birthdate->diffInYears(request()->vitals_date);
         $months = $patient->birthdate->diffInMonths(request()->vitals_date);
+        $patientVitals = new PatientVitalsService();
         if($years > 6) {
-            $patientBmi = new PatientVitalsService();
-            list($weight, $height, $bmi, $bmiClass) = $patientBmi->get_patient_bmi();
+
+            list($weight, $height, $bmi, $bmiClass) = $patientVitals->get_patient_bmi();
         }
         if($months < 72) {
-
+            $weightForAge = $patientVitals->get_weight_for_age($months, $gender, request()->patient_weight);
+            dd($weightForAge->wt_class);
         }
         return array_merge($this->validated(), [
             'patient_bmi' => ($height != null && $weight != null) ? $bmi : null,
