@@ -39,6 +39,7 @@ class ConsultController extends Controller
                 $q->where('patient_id', '=', $request->patient_id);
             })
             ->where('consult_done', '=', $request->consult_done ?? 0)
+            ->orderBy('consult_date', 'DESC')
             ->get();
 
 
@@ -79,9 +80,8 @@ class ConsultController extends Controller
                 $q->where('pt_group', $request->pt_group);
             })
         ->where('consult_done', '=', $request->consult_done ?? 0)
+        ->orderBy('consult_date', 'DESC')
         ->get();
-
-
         return ConsultResource::collection($query);
 
     }
