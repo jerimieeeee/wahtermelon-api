@@ -4,6 +4,7 @@ namespace App\Models\V1\Consultation;
 
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientVitals;
 use DateTime;
 use Carbon\Carbon;
 use DateTimeInterface;

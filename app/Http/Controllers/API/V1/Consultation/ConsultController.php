@@ -24,8 +24,10 @@ class ConsultController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      * @queryParam patient_id Identification code of the patient.
      * @queryParam pt_group Patient group. Example: cn
+     * @queryParam sort string Sort consult_date. Add hyphen (-) to descend the list: e.g. consult_date. Example: consult_date
      * @queryParam consult_done Consultation Status. Example: 1
      * @return \Illuminate\Http\Response
      */
@@ -38,12 +40,18 @@ class ConsultController extends Controller
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', '=', $request->patient_id);
             })
-            ->where('consult_done', '=', $request->consult_done ?? 0)
-            ->orderBy('consult_date', 'DESC')
+            ->with('user', 'patient', 'physician')
+
+            ->where('consult_done', '=', $request->consult_done ?? 0);
+
+        $consult = QueryBuilder::for($query)
+            ->defaultSort('consult_date')
+            ->allowedSorts('consult_date')
             ->get();
 
 
-        return ConsultResource::collection($query);
+
+        return ConsultResource::collection($consult);
     }
 
     /**
@@ -79,6 +87,7 @@ class ConsultController extends Controller
             ->when(isset($request->pt_group), function($q) use($request){
                 $q->where('pt_group', $request->pt_group);
             })
+        ->with('user', 'patient', 'physician')
         ->where('consult_done', '=', $request->consult_done ?? 0)
         ->orderBy('consult_date', 'DESC')
         ->get();

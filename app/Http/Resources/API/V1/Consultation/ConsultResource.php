@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1\Consultation;
 
+use App\Http\Resources\API\V1\Patient\PatientVitalsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ConsultResource extends JsonResource
@@ -16,10 +17,13 @@ class ConsultResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient_id' => $this->patient_id,
-            'user_id' => $this->user,
+            'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
+            'patient' => $this->whenLoaded('patient'),
+            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user' => $this->whenLoaded('user'),
             'consult_date' => $this->consult_date->format('Y-m-d H:i:s'),
-            'physician_id' => $this->physician,
+            'physician_id' => $this->when(!$this->relationLoaded('physician'),$this->physician_id),
+            'physician' => $this->whenLoaded('physician'),
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,
