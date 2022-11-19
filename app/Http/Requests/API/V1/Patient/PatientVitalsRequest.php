@@ -40,6 +40,9 @@ class PatientVitalsRequest extends FormRequest
             $weight = "";
         }
         if($months < 72) {
+            $weightForAge = "";
+            $heightForAge = "";
+            $weightForHeight = "";
             if(isset(request()->patient_weight)) {
                 $weightForAge = $patientVitals->get_weight_for_age($months, $gender, request()->patient_weight);
                 $weightForAgeClass = $weightForAge ? $weightForAge->wt_class : null;
