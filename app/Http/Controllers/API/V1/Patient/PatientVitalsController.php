@@ -72,13 +72,13 @@ class PatientVitalsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param PatientVitalsRequest $request
+     * @param PatientVitals $vitals
      * @return \Illuminate\Http\Response
      */
     public function update(PatientVitalsRequest $request, PatientVitals $vitals)
     {
-        $vitals->update($request->validated());
+        $vitals->update($request->validatedWithCasts());
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
