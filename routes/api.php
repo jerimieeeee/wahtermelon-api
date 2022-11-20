@@ -23,10 +23,11 @@ Route::prefix('v1')->group(function (){
     Route::post('login', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'login']);
 
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
+    //->middleware('auth:api')
     ->group(function (){
         Route::get('users', 'index');
         Route::get('users/{user}', 'show');
-        Route::post('register', 'store');
+        Route::post('register', 'store')->withoutMiddleware('auth:api');
         Route::put('users/{user}', 'update');
     });
 
