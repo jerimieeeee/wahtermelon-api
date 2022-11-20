@@ -24,8 +24,10 @@ class HouseholdFolderRequest extends FormRequest
     public function rules()
     {
         return [
-            'facility_code' => 'exists:facilities,code',
+            'facility_code' => 'required|exists:facilities,code',
             'user_id' => 'required|exists:users,id',
+            'patient_id' => 'required|exists:patients,id',
+            'family_role_code' => 'required|exists:lib_family_roles,code',
             'address' => 'required',
             'barangay_code' => 'required|exists:barangays,code',
             'cct_date' => 'date|date_format:Y-m-d|before:tomorrow|nullable',

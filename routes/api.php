@@ -39,6 +39,17 @@ Route::prefix('v1')->group(function (){
         Route::put('patient/{patient}', 'update')->name('patient.update');
     });
 
+    //House APIs
+    Route::prefix('households')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
+            ->group(function() {
+                Route::get('household-folders', 'index');
+                Route::get('household-folders/{householdFolder}', 'show');
+                Route::post('household-folders', 'store');
+                Route::put('household-folders/{householdFolder}', 'update');
+            });
+    });
+
 
     //Patient Vaccines APIs
     Route::prefix('patient-vaccines')->group(function () {

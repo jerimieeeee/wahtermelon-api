@@ -2,6 +2,10 @@
 
 namespace App\Models\V1\Household;
 
+use App\Models\User;
+use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Barangay;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
@@ -35,8 +39,19 @@ class HouseholdFolder extends Model
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function householdMember()
+    {
+        return $this->hasMany(HouseholdMember::class);
+    }
+
 }

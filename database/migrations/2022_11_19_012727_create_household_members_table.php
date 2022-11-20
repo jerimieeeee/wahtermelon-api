@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('household_members', function (Blueprint $table) {
-            $table->foreignId('household_folder_id')->constrained()->onDelete('cascade');
-            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('household_folder_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('patient_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->char('family_role_code',10)->index();
             $table->timestamps();
 
