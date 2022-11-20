@@ -3,7 +3,6 @@
 namespace App\Models\V1\Household;
 
 use App\Models\User;
-use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasUuid;

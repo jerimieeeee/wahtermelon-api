@@ -6,17 +6,34 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Household\HouseholdFolderRequest;
 use App\Http\Resources\API\V1\Household\HouseholdFolderResource;
 use App\Models\V1\Household\HouseholdFolder;
+use App\Models\V1\Household\HouseholdMember;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Household Information Management
+ *
+ * APIs for managing household information
+ * @subgroup Household Folder
+ * @subgroupDescription Household folder management.
+ */
 class HouseholdFolderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Household\HouseholdFolderResource
+     * @apiResourceModel App\Models\V1\Household\HouseholdFolder paginate=15
+     * @param Request $request
+     * @return ResourceCollection
      */
-    public function index(Request $request)
+    public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
@@ -38,37 +55,58 @@ class HouseholdFolderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResourceModel App\Models\V1\Household\HouseholdFolder
+     * @param HouseholdFolderRequest $requestS
+     * @return JsonResponse
      */
     public function store(HouseholdFolderRequest $request)
     {
-        $data = HouseholdFolder::create($request->validated());
-        $data->householdMember()->create($request->validated());
-        return HouseholdFolderResource::collection($data);
+        return DB::transaction(function() use($request){
+            $checkPatient = HouseholdMember::wherePatientId($request->safe()->patient_id)->first();
+            if($checkPatient) {
+                return response()->json(['message' => 'Patient record is already in the household folder']);
+            }
+            $data = HouseholdFolder::create($request->validated());
+            $data->householdMember()->updateOrCreate($request->safe()->only(['patient_id', 'user_id', 'family_role_code']));
+            return new HouseholdFolderResource($data);
+        });
+
+
     }
 
-    /**
+     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Household\HouseholdFolderResource
+     * @apiResourceModel App\Models\V1\Household\HouseholdFolder
+     * @param PatientRequest $request
+     * @return HouseholdFolderResource
      */
-    public function show($id)
+    public function show(HouseholdFolder $householdFolder): HouseholdFolderResource
     {
-        //
+        $query = HouseholdFolder::where('id', $householdFolder->id);
+        $householdFolder = QueryBuilder::for($query)
+            ->first();
+        return new HouseholdFolderResource($householdFolder);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  HouseholdFolderRequest $request
+     * @param  HouseholdFolder $householdFolder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HouseholdFolderRequest $request, HouseholdFolder $householdFolder)
     {
-        //
+        return DB::transaction(function() use($request, $householdFolder){
+            $id = $householdFolder->id;
+            $householdFolder->update($request->safe()->except(['patient_id', 'user_id', 'family_role_code']));
+            HouseholdMember::updateOrCreate($request->safe()->only(['patient_id']), array_merge($request->safe()->only(['patient_id', 'user_id', 'family_role_code']), ['household_folder_id' => $id]));
+            return response()->json(['status' => 'Update successful!'], 200);
+        });
     }
 
     /**

@@ -22,7 +22,7 @@ class HouseholdFolderResource extends JsonResource
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
             'address' => $this->address,
-            'barangay' => new BarangayResource($this->barangay),
+            'barangay_code' => $this->barangay_code,
             'cct_date' => $this->cct_date?->format('Y-m-d'),
             'cct_id' => $this->cct_id,
             'household_member' => HouseholdMemberResource::collection($this->householdMember),

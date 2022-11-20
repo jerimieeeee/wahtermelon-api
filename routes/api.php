@@ -40,7 +40,7 @@ Route::prefix('v1')->group(function (){
         Route::put('patient/{patient}', 'update')->name('patient.update');
     });
 
-    //House APIs
+    //Households APIs
     Route::prefix('households')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
             ->group(function() {
