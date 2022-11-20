@@ -21,11 +21,24 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function (){
     Route::post('login', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'login']);
-    Route::post('register', [\App\Http\Controllers\API\V1\UserController::class, 'store']);
 
-    Route::get('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'index'])->name('patient.index');
-    Route::get('patient/{patient}', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'show'])->name('patient.show');
-    Route::post('patient', [\App\Http\Controllers\API\V1\Patient\PatientController::class, 'store'])->name('patient.store');
+    Route::controller(\App\Http\Controllers\API\V1\UserController::class)
+    ->group(function (){
+        Route::get('users', 'index');
+        Route::get('users/{user}', 'show');
+        Route::post('register', 'store');
+        Route::put('users/{user}', 'update');
+    });
+
+
+    Route::controller(\App\Http\Controllers\API\V1\Patient\PatientController::class)
+    ->group(function (){
+        Route::get('patient', 'index')->name('patient.index');
+        Route::get('patient/{patient}', 'show')->name('patient.show');
+        Route::post('patient', 'store')->name('patient.store');
+        Route::put('patient/{patient}', 'update')->name('patient.update');
+    });
+
 
     //Patient Vaccines APIs
     Route::prefix('patient-vaccines')->group(function () {

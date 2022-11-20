@@ -85,13 +85,14 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  PatientRequest  $request
+     * @param  Patient $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientRequest $request, Patient $patient)
     {
-        //
+        $patient->update($request->validated());
+        return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
