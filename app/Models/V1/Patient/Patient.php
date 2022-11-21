@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Patient extends Model
 {
@@ -90,9 +91,14 @@ class Patient extends Model
         return $this->hasMany(PatientVaccine::class);
     }
 
-    public function householdMember()
+    public function householdFolder()
     {
         return $this->hasOneThrough(HouseholdFolder::class, HouseholdMember::class, 'patient_id', 'id', 'id', 'household_folder_id');
+    }
+
+    public function householdMember()
+    {
+        return $this->hasOne(HouseholdMember::class);
     }
 
 }

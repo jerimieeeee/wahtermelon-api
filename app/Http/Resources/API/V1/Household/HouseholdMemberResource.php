@@ -16,9 +16,11 @@ class HouseholdMemberResource extends JsonResource
     {
         return [
             'household_folder_id' => $this->household_folder_id,
-            'patient_id' => $this->patient_id,
-            'user_id' => $this->user_id,
-            'patient' => $this->patient,
+            'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
+            'patient' => $this->whenLoaded('patient'),
+            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user' => $this->whenLoaded('user'),
+            'family_role_code' => $this->family_role_code,
         ];
     }
 }
