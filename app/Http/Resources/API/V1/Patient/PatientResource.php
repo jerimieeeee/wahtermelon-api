@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1\Patient;
 
+use App\Http\Resources\API\V1\Household\HouseholdFolderResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PatientResource extends JsonResource
@@ -36,6 +37,7 @@ class PatientResource extends JsonResource
             'civil_status_code' => $this->civil_status_code,
             'consent_flag' => $this->consent_flag,
             'image_url' => $this->image_url,
+            'address' => $this->when($this->relationLoaded('householdMember'), new HouseholdFolderResource($this->householdMember)),
             'deleted_at' => $this->created_at->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),

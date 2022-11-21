@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1\Household;
 
+use App\Http\Resources\API\V1\PSGC\BarangayAddressResource;
 use App\Http\Resources\API\V1\PSGC\BarangayResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,8 @@ class HouseholdFolderResource extends JsonResource
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
             'address' => $this->address,
-            'barangay_code' => $this->barangay_code,
+            'barangay_code' => $this->when(!$this->relationLoaded('barangay'),$this->barangay_code),
+            'barangay' => $this->when($this->relationLoaded('barangay'),new BarangayAddressResource($this->barangay)),
             'cct_date' => $this->cct_date?->format('Y-m-d'),
             'cct_id' => $this->cct_id,
             'household_member' => HouseholdMemberResource::collection($this->householdMember),

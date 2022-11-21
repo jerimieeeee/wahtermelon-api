@@ -24,6 +24,7 @@ class PatientController extends Controller
      * Display a listing of the Patient resource.
      *
      * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
+     * @queryParam include string Relationship to view: e.g. householdMember Example: householdMember
      * @queryParam sort string Sort last_name, first_name, middle_name, birthdate of the patient. Add hyphen (-) to descend the list: e.g. last_name,birthdate. Example: last_name
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
@@ -41,7 +42,7 @@ class PatientController extends Controller
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             })
-            ->allowedIncludes('suffixName', 'pwdType', 'religion')
+            ->allowedIncludes('suffixName', 'pwdType', 'religion', 'householdMember')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')
             ->allowedSorts(['last_name', 'first_name', 'middle_name', 'birthdate']);
         if ($perPage === 'all') {
@@ -78,6 +79,7 @@ class PatientController extends Controller
     {
         $query = Patient::where('id', $patient->id);
         $patient = QueryBuilder::for($query)
+            ->with('householdMember')
             ->first();
         return new PatientResource($patient);
     }

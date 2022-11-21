@@ -2,6 +2,8 @@
 
 namespace App\Models\V1\Patient;
 
+use App\Models\V1\Household\HouseholdFolder;
+use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
@@ -78,15 +80,19 @@ class Patient extends Model
         return $this->hasMany(PatientMc::class);
     }
 
-    public function patientccdev(){
-
+    public function patientccdev()
+    {
         return $this->hasOne(PatientCcdev::class);
-
     }
-    public function patientvaccine(){
 
+    public function patientvaccine()
+    {
         return $this->hasMany(PatientVaccine::class);
+    }
 
+    public function householdMember()
+    {
+        return $this->hasOneThrough(HouseholdFolder::class, HouseholdMember::class, 'patient_id', 'id', 'id', 'household_folder_id')->with('barangay');
     }
 
 }

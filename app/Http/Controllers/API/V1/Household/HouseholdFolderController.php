@@ -26,6 +26,7 @@ class HouseholdFolderController extends Controller
      * Display a listing of the resource.
      *
      * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
+     * @queryParam include string Relationship to view: e.g. barangay Example: barangay
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Household\HouseholdFolderResource
@@ -43,7 +44,8 @@ class HouseholdFolderController extends Controller
                 $q->whereHas('householdMember.patient', function($q) use($request, $columns){
                     $q->search($request->filter['search'], $columns);
                 });
-            });
+            })
+            ->allowedIncludes('barangay');
 
         if ($perPage === 'all') {
             return HouseholdFolderResource::collection($household->get());
@@ -88,6 +90,7 @@ class HouseholdFolderController extends Controller
     {
         $query = HouseholdFolder::where('id', $householdFolder->id);
         $householdFolder = QueryBuilder::for($query)
+            ->allowedIncludes('barangay')
             ->first();
         return new HouseholdFolderResource($householdFolder);
     }
