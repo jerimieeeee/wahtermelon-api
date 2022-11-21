@@ -102,9 +102,9 @@ class HouseholdFolderController extends Controller
     public function update(HouseholdFolderRequest $request, HouseholdFolder $householdFolder)
     {
         return DB::transaction(function() use($request, $householdFolder){
-            $id = $householdFolder->id;
             $householdFolder->update($request->safe()->except(['patient_id', 'user_id', 'family_role_code']));
-            HouseholdMember::updateOrCreate($request->safe()->only(['patient_id']), array_merge($request->safe()->only(['patient_id', 'user_id', 'family_role_code']), ['household_folder_id' => $id]));
+            HouseholdMember::query()
+                ->updateOrCreate(['patient_id' => $request->safe()->patient_id], $request->safe()->only(['user_id', 'family_role_code']) + ['household_folder_id' => $householdFolder->id]);
             return response()->json(['status' => 'Update successful!'], 200);
         });
     }

@@ -12,12 +12,8 @@ class HouseholdMember extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = null;
-    public $incrementing = false;
 
     protected $fillable = ['household_folder_id', 'patient_id', 'user_id', 'family_role_code'];
-
-    protected $hidden = ['pivot'];
 
     protected function serializeDate(DateTimeInterface $date)
     {
