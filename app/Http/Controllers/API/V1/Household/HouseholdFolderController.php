@@ -45,7 +45,7 @@ class HouseholdFolderController extends Controller
                     $q->search($request->filter['search'], $columns);
                 });
             })
-            ->with('householdMember')
+            ->with('householdMember.patient')
             ->allowedIncludes('barangay');
 
         if ($perPage === 'all') {
