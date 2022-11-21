@@ -58,6 +58,7 @@ class HouseholdFolderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @bodyParam status string Status to view: e.g. new Example: new
      * @apiResourceAdditional status=Success
      * @apiResourceModel App\Models\V1\Household\HouseholdFolder
      * @param HouseholdFolderRequest $requestS
@@ -66,12 +67,15 @@ class HouseholdFolderController extends Controller
     public function store(HouseholdFolderRequest $request)
     {
         return DB::transaction(function() use($request){
-            $checkPatient = HouseholdMember::wherePatientId($request->safe()->patient_id)->first();
-            if($checkPatient) {
-                return response()->json(['message' => 'Patient record is already in the household folder']);
+            if(isset($request->status) && $request->status != 'new') {
+                $checkPatient = HouseholdMember::wherePatientId($request->safe()->patient_id)->first();
+                if ($checkPatient) {
+                    return response()->json(['message' => 'Patient record is already in the household folder']);
+                }
             }
             $data = HouseholdFolder::create($request->validated());
-            $data->householdMember()->updateOrCreate($request->safe()->only(['patient_id', 'user_id', 'family_role_code']));
+            //$data->householdMember()->updateOrCreate($request->safe()->only('patient_id'), $request->safe()->only(['patient_id', 'user_id', 'family_role_code']));
+            $member = HouseholdMember::updateOrCreate(['patient_id' => $request->safe()->patient_id], $request->safe()->only(['user_id', 'family_role_code']) + ['household_folder_id' => $data->id]);
             return new HouseholdFolderResource($data);
         });
 
