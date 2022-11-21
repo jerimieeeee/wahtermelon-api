@@ -32,7 +32,7 @@ class PatientMcPostRegistration extends Model
         'admission_date' => 'datetime:Y-m-d H:i:s',
         'discharge_date' => 'datetime:Y-m-d H:i:s',
         'delivery_date' => 'datetime:Y-m-d H:i:s',
-        'breastfed_date' => 'date:Y-m-d H:i:s',
+        'breastfed_date' => 'date:Y-m-d',
         'healthy_baby' => 'boolean',
         'breastfeeding' => 'boolean',
         'end_pregnancy' => 'boolean',
