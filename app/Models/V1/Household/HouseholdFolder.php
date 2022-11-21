@@ -33,6 +33,11 @@ class HouseholdFolder extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function setAddressAttribute($value)
+    {
+        $this->attributes["address"] = ucwords(strtolower($value));
+    }
+
     public function facility()
     {
         return $this->belongsTo(Facility::class, 'facility_code', 'code');

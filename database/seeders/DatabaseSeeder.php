@@ -47,6 +47,11 @@ class DatabaseSeeder extends Seeder
             LibWeightForHeightSeeder::class,
             LibLengthHeightForAgeSeeder::class,
             LibFamilyRoleSeeder::class,
+            LibPhilhealthMembershipTypeSeeder::class,
+            LibPhilhealthMembershipCategorySeeder::class,
+            LibPhilhealthPackageTypeSeeder::class,
+            LibPhilhealthEnlistmentStatusSeeder::class,
+            LibMemberRelationshipSeeder::class,
         ]);
     }
 }

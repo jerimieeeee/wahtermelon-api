@@ -256,6 +256,22 @@ Route::prefix('v1')->group(function (){
         Route::get('family-roles', [\App\Http\Controllers\API\V1\Libraries\LibFamilyRoleController::class, 'index'])->name('family-roles.index');
         Route::get('family-roles/{familyRole}', [\App\Http\Controllers\API\V1\Libraries\LibFamilyRoleController::class, 'show'])->name('family-roles.show');
 
+        //Philhealth Libraries
+        Route::get('membership-types', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthMembershipTypeController::class, 'index'])->name('membership-types.index');
+        Route::get('membership-types/{membershipType}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthMembershipTypeController::class, 'show'])->name('membership-types.show');
+
+        Route::get('membership-categories', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthMembershipCategoryController::class, 'index'])->name('membership-categories.index');
+        Route::get('membership-categories/{membershipCategory}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthMembershipCategoryController::class, 'show'])->name('membership-categories.show');
+
+        Route::get('member-relationships', [\App\Http\Controllers\API\V1\Libraries\LibMemberRelationshipController::class, 'index'])->name('member-relationships.index');
+        Route::get('member-relationships/{memberRelationship}', [\App\Http\Controllers\API\V1\Libraries\LibMemberRelationshipController::class, 'show'])->name('member-relationships.show');
+
+        Route::get('enlistment-status', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthEnlistmentStatusController::class, 'index'])->name('enlistment-status.index');
+        Route::get('enlistment-status/{enlistmentStatus}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthEnlistmentStatusController::class, 'show'])->name('enlistment-status.show');
+
+        Route::get('package-types', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthPackageTypeController::class, 'index'])->name('package-types.index');
+        Route::get('package-types/{packageType}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthPackageTypeController::class, 'show'])->name('package-types.show');
+
     });
 
 });
