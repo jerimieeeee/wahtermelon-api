@@ -27,7 +27,7 @@ class HouseholdFolderResource extends JsonResource
             'barangay' => $this->when($this->relationLoaded('barangay'),new BarangayAddressResource($this->barangay)),
             'cct_date' => $this->cct_date?->format('Y-m-d'),
             'cct_id' => $this->cct_id,
-            'household_member' => HouseholdMemberResource::collection($this->householdMember),
+            'household_member' => $this->when($this->relationLoaded('householdMember'), HouseholdMemberResource::collection($this->householdMember)),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

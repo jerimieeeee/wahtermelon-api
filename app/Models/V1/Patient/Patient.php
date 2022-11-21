@@ -92,7 +92,7 @@ class Patient extends Model
 
     public function householdMember()
     {
-        return $this->hasOneThrough(HouseholdFolder::class, HouseholdMember::class, 'patient_id', 'id', 'id', 'household_folder_id')->with('barangay');
+        return $this->hasOneThrough(HouseholdFolder::class, HouseholdMember::class, 'patient_id', 'id', 'id', 'household_folder_id');
     }
 
 }

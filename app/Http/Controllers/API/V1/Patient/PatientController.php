@@ -79,7 +79,7 @@ class PatientController extends Controller
     {
         $query = Patient::where('id', $patient->id);
         $patient = QueryBuilder::for($query)
-            ->with('householdMember')
+            ->with('householdMember.barangay')
             ->first();
         return new PatientResource($patient);
     }
