@@ -48,6 +48,7 @@ class PatientPhilhealthFactory extends Factory
             'member_gender' => $membershipType == 'DD' ? substr(Str::ucfirst($gender), 0, 1) : null,
             'member_relation_id' => $membershipType == 'DD' ? fake()->randomElement(LibMemberRelationship::pluck('id')->toArray()) : null,
             'employer_pin' => fake()->numerify('############'),
+            'employer_name' => fake()->company(),
             'employer_address' => fake()->address(),
         ];
     }

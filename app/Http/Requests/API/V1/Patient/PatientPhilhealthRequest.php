@@ -53,6 +53,7 @@ class PatientPhilhealthRequest extends FormRequest
             'member_gender' => 'required_if:membership_type_id,DD',
             'member_relation_id' => 'required_if:membership_type_id,DD|exists:lib_member_relationships,id',
             'employer_pin' => 'required_with:employer_address|nullable',
+            'employer_name' => 'required_with:employer_pin|nullable',
             'employer_address' => 'required_with:employer_pin|nullable',
         ];
     }
@@ -137,6 +138,10 @@ class PatientPhilhealthRequest extends FormRequest
             'employer_pin' => [
                 'description' => 'Employer id',
                 'example' => fake()->numerify('############')
+            ],
+            'employer_name' => [
+                'description' => 'Employer name',
+                'example' => fake()->company()
             ],
             'employer_address' => [
                 'description' => 'Employer address',
