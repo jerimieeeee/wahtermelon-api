@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('enlistment_status_id')->index()->constrained('lib_philhealth_enlistment_statuses');
             $table->char('package_type_id')->index();
             $table->char('membership_type_id')->index();
-            $table->unsignedInteger('membership_category_id')->index();
+            $table->foreignId('membership_category_id')->index()->constrained('lib_philhealth_membership_categories');
             $table->string('member_pin',14)->index()->nullable();
             $table->string('member_last_name')->index()->nullable();
             $table->string('member_first_name')->index()->nullable();
@@ -41,6 +41,7 @@ return new class extends Migration
             $table->foreign('package_type_id')->references('id')->on('lib_philhealth_package_types');
             $table->foreign('member_relation_id')->references('id')->on('lib_member_relationships');
             $table->foreign('member_suffix_name')->references('code')->on('lib_suffix_names');
+            $table->foreign('membership_type_id')->references('id')->on('lib_philhealth_membership_types');
         });
     }
 
