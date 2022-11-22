@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
             LibPhilhealthEnlistmentStatusSeeder::class,
             LibMemberRelationshipSeeder::class,
             LibMcServiceSeeder::class,
+            LibCcdevServicesSeeder::class,
         ]);
     }
 }

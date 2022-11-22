@@ -69,7 +69,7 @@ class PatientVaccineController extends Controller
     {
             $vaccine = $request->input('vaccines');
             foreach($vaccine as $value){
-                PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
+               PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
                 ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
             }
 

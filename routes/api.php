@@ -93,11 +93,11 @@ Route::prefix('v1')->group(function (){
             // Route::post('cc-records/{patient_ccdev_id}', 'update');
             Route::get('cc-records/{patientccdev}', 'show');
         });
-        // Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevController::class)
-        // ->group(function() {
-        //     Route::post('cc-consult', 'store');
-        //     Route::get('cc-consult/{consultccdev}', 'show');
-        // });
+        Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevServiceController::class)
+        ->group(function() {
+            Route::post('cc-services', 'store');
+            Route::get('cc-services', 'index');
+        });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
         ->group(function() {
             Route::post('cc-breastfed', 'store');
@@ -115,7 +115,7 @@ Route::prefix('v1')->group(function (){
             Route::get('cn-records/{consult}', 'show');
             Route::get('cn-records', 'index');
         });
-        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
+        /* Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
         ->group(function() {
             Route::post('cn-complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');
@@ -131,7 +131,7 @@ Route::prefix('v1')->group(function (){
             Route::post('cn-fdx', 'store');
             Route::get('cn-fdx/{id}', 'show');
             Route::delete('cn-fdx/{id}', 'destroy');
-        });
+        }); */
     });
 
     //Maternal Care APIs

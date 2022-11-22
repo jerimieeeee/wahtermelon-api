@@ -14,15 +14,16 @@ class ConsultCcdevServiceResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return [
-        //     'notes_id' => $this->notes_id,
-        //     'consult_id' => $this->consult_id,
-        //     'patient_id' => $this->patient_id,
-        //     'user_id' => $this->user_id,
-        //     'complaint_id' => $this->complaint_id,
-        //     'complaint_date' => $this->complaint_date?->format('Y-m-d'),
-        //     'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
-        //     'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
-        // ];
+        return [
+            'id' => $this->id,
+            'patient_id' => $this->patient_id,
+            'user_id' => $this->user_id,
+            'service_id' => $this->service_id,
+            'service_date' => !is_null($this->service_date) ? $this->service_date->format('Y-m-d') : null,
+            'status_id' => $this->status_id,
+            'services' => $this->whenLoaded('services'),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+        ];
     }
 }
