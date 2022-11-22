@@ -29,7 +29,7 @@ class ConsultNotesComplaintTest extends TestCase
             'consult_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'is_pregnant' => fake()->boolean(),
             'consult_done' => fake()->boolean(),
-            'pt_group' => fake()->randomElement(['mc','ncd','cc']),
+            'pt_group' => fake()->randomElement(['cn']),
 
         ]);
 

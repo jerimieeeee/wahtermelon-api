@@ -54,7 +54,47 @@ class PatientVaccineController extends Controller
         return PatientVaccineResource::collection($vaccines->paginate($perPage));
     }
 
-        // return PatientResource::collection($patients->paginate($perPage));
+    public function count(Request $request)
+    {
+
+        $query = PatientVaccine::query()
+        ->where('vaccine_id', '=', 'BCG')
+        ->where('vaccine_id', '=', 'OPV')
+        ->where('vaccine_id', '=', 'PENTA')
+        ->where('vaccine_id', '=', 'MCV')
+        ->when(isset($request->patient_id), function($query) use($request){
+            return $query->wherePatientId($request->patient_id);
+        });
+
+        return $query;
+
+        //Get BCG count
+        $bcg_count = PatientVaccine::where('vaccine_id', '=', 'BCG')->count();
+
+        //Get OPV count
+        $opv_count = PatientVaccine::where('vaccine_id', '=', 'OPV')->count();
+
+        //Get PENTA count
+        $penta_count = PatientVaccine::where('vaccine_id', '=', 'PENTA')->count();
+
+        //Get MCV count
+        $mcv_count = PatientVaccine::where('vaccine_id', '=', 'MCV')->count();
+
+        return [$bcg_count, $opv_count, $penta_count, $mcv_count];
+        // $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
+        //         ->when(isset($request->patient_id), function($query) use($request){
+        //             return $query->wherePatientId($request->patient_id);
+        //         });
+        // $vaccines = QueryBuilder::for($query)
+        //         ->defaultSort('-vaccine_date', '-vaccine_id')
+        //         ->allowedSorts(['vaccine_date', 'vaccine_id']);
+
+        // if ($perPage == 'all') {
+        //     return PatientVaccineResource::collection($vaccines->get());
+        // }
+
+        // return PatientVaccineResource::collection($vaccines->paginate($perPage));
+    }
 
     /**
      * Store a newly created Patient Vaccine resource in storage.

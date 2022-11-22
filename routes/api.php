@@ -68,6 +68,7 @@ Route::prefix('v1')->group(function (){
         ->group(function() {
             Route::post('vaccines', 'store');
             Route::get('vaccines-records', 'index');
+            Route::get('vaccines-recordss', 'count');
             Route::get('vaccines-records/{patientvaccine}', 'show');
             Route::post('vaccines/{id}', 'update');
             Route::delete('vaccines/{id}', 'destroy');
