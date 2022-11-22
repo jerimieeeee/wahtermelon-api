@@ -51,7 +51,7 @@ class PatientPhilhealthRequest extends FormRequest
             'member_suffix_name' => 'required_if:membership_type_id,DD|sometimes|exists:lib_suffix_names,code',
             'member_birthdate' => 'required_if:membership_type_id,DD|sometimes|date|date_format:Y-m-d|before:tomorrow',
             'member_gender' => 'required_if:membership_type_id,DD|sometimes',
-            'member_relation_id' => 'required_if:membership_type_id,DD|sometimes|exists:lib_member_relationships,code',
+            'member_relation_id' => 'required_if:membership_type_id,DD|sometimes|exists:lib_member_relationships,id',
             'employer_pin' => 'required_with:employer_address|nullable',
             'employer_address' => 'required_with:employer_pin|nullable',
         ];
