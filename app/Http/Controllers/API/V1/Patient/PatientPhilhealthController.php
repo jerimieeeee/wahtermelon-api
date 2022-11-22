@@ -47,7 +47,7 @@ class PatientPhilhealthController extends Controller
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             })
-            ->allowedFilters(['philhealth_id, patient_id'])
+            ->allowedFilters(['philhealth_id', 'patient_id'])
             ->allowedIncludes('patient', 'user',)
             ->defaultSort('member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate')
             ->allowedSorts(['member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate']);
