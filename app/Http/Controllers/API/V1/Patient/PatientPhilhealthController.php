@@ -50,7 +50,7 @@ class PatientPhilhealthController extends Controller
             ->allowedFilters(['philhealth_id', 'patient_id'])
             ->allowedIncludes('patient', 'user', 'membershipType', 'membershipCategory')
             ->defaultSort('member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate')
-            ->allowedSorts(['member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate']);
+            ->allowedSorts(['member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate', 'enlistment_date']);
         if ($perPage === 'all') {
             return PatientPhilhealthResource::collection($patientPhilhealth->get());
         }
