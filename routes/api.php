@@ -51,6 +51,16 @@ Route::prefix('v1')->group(function (){
             });
     });
 
+    //Patient Philhealth APIs
+    Route::prefix('patient-philhealth')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPhilhealthController::class)
+            ->group(function() {
+                Route::get('philhealth', 'index');
+                Route::get('philhealth/{patientPhilhealth}', 'show');
+                Route::post('philhealth', 'store');
+                Route::put('philhealth/{patientPhilhealth}', 'update');
+            });
+    });
 
     //Patient Vaccines APIs
     Route::prefix('patient-vaccines')->group(function () {

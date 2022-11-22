@@ -33,7 +33,7 @@ class PatientRequest extends FormRequest
     public function rules()
     {
         return [
-            'facility_id' => 'sometimes|exists:facilities,id',
+            'facility_code' => 'sometimes|exists:facilities,code',
             'last_name' => 'required',
             'first_name' => 'required',
             'middle_name' => 'nullable',
@@ -65,9 +65,9 @@ class PatientRequest extends FormRequest
     {
         $gender = fake()->randomElement(['male', 'female']);
         return [
-            'facility_id' => [
+            'facility_code' => [
                 'description' => 'ID of facility library',
-                'example' => fake()->randomElement(Facility::pluck('id')->toArray()),
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'last_name' => [
                 'description' => 'Last name of the patient.',
