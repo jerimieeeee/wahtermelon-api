@@ -2,6 +2,8 @@
 
 namespace App\Models\V1\Patient;
 
+use App\Models\V1\Childcare\ConsultCcdev;
+use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Libraries\LibPwdType;
@@ -99,6 +101,11 @@ class Patient extends Model
     public function householdMember()
     {
         return $this->hasOne(HouseholdMember::class);
+    }
+
+    public function ccdevservices()
+    {
+        return $this->hasMany(ConsultCcdevService::class);
     }
 
 }
