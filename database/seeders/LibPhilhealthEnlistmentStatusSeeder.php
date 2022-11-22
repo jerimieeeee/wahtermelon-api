@@ -16,9 +16,9 @@ class LibPhilhealthEnlistmentStatusSeeder extends Seeder
     public function run()
     {
         LibPhilhealthEnlistmentStatus::upsert([
-            ['desc' => 'Active'],
-            ['desc' => 'Cancelled'],
-            ['desc' => 'Transferred'],
-        ], ['desc']);
+            ['id' => 1, 'desc' => 'Active'],
+            ['id' => 2,'desc' => 'Cancelled'],
+            ['id' => 3,'desc' => 'Transferred'],
+        ], ['id', 'desc']);
     }
 }
