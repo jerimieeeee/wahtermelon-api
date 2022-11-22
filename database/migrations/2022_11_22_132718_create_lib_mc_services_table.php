@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lib_mc_visit_types', function (Blueprint $table) {
-            $table->char('code',10)->primary();
+        Schema::create('lib_mc_services', function (Blueprint $table) {
+            $table->char('id', 10)->index()->primary();
             $table->string('desc');
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lib_mc_visit_types');
+        Schema::dropIfExists('lib_mc_services');
     }
 };
