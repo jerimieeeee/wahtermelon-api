@@ -172,8 +172,8 @@ Route::prefix('v1')->group(function (){
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcServiceController::class)
             ->group(function() {
-                /*Route::get('mc-services', 'index');
-                Route::post('mc-services', 'store');*/
+                Route::get('mc-services', 'index');
+                Route::post('mc-services', 'store');
             });
     });
 

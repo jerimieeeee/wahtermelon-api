@@ -29,7 +29,7 @@ class ConsultMcServiceResource extends JsonResource
             'visit_type_code' => $this->when(!$this->relationLoaded('visitType'),$this->visit_type_code),
             'visit_type' => $this->whenLoaded('visitType'),
             'visit_status' => $this->visit_status,
-            'service_date' => $this->service_date->format('Y-m-d',),
+            'service_date' => $this->service_date->format('Y-m-d'),
             'service_qty' => $this->service_qty,
             'positive_result' => $this->positive_result,
             'intake_penicillin' => $this->intake_penicillin,
