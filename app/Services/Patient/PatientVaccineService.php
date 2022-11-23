@@ -69,7 +69,6 @@ class PatientVaccineService
                     THEN "CIC"
                     WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month >= 24
                     THEN "COMPLETED"
-                    ELSE "SURVIVOR"
 	            END AS immunization_status,
                 vaccine_date
         ');
