@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_employers', function (Blueprint $table) {
-            $table->char('code',10);
+            $table->char('code',10)->index()->primary();
             $table->string('desc');
         });
     }

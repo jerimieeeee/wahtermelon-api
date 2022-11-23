@@ -3,6 +3,9 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibDesignation;
+use App\Models\V1\Libraries\LibEmployer;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -29,6 +32,7 @@ class UserTest extends TestCase
     {
         $gender = fake()->randomElement(['male', 'female']);
         $response = $this->post('api/v1/register', [
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => fake()->lastName(),
@@ -37,6 +41,8 @@ class UserTest extends TestCase
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'contact_number' => fake()->phoneNumber(),
             'email' => fake()->safeEmail(),
+            'designation_code' => fake()->randomElement(LibDesignation::pluck('code')->toArray()),
+            'employer_code' => fake()->randomElement(LibEmployer::pluck('code')->toArray()),
             'password' => 'Password2!',
             'password_confirmation' => 'Password2!',
             'email_verified_at' => now(),

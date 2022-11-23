@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\API\V1;
 
+use App\Models\V1\Libraries\LibDesignation;
+use App\Models\V1\Libraries\LibEmployer;
 use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 use Str;
@@ -27,6 +30,7 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'facility_code' => 'required|exists:facilities,code',
             'last_name' => 'required',
             'first_name' => 'required',
             'middle_name' => 'nullable',
@@ -40,6 +44,8 @@ class UserRequest extends FormRequest
             'photo_url' => 'nullable|url',
             'tin_number' => 'sometimes|max:9',
             'accreditation_number' => 'sometimes|max:14',
+            'designation_code' => 'required|exists:lib_designations,code',
+            'employer_code' => 'required|exists:lib_employers,code',
             'password' => [
                 'required',
                 'confirmed',
@@ -59,6 +65,10 @@ class UserRequest extends FormRequest
         $gender = fake()->randomElement(['male', 'female']);
         $fakePassword = fake()->password();
         return [
+            'facility_code' => [
+                'description' => 'ID of facility library',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            ],
             'last_name' => [
                 'description' => 'Last name of the user.',
                 'example' => fake()->lastName(),
@@ -98,6 +108,14 @@ class UserRequest extends FormRequest
             'accreditation_number' => [
                 'description' => 'Accreditation number of the user',
                 'example' => fake()->optional()->randomDigit(),
+            ],
+            'designation_code' => [
+                'description' => 'Designation of the user',
+                'example' => fake()->randomElement(LibDesignation::pluck('code')->toArray()),
+            ],
+            'employer_code' => [
+                'description' => 'Employer of the user',
+                'example' => fake()->randomElement(LibEmployer::pluck('code')->toArray()),
             ],
             'email' => [
                 'description' => 'Email of the user',

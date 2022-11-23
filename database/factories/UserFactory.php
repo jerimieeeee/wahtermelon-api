@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\V1\Libraries\LibDesignation;
+use App\Models\V1\Libraries\LibEmployer;
 use App\Models\V1\Libraries\LibSuffixName;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,6 +23,7 @@ class UserFactory extends Factory
     {
         $gender = fake()->randomElement(['male', 'female']);
         return [
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => fake()->lastName(),
@@ -28,6 +32,8 @@ class UserFactory extends Factory
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'contact_number' => fake()->phoneNumber(),
             'email' => fake()->safeEmail(),
+            'designation_code' => fake()->randomElement(LibDesignation::pluck('code')->toArray()),
+            'employer_code' => fake()->randomElement(LibEmployer::pluck('code')->toArray()),
             'password' => 'Password2!',
             //'password_confirmation' => 'Password2!',
             'email_verified_at' => now(),

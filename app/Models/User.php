@@ -4,6 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\V1\Libraries\LibDesignation;
+use App\Models\V1\Libraries\LibEmployer;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
@@ -78,6 +81,21 @@ class User extends Authenticatable
     public function suffixName(): BelongsTo
     {
         return $this->belongsTo(LibSuffixName::class, 'suffix_name', 'code');
+    }
+
+    public function designation(): BelongsTo
+    {
+        return $this->belongsTo(LibDesignation::class, 'designation_code', 'code');
+    }
+
+    public function employer(): BelongsTo
+    {
+        return $this->belongsTo(LibEmployer::class, 'employer_code', 'code');
+    }
+
+    public function facility(): BelongsTo
+    {
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
 }
