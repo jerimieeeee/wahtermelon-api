@@ -44,15 +44,16 @@ class PatientPhilhealthRequest extends FormRequest
             'package_type_id' => 'required|exists:lib_philhealth_package_types,id',
             'membership_type_id' => 'required|exists:lib_philhealth_membership_types,id',
             'membership_category_id' => 'required|exists:lib_philhealth_membership_categories,id',
-            'member_pin' => 'required|min:12|max:14',
-            'member_last_name' => 'required_if:membership_type_id,DD|sometimes',
-            'member_first_name' => 'required_if:membership_type_id,DD|sometimes',
+            'member_pin' => 'required_if:membership_type_id,DD|min:12|max:14',
+            'member_last_name' => 'required_if:membership_type_id,DD',
+            'member_first_name' => 'required_if:membership_type_id,DD',
             'member_middle_name' => 'nullable',
-            'member_suffix_name' => 'required_if:membership_type_id,DD|sometimes|exists:lib_suffix_names,code',
-            'member_birthdate' => 'required_if:membership_type_id,DD|sometimes|date|date_format:Y-m-d|before:tomorrow',
-            'member_gender' => 'required_if:membership_type_id,DD|sometimes',
-            'member_relation_id' => 'required_if:membership_type_id,DD|sometimes|exists:lib_member_relathipships,code',
+            'member_suffix_name' => 'required_if:membership_type_id,DD|exists:lib_suffix_names,code',
+            'member_birthdate' => 'required_if:membership_type_id,DD|date|date_format:Y-m-d|before:tomorrow',
+            'member_gender' => 'required_if:membership_type_id,DD',
+            'member_relation_id' => 'required_if:membership_type_id,DD|exists:lib_member_relationships,id',
             'employer_pin' => 'required_with:employer_address|nullable',
+            'employer_name' => 'required_with:employer_pin|nullable',
             'employer_address' => 'required_with:employer_pin|nullable',
         ];
     }
@@ -137,6 +138,10 @@ class PatientPhilhealthRequest extends FormRequest
             'employer_pin' => [
                 'description' => 'Employer id',
                 'example' => fake()->numerify('############')
+            ],
+            'employer_name' => [
+                'description' => 'Employer name',
+                'example' => fake()->company()
             ],
             'employer_address' => [
                 'description' => 'Employer address',

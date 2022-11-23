@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lib_mc_visit_types', function (Blueprint $table) {
-            $table->char('code',10)->primary();
-            $table->string('desc');
+        Schema::table('patient_philhealth', function (Blueprint $table) {
+            $table->string('employer_name')->after('employer_pin')->nullable();
         });
     }
 
@@ -26,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lib_mc_visit_types');
+        Schema::table('patient_philhealth', function (Blueprint $table) {
+            $table->dropColumn('employer_name');
+        });
     }
 };

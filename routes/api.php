@@ -116,7 +116,7 @@ Route::prefix('v1')->group(function (){
             Route::get('cn-records/{consult}', 'show');
             Route::get('cn-records', 'index');
         });
-        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
+        /* Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
         ->group(function() {
             Route::post('cn-complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');
@@ -132,7 +132,7 @@ Route::prefix('v1')->group(function (){
             Route::post('cn-fdx', 'store');
             Route::get('cn-fdx/{id}', 'show');
             Route::delete('cn-fdx/{id}', 'destroy');
-        });
+        }); */
     });
 
     //Maternal Care APIs
@@ -170,6 +170,11 @@ Route::prefix('v1')->group(function (){
                 //Route::get('mc-risk-factors/{mcRisk}', 'show');
                 Route::get('mc-risk-factors', 'index');
                 Route::post('mc-risk-factors', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcServiceController::class)
+            ->group(function() {
+                Route::get('mc-services', 'index');
+                Route::post('mc-services', 'store');
             });
     });
 
@@ -245,6 +250,9 @@ Route::prefix('v1')->group(function (){
 
         Route::get('mc-visit-type', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'index'])->name('mc-visit-type.index');
         Route::get('mc-visit-type/{visitType}', [\App\Http\Controllers\API\V1\Libraries\LibMcVisitTypeController::class, 'show'])->name('mc-visit-type.show');
+
+        Route::get('mc-services', [\App\Http\Controllers\API\V1\Libraries\LibMcServiceController::class, 'index'])->name('mc-services.index');
+        Route::get('mc-services/{mcService}', [\App\Http\Controllers\API\V1\Libraries\LibMcServiceController::class, 'show'])->name('mc-services.show');
 
         //Consultation Libraries
         Route::get('complaint', [\App\Http\Controllers\API\V1\Libraries\LibComplaintController::class, 'index']);

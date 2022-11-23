@@ -44,6 +44,7 @@ class PatientPhilhealthResource extends JsonResource
             'member_relation_id' => $this->when(!$this->relationLoaded('memberRelation'),$this->member_relation_id),
             'member_relation' => $this->whenLoaded('memberRelation'),
             'employer_pin' => $this->employer_pin,
+            'employer_name' => $this->employer_name,
             'employer_address' => $this->employer_address,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),

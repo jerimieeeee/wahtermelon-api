@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('consult_mc_services', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->index()->primary();
             $table->uuid('patient_mc_id');
             // $table->foreignId('consult_id')->constrained();
-            $table->foreignUuid('patients_id')->constrained();
+            $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
             $table->char('service_id',5);
             $table->char('visit_type',10);

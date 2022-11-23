@@ -3,39 +3,62 @@
 namespace App\Http\Controllers\API\V1\MaternalCare;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\MaternalCare\ConsultMcServiceRequest;
+use App\Http\Resources\API\V1\MaternalCare\ConsultMcServiceResource;
+use App\Models\V1\MaternalCare\ConsultMcService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group Maternal Care Management
+ *
+ * APIs for managing maternal care information
+ * @subgroup Services
+ * @subgroupDescription Service management.
+ */
 class ConsultMcServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @queryParam filter[patient_mc_id] string Filter by patient_mc_id.
+     * @queryParam filter[service_id] string Filter by service_id.
+     * @apiResourceCollection App\Http\Resources\API\V1\MaternalCare\ConsultMcServiceResource
+     * @apiResourceModel App\Models\V1\MaternalCare\ConsultMcService
+     * @param Request $request
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(Request $request): ResourceCollection
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $query = ConsultMcService::query();
+        $service = QueryBuilder::for($query)
+            ->allowedFilters(['patient_mc_id', 'service_id'])
+            ->get();
+        return ConsultMcServiceResource::collection($service);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\MaternalCare\ConsultMcServiceResource
+     * @apiResourceModel App\Models\V1\MaternalCare\ConsultMcService
+     * @param ConsultMcServiceRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(ConsultMcServiceRequest $request): JsonResponse
     {
-        //
+        $data = ConsultMcService::updateOrCreate(
+            [
+                'patient_mc_id' => $request->safe()->patient_mc_id,
+                'service_id' => $request->safe()->service_id,
+                'service_date' => $request->safe()->service_date,
+            ],
+            $request->validatedWithCasts()
+        );
+        return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 
     /**
@@ -45,17 +68,6 @@ class ConsultMcServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

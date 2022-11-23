@@ -28,7 +28,8 @@ class PatientPhilhealthController extends Controller
      *
      * @queryParam filter[search] string Filter by member_last_name, member_first_name or member_middle_name. Example: Juwahn Dela Cruz
      * @queryParam filter[philhealth_id] string Filter by philhealth_id. Example: 0123456789123
-     * @queryParam include string Relationship to view: e.g. patient, user Example: patient
+     * @queryParam filter[patient_id] string Filter by patient_id.
+     * @queryParam include string Relationship to view: e.g. patient,user,membershipType,membershipCategory Example: patient,membershipType,membershipCategory
      * @queryParam sort string Sort member_last_name, member_first_name, member_middle_name, member_birthdate of the patient. Add hyphen (-) to descend the list: e.g. member_last_name,member_birthdate. Example: member_last_name
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
@@ -46,10 +47,10 @@ class PatientPhilhealthController extends Controller
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             })
-            ->allowedFilters(['philhealth_id'])
-            ->allowedIncludes('patient', 'user',)
+            ->allowedFilters(['philhealth_id', 'patient_id'])
+            ->allowedIncludes('patient', 'user', 'membershipType', 'membershipCategory')
             ->defaultSort('member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate')
-            ->allowedSorts(['member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate']);
+            ->allowedSorts(['member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate', 'enlistment_date']);
         if ($perPage === 'all') {
             return PatientPhilhealthResource::collection($patientPhilhealth->get());
         }
