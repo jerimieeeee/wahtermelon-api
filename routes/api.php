@@ -68,7 +68,6 @@ Route::prefix('v1')->group(function (){
         ->group(function() {
             Route::post('vaccines', 'store');
             Route::get('vaccines-records', 'index');
-            Route::get('vaccines-recordss/{patientvax}', 'count');
             Route::get('vaccines-records/{patientvaccine}', 'show');
             Route::post('vaccines/{id}', 'update');
             Route::delete('vaccines/{id}', 'destroy');
@@ -270,6 +269,9 @@ Route::prefix('v1')->group(function (){
 
         Route::get('reason', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'index']);
         Route::get('reason/{id}', [\App\Http\Controllers\API\V1\Libraries\LibEbfReasonController::class, 'show']);
+
+        Route::get('cc-services', [\App\Http\Controllers\API\V1\Libraries\LibCcdevServiceController::class, 'index'])->name('cc-services.index');
+        Route::get('cc-services/{ccService}', [\App\Http\Controllers\API\V1\Libraries\LibCcdevServiceController::class, 'show'])->name('cc-services.show');
 
         //Household
         Route::get('family-roles', [\App\Http\Controllers\API\V1\Libraries\LibFamilyRoleController::class, 'index'])->name('family-roles.index');
