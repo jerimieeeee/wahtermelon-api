@@ -293,6 +293,9 @@ Route::prefix('v1')->group(function (){
         Route::get('package-types', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthPackageTypeController::class, 'index'])->name('package-types.index');
         Route::get('package-types/{packageType}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthPackageTypeController::class, 'show'])->name('package-types.show');
 
+        Route::get('designations', [\App\Http\Controllers\API\V1\Libraries\LibDesignationController::class, 'index'])->name('designations.index');
+        Route::get('designations/{designation}', [\App\Http\Controllers\API\V1\Libraries\LibDesignationController::class, 'show'])->name('designations.show');
+
     });
 
 });
