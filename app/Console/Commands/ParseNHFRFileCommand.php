@@ -123,7 +123,7 @@ class ParseNHFRFileCommand extends Command
         //$modelName = '\\App\\Models\\V1\\PSGC\\'.$modelName;
         //$id = $modelName::select('id')->whereCode($data[$label])->pluck('id')->first();
         //return $id;
-        return $data[$label]?? null;
+        return !ctype_space($data[$label]) ? $data[$label] : null;
     }
 
     private function processData($data)

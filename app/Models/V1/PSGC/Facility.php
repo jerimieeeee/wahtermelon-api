@@ -39,7 +39,7 @@ class Facility extends Model
      *
      * @var array
      */
-    protected $hidden = ['id', 'region_code', 'province_code', 'municipality_code', 'barangay_code'];
+    protected $hidden = ['id'];
 
     /**
      * Get the route key for the model.
@@ -53,21 +53,21 @@ class Facility extends Model
 
     public function region(): BelongsTo
     {
-        return $this->belongsTo(Region::class, 'region_code');
+        return $this->belongsTo(Region::class, 'region_code', 'code');
     }
 
     public function province(): BelongsTo
     {
-        return $this->belongsTo(Province::class, 'province_code');
+        return $this->belongsTo(Province::class, 'province_code', 'code');
     }
 
     public function municipality(): BelongsTo
     {
-        return $this->belongsTo(Municipality::class, 'municipality_code');
+        return $this->belongsTo(Municipality::class, 'municipality_code', 'code');
     }
 
     public function barangay(): BelongsTo
     {
-        return $this->belongsTo(Barangay::class, 'barangay_code');
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
     }
 }
