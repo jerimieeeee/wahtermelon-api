@@ -15,31 +15,25 @@ class PatientVaccineService
         $status = PatientVaccine::query()
             ->wherePatientId($patient_id)
             ->whereRaw("
-                SUM(CASE
-                    WHEN vaccine_id = 'BCG'
-                    THEN 1 ELSE 0
-                END) AS 'BCG',
+            CASE
+                WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month < 13
+                THEN 'FIC'
+                WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month BETWEEN 13 AND 23
+                THEN 'CIC'
+                WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month >= 24
+                THEN 'COMPOLETED'
+                ELSE 'SURVIVOR'
+            END AS immunizatio_status"
+            )
+            ->whereRaw("
+            SUM(CASE
+			    WHEN vaccine_id = 'BCG'
+			    THEN 1
+			    ELSE 0
+		    END) AS 'BCG',
+            ")
 
-                SUM(CASE
-                   WHEN vaccine_id = 'PENTA'
-                   THEN 1 ELSE 0
-                END) AS 'PENGA',
-
-                SUM(CASE
-                    WHEN vaccine_id = 'OPV'
-                    THEN 1 ELSE 0
-                END) AS 'OPV',
-
-                SUM(CASE
-                    WHEN vaccine_id = 'MCV'
-                    THEN 1 ELSE 0
-                END) AS 'MCV',
-
-            ", [$weight, $weight, $weight])
-            ->toBase()
-            ->first();
-        return $weightForAge;
-    }
+        }
 
     public function get_height_for_age($ageMonth, $gender, $height)
     {
