@@ -11,7 +11,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 
 /**
- * @group Libraries for Child Care
+ * @group Libraries for Child Care Services
  *
  * APIs for managing libraries
  * @subgroup Services
@@ -54,10 +54,10 @@ class LibCcdevServiceController extends Controller
      */
     public function show(LibCcdevService $ccService): LibCcdevServiceResource
     {
-        $query = LibCcdevService::where('id', $ccService->id);
-        $mcService = QueryBuilder::for($query)
+        $query = LibCcdevService::where('service_id', $ccService->service_id);
+        $ccService = QueryBuilder::for($query)
             ->first();
-        return new LibCcdevServiceResource($mcService);
+        return new LibCcdevServiceResource($ccService);
     }
 
     /**
