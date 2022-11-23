@@ -23,6 +23,7 @@ class PatientVaccineResource extends JsonResource
             'vaccine_id' => $this->vaccine_id,
             'status_id' => $this->status_id,
             'vaccines' => $this->whenLoaded('vaccines'),
+            //'immunization_status' => $this->immunization_status,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

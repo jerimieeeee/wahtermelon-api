@@ -6,15 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
 use App\Http\Requests\API\V1\Patient\PatientVaccineUpdateRequest;
 use App\Http\Resources\API\V1\Patient\PatientVaccineResource;
-use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Patient\PatientVaccine;
-use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Services\Patient\PatientVaccineService;
 
 /**
  * @group Patient Vaccine Management
@@ -36,26 +34,30 @@ class PatientVaccineController extends Controller
      * @param Request $request
      * @return ResourceCollection
      */
-    public function index(Request $request): ResourceCollection
+    public function index(Request $request)
     {
+
+        $patientvax = new PatientVaccineService();
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
                 ->when(isset($request->patient_id), function($query) use($request){
                     return $query->wherePatientId($request->patient_id);
                 });
+
         $vaccines = QueryBuilder::for($query)
                 ->defaultSort('-vaccine_date', '-vaccine_id')
                 ->allowedSorts(['vaccine_date', 'vaccine_id']);
 
-        if ($perPage == 'all') {
-            return PatientVaccineResource::collection($vaccines->get());
+        if(isset($request->patient_id)) {
+            $data = $patientvax->get_immunization_status($request->patient_id)->first();
+            return PatientVaccineResource::collection($vaccines->get())
+                    ->additional(['status' => $data]);
         }
 
+        if ($perPage == 'all') {
+            return PatientVaccineResource::collection($vaccines->first());
+        }
         return PatientVaccineResource::collection($vaccines->paginate($perPage));
-    }
-
-    public function count(PatientVaccine $patientvax, Request $request)
-    {
 
     }
 
