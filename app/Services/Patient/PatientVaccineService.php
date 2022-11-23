@@ -12,33 +12,33 @@ class PatientVaccineService
 {
     public function get_immunization_status($patient_id)
     {
-        // $status = PatientVaccine::query()
-        //     ->wherePatientId($patient_id)
-        //     ->whereRaw("
-        //         SUM(CASE
-        //             WHEN vaccine_id = 'BCG'
-        //             THEN 1 ELSE 0
-        //         END) AS 'BCG',
+        $status = PatientVaccine::query()
+            ->wherePatientId($patient_id)
+            ->whereRaw("
+                SUM(CASE
+                    WHEN vaccine_id = 'BCG'
+                    THEN 1 ELSE 0
+                END) AS 'BCG',
 
-        //         SUM(CASE
-        //            WHEN vaccine_id = 'PENTA'
-        //            THEN 1 ELSE 0
-        //         END) AS 'PENGA',
+                SUM(CASE
+                   WHEN vaccine_id = 'PENTA'
+                   THEN 1 ELSE 0
+                END) AS 'PENGA',
 
-        //         SUM(CASE
-        //             WHEN vaccine_id = 'OPV'
-        //             THEN 1 ELSE 0
-        //         END) AS 'OPV',
+                SUM(CASE
+                    WHEN vaccine_id = 'OPV'
+                    THEN 1 ELSE 0
+                END) AS 'OPV',
 
-        //         SUM(CASE
-        //             WHEN vaccine_id = 'MCV'
-        //             THEN 1 ELSE 0
-        //         END) AS 'MCV',
+                SUM(CASE
+                    WHEN vaccine_id = 'MCV'
+                    THEN 1 ELSE 0
+                END) AS 'MCV',
 
-        //     ", [$weight, $weight, $weight])
-        //     ->toBase()
-        //     ->first();
-        // return $weightForAge;
+            ", [$weight, $weight, $weight])
+            ->toBase()
+            ->first();
+        return $weightForAge;
     }
 
     public function get_height_for_age($ageMonth, $gender, $height)

@@ -116,7 +116,7 @@ Route::prefix('v1')->group(function (){
             Route::get('cn-records/{consult}', 'show');
             Route::get('cn-records', 'index');
         });
-        /* Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
         ->group(function() {
             Route::post('cn-complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');
@@ -132,7 +132,7 @@ Route::prefix('v1')->group(function (){
             Route::post('cn-fdx', 'store');
             Route::get('cn-fdx/{id}', 'show');
             Route::delete('cn-fdx/{id}', 'destroy');
-        }); */
+        });
     });
 
     //Maternal Care APIs
