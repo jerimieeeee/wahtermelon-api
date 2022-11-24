@@ -29,6 +29,12 @@ class AuthenticationController extends Controller
             $abilities = ["*"];
         }*/
 
+        if ($user->is_active == 0) {
+            throw ValidationException::withMessages([
+                'account_status' => 'Account not activated!'
+            ]);
+        }
+
         $tokenResult = $user->createToken(request()->ip())->accessToken;
 
         return response()->json([
