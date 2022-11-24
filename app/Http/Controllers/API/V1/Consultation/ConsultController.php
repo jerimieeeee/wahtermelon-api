@@ -10,6 +10,7 @@ use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -29,36 +30,61 @@ class ConsultController extends Controller
      * @queryParam pt_group Patient group. Example: cn
      * @queryParam sort string Sort consult_date. Add hyphen (-) to descend the list: e.g. consult_date. Example: consult_date
      * @queryParam consult_done Consultation Status. Example: 1
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Consultation\ConsultResource
+     * @apiResourceModel App\Models\V1\Consultation\Consult paginate=15
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): ResourceCollection
     {
-        $query = Consult::query()
-            ->when(isset($request->pt_group), function($q) use($request){
-                $q->where('pt_group', $request->pt_group);
-            })
-            ->when(isset($request->patient_id), function($q) use($request){
-                $q->where('patient_id', '=', $request->patient_id);
-            })
-            ->with('user', 'patient', 'physician', 'vitals')
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-            ->where('consult_done', '=', $request->consult_done ?? 0);
+        $consult = QueryBuilder::for(Consult::class)
+        ->when(isset($request->pt_group), function($q) use($request){
+            $q->where('pt_group', $request->pt_group);
+        })
+        ->when(isset($request->patient_id), function($q) use($request){
+            $q->where('patient_id', '=', $request->patient_id);
+        })
+        ->with('user', 'patient', 'physician', 'vitals')
+        ->where('consult_done', '=', $request->consult_done ?? 0)
 
-        $consult = QueryBuilder::for($query)
-            ->defaultSort('consult_date')
-            ->allowedSorts('consult_date')
-            ->get();
+        ->defaultSort('consult_date')
+        ->allowedSorts('consult_date');
+        // ->get();
 
+        // $query = Consult::query()
+        //     ->when(isset($request->pt_group), function($q) use($request){
+        //         $q->where('pt_group', $request->pt_group);
+        //     })
+        //     ->when(isset($request->patient_id), function($q) use($request){
+        //         $q->where('patient_id', '=', $request->patient_id);
+        //     })
+        //     ->with('user', 'patient', 'physician', 'vitals')
 
+        //     ->where('consult_done', '=', $request->consult_done ?? 0);
 
-        return ConsultResource::collection($consult);
+        // $consult = QueryBuilder::for($query)
+        //     ->defaultSort('consult_date')
+        //     ->allowedSorts('consult_date')
+        //     ->get();
+
+        if ($perPage === 'all') {
+            return ConsultResource::collection($consult->get());
+        }
+
+        return ConsultResource::collection($consult->paginate($perPage));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consult resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultResource
+     * @apiResourceModel App\Models\V1\Consultation\Consult
+     * @param ConsultRequest $request
+     * @return JsonResponse
      */
     public function store(ConsultRequest $request)
     {
