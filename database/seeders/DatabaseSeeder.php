@@ -54,6 +54,8 @@ class DatabaseSeeder extends Seeder
             LibMemberRelationshipSeeder::class,
             LibMcServiceSeeder::class,
             LibCcdevServicesSeeder::class,
+            LibDesignationSeeder::class,
+            LibEmployerSeeder::class,
         ]);
     }
 }

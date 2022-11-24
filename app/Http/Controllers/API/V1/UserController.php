@@ -43,6 +43,7 @@ class UserController extends Controller
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
             })
+            ->with('facility', 'designation', 'employer')
             ->allowedIncludes('suffixName')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')
             ->allowedSorts(['last_name', 'first_name', 'middle_name', 'birthdate']);
@@ -65,7 +66,7 @@ class UserController extends Controller
     public function store(UserRequest $request): JsonResponse
     {
         $data = User::create($request->validated());
-        return response()->json(['status' => 'Success', 'data' => $data], 201);
+        return response()->json(['status' => 'Success', 'date' => new UserResource($data)], 201);
     }
 
     /**
@@ -80,6 +81,7 @@ class UserController extends Controller
     {
         $query = User::where('id', $user->id);
         $user = QueryBuilder::for($query)
+            ->with('facility', 'designation', 'employer')
             ->first();
         return new UserResource($user);
     }

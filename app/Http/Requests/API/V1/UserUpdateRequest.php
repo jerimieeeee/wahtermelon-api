@@ -24,6 +24,7 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'facility_code' => 'required|exists:facilities,code',
             'last_name' => 'required',
             'first_name' => 'required',
             'middle_name' => 'nullable',
@@ -37,6 +38,8 @@ class UserUpdateRequest extends FormRequest
             'photo_url' => 'nullable|url',
             'tin_number' => 'sometimes|max:9',
             'accreditation_number' => 'sometimes|max:14',
+            'designation_code' => 'required|exists:lib_designations,code',
+            'employer_code' => 'required|exists:lib_employers,code',
         ];
     }
 

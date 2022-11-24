@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\V1\Libraries\LibPhilhealthMembershipCategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class LibPhilhealthMembershipCategorySeeder extends Seeder
 {
@@ -15,6 +16,9 @@ class LibPhilhealthMembershipCategorySeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        LibPhilhealthMembershipCategory::truncate();
+        Schema::enableForeignKeyConstraints();
         LibPhilhealthMembershipCategory::upsert([
             ['desc' => 'FE - Private - Permanent Regular'],
             ['desc' => 'FE - Private - Casual'],
