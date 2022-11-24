@@ -2,6 +2,7 @@
 
 namespace Database\Factories\V1\Patient;
 
+use App\Models\User;
 use App\Models\V1\Libraries\LibBloodType;
 use App\Models\V1\Libraries\LibCivilStatus;
 use App\Models\V1\Libraries\LibEducation;
@@ -28,6 +29,7 @@ class PatientFactory extends Factory
         $gender = fake()->randomElement(['male', 'female']);
         return [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => $middle = fake()->lastName(),

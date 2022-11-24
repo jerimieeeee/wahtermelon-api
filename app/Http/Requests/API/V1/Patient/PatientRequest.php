@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\Patient;
 
+use App\Models\User;
 use App\Models\V1\Libraries\LibBloodType;
 use App\Models\V1\Libraries\LibCivilStatus;
 use App\Models\V1\Libraries\LibEducation;
@@ -34,6 +35,7 @@ class PatientRequest extends FormRequest
     {
         return [
             'facility_code' => 'sometimes|exists:facilities,code',
+            'user_id' => 'sometimes|exists:users,id',
             'last_name' => 'required',
             'first_name' => 'required',
             'middle_name' => 'nullable',
@@ -68,6 +70,10 @@ class PatientRequest extends FormRequest
             'facility_code' => [
                 'description' => 'ID of facility library',
                 'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            ],
+            'user_id' => [
+                'description' => 'ID of user',
+                'example' => fake()->randomElement(User::pluck('id')->toArray()),
             ],
             'last_name' => [
                 'description' => 'Last name of the patient.',
