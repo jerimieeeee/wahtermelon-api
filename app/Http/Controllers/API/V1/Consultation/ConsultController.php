@@ -4,10 +4,9 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
-use App\Http\Resources\API\V1\Childcare\ConsultCcdevResource;
 use App\Http\Resources\API\V1\Consultation\ConsultResource;
 use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Consultation\ConsultNotes;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -52,23 +51,6 @@ class ConsultController extends Controller
 
         ->defaultSort('consult_date')
         ->allowedSorts('consult_date');
-        // ->get();
-
-        // $query = Consult::query()
-        //     ->when(isset($request->pt_group), function($q) use($request){
-        //         $q->where('pt_group', $request->pt_group);
-        //     })
-        //     ->when(isset($request->patient_id), function($q) use($request){
-        //         $q->where('patient_id', '=', $request->patient_id);
-        //     })
-        //     ->with('user', 'patient', 'physician', 'vitals')
-
-        //     ->where('consult_done', '=', $request->consult_done ?? 0);
-
-        // $consult = QueryBuilder::for($query)
-        //     ->defaultSort('consult_date')
-        //     ->allowedSorts('consult_date')
-        //     ->get();
 
         if ($perPage === 'all') {
             return ConsultResource::collection($consult->get());
@@ -107,18 +89,23 @@ class ConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Consult $consult, Request $request)
+    public function show()
     {
-        $query = Consult::where('patient_id', $consult->patient_id)
-            ->when(isset($request->pt_group), function($q) use($request){
-                $q->where('pt_group', $request->pt_group);
-            })
-        ->with('user', 'patient', 'physician')
-        ->where('consult_done', '=', $request->consult_done ?? 0)
-        ->orderBy('consult_date', 'DESC')
-        ->get();
-        return ConsultResource::collection($query);
+        // $query = Consult::where('patient_id', $consult->patient_id)
+        //             ->when(isset($request->pt_group), function($q) use($request){
+        //                 $q->where('pt_group', $request->pt_group);
+        //         })
+        //         ->with('user', 'patient', 'physician')
+        //         ->where('consult_done', '=', $request->consult_done ?? 0)
+        //         ->orderBy('consult_date', 'DESC')
+        //         ->get();
 
+        // return ConsultResource::collection($query);
+        $date_today = Carbon::now()->format('Y-m-d');
+        $cn_count = Consult::whereDate('consult_date', '=', $date_today)
+                            ->where('pt_group', '=', 'cn')->count();
+        // return ['today_cn_count' => $cn_count];
+        return $cn_count;
     }
 
     /**
