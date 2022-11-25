@@ -56,8 +56,10 @@ class UserTest extends TestCase
         $details = [
                 'email' => fake()->safeEmail(),
                 'password' => 'Password2!',
+                'email_verified_at' => now(),
+                'is_active' => 1,
             ];
-        User::factory()->create($details);
+        User::factory()->create($details+[]);
 
         $response = $this->post('api/v1/login', $details);
         $response->assertOk()
