@@ -43,11 +43,11 @@ class VerificationController extends Controller
      */
     public function resend() {
         if (auth()->user()->hasVerifiedEmail()) {
-            return response(['message'=>'Already verified']);
+            return response()->json(['message'=>'Already verified']);
         }
 
         auth()->user()->sendEmailVerificationNotification();
 
-        return response("Email verification link sent on your email id");
+        return response()->json(["message" => "Email verification link sent on your email id."]);
     }
 }
