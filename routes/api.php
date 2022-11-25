@@ -24,7 +24,8 @@ Route::prefix('v1')->group(function (){
     Route::post('logout', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'logout'])->middleware('auth:api');
     Route::get('email/verify/{id}', [\App\Http\Controllers\API\Auth\VerificationController::class, 'verify'])->name('verification.verify');
     Route::get('email/resend', [\App\Http\Controllers\API\Auth\VerificationController::class, 'resend'])->name('verification.resend');
-
+    Route::post('forgot-password', [\App\Http\Controllers\API\Auth\PasswordResetLinkController::class, 'sendPasswordResetEmail'])
+        ->middleware('guest');
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
     //->middleware('auth:api')
     ->group(function (){
