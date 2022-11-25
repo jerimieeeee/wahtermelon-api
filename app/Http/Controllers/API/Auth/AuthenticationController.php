@@ -31,18 +31,7 @@ class AuthenticationController extends Controller
         if (!$user->roles->isEmpty() && auth()->user()->isSuperAdmin()) {
             $abilities = ["*"];
         }*/
-        if(is_null($user->email_verified_at)){
-            event(new Registered($user));
-            throw ValidationException::withMessages([
-                'account_status' => 'Your email address is not verified. You need to confirm your account. We have sent you an activation code, please check your email.'
-            ]);
-        }
 
-        if ($user->is_active == 0) {
-            throw ValidationException::withMessages([
-                'account_status' => 'Account not activated!'
-            ]);
-        }
 
         $tokenResult = $user->createToken(request()->ip())->accessToken;
 

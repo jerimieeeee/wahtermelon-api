@@ -33,11 +33,15 @@ class AuthServiceProvider extends ServiceProvider
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
-            $token = substr($url, strpos($url, "verify/") + 7);
+            if(config('app.env') != 'local'){
+                $token = substr($url, strpos($url, "verify/") + 7);
+                $url = config('app.frontend_url').'/#/verify;id='.$token;
+            }
+
             return (new MailMessage())
-                ->subject('Verify Email Address aa')
+                ->subject('Verify Email Address')
                 ->line('Click the button below to verify your email address.')
-                ->action('Verify Email Address', config('app.frontend_url').'/#/verify;id='.$token);
+                ->action('Verify Email Address', $url);
         });
     }
 }

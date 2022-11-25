@@ -31,8 +31,8 @@ class VerificationController extends Controller
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
-
-        return redirect()->to('/');
+        return $this->respondWithMessage("Your e-mail is verified. You can now login.");
+        //return redirect()->to('/');
     }
 
     /**
