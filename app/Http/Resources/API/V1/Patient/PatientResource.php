@@ -18,6 +18,10 @@ class PatientResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility' => $this->whenLoaded('facility'),
+            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user' => $this->whenLoaded('user'),
             'last_name' => $this->last_name,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,

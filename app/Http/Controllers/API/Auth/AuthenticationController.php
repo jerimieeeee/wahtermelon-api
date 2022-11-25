@@ -5,10 +5,13 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Laravel\Passport\RefreshToken;
+use Laravel\Passport\Token;
 
 class AuthenticationController extends Controller
 {
@@ -28,6 +31,18 @@ class AuthenticationController extends Controller
         if (!$user->roles->isEmpty() && auth()->user()->isSuperAdmin()) {
             $abilities = ["*"];
         }*/
+        if(is_null($user->email_verified_at)){
+            event(new Registered($user));
+            throw ValidationException::withMessages([
+                'account_status' => 'Your email address is not verified. You need to confirm your account. We have sent you an activation code, please check your email.'
+            ]);
+        }
+
+        if ($user->is_active == 0) {
+            throw ValidationException::withMessages([
+                'account_status' => 'Account not activated!'
+            ]);
+        }
 
         $tokenResult = $user->createToken(request()->ip())->accessToken;
 
@@ -45,9 +60,23 @@ class AuthenticationController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request)
     {
-        auth()->user()->currentAccessToken()->delete();
+        /*
+         * This will log the user out from the current device where he requested to log out.
+         */
+        $user = Auth::user()->token();
+        $user->revoke();
+
+       /*
+        * This will revoke all the access and refresh tokens issued to that user.
+        * This will log the user out from everywhere.
+        * This really comes into help when the user changes his password using reset password
+        * or forget password option, and you have to log the user out from everywhere.
+       $tokens =  auth()->user()->tokens->pluck('id');Token::whereIn('id', $tokens)
+            ->update(['revoked'=> true]);
+
+        RefreshToken::whereIn('access_token_id', $tokens)->update(['revoked' => true]);*/
 
         return response()->json([
             'status_code' => 200,

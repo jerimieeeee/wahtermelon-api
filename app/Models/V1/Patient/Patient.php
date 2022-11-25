@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\Patient;
 
+use App\Models\User;
 use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Household\HouseholdFolder;
@@ -10,6 +11,7 @@ use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\MaternalCare\PatientMc;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
@@ -106,6 +108,16 @@ class Patient extends Model
     public function ccdevservices()
     {
         return $this->hasMany(ConsultCcdevService::class);
+    }
+
+    public function facility()
+    {
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -37,6 +37,7 @@ class PatientTest extends TestCase
         $gender = fake()->randomElement(['male', 'female']);
         $response = $this->post('api/v1/patient', [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
             'middle_name' => $middle = fake()->lastName(),
