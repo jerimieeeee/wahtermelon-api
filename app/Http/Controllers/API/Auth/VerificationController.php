@@ -31,7 +31,8 @@ class VerificationController extends Controller
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
-        return $this->respondWithMessage("Your e-mail is verified. You can now login.");
+
+        return response("Your e-mail is verified. You can now login.");
         //return redirect()->to('/');
     }
 
@@ -47,6 +48,6 @@ class VerificationController extends Controller
 
         auth()->user()->sendEmailVerificationNotification();
 
-        return $this->respondWithMessage("Email verification link sent on your email id");
+        return response("Email verification link sent on your email id");
     }
 }
