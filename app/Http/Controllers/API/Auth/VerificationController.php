@@ -32,7 +32,7 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return response("Your e-mail is verified. You can now login.");
+        return response()->json(["message" => "Your e-mail is verified. You can now login."]);
         //return redirect()->to('/');
     }
 
