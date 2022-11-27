@@ -9,13 +9,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class PasswordResetLinkController extends Controller
 {
-    public function sendPasswordResetEmail(Request $request){
-        // If email does not exist
+    public function sendPasswordResetEmail(Request $request)
+    {
+        /* // If email does not exist
         if(!$this->validEmail($request->email)) {
             return response()->json([
                 'message' => 'Email does not exist.'
@@ -26,32 +29,49 @@ class PasswordResetLinkController extends Controller
             return response()->json([
                 'message' => 'Check your inbox, we have sent a link to reset email.'
             ], Response::HTTP_OK);
+        } */
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status == Password::RESET_LINK_SENT) {
+            return response()->json(array("status" => 200, "message" => trans($status)));
         }
+
+        throw ValidationException::withMessages([
+            'email' => [trans($status)],
+        ]);
     }
 
-    public function sendMail($email){
+    public function sendMail($email)
+    {
         $token = $this->generateToken($email);
-        Mail::to($email)->send(new SendPasswordResetMail($token));
+        Mail::to($email)->send(new SendPasswordResetMail($token, $email));
     }
 
-    public function validEmail($email) {
+    public function validEmail($email)
+    {
         return !!User::where('email', $email)->first();
     }
 
-    public function generateToken($email){
+    public function generateToken($email)
+    {
         $isOtherToken = DB::table('password_resets')->where('email', $email)->first();
-        if($isOtherToken) {
+        if ($isOtherToken) {
             return $isOtherToken->token;
         }
-        $token = Str::random(80);;
+        $token = Str::random(60);
         $this->storeToken($token, $email);
         return $token;
     }
-    public function storeToken($token, $email){
-        DB::table('recover_password')->insert([
+    public function storeToken($token, $email)
+    {
+        DB::table('password_resets')->insert([
             'email' => $email,
             'token' => $token,
-            'created' => Carbon::now()
+            'created_at' => Carbon::now()
         ]);
     }
 }

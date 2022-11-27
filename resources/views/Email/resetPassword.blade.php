@@ -3,10 +3,9 @@
 
 The body of your message.
 
-
-@component('mail::button', ['url' => $url.'/'.$token])
-        Reset Password
-@endcomponent
+<x-mail::button :url="$url">
+Reset Password
+</x-mail::button>
 
 Thanks,<br>
 {{ config('app.name') }}

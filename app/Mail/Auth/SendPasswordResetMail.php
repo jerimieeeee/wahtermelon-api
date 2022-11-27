@@ -14,14 +14,16 @@ class SendPasswordResetMail extends Mailable
     use Queueable, SerializesModels;
 
     public $token;
+    public $email;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token, $email)
     {
         $this->token = $token;
+        $this->email = $email;
     }
 
     /**
@@ -30,9 +32,9 @@ class SendPasswordResetMail extends Mailable
      * @return $this
      */
     public function build(){
+        $url = config('app.env') != 'local' ? config('app.frontend_url') : config('app.url');
         return $this->markdown('Email.resetPassword')->with([
-            'token' => $this->token,
-            'url' => config('app.url')
+            'url' => $url . '?token=' . $this->token .'&email='.urlencode($this->email)
         ]);
     }
 
