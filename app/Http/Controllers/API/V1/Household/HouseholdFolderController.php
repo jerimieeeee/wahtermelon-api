@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Household Information Management
  *
  * APIs for managing household information

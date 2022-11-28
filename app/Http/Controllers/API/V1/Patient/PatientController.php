@@ -12,6 +12,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Personal Information Management
  *
  * APIs for managing patient information
@@ -49,7 +50,7 @@ class PatientController extends Controller
             return PatientResource::collection($patients->get());
         }
 
-        return PatientResource::collection($patients->paginate($perPage));
+        return PatientResource::collection($patients->paginate($perPage)->withQueryString());
     }
 
     /**

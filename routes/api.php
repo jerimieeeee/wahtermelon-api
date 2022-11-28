@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $request) {
+    return auth()->user()->facility_code;
     return $request->user();
 });
 
@@ -39,6 +40,7 @@ Route::prefix('v1')->group(function (){
 
 
     Route::controller(\App\Http\Controllers\API\V1\Patient\PatientController::class)
+    ->middleware('auth:api')
     ->group(function (){
         Route::get('patient', 'index')->name('patient.index');
         Route::get('patient/{patient}', 'show')->name('patient.show');
@@ -49,6 +51,7 @@ Route::prefix('v1')->group(function (){
     //Households APIs
     Route::prefix('households')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('household-folders', 'index');
                 Route::get('household-folders/{householdFolder}', 'show');

@@ -4,13 +4,14 @@ namespace App\Models\V1\Household;
 
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
+use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class HouseholdMember extends Model
 {
-    use HasFactory;
+    use HasFactory, FilterByUser;
 
 
     protected $fillable = ['household_folder_id', 'patient_id', 'user_id', 'family_role_code'];
