@@ -35,9 +35,7 @@ class PatientPhilhealthRequest extends FormRequest
     {
         return [
             'philhealth_id' => 'required|min:12|max:14',
-            'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
             'enlistment_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'effectivity_year' => 'required',
             'enlistment_status_id' => 'required|exists:lib_philhealth_enlistment_statuses,id',
@@ -67,18 +65,18 @@ class PatientPhilhealthRequest extends FormRequest
                 'description' => 'Philhealth ID of the Patient',
                 'example' => fake()->numerify('############')
             ],
-            'facility_code' => [
+            /*'facility_code' => [
                 'description' => 'ID of facility library',
                 'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            ],*/
             'patient_id' => [
                 'description' => 'ID of patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
+            /*'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            ],*/
             'enlistment_date' => [
                 'description' => 'Enlistment date of the patient',
                 'example' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d')

@@ -63,6 +63,7 @@ Route::prefix('v1')->group(function (){
     //Patient Philhealth APIs
     Route::prefix('patient-philhealth')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPhilhealthController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('philhealth', 'index');
                 Route::get('philhealth/{patientPhilhealth}', 'show');

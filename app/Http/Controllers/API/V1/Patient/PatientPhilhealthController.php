@@ -15,6 +15,7 @@ use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Philhealth Information Management
  *
  * APIs for managing philhealth information
@@ -26,7 +27,7 @@ class PatientPhilhealthController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @queryParam filter[search] string Filter by member_last_name, member_first_name or member_middle_name. Example: Juwahn Dela Cruz
+     * @queryParam search string Filter by member_last_name, member_first_name or member_middle_name. Example: Juwahn Dela Cruz
      * @queryParam filter[philhealth_id] string Filter by philhealth_id. Example: 0123456789123
      * @queryParam filter[patient_id] string Filter by patient_id.
      * @queryParam include string Relationship to view: e.g. patient,user,membershipType,membershipCategory Example: patient,membershipType,membershipCategory
@@ -44,10 +45,13 @@ class PatientPhilhealthController extends Controller
 
         $columns = ['last_name', 'first_name', 'middle_name'];
         $patientPhilhealth = QueryBuilder::for(PatientPhilhealth::class)
-            ->when(isset($request->filter['search']), function($q) use($request, $columns) {
-                $q->search($request->filter['search'], $columns);
+            ->when(isset($request->search), function($q) use($request, $columns) {
+                //$q->search($request->filter['search'], $columns);
+                $q->whereHas('patient', function($q) use($request, $columns){
+                    $q->search($request->search, $columns);
+                });
             })
-            ->allowedFilters(['philhealth_id', 'patient_id'])
+            ->allowedFilters(['philhealth_id', 'patient_id', 'search'])
             ->allowedIncludes('patient', 'user', 'membershipType', 'membershipCategory')
             ->defaultSort('member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate')
             ->allowedSorts(['member_last_name', 'member_first_name', 'member_middle_name', 'member_birthdate', 'enlistment_date']);
