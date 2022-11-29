@@ -44,8 +44,8 @@ class AuthenticationController extends Controller
     }
 
     /**
+     * User Logout API
      * @authenticated
-     * User Logout API.
      *
      * @param Request $request
      * @return JsonResponse
