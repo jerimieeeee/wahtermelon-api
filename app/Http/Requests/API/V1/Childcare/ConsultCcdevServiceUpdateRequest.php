@@ -5,6 +5,7 @@ namespace App\Http\Requests\API\V1\Childcare;
 use App\Models\User;
 use App\Models\V1\Libraries\LibCcdevService;
 use App\Models\V1\Libraries\LibVaccine;
+use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -57,7 +58,7 @@ class ConsultCcdevServiceUpdateRequest extends FormRequest
             ],
             'status_id' => [
                 'description' => 'Status of Service',
-                'example' => fake()->randomElement(LibVaccine::pluck('status_id')->toArray()),
+                'example' => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),
             ],
         ];
     }

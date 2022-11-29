@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_pt_groups', function (Blueprint $table) {
-            $table->char('pt_group_id', 4);
+            $table->char('id', 4)->primary();
             $table->string('desc', 255);
         });
     }

@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('consult_ccdev_breastfeds', function (Blueprint $table) {
 
-            $table->date('comp_fed_date')->nullable()->after('ebf_date');
+        Schema::table('consults', function (Blueprint $table) {
+
+            $table->foreign('pt_group')->references('id')->on('lib_pt_groups');
         });
     }
 
@@ -26,9 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('consult_ccdev_breastfeds', function (Blueprint $table) {
+        Schema::table('consults', function (Blueprint $table) {
 
-            $table->dropColumn('comp_fed_date');
+            $table->dropForeign('pt_group');
         });
     }
 };

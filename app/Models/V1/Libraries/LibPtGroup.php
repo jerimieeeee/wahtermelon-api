@@ -9,7 +9,7 @@ class LibPtGroup extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'pt_group_id';
+    protected $primaryKey = 'id';
     public $incrementing = 'false';
     public $keyType = 'string';
     public $timestamps = false;

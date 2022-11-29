@@ -4,6 +4,7 @@ namespace Tests\Feature\API\V1;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Libraries\LibPtGroup;
 use App\Models\V1\Patient\Patient;
 use Tests\TestCase;
 
@@ -23,7 +24,7 @@ class ConsultationTest extends TestCase
             'consult_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),
             'is_pregnant' => fake()->boolean(),
             'consult_done' => fake()->boolean(),
-            'pt_group' => fake()->randomElement(['mc','ncd','cc']),
+            'pt_group' => fake()->randomElement(LibPtGroup::pluck('id')->toArray()),
         ]);
         $response->assertCreated();
     }

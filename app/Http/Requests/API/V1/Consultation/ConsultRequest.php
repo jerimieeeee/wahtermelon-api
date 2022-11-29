@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\Consultation;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibPtGroup;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,7 +33,7 @@ class ConsultRequest extends FormRequest
             'physician_id' => 'nullable|exists:users,id',
             'is_pregnant' => 'nullable|boolean',
             'consult_done' => 'required|boolean',
-            'pt_group' => 'required',
+            'pt_group' => 'required|exists:lib_pt_groups,id',
         ];
     }
 
@@ -64,8 +65,8 @@ class ConsultRequest extends FormRequest
                 'consult_done' => fake()->boolean,
             ],
             'pt_group' => [
-                'description' => 'Patient Group',
-                'example' => fake()->randomElement(['mc','ncd','cc']),
+                'description' => 'ID of Patient Group',
+                'example' => fake()->randomElement(LibPtGroup::pluck('id')->toArray()),
             ],
         ];
 
