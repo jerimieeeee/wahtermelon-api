@@ -37,7 +37,7 @@ class ConsultCcdevServiceController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = ConsultCcdevService::query()->with(['services:service_id,service_name'])
+        $query = ConsultCcdevService::query()->with(['services:service_id,service_name,service_cat'])
                 ->when(isset($request->patient_id), function($query) use($request){
                     return $query->wherePatientId($request->patient_id);
                 });
@@ -59,11 +59,17 @@ class ConsultCcdevServiceController extends Controller
      */
     public function store(ConsultCcdevServiceRequest $request): JsonResponse
     {
+
         $service = $request->input('services');
         foreach($service as $value){
             ConsultCcdevService::updateOrCreate(['patient_id' => $request->patient_id, 'service_id' => $value['service_id']],
             ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
         }
+
+        // ConsultCcdevService::with(['services:service_id,service_name,service_cat'])
+        // ->whereNotIn('service_id', $service)
+        // ->where('service_cat', '=', $s->consult_id )
+        // ->delete();
 
         $ccdevservices = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
 

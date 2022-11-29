@@ -79,7 +79,7 @@ Route::prefix('v1')->group(function (){
             Route::post('vaccines', 'store');
             Route::get('vaccines-records', 'index');
             Route::get('vaccines-records/{patientvaccine}', 'show');
-            Route::post('vaccines/{id}', 'update');
+            Route::put('vaccines/{id}', 'update');
             Route::delete('vaccines/{id}', 'destroy');
         });
     });
@@ -106,11 +106,11 @@ Route::prefix('v1')->group(function (){
             Route::get('cc-records/{patientccdev}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevServiceController::class)
-            ->middleware('auth:api')
+            // ->middleware('auth:api')
             ->group(function() {
             Route::post('cc-services', 'store');
             Route::get('cc-services', 'index');
-            Route::post('cc-services/{id}', 'update');
+            Route::put('cc-services/{id}', 'update');
             Route::delete('cc-services/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
@@ -127,13 +127,13 @@ Route::prefix('v1')->group(function (){
             ->middleware('auth:api')
             ->group(function() {
             Route::post('cn-records', 'store');
-            Route::post('cn-records/{id}', 'update');
+            Route::put('cn-records/{id}', 'update');
             Route::get('cn-records', 'show');
             Route::get('cn-count', 'show');
             Route::get('cn-records', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
-            ->middleware('auth:api')
+            // ->middleware('auth:api')
             ->group(function() {
             Route::post('cn-complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConsultNotes extends Model
 {
+    use HasFactory;
+
     protected $table='consult_notes';
 
     protected $primaryKey = 'id';
