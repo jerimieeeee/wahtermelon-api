@@ -44,7 +44,8 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @authenticated
+     * User Logout API.
      *
      * @param Request $request
      * @return JsonResponse
