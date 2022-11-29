@@ -5,6 +5,7 @@ namespace App\Models\V1\Household;
 use App\Models\User;
 use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HouseholdFolder extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuid;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuid, FilterByUser;
 
     protected $guarded = [
         'id'

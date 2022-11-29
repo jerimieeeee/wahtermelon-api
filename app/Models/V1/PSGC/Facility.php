@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\PSGC;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -69,5 +70,10 @@ class Facility extends Model
     public function barangay(): BelongsTo
     {
         return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'facility_code', 'code');
     }
 }

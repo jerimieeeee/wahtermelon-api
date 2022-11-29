@@ -29,16 +29,17 @@ Route::prefix('v1')->group(function (){
     Route::post('reset-password', [\App\Http\Controllers\API\Auth\ChangePasswordController::class, 'passwordResetProcess'])->middleware('guest');
 
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
-    //->middleware('auth:api')
+    ->middleware('auth:api')
     ->group(function (){
         Route::get('users', 'index');
         Route::get('users/{user}', 'show');
-        Route::post('register', 'store')->withoutMiddleware('auth:api');
+        Route::post('register', 'store')->middleware('guest');
         Route::put('users/{user}', 'update');
     });
 
 
     Route::controller(\App\Http\Controllers\API\V1\Patient\PatientController::class)
+    ->middleware('auth:api')
     ->group(function (){
         Route::get('patient', 'index')->name('patient.index');
         Route::get('patient/{patient}', 'show')->name('patient.show');
@@ -49,6 +50,7 @@ Route::prefix('v1')->group(function (){
     //Households APIs
     Route::prefix('households')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('household-folders', 'index');
                 Route::get('household-folders/{householdFolder}', 'show');
@@ -60,6 +62,7 @@ Route::prefix('v1')->group(function (){
     //Patient Philhealth APIs
     Route::prefix('patient-philhealth')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPhilhealthController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('philhealth', 'index');
                 Route::get('philhealth/{patientPhilhealth}', 'show');
@@ -71,7 +74,8 @@ Route::prefix('v1')->group(function (){
     //Patient Vaccines APIs
     Route::prefix('patient-vaccines')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('vaccines', 'store');
             Route::get('vaccines-records', 'index');
             Route::get('vaccines-records/{patientvaccine}', 'show');
@@ -83,6 +87,7 @@ Route::prefix('v1')->group(function (){
     //Patient Vitals APIs
     Route::prefix('patient-vitals')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVitalsController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('vitals', 'index');
                 Route::get('vitals/{vitals}', 'show');
@@ -94,30 +99,33 @@ Route::prefix('v1')->group(function (){
     //Childcare APIs
     Route::prefix('child-care')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cc-records', 'store');
             // Route::post('cc-records/{patient_ccdev_id}', 'update');
             Route::get('cc-records/{patientccdev}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevServiceController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cc-services', 'store');
             Route::get('cc-services', 'index');
             Route::post('cc-services/{id}', 'update');
             Route::delete('cc-services/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cc-breastfed', 'store');
             Route::get('cc-breastfed/{patientccdevbfed}', 'show');
         });
-
     });
 
     //Consultation APIs
     Route::prefix('consultation')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cn-records', 'store');
             Route::post('cn-records/{id}', 'update');
             Route::get('cn-records', 'show');
@@ -125,18 +133,21 @@ Route::prefix('v1')->group(function (){
             Route::get('cn-records', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cn-complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cn-idx', 'store');
             Route::delete('cn-idx/{id}', 'destroy');
             Route::get('cn-idx/{id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class)
-        ->group(function() {
+            ->middleware('auth:api')
+            ->group(function() {
             Route::post('cn-fdx', 'store');
             Route::get('cn-fdx/{id}', 'show');
             Route::delete('cn-fdx/{id}', 'destroy');
@@ -146,40 +157,47 @@ Route::prefix('v1')->group(function (){
     //Maternal Care APIs
     Route::prefix('maternal-care')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-records', 'index');
                 Route::get('mc-records/{mc}', 'show');
                 //Route::post('mc-records', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPreRegistrationController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-preregistrations/{preRegistration}', 'show');
                 Route::post('mc-preregistrations', 'store');
                 Route::put('mc-preregistrations/{preRegistration}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\PatientMcPostRegistrationController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-postregistrations/{postRegistration}', 'show');
                 Route::post('mc-postregistrations', 'store');
                 Route::put('mc-postregistrations/{postRegistration}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPrenatalController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-prenatal/{mcPrenatal}', 'show');
                 Route::post('mc-prenatal', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPostpartumController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-postpartum/{mcPostpartum}', 'show');
                 Route::post('mc-postpartum', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcRiskController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 //Route::get('mc-risk-factors/{mcRisk}', 'show');
                 Route::get('mc-risk-factors', 'index');
                 Route::post('mc-risk-factors', 'store');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcServiceController::class)
+            ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-services', 'index');
                 Route::post('mc-services', 'store');

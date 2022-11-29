@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Household Information Management
  *
  * APIs for managing household information
@@ -52,7 +53,7 @@ class HouseholdFolderController extends Controller
             return HouseholdFolderResource::collection($household->get());
         }
 
-        return HouseholdFolderResource::collection($household->paginate($perPage));
+        return HouseholdFolderResource::collection($household->paginate($perPage)->withQueryString());
     }
 
     /**

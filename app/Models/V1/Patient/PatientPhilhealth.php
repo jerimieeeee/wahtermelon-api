@@ -10,6 +10,7 @@ use App\Models\V1\Libraries\LibPhilhealthMembershipType;
 use App\Models\V1\Libraries\LibPhilhealthPackageType;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PatientPhilhealth extends Model
 {
-    use HasFactory, HasSearchFilter;
+    use HasFactory, HasSearchFilter, FilterByUser;
 
     protected $table = 'patient_philhealth';
 

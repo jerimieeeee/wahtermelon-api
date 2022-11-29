@@ -12,6 +12,7 @@ use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\DB;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuid, HasSearchFilter;
+    use HasFactory, HasUuid, HasSearchFilter, FilterByUser;
 
     protected $guarded = [
         'id',
