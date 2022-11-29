@@ -13,6 +13,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Childcare Service Management
  *
  * APIs for managing Childcare Service information

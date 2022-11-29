@@ -9,10 +9,11 @@ use App\Http\Requests\API\V1\Consultation\ConsultNotesPeRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
+ * @authenticated
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Physical Exam information
- * @subgroup Patient Patient Consultation Physical Exam
+ * @subgroup Patient Consultation Physical Exam
  * @subgroupDescription Patient Consultation Physical Exam.
  */
 class ConsultNotesPeController extends Controller

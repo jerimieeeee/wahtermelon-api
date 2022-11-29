@@ -33,7 +33,7 @@ Route::prefix('v1')->group(function (){
     ->group(function (){
         Route::get('users', 'index');
         Route::get('users/{user}', 'show');
-        Route::post('register', 'store')->middleware('guest');
+        Route::post('register', 'store')->withoutMiddleware('auth:api');
         Route::put('users/{user}', 'update');
     });
 
@@ -79,7 +79,7 @@ Route::prefix('v1')->group(function (){
             Route::post('vaccines', 'store');
             Route::get('vaccines-records', 'index');
             Route::get('vaccines-records/{patientvaccine}', 'show');
-            Route::post('vaccines/{id}', 'update');
+            Route::put('vaccines/{id}', 'update');
             Route::delete('vaccines/{id}', 'destroy');
         });
     });

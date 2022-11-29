@@ -23,6 +23,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class UserController extends Controller
 {
     /**
+     * @authenticated
      * Display a listing of the resource.
      *
      * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
@@ -70,6 +71,7 @@ class UserController extends Controller
     }
 
     /**
+     * @authenticated
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\UserResource

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Childcare Information Management
  *
  * APIs for managing Childcare Patient information

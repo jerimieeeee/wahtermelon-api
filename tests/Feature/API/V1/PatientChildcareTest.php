@@ -5,6 +5,7 @@ namespace Tests\Feature\API\V1;
 use App\Models\User;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class PatientChildcareTest extends TestCase
@@ -18,6 +19,9 @@ class PatientChildcareTest extends TestCase
     // Childcare Patient
     public function test_childcare_patient_can_be_created()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $response = $this->post('api/v1/child-care/cc-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -33,6 +37,9 @@ class PatientChildcareTest extends TestCase
 
     public function test_child_care_patient_can_show_specific_record()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $id = fake()->randomElement(PatientCcdev::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/child-care/cc-records/$id");
         $response->assertOk();

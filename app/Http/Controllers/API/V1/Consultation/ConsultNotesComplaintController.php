@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
+ * @authenticated
  * @group Consultation Chief Complaint Management
  *
  * APIs for managing Patient Consultation Chief Complaint information

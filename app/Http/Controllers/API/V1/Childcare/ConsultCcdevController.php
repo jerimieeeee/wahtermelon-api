@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
+ * @authenticated
  * @group Childcare Consultation Management
  *
  * APIs for managing Childcare Consultation information

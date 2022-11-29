@@ -3,12 +3,14 @@
 namespace App\Models\V1\Childcare;
 
 use App\Models\V1\Libraries\LibCcdevService;
+use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ConsultCcdevService extends Model
 {
+    use HasFactory, FilterByUser;
     protected $guarded = [
         'id',
     ];

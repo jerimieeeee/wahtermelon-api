@@ -17,6 +17,7 @@ use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class PatientTest extends TestCase
@@ -28,44 +29,38 @@ class PatientTest extends TestCase
      */
     public function test_model_patient_can_be_instantiated(): void
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $patient = Patient::factory()->create();
         $this->assertModelExists($patient);
     }
 
     public function test_patient_can_be_created()
     {
-        $gender = fake()->randomElement(['male', 'female']);
-        $response = $this->post('api/v1/patient', [
-            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'last_name' => fake()->lastName(),
-            'first_name' => fake()->firstName($gender),
-            'middle_name' => $middle = fake()->lastName(),
-            'suffix_name' => $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : 'NA',
-            'gender' => substr(Str::ucfirst($gender), 0, 1),
-            'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'mothers_name' => fake()->firstName('female') . ' ' . $middle,
-            'mobile_number' => fake()->phoneNumber(),
-            'pwd_type_code' => fake()->randomElement(LibPwdType::pluck('code')->toArray()),
-            'indegenous_flag' => fake()->boolean,
-            'blood_type_code' => fake()->randomElement(LibBloodType::pluck('code')->toArray()),
-            'religion_code' => fake()->randomElement(LibReligion::pluck('code')->toArray()),
-            'occupation_code' => fake()->randomElement(LibOccupation::pluck('code')->toArray()),
-            'education_code' => fake()->randomElement(LibEducation::pluck('code')->toArray()),
-            'civil_status_code' => fake()->randomElement(LibCivilStatus::pluck('code')->toArray()),
-            'consent_flag' => fake()->boolean,
-        ]);
+        Passport::actingAs(
+            User::factory()->create()
+        );
+        $patient = Patient::factory()->create()->toArray();
+        $response = $this->post('api/v1/patient', $patient);
         $response->assertCreated();
     }
 
     public function test_patient_can_show_all_records()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
+
         $response = $this->get('api/v1/patient');
         $response->assertOk();
     }
 
     public function test_patient_can_show_specific_record()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/patient/$id");
         $response->assertOk();

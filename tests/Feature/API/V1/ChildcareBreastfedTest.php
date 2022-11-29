@@ -15,6 +15,7 @@ use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 
@@ -28,6 +29,9 @@ class ChildcareBreastfedTest extends TestCase
 
     public function test_childcare_breastfed_can_be_created()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         //Create User
         $gender = fake()->randomElement(['male', 'female']);
         $response = $this->post('api/v1/register', [
@@ -96,6 +100,9 @@ class ChildcareBreastfedTest extends TestCase
 
     public function test_childcare_breastfed_can_show_specific_record()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/child-care/cc-breastfed/$id");
         $response->assertOk();

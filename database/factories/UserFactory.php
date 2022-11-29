@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'gender' => substr(Str::ucfirst($gender), 0, 1),
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'contact_number' => fake()->phoneNumber(),
+            'is_active' => true,
             'email' => fake()->safeEmail(),
             'designation_code' => fake()->randomElement(LibDesignation::pluck('code')->toArray()),
             'employer_code' => fake()->randomElement(LibEmployer::pluck('code')->toArray()),

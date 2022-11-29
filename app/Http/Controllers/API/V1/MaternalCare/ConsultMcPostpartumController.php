@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
+ * @authenticated
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
