@@ -102,10 +102,22 @@ class ConsultController extends Controller
 
         // return ConsultResource::collection($query);
         $date_today = Carbon::now()->format('Y-m-d');
+        $today_count = Consult::whereDate('consult_date', '=', $date_today)->count();
+
         $cn_count = Consult::whereDate('consult_date', '=', $date_today)
                             ->where('pt_group', '=', 'cn')->count();
-        // return ['today_cn_count' => $cn_count];
-        return $cn_count;
+
+        $cc_count = Consult::whereDate('consult_date', '=', $date_today)
+                            ->where('pt_group', '=', 'cc')->count();
+
+        $mc_count = Consult::whereDate('consult_date', '=', $date_today)
+                            ->where('pt_group', '=', 'mc')->count();
+
+        return ['todays_general_count' => $today_count,
+
+                        'consultation' => $cn_count,
+                        'childcare' => $cc_count,
+                        'maternal' => $mc_count];
     }
 
     /**

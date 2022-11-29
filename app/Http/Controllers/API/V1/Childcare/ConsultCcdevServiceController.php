@@ -4,9 +4,12 @@ namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevServiceRequest;
+use App\Http\Requests\API\V1\Childcare\ConsultCcdevServiceUpdateRequest;
 use App\Http\Resources\API\V1\Childcare\ConsultCcdevResource;
 use App\Http\Resources\API\V1\Childcare\ConsultCcdevServiceResource;
+use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevService;
+use App\Models\V1\Libraries\LibCcdevService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -68,6 +71,19 @@ class ConsultCcdevServiceController extends Controller
             'message' => 'Services Successfully Saved',
             'data' => $ccdevservices
         ], 201);
+
+        // $service = $request->input('service');
+        // foreach($service as $value){
+        //    ConsultCcdevService::updateOrCreate(['patient_id' => $request->patient_id, 'service_id' => $value['service_id'], 'service_date' => $value['service_date']],
+        //     ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
+        // }
+
+        // $patientservice = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
+
+        // return response()->json([
+        //     'message' => 'Services Successfully Saved',
+        //     'data' => $patientservice
+        // ], 201);
     }
 
     /**
@@ -88,10 +104,10 @@ class ConsultCcdevServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultCcdevServiceUpdateRequest $request, $id)
     {
         ConsultCcdevService::findorfail($id)->update($request->all());
-        return response()->json('Successfully Updated');
+        return response()->json('Service Successfully Updated');
     }
 
     /**
@@ -100,8 +116,9 @@ class ConsultCcdevServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        ConsultCcdevService::findorfail($id)->forceDelete($request->all());
+        return response()->json('Service Successfully Deleted');
     }
 }

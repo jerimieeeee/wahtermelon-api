@@ -100,6 +100,8 @@ Route::prefix('v1')->group(function (){
         ->group(function() {
             Route::post('cc-services', 'store');
             Route::get('cc-services', 'index');
+            Route::post('cc-services/{id}', 'update');
+            Route::delete('cc-services/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
         ->group(function() {
@@ -115,6 +117,7 @@ Route::prefix('v1')->group(function (){
         ->group(function() {
             Route::post('cn-records', 'store');
             Route::post('cn-records/{id}', 'update');
+            Route::get('cn-records', 'show');
             Route::get('cn-count', 'show');
             Route::get('cn-records', 'index');
         });
@@ -265,6 +268,7 @@ Route::prefix('v1')->group(function (){
         Route::get('diagnosis/{id}', [\App\Http\Controllers\API\V1\Libraries\LibDiagnosisController::class, 'show']);
         Route::get('icd10', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'index']);
         Route::get('icd10/{id}', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'show']);
+        Route::get('ptgroup', [\App\Http\Controllers\API\V1\Libraries\LibPtGroupController::class, 'index']);
 
         //Childcare Libraries
         Route::get('vaccine', [\App\Http\Controllers\API\V1\Libraries\LibVaccineController::class, 'index']);

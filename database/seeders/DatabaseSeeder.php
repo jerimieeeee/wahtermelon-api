@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
             LibCcdevServicesSeeder::class,
             LibDesignationSeeder::class,
             LibEmployerSeeder::class,
+            LibPtGroupSeeder::class,
         ]);
     }
 }
