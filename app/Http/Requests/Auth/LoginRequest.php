@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -50,6 +51,19 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
                 'contact_number' => __('auth.failed'),
+            ]);
+        }
+
+        if(is_null(Auth::user()->email_verified_at)){
+            event(new Registered(Auth::user()));
+            throw ValidationException::withMessages([
+                'account_status' => 'Your email address is not verified. You need to confirm your account. We have sent you an activation code, please check your email.'
+            ]);
+        }
+
+        if (Auth::user()->is_active == 0) {
+            throw ValidationException::withMessages([
+                'account_status' => 'Account not activated!'
             ]);
         }
 

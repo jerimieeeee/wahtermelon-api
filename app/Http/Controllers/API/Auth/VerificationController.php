@@ -32,7 +32,8 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return redirect()->to('/');
+        return response()->json(["message" => "Your e-mail is verified. You can now login."]);
+        //return redirect()->to('/');
     }
 
     /**
@@ -42,11 +43,11 @@ class VerificationController extends Controller
      */
     public function resend() {
         if (auth()->user()->hasVerifiedEmail()) {
-            return response(['message'=>'Already verified']);
+            return response()->json(['message'=>'Already verified']);
         }
 
         auth()->user()->sendEmailVerificationNotification();
 
-        return $this->respondWithMessage("Email verification link sent on your email id");
+        return response()->json(["message" => "Email verification link sent on your email id."]);
     }
 }
