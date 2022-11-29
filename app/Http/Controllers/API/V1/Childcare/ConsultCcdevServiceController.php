@@ -61,6 +61,7 @@ class ConsultCcdevServiceController extends Controller
     {
 
         $service = $request->input('services');
+        $service_array = [];
         foreach($service as $value){
             ConsultCcdevService::updateOrCreate(['patient_id' => $request->patient_id, 'service_id' => $value['service_id']],
             ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
@@ -70,6 +71,11 @@ class ConsultCcdevServiceController extends Controller
         // ->whereNotIn('service_id', $service)
         // ->where('service_cat', '=', $s->consult_id )
         // ->delete();
+
+        ConsultCcdevService::whereNotIn('service_id', $service_array)
+        ->whereHas('services', function($q){
+            $q->where('service_cat', '=', 'Y');
+        })->delete();
 
         $ccdevservices = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
 
