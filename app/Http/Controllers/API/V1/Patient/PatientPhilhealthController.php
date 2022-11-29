@@ -59,7 +59,7 @@ class PatientPhilhealthController extends Controller
             return PatientPhilhealthResource::collection($patientPhilhealth->get());
         }
 
-        return PatientPhilhealthResource::collection($patientPhilhealth->paginate($perPage));
+        return PatientPhilhealthResource::collection($patientPhilhealth->paginate($perPage)->withQueryString());
     }
 
     /**

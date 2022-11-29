@@ -56,7 +56,7 @@ class ConsultController extends Controller
             return ConsultResource::collection($consult->get());
         }
 
-        return ConsultResource::collection($consult->paginate($perPage));
+        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());
     }
 
     /**

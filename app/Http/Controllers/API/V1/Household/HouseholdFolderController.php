@@ -53,7 +53,7 @@ class HouseholdFolderController extends Controller
             return HouseholdFolderResource::collection($household->get());
         }
 
-        return HouseholdFolderResource::collection($household->paginate($perPage));
+        return HouseholdFolderResource::collection($household->paginate($perPage)->withQueryString());
     }
 
     /**

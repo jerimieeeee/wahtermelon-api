@@ -43,7 +43,7 @@ class PatientVitalsController extends Controller
             return PatientVitalsResource::collection($vitals->get());
         }
 
-        return PatientVitalsResource::collection($vitals->paginate($perPage));
+        return PatientVitalsResource::collection($vitals->paginate($perPage)->withQueryString());
     }
 
     /**

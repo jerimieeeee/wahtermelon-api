@@ -57,7 +57,7 @@ class PatientVaccineController extends Controller
         if ($perPage == 'all') {
             return PatientVaccineResource::collection($vaccines->first());
         }
-        return PatientVaccineResource::collection($vaccines->paginate($perPage));
+        return PatientVaccineResource::collection($vaccines->paginate($perPage)->withQueryString());
 
     }
 

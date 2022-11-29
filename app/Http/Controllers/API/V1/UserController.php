@@ -51,7 +51,7 @@ class UserController extends Controller
             return UserResource::collection($user->get());
         }
 
-        return UserResource::collection($user->paginate($perPage));
+        return UserResource::collection($user->paginate($perPage)->withQueryString());
     }
 
     /**
