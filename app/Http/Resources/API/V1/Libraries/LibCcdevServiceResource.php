@@ -18,7 +18,7 @@ class LibCcdevServiceResource extends JsonResource
             'service_id' => $this->service_id,
             'service_name' => $this->service_name,
             'order_seq' => $this->order_seq,
-            'service_cat' => $this->service_cat,
+            'essential' => $this->essential,
         ];
     }
 }
