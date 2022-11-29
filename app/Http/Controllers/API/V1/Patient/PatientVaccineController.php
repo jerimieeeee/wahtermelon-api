@@ -15,6 +15,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use App\Services\Patient\PatientVaccineService;
 
 /**
+ * @authenticated
  * @group Patient Vaccine Management
  *
  * APIs for managing Patient Vaccine information

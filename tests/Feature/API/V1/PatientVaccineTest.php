@@ -10,6 +10,7 @@ use App\Models\V1\Patient\PatientVaccine;
 use Database\Seeders\LibVaccineSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class PatientVaccineTest extends TestCase
@@ -21,6 +22,9 @@ class PatientVaccineTest extends TestCase
      */
     public function test_patient_vaccine_can_be_created()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $response = $this->post('api/v1/patient-vaccines/vaccines', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -43,11 +47,13 @@ class PatientVaccineTest extends TestCase
 
     public function test_patient_vaccine_can_be_updated()
     {
-        $this->withoutExceptionHandling();
-
+        //$this->withoutExceptionHandling();
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $patientvax = PatientVaccine::factory()->create();
 
-        $response = $this->post('api/v1/patient-vaccines/vaccines/'. $patientvax->id, [
+        $response = $this->put('api/v1/patient-vaccines/vaccines/'. $patientvax->id, [
 
             'patient_id' => $patientvax->patient_id,
             'user_id' => $patientvax->user_id,
@@ -56,16 +62,18 @@ class PatientVaccineTest extends TestCase
             'status_id' => '3'
 
         ]);
-        $response->assertSessionHasNoErrors();
+        $response->assertOk();
     }
 
     public function test_patient_vaccine_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
-
+        //$this->withoutExceptionHandling();
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $fdx = PatientVaccine::factory()->create();
 
         $response = $this->delete('api/v1/patient-vaccines/vaccines/'. $fdx->id, []);
-        $response->assertSessionHasNoErrors();
+        $response->assertOk();
     }
 }

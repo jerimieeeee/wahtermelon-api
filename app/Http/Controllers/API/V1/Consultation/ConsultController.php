@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation information

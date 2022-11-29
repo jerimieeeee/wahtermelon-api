@@ -30,24 +30,11 @@ class UserTest extends TestCase
 
     public function test_register_user_can_be_created()
     {
-        $gender = fake()->randomElement(['male', 'female']);
-        $response = $this->post('api/v1/register', [
-            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'last_name' => fake()->lastName(),
-            'first_name' => fake()->firstName($gender),
-            'middle_name' => fake()->lastName(),
-            'suffix_name' => 'NA',
-            'gender' => substr(Str::ucfirst($gender), 0, 1),
-            'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'contact_number' => fake()->phoneNumber(),
-            'email' => fake()->safeEmail(),
-            'designation_code' => fake()->randomElement(LibDesignation::pluck('code')->toArray()),
-            'employer_code' => fake()->randomElement(LibEmployer::pluck('code')->toArray()),
-            'password' => 'Password2!',
-            'password_confirmation' => 'Password2!',
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-        ]);
+        $user = User::factory()->make()->toArray();
+        $user['password'] = 'Password2!';
+        $user['password_confirmation'] = 'Password2!';
+
+        $response = $this->post('api/v1/register', $user);
         $response->assertCreated();
     }
 

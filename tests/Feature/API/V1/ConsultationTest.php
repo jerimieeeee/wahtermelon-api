@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibPtGroup;
 use App\Models\V1\Patient\Patient;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class ConsultationTest extends TestCase
@@ -17,15 +18,11 @@ class ConsultationTest extends TestCase
      */
     public function test_consultation_can_be_created()
     {
-        $response = $this->post('api/v1/consultation/cn-records', [
-            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'physician_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'consult_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),
-            'is_pregnant' => fake()->boolean(),
-            'consult_done' => fake()->boolean(),
-            'pt_group' => fake()->randomElement(LibPtGroup::pluck('id')->toArray()),
-        ]);
+        Passport::actingAs(
+            User::factory()->create()
+        );
+        $consult = Consult::factory()->make()->toArray();
+        $response = $this->post('api/v1/consultation/cn-records', $consult);
         $response->assertCreated();
     }
 

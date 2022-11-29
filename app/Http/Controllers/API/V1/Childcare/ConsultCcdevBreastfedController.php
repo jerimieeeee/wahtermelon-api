@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Childcare Breastfed Management
  *
  * APIs for managing Childcare Breastfed information

@@ -24,6 +24,7 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @authenticated
      *
      * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
      * @queryParam sort string Sort last_name, first_name, middle_name, birthdate of the user. Add hyphen (-) to descend the list: e.g. last_name,birthdate. Example: last_name
@@ -57,7 +58,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-    * @apiResourceAdditional status=Success
+     * @apiResourceAdditional status=Success
      * @apiResource 201 App\Http\Resources\API\V1\UserResource
      * @apiResourceModel App\Models\User
      * @param UserRequest $request
@@ -71,6 +72,7 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     * @authenticated
      *
      * @apiResource App\Http\Resources\API\V1\UserResource
      * @apiResourceModel App\Models\User
@@ -101,6 +103,7 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @authenticated
      *
      * @param  int  $id
      * @return Response

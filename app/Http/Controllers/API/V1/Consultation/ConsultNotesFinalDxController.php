@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 
 /**
+ * @authenticated
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Final Dx information

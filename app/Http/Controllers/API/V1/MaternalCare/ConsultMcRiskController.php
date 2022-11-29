@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
+ * @authenticated
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information

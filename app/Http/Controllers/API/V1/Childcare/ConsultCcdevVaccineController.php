@@ -11,6 +11,7 @@ use App\Models\V1\Childcare\ConsultCcdevVaccine;
 use Illuminate\Http\JsonResponse;
 
 /**
+ * @authenticated
  * @group Childcare Vaccine Management
  *
  * APIs for managing Childcare Vaccine information

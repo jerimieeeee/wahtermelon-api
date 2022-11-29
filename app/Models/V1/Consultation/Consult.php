@@ -5,15 +5,18 @@ namespace App\Models\V1\Consultation;
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVitals;
+use App\Traits\FilterByUser;
+use DateTime;
+use Carbon\Carbon;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Consult extends Model
 {
-    use HasFactory;
-
+    use HasFactory, FilterByUser;
     /**
     * The attributes that are mass assignable.
     *

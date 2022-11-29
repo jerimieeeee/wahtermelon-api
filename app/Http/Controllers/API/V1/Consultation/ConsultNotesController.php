@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
+ * @authenticated
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Notes information

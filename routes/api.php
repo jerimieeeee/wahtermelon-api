@@ -33,7 +33,7 @@ Route::prefix('v1')->group(function (){
     ->group(function (){
         Route::get('users', 'index');
         Route::get('users/{user}', 'show');
-        Route::post('register', 'store')->middleware('guest');
+        Route::post('register', 'store')->withoutMiddleware('auth:api');
         Route::put('users/{user}', 'update');
     });
 
@@ -106,7 +106,7 @@ Route::prefix('v1')->group(function (){
             Route::get('cc-records/{patientccdev}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevServiceController::class)
-            // ->middleware('auth:api')
+            ->middleware('auth:api')
             ->group(function() {
             Route::post('cc-services', 'store');
             Route::get('cc-services', 'index');
@@ -133,7 +133,7 @@ Route::prefix('v1')->group(function (){
             Route::get('cn-records', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
-            // ->middleware('auth:api')
+            ->middleware('auth:api')
             ->group(function() {
             Route::post('cn-complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');

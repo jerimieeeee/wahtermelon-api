@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 /**
+ * @authenticated
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Final Dx information

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Libraries\LibIcd10;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class ConsultNotesFinalDxTest extends TestCase
@@ -17,6 +18,9 @@ class ConsultNotesFinalDxTest extends TestCase
      */
     public function test_consultation_final_dx_can_be_created()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $response = $this->post('api/v1/consultation/cn-fdx', [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -36,11 +40,11 @@ class ConsultNotesFinalDxTest extends TestCase
 
     public function test_consultation_final_dx_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
-
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $fdx = ConsultNotesFinalDx::factory()->create();
-
-        $response = $this->delete('api/v1/consultation/cn-fdx/'. $fdx->id, []);
-        $response->assertSessionHasNoErrors();
+        $response = $this->delete('api/v1/consultation/cn-fdx/'. $fdx->id);
+        $response->assertOk();
     }
 }
