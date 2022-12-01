@@ -13,6 +13,7 @@
         "laravel/passport": "^11.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "silber/bouncer": "^1.0",
         "spatie/laravel-query-builder": "^5.0",
         "spatie/simple-excel": "^2.1"
     },
