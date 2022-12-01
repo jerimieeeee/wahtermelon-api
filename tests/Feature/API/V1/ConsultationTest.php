@@ -28,6 +28,9 @@ class ConsultationTest extends TestCase
 
     public function test_consultation_can_show_specific_record()
     {
+        Passport::actingAs(
+            User::factory()->create()
+        );
         $id = fake()->randomElement(Consult::pluck('patient_id')->toArray());
         $response = $this->get("api/v1/consultation/cn-records?patient_id=$id");
         $response->assertOk();
