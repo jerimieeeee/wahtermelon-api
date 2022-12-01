@@ -114,11 +114,24 @@ class ConsultController extends Controller
         $mc_count = Consult::whereDate('consult_date', '=', $date_today)
                             ->where('pt_group', '=', 'mc')->count();
 
+        $ncd_count = Consult::whereDate('consult_date', '=', $date_today)
+                            ->where('pt_group', '=', 'ncd')->count();
+
+        $ab_count = Consult::whereDate('consult_date', '=', $date_today)
+                            ->where('pt_group', '=', 'ab')->count();
+
+        $cv_count = Consult::whereDate('consult_date', '=', $date_today)
+                            ->where('pt_group', '=', 'cv')->count();
+
         return ['todays_general_count' => $today_count,
 
                         'consultation' => $cn_count,
                         'childcare' => $cc_count,
-                        'maternal' => $mc_count];
+                        'maternal' => $mc_count,
+                        'animal bite' => $ab_count,
+                        'covid-19' => $cv_count,
+                        'ncd' => $ncd_count
+                    ];
     }
 
     /**
