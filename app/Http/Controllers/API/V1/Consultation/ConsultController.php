@@ -92,46 +92,7 @@ class ConsultController extends Controller
      */
     public function show()
     {
-        // $query = Consult::where('patient_id', $consult->patient_id)
-        //             ->when(isset($request->pt_group), function($q) use($request){
-        //                 $q->where('pt_group', $request->pt_group);
-        //         })
-        //         ->with('user', 'patient', 'physician')
-        //         ->where('consult_done', '=', $request->consult_done ?? 0)
-        //         ->orderBy('consult_date', 'DESC')
-        //         ->get();
-
-        // return ConsultResource::collection($query);
-        $date_today = Carbon::now()->format('Y-m-d');
-        $today_count = Consult::whereDate('consult_date', '=', $date_today)->count();
-
-        $cn_count = Consult::whereDate('consult_date', '=', $date_today)
-                            ->where('pt_group', '=', 'cn')->count();
-
-        $cc_count = Consult::whereDate('consult_date', '=', $date_today)
-                            ->where('pt_group', '=', 'cc')->count();
-
-        $mc_count = Consult::whereDate('consult_date', '=', $date_today)
-                            ->where('pt_group', '=', 'mc')->count();
-
-        $ncd_count = Consult::whereDate('consult_date', '=', $date_today)
-                            ->where('pt_group', '=', 'ncd')->count();
-
-        $ab_count = Consult::whereDate('consult_date', '=', $date_today)
-                            ->where('pt_group', '=', 'ab')->count();
-
-        $cv_count = Consult::whereDate('consult_date', '=', $date_today)
-                            ->where('pt_group', '=', 'cv')->count();
-
-        return ['todays_general_count' => $today_count,
-
-                        'consultation' => $cn_count,
-                        'childcare' => $cc_count,
-                        'maternal' => $mc_count,
-                        'animal bite' => $ab_count,
-                        'covid-19' => $cv_count,
-                        'ncd' => $ncd_count
-                    ];
+        //
     }
 
     /**

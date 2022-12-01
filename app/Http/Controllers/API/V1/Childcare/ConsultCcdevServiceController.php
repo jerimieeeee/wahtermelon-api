@@ -73,16 +73,6 @@ class ConsultCcdevServiceController extends Controller
             ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
         }
 
-        // ConsultCcdevService::with(['services:service_id,service_name,service_cat'])
-        // ->whereNotIn('service_id', $service)
-        // ->where('service_cat', '=', $s->consult_id )
-        // ->delete();
-
-        // ConsultCcdevService::query()
-        // ->whereHas('services', function($q) use($request){
-        //     $q->where('service_cat', $request->essential);
-        // })->delete();
-
         $ccdevservices = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
 
         return response()->json([
