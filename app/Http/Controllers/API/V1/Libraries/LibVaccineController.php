@@ -27,7 +27,7 @@ class LibVaccineController extends Controller
      */
     public function index()
     {
-        return LibVaccineResource::collection(LibVaccine::orderBy('vaccine_id', 'ASC')->get());
+        return LibVaccineResource::collection(LibVaccine::orderBy('order_seq', 'ASC')->get());
     }
 
     /**
