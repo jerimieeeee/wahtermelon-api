@@ -95,6 +95,9 @@ class PatientVitalsRequest extends FormRequest
             'patient_heart_rate' => 'nullable|numeric',
             'patient_respiratory_rate' => 'nullable|numeric',
             'patient_pulse_rate' => 'nullable|numeric',
+            'patient_spo2' => 'nullable|numeric',
+            'patient_chest' => 'nullable|numeric',
+            'patient_abdomen' => 'nullable|numeric',
             'patient_waist' => 'nullable|numeric',
             'patient_hip' => 'nullable|numeric',
             'patient_limbs' => 'nullable|numeric',
@@ -149,6 +152,15 @@ class PatientVitalsRequest extends FormRequest
             ],
             'patient_pulse_rate' => [
                 'example' => fake()->numberBetween(60, 100)
+            ],
+            'patient_spo2' => [
+                'example' => fake()->numberBetween(60, 100)
+            ],
+            'patient_chest' => [
+                'example' => fake()->numberBetween(24, 150)
+            ],
+            'patient_abdomen' => [
+                'example' => fake()->numberBetween(24, 150)
             ],
             'patient_waist' => [
                 'example' => fake()->numberBetween(24, 150)
