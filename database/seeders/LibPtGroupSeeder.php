@@ -26,7 +26,7 @@ class LibPtGroupSeeder extends Seeder
           ['id' => 'cc', 'desc' => 'Child Care'],
           ['id' => 'ab', 'desc' => 'Animal Bite'],
           ['id' => 'ncd', 'desc' => 'Noncommunicable disease'],
-          ['id' => 'cv', 'desc' => 'COVID'],
+          ['id' => 'cv', 'desc' => 'COVID-19'],
         ], ['id']);
     }
 }

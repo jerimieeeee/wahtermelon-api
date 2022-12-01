@@ -128,7 +128,7 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
             Route::post('cn-records', 'store');
             Route::put('cn-records/{id}', 'update');
-            Route::get('cn-records', 'show');
+            // Route::get('cn-records', 'show');
             Route::get('cn-count', 'show');
             Route::get('cn-records', 'index');
         });
@@ -152,6 +152,11 @@ Route::prefix('v1')->group(function (){
             Route::get('cn-fdx/{id}', 'show');
             Route::delete('cn-fdx/{id}', 'destroy');
         });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultStatsController::class)
+        ->middleware('auth:api')
+        ->group(function() {
+        Route::get('cn-stats', 'index');
+    });
     });
 
     //Maternal Care APIs
