@@ -37,7 +37,7 @@ class LibVaccineSeeder extends Seeder
           ['vaccine_id' => 'HPV',     'vaccine_name' => 'HPV',                        'vaccine_interval' => '1',     'vaccine_module' => 'gen',    'vaccine_desc' => 'Human Papilloma Virus Vaccine',         'order_seq' => '13'],
           ['vaccine_id' => 'HPVGR4',  'vaccine_name' => 'HPV Grade 4',                'vaccine_interval' => '0',     'vaccine_module' => 'gen',    'vaccine_desc' => 'Human Papilloma Virus Vaccine Grade 4', 'order_seq' => '14'],
           ['vaccine_id' => 'IV',      'vaccine_name' => 'Influenza Vaccine',          'vaccine_interval' => '0',     'vaccine_module' => 'ncd',    'vaccine_desc' => 'Influenza Vaccine',                     'order_seq' => '15'],
-          ['vaccine_id' => 'MRGR',    'vaccine_name' => 'MR GRADE 1',                 'vaccine_interval' => '0',     'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella',                       'order_seq' => '16'],
+          ['vaccine_id' => 'MRGR',    'vaccine_name' => 'MR GRADE 1',                 'vaccine_interval' => '0',     'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella Grade 1',               'order_seq' => '16'],
           ['vaccine_id' => 'MRGR7',   'vaccine_name' => 'MR Grade 7',                 'vaccine_interval' => '0',     'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella Grade 7',               'order_seq' => '17'],
 
           ['vaccine_id' => 'PCECV1',  'vaccine_name' => 'Safety and Immunogenicity of Purified Chick Embryo', 'vaccine_interval' => '0', 'vaccine_module' => 'animalbite',  'vaccine_desc' => 'Vaxirab-N',    'order_seq' => '18'],
