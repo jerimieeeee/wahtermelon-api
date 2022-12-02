@@ -37,7 +37,7 @@ class ScopeBouncer
         // Here you may use whatever mechanism you use in your app
         // to determine the current tenant. To demonstrate, the
         // $tenantId is set here from the user's account_id.
-        $tenantId = $request->user()->facility_code;
+        $tenantId = $request->user() ? $request->user()->facility_code : null;
 
         $this->bouncer->scope()->to($tenantId);
 
