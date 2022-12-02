@@ -47,9 +47,9 @@ class LibVaccineSeeder extends Seeder
         //   ['vaccine_id' => 'MCV1',    'vaccine_name' => 'MCV1',                           'vaccine_interval' => '365','vaccine_module' => 'ccdev',  'vaccine_desc' => 'Measles Vaccine'],
         //   ['vaccine_id' => 'MCV2',    'vaccine_name' => 'MCV2',                           'vaccine_interval' => '365','vaccine_module' => 'ccdev',  'vaccine_desc' => 'Measles, Mumps, Rubella Vaccine'],
 
-          ['vaccine_id' => 'MRGR',   'vaccine_name' => 'MR GRADE',                     'vaccine_interval' => '0',  'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella', 'order_seq' => '16'],
+          ['vaccine_id' => 'MRGR',   'vaccine_name' => 'MR GRADE 1',                     'vaccine_interval' => '0',  'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella', 'order_seq' => '16'],
         //   ['vaccine_id' => 'MRGR1',   'vaccine_name' => 'MR Grade 1',                     'vaccine_interval' => '0',  'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella Grade 1'],
-        //   ['vaccine_id' => 'MRGR7',   'vaccine_name' => 'MR Grade 7',                     'vaccine_interval' => '0',  'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella Grade 7'],
+          ['vaccine_id' => 'MRGR7',   'vaccine_name' => 'MR Grade 7',                     'vaccine_interval' => '0',  'vaccine_module' => 'gen',    'vaccine_desc' => 'Measles Rubella Grade 7','order_seq' => '28'],
 
           ['vaccine_id' => 'OPV',    'vaccine_name' => 'OPV',                          'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Oral Poliovirus Vaccine', 'order_seq' => '4'],
         //   ['vaccine_id' => 'OPV1',    'vaccine_name' => 'OPV 1',                          'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Oral Poliovirus Vaccine 1st'],
