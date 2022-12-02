@@ -47,6 +47,15 @@ Route::prefix('v1')->group(function (){
         Route::put('patient/{patient}', 'update')->name('patient.update');
     });
 
+    //Roles and Permissions
+    Route::prefix('authorization')->group(function () {
+        Route::controller(\App\Http\Controllers\API\Authorization\RoleController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::post('roles', 'addRole');
+            });
+    });
+
     //Households APIs
     Route::prefix('households')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
