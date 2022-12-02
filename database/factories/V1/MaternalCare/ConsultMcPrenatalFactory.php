@@ -38,6 +38,7 @@ class ConsultMcPrenatalFactory extends Factory
             'fundic_height' => fake()->numberBetween(0, 50),
             'fhr' => fake()->numberBetween(0, 50),
             'private' => fake()->boolean(),
+            'remarks' => fake()->sentence()
         ];
     }
 }
