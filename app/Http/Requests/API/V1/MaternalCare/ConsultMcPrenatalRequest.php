@@ -64,7 +64,8 @@ class ConsultMcPrenatalRequest extends FormRequest
             'presentation_code' => 'required|exists:lib_mc_presentations,code',
             'fhr' => 'numeric',
             'location_code' => 'required|exists:lib_mc_locations,code',
-            'private' => 'boolean'
+            'private' => 'boolean',
+            'remarks' => 'nullable'
         ];
     }
 
@@ -119,6 +120,9 @@ class ConsultMcPrenatalRequest extends FormRequest
             ],
             'private' => [
                 'example' => fake()->boolean()
+            ],
+            'remarks' => [
+                'example' => fake()->sentence()
             ],
         ];
     }

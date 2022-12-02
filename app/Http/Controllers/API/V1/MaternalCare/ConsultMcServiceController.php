@@ -35,6 +35,7 @@ class ConsultMcServiceController extends Controller
     {
         $query = ConsultMcService::query();
         $service = QueryBuilder::for($query)
+            ->with('service')
             ->allowedFilters(['patient_mc_id', 'service_id'])
             ->get();
         return ConsultMcServiceResource::collection($service);
