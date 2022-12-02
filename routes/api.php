@@ -294,7 +294,6 @@ Route::prefix('v1')->group(function (){
         Route::get('diagnosis/{id}', [\App\Http\Controllers\API\V1\Libraries\LibDiagnosisController::class, 'show']);
         Route::get('icd10', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'index']);
         Route::get('icd10/{id}', [\App\Http\Controllers\API\V1\Libraries\LibIcd10Controller::class, 'show']);
-        Route::get('ptgroup', [\App\Http\Controllers\API\V1\Libraries\LibPtGroupController::class, 'index']);
 
         //Childcare Libraries
         Route::get('vaccine', [\App\Http\Controllers\API\V1\Libraries\LibVaccineController::class, 'index']);
@@ -332,6 +331,9 @@ Route::prefix('v1')->group(function (){
         Route::get('employers', [\App\Http\Controllers\API\V1\Libraries\LibEmployerController::class, 'index'])->name('employers.index');
         Route::get('employers/{employer}', [\App\Http\Controllers\API\V1\Libraries\LibEmployerController::class, 'show'])->name('employers.show');
 
+        //Pt group
+        Route::get('pt-group', [\App\Http\Controllers\API\V1\Libraries\LibPtGroupController::class, 'index'])->name('pt-group.index');
+        Route::get('pt-group/{ptgroup}', [\App\Http\Controllers\API\V1\Libraries\LibPtGroupController::class, 'show'])->name('pt-group.show');
     });
 
 });
