@@ -2,12 +2,13 @@
 
 namespace App\Models\V1\Childcare;
 
+use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ConsultCcdevVaccine extends Model
 {
-    use HasFactory;
+    use HasFactory, FilterByUser;
 
     protected $primaryKey = 'id';
     protected $guarded = [

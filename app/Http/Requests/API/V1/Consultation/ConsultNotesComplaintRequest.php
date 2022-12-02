@@ -34,8 +34,8 @@ class ConsultNotesComplaintRequest extends FormRequest
             'consult_id' => 'required|exists:consults,id',
             'patient_id' => 'required|exists:patients,id',
             'complaints' => 'array|required|exists:lib_complaints,complaint_id',
-            'user_id' => 'required|exists:users,id',
-            'facility_code' => 'nullable|exists:facilities,code',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
         ];
     }
 
@@ -58,14 +58,14 @@ class ConsultNotesComplaintRequest extends FormRequest
                 'description' => 'ID of complaint library',
                 'example' => fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of user',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
-            'facility_code' => [
-                'description' => 'code of facility.',
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of user',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'code of facility.',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
         ];
 
     }

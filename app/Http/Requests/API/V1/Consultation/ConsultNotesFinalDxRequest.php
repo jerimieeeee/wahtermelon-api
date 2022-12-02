@@ -30,8 +30,8 @@ class ConsultNotesFinalDxRequest extends FormRequest
     {
         return [
             'notes_id' => 'required|exists:consult_notes,id',
-            'user_id' => 'required|exists:users,id',
-            'facility_code' => 'nullable|exists:facilities,code',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'fdx.*.icd10_code' => 'required|exists:lib_icd10s,icd10_code',
             'fdx.*.fdx_remark' => 'nullable',
         ];
@@ -44,14 +44,14 @@ class ConsultNotesFinalDxRequest extends FormRequest
                 'description' => 'ID of consult notes.',
                 'example' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of user',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
-            'facility_code' => [
-                'description' => 'code of facility.',
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of user',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'code of facility.',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
             'icd10_code' => [
                 'description' => 'Icd10 code of Final Dx',
                 'example' => fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),

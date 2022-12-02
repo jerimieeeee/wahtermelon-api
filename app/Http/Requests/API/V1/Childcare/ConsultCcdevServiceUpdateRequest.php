@@ -31,8 +31,8 @@ class ConsultCcdevServiceUpdateRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
-            'facility_code' => 'nullable|exists:facilities,code',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'service_id' => 'required|exists:lib_ccdev_services,service_id',
             'service_date' => 'nullable',
             'status_id' => 'required|exists:lib_vaccine_statuses,status_id',
@@ -46,14 +46,14 @@ class ConsultCcdevServiceUpdateRequest extends FormRequest
                 'description' => 'ID of Patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of User',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
-            'facility_code' => [
-                'description' => 'code of facility.',
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of User',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'code of facility.',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
             'service_id' => [
                 'description' => 'ID of Service',
                 'example' => fake()->randomElement(LibCcdevService::pluck('service_id')->toArray()),

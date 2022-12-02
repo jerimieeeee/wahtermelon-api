@@ -29,8 +29,8 @@ class ConsultRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
-            'facility_code' => 'nullable|exists:facilities,code',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'consult_date' => 'required|date',
             'physician_id' => 'nullable|exists:users,id',
             'is_pregnant' => 'nullable|boolean',
@@ -46,14 +46,14 @@ class ConsultRequest extends FormRequest
                 'description' => 'ID of patient.',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of user',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
-            'facility_code' => [
-                'description' => 'code of facility.',
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of user',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'code of facility.',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
             'consult_date' => [
                 'description' => 'Date Consult',
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),

@@ -30,8 +30,8 @@ class ConsultCcdevBreastfedRequest extends FormRequest
         return [
             'patient_ccdev_id' => 'required|exists:patient_ccdevs,id',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
-            'facility_code' => 'nullable|exists:facilities,code',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'bfed_month1' => 'boolean|nullable',
             'bfed_month2' => 'boolean|nullable',
             'bfed_month3' => 'boolean|nullable',
@@ -50,14 +50,14 @@ class ConsultCcdevBreastfedRequest extends FormRequest
                 'description' => 'ID of ccdev.',
                 'example' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             ],
-            'patient_id' => [
-                'description' => 'ID of patient',
-                'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            ],
-            'user_id' => [
-                'description' => 'ID of user.',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            // 'patient_id' => [
+            //     'description' => 'ID of patient',
+            //     'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
+            // ],
+            // 'user_id' => [
+            //     'description' => 'ID of user.',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
             'facility_code' => [
                 'description' => 'code of facility.',
                 'example' => fake()->randomElement(Facility::pluck('code')->toArray()),

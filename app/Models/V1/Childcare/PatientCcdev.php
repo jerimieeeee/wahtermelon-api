@@ -2,13 +2,14 @@
 
 namespace App\Models\V1\Childcare;
 
+use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientCcdev extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, HasFactory, FilterByUser;
 
     protected $fillable = ['patient_id', 'user_id', 'birth_weight', 'ccdev_ended', 'mothers_id', 'admission_date', 'discharge_date', 'nbs_filter'];
 
