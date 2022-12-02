@@ -18,6 +18,7 @@ class PatientCcdevResource extends JsonResource
             'id' => $this->id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'birth_weight' => $this->birth_weight,
             'mothers_id' => $this->mothers_id,
             'ccdev_ended' => $this->ccdev_ended,

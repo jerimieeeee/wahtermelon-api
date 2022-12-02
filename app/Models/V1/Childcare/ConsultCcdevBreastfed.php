@@ -3,6 +3,7 @@
 namespace App\Models\V1\Childcare;
 
 use App\Models\V1\Libraries\LibEbfReason;
+use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConsultCcdevBreastfed extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, HasFactory, FilterByUser;
 
     protected $guarded = ['id',];
 

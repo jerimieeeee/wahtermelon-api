@@ -19,6 +19,7 @@ class ConsultNotesComplaint extends Model
       'complaint_id',
       'complaint_date',
       'user_id',
+      'facility_code',
     ];
 
     public function consult_notes(){

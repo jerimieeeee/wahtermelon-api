@@ -73,10 +73,13 @@ class PatientCcdevController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PatientCcdevRequest $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
-        // PatientCcdev::findorfail($id)->update($request->all());
-        // return response()->json('Patient Child Care Successfully Updated');
+        PatientCcdev::findorfail($id)->update($request->only('nbs_filter'));
+
+        return response()->json([
+            'message' => 'Patient Childcare Successfully Saved',
+        ], 201);
     }
 
     /**

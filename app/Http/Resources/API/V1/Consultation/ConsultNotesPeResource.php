@@ -17,6 +17,7 @@ class ConsultNotesPeResource extends JsonResource
         return [
             'notes_id' => $this->notes_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'remarks' => $this->remarks,
             'breast_screen' => $this->breast_screen,
             'breast_remarks' => $this->breast_remarks,

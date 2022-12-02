@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientVaccineUpdateRequest extends FormRequest
@@ -29,7 +30,8 @@ class PatientVaccineUpdateRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
             'vaccine_date' => 'nullable',
             'status_id' => 'required|exists:lib_vaccine_statuses,status_id',
@@ -43,10 +45,14 @@ class PatientVaccineUpdateRequest extends FormRequest
                 'description' => 'ID of Patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of User',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of User',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'ID of User',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
             'vaccine_id' => [
                 'description' => 'ID of Vaccine',
                 'example' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),

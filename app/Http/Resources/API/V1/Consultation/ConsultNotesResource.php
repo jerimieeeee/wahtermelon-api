@@ -18,6 +18,7 @@ class ConsultNotesResource extends JsonResource
             'consult_id' => $this->consult_id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'complaint' => $this->complaint,
             'history' => $this->history,
             'physical_exam' => $this->physical_exam,

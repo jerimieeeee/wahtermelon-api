@@ -40,6 +40,7 @@ class ConsultMcPrenatalResource extends JsonResource
             'location_code' => $this->when(!$this->relationLoaded('location'),$this->location_code),
             'location' => $this->whenLoaded('location'),
             'private' => $this->private,
+            'remarks' => $this->remarks,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

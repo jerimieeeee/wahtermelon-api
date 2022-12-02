@@ -18,6 +18,7 @@ class ConsultNotesInitialDx extends Model
     protected $fillable = [
       'notes_id',
       'user_id',
+      'facility_code',
       'class_id',
       'idx_remark',
     ];

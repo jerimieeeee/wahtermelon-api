@@ -3,6 +3,7 @@
 namespace App\Models\V1\Patient;
 
 use App\Models\V1\Libraries\LibVaccine;
+use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientVaccine extends Model
 {
-    use SoftDeletes ,HasFactory;
+    use SoftDeletes ,HasFactory, FilterByUser;
 
     protected $guarded = [
         'id',

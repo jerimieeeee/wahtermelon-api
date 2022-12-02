@@ -102,7 +102,7 @@ Route::prefix('v1')->group(function (){
             ->middleware('auth:api')
             ->group(function() {
             Route::post('cc-records', 'store');
-            // Route::post('cc-records/{patient_ccdev_id}', 'update');
+            Route::put('cc-records/{patient_id}', 'update');
             Route::get('cc-records/{patientccdev}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevServiceController::class)

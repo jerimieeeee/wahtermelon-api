@@ -19,6 +19,7 @@ class ConsultNotesComplaintResource extends JsonResource
             'consult_id' => $this->consult_id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'complaint_id' => $this->complaint_id,
             // 'complaint_date' => $this->complaint_date?->format('Y-m-d'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

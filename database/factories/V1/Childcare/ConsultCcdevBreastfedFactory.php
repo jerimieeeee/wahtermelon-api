@@ -7,6 +7,7 @@ use App\Models\V1\Childcare\Ccdev;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibEbfReason;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,7 @@ class ConsultCcdevBreastfedFactory extends Factory
             'patient_ccdev_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'bfed_month1' => fake()->boolean,
             'bfed_month2' => fake()->boolean,
             'bfed_month3' => fake()->boolean,

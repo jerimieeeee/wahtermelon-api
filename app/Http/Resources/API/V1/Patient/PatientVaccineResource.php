@@ -18,6 +18,7 @@ class PatientVaccineResource extends JsonResource
             'id' => $this->id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'vaccine_id' => $this->vaccine_id,
             'vaccine_date' => !is_null($this->vaccine_date) ? $this->vaccine_date->format('Y-m-d') : null,
             'vaccine_id' => $this->vaccine_id,

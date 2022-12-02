@@ -5,6 +5,7 @@ namespace App\Http\Requests\API\V1\Childcare;
 use App\Models\User;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientCcdevRequest extends FormRequest
@@ -28,13 +29,14 @@ class PatientCcdevRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'birth_weight' => 'required',
             'mothers_id' => 'required|exists:patients,id',
             'ccdev_ended' => 'required|boolean',
             'admission_date' => 'required|date|date_format:Y-m-d',
             'discharge_date' => 'required|date|date_format:Y-m-d',
-            'nbs_filter' => 'required',
+            'nbs_filter' => 'nullable',
         ];
     }
 
@@ -45,10 +47,14 @@ class PatientCcdevRequest extends FormRequest
                 'description' => 'ID of patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of user',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of user',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'code of facility.',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
             'birth_weight' => [
                 'description' => 'birth weight of patient',
                 'example' => fake()->randomFloat(2, 2, 5),

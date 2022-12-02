@@ -5,6 +5,7 @@ namespace Database\Factories\V1\Consultation;
 use App\Models\User;
 use App\Models\V1\Libraries\LibPtGroup;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class ConsultFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'consult_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'physician_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'is_pregnant' => fake()->boolean,

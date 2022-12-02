@@ -30,7 +30,8 @@ class PatientVaccineRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
+            // 'facility_code' => 'nullable|exists:facilities,code',
             'vaccines.*.vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
             'vaccines.*.vaccine_date' => 'nullable',
             'vaccines.*.status_id' => 'required|exists:lib_vaccine_statuses,status_id',
@@ -44,10 +45,14 @@ class PatientVaccineRequest extends FormRequest
                 'description' => 'ID of Patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
-                'description' => 'ID of User',
-                'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            // 'user_id' => [
+            //     'description' => 'ID of User',
+            //     'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            // ],
+            // 'facility_code' => [
+            //     'description' => 'ID of User',
+            //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            // ],
             'vaccine_id' => [
                 'description' => 'ID of Vaccine',
                 'example' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
