@@ -30,7 +30,7 @@ class PatientCcdevRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
-            'facility_code' => 'required|exists:facilities,code',
+            'facility_code' => 'nullable|exists:facilities,code',
             'birth_weight' => 'required',
             'mothers_id' => 'required|exists:patients,id',
             'ccdev_ended' => 'required|boolean',

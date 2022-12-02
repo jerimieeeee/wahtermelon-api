@@ -31,7 +31,7 @@ class ConsultCcdevBreastfedRequest extends FormRequest
             'patient_ccdev_id' => 'required|exists:patient_ccdevs,id',
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
-            'facility_code' => 'required|exists:facilities,code',
+            'facility_code' => 'nullable|exists:facilities,code',
             'bfed_month1' => 'boolean|nullable',
             'bfed_month2' => 'boolean|nullable',
             'bfed_month3' => 'boolean|nullable',

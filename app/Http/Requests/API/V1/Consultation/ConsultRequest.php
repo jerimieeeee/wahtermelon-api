@@ -30,7 +30,7 @@ class ConsultRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
-            'facility_code' => 'required|exists:facilities,code',
+            'facility_code' => 'nullable|exists:facilities,code',
             'consult_date' => 'required|date',
             'physician_id' => 'nullable|exists:users,id',
             'is_pregnant' => 'nullable|boolean',

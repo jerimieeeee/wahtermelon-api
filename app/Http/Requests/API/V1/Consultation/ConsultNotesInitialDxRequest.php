@@ -30,7 +30,7 @@ class ConsultNotesInitialDxRequest extends FormRequest
         return [
             'notes_id' => 'required|exists:consult_notes,id',
             'user_id' => 'required|exists:users,id',
-            'facility_code' => 'required|exists:facilities,code',
+            'facility_code' => 'nullable|exists:facilities,code',
             'idx.*.class_id' => 'required|exists:lib_diagnoses,class_id',
             'idx.*.idx_remark' => 'nullable',
         ];

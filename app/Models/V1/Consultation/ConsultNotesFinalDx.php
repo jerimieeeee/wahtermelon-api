@@ -18,6 +18,7 @@ class ConsultNotesFinalDx extends Model
     protected $fillable = [
       'notes_id',
       'user_id',
+      'facility_code',
       'icd10_code',
       'fdx_remark',
     ];

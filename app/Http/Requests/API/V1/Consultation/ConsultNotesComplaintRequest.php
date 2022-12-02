@@ -35,7 +35,7 @@ class ConsultNotesComplaintRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'complaints' => 'array|required|exists:lib_complaints,complaint_id',
             'user_id' => 'required|exists:users,id',
-            'facility_code' => 'required|exists:facilities,code',
+            'facility_code' => 'nullable|exists:facilities,code',
         ];
     }
 

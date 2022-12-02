@@ -31,7 +31,7 @@ class ConsultCcdevServiceRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
-            'facility_code' => 'required|exists:facilities,code',
+            'facility_code' => 'nullable|exists:facilities,code',
             'services.*.service_id' => 'required|exists:lib_ccdev_services,service_id',
             'services.*.services_date' => 'nullable',
             'services.*.status_id' => 'required|exists:lib_vaccine_statuses,status_id',
