@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 class ConsultStatsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display Stats of Consultation today.
      *
      * @return \Illuminate\Http\Response
      */

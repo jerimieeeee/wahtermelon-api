@@ -16,7 +16,7 @@ class LibPtGroupResource extends JsonResource
     {
         return [
 
-            'pt_group_id' => $this->pt_group_id,
+            'id' => $this->id,
             'desc' => $this->desc,
 
         ];
