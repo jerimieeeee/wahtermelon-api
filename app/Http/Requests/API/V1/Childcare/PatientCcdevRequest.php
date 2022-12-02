@@ -5,6 +5,7 @@ namespace App\Http\Requests\API\V1\Childcare;
 use App\Models\User;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientCcdevRequest extends FormRequest
@@ -29,12 +30,13 @@ class PatientCcdevRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
+            'facility_code' => 'required|exists:facilities,code',
             'birth_weight' => 'required',
             'mothers_id' => 'required|exists:patients,id',
             'ccdev_ended' => 'required|boolean',
             'admission_date' => 'required|date|date_format:Y-m-d',
             'discharge_date' => 'required|date|date_format:Y-m-d',
-            'nbs_filter' => 'required',
+            'nbs_filter' => 'nullable',
         ];
     }
 
@@ -48,6 +50,10 @@ class PatientCcdevRequest extends FormRequest
             'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            ],
+            'facility_code' => [
+                'description' => 'code of facility.',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'birth_weight' => [
                 'description' => 'birth weight of patient',

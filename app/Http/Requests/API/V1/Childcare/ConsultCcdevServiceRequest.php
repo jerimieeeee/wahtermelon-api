@@ -6,6 +6,7 @@ use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibCcdevService;
 use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultCcdevServiceRequest extends FormRequest
@@ -30,6 +31,7 @@ class ConsultCcdevServiceRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'user_id' => 'required|exists:users,id',
+            'facility_code' => 'required|exists:facilities,code',
             'services.*.service_id' => 'required|exists:lib_ccdev_services,service_id',
             'services.*.services_date' => 'nullable',
             'services.*.status_id' => 'required|exists:lib_vaccine_statuses,status_id',
@@ -46,6 +48,10 @@ class ConsultCcdevServiceRequest extends FormRequest
             'user_id' => [
                 'description' => 'ID of User',
                 'example' => fake()->randomElement(PatientCcdev::pluck('user_id')->toArray()),
+            ],
+            'facility_code' => [
+                'description' => 'code of facility.',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'service_id' => [
                 'description' => 'ID of Childcare Services',

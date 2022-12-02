@@ -5,6 +5,7 @@ namespace Database\Factories\V1\Childcare;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibCcdevService;
 use App\Models\V1\Libraries\LibVaccineStatus;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class ConsultCcdevServiceFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(PatientCcdev::pluck('patient_id')->toArray()),
             'user_id' => fake()->randomElement(PatientCcdev::pluck('user_id')->toArray()),
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'service_id' => fake()->randomElement(LibCcdevService::pluck('service_id')->toArray()),
             'service_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'status_id' => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Libraries\LibDiagnosis;
 use App\Models\V1\Libraries\LibIcd10;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultNotesFinalDxRequest extends FormRequest
@@ -30,6 +31,7 @@ class ConsultNotesFinalDxRequest extends FormRequest
         return [
             'notes_id' => 'required|exists:consult_notes,id',
             'user_id' => 'required|exists:users,id',
+            'facility_code' => 'required|exists:facilities,code',
             'fdx.*.icd10_code' => 'required|exists:lib_icd10s,icd10_code',
             'fdx.*.fdx_remark' => 'nullable',
         ];
@@ -45,6 +47,10 @@ class ConsultNotesFinalDxRequest extends FormRequest
             'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            ],
+            'facility_code' => [
+                'description' => 'code of facility.',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'icd10_code' => [
                 'description' => 'Icd10 code of Final Dx',

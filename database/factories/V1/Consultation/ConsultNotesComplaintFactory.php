@@ -7,6 +7,7 @@ use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,6 +29,7 @@ class ConsultNotesComplaintFactory extends Factory
             'complaints' => [fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray())],
             // 'complaint_date' => [fake()->date($format = 'Y-m-d', $max = 'now')],
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
         ];
     }
 }

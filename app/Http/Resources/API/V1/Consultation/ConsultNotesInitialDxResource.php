@@ -17,6 +17,7 @@ class ConsultNotesInitialDxResource extends JsonResource
         return [
             'notes_id' => $this->notes_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'class_id' => $this->class_id,
             'idx_remark' => $this->idx_remark,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

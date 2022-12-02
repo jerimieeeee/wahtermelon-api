@@ -17,6 +17,7 @@ class ConsultCcdevResource extends JsonResource
         return [
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'visit_date' => $this->visit_date->format('Y-m-d'),
             'visit_ended' => $this->visit_ended,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

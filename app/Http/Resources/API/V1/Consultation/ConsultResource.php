@@ -21,6 +21,7 @@ class ConsultResource extends JsonResource
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
+            'facility_code' => $this->facility_code,
             'consult_date' => $this->consult_date->format('Y-m-d H:i:s'),
             'physician_id' => $this->when(!$this->relationLoaded('physician'),$this->physician_id),
             'physician' => $this->whenLoaded('physician'),

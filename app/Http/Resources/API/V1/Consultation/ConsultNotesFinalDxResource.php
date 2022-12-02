@@ -17,6 +17,7 @@ class ConsultNotesFinalDxResource extends JsonResource
         return [
             'notes_id' => $this->notes_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'icd10_code' => $this->icd10_code,
             'fdx_remark' => $this->fdx_remark,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

@@ -18,6 +18,7 @@ class ConsultCcdevBreastfedResource extends JsonResource
             'patient_ccdev_id' => $this->patient_ccdev_id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
             'bfed_month1' => $this->bfed_month1,
             'bfed_month2' => $this->bfed_month2,
             'bfed_month3' => $this->bfed_month3,

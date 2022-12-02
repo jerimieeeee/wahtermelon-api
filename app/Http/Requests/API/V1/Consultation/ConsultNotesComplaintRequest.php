@@ -7,6 +7,7 @@ use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultNotesComplaintRequest extends FormRequest
@@ -34,6 +35,7 @@ class ConsultNotesComplaintRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'complaints' => 'array|required|exists:lib_complaints,complaint_id',
             'user_id' => 'required|exists:users,id',
+            'facility_code' => 'required|exists:facilities,code',
         ];
     }
 
@@ -59,6 +61,10 @@ class ConsultNotesComplaintRequest extends FormRequest
             'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
+            ],
+            'facility_code' => [
+                'description' => 'code of facility.',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
         ];
 

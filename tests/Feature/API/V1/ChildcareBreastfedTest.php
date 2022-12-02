@@ -73,6 +73,7 @@ class ChildcareBreastfedTest extends TestCase
              $response = $this->post('api/v1/child-care/cc-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'birth_weight' => fake()->randomFloat(2, 0, 1),
             'ccdev_ended' => fake()->boolean,
             'mothers_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
@@ -86,6 +87,7 @@ class ChildcareBreastfedTest extends TestCase
             'patient_ccdev_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'bfed_month1' => fake()->boolean,
             'bfed_month2' => fake()->boolean,
             'bfed_month3' => fake()->boolean,
