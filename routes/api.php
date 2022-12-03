@@ -187,6 +187,7 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
                 Route::get('mc-prenatal/{mcPrenatal}', 'show');
                 Route::post('mc-prenatal', 'store');
+                Route::post('mc-prenatal/{mcPrenatal}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPostpartumController::class)
             ->middleware('auth:api')
