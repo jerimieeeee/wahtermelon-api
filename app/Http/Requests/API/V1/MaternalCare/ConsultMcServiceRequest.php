@@ -50,6 +50,7 @@ class ConsultMcServiceRequest extends FormRequest
             //'user_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:lib_mc_services,id',
             'visit_type_code' => 'required|exists:lib_mc_visit_types,code',
+            'visit_status' => 'required',
             'service_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'service_qty' => 'numeric',
             'positive_result' => 'boolean',
