@@ -4,6 +4,7 @@ namespace App\Models\V1\Patient;
 
 use App\Models\User;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PatientVitals extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, HasUuid, FilterByUser;
 
     protected $guarded = [
         'id',
