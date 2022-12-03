@@ -58,7 +58,7 @@ class ConsultMcServiceController extends Controller
                 'service_id' => $request->safe()->service_id,
                 'service_date' => $request->safe()->service_date,
             ],
-            $request->validatedWithCasts()
+            $request->validated()
         );
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }

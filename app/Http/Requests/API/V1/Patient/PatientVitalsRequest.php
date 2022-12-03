@@ -81,9 +81,9 @@ class PatientVitalsRequest extends FormRequest
     public function rules()
     {
         return [
-            'facility_code' => 'required|exists:facilities,code',
+            //'facility_code' => 'required|exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'vitals_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
             'patient_temp' => 'nullable|numeric',
             'patient_height' => 'nullable|numeric',
@@ -108,18 +108,18 @@ class PatientVitalsRequest extends FormRequest
     public function bodyParameters()
     {
         return [
-            'facility_code' => [
+            /* 'facility_code' => [
                 'description' => 'ID of facility library',
                 'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            ], */
             'patient_id' => [
                 'description' => 'ID of patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
+            /* 'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            ], */
             'vitals_date' => [
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s')
             ],

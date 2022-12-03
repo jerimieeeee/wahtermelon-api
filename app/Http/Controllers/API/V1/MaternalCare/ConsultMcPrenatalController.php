@@ -63,13 +63,15 @@ class ConsultMcPrenatalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  ConsultMcPrenatalRequest $request
+     * @param  ConsultMcPrenatal $mcPrenatal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultMcPrenatalRequest $request, ConsultMcPrenatal $mcPrenatal)
     {
-        //
+        $mcPrenatal->update($request->validatedWithCasts());
+        $mc = new MaternalCareRecordService();
+        return ConsultMcPrenatalResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date'));
     }
 
     /**

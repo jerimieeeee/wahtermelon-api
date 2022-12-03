@@ -45,11 +45,12 @@ class ConsultMcServiceRequest extends FormRequest
     {
         return [
             'patient_mc_id' => 'required|exists:patient_mc,id',
-            'facility_code' => 'exists:facilities,code',
+            //'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:lib_mc_services,id',
             'visit_type_code' => 'required|exists:lib_mc_visit_types,code',
+            'visit_status' => 'required',
             'service_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'service_qty' => 'numeric',
             'positive_result' => 'boolean',

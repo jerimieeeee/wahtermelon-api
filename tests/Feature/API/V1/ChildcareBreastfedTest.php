@@ -96,6 +96,7 @@ class ChildcareBreastfedTest extends TestCase
             'bfed_month6' => fake()->boolean,
             'reason_id' => fake()->randomElement(LibEbfReason::pluck('reason_id')->toArray()),
             'ebf_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'comp_fed_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
         ]);
         $response->assertCreated();
     }

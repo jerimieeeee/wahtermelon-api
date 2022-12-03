@@ -40,9 +40,9 @@ class PatientMcPostRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'facility_code' => 'exists:facilities,code',
+            //'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'post_registration_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'admission_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
             'discharge_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',

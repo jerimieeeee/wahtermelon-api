@@ -196,12 +196,14 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
                 Route::get('mc-prenatal/{mcPrenatal}', 'show');
                 Route::post('mc-prenatal', 'store');
+                Route::put('mc-prenatal/{mcPrenatal}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcPostpartumController::class)
             ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-postpartum/{mcPostpartum}', 'show');
                 Route::post('mc-postpartum', 'store');
+                Route::put('mc-postpartum/{mcPostpartum}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcRiskController::class)
             ->middleware('auth:api')

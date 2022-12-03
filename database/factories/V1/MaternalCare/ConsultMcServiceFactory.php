@@ -29,6 +29,7 @@ class ConsultMcServiceFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'service_id' => fake()->randomElement(LibMcService::pluck('id')->toArray()),
             'visit_type_code' => fake()->randomElement(LibMcVisitType::pluck('code')->toArray()),
+            'visit_status' => fake()->randomElement(['Prenatal', 'Postpartum']),
             'service_date' => fake()->date('Y-m-d'),
         ];
     }

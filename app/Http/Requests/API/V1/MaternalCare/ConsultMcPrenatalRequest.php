@@ -52,9 +52,9 @@ class ConsultMcPrenatalRequest extends FormRequest
     {
         return [
             'patient_mc_id' => 'required|exists:patient_mc_pre_registrations,patient_mc_id',
-            'facility_code' => 'exists:facilities,code',
+            //'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'prenatal_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'patient_height' => 'required|numeric',
             'patient_weight' => 'required|numeric',
@@ -76,18 +76,18 @@ class ConsultMcPrenatalRequest extends FormRequest
                 'description' => 'ID of maternal care record',
                 'example' => fake()->randomElement(PatientMcPreRegistration::pluck('patient_mc_id')->toArray()),
             ],
-            'facility_code' => [
+            /* 'facility_code' => [
                 'description' => 'ID of facility library',
                 'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            ], */
             'patient_id' => [
                 'description' => 'ID of patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'user_id' => [
+            /* 'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            ], */
             'presentation_code' => [
                 'description' => 'Code of presentation library',
                 'example' => fake()->randomElement(LibMcPresentation::pluck('code')->toArray()),
