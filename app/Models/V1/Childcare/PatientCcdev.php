@@ -14,8 +14,8 @@ class PatientCcdev extends Model
     protected $fillable = ['patient_id', 'user_id', 'birth_weight', 'ccdev_ended', 'mothers_id', 'admission_date', 'discharge_date', 'nbs_filter'];
 
     protected $casts = [
-        'admission_date' => 'date:Y-m-d',
-        'discharge_date' => 'date:Y-m-d',
+        'admission_date' => 'datetime:Y-m-d H:i:s',
+        'discharge_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     /**
