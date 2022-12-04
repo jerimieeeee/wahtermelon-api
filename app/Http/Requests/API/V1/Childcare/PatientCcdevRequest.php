@@ -34,8 +34,8 @@ class PatientCcdevRequest extends FormRequest
             'birth_weight' => 'required',
             'mothers_id' => 'required|exists:patients,id',
             'ccdev_ended' => 'required|boolean',
-            'admission_date' => 'date|date_format:Y-m-d H:i:s|required',
-            'discharge_date' => 'date|date_format:Y-m-d H:i:s|required',
+            'admission_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
+            'discharge_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
             'nbs_filter' => 'nullable',
         ];
     }
