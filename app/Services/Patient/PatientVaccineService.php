@@ -44,7 +44,7 @@ class PatientVaccineService
                     ELSE 0
                 END) AS "MCV",
                 SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(CASE
-                    WHEN vaccine_id = "PENTA"
+                    WHEN vaccine_id = "MCV"
                     THEN vaccine_date
                     ELSE NULL
                 END ORDER BY vaccine_date ASC),",", 2),",", -1) AS vaccine_date,
