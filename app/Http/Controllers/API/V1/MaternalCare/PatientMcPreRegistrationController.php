@@ -68,7 +68,8 @@ class PatientMcPreRegistrationController extends Controller
      */
     public function update(PatientMcPreRegistrationRequest $request, PatientMcPreRegistration $preRegistration)
     {
-        return $preRegistration->update($request->validatedWithCasts());
+        $preRegistration->update($request->validatedWithCasts());
+        return $preRegistration;
     }
 
     /**

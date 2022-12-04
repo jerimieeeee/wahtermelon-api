@@ -68,7 +68,8 @@ class PatientMcPostRegistrationController extends Controller
      */
     public function update(PatientMcPostRegistrationRequest $request, PatientMcPostRegistration $postRegistration)
     {
-        return $postRegistration->update($request->validatedWithCasts());
+        $postRegistration->update($request->validatedWithCasts());
+        return $postRegistration;
     }
 
     /**
