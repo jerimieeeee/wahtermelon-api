@@ -53,9 +53,9 @@ class PatientMcPreRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'facility_code' => 'exists:facilities,code',
+            //'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'pre_registration_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'lmp_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'initial_gravidity' => 'required|numeric',

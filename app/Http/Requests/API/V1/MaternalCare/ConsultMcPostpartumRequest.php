@@ -42,9 +42,9 @@ class ConsultMcPostpartumRequest extends FormRequest
     {
         return [
             'patient_mc_id' => 'required|exists:patient_mc,id',
-            'facility_code' => 'exists:facilities,code',
+            //'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'postpartum_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'visit_type' => 'required|exists:lib_mc_visit_types,code',
             'patient_height' => 'required|numeric',

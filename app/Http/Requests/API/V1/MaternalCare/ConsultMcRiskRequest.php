@@ -31,9 +31,9 @@ class ConsultMcRiskRequest extends FormRequest
     {
         return [
             'patient_mc_id' => 'required|exists:patient_mc_pre_registrations,patient_mc_id',
-            'facility_code' => 'exists:facilities,code',
+            //'facility_code' => 'exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
+            //'user_id' => 'required|exists:users,id',
             'risk_id' => 'required|exists:lib_mc_risk_factors,id',
             'date_detected' => 'date|date_format:Y-m-d|before:tomorrow|nullable',
         ];
@@ -47,18 +47,18 @@ class ConsultMcRiskRequest extends FormRequest
                 'description' => 'ID of maternal care record',
                 'example' => $mcId->id,
             ],
-            'facility_code' => [
+            /* 'facility_code' => [
                 'description' => 'ID of facility library',
                 'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            ],
+            ], */
             'patient_id' => [
                 'description' => 'ID of patient',
                 'example' => $mcId->patient_id,
             ],
-            'user_id' => [
+            /* 'user_id' => [
                 'description' => 'ID of user',
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
-            ],
+            ], */
             'risk_id' => [
                 'description' => 'ID of risk factor',
                 'example' => fake()->randomElement(LibMcRiskFactor::pluck('id')->toArray()),

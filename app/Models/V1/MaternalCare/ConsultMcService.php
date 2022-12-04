@@ -7,6 +7,7 @@ use App\Models\V1\Libraries\LibMcService;
 use App\Models\V1\Libraries\LibMcVisitType;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use DateTimeInterface;
 
 class ConsultMcService extends Model
 {
-    use HasFactory, SoftDeletes, HasUuid;
+    use HasFactory, SoftDeletes, HasUuid, FilterByUser;
 
     protected $guarded = [
         'id'

@@ -57,13 +57,15 @@ class ConsultMcPostpartumController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  ConsultMcPostpartumRequest $request
+     * @param  ConsultMcPostpartum $mcPostpartum
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultMcPostpartumRequest $request, ConsultMcPostpartum $mcPostpartum)
     {
-        //
+        $mcPostpartum->update($request->validatedWithCasts());
+        $mc = new MaternalCareRecordService();
+        return ConsultMcPostpartumResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPostpartum', 'postpartum_date'));
     }
 
     /**
