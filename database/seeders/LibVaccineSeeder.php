@@ -24,7 +24,7 @@ class LibVaccineSeeder extends Seeder
         LibVaccine::upsert([
           ['vaccine_id' => 'BCG',     'vaccine_name' => 'BCG Vaccine',                'vaccine_interval' => '1',     'vaccine_module' => 'ccdev',  'vaccine_desc' => 'BCG Vaccine',                           'order_seq' => '1'],
           ['vaccine_id' => 'HEPB',    'vaccine_name' => 'Hepa at Birth',              'vaccine_interval' => '1',     'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Hepa at Birth',                         'order_seq' => '2'],
-          ['vaccine_id' => 'PENTA',   'vaccine_name' => 'Pentavalent',                'vaccine_interval' => '42',    'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Pentavalent 1 (5 in 1) 1st Dose',       'order_seq' => '3'],
+          ['vaccine_id' => 'PENTA',   'vaccine_name' => 'Pentavalent',                'vaccine_interval' => '42',    'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Pentavalent (5 in 1) 1st Dose',       'order_seq' => '3'],
           ['vaccine_id' => 'OPV',     'vaccine_name' => 'OPV',                        'vaccine_interval' => '42',    'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Oral Poliovirus Vaccine',               'order_seq' => '4'],
           ['vaccine_id' => 'IPV',     'vaccine_name' => 'IPV',                        'vaccine_interval' => '98',    'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Inactivated Polio Vaccine',             'order_seq' => '5'],
           ['vaccine_id' => 'PCV',     'vaccine_name' => 'PCV',                        'vaccine_interval' => '42',    'vaccine_module' => 'ccdev',  'vaccine_desc' => 'Pneumococal Conjugate Antigen',         'order_seq' => '6'],
