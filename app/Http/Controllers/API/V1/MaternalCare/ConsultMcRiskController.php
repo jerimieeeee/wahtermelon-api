@@ -63,13 +63,14 @@ class ConsultMcRiskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ConsultMcRiskRequest $request
+     * @param ConsultMcRisk $mcRisk
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultMcRiskRequest $request, ConsultMcRisk $mcRisk)
     {
-        //
+        $mcRisk->update($request->validated());
+        return ConsultMcRiskResource::collection(ConsultMcRisk::where('patient_mc_id', $request->patient_mc_id)->get());
     }
 
     /**
