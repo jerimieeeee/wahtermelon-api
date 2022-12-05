@@ -29,8 +29,7 @@ class LibCcdevServiceController extends Controller
      */
     public function index(): ResourceCollection
     {
-        $query = QueryBuilder::for(LibCcdevService::class);
-        return LibCcdevServiceResource::collection($query->get());
+        return LibCcdevServiceResource::collection(LibCcdevService::orderBy('order_seq', 'ASC')->get());
     }
 
     /**
