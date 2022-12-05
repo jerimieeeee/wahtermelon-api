@@ -59,9 +59,8 @@ class PatientCcdevController extends Controller
 
     public function show(PatientCcdev $patientccdev, PatientChildcareService $ccdevStatus)
     {
-        //$ccdev_status = new PatientChildcareService();
         $query = PatientCcdev::where('id', $patientccdev->id)
-                ->leftJoinSub($ccdevStatus->get_cpab_status($patientccdev->mother_id), 'patientccdev', function($join) {
+                ->leftJoinSub($ccdevStatus->get_cpab_status($patientccdev->mothers_id), 'patientccdev', function($join) {
                     $join->on('mothers_id', '=', 'patientccdev.mothersId');
                  });
         $patientccdev = QueryBuilder::for($query)
