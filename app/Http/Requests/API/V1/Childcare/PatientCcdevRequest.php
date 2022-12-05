@@ -32,7 +32,7 @@ class PatientCcdevRequest extends FormRequest
             // 'user_id' => 'required|exists:users,id',
             // 'facility_code' => 'nullable|exists:facilities,code',
             'birth_weight' => 'required',
-            'mothers_id' => 'required|exists:patients,id',
+            'mothers_id' => 'nullable|exists:patients,id',
             'ccdev_ended' => 'required|boolean',
             'admission_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
             'discharge_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',

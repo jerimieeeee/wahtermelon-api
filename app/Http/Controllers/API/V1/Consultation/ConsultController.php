@@ -54,7 +54,7 @@ class ConsultController extends Controller
         ->when(isset($request->id), function($q) use($request){
             $q->where('id', '=', $request->id);
         })
-        ->with('user', 'patient', 'physician', 'vitals')
+        ->with('user', 'patient', 'physician', 'vitals', 'consult_notes')
 
         ->defaultSort('consult_date')
         ->allowedSorts('consult_date');

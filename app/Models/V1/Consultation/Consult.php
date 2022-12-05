@@ -12,6 +12,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
 class Consult extends Model
@@ -45,8 +46,13 @@ class Consult extends Model
     }
 
     public function consult_notes(){
-        return $this->hasOne(ConsultNotes::class, 'consult_id', 'id');
+        return $this->hasMany(ConsultNotes::class, 'consult_id', 'id');
     }
+
+    // public function consult_notes(): BelongsTo
+    // {
+    //     return $this->belongsTo(ConsultNotes::class);
+    // }
 
     public function user()
     {

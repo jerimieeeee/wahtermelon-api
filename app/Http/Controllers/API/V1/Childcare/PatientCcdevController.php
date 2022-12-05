@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
 use App\Http\Resources\API\V1\Childcare\PatientCcdevResource;
+use App\Services\Childcare\PatientChildcareService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
@@ -56,10 +57,13 @@ class PatientCcdevController extends Controller
      * @return PatientCcdevResource
      */
 
-    public function show(PatientCcdev $patientccdev)
+    public function show(PatientCcdev $patientccdev, PatientChildcareService $ccdevStatus)
     {
-        $query = PatientCcdev::where('id', $patientccdev->id);
-
+        //$ccdev_status = new PatientChildcareService();
+        $query = PatientCcdev::where('id', $patientccdev->id)
+                ->leftJoinSub($ccdevStatus->get_cpab_status($patientccdev->mother_id), 'patientccdev', function($join) {
+                    $join->on('mothers_id', '=', 'patientccdev.mothersId');
+                 });
         $patientccdev = QueryBuilder::for($query)
             ->first();
 
