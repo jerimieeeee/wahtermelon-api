@@ -31,6 +31,7 @@ class ConsultMcServiceFactory extends Factory
             'visit_type_code' => fake()->randomElement(LibMcVisitType::pluck('code')->toArray()),
             'visit_status' => fake()->randomElement(['Prenatal', 'Postpartum']),
             'service_date' => fake()->date('Y-m-d'),
+            'service_qty' => fake()->numberBetween(1, 100),
         ];
     }
 }

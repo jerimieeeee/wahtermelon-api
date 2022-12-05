@@ -9,6 +9,7 @@ use App\Models\V1\MaternalCare\ConsultMcService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -26,6 +27,7 @@ class ConsultMcServiceController extends Controller
      *
      * @queryParam filter[patient_mc_id] string Filter by patient_mc_id.
      * @queryParam filter[service_id] string Filter by service_id.
+     * @queryParam filter[visit_status] string Filter by visit_status e.g. Prenatal or Postpartum. Example: Prenatal
      * @apiResourceCollection App\Http\Resources\API\V1\MaternalCare\ConsultMcServiceResource
      * @apiResourceModel App\Models\V1\MaternalCare\ConsultMcService
      * @param Request $request
@@ -36,7 +38,7 @@ class ConsultMcServiceController extends Controller
         $query = ConsultMcService::query();
         $service = QueryBuilder::for($query)
             ->with('service')
-            ->allowedFilters(['patient_mc_id', 'service_id'])
+            ->allowedFilters(['patient_mc_id', 'service_id', 'visit_status'])
             ->get();
         return ConsultMcServiceResource::collection($service);
     }
@@ -77,13 +79,14 @@ class ConsultMcServiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ConsultMcServiceRequest $request
+     * @param ConsultMcService $mcService
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(ConsultMcServiceRequest $request, ConsultMcService $mcService): JsonResponse
     {
-        //
+        $mcService->update($request->validated());
+        return response()->json(['data' => $mcService, 'status' => 'Success'], 200);
     }
 
     /**
