@@ -13,6 +13,4 @@ class ConsultNotesPe extends Model
     protected $primaryKey = 'id';
     protected $guarded = ['id',];
 
-
-
 }

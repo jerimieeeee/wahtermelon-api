@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\API\V1\MaternalCare;
 
+use App\Models\V1\Libraries\LibMcService;
+use App\Models\V1\Libraries\LibMcVisitType;
 use App\Models\V1\MaternalCare\PatientMc;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -55,6 +57,36 @@ class ConsultMcServiceRequest extends FormRequest
             'service_qty' => 'numeric',
             'positive_result' => 'boolean',
             'intake_penicillin' => 'boolean'
+        ];
+    }
+
+    public function bodyParameters()
+    {
+        $mcId = PatientMc::whereHas('preRegister')->orWhereHas('postRegister')->inRandomOrder()->limit(1)->first();
+        return [
+            'patient_mc_id' => [
+                'description' => 'ID of maternal care record',
+                'example' => $mcId->id,
+            ],
+            'patient_id' => [
+                'description' => 'ID of patient',
+                'example' => $mcId->patient_id,
+            ],
+            'service_id' => [
+                'example' => fake()->randomElement(LibMcService::pluck('id')->toArray())
+            ],
+            'visit_type_code' => [
+                'example' => fake()->randomElement(LibMcVisitType::pluck('code')->toArray())
+            ],
+            'visit_status' => [
+                'example' => fake()->randomElement(['Prenatal', 'Postpartum'])
+            ],
+            'service_date' => [
+                'example' => fake()->date('Y-m-d')
+            ],
+            'service_qty' => [
+                'example' => fake()->numberBetween(1, 100)
+            ],
         ];
     }
 }

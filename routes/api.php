@@ -211,12 +211,14 @@ Route::prefix('v1')->group(function (){
                 //Route::get('mc-risk-factors/{mcRisk}', 'show');
                 Route::get('mc-risk-factors', 'index');
                 Route::post('mc-risk-factors', 'store');
+                Route::put('mc-risk-factors/{mcRisk}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\MaternalCare\ConsultMcServiceController::class)
             ->middleware('auth:api')
             ->group(function() {
                 Route::get('mc-services', 'index');
                 Route::post('mc-services', 'store');
+                Route::put('mc-services/{mcService}', 'update');
             });
     });
 
