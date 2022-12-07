@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Models\V1\PSGC;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+class Province extends Model
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['code', 'psgc_10_digit_code', 'region_id', 'name', 'income_class', 'population'];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['id', 'region_id'];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'code';
+    }
+
+    public function cities(): MorphMany
+    {
+        return $this->morphMany(City::class, 'geographic');
+    }
+
+    public function municipalities(): MorphMany
+    {
+        return $this->morphMany(Municipality::class, 'geographic');
+    }
+
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function facility(): HasMany
+    {
+        return $this->hasMany(Facility::class);
+    }
+}

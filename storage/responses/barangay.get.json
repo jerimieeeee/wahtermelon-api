@@ -1,0 +1,26 @@
+{
+    "data": {
+        "code": "012801001",
+        "name": "Adams (Pob.)",
+        "urban_rural": "R",
+        "population": 2189,
+        "municipality": {
+            "code": "012801000",
+            "name": "Adams",
+            "geo_level": "Mun",
+            "income_class": "5th",
+            "population": 2189
+        },
+        "province": {
+            "code": "012800000",
+            "name": "Ilocos Norte",
+            "income_class": "1st",
+            "population": 609588
+        },
+        "region": {
+            "code": "010000000",
+            "name": "Region I (Ilocos Region)",
+            "population": 5301139
+        }
+    }
+}

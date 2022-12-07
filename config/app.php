@@ -58,6 +58,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'frontend_url' => env('APP_FRONTEND_URL', 'http://localhost:4200'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -108,7 +110,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'en_PH',
 
     /*
     |--------------------------------------------------------------------------

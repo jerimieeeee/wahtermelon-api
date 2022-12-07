@@ -2,25 +2,34 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\V1\Libraries\LibDesignation;
+use App\Models\V1\Libraries\LibEmployer;
+use App\Models\V1\PSGC\Facility;
+use App\Traits\HasSearchFilter;
+use App\Traits\HasUuid;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasSearchFilter;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $guarded = [
+        'id',
     ];
 
     /**
@@ -39,6 +48,54 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'birthdate' => 'date:Y-m-d',
+        'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes["last_name"] = ucwords(strtolower($value));
+    }
+
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes["first_name"] = ucwords(strtolower($value));
+    }
+
+    public function setMiddleNameAttribute($value)
+    {
+        $this->attributes["middle_name"] = ucwords(strtolower($value));
+    }
+
+    public function suffixName(): BelongsTo
+    {
+        return $this->belongsTo(LibSuffixName::class, 'suffix_name', 'code');
+    }
+
+    public function designation(): BelongsTo
+    {
+        return $this->belongsTo(LibDesignation::class, 'designation_code', 'code');
+    }
+
+    public function employer(): BelongsTo
+    {
+        return $this->belongsTo(LibEmployer::class, 'employer_code', 'code');
+    }
+
+    public function facility(): BelongsTo
+    {
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+    }
+
 }
