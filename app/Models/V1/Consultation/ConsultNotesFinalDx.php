@@ -23,8 +23,13 @@ class ConsultNotesFinalDx extends Model
       'fdx_remark',
     ];
 
-    public function Icd10(): BelongsTo
-    {
-        return $this->belongsTo(LibIcd10::class, 'icd10_code', 'code');
+    public function consultNotes(){
+        return $this->belongsTo(ConsultNotes::class, 'notes_id', 'id');
     }
+
+    public function libIcd10(): BelongsTo
+    {
+        return $this->belongsTo(LibIcd10::class, 'icd10_code', 'icd10_code');
+    }
+
 }

@@ -14,13 +14,31 @@ class ConsultNotes extends Model
     protected $table='consult_notes';
 
     protected $primaryKey = 'id';
-    protected $guarded = ['id'];
 
-    // public function notes_complaint(){
-    //     return $this->hasMany(ConsultNotesComplaint::class);
-    // }
+    protected $fillable = [
+        'consult_id',
+        'patient_id',
+        'user_id',
+        'facility_code',
+        'complaint',
+        'history',
+        'physical_exam',
+        'plan',
+      ];
 
-    public function consult_notes()
+    public function complaints(){
+        return $this->hasMany(ConsultNotesComplaint::class, 'notes_id', 'id');
+    }
+
+    public function initialdx(){
+        return $this->hasMany(ConsultNotesInitialDx::class, 'notes_id', 'id');
+    }
+
+    public function finaldx(){
+        return $this->hasMany(ConsultNotesFinalDx::class, 'notes_id', 'id');
+    }
+
+    public function consultNotes()
     {
         return $this->belongsTo(Consult::class, 'consult_id', 'id');
     }

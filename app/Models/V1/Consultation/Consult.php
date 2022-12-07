@@ -45,18 +45,28 @@ class Consult extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function consult_notes(){
-        return $this->hasMany(ConsultNotes::class, 'consult_id', 'id');
+    public function consultNotes(){
+        return $this->hasOne(ConsultNotes::class, 'consult_id', 'id');
     }
-
-    // public function consult_notes(): BelongsTo
-    // {
-    //     return $this->belongsTo(ConsultNotes::class);
-    // }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function complaints()
+    {
+        return $this->belongsTo(ConsultNotesComplaint::class);
+    }
+
+    public function initialdx()
+    {
+        return $this->belongsTo(ConsultNotesInitialDx::class);
+    }
+
+    public function finaldx()
+    {
+        return $this->belongsTo(ConsultNotesFinalDx::class);
     }
 
     public function physician()

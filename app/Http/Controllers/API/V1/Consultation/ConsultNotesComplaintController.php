@@ -67,7 +67,7 @@ class ConsultNotesComplaintController extends Controller
                 ->update(['complaint' => $data1]);
 
                 return response()->json([
-                    'message' => 'Child Complaint Successfully Saved',
+                    'message' => 'Complaint Successfully Saved',
                 ], 201);
             }catch(Exception $error) {
                 return response()->json([

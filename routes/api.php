@@ -153,10 +153,15 @@ Route::prefix('v1')->group(function (){
             Route::delete('cn-fdx/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultStatsController::class)
-        ->middleware('auth:api')
-        ->group(function() {
-        Route::get('cn-stats', 'index');
-    });
+            ->middleware('auth:api')
+            ->group(function() {
+            Route::get('cn-stats', 'index');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+            Route::put('cn-notes/{id}', 'update');
+         });
     });
 
     //Maternal Care APIs
