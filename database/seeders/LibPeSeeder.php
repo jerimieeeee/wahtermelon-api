@@ -83,9 +83,9 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
 
           //EXTREMITIES
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'PELVIC','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'PELVIC','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'PELVIC','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
         ], ['category_id']);
     }
 }
