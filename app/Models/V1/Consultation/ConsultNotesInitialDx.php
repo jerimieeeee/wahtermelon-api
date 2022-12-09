@@ -20,7 +20,6 @@ class ConsultNotesInitialDx extends Model
       'user_id',
       'facility_code',
       'class_id',
-      'idx_remark',
     ];
 
     public function diagnosis(): BelongsTo

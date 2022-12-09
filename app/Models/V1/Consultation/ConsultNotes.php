@@ -23,6 +23,8 @@ class ConsultNotes extends Model
         'complaint',
         'history',
         'physical_exam',
+        'idx_remark',
+        'fdx_remark',
         'plan',
       ];
 

@@ -29,8 +29,18 @@ class ConsultNotesComplaintTest extends TestCase
         $patient = Patient::factory()->create();
         Consult::factory()->create(['pt_group' => 'cn', 'patient_id' => $patient->id])->consultNotes()->create(['patient_id' => $patient->id]);
 
-        $complaint = ConsultNotesComplaint::factory()->make()->toArray();
-        $response = $this->post('api/v1/consultation/cn-complaint', $complaint);
+
+        //Create Consult Notes Complaint
+        $response = $this->post('api/v1/consultation/complaint', [
+            'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
+            'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
+            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
+            'complaints' => [
+                fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
+                fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
+                fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray())
+            ]
+        ]);
         $response->assertCreated();
     }
 }

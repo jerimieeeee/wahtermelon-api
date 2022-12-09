@@ -32,8 +32,7 @@ class ConsultNotesFinalDxRequest extends FormRequest
             'notes_id' => 'required|exists:consult_notes,id',
             // 'user_id' => 'required|exists:users,id',
             // 'facility_code' => 'nullable|exists:facilities,code',
-            'fdx.*.icd10_code' => 'required|exists:lib_icd10s,icd10_code',
-            'fdx.*.fdx_remark' => 'nullable',
+            'final_diagnosis' => 'array|exists:lib_icd10s,icd10_code',
         ];
     }
 
@@ -55,10 +54,6 @@ class ConsultNotesFinalDxRequest extends FormRequest
             'icd10_code' => [
                 'description' => 'Icd10 code of Final Dx',
                 'example' => fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
-            ],
-            'fdx_remark' => [
-                'description' => 'Remarks of Final Dx',
-                'example' => fake()->sentence(),
             ],
         ];
 

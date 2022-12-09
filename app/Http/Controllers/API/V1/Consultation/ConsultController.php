@@ -87,7 +87,12 @@ class ConsultController extends Controller
             });
 
             $data = ConsultResource::collection(Consult::where('patient_id', $request->patient_id)->get());
-            return ConsultResource::collection($data)->last();
+            $data1 = ConsultResource::collection($data)->last();
+
+            return response()->json([
+                'data' => $data1,
+                'message' => 'Complaint Successfully Saved',
+            ], 201);
     }
 
     /**

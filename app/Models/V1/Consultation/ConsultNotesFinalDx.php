@@ -20,7 +20,6 @@ class ConsultNotesFinalDx extends Model
       'user_id',
       'facility_code',
       'icd10_code',
-      'fdx_remark',
     ];
 
     public function consultNotes(){

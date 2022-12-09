@@ -40,23 +40,19 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function store(ConsultNotesFinalDxRequest $request) : JsonResponse
     {
-        $fdx = $request->input('fdx');
-        foreach($fdx as $value){
-            ConsultNotesFinalDx::updateOrCreate(['notes_id' => $request->notes_id, 'icd10_code' => $value['icd10_code'], 'fdx_remark' => $value['fdx_remark']],
-            ['notes_id' => $request->input('notes_id'),'user_id' => $request->input('user_id')] + $value);
+        $finaldx = $request->input('final_diagnosis');
+        $finaldx_array = [];
+        foreach($finaldx as $value){
+            $data = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'icd10_code' => $value]);
+            $data->user_id = $request->input('user_id');
+            $data->icd10_code = $value;
+            $data->save();
+            array_push($finaldx_array, $value);
         }
-
-        $patientfdx = ConsultNotesFinalDx::where('notes_id', '=', $request->notes_id)
-        ->orderBy('notes_id', 'ASC')
-        ->orderBy('id', 'ASC')
-        ->orderBy('icd10_code', 'ASC')
-        ->get();
 
         return response()->json([
             'message' => 'Final Dx Successfully Saved',
-            'data' => $patientfdx
         ], 201);
-
     }
 
     /**
