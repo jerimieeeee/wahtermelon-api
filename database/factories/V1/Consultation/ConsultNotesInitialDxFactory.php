@@ -25,7 +25,6 @@ class ConsultNotesInitialDxFactory extends Factory
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'class_id' => fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
-            'idx_remark' => fake()->sentence(),
         ];
     }
 }

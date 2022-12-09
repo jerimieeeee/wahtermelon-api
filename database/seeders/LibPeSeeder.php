@@ -17,10 +17,23 @@ class LibPeSeeder extends Seeder
     public function run()
     {
         LibPe::upsert([
+          //SKIN
           ['category_id' => 'SKIN','pe_id' => 'SKIN01', 'pe_desc' => 'Pallor'],
           ['category_id' => 'SKIN','pe_id' => 'SKIN02', 'pe_desc' => 'Rashes'],
           ['category_id' => 'SKIN','pe_id' => 'SKIN03', 'pe_desc' => 'Jaundice'],
           ['category_id' => 'SKIN','pe_id' => 'SKIN04', 'pe_desc' => 'Good Skin Turgor'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN15', 'pe_desc' => 'Essentially normal'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN05', 'pe_desc' => 'Clubbing'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN06', 'pe_desc' => 'Cold clammy'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN07', 'pe_desc' => 'Cyanosis/mottled skin'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN08', 'pe_desc' => 'Edema/swelling'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN09', 'pe_desc' => 'Decreased mobility'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN10', 'pe_desc' => 'Pale nailbeds'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN11', 'pe_desc' => 'Poor skin turgor'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN12', 'pe_desc' => 'Weak pulses'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN13', 'pe_desc' => 'Others'],
+
+          //HEENT
           ['category_id' => 'HEENT','pe_id' => 'HEENT01', 'pe_desc' => 'Anicteric Sclerae'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT02', 'pe_desc' => 'Pupils Briskly Reactive to Light'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT03', 'pe_desc' => 'Aural Discharge'],

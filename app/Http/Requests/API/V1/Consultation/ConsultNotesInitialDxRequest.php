@@ -31,8 +31,7 @@ class ConsultNotesInitialDxRequest extends FormRequest
             'notes_id' => 'required|exists:consult_notes,id',
             // 'user_id' => 'required|exists:users,id',
             // 'facility_code' => 'nullable|exists:facilities,code',
-            'idx.*.class_id' => 'required|exists:lib_diagnoses,class_id',
-            'idx.*.idx_remark' => 'nullable',
+            'initial_diagnosis' => 'array|required|exists:lib_diagnoses,class_id',
         ];
     }
 
@@ -54,10 +53,6 @@ class ConsultNotesInitialDxRequest extends FormRequest
             'class_id' => [
                 'description' => 'class id of diagnoses',
                 'example' => fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
-            ],
-            'idx_remark' => [
-                'description' => 'Remarks of Initial Dx',
-                'example' => fake()->sentence(),
             ],
         ];
 

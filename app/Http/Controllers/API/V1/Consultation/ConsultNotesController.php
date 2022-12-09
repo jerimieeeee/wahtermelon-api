@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesRequest;
 use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -58,9 +59,9 @@ class ConsultNotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultNotesRequest $request, $id): JsonResponse
     {
-        ConsultNotes::findorfail($id)->update($request->all());
+        ConsultNotes::findorfail($id)->update($request->only('complaint', 'history', 'physical_exam', 'plan'));
         return response()->json('Consult Notes Successfully Updated');
     }
 

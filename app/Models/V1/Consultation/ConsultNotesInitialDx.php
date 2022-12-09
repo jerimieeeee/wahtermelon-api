@@ -20,16 +20,15 @@ class ConsultNotesInitialDx extends Model
       'user_id',
       'facility_code',
       'class_id',
-      'idx_remark',
     ];
 
-    public function Diagnosis(): BelongsTo
+    public function diagnosis(): BelongsTo
     {
-        return $this->belongsTo(LibDiagnosis::class, 'class_id', 'code');
+        return $this->belongsTo(LibDiagnosis::class, 'class_id', 'class_id');
     }
 
-    public function Consult_notes(): BelongsTo
-    {
-        return $this->belongsTo(ConsultNotes::class, 'notes_id', 'code');
+    public function consultNotes(){
+        return $this->hasMany(ConsultNotes::class);
     }
+
 }

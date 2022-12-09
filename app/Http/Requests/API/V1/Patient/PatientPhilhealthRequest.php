@@ -13,6 +13,7 @@ use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PatientPhilhealthRequest extends FormRequest
 {
@@ -42,14 +43,14 @@ class PatientPhilhealthRequest extends FormRequest
             'package_type_id' => 'required|exists:lib_philhealth_package_types,id',
             'membership_type_id' => 'required|exists:lib_philhealth_membership_types,id',
             'membership_category_id' => 'required|exists:lib_philhealth_membership_categories,id',
-            'member_pin' => 'required_if:membership_type_id,DD|min:12|max:14',
+            'member_pin' => ['sometimes', Rule::when($this->membership_type_id == 'DD', ['required','min:12','max:14'])],
             'member_last_name' => 'required_if:membership_type_id,DD',
             'member_first_name' => 'required_if:membership_type_id,DD',
             'member_middle_name' => 'nullable',
-            'member_suffix_name' => 'required_if:membership_type_id,DD|exists:lib_suffix_names,code',
-            'member_birthdate' => 'required_if:membership_type_id,DD|date|date_format:Y-m-d|before:tomorrow',
+            'member_suffix_name' => ['sometimes', Rule::when($this->membership_type_id == 'DD', ['required','exists:lib_suffix_names,code'])],
+            'member_birthdate' => ['sometimes', Rule::when($this->membership_type_id == 'DD', ['required','date','date_format:Y-m-d', 'before:tomorrow'])],
             'member_gender' => 'required_if:membership_type_id,DD',
-            'member_relation_id' => 'required_if:membership_type_id,DD|exists:lib_member_relationships,id',
+            'member_relation_id' => ['sometimes', Rule::when($this->membership_type_id == 'DD', ['required','exists:lib_member_relationships,id'])],
             'employer_pin' => 'required_with:employer_address|nullable',
             'employer_name' => 'required_with:employer_pin|nullable',
             'employer_address' => 'required_with:employer_pin|nullable',
@@ -119,11 +120,11 @@ class PatientPhilhealthRequest extends FormRequest
             ],
             'member_suffix_name' => [
                 'description' => 'Suffix name of the primary member',
-                'example' => $membershipType == 'DD' && $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : null
+                'example' => $membershipType == 'DD' && $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : ($membershipType == 'DD' && $gender == 'female' ? 'NA' : null)
             ],
             'member_birthdate' => [
                 'description' => 'Date of birth of the primary member',
-                'example' => $membershipType == 'DD' ? fake()->date('Y-m-d', 'now') : null
+                'example' => $membershipType == 'DD' ? fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d') : null
             ],
             'member_gender' => [
                 'description' => 'Gender of the primary member',

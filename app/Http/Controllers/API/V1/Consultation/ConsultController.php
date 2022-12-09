@@ -54,7 +54,7 @@ class ConsultController extends Controller
         ->when(isset($request->id), function($q) use($request){
             $q->where('id', '=', $request->id);
         })
-        ->with('user', 'patient', 'physician', 'vitals', 'consult_notes')
+        ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'consultNotes.complaints.libComplaints', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10')
 
         ->defaultSort('consult_date')
         ->allowedSorts('consult_date');
@@ -78,15 +78,21 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        $data = Consult::query()
-        ->when(request('pt_group') == 'cn', function ($q) use($request){
-            return $q->create($request->validated())->consult_notes()->create($request->validated());
-        })
-        ->when(request('pt_group') != 'cn', function ($q) use($request){
-            return $q->create($request->except(['physician_id', 'is_pregnant']));
-        });
+        Consult::query()
+                ->when(request('pt_group') == 'cn', function ($q) use($request){
+                return $q->create($request->validated())->consultNotes()->create($request->validated());
+            })
+                ->when(request('pt_group') != 'cn', function ($q) use($request){
+                return $q->create($request->except(['physician_id', 'is_pregnant']));
+            });
 
-        return response()->json(['data' => $data], 201);
+            $data = ConsultResource::collection(Consult::where('patient_id', $request->patient_id)->get());
+            $data1 = ConsultResource::collection($data)->last();
+
+            return response()->json([
+                'data' => $data1,
+                'message' => 'Complaint Successfully Saved',
+            ], 201);
     }
 
     /**

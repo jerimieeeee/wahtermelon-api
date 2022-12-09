@@ -135,37 +135,42 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cn-records', 'store');
-            Route::put('cn-records/{id}', 'update');
+            Route::post('records', 'store');
+            Route::put('records/{id}', 'update');
             // Route::get('cn-records', 'show');
-            Route::get('cn-count', 'show');
-            Route::get('cn-records', 'index');
+            Route::get('count', 'show');
+            Route::get('records', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cn-complaint', 'store');
+            Route::post('complaint', 'store');
             // Route::get('cn-complaint/{consult_id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cn-idx', 'store');
-            Route::delete('cn-idx/{id}', 'destroy');
-            Route::get('cn-idx/{id}', 'show');
+            Route::post('initial-diagnosis', 'store');
+            Route::delete('initial-diagnosis/{id}', 'destroy');
+            Route::get('initial-diagnosis/{id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cn-fdx', 'store');
-            Route::get('cn-fdx/{id}', 'show');
-            Route::delete('cn-fdx/{id}', 'destroy');
+            Route::post('final-diagnosis', 'store');
+            Route::get('final-diagnosis/{id}', 'show');
+            Route::delete('final-diagnosis/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultStatsController::class)
-        ->middleware('auth:api')
-        ->group(function() {
-        Route::get('cn-stats', 'index');
-    });
+            ->middleware('auth:api')
+            ->group(function() {
+            Route::get('stats', 'index');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+            Route::put('notes/{id}', 'update');
+         });
     });
 
     //Maternal Care APIs
