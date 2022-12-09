@@ -22,7 +22,6 @@ class PatientPhilhealthTest extends TestCase
             User::factory()->create()
         );
         $patient = PatientPhilhealth::factory()->make(['membership_type_id' => 'MM'])->toArray();
-        dump($patient);
         $response = $this->post('api/v1/patient-philhealth/philhealth', $patient);
         $response->assertCreated();
     }
