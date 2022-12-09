@@ -17,10 +17,23 @@ class LibPeSeeder extends Seeder
     public function run()
     {
         LibPe::upsert([
-          ['category_id' => 'SKIN','pe_id' => 'SKIN01', 'pe_desc' => 'Pallor'],
-          ['category_id' => 'SKIN','pe_id' => 'SKIN02', 'pe_desc' => 'Rashes'],
-          ['category_id' => 'SKIN','pe_id' => 'SKIN03', 'pe_desc' => 'Jaundice'],
-          ['category_id' => 'SKIN','pe_id' => 'SKIN04', 'pe_desc' => 'Good Skin Turgor'],
+          //SKIN  
+          ['category_id' => 'SKIN','pe_id' => 'SKIN01', 'pe_desc' => 'Pallor',                'konsulta_pe_id' => '',    'konsulta_library_status' => '0'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN02', 'pe_desc' => 'Rashes',                'konsulta_pe_id' => '',    'konsulta_library_status' => '0'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN03', 'pe_desc' => 'Jaundice',              'konsulta_pe_id' => '',    'konsulta_library_status' => '0'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN04', 'pe_desc' => 'Good Skin Turgor',      'konsulta_pe_id' => '',    'konsulta_library_status' => '0'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN15', 'pe_desc' => 'Essentially normal',    'konsulta_pe_id' => '1',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN05', 'pe_desc' => 'Clubbing',              'konsulta_pe_id' => '2',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN06', 'pe_desc' => 'Cold clammy',           'konsulta_pe_id' => '3',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN07', 'pe_desc' => 'Cyanosis/mottled skin', 'konsulta_pe_id' => '4',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN08', 'pe_desc' => 'Edema/swelling',        'konsulta_pe_id' => '5',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN09', 'pe_desc' => 'Decreased mobility',    'konsulta_pe_id' => '6',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN10', 'pe_desc' => 'Pale nailbeds',         'konsulta_pe_id' => '7',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN11', 'pe_desc' => 'Poor skin turgor',      'konsulta_pe_id' => '8',   'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN12', 'pe_desc' => 'Weak pulses',           'konsulta_pe_id' => '10',  'konsulta_library_status' => '1'],
+          ['category_id' => 'SKIN','pe_id' => 'SKIN13', 'pe_desc' => 'Others',                'konsulta_pe_id' => '99',  'konsulta_library_status' => '1'],
+
+          //HEENT
           ['category_id' => 'HEENT','pe_id' => 'HEENT01', 'pe_desc' => 'Anicteric Sclerae'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT02', 'pe_desc' => 'Pupils Briskly Reactive to Light'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT03', 'pe_desc' => 'Aural Discharge'],
