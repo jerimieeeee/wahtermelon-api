@@ -53,19 +53,39 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'CHEST','pe_id' => 'CHEST05', 'pe_desc' => 'Wheezes',                            'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
 
           //HEART
-          ['category_id' => 'HEART','pe_id' => 'HEART01', 'pe_desc' => 'Adynamic Precordium'],
-          ['category_id' => 'HEART','pe_id' => 'HEART02', 'pe_desc' => 'Normal Rate Regular Rhytm'],
-          ['category_id' => 'HEART','pe_id' => 'HEART03', 'pe_desc' => 'Heaves/Thrills'],
-          ['category_id' => 'HEART','pe_id' => 'HEART04', 'pe_desc' => 'Murmurs'],
-          ['category_id' => 'ABDOMEN','pe_id' => 'ABDOMEN01', 'pe_desc' => 'Flat'],
-          ['category_id' => 'ABDOMEN','pe_id' => 'ABDOMEN02', 'pe_desc' => 'Globular'],
-          ['category_id' => 'ABDOMEN','pe_id' => 'ABDOMEN03', 'pe_desc' => 'Flabby'],
-          ['category_id' => 'ABDOMEN','pe_id' => 'ABDOMEN04', 'pe_desc' => 'Muscle Guarding'],
-          ['category_id' => 'ABDOMEN','pe_id' => 'ABDOMEN05', 'pe_desc' => 'Tenderness'],
-          ['category_id' => 'ABDOMEN','pe_id' => 'ABDOMEN06', 'pe_desc' => 'Palpable Mass'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses']
+          ['category_id' => 'HEART','pe_id' => 'HEART01', 'pe_desc' => 'Adynamic Precordium',                'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'HEART','pe_id' => 'HEART02', 'pe_desc' => 'Normal Rate Regular Rhytm',          'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+          ['category_id' => 'HEART','pe_id' => 'HEART03', 'pe_desc' => 'Heaves/Thrills',                     'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'HEART','pe_id' => 'HEART04', 'pe_desc' => 'Murmurs',                            'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+
+          //ABDOMEN
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN01', 'pe_desc' => 'Flat',                         'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN02', 'pe_desc' => 'Globular',                     'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN03', 'pe_desc' => 'Flabby',                       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN04', 'pe_desc' => 'Muscle Guarding',              'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN05', 'pe_desc' => 'Tenderness',                   'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN06', 'pe_desc' => 'Palpable Mass',                'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN07', 'pe_desc' => 'Scars',                        'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN08', 'pe_desc' => 'Stretch Marks',                'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN09', 'pe_desc' => 'Presence of Mass',             'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN10', 'pe_desc' => 'Enlarged Liver',               'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+          ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN11', 'pe_desc' => 'Presence of Fluid Wave',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+
+          //EXTREMITIES
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+
+          //BREAST
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
+
+          //EXTREMITIES
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
         ], ['category_id']);
     }
 }
