@@ -13,6 +13,7 @@ use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PatientPhilhealthRequest extends FormRequest
 {
@@ -32,7 +33,7 @@ class PatientPhilhealthRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
+    {echo Rule::requiredIf(fn () => request()->membership_type_id == 'DD');
         return [
             'philhealth_id' => 'required|min:12|max:14',
             'patient_id' => 'required|exists:patients,id',
@@ -42,7 +43,7 @@ class PatientPhilhealthRequest extends FormRequest
             'package_type_id' => 'required|exists:lib_philhealth_package_types,id',
             'membership_type_id' => 'required|exists:lib_philhealth_membership_types,id',
             'membership_category_id' => 'required|exists:lib_philhealth_membership_categories,id',
-            'member_pin' => 'required_if:membership_type_id,==,DD|min:12|max:14',
+            'member_pin' => Rule::requiredIf(fn () => request()->membership_type_id == 'DD') . request()->membership_type_id == 'DD' ? 'min:12|max:14' : '',
             'member_last_name' => 'required_if:membership_type_id,DD',
             'member_first_name' => 'required_if:membership_type_id,DD',
             'member_middle_name' => 'nullable',
