@@ -80,7 +80,7 @@ class ConsultController extends Controller
         $request['consult_done'] = 0;
         $data = Consult::query()
         ->when(request('pt_group') == 'cn', function ($q) use($request){
-            return $q->create($request->validated())->consult_notes()->create($request->validated());
+            return $q->create($request->validated())->consultNotes()->create($request->validated());
         })
         ->when(request('pt_group') != 'cn', function ($q) use($request){
             return $q->create($request->except(['physician_id', 'is_pregnant']));
