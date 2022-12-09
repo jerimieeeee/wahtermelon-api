@@ -60,25 +60,18 @@ class ConsultNotesComplaintController extends Controller
             ->where('consult_id', '=', $data->consult_id )
             ->delete();
 
-            //Consult Notes Saving
-            $data1 = $request->input('notes_complaint');
-            DB::table('consult_notes')
-            ->where(['id' => $data->notes_id])
-                ->update(['complaint' => $data1]);
-
-                return response()->json([
+            return response()->json([
                     'message' => 'Complaint Successfully Saved',
                 ], 201);
+
             }catch(Exception $error) {
                 return response()->json([
+                    'Error' => $error,
                     'status_code' => 500,
                     'message' => 'Complaint Saving Error',
                 ]);
             }
 
-            // $notes_id = $request->input('notes_id');
-            // ConsultNotes::create($request->only('complaint'))
-            // ->where('id', '=', $notes_id->notes_id )->update();
     }
 
     /**
