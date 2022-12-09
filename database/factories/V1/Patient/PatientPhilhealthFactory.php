@@ -43,7 +43,7 @@ class PatientPhilhealthFactory extends Factory
             'member_last_name' => $membershipType == 'DD' ? fake()->lastName() : null,
             'member_first_name' => $membershipType == 'DD' ? fake()->firstName($gender) : null,
             'member_middle_name' => $membershipType == 'DD' ? fake()->optional()->lastName() : null,
-            'member_suffix_name' => $membershipType == 'DD' && $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : null,
+            'member_suffix_name' => $membershipType == 'DD' && $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : 'NA',
             'member_birthdate' => $membershipType == 'DD' ? fake()->date('Y-m-d', 'now') : null,
             'member_gender' => $membershipType == 'DD' ? substr(Str::ucfirst($gender), 0, 1) : null,
             'member_relation_id' => $membershipType == 'DD' ? fake()->randomElement(LibMemberRelationship::pluck('id')->toArray()) : null,

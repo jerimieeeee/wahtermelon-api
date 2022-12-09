@@ -21,7 +21,8 @@ class PatientPhilhealthTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
-        $patient = PatientPhilhealth::factory()->create()->toArray();
+        $patient = PatientPhilhealth::factory()->make()->toArray();
+        dump($patient);
         $response = $this->post('api/v1/patient-philhealth/philhealth', $patient);
         $response->assertCreated();
     }

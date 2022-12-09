@@ -42,7 +42,7 @@ class PatientPhilhealthRequest extends FormRequest
             'package_type_id' => 'required|exists:lib_philhealth_package_types,id',
             'membership_type_id' => 'required|exists:lib_philhealth_membership_types,id',
             'membership_category_id' => 'required|exists:lib_philhealth_membership_categories,id',
-            'member_pin' => 'required_if:membership_type_id,DD|min:12|max:14',
+            'member_pin' => 'required_if:membership_type_id,==,DD|min:12|max:14',
             'member_last_name' => 'required_if:membership_type_id,DD',
             'member_first_name' => 'required_if:membership_type_id,DD',
             'member_middle_name' => 'nullable',
