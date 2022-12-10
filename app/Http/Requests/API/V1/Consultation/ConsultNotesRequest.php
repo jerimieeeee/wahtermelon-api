@@ -31,8 +31,8 @@ class ConsultNotesRequest extends FormRequest
             'complaint' => 'nullable',
             'history' => 'nullable',
             'physical_exam' => 'nullable',
-            'idx_remark' => 'nullable',
-            'fdx_remark' => 'nullable',
+            'idx_remarks' => 'nullable',
+            'fdx_remarks' => 'nullable',
             'plan' => 'nullable',
         ];
     }
@@ -60,11 +60,11 @@ class ConsultNotesRequest extends FormRequest
                 'description' => 'remarks of consult_notes_pes',
                 'example' => fake()->sentence(),
             ],
-            'idx_remark' => [
+            'idx_remarks' => [
                 'description' => 'remarks of initial diagnosis',
                 'example' => fake()->sentence(),
             ],
-            'fdx_remark' => [
+            'fdx_remarks' => [
                 'description' => 'remarks of final diagnosis',
                 'example' => fake()->sentence(),
             ],

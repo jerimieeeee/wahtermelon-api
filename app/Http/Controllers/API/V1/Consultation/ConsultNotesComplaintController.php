@@ -50,7 +50,6 @@ class ConsultNotesComplaintController extends Controller
                 $data = ConsultNotesComplaint::firstOrNew(['consult_id' => $request->input('consult_id'), 'complaint_id' => $value]);
                 $data->notes_id = $request->input('notes_id');
                 $data->patient_id = $request->input('patient_id');
-                $data->user_id = $request->input('user_id');
                 $data->complaint_id = $value;
             $data->save();
             array_push($complaint_array, $value);
