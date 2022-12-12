@@ -343,6 +343,10 @@ Route::prefix('v1')->group(function (){
         //Pt group
         Route::get('pt-group', [\App\Http\Controllers\API\V1\Libraries\LibPtGroupController::class, 'index'])->name('pt-group.index');
         Route::get('pt-group/{ptgroup}', [\App\Http\Controllers\API\V1\Libraries\LibPtGroupController::class, 'show'])->name('pt-group.show');
+
+        //Medicine
+        Route::get('unit-of-measurements', [\App\Http\Controllers\API\V1\Libraries\LibMedicineUnitOfMeasurementController::class, 'index'])->name('unit-of-measurements.index');
+        Route::get('unit-of-measurements/{unitOfMeasurement}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineUnitOfMeasurementController::class, 'show'])->name('unit-of-measurements.show');
     });
 
 });
