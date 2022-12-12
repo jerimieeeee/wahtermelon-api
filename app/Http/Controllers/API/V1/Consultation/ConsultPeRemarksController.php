@@ -31,7 +31,7 @@ class ConsultPeRemarksController extends Controller
      * Store a newly created Consultation PE remarks resource in storage.
      *
      * @apiResourceAdditional status=Success
-     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultPeRemarksResoruce
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultPeRemarksResource
      * @apiResourceModel App\Models\V1\Consultation\ConsultPeRemarks
      * @param ConsultPeRemarksRequest $request
      * @return JsonResponse
