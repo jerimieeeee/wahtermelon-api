@@ -40,23 +40,28 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function store(ConsultNotesFinalDxRequest $request) : JsonResponse
     {
-        $fdx = $request->input('fdx');
-        foreach($fdx as $value){
-            ConsultNotesFinalDx::updateOrCreate(['notes_id' => $request->notes_id, 'icd10_code' => $value['icd10_code'], 'fdx_remark' => $value['fdx_remark']],
-            ['notes_id' => $request->input('notes_id'),'user_id' => $request->input('user_id')] + $value);
+        try {
+            $finaldx = $request->final_diagnosis;
+            foreach ($finaldx as $value) {
+                ConsultNotesFinalDx::firstOrCreate($request->safe()->except('final_diagnosis') + ['icd10_code' => $value]);
+            }
+
+            ConsultNotesFinalDx::query()
+                ->whereNotin('icd10_code', $finaldx)
+                ->where('notes_id', $request->safe()->notes_id)
+                ->delete();
+
+            return response()->json([
+                'message' => 'Final Dx Successfully Saved',
+            ], 201);
+
+        } catch (Exception $error) {
+            return response()->json([
+                'Error' => $error,
+                'status_code' => 500,
+                'message' => 'Final Dx Saving Error',
+            ]);
         }
-
-        $patientfdx = ConsultNotesFinalDx::where('notes_id', '=', $request->notes_id)
-        ->orderBy('notes_id', 'ASC')
-        ->orderBy('id', 'ASC')
-        ->orderBy('icd10_code', 'ASC')
-        ->get();
-
-        return response()->json([
-            'message' => 'Final Dx Successfully Saved',
-            'data' => $patientfdx
-        ], 201);
-
     }
 
     /**

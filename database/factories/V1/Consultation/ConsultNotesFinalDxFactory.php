@@ -25,7 +25,6 @@ class ConsultNotesFinalDxFactory extends Factory
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'icd10_code' => fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
-            'fdx_remark' => fake()->sentence(),
         ];
     }
 }

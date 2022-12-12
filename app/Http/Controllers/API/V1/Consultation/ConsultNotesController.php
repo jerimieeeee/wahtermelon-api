@@ -61,7 +61,7 @@ class ConsultNotesController extends Controller
      */
     public function update(ConsultNotesRequest $request, $id): JsonResponse
     {
-        ConsultNotes::findorfail($id)->update($request->only('complaint', 'history', 'physical_exam', 'plan'));
+        ConsultNotes::findorfail($id)->update($request->validated());
         return response()->json('Consult Notes Successfully Updated');
     }
 

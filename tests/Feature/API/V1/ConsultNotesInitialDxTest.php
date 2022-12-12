@@ -24,20 +24,16 @@ class ConsultNotesInitialDxTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
-        $response = $this->post('api/v1/consultation/cn-idx', [
+
+        $response = $this->post('api/v1/consultation/initial-diagnosis', [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
-            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            "idx" => [
-                [
-                    "class_id" => fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
-                    "idx_remark" => fake()->sentence(),
-                ],
-                [
-                    "class_id" => fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
-                    "idx_remark" => fake()->sentence(),
-                ],
+            "initial_diagnosis" => [
+                fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
+                fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
+                fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray())
             ]
         ]);
+
         $response->assertCreated();
     }
 
@@ -47,7 +43,7 @@ class ConsultNotesInitialDxTest extends TestCase
             User::factory()->create()
         );
         $idx = ConsultNotesInitialDx::factory()->create();
-        $response = $this->delete('api/v1/consultation/cn-idx/'. $idx->id);
+        $response = $this->delete('api/v1/consultation/initial-diagnosis/'. $idx->id);
         $response->assertOk();
     }
 }

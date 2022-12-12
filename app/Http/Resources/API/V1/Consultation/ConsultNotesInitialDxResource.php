@@ -19,7 +19,6 @@ class ConsultNotesInitialDxResource extends JsonResource
             'user_id' => $this->user_id,
             'facility_code' => $this->facility_code,
             'class_id' => $this->class_id,
-            'idx_remark' => $this->idx_remark,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

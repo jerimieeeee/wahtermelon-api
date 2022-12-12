@@ -78,15 +78,21 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        $data = Consult::query()
-        ->when(request('pt_group') == 'cn', function ($q) use($request){
-            return $q->create($request->validated())->consultNotes()->create($request->validated());
-        })
-        ->when(request('pt_group') != 'cn', function ($q) use($request){
-            return $q->create($request->except(['physician_id', 'is_pregnant']));
-        });
+        Consult::query()
+                ->when(request('pt_group') == 'cn', function ($q) use($request){
+                return $q->create($request->validated())->consultNotes()->create($request->validated());
+            })
+                ->when(request('pt_group') != 'cn', function ($q) use($request){
+                return $q->create($request->except(['physician_id', 'is_pregnant']));
+            });
 
-        return response()->json(['data' => $data], 201);
+            $data = ConsultResource::collection(Consult::where('patient_id', $request->patient_id)->get());
+            $data1 = ConsultResource::collection($data)->last();
+
+            return response()->json([
+                'data' => $data1,
+                'message' => 'Complaint Successfully Saved',
+            ], 201);
     }
 
     /**
