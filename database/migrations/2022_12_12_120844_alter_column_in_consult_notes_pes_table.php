@@ -37,7 +37,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('notes_id')->references('id')->on('consult_notes');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('facility_code')->references('code')->on('facilities');
             $table->foreign('pe_id')->references('pe_id')->on('lib_pes');
         });
@@ -53,7 +52,6 @@ return new class extends Migration
         Schema::table('consult_notes_pes', function (Blueprint $table) {
 
             $table->dropForeign(['notes_id']);
-            $table->dropForeign(['user_id']);
             $table->dropForeign(['facility_code']);
             $table->dropForeign(['pe_id']);
 
