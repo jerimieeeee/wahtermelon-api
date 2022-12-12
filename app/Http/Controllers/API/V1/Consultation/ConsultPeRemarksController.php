@@ -3,20 +3,11 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Consultation\ConsultNotesRequest;
-use App\Models\V1\Consultation\ConsultNotes;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\API\V1\Consultation\ConsultPeRemarksRequest;
+use App\Models\V1\Consultation\ConsultPeRemarks;
 use Illuminate\Http\Request;
 
-/**
- * @authenticated
- * @group Consultation Information Management
- *
- * APIs for managing Patient Consultation Notes information
- * @subgroup Patient Consultation Notes
- * @subgroupDescription Patient Consultation Notes management.
- */
-class ConsultNotesController extends Controller
+class ConsultPeRemarksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,9 +25,9 @@ class ConsultNotesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConsultNotesRequest $request) : JsonResponse
+    public function store(ConsultPeRemarksRequest $request)
     {
-        $data = ConsultNotes::create($request->all());
+        $data = ConsultPeRemarks::create($request->all());
         return response()->json(['data' => $data], 201);
     }
 
@@ -48,8 +39,7 @@ class ConsultNotesController extends Controller
      */
     public function show($id)
     {
-        $data = ConsultNotes::findOrFail($id);
-        return $data;
+        //
     }
 
     /**
@@ -59,10 +49,10 @@ class ConsultNotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ConsultNotesRequest $request, $id): JsonResponse
+    public function update(ConsultPeRemarksRequest $request, $id)
     {
-        ConsultNotes::findorfail($id)->update($request->only('complaint', 'history', 'physical_exam', 'plan'));
-        return response()->json('Consult Notes Successfully Updated');
+        ConsultPeRemarks::findorfail($id)->update($request->only('complaint', 'history', 'physical_exam', 'plan'));
+        return response()->json('Consult PE remarks Successfully Updated');
     }
 
     /**

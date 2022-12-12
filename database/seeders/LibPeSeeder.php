@@ -99,27 +99,59 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN18', 'pe_desc' => 'Uterine contraction',          'konsulta_pe_id' => '13',    'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN19', 'pe_desc' => 'Others',                       'konsulta_pe_id' => '99',    'konsulta_library_status' => '1', 'modules' => 'cn'],
 
-
           //EXTREMITIES
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'cn'],
 
           //BREAST
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
 
-          //EXTREMITIES
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC01', 'pe_desc' => 'Vulva: Redness (inflammation)',       'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC02', 'pe_desc' => 'Tenderness',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC03', 'pe_desc' => 'Ulcers',                              'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC04', 'pe_desc' => 'Blisters',                            'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC05', 'pe_desc' => 'Warts',                               'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC06', 'pe_desc' => 'Cyst',                                'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC07', 'pe_desc' => 'Skin Tags',                           'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC08', 'pe_desc' => 'Other Mass',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          //PELVIC
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC01', 'pe_desc' => 'Vulva: Redness (inflammation)',       'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC02', 'pe_desc' => 'Tenderness',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC03', 'pe_desc' => 'Ulcers',                              'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC04', 'pe_desc' => 'Blisters',                            'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC05', 'pe_desc' => 'Warts',                               'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC06', 'pe_desc' => 'Cyst',                                'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC07', 'pe_desc' => 'Skin Tags',                           'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC08', 'pe_desc' => 'Other Mass',                          'konsulta_pe_id' => '',    'konsulta_library_status' => '', 'modules' => 'ncd'],
+
+          //NEURO
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO01',   'pe_desc' => 'Developmental delay',                'konsulta_pe_id' => '1',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO02',   'pe_desc' => 'Seizures',                           'konsulta_pe_id' => '2',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO03',   'pe_desc' => 'Normal',                             'konsulta_pe_id' => '3',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO04',   'pe_desc' => 'Motor Deficit',                      'konsulta_pe_id' => '4',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO05',   'pe_desc' => 'Sensory Deficit',                    'konsulta_pe_id' => '5',    'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO06',   'pe_desc' => 'Essentially normal',                 'konsulta_pe_id' => '6',    'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO07',   'pe_desc' => 'Abnormal gait',                      'konsulta_pe_id' => '7',    'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO08',   'pe_desc' => 'Abnormal position sense',            'konsulta_pe_id' => '8',    'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO09',   'pe_desc' => 'Abnormal sensation',                 'konsulta_pe_id' => '9',    'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO10',  'pe_desc' => 'Abnormal reflex(es)',                'konsulta_pe_id' => '10',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO11',  'pe_desc' => 'Poor/altered memory',                'konsulta_pe_id' => '11',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO12',  'pe_desc' => 'Poor muscle tone/strength',          'konsulta_pe_id' => '12',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO13',  'pe_desc' => 'Poor coordination',                  'konsulta_pe_id' => '13',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO14',  'pe_desc' => 'Others',                             'konsulta_pe_id' => '14',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+
+          //DIGITAL RECTAL
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL01',  'pe_desc' => 'Essentially normal',                'konsulta_pe_id' => '1',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL02',  'pe_desc' => 'Enlarge Prospate',                  'konsulta_pe_id' => '2',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL03',  'pe_desc' => 'Mass',                              'konsulta_pe_id' => '3',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL04',  'pe_desc' => 'Hemorrhoids',                       'konsulta_pe_id' => '4',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL05',  'pe_desc' => 'Pus',                               'konsulta_pe_id' => '5',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL06',  'pe_desc' => 'Not Applicable',                    'konsulta_pe_id' => '0',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL07',  'pe_desc' => 'Others',                            'konsulta_pe_id' => '99',  'konsulta_library_status' => '1', 'modules' => 'cn'],
+
+          //GENITOURINARY
+          ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY01',  'pe_desc' => 'Essentially normal',                'konsulta_pe_id' => '1',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY02',  'pe_desc' => 'Blood stained in exam finger',      'konsulta_pe_id' => '2',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY03',  'pe_desc' => 'Cervical dilatation',               'konsulta_pe_id' => '3',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY04',  'pe_desc' => 'Presence of abnormal discharge',    'konsulta_pe_id' => '4',   'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY05',  'pe_desc' => 'Others',                            'konsulta_pe_id' => '99',  'konsulta_library_status' => '1', 'modules' => 'cn'],
+
         ], ['category_id']);
     }
 }
