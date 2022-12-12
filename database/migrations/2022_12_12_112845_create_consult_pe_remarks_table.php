@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('notes_id')->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->string('facility_code')->index();
+            $table->string('facility_code')->index()->nullable();
             $table->string('skin_remarks')->nullable();
             $table->string('heent_remarks')->nullable();
             $table->string('chest_remarks')->nullable();

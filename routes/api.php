@@ -162,6 +162,18 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
             Route::put('notes/{id}', 'update');
          });
+         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesPeController::class)
+         ->middleware('auth:api')
+         ->group(function() {
+         Route::post('physical-exam', 'store');
+         Route::post('physical-exam/{id}', 'show');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultPeRemarksController::class)
+        ->middleware('auth:api')
+        ->group(function() {
+        Route::post('physical-exam-remarks', 'store');
+        Route::put('physical-exam-remarks/{id}', 'update');
+        });
     });
 
     //Maternal Care APIs

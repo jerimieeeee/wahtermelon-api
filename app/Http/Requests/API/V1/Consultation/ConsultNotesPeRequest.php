@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\API\V1\Consultation;
 
+use App\Models\V1\Consultation\ConsultNotes;
+use App\Models\V1\Libraries\LibPe;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultNotesPeRequest extends FormRequest
@@ -23,15 +25,23 @@ class ConsultNotesPeRequest extends FormRequest
      */
     public function rules()
     {
-        // return [
-        //     'notes_id' => 'required|exists:patients,id',
-        //     'patient_id' => 'required|exists:patients,id',
-        //     'user_id' => 'required|exists:users,id',
-        //     'birth_weight' => 'required',
-        //     'mothers_id' => 'required|exists:patient,id',
-        //     'ccdev_ended' => 'required|boolean',
-        //     'admission_date' => 'required|date|date_format:Y-m-d',
-        //     'discharge_date' => 'required|date|date_format:Y-m-d',
-        // ];
+        return [
+            'notes_id' => 'required|exists:consult_notes,id',
+            'physical_exam' => 'required|exists:lib_pes,pe_id',
+        ];
+    }
+
+    public function bodyParameters()
+    {
+        return [
+            'notes_id' => [
+                'description' => 'ID of consult notes.',
+                'example' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
+            ],
+            'pe_id' => [
+                'description' => 'class id of diagnoses',
+                'example' => fake()->randomElement(LibPe::pluck('pe_id')->toArray()),
+            ],
+        ];
     }
 }

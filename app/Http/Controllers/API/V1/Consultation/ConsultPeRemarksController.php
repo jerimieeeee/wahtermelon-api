@@ -7,6 +7,14 @@ use App\Http\Requests\API\V1\Consultation\ConsultPeRemarksRequest;
 use App\Models\V1\Consultation\ConsultPeRemarks;
 use Illuminate\Http\Request;
 
+/**
+ * @authenticated
+ * @group Consultation Information Management
+ *
+ * APIs for managing Patient Consultation Notes information
+ * @subgroup Patient Consultation Notes
+ * @subgroupDescription Patient Consultation Notes management.
+ */
 class ConsultPeRemarksController extends Controller
 {
     /**
@@ -20,10 +28,13 @@ class ConsultPeRemarksController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consultation PE remarks resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultPeRemarksResoruce
+     * @apiResourceModel App\Models\V1\Consultation\ConsultPeRemarks
+     * @param ConsultPeRemarksRequest $request
+     * @return JsonResponse
      */
     public function store(ConsultPeRemarksRequest $request)
     {
@@ -51,7 +62,7 @@ class ConsultPeRemarksController extends Controller
      */
     public function update(ConsultPeRemarksRequest $request, $id)
     {
-        ConsultPeRemarks::findorfail($id)->update($request->only('complaint', 'history', 'physical_exam', 'plan'));
+        ConsultPeRemarks::findorfail($id)->update($request->except('notes_id', 'patient_id', 'user_id', 'facility_code'));
         return response()->json('Consult PE remarks Successfully Updated');
     }
 
