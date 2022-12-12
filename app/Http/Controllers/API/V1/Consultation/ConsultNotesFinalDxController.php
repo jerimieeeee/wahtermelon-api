@@ -40,21 +40,22 @@ class ConsultNotesFinalDxController extends Controller
      */
     public function store(ConsultNotesFinalDxRequest $request) : JsonResponse
     {
-        try{
-            $finaldx = $request->input('final_diagnosis');
-            $finaldx_array = [];
-            foreach($finaldx as $value){
-                $data = ConsultNotesFinalDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'icd10_code' => $value]);
-                $data->icd10_code = $value;
-                $data->save();
-                array_push($finaldx_array, $value);
+        try {
+            $finaldx = $request->final_diagnosis;
+            foreach ($finaldx as $value) {
+                ConsultNotesFinalDx::firstOrCreate($request->safe()->except('final_diagnosis') + ['icd10_code' => $value]);
             }
 
+            ConsultNotesFinalDx::query()
+                ->whereNotin('icd10_code', $finaldx)
+                ->where('notes_id', $request->safe()->notes_id)
+                ->delete();
+
             return response()->json([
-            'message' => 'Final Dx Successfully Saved',
+                'message' => 'Final Dx Successfully Saved',
             ], 201);
 
-        }catch(Exception $error) {
+        } catch (Exception $error) {
             return response()->json([
                 'Error' => $error,
                 'status_code' => 500,
