@@ -44,6 +44,10 @@ class ConsultNotes extends Model
         return $this->hasMany(ConsultNotesPe::class, 'notes_id', 'id');
     }
 
+    public function physicalExamRemarks(){
+        return $this->hasMany(ConsultPeRemarks::class, 'notes_id', 'id');
+    }
+
     public function consultNotes()
     {
         return $this->belongsTo(Consult::class, 'consult_id', 'id');

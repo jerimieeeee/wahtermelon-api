@@ -16,13 +16,13 @@ class ConsultNotesPe extends Model
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
 
-    public function physicalExam(): BelongsTo
-    {
-        return $this->belongsTo(LibPe::class, 'pe_id', 'pe_id');
-    }
-
     public function consultNotes(){
         return $this->hasMany(ConsultNotes::class);
+    }
+
+    public function libPhysicalExam(): BelongsTo
+    {
+        return $this->belongsTo(LibPe::class, 'pe_id', 'pe_id');
     }
 
 }
