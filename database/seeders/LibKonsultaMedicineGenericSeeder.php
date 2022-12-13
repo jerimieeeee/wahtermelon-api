@@ -98,7 +98,7 @@ class LibKonsultaMedicineGenericSeeder extends Seeder
             ["code" => "AlFU4", "desc" => "ALFUSOZINE HYDROCHLORIDE"],
             ["code" => "ALFUZ", "desc" => "ALFUZOSIN"],
             ["code" => "ALISK", "desc" => "ALISKEIREN (AS HEMIFUMARATE) + AMLODIPINE (AS BESILATE)"],
-            ["code" => "ALL-I", "desc" => "\"ALL-IN-ONE ADMIXTURES (\"\"3-IN-1\"\" OR \"\"DUAL ENERGY\"\" SOLUTIONS)\""],
+            ["code" => "ALL-I", "desc" => "ALL-IN-ONE ADMIXTURES (\"3-IN-1\" OR \"DUAL ENERGY\" SOLUTIONS)"],
             ["code" => "ALLOP", "desc" => "ALLOPURINOL"],
             ["code" => "ALLTR", "desc" => "ALL TRANS RETINOIC ACID"],
             ["code" => "ALMIT", "desc" => "ALMITRINE BISMESYLATE + RAUBASINE"],

@@ -372,6 +372,12 @@ Route::prefix('v1')->group(function (){
         //Konsulta Medicine
         Route::get('konsulta-generics', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineGenericController::class, 'index'])->name('konsulta-generics.index');
         Route::get('konsulta-generics/{medicineGeneric}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineGenericController::class, 'show'])->name('konsulta-generics.show');
+
+        Route::get('konsulta-salts', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineSaltController::class, 'index'])->name('konsulta-salts.index');
+        Route::get('konsulta-salts/{medicineSalt}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineSaltController::class, 'show'])->name('konsulta-salts.show');
+
+        Route::get('konsulta-forms', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineFormController::class, 'index'])->name('konsulta-forms.index');
+        Route::get('konsulta-forms/{medicineForm}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineFormController::class, 'show'])->name('konsulta-forms.show');
     });
 
 });
