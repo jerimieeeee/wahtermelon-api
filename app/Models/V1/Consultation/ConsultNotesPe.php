@@ -16,6 +16,8 @@ class ConsultNotesPe extends Model
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
 
+    protected $keyType = 'string';
+
     public function consultNotes(){
         return $this->hasMany(ConsultNotes::class);
     }

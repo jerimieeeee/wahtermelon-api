@@ -69,16 +69,6 @@ class Consult extends Model
         return $this->belongsTo(ConsultNotesFinalDx::class);
     }
 
-    public function physicalExam()
-    {
-        return $this->belongsTo(ConsultNotesPe::class);
-    }
-
-    public function physicalExamRemarks()
-    {
-        return $this->belongsTo(ConsultPeRemarks::class);
-    }
-
     public function physician()
     {
         return $this->belongsTo(User::class, 'physician_id', 'id');

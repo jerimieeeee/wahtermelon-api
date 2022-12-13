@@ -11,6 +11,8 @@ class ConsultPeRemarks extends Model
 {
     use HasFactory, HasUuid, FilterByUser;
 
+    protected $keyType = 'string';
+
     protected $guarded = [
         'id'
     ];
