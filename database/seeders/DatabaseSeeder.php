@@ -59,6 +59,8 @@ class DatabaseSeeder extends Seeder
             LibPtGroupSeeder::class,
             LibMedicineUnitOfMeasurementSeeder::class,
             LibMedicineDoseRegimenSeeder::class,
+            LibMedicineDurationFrequencySeeder::class,
+            LibMedicinePreparationSeeder::class,
         ]);
     }
 }
