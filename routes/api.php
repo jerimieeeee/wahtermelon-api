@@ -378,6 +378,12 @@ Route::prefix('v1')->group(function (){
 
         Route::get('konsulta-forms', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineFormController::class, 'index'])->name('konsulta-forms.index');
         Route::get('konsulta-forms/{medicineForm}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineFormController::class, 'show'])->name('konsulta-forms.show');
+
+        Route::get('konsulta-strengths', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineStrengthController::class, 'index'])->name('konsulta-strengths.index');
+        Route::get('konsulta-strengths/{medicineStrength}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineStrengthController::class, 'show'])->name('konsulta-strengths.show');
+
+        Route::get('konsulta-units', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineUnitController::class, 'index'])->name('konsulta-units.index');
+        Route::get('konsulta-units/{medicineUnit}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineUnitController::class, 'show'])->name('konsulta-units.show');
     });
 
 });

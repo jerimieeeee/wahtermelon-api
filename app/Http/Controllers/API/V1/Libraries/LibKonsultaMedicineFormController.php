@@ -27,7 +27,7 @@ class LibKonsultaMedicineFormController extends Controller
      * @apiResourceModel App\Models\V1\Libraries\LibKonsultaMedicineForm
      * @return ResourceCollection
      */
-    public function index(): ResourceCollection
+    public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = QueryBuilder::for(LibKonsultaMedicineForm::class);
