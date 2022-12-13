@@ -42,9 +42,9 @@ class LibMedicineUnitOfMeasurementController extends Controller
     public function show(LibMedicineUnitOfMeasurement $unitOfMeasurement): LibMedicineUnitOfMeasurementResource
     {
         $query = LibMedicineUnitOfMeasurement::where('code', $unitOfMeasurement->code);
-        $visitType = QueryBuilder::for($query)
+        $unitOfMeasurement = QueryBuilder::for($query)
             ->first();
-        return new LibMedicineUnitOfMeasurementResource($visitType);
+        return new LibMedicineUnitOfMeasurementResource($unitOfMeasurement);
     }
 
 }
