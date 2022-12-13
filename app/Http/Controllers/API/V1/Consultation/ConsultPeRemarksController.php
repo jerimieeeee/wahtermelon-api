@@ -12,8 +12,8 @@ use Illuminate\Http\Request;
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Notes information
- * @subgroup Patient Consultation Notes
- * @subgroupDescription Patient Consultation Notes management.
+ * @subgroup Patient Physical Exam Notes
+ * @subgroupDescription Patient Physical Exam Notes management.
  */
 class ConsultPeRemarksController extends Controller
 {
