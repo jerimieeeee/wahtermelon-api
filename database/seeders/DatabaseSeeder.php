@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
             LibMedicineDoseRegimenSeeder::class,
             LibMedicineDurationFrequencySeeder::class,
             LibMedicinePreparationSeeder::class,
+            LibKonsultaMedicineGenericSeeder::class,
         ]);
     }
 }
