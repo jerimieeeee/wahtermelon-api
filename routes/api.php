@@ -359,6 +359,9 @@ Route::prefix('v1')->group(function (){
         //Medicine
         Route::get('unit-of-measurements', [\App\Http\Controllers\API\V1\Libraries\LibMedicineUnitOfMeasurementController::class, 'index'])->name('unit-of-measurements.index');
         Route::get('unit-of-measurements/{unitOfMeasurement}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineUnitOfMeasurementController::class, 'show'])->name('unit-of-measurements.show');
+
+        Route::get('dose-regimens', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDoseRegimenController::class, 'index'])->name('dose-regimens.index');
+        Route::get('dose-regimens/{doseRegimen}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDoseRegimenController::class, 'show'])->name('dose-regimens.show');
     });
 
 });
