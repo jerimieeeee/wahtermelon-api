@@ -384,6 +384,9 @@ Route::prefix('v1')->group(function (){
 
         Route::get('konsulta-units', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineUnitController::class, 'index'])->name('konsulta-units.index');
         Route::get('konsulta-units/{medicineUnit}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineUnitController::class, 'show'])->name('konsulta-units.show');
+
+        Route::get('konsulta-packages', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicinePackageController::class, 'index'])->name('konsulta-packages.index');
+        Route::get('konsulta-packages/{medicinePackage}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicinePackageController::class, 'show'])->name('konsulta-packages.show');
     });
 
 });
