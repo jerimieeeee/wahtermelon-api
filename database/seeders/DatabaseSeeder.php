@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
             LibKonsultaMedicineUnitSeeder::class,
             LibKonsultaMedicinePackageSeeder::class,
             LibKonsultaMedicineSeeder::class,
+            LibMedicinePurposeSeeder::class,
         ]);
     }
 }

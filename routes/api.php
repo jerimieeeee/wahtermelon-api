@@ -369,6 +369,9 @@ Route::prefix('v1')->group(function (){
         Route::get('preparations', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePreparationController::class, 'index'])->name('preparations.index');
         Route::get('preparations/{preparation}', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePreparationController::class, 'show'])->name('preparations.show');
 
+        Route::get('purposes', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePurposeController::class, 'index'])->name('purposes.index');
+        Route::get('purposes/{purpose}', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePurposeController::class, 'show'])->name('purposes.show');
+
         //Konsulta Medicine
         Route::get('konsulta-generics', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineGenericController::class, 'index'])->name('konsulta-generics.index');
         Route::get('konsulta-generics/{medicineGeneric}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineGenericController::class, 'show'])->name('konsulta-generics.show');
