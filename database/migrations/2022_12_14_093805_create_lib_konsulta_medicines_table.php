@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('lib_konsulta_medicines', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->index();
+            $table->string('code')->index()->unique();
             $table->string('desc')->index();
             $table->char('generic_code',10)->index();
             $table->char('salt_code',10)->index();
