@@ -43,10 +43,16 @@ class SoapService
 
         $encryptedOutput = $client->extractRegistrationList(['pStartDate' => '01/01/2022', 'pEndDate' => '12/31/2022']);
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
-        //$decryptor->setLoggingEnabled(true);
-        $cipher_key = 'PHilheaLthDuMmyciPHerKeyS';
-        $serverDateTime = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
-        return (XML2JSON($serverDateTime));
+        if(isJson($encryptedOutput->return)) {
+            $decryptor = new PhilHealthEClaimsEncryptor();
+            //$decryptor->setLoggingEnabled(true);
+            $cipher_key = 'PHilheaLthDuMmyciPHerKeyS';
+            $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
+            return (XML2JSON($decryptedData));
+        }
+
+        return $encryptedOutput;
     }
+
+
 }

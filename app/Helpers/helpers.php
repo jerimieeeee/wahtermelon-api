@@ -109,6 +109,16 @@ if(!function_exists('XML2JSON')) {
             }
         }
         normalizeSimpleXML(simplexml_load_string($xml), $result);
-        return json_encode($result);
+        return json_decode(json_encode($result));
+    }
+}
+
+if(!function_exists('isJson')) {
+    function isJson($data) {
+        if (!empty($data)) {
+            return is_string($data) &&
+            is_array(json_decode($data, true)) ? true : false;
+        }
+        return false;
     }
 }
