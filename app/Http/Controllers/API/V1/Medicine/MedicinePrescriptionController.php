@@ -27,6 +27,7 @@ class MedicinePrescriptionController extends Controller
      *
      * @queryParam sort string Sort prescription_date. Add hyphen (-) to descend the list: e.g. prescription_date. Example: -prescription_date
      * @queryParam patient_id string Patient to view.
+     * @queryParam consult_id string Consult to view.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Medicine\MedicinePrescriptionResource
@@ -40,6 +41,9 @@ class MedicinePrescriptionController extends Controller
         $query = MedicinePrescription::query()
             ->when(isset($request->patient_id), function($query) use($request){
                 return $query->wherePatientId($request->patient_id);
+            })
+            ->when(isset($request->consult_id), function($query) use($request){
+                return $query->whereConsultId($request->consult_id);
             });
         $prescription = QueryBuilder::for($query)
             ->defaultSort('-prescription_date')

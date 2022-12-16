@@ -239,6 +239,13 @@ Route::prefix('v1')->group(function (){
                 Route::post('prescriptions', 'store');
                 Route::put('prescriptions/{prescription}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicineDispensingController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('dispensing', 'index');
+                Route::post('dispensing', 'store');
+                Route::put('dispensing/{dispensing}', 'update');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

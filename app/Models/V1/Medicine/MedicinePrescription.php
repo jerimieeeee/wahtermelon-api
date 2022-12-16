@@ -104,4 +104,9 @@ class MedicinePrescription extends Model
         return $this->belongsTo(LibMedicinePreparation::class, 'quantity_preparation');
     }
 
+    public function dispensing()
+    {
+        return $this->hasMany(MedicineDispensing::class, 'prescription_id', 'id');
+    }
+
 }

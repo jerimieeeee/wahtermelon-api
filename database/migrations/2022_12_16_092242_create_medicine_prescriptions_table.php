@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index()->constrained();
             $table->foreignUuid('prescribed_by')->index()->nullable()->constrained('users');
             $table->foreignId('consult_id')->nullable()->index()->constrained();
-            $table->dateTime('prescription_date')->index();
+            $table->date('prescription_date')->index();
             $table->string('konsulta_medicine_code')->index()->nullable();
             $table->string('added_medicine', 255)->nullable();
             $table->unsignedInteger('dosage_quantity');
