@@ -230,6 +230,17 @@ Route::prefix('v1')->group(function (){
             });
     });
 
+    //Medicine
+    Route::prefix('medicine')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicinePrescriptionController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('prescriptions', 'index');
+                Route::post('prescriptions', 'store');
+                Route::put('prescriptions/{prescription}', 'update');
+            });
+    });
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');
