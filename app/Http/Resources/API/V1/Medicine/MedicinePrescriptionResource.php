@@ -30,7 +30,7 @@ class MedicinePrescriptionResource extends JsonResource
             'konsulta_medicine_code' => $this->when(!$this->relationLoaded('konsultaMedicine'),$this->konsulta_medicine_code),
             'konsulta_medicine' => $this->whenLoaded('konsultaMedicine'),
             'added_medicine' => $this->added_medicine,
-            'dossage_quantity' => $this->dosage_quantity,
+            'dosage_quantity' => $this->dosage_quantity,
             'dosage_uom' => $this->when(!$this->relationLoaded('dosageUom'),$this->dosage_uom),
             'unit_of_measurement' => $this->whenLoaded('dosageUom'),
             'dose_regimen' => $this->when(!$this->relationLoaded('doseRegimen'),$this->dose_regimen),
