@@ -230,6 +230,66 @@ Route::prefix('v1')->group(function (){
             });
     });
 
+    //Non-Communicable Disease APIs
+    Route::prefix('non-communicable-disease')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\NCD\PatientNcdController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('records', 'index');
+                Route::post('records', 'store');
+                Route::put('records/{patientNcd}', 'update');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskAssessmentController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('risk-assessment', 'index');
+                // Route::post('risk-assessment', 'store');
+                // Route::put('risk-assessment/{ncdRisk}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('risk-screening-blood-glucose', 'index');
+                Route::post('risk-screening-blood-glucose', 'store');
+                Route::put('risk-screening-blood-glucose/{id}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskScreeningBloodLipidController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('risk-screening-blood-lipid', 'index');
+                Route::post('risk-screening-blood-lipid', 'store');
+                Route::put('risk-screening-blood-lipid/{id}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskScreeningUrineKetonesController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('risk-screening-urine-ketones', 'index');
+                Route::post('risk-screening-urine-ketones', 'store');
+                Route::put('risk-screening-urine-ketones/{id}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskScreeningUrineProteinController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('risk-screening-urine-protein', 'index');
+                Route::post('risk-screening-urine-protein', 'store');
+                Route::put('risk-screening-urine-protein/{id}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskQuestionnaireController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('risk-questionnaire', 'index');
+                Route::post('risk-questionnaire', 'store');
+                Route::put('risk-questionnaire/{id}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\PatientNcdRecordController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('patient-record', 'index');
+                Route::post('patient-record', 'store');
+                // Route::put('risk-questionnaire/{id}', 'update');
+            });
+        });
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');
@@ -362,6 +422,37 @@ Route::prefix('v1')->group(function (){
 
         Route::get('dose-regimens', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDoseRegimenController::class, 'index'])->name('dose-regimens.index');
         Route::get('dose-regimens/{doseRegimen}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDoseRegimenController::class, 'show'])->name('dose-regimens.show');
+
+        //NCD
+        Route::get('ncd-answers', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerController::class, 'index'])->name('ncd-answers.index');
+        Route::get('ncd-answers/{answer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerController::class, 'show'])->name('ncd-answers.show');
+
+        Route::get('ncd-answers-s2', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'index'])->name('ncd-answers-s2.index');
+        Route::get('ncd-answers-s2/{answerS2}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'show'])->name('ncd-answers-s2.show');
+
+        Route::get('ncd-client-types', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'index'])->name('ncd-client-types.index');
+        Route::get('ncd-client-types/{clientType}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'show'])->name('ncd-client-types.show');
+
+        Route::get('ncd-locations', [\App\Http\Controllers\API\V1\Libraries\LibNcdLocationController::class, 'index'])->name('ncd-locations.index');
+        Route::get('ncd-locations/{location}', [\App\Http\Controllers\API\V1\Libraries\LibNcdLocationController::class, 'show'])->name('ncd-locations.show');
+
+        Route::get('ncd-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibNcdPhysicalExamAnswerController::class, 'index'])->name('ncd-physical-exam.index');
+        Route::get('ncd-physical-exam/{physicalExamAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdPhysicalExamAnswerController::class, 'show'])->name('ncd-physical-exam.show');
+
+        Route::get('ncd-risk-stratification-chart', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskStratificationChartController::class, 'index'])->name('ncd-risk-stratification-chart.index');
+        Route::get('ncd-risk-stratification-chart/{riskStratificationChart}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskStratificationChartController::class, 'show'])->name('ncd-risk-stratification-chart.show');
+
+        Route::get('ncd-risk-stratification', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskStratificationController::class, 'index'])->name('ncd-risk-stratification.index');
+        Route::get('ncd-risk-stratification/{riskStratification}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskStratificationController::class, 'show'])->name('ncd-risk-stratification.show');
+
+        Route::get('ncd-smoking', [\App\Http\Controllers\API\V1\Libraries\LibNcdPhysicalExamAnswerController::class, 'index'])->name('ncd-smoking.index');
+        Route::get('ncd-smoking/{smokingAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdPhysicalExamAnswerController::class, 'show'])->name('ncd-smoking.show');
+
+        Route::get('ncd-risk-screening-urine-ketones', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineKetonesController::class, 'index'])->name('ncd-risk-screening-urine-ketones.index');
+        Route::get('ncd-risk-screening-urine-ketones/{riskScreeningUrineKetones}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineKetonesController::class, 'show'])->name('ncd-risk-screening-urine-ketones.show');
+
+        Route::get('ncd-risk-screening-urine-protein', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineProteinController::class, 'index'])->name('ncd-risk-screening-urine-protein.index');
+        Route::get('ncd-risk-screening-urine-protein/{riskScreeningUrineProtein}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineProteinController::class, 'show'])->name('ncd-risk-screening-urine-protein.show');
     });
 
 });
