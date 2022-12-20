@@ -289,6 +289,46 @@ Route::prefix('v1')->group(function (){
                 // Route::put('risk-questionnaire/{id}', 'update');
             });
         });
+    //Medicine
+    Route::prefix('medicine')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicinePrescriptionController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('prescriptions', 'index');
+                Route::post('prescriptions', 'store');
+                Route::put('prescriptions/{prescription}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicineDispensingController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('dispensing', 'index');
+                Route::post('dispensing', 'store');
+                Route::put('dispensing/{dispensing}', 'update');
+            });
+    });
+
+    //Konsulta
+    Route::prefix('konsulta')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('get-token', 'getToken');
+                Route::get('registration-list', 'extractRegistrationList');
+                Route::get('check-registered', 'checkRegistered');
+                Route::get('check-atc', 'checkATC');
+            });
+    });
+
+    //Settings
+    Route::prefix('settings')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\PhilHealth\PhilhealthCredentialController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('philhealth-credentials', 'index');
+                Route::post('philhealth-credentials', 'store');
+                //Route::put('dispensing/{dispensing}', 'update');
+            });
+    });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -453,6 +493,40 @@ Route::prefix('v1')->group(function (){
 
         Route::get('ncd-risk-screening-urine-protein', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineProteinController::class, 'index'])->name('ncd-risk-screening-urine-protein.index');
         Route::get('ncd-risk-screening-urine-protein/{riskScreeningUrineProtein}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineProteinController::class, 'show'])->name('ncd-risk-screening-urine-protein.show');
+        Route::get('duration-frequencies', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDurationFrequencyController::class, 'index'])->name('duration-frequencies.index');
+        Route::get('duration-frequencies/{durationFrequency}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDurationFrequencyController::class, 'show'])->name('duration-frequencies.show');
+
+        Route::get('preparations', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePreparationController::class, 'index'])->name('preparations.index');
+        Route::get('preparations/{preparation}', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePreparationController::class, 'show'])->name('preparations.show');
+
+        Route::get('purposes', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePurposeController::class, 'index'])->name('purposes.index');
+        Route::get('purposes/{purpose}', [\App\Http\Controllers\API\V1\Libraries\LibMedicinePurposeController::class, 'show'])->name('purposes.show');
+
+        //Konsulta Medicine
+        Route::get('konsulta-generics', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineGenericController::class, 'index'])->name('konsulta-generics.index');
+        Route::get('konsulta-generics/{medicineGeneric}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineGenericController::class, 'show'])->name('konsulta-generics.show');
+
+        Route::get('konsulta-salts', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineSaltController::class, 'index'])->name('konsulta-salts.index');
+        Route::get('konsulta-salts/{medicineSalt}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineSaltController::class, 'show'])->name('konsulta-salts.show');
+
+        Route::get('konsulta-forms', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineFormController::class, 'index'])->name('konsulta-forms.index');
+        Route::get('konsulta-forms/{medicineForm}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineFormController::class, 'show'])->name('konsulta-forms.show');
+
+        Route::get('konsulta-strengths', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineStrengthController::class, 'index'])->name('konsulta-strengths.index');
+        Route::get('konsulta-strengths/{medicineStrength}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineStrengthController::class, 'show'])->name('konsulta-strengths.show');
+
+        Route::get('konsulta-units', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineUnitController::class, 'index'])->name('konsulta-units.index');
+        Route::get('konsulta-units/{medicineUnit}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineUnitController::class, 'show'])->name('konsulta-units.show');
+
+        Route::get('konsulta-packages', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicinePackageController::class, 'index'])->name('konsulta-packages.index');
+        Route::get('konsulta-packages/{medicinePackage}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicinePackageController::class, 'show'])->name('konsulta-packages.show');
+
+        Route::get('konsulta-medicines', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineController::class, 'index'])->name('konsulta-medicines.index');
+        Route::get('konsulta-medicines/{medicine}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineController::class, 'show'])->name('konsulta-medicines.show');
+
+        //PhilHealth Programs
+        Route::get('philhealth-programs', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthProgramController::class, 'index'])->name('philhealth-programs.index');
+        Route::get('philhealth-programs/{program}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthProgramController::class, 'show'])->name('philhealth-programs.show');
     });
 
 });

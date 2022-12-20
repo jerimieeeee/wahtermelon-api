@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
             LibPtGroupSeeder::class,
             LibMedicineUnitOfMeasurementSeeder::class,
             LibMedicineDoseRegimenSeeder::class,
+<<<<<<< HEAD
             LibNcdAnswerSeeder::class,
             LibNcdAnswerS2Seeder::class,
             LibNcdSmokingAnswerSeeder::class,
@@ -74,6 +75,19 @@ class DatabaseSeeder extends Seeder
             LibNcdRecordTargetOrganSeeder::class,
             LibNcdRecordDiagnosisSeeder::class,
             LibNcdRecordCounsellingSeeder::class,
+=======
+            LibMedicineDurationFrequencySeeder::class,
+            LibMedicinePreparationSeeder::class,
+            LibKonsultaMedicineGenericSeeder::class,
+            LibKonsultaMedicineSaltSeeder::class,
+            LibKonsultaMedicineFormSeeder::class,
+            LibKonsultaMedicineStrengthSeeder::class,
+            LibKonsultaMedicineUnitSeeder::class,
+            LibKonsultaMedicinePackageSeeder::class,
+            LibKonsultaMedicineSeeder::class,
+            LibMedicinePurposeSeeder::class,
+            LibPhilhealthProgramSeeder::class,
+>>>>>>> a71b7abcfe041e75324bfaae75f00b796c3120e2
         ]);
     }
 }

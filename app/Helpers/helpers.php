@@ -86,3 +86,39 @@ if(!function_exists('compute_bmi')) {
     }
 
 }
+
+if(!function_exists('XML2JSON')) {
+    function XML2JSON($xml) {
+        function normalizeSimpleXML($obj, &$result) {
+            $data = $obj;
+            if (is_object($data)) {
+                $data = get_object_vars($data);
+            }
+            if (is_array($data)) {
+                foreach ($data as $key => $value) {
+                    $res = null;
+                    normalizeSimpleXML($value, $res);
+                    if (($key == '@attributes') && ($key)) {
+                        $result = $res;
+                    } else {
+                        $result[$key] = $res;
+                    }
+                }
+            } else {
+                $result = $data;
+            }
+        }
+        normalizeSimpleXML(simplexml_load_string($xml), $result);
+        return json_decode(json_encode($result));
+    }
+}
+
+if(!function_exists('isJson')) {
+    function isJson($data) {
+        if (!empty($data)) {
+            return is_string($data) &&
+            is_array(json_decode($data, true)) ? true : false;
+        }
+        return false;
+    }
+}

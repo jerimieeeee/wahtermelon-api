@@ -25,8 +25,11 @@ class PatientVitalsController extends Controller
      * Display a listing of the resource.
      * @queryParam sort string Sort vitals_date. Add hyphen (-) to descend the list: e.g. vitals_date. Example: -vitals_date
      * @queryParam patient_id string Patient to view.
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientVitalsResource
      * @apiResourceModel App\Models\V1\Patient\PatientVitals paginate=15
+     * @param Request $request
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
