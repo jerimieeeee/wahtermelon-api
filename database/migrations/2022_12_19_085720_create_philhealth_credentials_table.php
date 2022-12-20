@@ -23,8 +23,9 @@ return new class extends Migration
             $table->string('pmcc_number')->index();
             $table->string('software_certification_id')->index();
             $table->string('cipher_key')->index();
-            $table->string('username')->index();
-            $table->string('password')->index();
+            $table->string('username')->index()->nullable();
+            $table->string('password')->index()->nullable();
+            $table->string('token')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

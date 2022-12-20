@@ -4,6 +4,7 @@ namespace App\Services\PhilHealth;
 
 use App\Classes\LocalSoapClient;
 use App\Classes\PhilHealthEClaimsEncryptor;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Illuminate\Support\Facades\Http;
 use Spatie\ArrayToXml\ArrayToXml;
 use Str;
@@ -15,7 +16,6 @@ class SoapService
         $opts = array(
             'http' => [
                 'user_agent' => 'PHPSoapClient',
-                'header' => 'Token: eyJhbGciOiJIUzI1NiJ9.eyJDb2RlMSI6IkhBZzdmS3dFeUhhSExCOFZxYi9nYmciLCJDb2RlMiI6InBMb0N3eUFic0YxVkdZR045NVdZSVEiLCJDb2RlNCI6IkpMVHh2aWRQYnFjTFVsTjRyeEt2clEifQ.jtXbGX75jozvZ0qGtqAQ7qn2Ro_P9FoekYa3SmwmI04'
             ],
             'ssl' => [
                 // set some SSL/TLS specific options
@@ -24,6 +24,10 @@ class SoapService
                 'allow_self_signed' => true
             ]
         );
+
+        $token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
+
+        $opts['http']['header'] = "Token: $token";
 
         $wsdlUrl = "https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl";
 
@@ -44,18 +48,6 @@ class SoapService
         }
     }
 
-    private function getToken()
-    {
-        $this->client = $this->_client(['pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634','pHospitalCode' => 'P01033020']);
-        try {
-          $result = $this->client->getToken(['pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634','pHospitalCode' => 'P01033020']);
-          return $this->decryptResponse($result);
-        }
-        catch (\Exception $e) {
-             return $e;       // just re-throw it
-        }
-    }
-
     private function decryptResponse($encryptedOutput)
     {
         if (!isJson($encryptedOutput->return)) {
@@ -71,7 +63,7 @@ class SoapService
 
         $decryptor = new PhilHealthEClaimsEncryptor();
         //$decryptor->setLoggingEnabled(true);
-        $cipher_key = 'PHilheaLthDuMmyciPHerKeyS';
+        $cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
         $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
         return (XML2JSON($decryptedData));
     }
@@ -87,54 +79,6 @@ class SoapService
         catch (\Exception $e) {
              return $e;       // just re-throw it
         }
-    }
-
-    public function soapCall()
-    {
-        $opts = array(
-            'http' => [
-                'user_agent' => 'PHPSoapClient',
-                'header' => 'Token: eyJhbGciOiJIUzI1NiJ9.eyJDb2RlMSI6IkhBZzdmS3dFeUhhSExCOFZxYi9nYmciLCJDb2RlMiI6InBMb0N3eUFic0YxVkdZR045NVdZSVEiLCJDb2RlNCI6IkpMVHh2aWRQYnFjTFVsTjRyeEt2clEifQ.jtXbGX75jozvZ0qGtqAQ7qn2Ro_P9FoekYa3SmwmI04'
-            ],
-            'ssl' => [
-                // set some SSL/TLS specific options
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            ]
-        );
-
-        $wsdlUrl = "https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl";
-
-        $context = stream_context_create($opts);
-        $soapClientOptions = array(
-            'location' => $wsdlUrl,
-            'stream_context' => $context,
-            'cache_wsdl' => WSDL_CACHE_NONE,
-            'exceptions' => true,
-            'keep_alive' => false
-        );
-
-        try{
-            $client = new LocalSoapClient($wsdlUrl, $soapClientOptions);
-        }catch(\Exception $e){
-            $desc = $e->getMessage();
-            return $desc;
-        }
-
-        $encryptedOutput = $client->extractRegistrationList(['pStartDate' => '01/01/2022', 'pEndDate' => '12/31/2022']);
-        //$encryptedOutput = $client->getToken(['pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634','pHospitalCode' => 'P01033020']);
-        $response = json_decode($encryptedOutput->return);
-
-        if(isJson($encryptedOutput->return)) {
-            $decryptor = new PhilHealthEClaimsEncryptor();
-            //$decryptor->setLoggingEnabled(true);
-            $cipher_key = 'PHilheaLthDuMmyciPHerKeyS';
-            $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
-            return (XML2JSON($decryptedData));
-        }
-
-        return $encryptedOutput;
     }
 
     public function httpClient()

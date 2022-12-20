@@ -251,9 +251,23 @@ Route::prefix('v1')->group(function (){
     //Konsulta
     Route::prefix('konsulta')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaController::class)
-            //->middleware('auth:api')
+            ->middleware('auth:api')
             ->group(function() {
-                Route::get('check-member', 'index');
+                Route::get('get-token', 'getToken');
+                Route::get('registration-list', 'extractRegistrationList');
+                Route::get('check-registered', 'checkRegistered');
+                Route::get('check-atc', 'checkATC');
+            });
+    });
+
+    //Settings
+    Route::prefix('settings')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\PhilHealth\PhilhealthCredentialController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('philhealth-credentials', 'index');
+                Route::post('philhealth-credentials', 'store');
+                //Route::put('dispensing/{dispensing}', 'update');
             });
     });
 

@@ -14,6 +14,23 @@ class PhilhealthCredentialResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility' => $this->whenLoaded('facility'),
+            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user' => $this->whenLoaded('user'),
+            'program_code' => $this->when(!$this->relationLoaded('program'),$this->program_code),
+            'program' => $this->whenLoaded('program'),
+            'facility_name' => $this->facility_name,
+            'accreditation_number' => $this->accreditation_number,
+            'pmcc_number' => $this->pmcc_number,
+            'software_certification_id' => $this->software_certification_id,
+            'cipher_key' => $this->cipher_key,
+            'username' => $this->username,
+            'password' => $this->password,
+            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+        ];
     }
 }
