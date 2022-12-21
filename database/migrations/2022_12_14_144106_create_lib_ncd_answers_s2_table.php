@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lib_ncd_answers_s2');
+        Schema::dropIfExists('lib_ncd_answer_s2');
     }
 };
