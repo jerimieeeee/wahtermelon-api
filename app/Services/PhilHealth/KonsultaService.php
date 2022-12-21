@@ -11,7 +11,7 @@ class KonsultaService
         $root = [
             'rootElementName' => 'PCB',
             '_attributes' => [
-                'pUsername'=>"", 'pPassword'=>"", 'pHciAccreNo'=>"P91034068", 'pPMCCNo'=>"Z10681", 'pEnlistTotalCnt'=>"1", 'pProfileTotalCnt'=>"1", 'pSoapTotalCnt'=>"1", 'pCertificationId'=>"KON-DUMMYSCERTZ10681", 'pHciTransmittalNumber'=>"RH9000000120220800001"
+                'pUsername'=>"", 'pPassword'=>"", 'pHciAccreNo'=>"P91034068", 'pPMCCNo'=>"Z10681", 'pEnlistTotalCnt'=>"1", 'pProfileTotalCnt'=>"1", 'pSoapTotalCnt'=>"1", 'pCertificationId'=>"KON-DUMMYSCERTZ10681", 'pHciTransmittalNumber'=>"RP9103406820221200001"
             ]
         ];
         $firstTrancheArray = [
