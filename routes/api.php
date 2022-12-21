@@ -257,6 +257,7 @@ Route::prefix('v1')->group(function (){
                 Route::get('registration-list', 'extractRegistrationList');
                 Route::get('check-registered', 'checkRegistered');
                 Route::get('check-atc', 'checkATC');
+                Route::get('validate-report', 'validateReport');
             });
     });
 
