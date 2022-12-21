@@ -30,6 +30,14 @@ class PatientNcdRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+         $this->merge([
+            'assessment_date' => $this->date_enrolled,
+            'id' => $this->patient_ncd_id
+        ]);
+    }
+
     public function bodyParameters()
     {
         return [

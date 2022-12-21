@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\V1\Libraries;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibNcdClientTypeResource;
 use App\Models\V1\Libraries\LibNcdClientType;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -13,13 +12,13 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Non-Communicable Disease
  *
  * APIs for managing libraries
- * @subgroup Client Type
- * @subgroupDescription List of Client Types.
+ * @subgroup Client Type Answer
+ * @subgroupDescription List of Client Type Answers.
  */
 class LibNcdClientTypeController extends Controller
 {
     /**
-     * Display a listing of the Client Type resource.
+     * Display a listing of the Client Type Answer resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibNcdClientTypeResource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdClientType
@@ -31,7 +30,7 @@ class LibNcdClientTypeController extends Controller
         return LibNcdClientTypeResource::collection($query->get());
     }
     /**
-     * Display the specified Client Type Resource.
+     * Display the specified Client Type Answer Resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibNcdClientTypeResource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdClientType

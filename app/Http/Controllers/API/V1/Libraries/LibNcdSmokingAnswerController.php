@@ -12,13 +12,13 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Non-Communicable Disease
  *
  * APIs for managing libraries
- * @subgroup Smoking Answer
+ * @subgroup Smoking Answers
  * @subgroupDescription List of Smoking Answers.
  */
 class LibNcdSmokingAnswerController extends Controller
 {
     /**
-     * Display a listing of the Smoking Answer resource.
+     * Display a listing of the Smoking Answers resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibNcdSmokingAnswerResource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdSmokingAnswer
@@ -30,18 +30,18 @@ class LibNcdSmokingAnswerController extends Controller
         return LibNcdSmokingAnswerResource::collection($query->get());
     }
     /**
-     * Display the specified Smoking Answer Resource.
+     * Display the specified Smoking Answers Resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibNcdSmokingAnswerResource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdSmokingAnswer
      * @param LibNcdSmokingAnswer $smokingAnswer
      * @return LibNcdSmokingAnswerResource
      */
-    public function show(LibNcdSmokingAnswer $smokingAnswer): LibNcdSmokingAnswerResource
+    public function show(LibNcdSmokingAnswer $smokingAnswers): LibNcdSmokingAnswerResource
     {
-        $query = LibNcdSmokingAnswer::where('id', $smokingAnswer->id);
-        $smokingAnswer = QueryBuilder::for($query)
+        $query = LibNcdSmokingAnswer::where('id', $smokingAnswers->id);
+        $smokingAnswers = QueryBuilder::for($query)
             ->first();
-        return new LibNcdSmokingAnswerResource($smokingAnswer);
+        return new LibNcdSmokingAnswerResource($smokingAnswers);
     }
 }

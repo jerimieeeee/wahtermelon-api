@@ -32,6 +32,7 @@ class ConsultNcdRiskAssessmentResource extends JsonResource
             'family_hx_cancer' => $this->family_hx_cancer,
             'family_hx_kidney_disease' => $this->family_hx_kidney_disease,
             'smoking' => $this->smoking,
+            'alcohol_intake' => $this->alcohol_intake,
             'excessive_alcohol_intake' => $this->excessive_alcohol_intake,
             'high_fat' => $this->high_fat,
             'intake_fruits' => $this->intake_fruits,

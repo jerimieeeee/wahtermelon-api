@@ -236,14 +236,14 @@ Route::prefix('v1')->group(function (){
             ->middleware('auth:api')
             ->group(function() {
                 Route::get('records', 'index');
-                Route::post('records', 'store');
-                Route::put('records/{patientNcd}', 'update');
+                // Route::post('records', 'store');
+                // Route::put('records/{patientNcd}', 'update');
         });
         Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskAssessmentController::class)
             ->middleware('auth:api')
             ->group(function() {
                 Route::get('risk-assessment', 'index');
-                // Route::post('risk-assessment', 'store');
+                Route::post('risk-assessment', 'store');
                 Route::put('risk-assessment/{ncdRisk}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseController::class)
@@ -464,14 +464,17 @@ Route::prefix('v1')->group(function (){
         Route::get('dose-regimens/{doseRegimen}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDoseRegimenController::class, 'show'])->name('dose-regimens.show');
 
         //NCD
+        Route::get('ncd-alcohol-intake', [\App\Http\Controllers\API\V1\Libraries\LibNcdAlcoholIntakeAnswerController::class, 'index'])->name('ncd-alcohol-intake.index');
+        Route::get('ncd-alcohol-intake/{alcoholIntake}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAlcoholIntakeAnswerController::class, 'show'])->name('ncd-alcohol-intake.show');
+
         Route::get('ncd-answers', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerController::class, 'index'])->name('ncd-answers.index');
         Route::get('ncd-answers/{answer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerController::class, 'show'])->name('ncd-answers.show');
 
         Route::get('ncd-answers-s2', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'index'])->name('ncd-answers-s2.index');
         Route::get('ncd-answers-s2/{answerS2}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'show'])->name('ncd-answers-s2.show');
 
-        Route::get('ncd-client-types', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'index'])->name('ncd-client-types.index');
-        Route::get('ncd-client-types/{clientType}', [\App\Http\Controllers\API\V1\Libraries\LibNcdAnswerS2Controller::class, 'show'])->name('ncd-client-types.show');
+        Route::get('ncd-client-types', [\App\Http\Controllers\API\V1\Libraries\LibNcdClientTypeController::class, 'index'])->name('ncd-client-types.index');
+        Route::get('ncd-client-types/{clientType}', [\App\Http\Controllers\API\V1\Libraries\LibNcdClientTypeController::class, 'show'])->name('ncd-client-types.show');
 
         Route::get('ncd-locations', [\App\Http\Controllers\API\V1\Libraries\LibNcdLocationController::class, 'index'])->name('ncd-locations.index');
         Route::get('ncd-locations/{location}', [\App\Http\Controllers\API\V1\Libraries\LibNcdLocationController::class, 'show'])->name('ncd-locations.show');
@@ -485,8 +488,8 @@ Route::prefix('v1')->group(function (){
         Route::get('ncd-risk-stratification', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskStratificationController::class, 'index'])->name('ncd-risk-stratification.index');
         Route::get('ncd-risk-stratification/{riskStratification}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskStratificationController::class, 'show'])->name('ncd-risk-stratification.show');
 
-        Route::get('ncd-smoking', [\App\Http\Controllers\API\V1\Libraries\LibNcdPhysicalExamAnswerController::class, 'index'])->name('ncd-smoking.index');
-        Route::get('ncd-smoking/{smokingAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdPhysicalExamAnswerController::class, 'show'])->name('ncd-smoking.show');
+        Route::get('ncd-smoking', [\App\Http\Controllers\API\V1\Libraries\LibNcdSmokingAnswerController::class, 'index'])->name('ncd-smoking.index');
+        Route::get('ncd-smoking/{smokingAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdSmokingAnswerController::class, 'show'])->name('ncd-smoking.show');
 
         Route::get('ncd-risk-screening-urine-ketones', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineKetonesController::class, 'index'])->name('ncd-risk-screening-urine-ketones.index');
         Route::get('ncd-risk-screening-urine-ketones/{riskScreeningUrineKetones}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineKetonesController::class, 'show'])->name('ncd-risk-screening-urine-ketones.show');

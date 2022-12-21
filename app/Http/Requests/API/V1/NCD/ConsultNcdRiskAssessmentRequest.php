@@ -34,7 +34,7 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_ncd_id' => 'required|exists:patient_ncd,id',
+            // 'patient_ncd_id' => 'required|exists:patient_ncd,id',
             'patient_id' => 'required|exists:patients,id',
             'consult_id' => 'required|exists:consults,id',
             'location' => 'required|exists:lib_ncd_locations,id',

@@ -41,18 +41,18 @@ class PatientNcdController extends Controller
      */
     public function store(PatientNcdRequest $request)
     {
-        DB::transaction(function () use($request) {
+        // DB::transaction(function () use($request) {
 
-            $data = PatientNcd::create($request->all());
+        //     $data = PatientNcd::create($request->all());
 
-            $data->riskAssessment()->create($request->all() + ['patient_ncd_id' => $request->id] + ['assessment_date' => $request->date_enrolled]);
+        //     $data->riskAssessment()->create($request->all() + ['patient_ncd_id' => $request->id] + ['assessment_date' => $request->date_enrolled]);
 
-        });
+        // });
 
-        $patientNcdRiskAssessment = PatientNcd::where('patient_id', '=', $request->patient_id)->with('riskAssessment')->get();
-        $patientNcdRiskAssessment1 = PatientNcdResource::collection($patientNcdRiskAssessment);
+        // $patientNcdRiskAssessment = PatientNcd::where('patient_id', '=', $request->patient_id)->with('riskAssessment')->get();
+        // $patientNcdRiskAssessment1 = PatientNcdResource::collection($patientNcdRiskAssessment);
 
-        return response()->json(['data' => $patientNcdRiskAssessment1], 201);
+        // return response()->json(['data' => $patientNcdRiskAssessment1], 201);
     }
 
     /**
@@ -77,7 +77,7 @@ class PatientNcdController extends Controller
     {
         DB::transaction(function () use($patientNcd, $request) {
 
-            $patientNcd->update($request->all());
+            $patientNcd->update($request->validated());
 
             $patientNcd->riskAssessment()->update($request->except('date_enrolled') + ['patient_ncd_id' => $patientNcd->id] + ['assessment_date' => $request->date_enrolled]);
 

@@ -27,10 +27,10 @@ class ConsultNcdRiskAssessmentController extends Controller
      * Display a listing of the resource.
      *
      * @queryParam patient_id Identification code of the patient.
-     * @queryParam patient_ncd_id Identification code of the patient ncd.
+     * @queryParam consult_id Identification code of the consult.
+     * @queryParam id Identification code of the consult ncd risk assessment.
      * @queryParam sort string Sort assessment_date. Add hyphen (-) to descend the list: e.g. assessment_date. Example: assessment_date
-     * @queryParam client_type Consultation Status. Example: Walk-in
-     * @queryParam location Consultation Status. Example: Health Facility
+     * @queryParam consult_id Consultation ID. Example: 1
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource
@@ -84,20 +84,22 @@ class ConsultNcdRiskAssessmentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consult NCD Risk Assessment resource in storage.
      *
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource
+     * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskAssessment
      * @param ConsultNcdRiskAssessmentRequest $request
-     * @return Response
+     * @return JsonResponse
      */
     public function store(ConsultNcdRiskAssessmentRequest $request)
     {
+        $data = DB::transaction(function () use($request) {
+            $data = PatientNcd::create(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]);
+            return $data->riskAssessment()->create($request->validated());
+        });
 
-            $data = ConsultNcdRiskScreeningBloodGlucose::create($request->all());
-
-            $data = ConsultNcdRiskAssessment::create($request->all());
-
-            return new ConsultNcdRiskAssessmentResource($data);
-
+        return response()->json(['data' => $data], 201);
     }
 
     /**
@@ -120,8 +122,18 @@ class ConsultNcdRiskAssessmentController extends Controller
      */
     public function update(ConsultNcdRiskAssessmentRequest $request, ConsultNcdRiskAssessment $ncdRisk)
     {
-        $ncdRisk->update($request->validated());
-        return ConsultNcdRiskAssessmentResource::collection(ConsultNcdRiskAssessment::where('patient_ncd_id', $request->patient_ncd_id)->get());
+        $data = DB::transaction(function () use($request, $ncdRisk) {
+            // $data = PatientNcd::create(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]);
+            // $ncdRisk->update($request->validated());
+            // $ncdRisk->patientNcd()->update($request->only(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]));
+
+            $ncdRisk->update($request->validated());
+
+            $ncdRisk->patientNcd()->update($request->only('date_enrolled', 'patient_id') + ['patient_id' => $request->patient_id, 'date_enrolled' =>$request->assessment_date]);
+            // $ncdRisk->patientNcd()->update($request->validated(['patient_id' => $request->patient_id, 'id' => $request->patient_ncd_id, 'date_enrolled' => $request->assessment_date]));
+        });
+
+        return response()->json(['data' => $data], 201);
     }
 
     /**
