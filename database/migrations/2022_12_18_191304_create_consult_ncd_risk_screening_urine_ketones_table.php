@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consult_ncd_risk_screening_urine_ketones');
+        Schema::dropIfExists('consult_ncd_risk_screening_ketones');
     }
 };
