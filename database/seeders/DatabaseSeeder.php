@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -59,6 +60,20 @@ class DatabaseSeeder extends Seeder
             LibPtGroupSeeder::class,
             LibMedicineUnitOfMeasurementSeeder::class,
             LibMedicineDoseRegimenSeeder::class,
+            LibNcdAnswerSeeder::class,
+            LibNcdAnswerS2Seeder::class,
+            LibNcdSmokingAnswerSeeder::class,
+            LibNcdClientTypeSeeder::class,
+            LibNcdLocationSeeder::class,
+            LibNcdPhysicalExamAnswerSeeder::class,
+            LibNcdRiskStratificationChartSeeder::class,
+            LibNcdRiskStratificationSeeder::class,
+            LibNcdAlocoholIntakeAnswerSeeder::class,
+            LibNcdRiskScreeningUrineKetonesSeeder::class,
+            LibNcdRiskScreeningUrineProteinSeeder::class,
+            LibNcdRecordTargetOrganSeeder::class,
+            LibNcdRecordDiagnosisSeeder::class,
+            LibNcdRecordCounsellingSeeder::class,
             LibMedicineDurationFrequencySeeder::class,
             LibMedicinePreparationSeeder::class,
             LibKonsultaMedicineGenericSeeder::class,
