@@ -21,10 +21,10 @@ class LibNcdAnswerSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibNcdAnswer::upsert([
-          ['desc' => 'Yes'],
-          ['desc' => 'No'],
-          ['desc' => 'Unknown'],
-          ['desc' => 'Not Applicable'],
+          ['id' => 'Y', 'desc' => 'Yes'],
+          ['id' => 'N', 'desc' => 'No'],
+          ['id' => 'X', 'desc' => 'Dont Know'],
+          ['id' => 'NA', 'desc' => 'Not Applicable'],
         ], ['id']);
     }
 }

@@ -21,16 +21,16 @@ return new class extends Migration
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
-            $table->unsignedBigInteger('question1');
-            $table->unsignedBigInteger('question2');
-            $table->unsignedBigInteger('question3');
-            $table->unsignedBigInteger('question4');
-            $table->unsignedBigInteger('question5');
-            $table->unsignedBigInteger('question6');
-            $table->unsignedBigInteger('question7');
-            $table->unsignedBigInteger('question8');
-            $table->unsignedBigInteger('angina_heart_attack');
-            $table->unsignedBigInteger('stroke_tia');
+            $table->string('question1');
+            $table->string('question2');
+            $table->string('question3');
+            $table->string('question4');
+            $table->string('question5');
+            $table->string('question6');
+            $table->string('question7');
+            $table->string('question8');
+            $table->string('angina_heart_attack');
+            $table->string('stroke_tia');
             $table->timestamps();
 
             $table->foreign('consult_ncd_risk_id')->references('id')->on('consult_ncd_risk_assessment');
