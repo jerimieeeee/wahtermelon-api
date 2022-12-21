@@ -27,7 +27,7 @@ class LibNcdAlcoholIntakeAnswerController extends Controller
      */
     public function index(): ResourceCollection
     {
-        $query = QueryBuilder::for(LibNcdAnswer::class);
+        $query = QueryBuilder::for(LibNcdAlcoholIntakeAnswer::class);
         return LibNcdAlcoholIntakeAnswerResource::collection($query->get());
     }
         /**
