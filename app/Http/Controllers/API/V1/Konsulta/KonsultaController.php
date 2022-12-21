@@ -8,6 +8,7 @@ use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\PhilHealth\KonsultaService;
 use App\Services\PhilHealth\SoapService;
 use Exception;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -139,6 +140,8 @@ class KonsultaController extends Controller
 
     public function validateReport(SoapService $service, KonsultaService $konsultaService)
     {
+        return $id = IdGenerator::generate(['table' => 'patients', 'length' => 21, 'prefix' => 'RP91034068'.date('Ym'), 'reset_on_prefix_change' => true]);
+        //return $service->soapMethod('checkUploadStatus', []);
         $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
         return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);

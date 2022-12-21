@@ -9,6 +9,7 @@
         "doctrine/dbal": "^3.5",
         "dyrynda/laravel-cascade-soft-deletes": "^4.2",
         "guzzlehttp/guzzle": "^7.2",
+        "haruncpi/laravel-id-generator": "^1.1",
         "laravel/framework": "^9.19",
         "laravel/passport": "^11.0",
         "laravel/sanctum": "^3.0",
