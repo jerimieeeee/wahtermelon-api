@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\ConsultNcdRiskScreeningUrineKetones;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,6 +22,7 @@ class ConsultNcdRiskScreeningUrineKetonesTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
+        $ncdRisk = ConsultNcdRiskAssessment::factory()->make()->toArray();
         $ncdScreeningKetones = ConsultNcdRiskScreeningUrineKetones::factory()->make()->toArray();
         $response = $this->post('api/v1/non-communicable-disease/risk-screening-urine-ketones', $ncdScreeningKetones);
         $response->assertCreated();

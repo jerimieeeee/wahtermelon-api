@@ -11,6 +11,7 @@ class LibNcdAnswer extends Model
 
     protected $primaryKey = 'id';
     public $timestamps = false;
+    public $keyType = 'string';
 
     protected $guarded = [
         'id',

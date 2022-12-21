@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\ConsultNcdRiskScreeningBloodGlucose;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,6 +22,7 @@ class ConsultNcdRiskScreeningBloodGlucoseTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
+        $ncdRisk = ConsultNcdRiskAssessment::factory()->make()->toArray();
         $ncdScreeningGlucose = ConsultNcdRiskScreeningBloodGlucose::factory()->make()->toArray();
         $response = $this->post('api/v1/non-communicable-disease/risk-screening-blood-glucose', $ncdScreeningGlucose);
         $response->assertCreated();

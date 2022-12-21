@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Libraries\LibNcdRecordCounselling;
 use App\Models\V1\Libraries\LibNcdRecordDiagnosis;
 use App\Models\V1\Libraries\LibNcdRecordTargetOrgan;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\NCD\PatientNcdRecord;
 use App\Models\V1\NCD\PatientNcdRecordCounselling;
@@ -29,6 +30,7 @@ class PatientNcdRecordTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
+        $ncdRisk = ConsultNcdRiskAssessment::factory()->make()->toArray();
         $patientncd = PatientNcd::factory()->create()->toArray();
         $patientNcdRecord = PatientNcdRecord::factory()->make()->toArray();
         $response = $this->post('api/v1/non-communicable-disease/patient-record',

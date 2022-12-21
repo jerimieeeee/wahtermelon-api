@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\ConsultNcdRiskQuestionnaire;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,6 +22,7 @@ class ConsultNcdRiskQuestionnaireTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
+        $ncdRisk = ConsultNcdRiskAssessment::factory()->make()->toArray();
         $ncdRiskQuestionnaire = ConsultNcdRiskQuestionnaire::factory()->make()->toArray();
         $response = $this->post('api/v1/non-communicable-disease/risk-questionnaire', $ncdRiskQuestionnaire);
         $response->assertCreated();
