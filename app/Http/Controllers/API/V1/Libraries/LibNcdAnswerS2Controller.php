@@ -30,7 +30,7 @@ class LibNcdAnswerS2Controller extends Controller
         return LibNcdAnswerS2Resource::collection($query->get());
     }
     /**
-     * Display the specified Answer Resource.
+     * Display the specified Answer S2 Resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibNcdAnswerS2Resource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdAnswerS2

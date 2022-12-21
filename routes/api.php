@@ -244,7 +244,7 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
                 Route::get('risk-assessment', 'index');
                 // Route::post('risk-assessment', 'store');
-                // Route::put('risk-assessment/{ncdRisk}', 'update');
+                Route::put('risk-assessment/{ncdRisk}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseController::class)
             ->middleware('auth:api')

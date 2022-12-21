@@ -18,7 +18,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class LibNcdSmokingAnswerController extends Controller
 {
     /**
-     * Display a listing of the Risk Stratification resource.
+     * Display a listing of the Smoking Answer resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibNcdSmokingAnswerResource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdSmokingAnswer
@@ -30,7 +30,7 @@ class LibNcdSmokingAnswerController extends Controller
         return LibNcdSmokingAnswerResource::collection($query->get());
     }
     /**
-     * Display the specified Risk Stratification Resource.
+     * Display the specified Smoking Answer Resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibNcdSmokingAnswerResource
      * @apiResourceModel App\Models\V1\Libraries\LibNcdSmokingAnswer
