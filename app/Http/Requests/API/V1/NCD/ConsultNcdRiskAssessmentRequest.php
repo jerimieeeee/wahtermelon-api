@@ -49,7 +49,7 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'consult_id' => 'required|exists:consults,id',
             'location' => 'required|exists:lib_ncd_locations,id',
-            'client_type' => 'required|exists:lib_ncd_client_types,id',
+            'client_type' => 'nullable|exists:lib_ncd_client_types,id',
             'assessment_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'family_hx_hypertension' => 'required|exists:lib_ncd_answers,id',
             'family_hx_stroke' => 'required|exists:lib_ncd_answers,id',
