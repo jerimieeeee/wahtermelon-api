@@ -17,7 +17,7 @@ class PatientVaccine extends Model
         'id',
     ];
 
-    protected $fillable = ['patient_id', 'user_id', 'vaccine_id', 'vaccine_date', 'status_id'];
+    // protected $fillable = ['patient_id', 'user_id', 'vaccine_id', 'vaccine_date', 'status_id'];
 
     protected $casts = [
         'vaccine_date' => 'date:Y-m-d',
