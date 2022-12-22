@@ -51,14 +51,13 @@ class PatientHistoryController extends Controller
      */
     public function store(PatientHistoryRequest $request)
     {
-            // $data = PatientHistory::updateOrCreate($request->validated());
-            $medical_history_id = $request->medical_history_id;
+            $medical_history = $request->input('medical_history');
             PatientHistory::query()
                 ->where('patient_id', $request->safe()->patient_id)
                 ->delete();
 
-                if (isset($request->medical_history_id)) {
-                    foreach($medical_history_id as $value){
+                if (isset($request->medical_history)) {
+                    foreach($medical_history as $value){
                         PatientHistory::firstOrCreate(['patient_id' => $request->patient_id, 'medical_history_id' => $value['medical_history_id'], 'category' => $value['category'], 'remarks' => $value['remarks']],
                         ['patient_id' => $request->input('patient_id')] + $value);
                     }
