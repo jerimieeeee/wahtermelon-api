@@ -51,37 +51,38 @@ class PatientHistoryController extends Controller
      */
     public function store(PatientHistoryRequest $request)
     {
-        return DB::transaction(function () use($request) {
-
-            $data = PatientHistory::firstOrCreate($request->validated());
-
+            // $data = PatientHistory::updateOrCreate($request->validated());
             $medical_history_id = $request->medical_history_id;
-
             PatientHistory::query()
                 ->where('patient_id', $request->safe()->patient_id)
                 ->delete();
 
                 if (isset($request->medical_history_id)) {
-                    foreach ($medical_history_id as $value) {
-                        PatientHistory::where('patient_id', $data->patient_id)->firstOrCreate(['patient_id' => $data->patient_id, 'medical_history_id' => $value]);
+                    foreach($medical_history_id as $value){
+                        PatientHistory::firstOrCreate(['patient_id' => $request->patient_id, 'medical_history_id' => $value['medical_history_id'], 'category' => $value['category'], 'remarks' => $value['remarks']],
+                        ['patient_id' => $request->input('patient_id')] + $value);
                     }
                 }
 
             return response()->json([
-                'message' => 'Successfully Saved',
+                'message' => 'Patient History Successfully Saved',
             ], 201);
-        });
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @apiResource App\Http\Resources\API\V1\Patient\PatientHistoryResource
+     * @apiResourceModel App\Models\V1\Patient\PatientHistory
+     * @param PatientHistory $patientHistory
+     * @return PatientHistoryResource
      */
-    public function show($id)
+    public function show(PatientHistory $patientHistory): PatientHistoryResource
     {
-        //
+        $query = PatientHistory::where('id', $patientHistory->id);
+        $patientHistory = QueryBuilder::for($query)
+            ->first();
+        return new PatientHistoryResource($patientHistory);
     }
 
     /**

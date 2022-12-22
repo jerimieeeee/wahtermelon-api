@@ -30,6 +30,7 @@ class PatientHistoryRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'medical_history_id' => 'array|exists:lib_medical_histories,id',
             'category' => 'array|exists:lib_medical_history_categories,id',
+            'remarks' => 'array|nullable'
         ];
     }
 
@@ -47,6 +48,10 @@ class PatientHistoryRequest extends FormRequest
             'category' => [
                 'description' => 'ID of medical history category',
                 'example' => fake()->randomElement(LibMedicalHistoryCategory::pluck('id')->toArray()),
+            ],
+            'remarks' => [
+                'description' => 'remarks of patient history',
+                'example' => fake()->sentence(),
             ],
         ];
     }

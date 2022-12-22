@@ -330,6 +330,18 @@ Route::prefix('v1')->group(function (){
             });
     });
 
+    //Patient Philhealth APIs
+    Route::prefix('patient-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientHistoryController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('history', 'index');
+                Route::get('history/{patientHistory}', 'show');
+                Route::post('history', 'store');
+                // Route::put('history/{patientPhilhealth}', 'update');
+             });
+        });
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');

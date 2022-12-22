@@ -21,6 +21,7 @@ class PatientHistoryResource extends JsonResource
             'facility_code' => $this->facility_code,
             'medical_history_id' => $this->medical_history_id,
             'category' => $this->category,
+            'remarks' => $this->remarks,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
