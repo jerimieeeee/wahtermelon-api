@@ -31,6 +31,17 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    public function validatedWithCasts(): array
+    {
+        $patient = Patient::find(request()->patient_id);
+        $gender = $patient->gender;
+        $age = $patient->birthdate->diff(request()->assessment_date)->y;
+        return array_merge($this->validated(), [
+            'age' => $age,
+            'gender' => $gender,
+        ]);
+    }
+
     public function rules()
     {
         return [
@@ -70,8 +81,8 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
             'diastolic_1st' => 'required|numeric',
             'systolic_2nd' => 'required|numeric',
             'diastolic_2nd' => 'required|numeric',
-            'gender' => 'required',
-            'age' => 'required|numeric',
+            // 'gender' => 'required',
+            // 'age' => 'required|numeric',
         ];
     }
 
@@ -235,14 +246,14 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
                 'description' => '2nd diastolic of patient',
                 'example' => fake()->randomNumber(3, true),
             ],
-            'gender' => [
-                'description' => 'gender of the patient.',
-                'example' => substr(Str::ucfirst($gender), 0, 1),
-            ],
-            'age' => [
-                'description' => 'age of the patient.',
-                'example' => fake()->randomNumber(2, true),
-            ],
+            // 'gender' => [
+            //     'description' => 'gender of the patient.',
+            //     'example' => substr(Str::ucfirst($gender), 0, 1),
+            // ],
+            // 'age' => [
+            //     'description' => 'age of the patient.',
+            //     'example' => fake()->randomNumber(2, true),
+            // ],
         ];
 
     }

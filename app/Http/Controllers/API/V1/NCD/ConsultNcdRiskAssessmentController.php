@@ -39,35 +39,15 @@ class ConsultNcdRiskAssessmentController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        // $query = ConsultNcdRiskAssessment::query();
-        // $consultNcdRisk = QueryBuilder::for($query)
-        //     ->when(isset($request->patient_ncd_id), function ($q) use($request){
-        //         $q->wherePatientNcdId($request->patient_ncd_id);
-        //     })
-        //     ->get();
-        // return ConsultNcdRiskAssessmentResource::collection($consultNcdRisk);
-
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consultNcdRiskAssessment = QueryBuilder::for(ConsultNcdRiskAssessment::class)
         ->when(isset($request->patient_id), function($q) use($request){
             $q->where('patient_id', $request->patient_id);
         })
-        // ->when(isset($request->patient_ncd_id), function($q) use($request){
-        //     $q->where('patient_ncd_id', '=', $request->patient_ncd_id);
-        // })
-        // ->when(isset($request->assessment_date), function($q) use($request){
-        //     $q->where('assessment_date', '=', $request->assessment_date);
-        // })
         ->when(isset($request->consult_id), function($q) use($request){
             $q->where('consult_id', '=', $request->consult_id);
         })
-        // ->when(isset($request->client_type), function($q) use($request){
-        //     $q->where('client_type', '=', $request->client_type);
-        // })
-        // ->when(isset($request->location), function($q) use($request){
-        //     $q->where('location', '=', $request->location);
-        // })
         ->when(isset($request->id), function($q) use($request){
             $q->where('id', '=', $request->id);
         })
@@ -96,7 +76,7 @@ class ConsultNcdRiskAssessmentController extends Controller
     {
         $data = DB::transaction(function () use($request) {
             $data = PatientNcd::create(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]);
-            return $data->riskAssessment()->create($request->validated());
+            return $data->riskAssessment()->create($request->validatedWithCasts());
         });
 
         return response()->json(['data' => $data], 201);
@@ -123,14 +103,10 @@ class ConsultNcdRiskAssessmentController extends Controller
     public function update(ConsultNcdRiskAssessmentRequest $request, ConsultNcdRiskAssessment $ncdRisk)
     {
         $data = DB::transaction(function () use($request, $ncdRisk) {
-            // $data = PatientNcd::create(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]);
-            // $ncdRisk->update($request->validated());
-            // $ncdRisk->patientNcd()->update($request->only(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]));
 
-            $ncdRisk->update($request->validated());
+            $ncdRisk->update($request->validatedWithCasts());
 
-            $ncdRisk->patientNcd()->update($request->only('date_enrolled', 'patient_id') + ['patient_id' => $request->patient_id, 'date_enrolled' =>$request->assessment_date]);
-            // $ncdRisk->patientNcd()->update($request->validated(['patient_id' => $request->patient_id, 'id' => $request->patient_ncd_id, 'date_enrolled' => $request->assessment_date]));
+            $ncdRisk->patientNcd()->update($request->validatedWithCasts('date_enrolled', 'patient_id') + ['patient_id' => $request->patient_id, 'date_enrolled' =>$request->assessment_date]);
         });
 
         return response()->json(['data' => $data], 201);
