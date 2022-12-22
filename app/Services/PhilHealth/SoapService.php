@@ -60,6 +60,14 @@ class SoapService
 
         if(!isset($jsonOutput->hash))
         {
+            if(isset($jsonOutput->uploadxmlresult))
+            {
+                if(isset($jsonOutput->uploadxmlresult->errors)){
+                    return json_decode($jsonOutput->uploadxmlresult->errors);
+                }
+                return $jsonOutput;
+            }
+
             if(!isset($jsonOutput->encryptedxmlerrors))
             {
                 return $jsonOutput;
