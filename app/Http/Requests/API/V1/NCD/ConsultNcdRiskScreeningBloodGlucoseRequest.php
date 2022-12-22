@@ -31,8 +31,8 @@ class ConsultNcdRiskScreeningBloodGlucoseRequest extends FormRequest
             'patient_ncd_id' => 'required|exists:patient_ncd,id',
             'patient_id' => 'required|exists:patients,id',
             'date_taken' => 'date|date_format:Y-m-d|before:tomorrow|required',
-            'fbs' => 'required',
-            'rbs' => 'required',
+            'fbs' => 'required_without:rbs|nullable',
+            'rbs' => 'required_without:fbs|nullable',
             'raised_blood_glucose' => 'boolean',
         ];
     }
