@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lib_ncd_answer_s2', function (Blueprint $table) {
-            $table->string('id')->index()->primary();
-            $table->string('desc');
+        Schema::table('consult_ncd_risk_assessment', function (Blueprint $table) {
+            $table->unsignedBigInteger('client_type')->nullable()->change();
         });
     }
 
@@ -26,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lib_ncd_answer_s2');
+        Schema::table('consult_ncd_risk_assessment', function (Blueprint $table) {
+            $table->unsignedBigInteger('client_type')->nullable(false)->change();
+        });
     }
 };

@@ -92,6 +92,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consult_ncd_risk_assessments');
+        Schema::dropIfExists('consult_ncd_risk_assessment');
     }
 };
