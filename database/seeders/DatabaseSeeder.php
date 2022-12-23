@@ -87,6 +87,7 @@ class DatabaseSeeder extends Seeder
             LibPhilhealthProgramSeeder::class,
             LibMedicalHistorySeeder::class,
             LibMedicalHistoryCategorySeeder::class,
+            LibPatientSocialHistoryAnswerSeeder::class,
         ]);
     }
 }

@@ -338,7 +338,6 @@ Route::prefix('v1')->group(function (){
                 Route::get('history', 'index');
                 Route::get('history/{patientHistory}', 'show');
                 Route::post('history', 'store');
-                // Route::put('history/{patientPhilhealth}', 'update');
              });
         });
 
