@@ -235,9 +235,9 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\NCD\PatientNcdController::class)
             ->middleware('auth:api')
             ->group(function() {
-                Route::get('records', 'index');
+                // Route::get('records', 'index');
                 // Route::post('records', 'store');
-                // Route::put('records/{patientNcd}', 'update');
+                Route::put('records/{patientNcd}', 'update');
         });
         Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskAssessmentController::class)
             ->middleware('auth:api')

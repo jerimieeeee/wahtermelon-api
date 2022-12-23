@@ -21,7 +21,7 @@ class PatientNcdRecordDiagnosis extends Model
 
     public function getRouteKeyName()
     {
-        return 'patient_ncd_id';
+        return 'consult_ncd_risk_id';
     }
 
     public $incrementing = false;

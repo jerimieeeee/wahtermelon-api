@@ -29,8 +29,8 @@ class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
     {
         $query = ConsultNcdRiskScreeningBloodGlucose::query();
         $consultNcdRiskBloodGlucose = QueryBuilder::for($query)
-            ->when(isset($request->patient_ncd_id), function ($q) use($request){
-                $q->wherePatientNcdId($request->patient_ncd_id);
+            ->when(isset($request->consult_ncd_risk_id), function ($q) use($request){
+                $q->whereConsultNcdRiskId($request->consult_ncd_risk_id);
             })
             ->get();
         return ConsultNcdRiskScreeningBloodGlucoseResoure::collection($consultNcdRiskBloodGlucose);
@@ -44,7 +44,7 @@ class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
      */
     public function store(ConsultNcdRiskScreeningBloodGlucoseRequest $request)
     {
-        $data = ConsultNcdRiskScreeningBloodGlucose::create($request->all());
+        $data = ConsultNcdRiskScreeningBloodGlucose::updateOrCreate($request->all());
 
         return new ConsultNcdRiskScreeningBloodGlucoseResoure($data);
     }

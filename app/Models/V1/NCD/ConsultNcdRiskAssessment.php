@@ -57,47 +57,47 @@ class ConsultNcdRiskAssessment extends Model
 
     public function riskScreeningGlucose()
     {
-        return $this->hasMany(ConsultNcdRiskScreeningBloodGlucose::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(ConsultNcdRiskScreeningBloodGlucose::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function riskScreeningLipid()
     {
-        return $this->hasMany(ConsultNcdRiskScreeningBloodLipid::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(ConsultNcdRiskScreeningBloodLipid::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function riskScreeningKetones()
     {
-        return $this->hasMany(ConsultNcdRiskScreeningUrineKetones::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(ConsultNcdRiskScreeningUrineKetones::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function riskScreeningProtein()
     {
-        return $this->hasMany(ConsultNcdRiskScreeningUrineProtein::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(ConsultNcdRiskScreeningUrineProtein::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function riskQuestionnaire()
     {
-        return $this->hasMany(ConsultNcdRiskQuestionnaire::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(ConsultNcdRiskQuestionnaire::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function patientNcdRecord()
     {
-        return $this->hasMany(PatientNcdRecord::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(PatientNcdRecord::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function ncdRecordDiagnosis()
     {
-        return $this->hasMany(PatientNcdRecordDiagnosis::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(PatientNcdRecordDiagnosis::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function ncdRecordTargetOrgan()
     {
-        return $this->hasMany(PatientNcdRecordTargetOrgan::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(PatientNcdRecordTargetOrgan::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function ncdRecordCounselling()
     {
-        return $this->hasMany(PatientNcdRecordCounselling::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasOne(PatientNcdRecordCounselling::class, 'consult_ncd_risk_id', 'id');
     }
 
 }

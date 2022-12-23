@@ -79,7 +79,7 @@ class PatientNcdController extends Controller
 
             $patientNcd->update($request->validated());
 
-            $patientNcd->riskAssessment()->update($request->except('date_enrolled') + ['patient_ncd_id' => $patientNcd->id] + ['assessment_date' => $request->date_enrolled]);
+            // $patientNcd->riskAssessment()->update($request->except('date_enrolled') + ['patient_ncd_id' => $patientNcd->id] + ['assessment_date' => $request->date_enrolled]);
 
         });
 

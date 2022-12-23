@@ -29,8 +29,8 @@ class ConsultNcdRiskScreeningUrineProteinController extends Controller
     {
         $query = ConsultNcdRiskScreeningUrineProtein::query();
         $consultNcdRiskUrineProtein = QueryBuilder::for($query)
-            ->when(isset($request->patient_ncd_id), function ($q) use($request){
-                $q->wherePatientNcdId($request->patient_ncd_id);
+            ->when(isset($request->consult_ncd_risk_id), function ($q) use($request){
+                $q->whereConsultNcdRiskId($request->consult_ncd_risk_id);
             })
             ->get();
         return ConsultNcdRiskScreeningUrineProteinResource::collection($consultNcdRiskUrineProtein);
@@ -44,7 +44,7 @@ class ConsultNcdRiskScreeningUrineProteinController extends Controller
      */
     public function store(ConsultNcdRiskScreeningUrineProteinRequest $request)
     {
-        $data = ConsultNcdRiskScreeningUrineProtein::create($request->all());
+        $data = ConsultNcdRiskScreeningUrineProtein::updateOrCreate($request->all());
 
         return new ConsultNcdRiskScreeningUrineProteinResource($data);
     }

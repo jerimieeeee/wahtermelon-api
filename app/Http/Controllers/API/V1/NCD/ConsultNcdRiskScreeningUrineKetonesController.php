@@ -29,8 +29,8 @@ class ConsultNcdRiskScreeningUrineKetonesController extends Controller
     {
         $query = ConsultNcdRiskScreeningUrineKetones::query();
         $consultNcdRiskUrineKetones = QueryBuilder::for($query)
-            ->when(isset($request->patient_ncd_id), function ($q) use($request){
-                $q->wherePatientNcdId($request->patient_ncd_id);
+            ->when(isset($request->consult_ncd_risk_id), function ($q) use($request){
+                $q->whereConsultNcdRiskId($request->consult_ncd_risk_id);
             })
             ->get();
         return ConsultNcdRiskScreeningUrineKetonesResource::collection($consultNcdRiskUrineKetones);
@@ -44,7 +44,7 @@ class ConsultNcdRiskScreeningUrineKetonesController extends Controller
      */
     public function store(ConsultNcdRiskScreeningUrineKetonesRequest $request)
     {
-        $data = ConsultNcdRiskScreeningUrineKetones::create($request->all());
+        $data = ConsultNcdRiskScreeningUrineKetones::updateOrCreate($request->all());
 
         return new ConsultNcdRiskScreeningUrineKetonesResource($data);
     }
