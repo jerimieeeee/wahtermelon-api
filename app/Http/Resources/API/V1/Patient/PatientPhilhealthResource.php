@@ -16,6 +16,7 @@ class PatientPhilhealthResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'transaction_number' => $this->transaction_number,
             'philhealth_id' => $this->philhealth_id,
             'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
             'facility' => $this->whenLoaded('facility'),
