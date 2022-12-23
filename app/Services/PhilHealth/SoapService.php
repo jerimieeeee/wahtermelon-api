@@ -60,20 +60,16 @@ class SoapService
 
         if(!isset($jsonOutput->hash))
         {
-            if(isset($jsonOutput->uploadxmlresult))
+            if(isset($jsonOutput->encryptedxmlerrors))
             {
-                if(isset($jsonOutput->uploadxmlresult->errors)){
+                $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
+                return json_decode($decryptedData);
+            }
+            if(isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors))
+            {
                     return json_decode($jsonOutput->uploadxmlresult->errors);
-                }
-                return $jsonOutput;
             }
-
-            if(!isset($jsonOutput->encryptedxmlerrors))
-            {
-                return $jsonOutput;
-            }
-            $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
-            return json_decode($decryptedData);
+            return $jsonOutput;
         }
 
         $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);

@@ -140,7 +140,7 @@ class KonsultaController extends Controller
 
     public function validateReport(SoapService $service, KonsultaService $konsultaService)
     {
-        //return $id = IdGenerator::generate(['table' => 'patients', 'length' => 21, 'prefix' => 'RP91034068'.date('Ym'), 'reset_on_prefix_change' => true]);
+        return $id = IdGenerator::generate(['table' => 'patients', 'length' => 21, 'prefix' => 'RP91034068'.date('Ym'), 'reset_on_prefix_change' => true]);
         //return $service->soapMethod('checkUploadStatus', []);
         $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
