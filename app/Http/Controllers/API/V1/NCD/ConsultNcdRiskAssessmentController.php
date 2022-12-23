@@ -104,7 +104,7 @@ class ConsultNcdRiskAssessmentController extends Controller
     {
         // $data = DB::transaction(function () use($request, $ncdRisk) {
 
-            $ncdRisk->update($request->validatedWithCasts());
+        $ncdRisk->update($request->validatedWithCasts());
 
             // $ncdRisk->patientNcd()->update($request->validatedWithCasts('date_enrolled', 'patient_id') + ['patient_id' => $request->patient_id, 'date_enrolled' =>$request->assessment_date]);
         // });

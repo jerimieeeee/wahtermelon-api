@@ -75,16 +75,16 @@ class PatientNcdController extends Controller
      */
     public function update(PatientNcdRequest $request, PatientNcd $patientNcd)
     {
-        DB::transaction(function () use($patientNcd, $request) {
+        // DB::transaction(function () use($patientNcd, $request) {
 
-            $patientNcd->update($request->validated());
+        // return $patientNcd->update($request->validated());
 
             // $patientNcd->riskAssessment()->update($request->except('date_enrolled') + ['patient_ncd_id' => $patientNcd->id] + ['assessment_date' => $request->date_enrolled]);
 
-        });
+        // });
 
-        $patientNcdRiskAssessment = PatientNcd::where('patient_id', '=', $request->patient_id)->with('riskAssessment')->get();
-        return PatientNcdResource::collection($patientNcdRiskAssessment);
+        // $patientNcdRiskAssessment = PatientNcd::where('patient_id', '=', $request->patient_id)->with('riskAssessment')->get();
+        // return PatientNcdResource::collection($patientNcdRiskAssessment);
     }
 
     /**
