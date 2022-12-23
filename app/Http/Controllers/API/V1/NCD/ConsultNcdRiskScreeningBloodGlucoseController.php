@@ -40,7 +40,7 @@ class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
      * Store a newly created Consult Risk Screening Blood Glucose resource in storage.
      *
      * @apiResourceAdditional status=Success
-     * @apiResource 201 App\Http\Resources\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseResource
+     * @apiResource 201 App\Http\Resources\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseResoure
      * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskScreeningBloodGlucose
      * @param ConsultNcdRiskScreeningBloodGlucoseRequest $request
      * @return JsonResponse
