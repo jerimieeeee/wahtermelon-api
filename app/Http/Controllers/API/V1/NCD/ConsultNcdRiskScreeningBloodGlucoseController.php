@@ -37,16 +37,19 @@ class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consult Risk Screening Blood Glucose resource in storage.
      *
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseResource
+     * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskScreeningBloodGlucose
      * @param ConsultNcdRiskScreeningBloodGlucoseRequest $request
-     * @return Response
+     * @return JsonResponse
      */
     public function store(ConsultNcdRiskScreeningBloodGlucoseRequest $request)
     {
-        $data = ConsultNcdRiskScreeningBloodGlucose::updateOrCreate($request->all());
-
-        return new ConsultNcdRiskScreeningBloodGlucoseResoure($data);
+        $data = ConsultNcdRiskScreeningBloodGlucose::updateOrCreate(['consult_ncd_risk_id' => $request['consult_ncd_risk_id']],$request->validated());
+        $data1 = new ConsultNcdRiskScreeningBloodGlucoseResoure($data);
+        return response()->json(['data' => $data1], 201);
     }
 
     /**
