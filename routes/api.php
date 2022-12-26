@@ -232,13 +232,13 @@ Route::prefix('v1')->group(function (){
 
     //Non-Communicable Disease APIs
     Route::prefix('non-communicable-disease')->group(function () {
-        Route::controller(\App\Http\Controllers\API\V1\NCD\PatientNcdController::class)
-            ->middleware('auth:api')
-            ->group(function() {
-                // Route::get('records', 'index');
-                // Route::post('records', 'store');
-                Route::put('records/{patientNcd}', 'update');
-        });
+        // Route::controller(\App\Http\Controllers\API\V1\NCD\PatientNcdController::class)
+        //     ->middleware('auth:api')
+        //     ->group(function() {
+        //         // Route::get('records', 'index');
+        //         // Route::post('records', 'store');
+        //         Route::put('records/{patientNcd}', 'update');
+        // });
         Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskAssessmentController::class)
             ->middleware('auth:api')
             ->group(function() {

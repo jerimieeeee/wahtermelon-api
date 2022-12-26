@@ -37,16 +37,19 @@ class ConsultNcdRiskQuestionnaireController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Consult Risk Questionnaire resource in storage.
      *
+     * @apiResourceAdditional status=Success
+     * @apiResource 201 App\Http\Resources\API\V1\NCD\ConsultNcdRiskQuestionnaireResource
+     * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskQuestionnaire
      * @param ConsultNcdRiskQuestionnaireRequest $request
-     * @return Response
+     * @return JsonResponse
      */
     public function store(ConsultNcdRiskQuestionnaireRequest $request)
     {
-        $data = ConsultNcdRiskQuestionnaire::create($request->all());
-
-        return new ConsultNcdRiskQuestionnaireResource($data);
+        $data = ConsultNcdRiskQuestionnaire::updateOrCreate(['consult_ncd_risk_id' => $request['consult_ncd_risk_id']],$request->validated());
+        $data1 = new ConsultNcdRiskQuestionnaireResource($data);
+        return response()->json(['data' => $data1], 201);
     }
 
     /**
