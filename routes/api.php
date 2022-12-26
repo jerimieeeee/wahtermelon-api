@@ -330,7 +330,7 @@ Route::prefix('v1')->group(function (){
             });
     });
 
-    //Patient Philhealth APIs
+    //Patient Medical History APIs
     Route::prefix('patient-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientHistoryController::class)
             ->middleware('auth:api')
@@ -340,6 +340,17 @@ Route::prefix('v1')->group(function (){
                 Route::post('history', 'store');
              });
         });
+
+    //Patient Social History APIs
+        Route::prefix('patient-social-history')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSocialHistoryController::class)
+                ->middleware('auth:api')
+                ->group(function() {
+                    Route::get('history', 'index');
+                    Route::get('history/{patientSocialHistory}', 'show');
+                    Route::post('history', 'store');
+                });
+            });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -556,7 +567,12 @@ Route::prefix('v1')->group(function (){
         Route::get('medical-history', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryController::class, 'index'])->name('medical-history.index');
         Route::get('medical-history/{medicalHistory}', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryController::class, 'show'])->name('medical-history.show');
 
+        //Patient Medical History Category
         Route::get('medical-history-category', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryCategoryController::class, 'index'])->name('medical-history-category.index');
         Route::get('medical-history-category/{medicalHistoryCategory}', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryCategoryController::class, 'show'])->name('medical-history-category.show');
+
+        //Patient Social History
+        Route::get('social-history', [\App\Http\Controllers\API\V1\Libraries\LibPatientSocialHistoryAnswerController::class, 'index'])->name('social-history-category.index');
+        Route::get('social-history/{socialHistoryAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibPatientSocialHistoryAnswerController::class, 'show'])->name('social-history-category.show');
     });
 });
