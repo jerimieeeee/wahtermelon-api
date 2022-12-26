@@ -502,11 +502,21 @@ Route::prefix('v1')->group(function (){
         Route::get('ncd-smoking', [\App\Http\Controllers\API\V1\Libraries\LibNcdSmokingAnswerController::class, 'index'])->name('ncd-smoking.index');
         Route::get('ncd-smoking/{smokingAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibNcdSmokingAnswerController::class, 'show'])->name('ncd-smoking.show');
 
+        Route::get('ncd-record-counselling', [\App\Http\Controllers\API\V1\Libraries\LibNcdRecordCounsellingController::class, 'index'])->name('ncd-record-counselling.index');
+        Route::get('ncd-record-counselling/{counselling}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRecordCounsellingController::class, 'show'])->name('ncd-record-counselling.show');
+
+        Route::get('ncd-record-diagnosis', [\App\Http\Controllers\API\V1\Libraries\LibNcdRecordDiagnosisController::class, 'index'])->name('ncd-record-diagnosis.index');
+        Route::get('ncd-record-diagnosis/{diagnosis}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRecordDiagnosisController::class, 'show'])->name('ncd-record-diagnosis.show');
+
+        Route::get('ncd-record-target-organ', [\App\Http\Controllers\API\V1\Libraries\LibNcdRecordTargetOrganController::class, 'index'])->name('ncd-record-target-organ.index');
+        Route::get('ncd-record-target-organ/{targetOrgan}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRecordTargetOrganController::class, 'show'])->name('ncd-record-target-organ.show');
+
         Route::get('ncd-risk-screening-urine-ketones', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineKetonesController::class, 'index'])->name('ncd-risk-screening-urine-ketones.index');
         Route::get('ncd-risk-screening-urine-ketones/{riskScreeningUrineKetones}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineKetonesController::class, 'show'])->name('ncd-risk-screening-urine-ketones.show');
 
         Route::get('ncd-risk-screening-urine-protein', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineProteinController::class, 'index'])->name('ncd-risk-screening-urine-protein.index');
         Route::get('ncd-risk-screening-urine-protein/{riskScreeningUrineProtein}', [\App\Http\Controllers\API\V1\Libraries\LibNcdRiskScreeningUrineProteinController::class, 'show'])->name('ncd-risk-screening-urine-protein.show');
+
         Route::get('duration-frequencies', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDurationFrequencyController::class, 'index'])->name('duration-frequencies.index');
         Route::get('duration-frequencies/{durationFrequency}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineDurationFrequencyController::class, 'show'])->name('duration-frequencies.show');
 
@@ -541,6 +551,12 @@ Route::prefix('v1')->group(function (){
         //PhilHealth Programs
         Route::get('philhealth-programs', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthProgramController::class, 'index'])->name('philhealth-programs.index');
         Route::get('philhealth-programs/{program}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthProgramController::class, 'show'])->name('philhealth-programs.show');
-    });
 
+        //Patient Medical History
+        Route::get('medical-history', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryController::class, 'index'])->name('medical-history.index');
+        Route::get('medical-history/{medicalHistory}', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryController::class, 'show'])->name('medical-history.show');
+
+        Route::get('medical-history-category', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryCategoryController::class, 'index'])->name('medical-history-category.index');
+        Route::get('medical-history-category/{medicalHistoryCategory}', [\App\Http\Controllers\API\V1\Libraries\LibMedicalHistoryCategoryController::class, 'show'])->name('medical-history-category.show');
+    });
 });

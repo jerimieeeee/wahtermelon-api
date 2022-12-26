@@ -22,7 +22,7 @@ class ConsultNcdRiskScreeningUrineProteinController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @queryParam patient_ncd_id string Patient record to view.
+     * @queryParam consult_ncd_risk_id string Patient record to view.
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)

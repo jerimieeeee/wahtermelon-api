@@ -12,8 +12,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Non-Communicable Disease
  *
  * APIs for managing libraries
- * @subgroup Risk Screening Ketones
- * @subgroupDescription List of Risk Screening Ketones.
+ * @subgroup Risk Screening Urine Ketones
+ * @subgroupDescription List of Risk Screening Urine Ketones.
  */
 class LibNcdRiskScreeningUrineKetonesController extends Controller
 {
