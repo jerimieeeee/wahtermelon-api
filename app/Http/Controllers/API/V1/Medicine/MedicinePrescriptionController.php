@@ -28,6 +28,7 @@ class MedicinePrescriptionController extends Controller
      * @queryParam sort string Sort prescription_date. Add hyphen (-) to descend the list: e.g. prescription_date. Example: -prescription_date
      * @queryParam patient_id string Patient to view.
      * @queryParam consult_id string Consult to view.
+     * @queryParam status string Status to view. e.g. dispensing. Example: dispensing
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Medicine\MedicinePrescriptionResource
@@ -44,8 +45,13 @@ class MedicinePrescriptionController extends Controller
             })
             ->when(isset($request->consult_id), function($query) use($request){
                 return $query->whereConsultId($request->consult_id);
+            })
+            ->when(isset($request->status) && $request->status == 'dispensing', function ($query) {
+                $query->withSum('dispensing', 'dispense_quantity')
+                    ->havingRaw('quantity > dispensing_sum_dispense_quantity OR dispensing_sum_dispense_quantity IS NULL');
             });
         $prescription = QueryBuilder::for($query)
+            ->with(['konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'prescribedBy', 'dispensing'])
             ->defaultSort('-prescription_date')
             ->allowedSorts('prescription_date');
 
