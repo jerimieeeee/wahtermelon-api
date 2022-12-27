@@ -20,6 +20,8 @@ class PatientHistoryResource extends JsonResource
             'user_id' => $this->user_id,
             'facility_code' => $this->facility_code,
             'medical_history_id' => $this->medical_history_id,
+            'libmedicalHistory' => $this->whenLoaded('libmedicalHistory'),
+            'libmedicalHistoryCategory' => $this->whenLoaded('libmedicalHistoryCategory'),
             'category' => $this->category,
             'remarks' => $this->remarks,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

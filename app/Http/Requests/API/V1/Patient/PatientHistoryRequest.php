@@ -28,9 +28,9 @@ class PatientHistoryRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'medical_history_id' => 'array|exists:lib_medical_histories,id',
-            'category' => 'array|exists:lib_medical_history_categories,id',
-            'remarks' => 'array|nullable'
+            'medical_history.*.medical_history_id' => 'required|exists:lib_medical_histories,id',
+            'medical_history.*.category' => 'required|exists:lib_medical_history_categories,id',
+            'medical_history.*.remarks' => 'nullable'
         ];
     }
 

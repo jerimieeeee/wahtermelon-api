@@ -24,6 +24,8 @@ class PatientHistoryController extends Controller
      * Display a listing of the resource.
      *
      * @queryParam patient_id string Patient record to view.
+     * @queryParam patient_id Identification code of the patient.
+     * @queryParam category category. Example: 1
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -33,6 +35,9 @@ class PatientHistoryController extends Controller
         $patientHistory = QueryBuilder::for(PatientHistory::class)
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', $request->patient_id);
+            })
+            ->when(isset($request->category), function($q) use($request){
+                $q->where('category', $request->category);
             })
             ->with('libmedicalHistory', 'libmedicalHistoryCategory');
 
