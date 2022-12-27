@@ -87,17 +87,17 @@ class ConsultNcdRiskAssessment extends Model
 
     public function ncdRecordDiagnosis()
     {
-        return $this->hasOne(PatientNcdRecordDiagnosis::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasMany(PatientNcdRecordDiagnosis::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function ncdRecordTargetOrgan()
     {
-        return $this->hasOne(PatientNcdRecordTargetOrgan::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasMany(PatientNcdRecordTargetOrgan::class, 'consult_ncd_risk_id', 'id');
     }
 
     public function ncdRecordCounselling()
     {
-        return $this->hasOne(PatientNcdRecordCounselling::class, 'consult_ncd_risk_id', 'id');
+        return $this->hasMany(PatientNcdRecordCounselling::class, 'consult_ncd_risk_id', 'id');
     }
 
 }
