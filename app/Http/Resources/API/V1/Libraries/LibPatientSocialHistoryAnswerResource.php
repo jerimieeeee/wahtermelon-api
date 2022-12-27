@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Libraries;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LibNcdRecordTargetDiagnosisResource extends JsonResource
+class LibPatientSocialHistoryAnswerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

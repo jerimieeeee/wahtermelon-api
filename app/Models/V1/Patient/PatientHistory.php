@@ -1,36 +1,28 @@
 <?php
 
-namespace App\Models\V1\NCD;
+namespace App\Models\V1\Patient;
 
+use App\Models\V1\Libraries\LibMedicalHistory;
+use App\Models\V1\Libraries\LibMedicalHistoryCategory;
 use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 
-class ConsultNcdRiskScreeningUrineKetones extends Model
+class PatientHistory extends Model
 {
     use HasFactory, HasUuid, FilterByUser;
 
-    protected $table = 'consult_ncd_risk_screening_ketones';
+    protected $table = 'patient_histories';
 
     protected $guarded = [
         'id'
     ];
 
-    public function getRouteKeyName()
-    {
-        return 'consult_ncd_risk_id';
-    }
-
     public $incrementing = false;
 
     protected $keyType = 'string';
-
-    protected $casts = [
-        'date_taken' => 'date:Y-m-d',
-        'presence_of_urine_ketones' => 'boolean',
-    ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -52,13 +44,13 @@ class ConsultNcdRiskScreeningUrineKetones extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function patientNcd()
+    public function libmedicalHistory()
     {
-        return $this->belongsTo(PatientNcd::class, 'patient_ncd_id', 'id');
+        return $this->belongsTo(LibMedicalHistory::class, 'medical_history_id', 'id');
     }
 
-    public function consultRiskAssessment()
+    public function libmedicalHistoryCategory()
     {
-        return $this->belongsTo(ConsultNcdRiskAssessment::class, 'consult_ncd_risk_id', 'id');
+        return $this->belongsTo(LibMedicalHistoryCategory::class, 'category', 'id');
     }
 }

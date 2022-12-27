@@ -13,8 +13,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Non-Communicable Disease
  *
  * APIs for managing libraries
- * @subgroup Risk Screening Protein
- * @subgroupDescription List of Risk Screening Protein.
+ * @subgroup Risk Screening Urine Protein
+ * @subgroupDescription List of Risk Screening Urine Protein.
  */
 class LibNcdRiskScreeningUrineProteinController extends Controller
 {

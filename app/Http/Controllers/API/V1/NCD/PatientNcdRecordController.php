@@ -26,7 +26,7 @@ class PatientNcdRecordController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @queryParam patient_ncd_id string Patient record to view.
+     * @queryParam consult_ncd_risk_id string Patient record to view.
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -68,7 +68,7 @@ class PatientNcdRecordController extends Controller
     {
         return DB::transaction(function () use($request) {
 
-            $data = PatientNcdRecord::firstOrCreate($request->validated());
+            $data = PatientNcdRecord::updateOrCreate($request->validated());
 
             $diagnosis_code = $request->diagnosis_code;
             $target_organ_code = $request->target_organ_code;
@@ -88,19 +88,19 @@ class PatientNcdRecordController extends Controller
 
                 if (isset($request->diagnosis_code)) {
                     foreach ($diagnosis_code as $value) {
-                        PatientNcdRecordDiagnosis::where('patient_ncd_record_id', $data->id)->firstOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'diagnosis_code' => $value]);
+                        PatientNcdRecordDiagnosis::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'diagnosis_code' => $value]);
                     }
                 }
 
                 if (isset($request->target_organ_code)) {
                     foreach ($target_organ_code as $value) {
-                        PatientNcdRecordTargetOrgan::where('patient_ncd_record_id', $data->id)->firstOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'target_organ_code' => $value]);
+                        PatientNcdRecordTargetOrgan::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'target_organ_code' => $value]);
                     }
                 }
 
                 if (isset($request->counselling_code)) {
                     foreach ($counselling_code as $value) {
-                        PatientNcdRecordCounselling::where('patient_ncd_record_id', $data->id)->firstOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'counselling_code' => $value]);
+                        PatientNcdRecordCounselling::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'counselling_code' => $value]);
                     }
                 }
 
