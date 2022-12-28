@@ -42,6 +42,7 @@ class MedicineDispensingController extends Controller
                 return $query->wherePatientId($request->patient_id);
             });
         $prescription = QueryBuilder::for($query)
+            ->with('prescription')
             ->defaultSort('-dispensing_date')
             ->allowedSorts('dispensing_date');
 
