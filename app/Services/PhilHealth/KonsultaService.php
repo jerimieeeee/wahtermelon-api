@@ -109,29 +109,83 @@ class KonsultaService
                     ],
                     'SOCHIST' => [
                         '_attributes' => [
-                            'pIsSmoker'=>"N", 'pNoCigpk'=>"", 'pIsAdrinker'=>"N", 'pNoBottles'=>"", 'pIllDrugUser'=>"N", 'pIsSexuallyActive'=>"N", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                            'pIsSmoker'=>"N",
+                            'pNoCigpk'=>"",
+                            'pIsAdrinker'=>"N",
+                            'pNoBottles'=>"",
+                            'pIllDrugUser'=>"N",
+                            'pIsSexuallyActive'=>"N",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
                         ]
                     ],
                     'IMMUNIZATIONS' => [
                         'IMMUNIZATION' => [
                             '_attributes' => [
-                                'pChildImmcode'=>"C01", 'pYoungwImmcode'=>"", 'pPregwImmcode'=>"", 'pElderlyImmcode'=>"", 'pOtherImm'=>"", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                'pChildImmcode'=>"C01",
+                                'pYoungwImmcode'=>"",
+                                'pPregwImmcode'=>"",
+                                'pElderlyImmcode'=>"",
+                                'pOtherImm'=>"",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
                             ]
                         ]
                     ],
                     'MENSHIST' => [
                         '_attributes' => [
-                            'pMenarchePeriod'=>"0", 'pLastMensPeriod'=>"", 'pPeriodDuration'=>"0", 'pMensInterval'=>"0", 'pPadsPerDay'=>"0", 'pOnsetSexIc'=>"0", 'pBirthCtrlMethod'=>"", 'pIsMenopause'=>"", 'pMenopauseAge'=>"", 'pIsApplicable'=>"N", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                            'pMenarchePeriod'=>"0",
+                            'pLastMensPeriod'=>"",
+                            'pPeriodDuration'=>"0",
+                            'pMensInterval'=>"0",
+                            'pPadsPerDay'=>"0",
+                            'pOnsetSexIc'=>"0",
+                            'pBirthCtrlMethod'=>"",
+                            'pIsMenopause'=>"",
+                            'pMenopauseAge'=>"",
+                            'pIsApplicable'=>"N",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
                         ]
                     ],
                     'PREGHIST' => [
                         '_attributes' => [
-                            'pPregCnt'=>"0", 'pDeliveryCnt'=>"0", 'pDeliveryTyp'=>"X", 'pFullTermCnt'=>"0", 'pPrematureCnt'=>"0", 'pAbortionCnt'=>"0", 'pLivChildrenCnt'=>"0", 'pWPregIndhyp'=>"N", 'pWFamPlan'=>"N", 'pIsApplicable'=>"N", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                            'pPregCnt'=>"0",
+                            'pDeliveryCnt'=>"0",
+                            'pDeliveryTyp'=>"X",
+                            'pFullTermCnt'=>"0",
+                            'pPrematureCnt'=>"0",
+                            'pAbortionCnt'=>"0",
+                            'pLivChildrenCnt'=>"0",
+                            'pWPregIndhyp'=>"N",
+                            'pWFamPlan'=>"N",
+                            'pIsApplicable'=>"N",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
                         ]
                     ],
                     'PEPERT' => [
                         '_attributes' => [
-                            'pSystolic'=>"95", 'pDiastolic'=>"58", 'pHr'=>"110", 'pRr'=>"30", 'pTemp'=>"36.10", 'pHeight'=>"0", 'pWeight'=>"8.9", 'pBMI'=>"0", 'pZScore'=>"", 'pLeftVision'=>"20", 'pRightVision'=>"20", 'pLength'=>"63", 'pHeadCirc'=>"46", 'pSkinfoldThickness'=>"46", 'pWaist'=>"48", 'pHip'=>"50", 'pLimbs'=>"40", 'pMidUpperArmCirc'=>"12.5", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                            'pSystolic'=>"95",
+                            'pDiastolic'=>"58",
+                            'pHr'=>"110",
+                            'pRr'=>"30",
+                            'pTemp'=>"36.10",
+                            'pHeight'=>"0",
+                            'pWeight'=>"8.9",
+                            'pBMI'=>"0",
+                            'pZScore'=>"",
+                            'pLeftVision'=>"20",
+                            'pRightVision'=>"20",
+                            'pLength'=>"63",
+                            'pHeadCirc'=>"46",
+                            'pSkinfoldThickness'=>"46",
+                            'pWaist'=>"48",
+                            'pHip'=>"50",
+                            'pLimbs'=>"40",
+                            'pMidUpperArmCirc'=>"12.5",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
                         ]
                     ],
                     'BLOODTYPE' => [
