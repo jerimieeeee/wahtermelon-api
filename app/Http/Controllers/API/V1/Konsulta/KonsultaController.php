@@ -140,14 +140,11 @@ class KonsultaController extends Controller
 
     public function validateReport(SoapService $service, KonsultaService $konsultaService)
     {
-        return auth()->user()->konsultaCredential->accreditation_number;
-        return auth()->user()->philhealthCredential->where('program_code', 'kp')->first()->accreditation_number;
-        return $id = IdGenerator::generate(['table' => 'patients', 'length' => 21, 'prefix' => 'RP91034068'.date('Ym'), 'reset_on_prefix_change' => true]);
         //return $service->soapMethod('checkUploadStatus', []);
         $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
-        return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
-        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
+        //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
+        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>2]);
     }
 
     public function sample()

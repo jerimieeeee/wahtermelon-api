@@ -51,7 +51,19 @@ class KonsultaService
             'PROFILING' => [
                 'PROFILE' => [
                     '_attributes' => [
-                        'pHciTransNo'=>"PH9000000120220800001", 'pHciCaseNo'=>"TH9000000120220800001", 'pProfDate'=>"2022-08-26", 'pPatientPin'=>"242500004774", 'pPatientType'=>"DD", 'pPatientAge'=>"1 YR(S), 0 MO(S), 25 DAY(S)", 'pMemPin'=>"030263078507", 'pEffYear'=>"2022", 'pATC'=>"JruBaQ2Y", 'pIsWalkedIn'=>"N", 'pTransDate'=>"2022-08-27", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                        'pHciTransNo'=>"PH9000000120220800001",
+                        'pHciCaseNo'=>"TH9000000120220800001",
+                        'pProfDate'=>"2022-08-26",
+                        'pPatientPin'=>"242500004774",
+                        'pPatientType'=>"DD",
+                        'pPatientAge'=>"1 YR(S), 0 MO(S), 25 DAY(S)",
+                        'pMemPin'=>"030263078507",
+                        'pEffYear'=>"2022",
+                        'pATC'=>"JruBaQ2Y",
+                        'pIsWalkedIn'=>"N",
+                        'pTransDate'=>"2022-08-27",
+                        'pReportStatus'=>"U",
+                        'pDeficiencyRemarks'=>""
                     ],
                     'MEDHISTS' => [
                         'MEDHIST' => [
@@ -208,24 +220,46 @@ class KonsultaService
             ],
             'DIAGNOSTICEXAMRESULTS' => [
                 'DIAGNOSTICEXAMRESULT' => [
-                    '_attributes' => [
+                    [
+                        '_attributes' => [
                         'pHciCaseNo'=>"TH9000000120220800001", 'pHciTransNo'=>"PH9000000120220800001", 'pPatientPin'=>"242500004774", 'pPatientType'=>"DD", 'pMemPin'=>"030263078507", 'pEffYear'=>"2022"
-                    ],
-                    'FBSS' => [
-                        'FBS' => [
-                            '_attributes' => [
-                                'pReferralFacility'=>"SAMPLE REFERRAL FACILITY", 'pLabDate'=>"2022-08-26", 'pGlucoseMg'=>"45", 'pGlucoseMmol'=>"7.8", 'pDateAdded'=>"2022-08-27", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"0.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                            ]
+                        ],
+                        'FBSS' => [
+                            'FBS' => [
+                                '_attributes' => [
+                                    'pReferralFacility'=>"SAMPLE REFERRAL FACILITY", 'pLabDate'=>"2022-08-26", 'pGlucoseMg'=>"45", 'pGlucoseMmol'=>"7.8", 'pDateAdded'=>"2022-08-27", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"0.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ],
+                        ],
+                        'RBSS' => [
+                            'RBS' => [
+                                '_attributes' => [
+                                    'pReferralFacility'=>"", 'pLabDate'=>"2022-08-26", 'pGlucoseMg'=>"45", 'pGlucoseMmol'=>"7.8", 'pDateAdded'=>"2022-08-27", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"0.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ],
                         ],
                     ],
-                    'RBSS' => [
-                        'RBS' => [
-                            '_attributes' => [
-                                'pReferralFacility'=>"", 'pLabDate'=>"2022-08-26", 'pGlucoseMg'=>"45", 'pGlucoseMmol'=>"7.8", 'pDateAdded'=>"2022-08-27", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"0.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                            ]
+                    [
+                        '_attributes' => [
+                        'pHciCaseNo'=>"TH9000000120220800001", 'pHciTransNo'=>"PH9000000120220800001", 'pPatientPin'=>"242500004774", 'pPatientType'=>"DD", 'pMemPin'=>"030263078507", 'pEffYear'=>"2022"
+                        ],
+                        'CBCS' => [
+                            'CBC' => [
+                                '_attributes' => [
+                                    'pReferralFacility'=>"", 'pLabDate'=>"2022-08-27", 'pHematocrit'=>"35", 'pHemoglobinG'=>"11.9", 'pHemoglobinMmol'=>"-", 'pMhcPg'=>"32.5", 'pMhcFmol'=>"-", 'pMchcGhb'=>"32.5", 'pMchcMmol'=>"-", 'pMcvUm'=>"82.5", 'pMcvFl'=>"-", 'pWbc1000'=>"3.9", 'pWbc10'=>"-", 'pMyelocyte'=>"0", 'pNeutrophilsBnd'=>"0-5", 'pNeutrophilsSeg'=>"40-60", 'pLymphocytes'=>"20-40", 'pMonocytes'=>"4-8", 'pEosinophils'=>"1-3", 'pBasophils'=>"0-1", 'pPlatelet'=>"200,000-500,000", 'pDateAdded'=>"2022-08-31", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"120.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ],
+                        ],
+                        'RBSS' => [
+                            'RBS' => [
+                                '_attributes' => [
+                                    'pReferralFacility'=>"", 'pLabDate'=>"2022-08-26", 'pGlucoseMg'=>"45", 'pGlucoseMmol'=>"7.8", 'pDateAdded'=>"2022-08-27", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"0.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ],
                         ],
                     ],
                 ],
+
             ],
             'MEDICINES' => [
                 'MEDICINE' => [
