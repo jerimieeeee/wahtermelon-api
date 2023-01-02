@@ -574,5 +574,9 @@ Route::prefix('v1')->group(function (){
         //Patient Social History
         Route::get('social-history', [\App\Http\Controllers\API\V1\Libraries\LibPatientSocialHistoryAnswerController::class, 'index'])->name('social-history-category.index');
         Route::get('social-history/{socialHistoryAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibPatientSocialHistoryAnswerController::class, 'show'])->name('social-history-category.show');
+
+        //Laboratory
+        Route::get('laboratories', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'index'])->name('laboratories.index');
+        Route::get('laboratories/{laboratory}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'show'])->name('laboratories.show');
     });
 });
