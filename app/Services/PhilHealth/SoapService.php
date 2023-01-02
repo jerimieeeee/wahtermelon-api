@@ -142,6 +142,14 @@ class SoapService
             'Content-Type' => 'text/xml; charset=utf-8',
             'SOAPAction'=>'getToken'
         ])->post($wsdlUrl,$postArray);
+        return $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'SOAPAction'=>'getToken'
+        ])->post(
+            $wsdlUrl,
+            $postArray
+        );
 
         return $http->getBody();
 
