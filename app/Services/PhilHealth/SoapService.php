@@ -98,7 +98,7 @@ class SoapService
 
     public function httpClient()
     {
-        return $response = Http::post('https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl');
+        //return $response = Http::post('https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl');
         $wsdlUrl = "https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl";
         $array = [
             'Body' => [
@@ -131,18 +131,19 @@ class SoapService
         ], true, 'UTF-8');
 
         $postArray = [
+            'pUserName' => '',
+            'pUserPassword' => '',
             'pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634',
             'pHospitalCode' => 'P01033020'
         ];
-        return Http::post($wsdlUrl,$postArray);
+        //return Http::post($wsdlUrl,$postArray);
 
-        return $http=Http::withHeaders([
-            'Content-Type'=>'application/xml',
-            'user_agent' => 'PHPSoapClient',
-            'SOAPAction'=>'balance'
+        $http=Http::withHeaders([
+            'Content-Type' => 'text/xml; charset=utf-8',
+            'SOAPAction'=>'getToken'
         ])->post($wsdlUrl,$postArray);
 
-
+        return $http->getBody();
 
         return response($http->body())
             ->withHeaders([

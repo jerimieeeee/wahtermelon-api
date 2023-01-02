@@ -140,6 +140,7 @@ class KonsultaController extends Controller
 
     public function validateReport(SoapService $service, KonsultaService $konsultaService)
     {
+        return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
         $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
