@@ -22,6 +22,7 @@ class LibLaboratoryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @queryParam include string Relationship to view: e.g. category Example: category
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibLaboratoryResource
      * @apiResourceModel App\Models\V1\Libraries\LibLaboratory
      * @return ResourceCollection
@@ -29,7 +30,7 @@ class LibLaboratoryController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratory::class)
-                ->with('category')
+                ->allowedIncludes('category')
                 ->whereLabActive(1);
         return LibLaboratoryResource::collection($query->get());
     }

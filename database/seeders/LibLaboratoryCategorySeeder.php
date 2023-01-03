@@ -70,6 +70,7 @@ class LibLaboratoryCategorySeeder extends Seeder
             ['lab_code' => 'HEMA', 'field_name' => 'clothing_time', 'field_desc' => 'Clothing Time', 'group_cat' => null, 'range_cat' => null, 'nv_min' => '1', 'nv_max' => '6', 'nv_uom' => 'min', 'sequence_id' => '24', 'field_active' => 1],
             ['lab_code' => 'HEMA', 'field_name' => 'esr', 'field_desc' => 'ESR', 'group_cat' => null, 'range_cat' => 'M', 'nv_min' => '0', 'nv_max' => '15', 'nv_uom' => 'mm/hr', 'sequence_id' => '25', 'field_active' => 1],
             ['lab_code' => 'HEMA', 'field_name' => 'esr', 'field_desc' => 'ESR', 'group_cat' => null, 'range_cat' => 'F', 'nv_min' => '0', 'nv_max' => '20', 'nv_uom' => 'mm/hr', 'sequence_id' => '26', 'field_active' => 1],
+            ['lab_code' => 'HEMA', 'field_name' => 'blood_type', 'field_desc' => 'Blood Type', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '27', 'field_active' => 1],
 
             ['lab_code' => 'URN', 'field_name' => 'color', 'field_desc' => 'Color', 'group_cat' => 'PHYSICAL', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
             ['lab_code' => 'URN', 'field_name' => 'transparency', 'field_desc' => 'Transparency', 'group_cat' => 'PHYSICAL', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
@@ -170,6 +171,73 @@ class LibLaboratoryCategorySeeder extends Seeder
             ['lab_code' => 'SPTM', 'field_name' => 'visual_appearance2', 'field_desc' => 'Visual Appearance', 'group_cat' => 'SPECIMEN #2', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
             ['lab_code' => 'SPTM', 'field_name' => 'reading2', 'field_desc' => 'Reading', 'group_cat' => 'SPECIMEN #2', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '3', 'field_active' => 1],
             ['lab_code' => 'SPTM', 'field_name' => 'result2', 'field_desc' => 'Sputum Exam Result', 'group_cat' => 'SPECIMEN #2', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '4', 'field_active' => 1],
+
+            ['lab_code' => 'GRMS', 'field_name' => 'nugent_score', 'field_desc' => 'Nugent Score', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'GRMS', 'field_name' => 'fungal_elements', 'field_desc' => 'Fungal Elements', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'GRMS', 'field_name' => 'pus_cells', 'field_desc' => 'Pus Cells', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'GRMS', 'field_name' => 'gram_negative', 'field_desc' => 'Gram Negative Diplococci', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+
+            ['lab_code' => 'SSMR', 'field_name' => 'site_slit1', 'field_desc' => '1', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'site_slit2', 'field_desc' => '2', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'site_slit3', 'field_desc' => '3', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'site_slit4', 'field_desc' => '4', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'site_slit5', 'field_desc' => '5', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '5', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'site_slit6', 'field_desc' => '6', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '6', 'field_active' => 1],
+
+            ['lab_code' => 'SSMR', 'field_name' => 'bac_index1', 'field_desc' => '1', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'bac_index2', 'field_desc' => '2', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'bac_index3', 'field_desc' => '3', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'bac_index4', 'field_desc' => '4', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'bac_index5', 'field_desc' => '5', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '5', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'bac_index6', 'field_desc' => '6', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '6', 'field_active' => 1],
+
+            ['lab_code' => 'SSMR', 'field_name' => 'morp_index1', 'field_desc' => '1', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'morp_index2', 'field_desc' => '2', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'morp_index3', 'field_desc' => '3', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'morp_index4', 'field_desc' => '4', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'morp_index5', 'field_desc' => '5', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '5', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'morp_index6', 'field_desc' => '6', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '6', 'field_active' => 1],
+
+            ['lab_code' => 'SSMR', 'field_name' => 'comment1', 'field_desc' => '1', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'comment2', 'field_desc' => '2', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'comment3', 'field_desc' => '3', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'comment4', 'field_desc' => '4', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'comment5', 'field_desc' => '5', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '5', 'field_active' => 1],
+            ['lab_code' => 'SSMR', 'field_name' => 'comment6', 'field_desc' => '6', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '6', 'field_active' => 1],
+
+            ['lab_code' => 'SRLG', 'field_name' => 'hiv', 'field_desc' => 'HIV', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'SRLG', 'field_name' => 'hcv', 'field_desc' => 'HCV', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'SRLG', 'field_name' => 'anti_streaptolysin', 'field_desc' => 'Anti-Streptolysin - O', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'SRLG', 'field_name' => 'reactive_protein', 'field_desc' => 'C - Reactive Protein', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+            ['lab_code' => 'SRLG', 'field_name' => 'rheumatoid_factor', 'field_desc' => 'Rheumatoid Factor', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '5', 'field_active' => 1],
+            ['lab_code' => 'SRLG', 'field_name' => 'rapid_plasma', 'field_desc' => 'Rapid Plasma Reagin', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '6', 'field_active' => 1],
+
+            ['lab_code' => 'MCRP', 'field_name' => 'parasite_type', 'field_desc' => 'Parasite Type', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'MCRP', 'field_name' => 'slide_number', 'field_desc' => 'Slide Number', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'MCRP', 'field_name' => 'parasite_count', 'field_desc' => 'Parasite Count', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+
+            ['lab_code' => 'MRDT', 'field_name' => 'parasite_type', 'field_desc' => 'Parasite Type', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'MRDT', 'field_name' => 'rdt_number', 'field_desc' => 'RDT Number', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+
+            ['lab_code' => 'GXPT', 'field_name' => 'collection_date', 'field_desc' => 'Collection Date', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'GXPT', 'field_name' => 'release_date', 'field_desc' => 'Release Date', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'GXPT', 'field_name' => 'mtb', 'field_desc' => 'MTB', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'GXPT', 'field_name' => 'rif', 'field_desc' => 'Rif', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
+            ['lab_code' => 'GXPT', 'field_name' => 'specimen_code', 'field_desc' => 'Specimen Code', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '5', 'field_active' => 1],
+
+            ['lab_code' => 'XRAY', 'field_name' => 'type', 'field_desc' => 'Type', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'XRAY', 'field_name' => 'result', 'field_desc' => 'Result/Findings', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+
+            ['lab_code' => 'USND', 'field_name' => 'type', 'field_desc' => 'Type', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'USND', 'field_name' => 'result', 'field_desc' => 'Result/Findings', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+
+            ['lab_code' => 'BPSY', 'field_name' => 'type', 'field_desc' => 'Type', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'BPSY', 'field_name' => 'result', 'field_desc' => 'Result/Findings', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+
+            ['lab_code' => 'CXRAY', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'CXRAY', 'field_name' => 'remarks_findings', 'field_desc' => 'Remarks Findings', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '2', 'field_active' => 1],
+            ['lab_code' => 'CXRAY', 'field_name' => 'observation', 'field_desc' => 'Observation', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'CXRAY', 'field_name' => 'remarks_observation', 'field_desc' => 'Remarks Observation', 'group_cat' => '', 'range_cat' => '', 'nv_min' => '', 'nv_max' => '', 'nv_uom' => '', 'sequence_id' => '4', 'field_active' => 1],
         ], ['lab_code', 'field_name']);
     }
 }
