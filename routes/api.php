@@ -578,5 +578,7 @@ Route::prefix('v1')->group(function (){
         //Laboratory
         Route::get('laboratories', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'index'])->name('laboratories.index');
         Route::get('laboratories/{laboratory}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'show'])->name('laboratories.show');
+
+        Route::get('laboratory-categories', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryCategoryController::class, 'index'])->name('laboratory-categories.index');
     });
 });

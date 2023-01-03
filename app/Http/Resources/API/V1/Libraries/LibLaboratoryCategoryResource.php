@@ -16,7 +16,8 @@ class LibLaboratoryCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'laboratory' => $this->when($this->relationLoaded('laboratory'), new LibLaboratoryResource($this->laboratory)),
+            'lab_code' => $this->when(!$this->relationLoaded('laboratory'), $this->lab_code),
+            'laboratory' => $this->whenLoaded('laboratory'),
             'field_name' => $this->field_name,
             'field_desc' => $this->field_desc,
             'group_cat' => $this->group_cat,

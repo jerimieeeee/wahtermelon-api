@@ -42,7 +42,7 @@ class LibLaboratorySeeder extends Seeder
             ['code' => 'FBS', 'desc' => 'Fasting Blood Sugar', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 7],
             ['code' => 'CRTN', 'desc' => 'Creatinine', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 8],
             ['code' => 'ECG', 'desc' => 'Electrocardiogram (ECG)', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 9],
-            ['code' => 'FOB', 'desc' => 'Fecal Occult Blood', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 15],
+            ['code' => 'FOBT', 'desc' => 'Fecal Occult Blood Test', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 15],
             ['code' => 'PPD', 'desc' => 'PPD Test (Tuberculosis)', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 17],
             ['code' => 'HBA', 'desc' => 'HbA1c', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 18],
             ['code' => 'RBS', 'desc' => 'Random Blood Sugar', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 19],
