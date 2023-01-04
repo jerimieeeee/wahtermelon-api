@@ -386,6 +386,14 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-chestxray/{chestxray}', 'update');
                 Route::delete('consult-laboratory-chestxray/{chestxray}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryEcgController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-ecg', 'index');
+                Route::post('consult-laboratory-ecg', 'store');
+                Route::put('consult-laboratory-ecg/{ecg}', 'update');
+                Route::delete('consult-laboratory-ecg/{ecg}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1\Laboratory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryChestXrayRequest;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryChestXrayResource;
-use App\Models\V1\Laboratory\ConsultLaboratoryChestXray;
+use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryEcgRequest;
+use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryEcgResource;
+use App\Models\V1\Laboratory\ConsultLaboratoryEcg;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -17,10 +17,10 @@ use Throwable;
  * @group Laboratory Management
  *
  * APIs for managing medicines
- * @subgroup Chest X-ray
- * @subgroupDescription Consult laboratory for chest x-ray.
+ * @subgroup ECG
+ * @subgroupDescription Consult laboratory for ECG.
  */
-class ConsultLaboratoryChestXrayController extends Controller
+class ConsultLaboratoryEcgController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,15 +31,15 @@ class ConsultLaboratoryChestXrayController extends Controller
      * @queryParam request_id string Consult Laboratory id to view.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
-     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryChestXrayResource
-     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryChestXray paginate=15
+     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryEcgResource
+     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryEcg paginate=15
      * @param Request $request
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = ConsultLaboratoryChestXray::query()
+        $query = ConsultLaboratoryEcg::query()
             ->when(isset($request->patient_id), function($query) use($request){
                 return $query->wherePatientId($request->patient_id);
             })
@@ -50,63 +50,63 @@ class ConsultLaboratoryChestXrayController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['findings', 'observation'])
+            ->with(['findings'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 
         if ($perPage == 'all') {
-            return ConsultLaboratoryChestXrayResource::collection($laboratory->get());
+            return ConsultLaboratoryEcgResource::collection($laboratory->get());
         }
 
-        return ConsultLaboratoryChestXrayResource::collection($laboratory->paginate($perPage)->withQueryString());
+        return ConsultLaboratoryEcgResource::collection($laboratory->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConsultLaboratoryChestXrayRequest $request
+     * @param ConsultLaboratoryEcgRequest $request
      * @return JsonResponse
      */
-    public function store(ConsultLaboratoryChestXrayRequest $request): JsonResponse
+    public function store(ConsultLaboratoryEcgRequest $request): JsonResponse
     {
-        $data = ConsultLaboratoryChestXray::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
-        return response()->json(['data' => new ConsultLaboratoryChestXrayResource($data), 'status' => 'Success'], 201);
+        $data = ConsultLaboratoryEcg::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+        return response()->json(['data' => new ConsultLaboratoryEcgResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param ConsultLaboratoryChestXray $chestxray
-     * @return ConsultLaboratoryChestXrayResource
+     * @param ConsultLaboratoryEcg $ecg
+     * @return ConsultLaboratoryEcgResource
      */
-    public function show(ConsultLaboratoryChestXray $chestxray): ConsultLaboratoryChestXrayResource
+    public function show(ConsultLaboratoryEcg $ecg)
     {
-        return new ConsultLaboratoryChestXrayResource($chestxray);
+        return new ConsultLaboratoryEcgResource($ecg);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ConsultLaboratoryChestXrayRequest $request
-     * @param ConsultLaboratoryChestXray $chestxray
+     * @param ConsultLaboratoryEcgRequest $request
+     * @param ConsultLaboratoryEcg $ecg
      * @return JsonResponse
      */
-    public function update(ConsultLaboratoryChestXrayRequest $request, ConsultLaboratoryChestXray $chestxray): JsonResponse
+    public function update(ConsultLaboratoryEcgRequest $request, ConsultLaboratoryEcg $ecg): JsonResponse
     {
-        $chestxray->update($request->validated());
+        $ecg->update($request->validated());
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConsultLaboratoryChestXray $chestxray
+     * @param ConsultLaboratoryEcg $ecg
      * @return JsonResponse
      * @throws Throwable
      */
-    public function destroy(ConsultLaboratoryChestXray $chestxray): JsonResponse
+    public function destroy(ConsultLaboratoryEcg $ecg): JsonResponse
     {
-        $chestxray->deleteOrFail();
+        $ecg->deleteOrFail();
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

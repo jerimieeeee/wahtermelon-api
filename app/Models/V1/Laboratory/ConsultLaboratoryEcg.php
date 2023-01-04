@@ -2,13 +2,7 @@
 
 namespace App\Models\V1\Laboratory;
 
-use App\Models\User;
-use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Libraries\LibLaboratoryChestxrayFindings;
-use App\Models\V1\Libraries\LibLaboratoryChestxrayObservation;
-use App\Models\V1\Libraries\LibLaboratoryStatus;
-use App\Models\V1\Patient\Patient;
-use App\Models\V1\PSGC\Facility;
+use App\Models\V1\Libraries\LibLaboratoryFindings;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
@@ -17,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConsultLaboratoryChestXray extends Model
+class ConsultLaboratoryEcg extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
@@ -70,11 +64,6 @@ class ConsultLaboratoryChestXray extends Model
 
     public function findings()
     {
-        return $this->belongsTo(LibLaboratoryChestxrayFindings::class, 'findings_code', 'code');
-    }
-
-    public function observation()
-    {
-        return $this->belongsTo(LibLaboratoryChestxrayObservation::class, 'observation_code', 'code');
+        return $this->belongsTo(LibLaboratoryFindings::class, 'findings_code', 'code');
     }
 }

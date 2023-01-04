@@ -270,3 +270,4 @@ class LibLaboratoryCategorySeeder extends Seeder
         ], ['lab_code', 'field_name']);
     }
 }
+     

@@ -23,7 +23,7 @@ class ConsultLaboratory extends Model
         'id'
     ];
 
-    protected $cascadeDeletes = ['cbc', 'creatinine', 'chestXray'];
+    protected $cascadeDeletes = ['cbc', 'creatinine', 'chestXray', 'ecg'];
 
     public $incrementing = false;
 
@@ -76,5 +76,10 @@ class ConsultLaboratory extends Model
     public function chestXray()
     {
         return $this->hasOne(ConsultLaboratoryChestXray::class, 'request_id', 'id');
+    }
+
+    public function ecg()
+    {
+        return $this->hasOne(ConsultLaboratoryEcg::class, 'request_id', 'id');
     }
 }
