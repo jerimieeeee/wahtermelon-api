@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('consult_laboratories', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
-            $table->date('request_date');
+            $table->date('request_date')->index();
             $table->string('facility_code')->index();
             $table->foreignId('consult_id')->nullable()->index()->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();

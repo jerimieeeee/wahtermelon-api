@@ -240,9 +240,9 @@ class LibLaboratoryCategorySeeder extends Seeder
             ['lab_code' => 'BPSY', 'field_name' => 'type', 'field_desc' => 'Type', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
             ['lab_code' => 'BPSY', 'field_name' => 'result', 'field_desc' => 'Result/Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
 
-            ['lab_code' => 'CXRAY', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'CXRAY', 'field_name' => 'findings_code', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
             ['lab_code' => 'CXRAY', 'field_name' => 'remarks_findings', 'field_desc' => 'Remarks Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
-            ['lab_code' => 'CXRAY', 'field_name' => 'observation', 'field_desc' => 'Observation', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'CXRAY', 'field_name' => 'observation_code', 'field_desc' => 'Observation', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '3', 'field_active' => 1],
             ['lab_code' => 'CXRAY', 'field_name' => 'remarks_observation', 'field_desc' => 'Remarks Observation', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '4', 'field_active' => 1],
 
             ['lab_code' => 'LPFL', 'field_name' => 'ldl', 'field_desc' => 'LDL', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mg/dl', 'sequence_id' => '1', 'field_active' => 1],

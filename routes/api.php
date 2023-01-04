@@ -378,6 +378,14 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-creatinine/{creatinine}', 'update');
                 Route::delete('consult-laboratory-creatinine/{creatinine}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryChestXrayController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-chestxray', 'index');
+                Route::post('consult-laboratory-chestxray', 'store');
+                Route::put('consult-laboratory-chestxray/{chestxray}', 'update');
+                Route::delete('consult-laboratory-chestxray/{chestxray}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

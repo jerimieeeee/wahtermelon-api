@@ -2,11 +2,8 @@
 
 namespace App\Models\V1\Laboratory;
 
-use App\Models\User;
-use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Libraries\LibLaboratory;
-use App\Models\V1\Patient\Patient;
-use App\Models\V1\PSGC\Facility;
+use App\Models\V1\Libraries\LibLaboratoryChestxrayFindings;
+use App\Models\V1\Libraries\LibLaboratoryChestxrayObservation;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
@@ -15,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConsultLaboratory extends Model
+class ConsultLaboratoryChestXray extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
@@ -23,14 +20,12 @@ class ConsultLaboratory extends Model
         'id'
     ];
 
-    protected $cascadeDeletes = ['cbc', 'creatinine', 'chestXray'];
-
     public $incrementing = false;
 
     protected $keyType = 'string';
 
     protected $casts = [
-        'request_date' => 'date:Y-m-d',
+        'laboratory_date' => 'date:Y-m-d',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -58,23 +53,23 @@ class ConsultLaboratory extends Model
         return $this->belongsTo(Consult::class);
     }
 
-    public function laboratory()
+    public function laboratoryRequest()
     {
-        return $this->belongsTo(LibLaboratory::class, 'lab_code', 'code');
+        return $this->belongsTo(ConsultLaboratory::class, 'request_id', 'id');
     }
 
-    public function cbc()
+    public function laboratoryStatus()
     {
-        return $this->hasOne(ConsultLaboratoryCbc::class, 'request_id', 'id');
+        return $this->belongsTo(LibLaboratoryStatus::class, 'lab_status_code', 'code');
     }
 
-    public function creatinine()
+    public function findings()
     {
-        return $this->hasOne(ConsultLaboratoryCreatinine::class, 'request_id', 'id');
+        return $this->belongsTo(LibLaboratoryChestxrayFindings::class, 'findings', 'code');
     }
 
-    public function chestXray()
+    public function observation()
     {
-        return $this->hasOne(ConsultLaboratoryChestXray::class, 'request_id', 'id');
+        return $this->belongsTo(LibLaboratoryChestxrayObservation::class, 'observation', 'code');
     }
 }
