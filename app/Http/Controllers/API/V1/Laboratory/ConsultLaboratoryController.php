@@ -26,6 +26,7 @@ class ConsultLaboratoryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @queryParam include string Relationship to view: e.g. category Example: laboratory
      * @queryParam sort string Sort request_date. Add hyphen (-) to descend the list: e.g. prescription_date. Example: -request_date
      * @queryParam patient_id string Patient to view.
      * @queryParam consult_id string Consult to view.
@@ -47,6 +48,7 @@ class ConsultLaboratoryController extends Controller
                 return $query->whereConsultId($request->consult_id);
             });
         $laboratory = QueryBuilder::for($query)
+            ->allowedIncludes('laboratory')
             ->defaultSort('-request_date')
             ->allowedSorts('request_date');
 
