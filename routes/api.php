@@ -628,5 +628,8 @@ Route::prefix('v1')->group(function (){
 
         Route::get('laboratory-findings', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryFindingsController::class, 'index'])->name('laboratory-findings.index');
         Route::get('laboratory-findings/{findings}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryFindingsController::class, 'show'])->name('laboratory-findings.show');
+
+        Route::get('laboratory-results', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'index'])->name('laboratory-results.index');
+        Route::get('laboratory-results/{result}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'show'])->name('laboratory-results.show');
     });
 });
