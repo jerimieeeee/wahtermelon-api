@@ -16,7 +16,7 @@ use Throwable;
  * @authenticated
  * @group Laboratory Management
  *
- * APIs for managing medicines
+ * APIs for managing laboratories
  * @subgroup FBS
  * @subgroupDescription Consult laboratory for FBS.
  */

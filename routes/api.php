@@ -394,6 +394,22 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-ecg/{ecg}', 'update');
                 Route::delete('consult-laboratory-ecg/{ecg}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryFbsController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-fbs', 'index');
+                Route::post('consult-laboratory-fbs', 'store');
+                Route::put('consult-laboratory-fbs/{fbs}', 'update');
+                Route::delete('consult-laboratory-fbs/{fbs}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryRbsController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-rbs', 'index');
+                Route::post('consult-laboratory-rbs', 'store');
+                Route::put('consult-laboratory-rbs/{rbs}', 'update');
+                Route::delete('consult-laboratory-rbs/{rbs}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {
@@ -639,12 +655,6 @@ Route::prefix('v1')->group(function (){
 
         Route::get('laboratory-results', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'index'])->name('laboratory-results.index');
         Route::get('laboratory-results/{result}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'show'])->name('laboratory-results.show');
-
-        Route::get('laboratory-sputum-collection', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'index'])->name('laboratory-sputum-collection.index');
-        Route::get('laboratory-sputum-collection/{collection}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'show'])->name('laboratory-sputum-collection.show');
-    });
-});
-                                y-results.show');
 
         Route::get('laboratory-sputum-collection', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'index'])->name('laboratory-sputum-collection.index');
         Route::get('laboratory-sputum-collection/{collection}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'show'])->name('laboratory-sputum-collection.show');

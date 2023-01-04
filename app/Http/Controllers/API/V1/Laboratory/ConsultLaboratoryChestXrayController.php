@@ -16,7 +16,7 @@ use Throwable;
  * @authenticated
  * @group Laboratory Management
  *
- * APIs for managing medicines
+ * APIs for managing laboratories
  * @subgroup Chest X-ray
  * @subgroupDescription Consult laboratory for chest x-ray.
  */
