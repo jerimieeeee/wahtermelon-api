@@ -88,6 +88,14 @@ class DatabaseSeeder extends Seeder
             LibMedicalHistorySeeder::class,
             LibMedicalHistoryCategorySeeder::class,
             LibPatientSocialHistoryAnswerSeeder::class,
+            LibLaboratorySeeder::class,
+            LibLaboratoryCategorySeeder::class,
+            LibLaboratoryStatusSeeder::class,
+            LibLaboratoryChestxrayFindingsSeeder::class,
+            LibLaboratoryChestxrayObservationSeeder::class,
+            LibLaboratoryFindingsSeeder::class,
+            LibLaboratoryResultSeeder::class,
+            LibLaboratorySputumCollectionSeeder::class,
         ]);
     }
 }
