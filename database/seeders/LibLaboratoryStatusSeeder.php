@@ -17,9 +17,10 @@ class LibLaboratoryStatusSeeder extends Seeder
     {
         LibLaboratoryStatus::upsert([
             ['code' => 'D', 'desc' => 'Done', 'sequence' => 1],
-            ['code' => 'N', 'desc' => 'Not yet done', 'sequence' => 2],
-            ['code' => 'X', 'desc' => 'Deferred', 'sequence' => 3],
-            ['code' => 'W', 'desc' => 'Waived', 'sequence' => 4],
+            ['code' => 'O', 'desc' => 'Done Outside', 'sequence' => 2],
+            ['code' => 'N', 'desc' => 'Not yet done', 'sequence' => 3],
+            ['code' => 'X', 'desc' => 'Deferred', 'sequence' => 4],
+            ['code' => 'W', 'desc' => 'Waived', 'sequence' => 5],
         ], ['code']);
     }
 }

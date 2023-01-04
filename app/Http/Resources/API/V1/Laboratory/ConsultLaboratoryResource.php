@@ -27,6 +27,8 @@ class ConsultLaboratoryResource extends JsonResource
             'request_date' => $this->request_date->format('Y-m-d'),
             'lab_code' => $this->when(!$this->relationLoaded('laboratory'),$this->lab_code),
             'laboratory' => $this->whenLoaded('laboratory'),
+            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
     }
 }

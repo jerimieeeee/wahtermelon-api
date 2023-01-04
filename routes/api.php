@@ -352,7 +352,7 @@ Route::prefix('v1')->group(function (){
             });
         });
 
-    //Konsulta
+    //Consult Laboratory
     Route::prefix('laboratory')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryController::class)
             ->middleware('auth:api')
@@ -361,6 +361,14 @@ Route::prefix('v1')->group(function (){
                 Route::post('consult-laboratories', 'store');
                 Route::put('consult-laboratories/{laboratory}', 'update');
                 Route::delete('consult-laboratories/{laboratory}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryCbcController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-cbc', 'index');
+                Route::post('consult-laboratory-cbc', 'store');
+                Route::put('consult-laboratory-cbc/{cbc}', 'update');
+                Route::delete('consult-laboratory-cbc/{cbc}', 'destroy');
             });
     });
 
