@@ -23,6 +23,8 @@ class ConsultLaboratory extends Model
         'id'
     ];
 
+    protected $cascadeDeletes = ['cbc'];
+
     public $incrementing = false;
 
     protected $keyType = 'string';
@@ -59,5 +61,10 @@ class ConsultLaboratory extends Model
     public function laboratory()
     {
         return $this->belongsTo(LibLaboratory::class, 'lab_code', 'code');
+    }
+
+    public function cbc()
+    {
+        return $this->hasOne(ConsultLaboratoryCbc::class, 'request_id', 'id');
     }
 }

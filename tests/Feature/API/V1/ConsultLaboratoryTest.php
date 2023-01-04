@@ -16,7 +16,7 @@ class ConsultLaboratoryTest extends TestCase
      *
      * @return void
      */
-    public function test_consult_mc_service_can_store_data()
+    public function test_consult_laboratory_can_store_data()
     {
         Passport::actingAs(
             User::factory()->create()

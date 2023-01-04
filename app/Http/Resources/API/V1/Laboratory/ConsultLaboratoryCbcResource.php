@@ -24,7 +24,7 @@ class ConsultLaboratoryCbcResource extends JsonResource
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
-            'laboratory_date' => $this->request_date->format('Y-m-d'),
+            'laboratory_date' => $this->laboratory_date->format('Y-m-d'),
             'request_id' => $this->when(!$this->relationLoaded('laboratoryRequest'),$this->request_id),
             'request' => $this->whenLoaded('laboratoryRequest'),
             'hemoglobin' => $this->hemoglobin,

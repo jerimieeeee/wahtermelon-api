@@ -2,12 +2,8 @@
 
 namespace Database\Factories\V1\Laboratory;
 
-use App\Models\User;
-use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
-use App\Models\V1\Patient\Patient;
-use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,13 +18,14 @@ class ConsultLaboratoryCbcFactory extends Factory
      */
     public function definition()
     {
+        $consult = ConsultLaboratory::inRandomOrder()->limit(1)->first();
         return [
-            'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
+            'facility_code' => $consult->facility_code,
+            'user_id' => $consult->user_id,
+            'patient_id' => $consult->patient_id,
+            'consult_id' => $consult->consult_id,
             'laboratory_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
-            'request_id' => fake()->randomElement(ConsultLaboratory::pluck('id')->toArray()),
+            'request_id' => $consult->id,
             'hemoglobin' => fake()->numberBetween(1, 10),
             'hematocrit' => fake()->numberBetween(1, 10),
             'rbc' => fake()->numberBetween(1, 10),
