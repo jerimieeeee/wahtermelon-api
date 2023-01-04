@@ -2,9 +2,11 @@
 
 namespace Database\Factories\V1\Laboratory;
 
+use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravel\Passport\Passport;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryCbc>
@@ -18,7 +20,11 @@ class ConsultLaboratoryCbcFactory extends Factory
      */
     public function definition()
     {
-        $consult = ConsultLaboratory::inRandomOrder()->limit(1)->first();
+        Passport::actingAs(
+            User::factory()->create()
+        );
+        //$consult = ConsultLaboratory::whereLabCode('CBC')->inRandomOrder()->limit(1)->first();
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CBC']);
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

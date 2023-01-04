@@ -370,6 +370,14 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-cbc/{cbc}', 'update');
                 Route::delete('consult-laboratory-cbc/{cbc}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryCreatinineController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-creatinine', 'index');
+                Route::post('consult-laboratory-creatinine', 'store');
+                Route::put('consult-laboratory-creatinine/{creatinine}', 'update');
+                Route::delete('consult-laboratory-creatinine/{creatinine}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

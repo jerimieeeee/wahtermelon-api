@@ -261,11 +261,11 @@ class LibLaboratoryCategorySeeder extends Seeder
 
             ['lab_code' => 'FOBT', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
 
-            ['lab_code' => 'CRTN', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'CRTN', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mg/dl', 'sequence_id' => '1', 'field_active' => 1],
 
             ['lab_code' => 'PPD', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
 
-            ['lab_code' => 'HBA', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'HBA', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mmol/mol', 'sequence_id' => '1', 'field_active' => 1],
 
         ], ['lab_code', 'field_name']);
     }

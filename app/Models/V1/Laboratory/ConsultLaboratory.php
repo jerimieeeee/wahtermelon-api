@@ -23,7 +23,7 @@ class ConsultLaboratory extends Model
         'id'
     ];
 
-    protected $cascadeDeletes = ['cbc'];
+    protected $cascadeDeletes = ['cbc', 'creatinine'];
 
     public $incrementing = false;
 
@@ -66,5 +66,10 @@ class ConsultLaboratory extends Model
     public function cbc()
     {
         return $this->hasOne(ConsultLaboratoryCbc::class, 'request_id', 'id');
+    }
+
+    public function creatinine()
+    {
+        return $this->hasOne(ConsultLaboratoryCreatinine::class, 'request_id', 'id');
     }
 }

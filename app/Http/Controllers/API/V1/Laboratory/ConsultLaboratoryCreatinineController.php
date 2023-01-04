@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1\Laboratory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryCbcRequest;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryCbcResource;
-use App\Models\V1\Laboratory\ConsultLaboratoryCbc;
+use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryCreatinineRequest;
+use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryCreatinineResource;
+use App\Models\V1\Laboratory\ConsultLaboratoryCreatinine;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -18,10 +18,10 @@ use Throwable;
  * @group Laboratory Management
  *
  * APIs for managing medicines
- * @subgroup CBC
- * @subgroupDescription Consult laboratory for cbc.
+ * @subgroup Creatinine
+ * @subgroupDescription Consult laboratory for creatinine.
  */
-class ConsultLaboratoryCbcController extends Controller
+class ConsultLaboratoryCreatinineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,15 +32,15 @@ class ConsultLaboratoryCbcController extends Controller
      * @queryParam request_id string Consult Laboratory id to view.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
-     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryCbcResource
-     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryCbc paginate=15
+     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryCreatinineResource
+     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryCreatinine paginate=15
      * @param Request $request
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = ConsultLaboratoryCbc::query()
+        $query = ConsultLaboratoryCreatinine::query()
             ->when(isset($request->patient_id), function($query) use($request){
                 return $query->wherePatientId($request->patient_id);
             })
@@ -55,58 +55,58 @@ class ConsultLaboratoryCbcController extends Controller
             ->allowedSorts('laboratory_date');
 
         if ($perPage == 'all') {
-            return ConsultLaboratoryCbcResource::collection($laboratory->get());
+            return ConsultLaboratoryCreatinineResource::collection($laboratory->get());
         }
 
-        return ConsultLaboratoryCbcResource::collection($laboratory->paginate($perPage)->withQueryString());
+        return ConsultLaboratoryCreatinineResource::collection($laboratory->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConsultLaboratoryCbcRequest $request
+     * @param ConsultLaboratoryCreatinineRequest $request
      * @return JsonResponse
      */
-    public function store(ConsultLaboratoryCbcRequest $request): JsonResponse
+    public function store(ConsultLaboratoryCreatinineRequest $request): JsonResponse
     {
-        $data = ConsultLaboratoryCbc::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
-        return response()->json(['data' => new ConsultLaboratoryCbcResource($data), 'status' => 'Success'], 201);
+        $data = ConsultLaboratoryCreatinine::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+        return response()->json(['data' => new ConsultLaboratoryCreatinineResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param ConsultLaboratoryCbc $cbc
-     * @return ConsultLaboratoryCbcResource
+     * @param ConsultLaboratoryCreatinine $creatinine
+     * @return ConsultLaboratoryCreatinineResource
      */
-    public function show(ConsultLaboratoryCbc $cbc): ConsultLaboratoryCbcResource
+    public function show(ConsultLaboratoryCreatinine $creatinine)
     {
-        return new ConsultLaboratoryCbcResource($cbc);
+        return new ConsultLaboratoryCreatinineResource($creatinine);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ConsultLaboratoryCbcRequest $request
-     * @param ConsultLaboratoryCbc $cbc
+     * @param ConsultLaboratoryCreatinineRequest $request
+     * @param ConsultLaboratoryCreatinine $creatinine
      * @return JsonResponse
      */
-    public function update(ConsultLaboratoryCbcRequest $request, ConsultLaboratoryCbc $cbc): JsonResponse
+    public function update(ConsultLaboratoryCreatinineRequest $request, ConsultLaboratoryCreatinine $creatinine): JsonResponse
     {
-        $cbc->update($request->validated());
+        $creatinine->update($request->validated());
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConsultLaboratoryCbc $cbc
+     * @param ConsultLaboratoryCreatinine $creatinine
      * @return JsonResponse
      * @throws Throwable
      */
-    public function destroy(ConsultLaboratoryCbc $cbc): JsonResponse
+    public function destroy(ConsultLaboratoryCreatinine $creatinine): JsonResponse
     {
-        $cbc->deleteOrFail();
+        $creatinine->deleteOrFail();
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }
