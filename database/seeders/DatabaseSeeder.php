@@ -90,6 +90,7 @@ class DatabaseSeeder extends Seeder
             LibPatientSocialHistoryAnswerSeeder::class,
             LibLaboratorySeeder::class,
             LibLaboratoryCategorySeeder::class,
+            LibLaboratoryStatusSeeder::class,
         ]);
     }
 }

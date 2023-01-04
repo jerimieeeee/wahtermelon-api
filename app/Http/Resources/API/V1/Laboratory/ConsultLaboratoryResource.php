@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Resources\API\V1\Laboratory;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class ConsultLaboratoryResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility' => $this->whenLoaded('facility'),
+            'consult_id' => $this->when(!$this->relationLoaded('consult'),$this->consult_id),
+            'consult' => $this->whenLoaded('consult'),
+            'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
+            'patient' => $this->whenLoaded('patient'),
+            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user' => $this->whenLoaded('user'),
+            'request_date' => $this->request_date->format('Y-m-d'),
+            'lab_code' => $this->when(!$this->relationLoaded('laboratory'),$this->lab_code),
+            'laboratory' => $this->whenLoaded('laboratory'),
+        ];
+    }
+}

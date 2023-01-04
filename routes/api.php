@@ -342,15 +342,27 @@ Route::prefix('v1')->group(function (){
         });
 
     //Patient Social History APIs
-        Route::prefix('patient-social-history')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSocialHistoryController::class)
-                ->middleware('auth:api')
-                ->group(function() {
-                    Route::get('history', 'index');
-                    Route::get('history/{patientSocialHistory}', 'show');
-                    Route::post('history', 'store');
-                });
+    Route::prefix('patient-social-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSocialHistoryController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('history', 'index');
+                Route::get('history/{patientSocialHistory}', 'show');
+                Route::post('history', 'store');
             });
+        });
+
+    //Konsulta
+    Route::prefix('laboratory')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratories', 'index');
+                Route::post('consult-laboratories', 'store');
+                Route::put('consult-laboratories/{laboratory}', 'update');
+                Route::delete('consult-laboratories/{laboratory}', 'destroy');
+            });
+    });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -580,5 +592,8 @@ Route::prefix('v1')->group(function (){
         Route::get('laboratories/{laboratory}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'show'])->name('laboratories.show');
 
         Route::get('laboratory-categories', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryCategoryController::class, 'index'])->name('laboratory-categories.index');
+
+        Route::get('laboratory-statuses', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStatusController::class, 'index'])->name('laboratory-statuses.index');
+        Route::get('laboratory-statuses/{laboratoryStatus}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStatusController::class, 'show'])->name('laboratory-statuses.show');
     });
 });
