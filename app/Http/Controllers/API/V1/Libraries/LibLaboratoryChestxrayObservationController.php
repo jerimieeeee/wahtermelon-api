@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibLaboratoryChestxrayObservationResource;
 use App\Models\V1\Libraries\LibLaboratoryChestxrayObservation;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
