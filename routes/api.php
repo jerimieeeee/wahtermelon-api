@@ -611,5 +611,11 @@ Route::prefix('v1')->group(function (){
 
         Route::get('laboratory-statuses', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStatusController::class, 'index'])->name('laboratory-statuses.index');
         Route::get('laboratory-statuses/{laboratoryStatus}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStatusController::class, 'show'])->name('laboratory-statuses.show');
+
+        Route::get('laboratory-chestxray-findings', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayFindingsController::class, 'index'])->name('laboratory-chestxray-findings.index');
+        Route::get('laboratory-chestxray-findings/{findings}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayFindingsController::class, 'show'])->name('laboratory-chestxray-findings.show');
+
+        Route::get('laboratory-chestxray-observations', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayObservationController::class, 'index'])->name('laboratory-chestxray-observations.index');
+        Route::get('laboratory-chestxray-observations/{observation}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayObservationController::class, 'show'])->name('laboratory-chestxray-observations.show');
     });
 });

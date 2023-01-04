@@ -91,6 +91,8 @@ class DatabaseSeeder extends Seeder
             LibLaboratorySeeder::class,
             LibLaboratoryCategorySeeder::class,
             LibLaboratoryStatusSeeder::class,
+            LibLaboratoryChestxrayFindingsSeeder::class,
+            LibLaboratoryChestxrayObservationSeeder::class,
         ]);
     }
 }
