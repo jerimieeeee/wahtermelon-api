@@ -631,5 +631,8 @@ Route::prefix('v1')->group(function (){
 
         Route::get('laboratory-results', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'index'])->name('laboratory-results.index');
         Route::get('laboratory-results/{result}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'show'])->name('laboratory-results.show');
+
+        Route::get('laboratory-sputum-collection', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'index'])->name('laboratory-sputum-collection.index');
+        Route::get('laboratory-sputum-collection/{collection}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'show'])->name('laboratory-sputum-collection.show');
     });
 });
