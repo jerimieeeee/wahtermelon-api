@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('consult_id')->nullable()->index()->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->foreignUuid('request_id')->index()->constrained();
+            $table->foreignUuid('request_id')->index()->constrained('consult_laboratories');
             $table->date('laboratory_date');
             $table->string('hemoglobin',50);
             $table->string('hematocrit',50);
