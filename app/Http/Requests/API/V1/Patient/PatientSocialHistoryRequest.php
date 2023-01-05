@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1\Patient;
 
+use App\Models\V1\Libraries\LibNcdAnswerS2;
 use App\Models\V1\Libraries\LibPatientSocialHistoryAnswer;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
@@ -32,6 +33,7 @@ class PatientSocialHistoryRequest extends FormRequest
             'alcohol' => 'required|exists:lib_patient_social_history_answers,id',
             'bottles_per_day' => 'numeric|nullable',
             'illicit_drugs' => 'required|exists:lib_patient_social_history_answers,id',
+            'sexually_active' => 'required|exists:lib_ncd_answer_s2,id',
         ];
     }
 
@@ -61,6 +63,10 @@ class PatientSocialHistoryRequest extends FormRequest
             'illicit_drugs' => [
                 'description' => 'ID of illicit drugs library',
                 'example' => fake()->randomElement(LibPatientSocialHistoryAnswer::pluck('id')->toArray()),
+            ],
+            'sexually_active' => [
+                'description' => 'is patient sexually active?',
+                'example' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
             ],
         ];
     }

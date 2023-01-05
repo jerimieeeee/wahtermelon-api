@@ -24,6 +24,7 @@ class PatientSocialHistoryResource extends JsonResource
             'alcohol' => $this->alcohol,
             'bottles_per_day' => $this->bottles_per_day,
             'illicit_drugs' => $this->illicit_drugs,
+            'sexually_active' => $this->sexually_active,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
