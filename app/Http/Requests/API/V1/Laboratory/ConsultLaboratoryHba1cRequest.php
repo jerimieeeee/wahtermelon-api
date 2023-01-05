@@ -8,7 +8,7 @@ use App\Models\V1\Libraries\LibLaboratoryStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
-class ConsultLaboratoryCreatinineRequest extends FormRequest
+class ConsultLaboratoryHba1cRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -43,7 +43,7 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
         Passport::actingAs(
             User::factory()->create()
         );
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CRTN']);
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'HBA']);
         return [
             'facility_code' => [
                 'example' => $consult->facility_code
