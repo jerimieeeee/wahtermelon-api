@@ -11,6 +11,7 @@ use App\Models\V1\Libraries\LibNcdLocation;
 use App\Models\V1\Libraries\LibNcdSmokingAnswer;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\Patient\Patient;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
@@ -35,7 +36,7 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
     {
         $patient = Patient::find(request()->patient_id);
         $gender = $patient->gender;
-        $age = $patient->birthdate->diff(request()->assessment_date)->y;
+        $age = Carbon::parse($patient->birthdate)->diff(request()->assessment_date)->y;
         return array_merge($this->validated(), [
             'age' => $age,
             'gender' => $gender,
