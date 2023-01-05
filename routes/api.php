@@ -342,15 +342,75 @@ Route::prefix('v1')->group(function (){
         });
 
     //Patient Social History APIs
-        Route::prefix('patient-social-history')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSocialHistoryController::class)
-                ->middleware('auth:api')
-                ->group(function() {
-                    Route::get('history', 'index');
-                    Route::get('history/{patientSocialHistory}', 'show');
-                    Route::post('history', 'store');
-                });
+    Route::prefix('patient-social-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSocialHistoryController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('history', 'index');
+                Route::get('history/{patientSocialHistory}', 'show');
+                Route::post('history', 'store');
             });
+        });
+
+    //Consult Laboratory
+    Route::prefix('laboratory')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratories', 'index');
+                Route::post('consult-laboratories', 'store');
+                Route::put('consult-laboratories/{laboratory}', 'update');
+                Route::delete('consult-laboratories/{laboratory}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryCbcController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-cbc', 'index');
+                Route::post('consult-laboratory-cbc', 'store');
+                Route::put('consult-laboratory-cbc/{cbc}', 'update');
+                Route::delete('consult-laboratory-cbc/{cbc}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryCreatinineController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-creatinine', 'index');
+                Route::post('consult-laboratory-creatinine', 'store');
+                Route::put('consult-laboratory-creatinine/{creatinine}', 'update');
+                Route::delete('consult-laboratory-creatinine/{creatinine}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryChestXrayController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-chestxray', 'index');
+                Route::post('consult-laboratory-chestxray', 'store');
+                Route::put('consult-laboratory-chestxray/{chestxray}', 'update');
+                Route::delete('consult-laboratory-chestxray/{chestxray}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryEcgController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-ecg', 'index');
+                Route::post('consult-laboratory-ecg', 'store');
+                Route::put('consult-laboratory-ecg/{ecg}', 'update');
+                Route::delete('consult-laboratory-ecg/{ecg}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryFbsController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-fbs', 'index');
+                Route::post('consult-laboratory-fbs', 'store');
+                Route::put('consult-laboratory-fbs/{fbs}', 'update');
+                Route::delete('consult-laboratory-fbs/{fbs}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryRbsController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-rbs', 'index');
+                Route::post('consult-laboratory-rbs', 'store');
+                Route::put('consult-laboratory-rbs/{rbs}', 'update');
+                Route::delete('consult-laboratory-rbs/{rbs}', 'destroy');
+            });
+    });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -574,5 +634,29 @@ Route::prefix('v1')->group(function (){
         //Patient Social History
         Route::get('social-history', [\App\Http\Controllers\API\V1\Libraries\LibPatientSocialHistoryAnswerController::class, 'index'])->name('social-history-category.index');
         Route::get('social-history/{socialHistoryAnswer}', [\App\Http\Controllers\API\V1\Libraries\LibPatientSocialHistoryAnswerController::class, 'show'])->name('social-history-category.show');
+
+        //Laboratory
+        Route::get('laboratories', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'index'])->name('laboratories.index');
+        Route::get('laboratories/{laboratory}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryController::class, 'show'])->name('laboratories.show');
+
+        Route::get('laboratory-categories', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryCategoryController::class, 'index'])->name('laboratory-categories.index');
+
+        Route::get('laboratory-statuses', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStatusController::class, 'index'])->name('laboratory-statuses.index');
+        Route::get('laboratory-statuses/{laboratoryStatus}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStatusController::class, 'show'])->name('laboratory-statuses.show');
+
+        Route::get('laboratory-chestxray-findings', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayFindingsController::class, 'index'])->name('laboratory-chestxray-findings.index');
+        Route::get('laboratory-chestxray-findings/{findings}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayFindingsController::class, 'show'])->name('laboratory-chestxray-findings.show');
+
+        Route::get('laboratory-chestxray-observations', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayObservationController::class, 'index'])->name('laboratory-chestxray-observations.index');
+        Route::get('laboratory-chestxray-observations/{observation}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryChestxrayObservationController::class, 'show'])->name('laboratory-chestxray-observations.show');
+
+        Route::get('laboratory-findings', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryFindingsController::class, 'index'])->name('laboratory-findings.index');
+        Route::get('laboratory-findings/{findings}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryFindingsController::class, 'show'])->name('laboratory-findings.show');
+
+        Route::get('laboratory-results', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'index'])->name('laboratory-results.index');
+        Route::get('laboratory-results/{result}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryResultController::class, 'show'])->name('laboratory-results.show');
+
+        Route::get('laboratory-sputum-collection', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'index'])->name('laboratory-sputum-collection.index');
+        Route::get('laboratory-sputum-collection/{collection}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'show'])->name('laboratory-sputum-collection.show');
     });
 });
