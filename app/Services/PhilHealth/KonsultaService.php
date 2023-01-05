@@ -576,6 +576,7 @@ class KonsultaService
                 ->joinSub($patient, 'patients', function($join){
                     $join->on('patient_philhealth.patient_id', '=', 'patients.id');
                 })
+                ->where('patient_id', 'sdf')
                 ->get()
                 ->map(function($data, $key){
                     $age = Carbon::parse($data->birthdate)->diff($data->enlistment_date);

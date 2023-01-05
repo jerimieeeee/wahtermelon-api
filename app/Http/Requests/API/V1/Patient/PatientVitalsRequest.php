@@ -7,6 +7,7 @@ use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Facility;
 use App\Services\Patient\PatientVitalsService;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientVitalsRequest extends FormRequest
@@ -30,8 +31,8 @@ class PatientVitalsRequest extends FormRequest
     {
         $patient = Patient::find(request()->patient_id);
         $gender = $patient->gender;
-        $years = $patient->birthdate->diffInYears(request()->vitals_date);
-        $months = $patient->birthdate->diffInMonths(request()->vitals_date);
+        $years = Carbon::parse($patient->birthdate)->diffInYears(request()->vitals_date);
+        $months = Carbon::parse($patient->birthdate)->diffInMonths(request()->vitals_date);
         $patientVitals = new PatientVitalsService();
         if($years > 6) {
             list($weight, $height, $bmi, $bmiClass) = $patientVitals->get_patient_bmi();
