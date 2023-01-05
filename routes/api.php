@@ -412,6 +412,28 @@ Route::prefix('v1')->group(function (){
             });
     });
 
+    //Patient Menstrual History APIs
+    Route::prefix('patient-menstrual-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientMenstrualHistoryController::class)
+            ->middleware('auth:api')
+             ->group(function() {
+                Route::get('history', 'index');
+                Route::get('history/{patientMenstrualHistory}', 'show');
+                Route::post('history', 'store');
+            });
+    });
+
+    //Patient Surgical History APIs
+    Route::prefix('patient-surgical-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSurgicalHistoryController::class)
+            ->middleware('auth:api')
+             ->group(function() {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::delete('history/{patientSurgicalHistory}', 'destroy');
+            });
+    });
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');
@@ -658,5 +680,10 @@ Route::prefix('v1')->group(function (){
 
         Route::get('laboratory-sputum-collection', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'index'])->name('laboratory-sputum-collection.index');
         Route::get('laboratory-sputum-collection/{collection}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'show'])->name('laboratory-sputum-collection.show');
+
+        //Family Planning Method
+        Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
+        Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
+
     });
 });

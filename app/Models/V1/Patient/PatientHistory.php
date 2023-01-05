@@ -5,14 +5,14 @@ namespace App\Models\V1\Patient;
 use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibMedicalHistoryCategory;
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class PatientHistory extends Model
 {
-    use HasFactory, HasUuid, FilterByUser;
+    use HasFactory, HasUuids, FilterByUser;
 
     protected $table = 'patient_histories';
 

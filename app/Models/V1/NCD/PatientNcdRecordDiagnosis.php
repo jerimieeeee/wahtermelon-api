@@ -7,11 +7,12 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PatientNcdRecordDiagnosis extends Model
 {
-    use HasFactory, HasUuid, FilterByUser;
+    use HasFactory, HasUuids, FilterByUser;
 
     protected $table = 'patient_ncd_record_diagnoses';
 

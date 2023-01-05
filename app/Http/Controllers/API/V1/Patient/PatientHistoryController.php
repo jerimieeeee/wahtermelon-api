@@ -59,12 +59,12 @@ class PatientHistoryController extends Controller
             $medical_history = $request->input('medical_history');
             PatientHistory::query()
                 ->where('patient_id', $request->safe()->patient_id)
+                ->where('category', $medical_history[0]['category'])
                 ->delete();
 
                 if (isset($request->medical_history)) {
                     foreach($medical_history as $value){
-                        PatientHistory::firstOrCreate(['patient_id' => $request->patient_id, 'medical_history_id' => $value['medical_history_id'], 'category' => $value['category'], 'remarks' => $value['remarks']],
-                        ['patient_id' => $request->input('patient_id')] + $value);
+                        PatientHistory::create(['patient_id' => $request->input('patient_id')] + $value);
                     }
                 }
 

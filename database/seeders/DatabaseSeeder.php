@@ -96,6 +96,7 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryFindingsSeeder::class,
             LibLaboratoryResultSeeder::class,
             LibLaboratorySputumCollectionSeeder::class,
+            LibFpMethodSeeder::class,
         ]);
     }
 }

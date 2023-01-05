@@ -5,13 +5,14 @@ namespace App\Models\V1\NCD;
 use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConsultNcdRiskAssessment extends Model
 {
-    use HasFactory, SoftDeletes, HasUuid, FilterByUser;
+    use HasFactory, SoftDeletes, HasUuids, FilterByUser;
 
     protected $table = 'consult_ncd_risk_assessment';
 

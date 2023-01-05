@@ -7,10 +7,11 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class PatientSocialHistory extends Model
 {
-    use HasFactory, HasUuid, FilterByUser;
+    use HasFactory, HasUuids, FilterByUser;
 
     protected $table = 'patient_social_histories';
 

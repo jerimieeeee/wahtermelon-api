@@ -1,38 +1,31 @@
 <?php
 
-namespace App\Models\V1\NCD;
+namespace App\Models\V1\Patient;
 
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use DateTimeInterface;
 
-class ConsultNcdRiskScreeningBloodGlucose extends Model
+class PatientSurgicalHistory extends Model
 {
     use HasFactory, HasUuids, FilterByUser;
 
-    protected $table = 'consult_ncd_risk_screening_glucose';
+    protected $table = 'patient_surgical_histories';
 
     protected $guarded = [
-        'id',
+        'id'
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'consult_ncd_risk_id';
-    }
 
     public $incrementing = false;
 
     protected $keyType = 'string';
 
-    protected $casts = [
-        'date_taken' => 'date:Y-m-d',
-        'raised_blood_glucose' => 'boolean',
-    ];
+    // public function getRouteKeyName()
+    // {
+    //     return 'patient_id';
+    // }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -53,15 +46,4 @@ class ConsultNcdRiskScreeningBloodGlucose extends Model
     {
         return $this->belongsTo(Patient::class);
     }
-
-    public function patientNcd()
-    {
-        return $this->belongsTo(PatientNcd::class, 'patient_ncd_id', 'id');
-    }
-
-    public function consultRiskAssessment()
-    {
-        return $this->belongsTo(ConsultNcdRiskAssessment::class, 'consult_ncd_risk_id', 'id');
-    }
-
 }

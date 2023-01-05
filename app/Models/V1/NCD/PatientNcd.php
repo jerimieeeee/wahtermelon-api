@@ -6,13 +6,14 @@ use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientNcd extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuid, FilterByUser;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $table = 'patient_ncd';
 
