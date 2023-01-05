@@ -410,6 +410,14 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-rbs/{rbs}', 'update');
                 Route::delete('consult-laboratory-rbs/{rbs}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryHba1cController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-hba1c', 'index');
+                Route::post('consult-laboratory-hba1c', 'store');
+                Route::put('consult-laboratory-hba1c/{hba1c}', 'update');
+                Route::delete('consult-laboratory-hba1c/{hba1c}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

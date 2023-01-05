@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\API\V1\Laboratory;
 
+use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Laravel\Passport\Passport;
 
 class ConsultLaboratoryCbcRequest extends FormRequest
 {
@@ -56,7 +58,11 @@ class ConsultLaboratoryCbcRequest extends FormRequest
 
     public function bodyParameters()
     {
-        $consult = ConsultLaboratory::inRandomOrder()->limit(1)->first();
+        Passport::actingAs(
+            User::factory()->create()
+        );
+        //$consult = ConsultLaboratory::whereLabCode('CBC')->inRandomOrder()->limit(1)->first();
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CBC']);
         return [
             'facility_code' => [
                 'example' => $consult->facility_code
