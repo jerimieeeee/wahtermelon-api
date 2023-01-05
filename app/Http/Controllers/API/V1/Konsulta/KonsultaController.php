@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\API\V1\Konsulta;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
+use App\Models\User;
+use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\PhilHealth\KonsultaService;
 use App\Services\PhilHealth\SoapService;
@@ -12,6 +16,7 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Collection;
 use Spatie\ArrayToXml\ArrayToXml;
 
 /**
@@ -140,12 +145,68 @@ class KonsultaController extends Controller
 
     public function validateReport(SoapService $service, KonsultaService $konsultaService)
     {
-        return $service->httpClient();
+        //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
-        $firstTranche = $konsultaService->generateXml();
+        return $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
-        //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
-        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>2]);
+        return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
+        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
+    }
+
+    public function generateXml(KonsultaService $konsultaService)
+    {
+        return $e = $konsultaService->profiling();
+        return count($e['ENLISTMENT'][0]);
+        $enlistments = ['ENLISTMENT' => []];
+        $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
+        $user = User::selectRaw('id, CONCAT(first_name, " ", last_name) AS created_by');
+        $data = PatientPhilhealth::query()
+            ->joinSub($patient, 'patients', function($join){
+                $join->on('patient_philhealth.patient_id', '=', 'patients.id');
+            })
+            ->joinSub($user, 'users', function($join){
+                $join->on('patient_philhealth.user_id', '=', 'users.id');
+            })
+            ->get()->map(function($data, $key){
+            return [
+                '_attributes' => [
+                    'pHciCaseNo' => $data->case_number?? "",
+                    'pHciTransNo' => $data->transaction_number?? "",
+                    'pEffYear' => $data->effectivity_year?? "",
+                    'pEnlistStat' => $data->enlistment_status_id?? "",
+                    'pEnlistDate' => $data->enlistment_date?? "",
+                    'pPackageType' => $data->package_type_id?? "",
+                    'pMemPin' => $data->member_pin?? "",
+                    'pMemFname' => strtoupper($data->member_first_name?? ""),
+                    'pMemMname' => strtoupper($data->member_middle_name?? ""),
+                    'pMemLname' => strtoupper($data->member_last_name?? ""),
+                    'pMemExtname' => strtoupper($data->member_suffix_name == 'NA' ? "" : $data->member_suffix_name),
+                    'pMemDob' => $data->member_birthdate?? "",
+                    'pPatientPin' => $data->philhealth_id?? "",
+                    'pPatientFname' => strtoupper($data->first_name?? ""),
+                    'pPatientMname' => strtoupper($data->middle_name?? ""),
+                    'pPatientLname' => strtoupper($data->last_name?? ""),
+                    'pPatientExtname' => strtoupper($data->suffix_name == 'NA' ? "" : $data->suffix_name),
+                    'pPatientSex' => $data->gender?? "",
+                    'pPatientDob' => $data->birthdate?? "",
+                    'pPatientType' => $data->membership_type_id?? "",
+                    'pPatientMobileNo' => $data->mobile_number?? "",
+                    'pPatientLandlineNo' => "",
+                    'pWithConsent' => isset($data->consent_flag) ? 'Y' : 'N',
+
+                    'pTransDate' => isset($data->created_at) ? $data->created_at->format('Y-m-d') : "",
+                    'pCreatedBy' => strtoupper($data->created_by?? ""),
+                    'pReportStatus' => "U",
+                    'pDeficiencyRemarks' => "",
+                ]
+            ];
+        });
+        //return $data->toArray();
+
+        $enlistments['ENLISTMENT'] = [$data->toArray()];
+        //return $enlistments;
+        $result = new ArrayToXml($enlistments);
+        return $result->dropXmlDeclaration()->toXml();
     }
 
     public function sample()

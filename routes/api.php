@@ -317,6 +317,7 @@ Route::prefix('v1')->group(function (){
                 Route::get('check-registered', 'checkRegistered');
                 Route::get('check-atc', 'checkATC');
                 Route::get('validate-report', 'validateReport');
+                Route::get('generate-xml', 'generateXml');
             });
     });
 
