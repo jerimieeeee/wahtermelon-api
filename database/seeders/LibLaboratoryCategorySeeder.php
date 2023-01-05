@@ -162,7 +162,7 @@ class LibLaboratoryCategorySeeder extends Seeder
 
             ['lab_code' => 'SPTM', 'field_name' => 'visual_appearance', 'field_desc' => 'Visual Appearance', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
             ['lab_code' => 'SPTM', 'field_name' => 'reading', 'field_desc' => 'Reading/Number of Plusses(+)', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
-            ['lab_code' => 'SPTM', 'field_name' => 'data_collection', 'field_desc' => 'Sequence Number of Sputum', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '3', 'field_active' => 1],
+            ['lab_code' => 'SPTM', 'field_name' => 'data_collection_code', 'field_desc' => 'Sequence Number of Sputum', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '3', 'field_active' => 1],
             ['lab_code' => 'SPTM', 'field_name' => 'result', 'field_desc' => 'Sputum Exam Result', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '4', 'field_active' => 1],
             ['lab_code' => 'SPTM', 'field_name' => 'period', 'field_desc' => 'Period of Sputum Exam', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '5', 'field_active' => 1],
             ['lab_code' => 'SPTM', 'field_name' => 'diagnosis', 'field_desc' => 'Final Lab Diagnosis', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '6', 'field_active' => 1],
@@ -254,7 +254,7 @@ class LibLaboratoryCategorySeeder extends Seeder
 
             ['lab_code' => 'RBS', 'field_name' => 'glucose', 'field_desc' => 'Glucose', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mg/dl', 'sequence_id' => '1', 'field_active' => 1],
 
-            ['lab_code' => 'ECG', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'ECG', 'field_name' => 'findings_code', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
 
             ['lab_code' => 'PSMR', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
             ['lab_code' => 'PSMR', 'field_name' => 'impression', 'field_desc' => 'Impression', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
@@ -263,7 +263,7 @@ class LibLaboratoryCategorySeeder extends Seeder
 
             ['lab_code' => 'CRTN', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mg/dl', 'sequence_id' => '1', 'field_active' => 1],
 
-            ['lab_code' => 'PPD', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'PPD', 'field_name' => 'findings_code', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
 
             ['lab_code' => 'HBA', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mmol/mol', 'sequence_id' => '1', 'field_active' => 1],
 

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1\Laboratory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryHba1cRequest;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryHba1cResource;
-use App\Models\V1\Laboratory\ConsultLaboratoryHba1c;
+use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryPpdRequest;
+use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryPpdResource;
+use App\Models\V1\Laboratory\ConsultLaboratoryPpd;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -18,10 +18,10 @@ use Throwable;
  * @group Laboratory Management
  *
  * APIs for managing laboratories
- * @subgroup HbA1c
- * @subgroupDescription Consult laboratory for HbA1c.
+ * @subgroup PPD Test
+ * @subgroupDescription Consult laboratory for PPD Test.
  */
-class ConsultLaboratoryHba1cController extends Controller
+class ConsultLaboratoryPpdController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,15 +32,15 @@ class ConsultLaboratoryHba1cController extends Controller
      * @queryParam request_id string Consult Laboratory id to view.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
-     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryHba1cResource
-     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryHba1c paginate=15
+     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryPpdResource
+     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryPpd paginate=15
      * @param Request $request
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = ConsultLaboratoryHba1c::query()
+        $query = ConsultLaboratoryPpd::query()
             ->when(isset($request->patient_id), function($query) use($request){
                 return $query->wherePatientId($request->patient_id);
             })
@@ -51,62 +51,63 @@ class ConsultLaboratoryHba1cController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
+            ->with(['findings'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 
         if ($perPage == 'all') {
-            return ConsultLaboratoryHba1cResource::collection($laboratory->get());
+            return ConsultLaboratoryPpdResource::collection($laboratory->get());
         }
 
-        return ConsultLaboratoryHba1cResource::collection($laboratory->paginate($perPage)->withQueryString());
+        return ConsultLaboratoryPpdResource::collection($laboratory->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConsultLaboratoryHba1cRequest $request
+     * @param ConsultLaboratoryPpdRequest $request
      * @return JsonResponse
      */
-    public function store(ConsultLaboratoryHba1cRequest $request): JsonResponse
+    public function store(ConsultLaboratoryPpdRequest $request): JsonResponse
     {
-        $data = ConsultLaboratoryHba1c::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
-        return response()->json(['data' => new ConsultLaboratoryHba1cResource($data), 'status' => 'Success'], 201);
+        $data = ConsultLaboratoryPpd::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+        return response()->json(['data' => new ConsultLaboratoryPpdResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param ConsultLaboratoryHba1c $hba1c
-     * @return ConsultLaboratoryHba1cResource
+     * @param ConsultLaboratoryPpd $ppd
+     * @return ConsultLaboratoryPpdResource
      */
-    public function show(ConsultLaboratoryHba1c $hba1c): ConsultLaboratoryHba1cResource
+    public function show(ConsultLaboratoryPpd $ppd): ConsultLaboratoryPpdResource
     {
-        return new ConsultLaboratoryHba1cResource($hba1c);
+        return new ConsultLaboratoryPpdResource($ppd);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ConsultLaboratoryHba1cRequest $request
-     * @param ConsultLaboratoryHba1c $hba1c
+     * @param ConsultLaboratoryPpdRequest $request
+     * @param ConsultLaboratoryPpd $ppd
      * @return JsonResponse
      */
-    public function update(ConsultLaboratoryHba1cRequest $request, ConsultLaboratoryHba1c $hba1c): JsonResponse
+    public function update(ConsultLaboratoryPpdRequest $request, ConsultLaboratoryPpd $ppd): JsonResponse
     {
-        $hba1c->update($request->validated());
+        $ppd->update($request->validated());
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConsultLaboratoryHba1c $hba1c
+     * @param ConsultLaboratoryPpd $ppd
      * @return JsonResponse
      * @throws Throwable
      */
-    public function destroy(ConsultLaboratoryHba1c $hba1c)
+    public function destroy(ConsultLaboratoryPpd $ppd): JsonResponse
     {
-        $hba1c->deleteOrFail();
+        $ppd->deleteOrFail();
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

@@ -418,6 +418,22 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-hba1c/{hba1c}', 'update');
                 Route::delete('consult-laboratory-hba1c/{hba1c}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryPapsmearController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-papsmear', 'index');
+                Route::post('consult-laboratory-papsmear', 'store');
+                Route::put('consult-laboratory-papsmear/{papsmear}', 'update');
+                Route::delete('consult-laboratory-papsmear/{papsmear}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryPpdController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-ppd', 'index');
+                Route::post('consult-laboratory-ppd', 'store');
+                Route::put('consult-laboratory-ppd/{ppd}', 'update');
+                Route::delete('consult-laboratory-ppd/{ppd}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

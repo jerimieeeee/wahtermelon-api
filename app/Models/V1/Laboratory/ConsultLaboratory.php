@@ -31,6 +31,8 @@ class ConsultLaboratory extends Model
         'fbs',
         'rbs',
         'hba1c',
+        'papsmear',
+        'ppd'
     ];
 
     public $incrementing = false;
@@ -104,5 +106,15 @@ class ConsultLaboratory extends Model
     public function hba1c()
     {
         return $this->hasOne(ConsultLaboratoryHba1c::class, 'request_id', 'id');
+    }
+
+    public function papsmear()
+    {
+        return $this->hasOne(ConsultLaboratoryPapsmear::class, 'request_id', 'id');
+    }
+
+    public function ppd()
+    {
+        return $this->hasOne(ConsultLaboratoryPpd::class, 'request_id', 'id');
     }
 }
