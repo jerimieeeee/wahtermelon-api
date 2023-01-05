@@ -5,7 +5,11 @@ namespace App\Services\PhilHealth;
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
+use App\Models\V1\Patient\PatientMenstrualHistory;
 use App\Models\V1\Patient\PatientPhilhealth;
+use App\Models\V1\Patient\PatientSocialHistory;
+use App\Models\V1\Patient\PatientSurgicalHistory;
+use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Spatie\ArrayToXml\ArrayToXml;
 
@@ -617,6 +621,72 @@ class KonsultaService
                             'pDeficiencyRemarks'=>""
                         ]
                     ];
+
+                    $familyHistory = PatientHistory::wherePatientId($data->patient_id)->whereCategory(2)->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>$data->medical_history_id,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $familyHistorySpecific = PatientHistory::wherePatientId($data->patient_id)->whereCategory(2)->whereNotNull('remarks')->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>$data->medical_history_id,
+                                    'pSpecificDesc'=>$data->remarks,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $familyHistoryDefault = [
+                        '_attributes' => [
+                            'pMdiseaseCode'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+                    $familyHistorySpecificDefault = [
+                        '_attributes' => [
+                            'pMdiseaseCode'=>"",
+                            'pSpecificDesc'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+
+                    $surgical = PatientSurgicalHistory::wherePatientId($data->patient_id)->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pSurgDesc'=>$data->operation,
+                                    'pSurgDate'=>$data->operation_date,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $surgicalDefault = [
+                        '_attributes' => [
+                            'pSurgDesc'=>"",
+                            'pSurgDate'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+
+                    $socialHistory = PatientSocialHistory::wherePatientId($data->patient_id)->first();
+
+                    $menstrualHistory = PatientMenstrualHistory::wherePatientId($data->patient_id)->first();
+
+                    $patient = Patient::whereId($data->patient_id)->first();
+
+                    $vitals = PatientVitals::wherePatientId($data->patient_id)->whereRaw("DATE_FORMAT(vitals_date, '%Y-%m-%d') = ?", $data->enlistment_date)->first();
+
                     return [
                         '_attributes' => [
                             'pHciTransNo' => 'P'.$data->transaction_number?? "",
@@ -640,34 +710,22 @@ class KonsultaService
                             'MHSPECIFIC' => $medhistorySpecific->toArray() ? [$medhistorySpecific->toArray()] : [$medhistorySpecificDefault]
                         ],
                         'SURGHISTS' => [
-                            'SURGHIST' => [
-                                '_attributes' => [
-                                    'pSurgDesc'=>"SAMPLE OPERATION", 'pSurgDate'=>"2022-06-01", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                                ]
-                            ]
+                            'SURGHIST' => $surgical->toArray() ? [$surgical->toArray()] : [$surgicalDefault]
                         ],
                         'FAMHISTS' => [
-                            'FAMHIST' => [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>"002", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                                ]
-                            ]
+                            'FAMHIST' => $familyHistory->toArray() ? [$familyHistory->toArray()] : [$familyHistoryDefault]
                         ],
                         'FHSPECIFICS' => [
-                            'FHSPECIFIC' => [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>"", 'pSpecificDesc'=>"", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                                ]
-                            ]
+                            'FHSPECIFIC' => $familyHistorySpecific->toArray() ? [$familyHistorySpecific->toArray()] : [$familyHistorySpecificDefault]
                         ],
                         'SOCHIST' => [
                             '_attributes' => [
-                                'pIsSmoker'=>"N",
-                                'pNoCigpk'=>"",
-                                'pIsAdrinker'=>"N",
-                                'pNoBottles'=>"",
-                                'pIllDrugUser'=>"N",
-                                'pIsSexuallyActive'=>"N",
+                                'pIsSmoker'=>$socialHistory ? $socialHistory->smoking : "",
+                                'pNoCigpk'=>$socialHistory ? $socialHistory->pack_per_year : "",
+                                'pIsAdrinker'=>$socialHistory ? $socialHistory->alcohol : "",
+                                'pNoBottles'=>$socialHistory ? $socialHistory->bottles_per_day : "",
+                                'pIllDrugUser'=>$socialHistory ? $socialHistory->illicit_drugs : "",
+                                'pIsSexuallyActive'=>$socialHistory ? $socialHistory->sexually_active : "",
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
@@ -687,16 +745,16 @@ class KonsultaService
                         ],
                         'MENSHIST' => [
                             '_attributes' => [
-                                'pMenarchePeriod'=>"",
-                                'pLastMensPeriod'=>"",
-                                'pPeriodDuration'=>"",
-                                'pMensInterval'=>"",
-                                'pPadsPerDay'=>"",
-                                'pOnsetSexIc'=>"",
-                                'pBirthCtrlMethod'=>"",
-                                'pIsMenopause'=>"",
-                                'pMenopauseAge'=>"",
-                                'pIsApplicable'=>"N",
+                                'pMenarchePeriod'=>$menstrualHistory ? $menstrualHistory->menarche : "",
+                                'pLastMensPeriod'=>$menstrualHistory ? $menstrualHistory->lmp : "",
+                                'pPeriodDuration'=>$menstrualHistory ? $menstrualHistory->period_duration : "",
+                                'pMensInterval'=>$menstrualHistory ? $menstrualHistory->cycle : "",
+                                'pPadsPerDay'=>$menstrualHistory ? $menstrualHistory->pads_per_day : "",
+                                'pOnsetSexIc'=>$menstrualHistory ? $menstrualHistory->onset_sexual_intercourse : "",
+                                'pBirthCtrlMethod'=>$menstrualHistory ? $menstrualHistory->method : "",
+                                'pIsMenopause'=>$menstrualHistory ? $menstrualHistory->menopause ? "Y" : "N" : "",
+                                'pMenopauseAge'=>$menstrualHistory ? $menstrualHistory->menopause ? $menstrualHistory->menopause_age : "" : "",
+                                'pIsApplicable'=>$menstrualHistory ? $patient->gender == 'F' ? "Y" : "N" : "N",
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
@@ -719,36 +777,36 @@ class KonsultaService
                         ],
                         'PEPERT' => [
                             '_attributes' => [
-                                'pSystolic'=>"95",
-                                'pDiastolic'=>"58",
-                                'pHr'=>"110",
-                                'pRr'=>"30",
-                                'pTemp'=>"36.10",
-                                'pHeight'=>"0",
-                                'pWeight'=>"8.9",
-                                'pBMI'=>"0",
+                                'pSystolic'=>$vitals ? $vitals->bp_systolic : "",
+                                'pDiastolic'=>$vitals ? $vitals->bp_diastolic : "",
+                                'pHr'=>$vitals ? $vitals->patient_heart_rate : "",
+                                'pRr'=>$vitals ? $vitals->patient_respiratory_rate : "",
+                                'pTemp'=>$vitals ? $vitals->patient_temp : "",
+                                'pHeight'=>$vitals ? $vitals->patient_height : "",
+                                'pWeight'=>$vitals ? $vitals->patient_weight : "",
+                                'pBMI'=>$vitals ? $vitals->patient_bmi : "",
                                 'pZScore'=>"",
-                                'pLeftVision'=>"20",
-                                'pRightVision'=>"20",
-                                'pLength'=>"63",
-                                'pHeadCirc'=>"46",
-                                'pSkinfoldThickness'=>"46",
-                                'pWaist'=>"48",
-                                'pHip'=>"50",
-                                'pLimbs'=>"40",
-                                'pMidUpperArmCirc'=>"12.5",
+                                'pLeftVision'=>"",
+                                'pRightVision'=>"",
+                                'pLength'=>$vitals ? $vitals->patient_height : "",
+                                'pHeadCirc'=>$vitals ? $vitals->patient_head_circumference : "",
+                                'pSkinfoldThickness'=>$vitals ? $vitals->patient_skinfold_thickness : "",
+                                'pWaist'=>$vitals ? $vitals->patient_waist : "",
+                                'pHip'=>$vitals ? $vitals->patient_hip : "",
+                                'pLimbs'=>$vitals ? $vitals->patient_limbs : "",
+                                'pMidUpperArmCirc'=>$vitals ? $vitals->patient_muac : "",
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
                         ],
                         'BLOODTYPE' => [
                             '_attributes' => [
-                                'pBloodType'=>"B+",
+                                'pBloodType'=>$patient->blood_type_code,
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
                         ],
-                        'PEGENSURVEY' => [
+                        /*'PEGENSURVEY' => [
                             '_attributes' => [
                                 'pGenSurveyId'=>"1",
                                 'pGenSurveyRem'=>"",
@@ -824,7 +882,7 @@ class KonsultaService
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
-                        ],
+                        ],*/
                     ];
                 });
         $profile['PROFILE'] = [$data->toArray()];
