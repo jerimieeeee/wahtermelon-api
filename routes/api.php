@@ -434,6 +434,14 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-ppd/{ppd}', 'update');
                 Route::delete('consult-laboratory-ppd/{ppd}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySputumController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-sputum', 'index');
+                Route::post('consult-laboratory-sputum', 'store');
+                Route::put('consult-laboratory-sputum/{sputum}', 'update');
+                Route::delete('consult-laboratory-sputum/{sputum}', 'destroy');
+            });
     });
 
     Route::prefix('libraries')->group(function () {

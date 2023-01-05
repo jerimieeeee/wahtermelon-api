@@ -32,7 +32,8 @@ class ConsultLaboratory extends Model
         'rbs',
         'hba1c',
         'papsmear',
-        'ppd'
+        'ppd',
+        'sputum',
     ];
 
     public $incrementing = false;
@@ -116,5 +117,10 @@ class ConsultLaboratory extends Model
     public function ppd()
     {
         return $this->hasOne(ConsultLaboratoryPpd::class, 'request_id', 'id');
+    }
+
+    public function sputum()
+    {
+        return $this->hasOne(ConsultLaboratorySputum::class, 'request_id', 'id');
     }
 }
