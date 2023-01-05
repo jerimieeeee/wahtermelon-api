@@ -4,6 +4,7 @@ namespace App\Services\PhilHealth;
 
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientHistory;
 use App\Models\V1\Patient\PatientPhilhealth;
 use Carbon\Carbon;
 use Spatie\ArrayToXml\ArrayToXml;
@@ -62,7 +63,8 @@ class KonsultaService
                 $this->enlistments(),
             ],
             'PROFILING' => [
-                'PROFILE' => [
+                $this->profiling(),
+                /*'PROFILE' => [
                     '_attributes' => [
                         'pHciTransNo'=>"PH9000000120220800001",
                         'pHciCaseNo'=>"TH9000000120220800001",
@@ -285,7 +287,7 @@ class KonsultaService
                             'pDeficiencyRemarks'=>""
                         ]
                     ],
-                ],
+                ],*/
             ],
             'SOAPS' => [
                 'SOAP' => [
@@ -576,10 +578,45 @@ class KonsultaService
                 ->joinSub($patient, 'patients', function($join){
                     $join->on('patient_philhealth.patient_id', '=', 'patients.id');
                 })
-                ->where('patient_id', 'sdf')
                 ->get()
                 ->map(function($data, $key){
                     $age = Carbon::parse($data->birthdate)->diff($data->enlistment_date);
+                    $medhistory = PatientHistory::wherePatientId($data->patient_id)->whereCategory(1)->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>$data->medical_history_id,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $medhistorySpecific = PatientHistory::wherePatientId($data->patient_id)->whereCategory(1)->whereNotNull('remarks')->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>$data->medical_history_id,
+                                    'pSpecificDesc'=>$data->remarks,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $medhistoryDefault = [
+                        '_attributes' => [
+                            'pMdiseaseCode'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+                    $medhistorySpecificDefault = [
+                        '_attributes' => [
+                            'pMdiseaseCode'=>"",
+                            'pSpecificDesc'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
                     return [
                         '_attributes' => [
                             'pHciTransNo' => 'P'.$data->transaction_number?? "",
@@ -595,6 +632,198 @@ class KonsultaService
                             'pTransDate' => isset($data->created_at) ? $data->created_at->format('Y-m-d') : "",
                             'pReportStatus' => "U",
                             'pDeficiencyRemarks' => ""
+                        ],
+                        'MEDHISTS' => [
+                            'MEDHIST' => $medhistory->toArray() ? [$medhistory->toArray()] : [$medhistoryDefault]
+                        ],
+                        'MHSPECIFICS' => [
+                            'MHSPECIFIC' => $medhistorySpecific->toArray() ? [$medhistorySpecific->toArray()] : [$medhistorySpecificDefault]
+                        ],
+                        'SURGHISTS' => [
+                            'SURGHIST' => [
+                                '_attributes' => [
+                                    'pSurgDesc'=>"SAMPLE OPERATION", 'pSurgDate'=>"2022-06-01", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ]
+                        ],
+                        'FAMHISTS' => [
+                            'FAMHIST' => [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>"002", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ]
+                        ],
+                        'FHSPECIFICS' => [
+                            'FHSPECIFIC' => [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>"", 'pSpecificDesc'=>"", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                                ]
+                            ]
+                        ],
+                        'SOCHIST' => [
+                            '_attributes' => [
+                                'pIsSmoker'=>"N",
+                                'pNoCigpk'=>"",
+                                'pIsAdrinker'=>"N",
+                                'pNoBottles'=>"",
+                                'pIllDrugUser'=>"N",
+                                'pIsSexuallyActive'=>"N",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'IMMUNIZATIONS' => [
+                            'IMMUNIZATION' => [
+                                '_attributes' => [
+                                    'pChildImmcode'=>"C01",
+                                    'pYoungwImmcode'=>"",
+                                    'pPregwImmcode'=>"",
+                                    'pElderlyImmcode'=>"",
+                                    'pOtherImm'=>"",
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ]
+                        ],
+                        'MENSHIST' => [
+                            '_attributes' => [
+                                'pMenarchePeriod'=>"",
+                                'pLastMensPeriod'=>"",
+                                'pPeriodDuration'=>"",
+                                'pMensInterval'=>"",
+                                'pPadsPerDay'=>"",
+                                'pOnsetSexIc'=>"",
+                                'pBirthCtrlMethod'=>"",
+                                'pIsMenopause'=>"",
+                                'pMenopauseAge'=>"",
+                                'pIsApplicable'=>"N",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'PREGHIST' => [
+                            '_attributes' => [
+                                'pPregCnt'=>"0",
+                                'pDeliveryCnt'=>"0",
+                                'pDeliveryTyp'=>"X",
+                                'pFullTermCnt'=>"0",
+                                'pPrematureCnt'=>"0",
+                                'pAbortionCnt'=>"0",
+                                'pLivChildrenCnt'=>"0",
+                                'pWPregIndhyp'=>"N",
+                                'pWFamPlan'=>"N",
+                                'pIsApplicable'=>"N",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'PEPERT' => [
+                            '_attributes' => [
+                                'pSystolic'=>"95",
+                                'pDiastolic'=>"58",
+                                'pHr'=>"110",
+                                'pRr'=>"30",
+                                'pTemp'=>"36.10",
+                                'pHeight'=>"0",
+                                'pWeight'=>"8.9",
+                                'pBMI'=>"0",
+                                'pZScore'=>"",
+                                'pLeftVision'=>"20",
+                                'pRightVision'=>"20",
+                                'pLength'=>"63",
+                                'pHeadCirc'=>"46",
+                                'pSkinfoldThickness'=>"46",
+                                'pWaist'=>"48",
+                                'pHip'=>"50",
+                                'pLimbs'=>"40",
+                                'pMidUpperArmCirc'=>"12.5",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'BLOODTYPE' => [
+                            '_attributes' => [
+                                'pBloodType'=>"B+",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'PEGENSURVEY' => [
+                            '_attributes' => [
+                                'pGenSurveyId'=>"1",
+                                'pGenSurveyRem'=>"",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'PEMISCS' => [
+                            'PEMISC' => [
+                                '_attributes' => [
+                                    'pSkinId'=>"",
+                                    'pHeentId'=>"",
+                                    'pChestId'=>"",
+                                    'pHeartId'=>"",
+                                    'pAbdomenId'=>"",
+                                    'pNeuroId'=>"",
+                                    'pRectalId'=>"",
+                                    'pGuId'=>"",
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ],
+                            ],
+                        ],
+                        'PESPECIFIC' => [
+                            '_attributes' => [
+                                'pSkinRem'=>"",
+                                'pHeentRem'=>"",
+                                'pChestRem'=>"",
+                                'pHeartRem'=>"",
+                                'pAbdomenRem'=>"",
+                                'pNeuroRem'=>"",
+                                'pRectalRem'=>"",
+                                'pGuRem'=>"SAMPLE REMARKS",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                        'NCDQANS' => [
+                            '_attributes' => [
+                                'pQid1_Yn'=>"",
+                                'pQid2_Yn'=>"",
+                                'pQid3_Yn'=>"",
+                                'pQid4_Yn'=>"",
+                                'pQid5_Ynx'=>"",
+                                'pQid6_Yn'=>"",
+                                'pQid7_Yn'=>"",
+                                'pQid8_Yn'=>"",
+                                'pQid9_Yn'=>"",
+                                'pQid10_Yn'=>"",
+                                'pQid11_Yn'=>"",
+                                'pQid12_Yn'=>"",
+                                'pQid13_Yn'=>"",
+                                'pQid14_Yn'=>"",
+                                'pQid15_Yn'=>"",
+                                'pQid16_Yn'=>"",
+                                'pQid17_Abcde'=>"",
+                                'pQid18_Yn'=>"",
+                                'pQid19_Yn'=>"",
+                                'pQid19_Fbsmg'=>"",
+                                'pQid19_Fbsmmol'=>"",
+                                'pQid19_Fbsdate'=>"",
+                                'pQid20_Yn'=>"",
+                                'pQid20_Choleval'=>"",
+                                'pQid20_Choledate'=>"",
+                                'pQid21_Yn'=>"",
+                                'pQid21_Ketonval'=>"",
+                                'pQid21_Ketondate'=>"",
+                                'pQid22_Yn'=>"",
+                                'pQid22_Proteinval'=>"",
+                                'pQid22_Proteindate'=>"",
+                                'pQid23_Yn'=>"",
+                                'pQid24_Yn'=>"",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
                         ],
                     ];
                 });
