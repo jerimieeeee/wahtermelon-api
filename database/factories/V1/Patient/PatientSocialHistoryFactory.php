@@ -3,6 +3,7 @@
 namespace Database\Factories\V1\Patient;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibNcdAnswerS2;
 use App\Models\V1\Libraries\LibPatientSocialHistoryAnswer;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -29,6 +30,7 @@ class PatientSocialHistoryFactory extends Factory
             'alcohol' => fake()->randomElement(LibPatientSocialHistoryAnswer::pluck('id')->toArray()),
             'bottles_per_day' => fake()->randomFloat(2, 2, 5),
             'illicit_drugs' => fake()->randomElement(LibPatientSocialHistoryAnswer::pluck('id')->toArray()),
+            'sexually_active' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
         ];
     }
 }
