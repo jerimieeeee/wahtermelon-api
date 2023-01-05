@@ -5,9 +5,10 @@ namespace App\Http\Controllers\API\V1\NCD;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\NCD\ConsultNcdRiskAssessmentRequest;
 use App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource;
+use App\Services\NCD\NcdRiskStratificationChartService;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
-use App\Models\V1\NCD\ConsultNcdRiskScreeningBloodGlucose;
 use App\Models\V1\NCD\PatientNcd;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -35,11 +36,14 @@ class ConsultNcdRiskAssessmentController extends Controller
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource
      * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskAssessment paginate=15
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param NcdRiskStratificationChartService $ncdRiskStratficationChartService
+     * @return JsonResponse|ConsultNcdRiskAssessmentResource|ResourceCollection
      */
-    public function index(Request $request): ResourceCollection
+    public function index(Request $request, NcdRiskStratificationChartService $ncdRiskStratService): JsonResponse|ConsultNcdRiskAssessmentResource|ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        // return $ncd = $ncdRiskStratService->getRiskStratificationChart($request->all());
 
         $consultNcdRiskAssessment = QueryBuilder::for(ConsultNcdRiskAssessment::class)
         ->when(isset($request->patient_id), function($q) use($request){
@@ -51,6 +55,7 @@ class ConsultNcdRiskAssessmentController extends Controller
         ->when(isset($request->id), function($q) use($request){
             $q->where('id', '=', $request->id);
         })
+
         ->with('riskScreeningGlucose', 'riskScreeningLipid', 'riskScreeningKetones', 'riskScreeningProtein', 'riskQuestionnaire', 'patientNcdRecord', 'ncdRecordDiagnosis', 'ncdRecordTargetOrgan', 'ncdRecordCounselling')
 
         ->defaultSort('assessment_date')

@@ -63,11 +63,11 @@ class PatientVaccineService
 
         })->selectRaw('
                 CASE
-                    WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month < 13
+                    WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13
                     THEN "FIC"
-                    WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month BETWEEN 13 AND 23
+                    WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month BETWEEN 13 AND 23
                     THEN "CIC"
-                    WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=0 AND age_month >= 24
+                    WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24
                     THEN "COMPLETED"
 	            END AS immunization_status,
                 vaccine_date
