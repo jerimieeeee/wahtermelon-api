@@ -27,7 +27,7 @@ class PatientResource extends JsonResource
             'middle_name' => $this->middle_name,
             'suffix_name' => $this->when(!$this->relationLoaded('suffixName'),$this->suffix_name),
             'suffix' => $this->whenLoaded('suffixName'),
-            'birthdate' => !is_null($this->birthdate) ? $this->birthdate->format('Y-m-d') : null,
+            'birthdate' => $this->birthdate,
             'mothers_name' => $this->mothers_name,
             'gender' => $this->gender,
             'mobile_number' => $this->mobile_number,

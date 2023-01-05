@@ -16,6 +16,7 @@ class PatientPhilhealthResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'transaction_number' => $this->transaction_number,
             'philhealth_id' => $this->philhealth_id,
             'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
             'facility' => $this->whenLoaded('facility'),
@@ -23,8 +24,8 @@ class PatientPhilhealthResource extends JsonResource
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
-            'enlistment_date' => $this->enlistment_date->format('Y-m-d'),
-            'effectivity_year' => $this->effectivity_year->format('Y'),
+            'enlistment_date' => $this->enlistment_date,
+            'effectivity_year' => $this->effectivity_year,
             'enlistment_status_id' => $this->when(!$this->relationLoaded('enlistmentStatus'),$this->enlistment_status_id),
             'enlistment_status' => $this->whenLoaded('enlistmentStatus'),
             'package_type_id' => $this->when(!$this->relationLoaded('packageType'),$this->package_type_id),

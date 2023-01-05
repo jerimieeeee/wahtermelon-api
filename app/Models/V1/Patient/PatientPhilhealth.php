@@ -27,11 +27,11 @@ class PatientPhilhealth extends Model
         'id',
     ];
 
-    protected $casts = [
+   /* protected $casts = [
         'enlistment_date' => 'date:Y-m-d',
         'member_birthdate' => 'date:Y-m-d',
         'effectivity_year' => 'date:Y'
-    ];
+    ];*/
 
     protected function serializeDate(DateTimeInterface $date)
     {

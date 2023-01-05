@@ -1,5 +1,6 @@
 <?php
 namespace  App\Traits;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 
@@ -12,6 +13,20 @@ trait FilterByUser
         self::creating(function($model) {
             if(Schema::hasColumn($model->getTable(), 'facility_code')) {
                 $model->facility_code = auth()->user()->facility_code;
+            }
+            if(Schema::hasColumn($model->getTable(), 'transaction_number')) {
+                if(auth()->user()->konsultaCredential) {
+                    $prefix = auth()->user()->konsultaCredential->accreditation_number . date('Ym');
+                    $transactionNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+                    $model->transaction_number = $transactionNumber;
+                }
+            }
+            if(Schema::hasColumn($model->getTable(), 'case_number')) {
+                if(auth()->user()->konsultaCredential) {
+                    $prefix = 'T'. auth()->user()->konsultaCredential->accreditation_number . date('Ym');
+                    $caseNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'case_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+                    $model->case_number = $caseNumber;
+                }
             }
             $model->user_id = auth()->id();
         });

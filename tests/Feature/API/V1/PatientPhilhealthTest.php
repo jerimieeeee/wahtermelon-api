@@ -4,6 +4,7 @@ namespace Tests\Feature\API\V1;
 
 use App\Models\User;
 use App\Models\V1\Patient\PatientPhilhealth;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
@@ -21,6 +22,7 @@ class PatientPhilhealthTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
+        PhilhealthCredential::factory()->create(['program_code' => 'kp']);
         $patient = PatientPhilhealth::factory()->make()->toArray();
         $response = $this->post('api/v1/patient-philhealth/philhealth', $patient);
         $response->assertCreated();

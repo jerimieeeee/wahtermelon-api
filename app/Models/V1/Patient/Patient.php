@@ -16,6 +16,7 @@ use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\DB;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuid, HasSearchFilter, FilterByUser;
+    use HasFactory, HasUuids, HasSearchFilter, FilterByUser;
 
     protected $guarded = [
         'id',
@@ -36,7 +37,7 @@ class Patient extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'birthdate' => 'date:Y-m-d',
+        //'birthdate' => 'date:Y-m-d',
         'indegenous_flag' => 'boolean',
         'consent_flag' => 'boolean',
     ];

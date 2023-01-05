@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\V1\Libraries\LibDesignation;
@@ -96,6 +97,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function facility(): BelongsTo
     {
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
+    }
+
+    public function philhealthCredential()
+    {
+        return $this->hasMany(PhilhealthCredential::class, 'facility_code', 'facility_code');
+    }
+
+    public function konsultaCredential()
+    {
+        return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')
+            ->whereProgramCode('kp');
     }
 
 }

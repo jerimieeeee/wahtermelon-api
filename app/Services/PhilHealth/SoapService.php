@@ -55,17 +55,32 @@ class SoapService
         }
 
         $jsonOutput = json_decode($encryptedOutput->return);
+        $decryptor = new PhilHealthEClaimsEncryptor();
+        $cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
 
         if(!isset($jsonOutput->hash))
         {
+            if(isset($jsonOutput->encryptedxmlerrors))
+            {
+                $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
+                return json_decode($decryptedData);
+            }
+            if(isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors))
+            {
+                    return json_decode($jsonOutput->uploadxmlresult->errors);
+            }
             return $jsonOutput;
         }
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
-        //$decryptor->setLoggingEnabled(true);
-        $cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
         $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
-        return (XML2JSON($decryptedData));
+        return XML2JSON($decryptedData);
+    }
+
+    public function encryptData($data)
+    {
+        $encryptor = new PhilHealthEClaimsEncryptor();
+        $cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        return $encryptor->encryptXmlPayloadData($data, $cipher_key);
     }
 
     public function soapMethod($method, $params)
@@ -83,7 +98,7 @@ class SoapService
 
     public function httpClient()
     {
-        return $response = Http::post('https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl');
+        //return $response = Http::post('https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl');
         $wsdlUrl = "https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl";
         $array = [
             'Body' => [
@@ -116,18 +131,27 @@ class SoapService
         ], true, 'UTF-8');
 
         $postArray = [
+            'pUserName' => '',
+            'pUserPassword' => '',
             'pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634',
             'pHospitalCode' => 'P01033020'
         ];
-        return Http::post($wsdlUrl,$postArray);
+        //return Http::post($wsdlUrl,$postArray);
 
-        return $http=Http::withHeaders([
-            'Content-Type'=>'application/xml',
-            'user_agent' => 'PHPSoapClient',
-            'SOAPAction'=>'balance'
+        $http=Http::withHeaders([
+            'Content-Type' => 'text/xml; charset=utf-8',
+            'SOAPAction'=>'getToken'
         ])->post($wsdlUrl,$postArray);
+        return $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'SOAPAction'=>'getToken'
+        ])->post(
+            $wsdlUrl,
+            $postArray
+        );
 
-
+        return $http->getBody();
 
         return response($http->body())
             ->withHeaders([
