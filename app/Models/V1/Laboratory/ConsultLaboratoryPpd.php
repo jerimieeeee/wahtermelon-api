@@ -5,6 +5,7 @@ namespace App\Models\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibLaboratoryFindings;
+use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConsultLaboratoryEcg extends Model
+class ConsultLaboratoryPpd extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
@@ -69,6 +70,6 @@ class ConsultLaboratoryEcg extends Model
 
     public function findings()
     {
-        return $this->belongsTo(LibLaboratoryFindings::class, 'findings_code', 'code');
+        return $this->belongsTo(LibLaboratoryResult::class, 'findings_code', 'code');
     }
 }

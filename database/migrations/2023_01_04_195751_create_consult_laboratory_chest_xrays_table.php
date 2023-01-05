@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->foreignUuid('request_id')->index()->constrained('consult_laboratories');
-            $table->date('laboratory_date');
+            $table->date('laboratory_date')->index();
             $table->char('findings_code', 10)->index()->nullable();
             $table->string('remarks_findings')->nullable();
             $table->char('observation_code', 10)->index()->nullable();

@@ -4,11 +4,12 @@ namespace App\Http\Requests\API\V1\Laboratory;
 
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
-class ConsultLaboratoryCreatinineRequest extends FormRequest
+class ConsultLaboratoryPpdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +33,7 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
             'consult_id' => 'nullable|exists:consults,id',
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
-            'findings' => 'required',
+            'findings_code' => 'nullable|exists:lib_laboratory_results,code',
             'remarks' => 'nullable',
             'lab_status_code' => 'required|exists:lib_laboratory_statuses,code',
         ];
@@ -43,7 +44,8 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
         Passport::actingAs(
             User::factory()->create()
         );
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CRTN']);
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'PPD']);
+        $findings = fake()->randomElement(LibLaboratoryResult::pluck('code')->toArray());
         return [
             'facility_code' => [
                 'example' => $consult->facility_code
@@ -63,8 +65,8 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
             'request_id' => [
                 'example' => $consult->id
             ],
-            'findings' => [
-                'example' => fake()->numberBetween(1, 10)
+            'findings_code' => [
+                'example' => $findings
             ],
             'remarks' => [
                 'example' => fake()->sentence()

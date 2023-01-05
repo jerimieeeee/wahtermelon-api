@@ -410,6 +410,38 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-rbs/{rbs}', 'update');
                 Route::delete('consult-laboratory-rbs/{rbs}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryHba1cController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-hba1c', 'index');
+                Route::post('consult-laboratory-hba1c', 'store');
+                Route::put('consult-laboratory-hba1c/{hba1c}', 'update');
+                Route::delete('consult-laboratory-hba1c/{hba1c}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryPapsmearController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-papsmear', 'index');
+                Route::post('consult-laboratory-papsmear', 'store');
+                Route::put('consult-laboratory-papsmear/{papsmear}', 'update');
+                Route::delete('consult-laboratory-papsmear/{papsmear}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryPpdController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-ppd', 'index');
+                Route::post('consult-laboratory-ppd', 'store');
+                Route::put('consult-laboratory-ppd/{ppd}', 'update');
+                Route::delete('consult-laboratory-ppd/{ppd}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySputumController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-sputum', 'index');
+                Route::post('consult-laboratory-sputum', 'store');
+                Route::put('consult-laboratory-sputum/{sputum}', 'update');
+                Route::delete('consult-laboratory-sputum/{sputum}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs

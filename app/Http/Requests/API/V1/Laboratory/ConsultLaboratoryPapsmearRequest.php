@@ -8,7 +8,7 @@ use App\Models\V1\Libraries\LibLaboratoryStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
-class ConsultLaboratoryCreatinineRequest extends FormRequest
+class ConsultLaboratoryPapsmearRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,6 +33,7 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'findings' => 'required',
+            'impression' => 'nullable',
             'remarks' => 'nullable',
             'lab_status_code' => 'required|exists:lib_laboratory_statuses,code',
         ];
@@ -43,7 +44,7 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
         Passport::actingAs(
             User::factory()->create()
         );
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CRTN']);
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'PSMR']);
         return [
             'facility_code' => [
                 'example' => $consult->facility_code
@@ -65,6 +66,9 @@ class ConsultLaboratoryCreatinineRequest extends FormRequest
             ],
             'findings' => [
                 'example' => fake()->numberBetween(1, 10)
+            ],
+            'impression' => [
+                'example' => fake()->sentence()
             ],
             'remarks' => [
                 'example' => fake()->sentence()

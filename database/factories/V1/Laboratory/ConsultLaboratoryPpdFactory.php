@@ -4,14 +4,15 @@ namespace Database\Factories\V1\Laboratory;
 
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryCreatinine>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryPpd>
  */
-class ConsultLaboratoryCreatinineFactory extends Factory
+class ConsultLaboratoryPpdFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +24,8 @@ class ConsultLaboratoryCreatinineFactory extends Factory
         Passport::actingAs(
             User::factory()->create()
         );
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CRTN']);
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'PPD']);
+        $findings = fake()->randomElement(LibLaboratoryResult::pluck('code')->toArray());
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,
@@ -31,7 +33,7 @@ class ConsultLaboratoryCreatinineFactory extends Factory
             'consult_id' => $consult->consult_id,
             'laboratory_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             'request_id' => $consult->id,
-            'findings' => fake()->numberBetween(1, 10),
+            'findings_code' => $findings,
             'remarks' => fake()->sentence(),
             'lab_status_code' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
         ];

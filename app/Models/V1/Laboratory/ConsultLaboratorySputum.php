@@ -5,6 +5,7 @@ namespace App\Models\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibLaboratoryFindings;
+use App\Models\V1\Libraries\LibLaboratorySputumCollection;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -16,13 +17,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConsultLaboratoryEcg extends Model
+class ConsultLaboratorySputum extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
         'id'
     ];
+
+    protected $table = 'consult_laboratory_sputum';
 
     public $incrementing = false;
 
@@ -65,6 +68,11 @@ class ConsultLaboratoryEcg extends Model
     public function laboratoryStatus()
     {
         return $this->belongsTo(LibLaboratoryStatus::class, 'lab_status_code', 'code');
+    }
+
+    public function sputumCollection()
+    {
+        return $this->belongsTo(LibLaboratorySputumCollection::class, 'data_collection_code', 'code');
     }
 
     public function findings()

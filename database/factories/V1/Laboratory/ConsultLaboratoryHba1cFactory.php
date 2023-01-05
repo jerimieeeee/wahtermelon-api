@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryCreatinine>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryHba1c>
  */
-class ConsultLaboratoryCreatinineFactory extends Factory
+class ConsultLaboratoryHba1cFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class ConsultLaboratoryCreatinineFactory extends Factory
         Passport::actingAs(
             User::factory()->create()
         );
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CRTN']);
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'HBA']);
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

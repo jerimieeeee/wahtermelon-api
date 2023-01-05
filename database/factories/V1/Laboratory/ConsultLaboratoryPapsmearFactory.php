@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryCreatinine>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryPapsmear>
  */
-class ConsultLaboratoryCreatinineFactory extends Factory
+class ConsultLaboratoryPapsmearFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class ConsultLaboratoryCreatinineFactory extends Factory
         Passport::actingAs(
             User::factory()->create()
         );
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CRTN']);
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'PSMR']);
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,
@@ -32,6 +32,7 @@ class ConsultLaboratoryCreatinineFactory extends Factory
             'laboratory_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             'request_id' => $consult->id,
             'findings' => fake()->numberBetween(1, 10),
+            'impression' => fake()->sentence(),
             'remarks' => fake()->sentence(),
             'lab_status_code' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
         ];
