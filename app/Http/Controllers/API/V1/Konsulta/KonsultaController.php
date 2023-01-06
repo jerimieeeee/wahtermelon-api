@@ -91,7 +91,7 @@ class KonsultaController extends Controller
         $credentials = PhilhealthCredential::whereProgramCode('kp')->first();
         $credentialsResource = GetTokenResource::make($credentials)->resolve();
         $result = $service->soapMethod('getToken', $credentialsResource);
-        if($result->success) {
+        if(isset($result->success)) {
             $credentials->update(['token' => $result->result]);
             return response()->json([
                 'message' => 'Successfully added the token in the database!'
@@ -147,9 +147,9 @@ class KonsultaController extends Controller
     {
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
-        return $firstTranche = $konsultaService->generateXml();
+        $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
-        return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
+        //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
     }
 

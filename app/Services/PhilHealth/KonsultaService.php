@@ -33,7 +33,7 @@ class KonsultaService
         ];
         $firstTrancheArray = [
             'ENLISTMENTS' => [
-                /*'ENLISTMENT' => [
+                'ENLISTMENT' => [
                     '_attributes' => [
                         'pHciCaseNo'=>"TH9000000120220800001",
                         'pHciTransNo'=>"PH9000000120220800001",
@@ -41,19 +41,19 @@ class KonsultaService
                         'pEnlistStat'=>"1",
                         'pEnlistDate'=>"2022-08-26",
                         'pPackageType'=>"K",
-                        'pMemPin'=>"190269297550",
-                        'pMemFname'=>"TFSHC FN ONE",
-                        'pMemMname'=>"TFSHC MN ONE",
-                        'pMemLname'=>"TFSHC LN ONE",
+                        'pMemPin'=>"190269297542",
+                        'pMemFname'=>"DRHUIII FN NINETY",
+                        'pMemMname'=>"DRHUIII MN NINETY",
+                        'pMemLname'=>"DRHUIII LN NINETY",
                         'pMemExtname'=>"",
-                        'pMemDob'=>"1974-01-02",
-                        'pPatientPin'=>"190269297550",
-                        'pPatientFname'=>"TFSHC FN ONE",
-                        'pPatientMname'=>"TFSHC MN ONE",
-                        'pPatientLname'=>"TFSHC LN ONE",
+                        'pMemDob'=>"1974-04-01",
+                        'pPatientPin'=>"190269297542",
+                        'pPatientFname'=>"a",
+                        'pPatientMname'=>"",
+                        'pPatientLname'=>"a",
                         'pPatientExtname'=>"",
-                        'pPatientSex'=>"M",
-                        'pPatientDob'=>"1974-01-02",
+                        'pPatientSex'=>"F",
+                        'pPatientDob'=>"1974-04-01",
                         'pPatientType'=>"MM",
                         'pPatientMobileNo'=>"09090000000",
                         'pPatientLandlineNo'=>"",
@@ -63,12 +63,12 @@ class KonsultaService
                         'pReportStatus'=>"U",
                         'pDeficiencyRemarks'=>""
                     ]
-                ],*/
-                $this->enlistments(),
+                ],
+                //$this->enlistments(),
             ],
             'PROFILING' => [
-                $this->profiling(),
-                /*'PROFILE' => [
+                //$this->profiling(),
+                'PROFILE' => [
                     '_attributes' => [
                         'pHciTransNo'=>"PH9000000120220800001",
                         'pHciCaseNo'=>"TH9000000120220800001",
@@ -291,7 +291,7 @@ class KonsultaService
                             'pDeficiencyRemarks'=>""
                         ]
                     ],
-                ],*/
+                ],
             ],
             'SOAPS' => [
                 'SOAP' => [
@@ -886,6 +886,8 @@ class KonsultaService
                     ];
                 });
         $profile['PROFILE'] = [$data->toArray()];
-        return $profile;
+        $result = new ArrayToXml($profile);
+        return $result->dropXmlDeclaration()->toXml();
+        //return $profile;
     }
 }
