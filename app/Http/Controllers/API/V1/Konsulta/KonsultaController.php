@@ -147,7 +147,7 @@ class KonsultaController extends Controller
     {
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
-        $firstTranche = $konsultaService->generateXml();
+        $firstTranche = $konsultaService->createXml();
         $data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
@@ -155,7 +155,7 @@ class KonsultaController extends Controller
 
     public function generateXml(KonsultaService $konsultaService)
     {
-        return $e = $konsultaService->profilings();
+        return $e = $konsultaService->createXml();
         return count($e['ENLISTMENT'][0]);
         $enlistments = ['ENLISTMENT' => []];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');

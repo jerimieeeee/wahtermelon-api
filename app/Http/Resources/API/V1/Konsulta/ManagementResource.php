@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Konsulta;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MedicalHistoryResource extends JsonResource
+class ManagementResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,8 @@ class MedicalHistoryResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pMdiseaseCode' => $this->medical_history_id?? "",
+                'pManagementId' => "",
+                'pOthRemarks' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

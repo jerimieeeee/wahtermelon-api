@@ -2,9 +2,11 @@
 
 namespace App\Services\PhilHealth;
 
+use App\Http\Resources\API\V1\Konsulta\ConsultationResource;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
 use App\Models\V1\Patient\PatientMenstrualHistory;
@@ -13,6 +15,7 @@ use App\Models\V1\Patient\PatientSocialHistory;
 use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\ArrayToXml\ArrayToXml;
@@ -529,6 +532,107 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
+    public function createXml()
+    {
+        $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
+        $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+        $root = [
+            'rootElementName' => 'PCB',
+            '_attributes' => [
+                'pUsername' => "",
+                'pPassword' => "",
+                'pHciAccreNo' => auth()->user()->konsultaCredential->accreditation_number?? "",
+                'pPMCCNo' => auth()->user()->konsultaCredential->pmcc_number?? "",
+                'pEnlistTotalCnt' => count($this->enlistments()['ENLISTMENT'][0]),
+                'pProfileTotalCnt' => count($this->profilings()['PROFILE'][0]),
+                'pSoapTotalCnt' => count($this->soaps()['SOAP'][0]),
+                'pCertificationId' => auth()->user()->konsultaCredential->software_certification_id?? "",
+                'pHciTransmittalNumber' => $transmittalNumber
+            ]
+        ];
+        $array = [
+            'ENLISTMENTS' => [$this->enlistments()],
+            'PROFILING' => [$this->profilings()],
+            'SOAPS' => [$this->soaps()],
+            'DIAGNOSTICEXAMRESULTS' => [
+                'DIAGNOSTICEXAMRESULT' => [
+
+                    '_attributes' => [
+                        'pHciCaseNo'=>"TH9000000120220800001",
+                        'pHciTransNo'=>"PH9000000120220800001",
+                        'pPatientPin'=>"242500004774",
+                        'pPatientType'=>"DD",
+                        'pMemPin'=>"030263078507",
+                        'pEffYear'=>"2022"
+                    ],
+                    'FBSS' => [
+                        'FBS' => [
+                            '_attributes' => [
+                                'pReferralFacility'=>"SAMPLE REFERRAL FACILITY",
+                                'pLabDate'=>"2022-08-26",
+                                'pGlucoseMg'=>"45",
+                                'pGlucoseMmol'=>"7.8",
+                                'pDateAdded'=>"2022-08-27",
+                                'pStatus'=>"D",
+                                'pDiagnosticLabFee'=>"0.00",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                    ],
+                    'RBSS' => [
+                        'RBS' => [
+                            '_attributes' => [
+                                'pReferralFacility'=>"",
+                                'pLabDate'=>"2022-08-26",
+                                'pGlucoseMg'=>"45",
+                                'pGlucoseMmol'=>"7.8",
+                                'pDateAdded'=>"2022-08-27",
+                                'pStatus'=>"D",
+                                'pDiagnosticLabFee'=>"0.00",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                    ],
+                ],
+            ],
+            'MEDICINES' => [
+                'MEDICINE' => [
+                    '_attributes' => [
+                        'pHciCaseNo'=>"",
+                        'pHciTransNo'=>"",
+                        'pCategory'=>"",
+                        'pDrugCode'=>"",
+                        'pGenericCode'=>"",
+                        'pSaltCode'=>"",
+                        'pStrengthCode'=>"",
+                        'pFormCode'=>"",
+                        'pUnitCode'=>"",
+                        'pPackageCode'=>"",
+                        'pOtherMedicine'=>"",
+                        'pRoute'=>"",
+                        'pQuantity'=>"",
+                        'pActualUnitPrice'=>"",
+                        'pTotalAmtPrice'=>"",
+                        'pInstructionQuantity'=>"",
+                        'pInstructionStrength'=>"",
+                        'pInstructionFrequency'=>"",
+                        'pPrescribingPhysician'=>"",
+                        'pIsDispensed'=>"",
+                        'pDateDispensed'=>"",
+                        'pDispensingPersonnel'=>"",
+                        'pIsApplicable'=>"",
+                        'pDateAdded'=>"",
+                        'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                    ]
+                ],
+            ],
+        ];
+        $result = new ArrayToXml($array, $root);
+        return $result->dropXmlDeclaration()->toXml();
+    }
+
     public function enlistments()
     {
         $enlistments = [];
@@ -541,7 +645,8 @@ class KonsultaService
             ->joinSub($user, 'users', function($join){
                 $join->on('patient_philhealth.user_id', '=', 'users.id');
             })
-            ->whereUserId('sdf')
+            ->whereIn('membership_type_id', ['MM', 'DD'])
+            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
 
         $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn() => [[]]))->resolve()];
@@ -878,14 +983,32 @@ class KonsultaService
                 'socialHistory',
                 'menstrualHistory',
             ])
-            ->withWhereHas('philhealthLatest')
-            //->whereId('sdf')
+            ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+            ->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]));
 
         $profile['PROFILE'] = [$profileResource->resolve()];
         /*$result = new ArrayToXml($profile);
         return $result->dropXmlDeclaration()->toXml();*/
+        return $profile;
         return count($profile['PROFILE'][0]);
     }
+
+    public function soaps()
+    {
+        $soap = [];
+        $data = Consult::query()
+            ->with(['patient'])
+            ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac1')
+            ->get();
+        $soapResource = ConsultationResource::collection($data->whenEmpty(fn() => [[]]));
+
+        $soap['SOAP'] = [$soapResource->resolve()];
+        /*$result = new ArrayToXml($soap);
+        return $result->dropXmlDeclaration()->toXml();*/
+        return $soap;
+    }
+
 }

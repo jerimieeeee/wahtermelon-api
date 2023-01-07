@@ -17,8 +17,12 @@ return new class extends Migration
             $table->uuid('id')->index()->primary();
             $table->string('facility_code')->index();
             $table->foreignUuid('user_id')->index()->constrained();
-
+            $table->string('transmittal_number',21)->unique()->index()->nullable();
+            $table->string('konsulta_transaction_number',21)->unique()->index()->nullable();
+            $table->json('xml_errors')->nullable();
             $table->timestamps();
+
+            $table->foreign('facility_code')->references('code')->on('facilities');
         });
     }
 

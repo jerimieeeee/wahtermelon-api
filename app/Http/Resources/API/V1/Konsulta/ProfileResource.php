@@ -86,7 +86,7 @@ class ProfileResource extends JsonResource
                 'MEDHIST' => [MedicalHistoryResource::collection(!empty($this->patientHistory) ? $this->patientHistory->whenEmpty(fn() => [[]]) : [[]])->resolve()],
             ],
             'MHSPECIFICS' => [
-                'MHSPECIFIC' => [MedicalHistoryResource::collection(!empty($this->patientHistorySpecifics) ? $this->patientHistorySpecifics->whenEmpty(fn() => [[]]) : [[]])->resolve()],
+                'MHSPECIFIC' => [MedicalHistorySpecificResource::collection(!empty($this->patientHistorySpecifics) ? $this->patientHistorySpecifics->whenEmpty(fn() => [[]]) : [[]])->resolve()],
             ],
             'SURGHISTS' => [
                 'SURGHIST' => [SurgicalHistoryResource::collection(!empty($this->surgicalHistory) ? $this->surgicalHistory->whenEmpty(fn() => [[]]) : [[]])->resolve()]
@@ -95,7 +95,7 @@ class ProfileResource extends JsonResource
                 'FAMHIST' => [MedicalHistoryResource::collection(!empty($this->familyHistory) ? $this->familyHistory->whenEmpty(fn() => [[]]) : [[]])->resolve()]
             ],
             'FHSPECIFICS' => [
-                'FHSPECIFIC' => [MedicalHistoryResource::collection(!empty($this->familyHistorySpecifics) ? $this->familyHistorySpecifics->whenEmpty(fn() => [[]]) : [[]])->resolve()]
+                'FHSPECIFIC' => [MedicalHistorySpecificResource::collection(!empty($this->familyHistorySpecifics) ? $this->familyHistorySpecifics->whenEmpty(fn() => [[]]) : [[]])->resolve()]
             ],
             'SOCHIST' => [SocialHistoryResource::make(!empty($this->socialHistory) ? $this->socialHistory : [[]])->resolve()],
             'IMMUNIZATIONS' => [
@@ -112,6 +112,7 @@ class ProfileResource extends JsonResource
                     'pDeficiencyRemarks'=>""
                 ]
             ],
+            'PEGENSURVEY' => [PhysicalExaminationGeneralSurveyResource::make(!empty($vitals) ? $vitals : [[]])->resolve()],
             'PEMISCS' => [
                 'PEMISC' => [PhysicalExaminationMiscResource::collection(!empty($physicalExam) ? $physicalExam->whenEmpty(fn() => [[]]) : [[]])->resolve()],
             ],
