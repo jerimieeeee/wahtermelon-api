@@ -16,7 +16,7 @@ class MedicalHistoryResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pMdiseaseCode' => $this->medical_history_id?? "",
+                'pMdiseaseCode' => $this->libmedicalHistory->konsulta_history_id?? "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

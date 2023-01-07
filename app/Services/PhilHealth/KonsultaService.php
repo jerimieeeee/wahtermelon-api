@@ -645,7 +645,7 @@ class KonsultaService
             ->joinSub($user, 'users', function($join){
                 $join->on('patient_philhealth.user_id', '=', 'users.id');
             })
-            ->whereIn('membership_type_id', ['MM', 'DD'])
+            //->whereIn('membership_type_id', ['MM', 'DD'])
             ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
 

@@ -74,10 +74,10 @@ class ProfileResource extends JsonResource
                 'pPatientPin' => $this->philhealthLatest->philhealth_id?? "",
                 'pPatientType' => $this->philhealthLatest->membership_type_id?? "",
                 'pPatientAge' => !empty($this->birthdate) ? Carbon::parse($this->birthdate)->diff($this->philhealthLatest->enlistment_date??"")->y : "",
-                'pMemPin' => $this->philhealthLatest->member_pin?? "",
+                'pMemPin' => !empty($this->philhealthLatest->member_pin) ? $this->philhealthLatest->member_pin : $this->philhealthLatest->philhealth_id?? "",
                 'pEffYear' => $this->philhealthLatest->effectivity_year?? "",
-                'pATC' => $this->philhealthLatest->atc?? "",
-                'pIsWalkedIn' => "N",
+                'pATC' => $this->philhealthLatest->atc?? "WALKEDIN",
+                'pIsWalkedIn' => "Y",
                 'pTransDate' => isset($this->philhealthLatest->created_at) ? $this->philhealthLatest->created_at->format('Y-m-d') : "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
