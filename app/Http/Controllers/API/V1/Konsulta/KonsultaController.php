@@ -155,7 +155,7 @@ class KonsultaController extends Controller
 
     public function generateXml(KonsultaService $konsultaService)
     {
-        return $e = $konsultaService->profiling();
+        return $e = $konsultaService->profilings();
         return count($e['ENLISTMENT'][0]);
         $enlistments = ['ENLISTMENT' => []];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');

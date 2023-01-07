@@ -2,6 +2,8 @@
 
 namespace App\Services\PhilHealth;
 
+use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
+use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
@@ -11,6 +13,8 @@ use App\Models\V1\Patient\PatientSocialHistory;
 use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class KonsultaService
@@ -169,14 +173,14 @@ class KonsultaService
                     ],
                     'PREGHIST' => [
                         '_attributes' => [
-                            'pPregCnt'=>"0",
-                            'pDeliveryCnt'=>"0",
-                            'pDeliveryTyp'=>"X",
-                            'pFullTermCnt'=>"0",
-                            'pPrematureCnt'=>"0",
-                            'pAbortionCnt'=>"0",
-                            'pLivChildrenCnt'=>"0",
-                            'pWPregIndhyp'=>"N",
+                            'pPregCnt'=>"",
+                            'pDeliveryCnt'=>"",
+                            'pDeliveryTyp'=>"",
+                            'pFullTermCnt'=>"",
+                            'pPrematureCnt'=>"",
+                            'pAbortionCnt'=>"",
+                            'pLivChildrenCnt'=>"",
+                            'pWPregIndhyp'=>"",
                             'pWFamPlan'=>"N",
                             'pIsApplicable'=>"N",
                             'pReportStatus'=>"U",
@@ -527,7 +531,7 @@ class KonsultaService
 
     public function enlistments()
     {
-        $enlistments = ['ENLISTMENT' => []];
+        $enlistments = [];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
         $user = User::selectRaw('id, CONCAT(first_name, " ", last_name) AS created_by');
         $data = PatientPhilhealth::query()
@@ -537,40 +541,10 @@ class KonsultaService
             ->joinSub($user, 'users', function($join){
                 $join->on('patient_philhealth.user_id', '=', 'users.id');
             })
-            ->get()->map(function($data, $key){
-                return [
-                    '_attributes' => [
-                        'pHciCaseNo' => $data->case_number?? "",
-                        'pHciTransNo' => 'E'.$data->transaction_number?? "",
-                        'pEffYear' => $data->effectivity_year?? "",
-                        'pEnlistStat' => $data->enlistment_status_id?? "",
-                        'pEnlistDate' => $data->enlistment_date?? "",
-                        'pPackageType' => $data->package_type_id?? "",
-                        'pMemPin' => $data->member_pin?? "",
-                        'pMemFname' => strtoupper($data->member_first_name?? ""),
-                        'pMemMname' => strtoupper($data->member_middle_name?? ""),
-                        'pMemLname' => strtoupper($data->member_last_name?? ""),
-                        'pMemExtname' => strtoupper($data->member_suffix_name == 'NA' ? "" : $data->member_suffix_name),
-                        'pMemDob' => $data->member_birthdate?? "",
-                        'pPatientPin' => $data->philhealth_id?? "",
-                        'pPatientFname' => strtoupper($data->first_name?? ""),
-                        'pPatientMname' => strtoupper($data->middle_name?? ""),
-                        'pPatientLname' => strtoupper($data->last_name?? ""),
-                        'pPatientExtname' => strtoupper($data->suffix_name == 'NA' ? "" : $data->suffix_name),
-                        'pPatientSex' => $data->gender?? "",
-                        'pPatientDob' => $data->birthdate?? "",
-                        'pPatientType' => $data->membership_type_id?? "",
-                        'pPatientMobileNo' => $data->mobile_number?? "",
-                        'pPatientLandlineNo' => "",
-                        'pWithConsent' => isset($data->consent_flag) ? 'Y' : 'N',
-                        'pTransDate' => isset($data->created_at) ? $data->created_at->format('Y-m-d') : "",
-                        'pCreatedBy' => strtoupper($data->created_by?? ""),
-                        'pReportStatus' => "U",
-                        'pDeficiencyRemarks' => "",
-                    ],
-                ];
-            });
-        $enlistments['ENLISTMENT'] = [$data->toArray()];
+            ->whereUserId('sdf')
+            ->get();
+
+        $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn() => [[]]))->resolve()];
         return $enlistments;
     }
 
@@ -889,5 +863,29 @@ class KonsultaService
         $result = new ArrayToXml($profile);
         return $result->dropXmlDeclaration()->toXml();
         //return $profile;
+    }
+
+    public function profilings()
+    {
+        $profile = [];
+        $data = Patient::query()
+            ->with([
+                'patientHistory:patient_id,medical_history_id',
+                'patientHistorySpecifics',
+                'familyHistory:patient_id,medical_history_id',
+                'familyHistorySpecifics',
+                'surgicalHistory',
+                'socialHistory',
+                'menstrualHistory',
+            ])
+            ->withWhereHas('philhealthLatest')
+            //->whereId('sdf')
+            ->get();
+        $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]));
+
+        $profile['PROFILE'] = [$profileResource->resolve()];
+        /*$result = new ArrayToXml($profile);
+        return $result->dropXmlDeclaration()->toXml();*/
+        return count($profile['PROFILE'][0]);
     }
 }
