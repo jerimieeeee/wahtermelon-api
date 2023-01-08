@@ -4,6 +4,7 @@ namespace App\Services\PhilHealth;
 
 use App\Classes\LocalSoapClient;
 use App\Classes\PhilHealthEClaimsEncryptor;
+use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Illuminate\Support\Facades\Http;
 use Spatie\ArrayToXml\ArrayToXml;
@@ -94,6 +95,66 @@ class SoapService
         catch (\Exception $e) {
              return $e;       // just re-throw it
         }
+    }
+
+    public function saveRegistrationList(array $data)
+    {
+        $newArray = [];
+        foreach($data as $key => $value){
+            $newArray[$key]['facility_code'] = auth()->user()->facility_code;
+            $newArray[$key]['user_id'] = auth()->id();
+            $newArray[$key]['custom_id'] = auth()->user()->facility_code.$value->pAssignedPin.$value->pEffYear;
+            $newArray[$key]['philhealth_id'] = $value->pAssignedPin;
+            $newArray[$key]['last_name'] = $value->pAssignedLastName;
+            $newArray[$key]['first_name'] = $value->pAssignedFirstName;
+            $newArray[$key]['middle_name'] = $value->pAssignedMiddleName;
+            $newArray[$key]['suffix_name'] = $value->pAssignedExtName;
+            $newArray[$key]['birthdate'] = $value->pAssignedDateOfBirth;
+            $newArray[$key]['gender'] = $value->pAssignedSex;
+            $newArray[$key]['membership_type_id'] = $value->pAssignedType;
+            $newArray[$key]['member_pin'] = $value->pPrimaryPIN;
+            $newArray[$key]['member_last_name'] = $value->pPrimaryLastName;
+            $newArray[$key]['member_first_name'] = $value->pPrimaryFirstName;
+            $newArray[$key]['member_middle_name'] = $value->pPrimaryMiddleName;
+            $newArray[$key]['member_suffix_name'] = $value->pPrimaryExtName;
+            $newArray[$key]['member_birthdate'] = $value->pPrimaryDateOfBirth;
+            $newArray[$key]['member_gender'] = $value->pPrimarySex;
+            $newArray[$key]['mobile_number'] = $value->pMobileNumber;
+            $newArray[$key]['landline_number'] = $value->pLandlineNumber;
+            $newArray[$key]['member_category'] = $value->pMemberNewCat;
+            $newArray[$key]['member_category_desc'] = $value->pMemberNewCatDesc;
+            $newArray[$key]['package_type_id'] = $value->pPackageType;
+            $newArray[$key]['assigned_date'] = $value->pAssignedDate;
+            $newArray[$key]['assigned_status_id'] = $value->pAssignedStatus;
+            $newArray[$key]['effectivity_year'] = $value->pEffYear;
+            /*$data[$key] = array_change_key_case($value, CASE_LOWER,
+                [
+                    "pAssignedPin" => "philhealth_id",
+                    "pAssignedLastName" => "last_name",
+                    "pAssignedFirstName" => "first_name",
+                    "pAssignedMiddleName" => "middle_name",
+                    "pAssignedExtName" => "suffix_name",
+                    "pAssignedDateOfBirth" => "birthdate",
+                    "pAssignedSex" => "gender",
+                    "pAssignedType" => "membership_type_id",
+                    "pPrimaryPIN" => "member_pin",
+                    "pPrimaryLastName" => "member_last_name",
+                    "pPrimaryFirstName" => "member_first_name",
+                    "pPrimaryMiddleName" => "member_middle_name",
+                    "pPrimaryExtName" => "member_suffix_name",
+                    "pPrimaryDateOfBirth" => "member_birthdate",
+                    "pPrimarySex" => "member_gender",
+                    "pMobileNumber" => "mobile_number",
+                    "pLandlineNumber" => "landline_number",
+                    "pMemberNewCat" => "member_category",
+                    "pMemberNewCatDesc" => "member_category_desc",
+                    "pPackageType" => "package_type_id",
+                    "pAssignedDate" => "assigned_date",
+                    "pAssignedStatus" => "assigned_status_id",
+                    "pEffYear" => "effectivity_year"
+                ]);*/
+        }
+        KonsultaRegistrationList::upsert($newArray, ['custom_id']);
     }
 
     public function httpClient()
