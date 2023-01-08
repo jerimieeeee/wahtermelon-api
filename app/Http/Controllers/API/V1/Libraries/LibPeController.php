@@ -29,7 +29,7 @@ class LibPeController extends Controller
 
     public function index()
     {
-        return LibPeResource::collection(LibPe::orderBy('category_id', 'ASC')->get());
+        return LibPeResource::collection(LibPe::orderBy('seq_id', 'ASC')->get());
     }
 
     /**
