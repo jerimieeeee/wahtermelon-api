@@ -33,7 +33,8 @@ class Consult extends Model
     protected $casts = [
         'consult_date' => 'datetime:Y-m-d H:i:s',
         'is_pregnant' => 'boolean',
-        'consult_done' => 'boolean'
+        'consult_done' => 'boolean',
+        'walkedin_status' => 'boolean',
     ];
 
     public function getRouteKeyName()

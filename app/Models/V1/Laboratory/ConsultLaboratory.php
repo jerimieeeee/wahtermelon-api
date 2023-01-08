@@ -5,6 +5,8 @@ namespace App\Models\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibLaboratory;
+use App\Models\V1\Libraries\LibLaboratoryRecommendation;
+use App\Models\V1\Libraries\LibLaboratoryRequestStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -72,6 +74,16 @@ class ConsultLaboratory extends Model
     public function laboratory()
     {
         return $this->belongsTo(LibLaboratory::class, 'lab_code', 'code');
+    }
+
+    public function recommendation()
+    {
+        return $this->belongsTo(LibLaboratoryRecommendation::class, 'recommendation_code', 'code');
+    }
+
+    public function requestStatus()
+    {
+        return $this->belongsTo(LibLaboratoryRequestStatus::class, 'request_status_code', 'code');
     }
 
     public function cbc()

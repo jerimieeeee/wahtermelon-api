@@ -1001,7 +1001,7 @@ class KonsultaService
         $data = Consult::query()
             ->with(['patient'])
             ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
-            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac1')
+            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $soapResource = ConsultationResource::collection($data->whenEmpty(fn() => [[]]));
 

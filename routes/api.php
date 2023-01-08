@@ -715,6 +715,12 @@ Route::prefix('v1')->group(function (){
         Route::get('laboratory-sputum-collection', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'index'])->name('laboratory-sputum-collection.index');
         Route::get('laboratory-sputum-collection/{collection}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySputumCollectionController::class, 'show'])->name('laboratory-sputum-collection.show');
 
+        Route::get('laboratory-recommendations', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRecommendationController::class, 'index'])->name('laboratory-recommendations.index');
+        Route::get('laboratory-recommendations/{recommendation}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRecommendationController::class, 'show'])->name('laboratory-recommendations.show');
+
+        Route::get('laboratory-request-statuses', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRequestStatusController::class, 'index'])->name('laboratory-request-statuses.index');
+        Route::get('laboratory-request-statuses/{status}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRequestStatusController::class, 'show'])->name('laboratory-request-statuses.show');
+
         //Family Planning Method
         Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
         Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');

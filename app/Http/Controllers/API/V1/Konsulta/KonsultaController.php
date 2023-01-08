@@ -150,7 +150,7 @@ class KonsultaController extends Controller
         $firstTranche = $konsultaService->createXml();
         $data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
-        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
+        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>2]);
     }
 
     public function generateXml(KonsultaService $konsultaService)
