@@ -4,6 +4,7 @@ namespace App\Services\PhilHealth;
 
 use App\Classes\LocalSoapClient;
 use App\Classes\PhilHealthEClaimsEncryptor;
+use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
 use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Illuminate\Support\Facades\Http;
@@ -53,6 +54,17 @@ class SoapService
     private function decryptResponse($encryptedOutput)
     {
         if (!isJson($encryptedOutput->return)) {
+            if (Str::contains($encryptedOutput->return, ['Please enter Valid', 'Koken', 'token'])) {
+                $credentials = auth()->user()->konsultaCredential;
+                $credentialsResource = GetTokenResource::make($credentials)->resolve();
+                $result = $this->soapMethod('getToken', $credentialsResource);
+                if(isset($result->success)) {
+                    $credentials->update(['token' => $result->result]);
+                    return response()->json([
+                        'message' => 'Successfully added the token in the database! You may now use konsulta webservice.'
+                    ], 201);
+                }
+            }
             return $encryptedOutput;
         }
 

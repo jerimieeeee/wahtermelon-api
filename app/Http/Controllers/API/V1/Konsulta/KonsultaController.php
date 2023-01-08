@@ -88,7 +88,7 @@ class KonsultaController extends Controller
      */
     public function getToken(SoapService $service): mixed
     {
-        $credentials = PhilhealthCredential::whereProgramCode('kp')->first();
+        $credentials = auth()->user()->konsultaCredential;
         $credentialsResource = GetTokenResource::make($credentials)->resolve();
         $result = $service->soapMethod('getToken', $credentialsResource);
         if(isset($result->success)) {
@@ -149,7 +149,7 @@ class KonsultaController extends Controller
     {
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
-        $firstTranche = $konsultaService->createXml();
+        $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>2]);

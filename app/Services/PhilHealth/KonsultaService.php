@@ -98,11 +98,11 @@ class KonsultaService
                                     'pMdiseaseCode'=>"001", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
                                 ]
                             ],
-                            [
+                            /*[
                                 '_attributes' => [
                                     'pMdiseaseCode'=>"002", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
                                 ],
-                            ]
+                            ]*/
                         ],
                     ],
                     'MHSPECIFICS' => [
@@ -975,7 +975,6 @@ class KonsultaService
         $profile = [];
         $data = Patient::query()
             ->with([
-                'patientHistory:patient_id,medical_history_id',
                 'patientHistorySpecifics',
                 'familyHistory:patient_id,medical_history_id',
                 'familyHistorySpecifics',
@@ -983,8 +982,9 @@ class KonsultaService
                 'socialHistory',
                 'menstrualHistory',
             ])
+            ->withWhereHas('patientHistory:patient_id,medical_history_id')
             ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
-            ->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+            //->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]));
 
@@ -1001,7 +1001,7 @@ class KonsultaService
         $data = Consult::query()
             ->with(['patient'])
             ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
-            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac1')
             ->get();
         $soapResource = ConsultationResource::collection($data->whenEmpty(fn() => [[]]));
 
