@@ -100,6 +100,8 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryStoolColorSeeder::class,
             LibLaboratoryStoolConsistencySeeder::class,
             LibLaboratoryBloodInStoolSeeder::class,
+            LibLaboratoryRecommendationSeeder::class,
+            LibLaboratoryRequestStatusSeeder::class,
         ]);
     }
 }

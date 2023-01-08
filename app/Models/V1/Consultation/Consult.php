@@ -4,6 +4,7 @@ namespace App\Models\V1\Consultation;
 
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
 use App\Traits\FilterByUser;
 use DateTime;
@@ -32,7 +33,8 @@ class Consult extends Model
     protected $casts = [
         'consult_date' => 'datetime:Y-m-d H:i:s',
         'is_pregnant' => 'boolean',
-        'consult_done' => 'boolean'
+        'consult_done' => 'boolean',
+        'walkedin_status' => 'boolean',
     ];
 
     public function getRouteKeyName()
@@ -128,6 +130,12 @@ class Consult extends Model
                 $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
             })
             ->orderBy('vitals_date', 'DESC');
+    }
+
+    public function philhealthLatest()
+    {
+        return $this->hasOne(PatientPhilhealth::class, 'patient_id', 'patient_id')
+            ->latest('effectivity_year');
     }
 
 }

@@ -22,6 +22,8 @@ class ConsultResource extends JsonResource
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->facility_code,
+            'transaction_number' => $this->transaction_number,
+            'transmittal_number' => $this->transmittal_number,
             'consult_date' => $this->consult_date->format('Y-m-d H:i:s'),
             'physician_id' => $this->when(!$this->relationLoaded('physician'),$this->physician_id),
             'physician' => $this->whenLoaded('physician'),
@@ -31,6 +33,8 @@ class ConsultResource extends JsonResource
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,
+            'authorization_transaction_code' => $this->authorization_transaction_code,
+            'walkedin_status' => $this->walkedin_status,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

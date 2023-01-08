@@ -2,11 +2,22 @@
 
 namespace App\Services\PhilHealth;
 
+use App\Http\Resources\API\V1\Konsulta\ConsultationResource;
+use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
+use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
+use App\Models\V1\Patient\PatientMenstrualHistory;
 use App\Models\V1\Patient\PatientPhilhealth;
+use App\Models\V1\Patient\PatientSocialHistory;
+use App\Models\V1\Patient\PatientSurgicalHistory;
+use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class KonsultaService
@@ -29,7 +40,7 @@ class KonsultaService
         ];
         $firstTrancheArray = [
             'ENLISTMENTS' => [
-                /*'ENLISTMENT' => [
+                'ENLISTMENT' => [
                     '_attributes' => [
                         'pHciCaseNo'=>"TH9000000120220800001",
                         'pHciTransNo'=>"PH9000000120220800001",
@@ -37,19 +48,19 @@ class KonsultaService
                         'pEnlistStat'=>"1",
                         'pEnlistDate'=>"2022-08-26",
                         'pPackageType'=>"K",
-                        'pMemPin'=>"190269297550",
-                        'pMemFname'=>"TFSHC FN ONE",
-                        'pMemMname'=>"TFSHC MN ONE",
-                        'pMemLname'=>"TFSHC LN ONE",
+                        'pMemPin'=>"190269297542",
+                        'pMemFname'=>"DRHUIII FN NINETY",
+                        'pMemMname'=>"DRHUIII MN NINETY",
+                        'pMemLname'=>"DRHUIII LN NINETY",
                         'pMemExtname'=>"",
-                        'pMemDob'=>"1974-01-02",
-                        'pPatientPin'=>"190269297550",
-                        'pPatientFname'=>"TFSHC FN ONE",
-                        'pPatientMname'=>"TFSHC MN ONE",
-                        'pPatientLname'=>"TFSHC LN ONE",
+                        'pMemDob'=>"1974-04-01",
+                        'pPatientPin'=>"190269297542",
+                        'pPatientFname'=>"a",
+                        'pPatientMname'=>"",
+                        'pPatientLname'=>"a",
                         'pPatientExtname'=>"",
-                        'pPatientSex'=>"M",
-                        'pPatientDob'=>"1974-01-02",
+                        'pPatientSex'=>"F",
+                        'pPatientDob'=>"1974-04-01",
                         'pPatientType'=>"MM",
                         'pPatientMobileNo'=>"09090000000",
                         'pPatientLandlineNo'=>"",
@@ -59,12 +70,12 @@ class KonsultaService
                         'pReportStatus'=>"U",
                         'pDeficiencyRemarks'=>""
                     ]
-                ],*/
-                $this->enlistments(),
+                ],
+                //$this->enlistments(),
             ],
             'PROFILING' => [
-                $this->profiling(),
-                /*'PROFILE' => [
+                //$this->profiling(),
+                'PROFILE' => [
                     '_attributes' => [
                         'pHciTransNo'=>"PH9000000120220800001",
                         'pHciCaseNo'=>"TH9000000120220800001",
@@ -165,14 +176,14 @@ class KonsultaService
                     ],
                     'PREGHIST' => [
                         '_attributes' => [
-                            'pPregCnt'=>"0",
-                            'pDeliveryCnt'=>"0",
-                            'pDeliveryTyp'=>"X",
-                            'pFullTermCnt'=>"0",
-                            'pPrematureCnt'=>"0",
-                            'pAbortionCnt'=>"0",
-                            'pLivChildrenCnt'=>"0",
-                            'pWPregIndhyp'=>"N",
+                            'pPregCnt'=>"",
+                            'pDeliveryCnt'=>"",
+                            'pDeliveryTyp'=>"",
+                            'pFullTermCnt'=>"",
+                            'pPrematureCnt'=>"",
+                            'pAbortionCnt'=>"",
+                            'pLivChildrenCnt'=>"",
+                            'pWPregIndhyp'=>"",
                             'pWFamPlan'=>"N",
                             'pIsApplicable'=>"N",
                             'pReportStatus'=>"U",
@@ -287,7 +298,7 @@ class KonsultaService
                             'pDeficiencyRemarks'=>""
                         ]
                     ],
-                ],*/
+                ],
             ],
             'SOAPS' => [
                 'SOAP' => [
@@ -521,9 +532,110 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
+    public function createXml()
+    {
+        $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
+        $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+        $root = [
+            'rootElementName' => 'PCB',
+            '_attributes' => [
+                'pUsername' => "",
+                'pPassword' => "",
+                'pHciAccreNo' => auth()->user()->konsultaCredential->accreditation_number?? "",
+                'pPMCCNo' => auth()->user()->konsultaCredential->pmcc_number?? "",
+                'pEnlistTotalCnt' => count($this->enlistments()['ENLISTMENT'][0]),
+                'pProfileTotalCnt' => count($this->profilings()['PROFILE'][0]),
+                'pSoapTotalCnt' => count($this->soaps()['SOAP'][0]),
+                'pCertificationId' => auth()->user()->konsultaCredential->software_certification_id?? "",
+                'pHciTransmittalNumber' => $transmittalNumber
+            ]
+        ];
+        $array = [
+            'ENLISTMENTS' => [$this->enlistments()],
+            'PROFILING' => [$this->profilings()],
+            'SOAPS' => [$this->soaps()],
+            'DIAGNOSTICEXAMRESULTS' => [
+                'DIAGNOSTICEXAMRESULT' => [
+
+                    '_attributes' => [
+                        'pHciCaseNo'=>"TH9000000120220800001",
+                        'pHciTransNo'=>"PH9000000120220800001",
+                        'pPatientPin'=>"242500004774",
+                        'pPatientType'=>"DD",
+                        'pMemPin'=>"030263078507",
+                        'pEffYear'=>"2022"
+                    ],
+                    'FBSS' => [
+                        'FBS' => [
+                            '_attributes' => [
+                                'pReferralFacility'=>"SAMPLE REFERRAL FACILITY",
+                                'pLabDate'=>"2022-08-26",
+                                'pGlucoseMg'=>"45",
+                                'pGlucoseMmol'=>"7.8",
+                                'pDateAdded'=>"2022-08-27",
+                                'pStatus'=>"D",
+                                'pDiagnosticLabFee'=>"0.00",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                    ],
+                    'RBSS' => [
+                        'RBS' => [
+                            '_attributes' => [
+                                'pReferralFacility'=>"",
+                                'pLabDate'=>"2022-08-26",
+                                'pGlucoseMg'=>"45",
+                                'pGlucoseMmol'=>"7.8",
+                                'pDateAdded'=>"2022-08-27",
+                                'pStatus'=>"D",
+                                'pDiagnosticLabFee'=>"0.00",
+                                'pReportStatus'=>"U",
+                                'pDeficiencyRemarks'=>""
+                            ]
+                        ],
+                    ],
+                ],
+            ],
+            'MEDICINES' => [
+                'MEDICINE' => [
+                    '_attributes' => [
+                        'pHciCaseNo'=>"",
+                        'pHciTransNo'=>"",
+                        'pCategory'=>"",
+                        'pDrugCode'=>"",
+                        'pGenericCode'=>"",
+                        'pSaltCode'=>"",
+                        'pStrengthCode'=>"",
+                        'pFormCode'=>"",
+                        'pUnitCode'=>"",
+                        'pPackageCode'=>"",
+                        'pOtherMedicine'=>"",
+                        'pRoute'=>"",
+                        'pQuantity'=>"",
+                        'pActualUnitPrice'=>"",
+                        'pTotalAmtPrice'=>"",
+                        'pInstructionQuantity'=>"",
+                        'pInstructionStrength'=>"",
+                        'pInstructionFrequency'=>"",
+                        'pPrescribingPhysician'=>"",
+                        'pIsDispensed'=>"",
+                        'pDateDispensed'=>"",
+                        'pDispensingPersonnel'=>"",
+                        'pIsApplicable'=>"",
+                        'pDateAdded'=>"",
+                        'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                    ]
+                ],
+            ],
+        ];
+        $result = new ArrayToXml($array, $root);
+        return $result->dropXmlDeclaration()->toXml();
+    }
+
     public function enlistments()
     {
-        $enlistments = ['ENLISTMENT' => []];
+        $enlistments = [];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
         $user = User::selectRaw('id, CONCAT(first_name, " ", last_name) AS created_by');
         $data = PatientPhilhealth::query()
@@ -533,40 +645,11 @@ class KonsultaService
             ->joinSub($user, 'users', function($join){
                 $join->on('patient_philhealth.user_id', '=', 'users.id');
             })
-            ->get()->map(function($data, $key){
-                return [
-                    '_attributes' => [
-                        'pHciCaseNo' => $data->case_number?? "",
-                        'pHciTransNo' => 'E'.$data->transaction_number?? "",
-                        'pEffYear' => $data->effectivity_year?? "",
-                        'pEnlistStat' => $data->enlistment_status_id?? "",
-                        'pEnlistDate' => $data->enlistment_date?? "",
-                        'pPackageType' => $data->package_type_id?? "",
-                        'pMemPin' => $data->member_pin?? "",
-                        'pMemFname' => strtoupper($data->member_first_name?? ""),
-                        'pMemMname' => strtoupper($data->member_middle_name?? ""),
-                        'pMemLname' => strtoupper($data->member_last_name?? ""),
-                        'pMemExtname' => strtoupper($data->member_suffix_name == 'NA' ? "" : $data->member_suffix_name),
-                        'pMemDob' => $data->member_birthdate?? "",
-                        'pPatientPin' => $data->philhealth_id?? "",
-                        'pPatientFname' => strtoupper($data->first_name?? ""),
-                        'pPatientMname' => strtoupper($data->middle_name?? ""),
-                        'pPatientLname' => strtoupper($data->last_name?? ""),
-                        'pPatientExtname' => strtoupper($data->suffix_name == 'NA' ? "" : $data->suffix_name),
-                        'pPatientSex' => $data->gender?? "",
-                        'pPatientDob' => $data->birthdate?? "",
-                        'pPatientType' => $data->membership_type_id?? "",
-                        'pPatientMobileNo' => $data->mobile_number?? "",
-                        'pPatientLandlineNo' => "",
-                        'pWithConsent' => isset($data->consent_flag) ? 'Y' : 'N',
-                        'pTransDate' => isset($data->created_at) ? $data->created_at->format('Y-m-d') : "",
-                        'pCreatedBy' => strtoupper($data->created_by?? ""),
-                        'pReportStatus' => "U",
-                        'pDeficiencyRemarks' => "",
-                    ],
-                ];
-            });
-        $enlistments['ENLISTMENT'] = [$data->toArray()];
+            //->whereIn('membership_type_id', ['MM', 'DD'])
+            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+            ->get();
+
+        $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn() => [[]]))->resolve()];
         return $enlistments;
     }
 
@@ -617,6 +700,72 @@ class KonsultaService
                             'pDeficiencyRemarks'=>""
                         ]
                     ];
+
+                    $familyHistory = PatientHistory::wherePatientId($data->patient_id)->whereCategory(2)->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>$data->medical_history_id,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $familyHistorySpecific = PatientHistory::wherePatientId($data->patient_id)->whereCategory(2)->whereNotNull('remarks')->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pMdiseaseCode'=>$data->medical_history_id,
+                                    'pSpecificDesc'=>$data->remarks,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $familyHistoryDefault = [
+                        '_attributes' => [
+                            'pMdiseaseCode'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+                    $familyHistorySpecificDefault = [
+                        '_attributes' => [
+                            'pMdiseaseCode'=>"",
+                            'pSpecificDesc'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+
+                    $surgical = PatientSurgicalHistory::wherePatientId($data->patient_id)->get()
+                        ->map(function($data, $key){
+                            return [
+                                '_attributes' => [
+                                    'pSurgDesc'=>$data->operation,
+                                    'pSurgDate'=>$data->operation_date,
+                                    'pReportStatus'=>"U",
+                                    'pDeficiencyRemarks'=>""
+                                ]
+                            ];
+                        });
+                    $surgicalDefault = [
+                        '_attributes' => [
+                            'pSurgDesc'=>"",
+                            'pSurgDate'=>"",
+                            'pReportStatus'=>"U",
+                            'pDeficiencyRemarks'=>""
+                        ]
+                    ];
+
+                    $socialHistory = PatientSocialHistory::wherePatientId($data->patient_id)->first();
+
+                    $menstrualHistory = PatientMenstrualHistory::wherePatientId($data->patient_id)->first();
+
+                    $patient = Patient::whereId($data->patient_id)->first();
+
+                    $vitals = PatientVitals::wherePatientId($data->patient_id)->whereRaw("DATE_FORMAT(vitals_date, '%Y-%m-%d') = ?", $data->enlistment_date)->first();
+
                     return [
                         '_attributes' => [
                             'pHciTransNo' => 'P'.$data->transaction_number?? "",
@@ -640,34 +789,22 @@ class KonsultaService
                             'MHSPECIFIC' => $medhistorySpecific->toArray() ? [$medhistorySpecific->toArray()] : [$medhistorySpecificDefault]
                         ],
                         'SURGHISTS' => [
-                            'SURGHIST' => [
-                                '_attributes' => [
-                                    'pSurgDesc'=>"SAMPLE OPERATION", 'pSurgDate'=>"2022-06-01", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                                ]
-                            ]
+                            'SURGHIST' => $surgical->toArray() ? [$surgical->toArray()] : [$surgicalDefault]
                         ],
                         'FAMHISTS' => [
-                            'FAMHIST' => [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>"002", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                                ]
-                            ]
+                            'FAMHIST' => $familyHistory->toArray() ? [$familyHistory->toArray()] : [$familyHistoryDefault]
                         ],
                         'FHSPECIFICS' => [
-                            'FHSPECIFIC' => [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>"", 'pSpecificDesc'=>"", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                                ]
-                            ]
+                            'FHSPECIFIC' => $familyHistorySpecific->toArray() ? [$familyHistorySpecific->toArray()] : [$familyHistorySpecificDefault]
                         ],
                         'SOCHIST' => [
                             '_attributes' => [
-                                'pIsSmoker'=>"N",
-                                'pNoCigpk'=>"",
-                                'pIsAdrinker'=>"N",
-                                'pNoBottles'=>"",
-                                'pIllDrugUser'=>"N",
-                                'pIsSexuallyActive'=>"N",
+                                'pIsSmoker'=>$socialHistory ? $socialHistory->smoking : "",
+                                'pNoCigpk'=>$socialHistory ? $socialHistory->pack_per_year : "",
+                                'pIsAdrinker'=>$socialHistory ? $socialHistory->alcohol : "",
+                                'pNoBottles'=>$socialHistory ? $socialHistory->bottles_per_day : "",
+                                'pIllDrugUser'=>$socialHistory ? $socialHistory->illicit_drugs : "",
+                                'pIsSexuallyActive'=>$socialHistory ? $socialHistory->sexually_active : "",
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
@@ -687,16 +824,16 @@ class KonsultaService
                         ],
                         'MENSHIST' => [
                             '_attributes' => [
-                                'pMenarchePeriod'=>"",
-                                'pLastMensPeriod'=>"",
-                                'pPeriodDuration'=>"",
-                                'pMensInterval'=>"",
-                                'pPadsPerDay'=>"",
-                                'pOnsetSexIc'=>"",
-                                'pBirthCtrlMethod'=>"",
-                                'pIsMenopause'=>"",
-                                'pMenopauseAge'=>"",
-                                'pIsApplicable'=>"N",
+                                'pMenarchePeriod'=>$menstrualHistory ? $menstrualHistory->menarche : "",
+                                'pLastMensPeriod'=>$menstrualHistory ? $menstrualHistory->lmp : "",
+                                'pPeriodDuration'=>$menstrualHistory ? $menstrualHistory->period_duration : "",
+                                'pMensInterval'=>$menstrualHistory ? $menstrualHistory->cycle : "",
+                                'pPadsPerDay'=>$menstrualHistory ? $menstrualHistory->pads_per_day : "",
+                                'pOnsetSexIc'=>$menstrualHistory ? $menstrualHistory->onset_sexual_intercourse : "",
+                                'pBirthCtrlMethod'=>$menstrualHistory ? $menstrualHistory->method : "",
+                                'pIsMenopause'=>$menstrualHistory ? $menstrualHistory->menopause ? "Y" : "N" : "",
+                                'pMenopauseAge'=>$menstrualHistory ? $menstrualHistory->menopause ? $menstrualHistory->menopause_age : "" : "",
+                                'pIsApplicable'=>$menstrualHistory ? $patient->gender == 'F' ? "Y" : "N" : "N",
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
@@ -719,36 +856,36 @@ class KonsultaService
                         ],
                         'PEPERT' => [
                             '_attributes' => [
-                                'pSystolic'=>"95",
-                                'pDiastolic'=>"58",
-                                'pHr'=>"110",
-                                'pRr'=>"30",
-                                'pTemp'=>"36.10",
-                                'pHeight'=>"0",
-                                'pWeight'=>"8.9",
-                                'pBMI'=>"0",
+                                'pSystolic'=>$vitals ? $vitals->bp_systolic : "",
+                                'pDiastolic'=>$vitals ? $vitals->bp_diastolic : "",
+                                'pHr'=>$vitals ? $vitals->patient_heart_rate : "",
+                                'pRr'=>$vitals ? $vitals->patient_respiratory_rate : "",
+                                'pTemp'=>$vitals ? $vitals->patient_temp : "",
+                                'pHeight'=>$vitals ? $vitals->patient_height : "",
+                                'pWeight'=>$vitals ? $vitals->patient_weight : "",
+                                'pBMI'=>$vitals ? $vitals->patient_bmi : "",
                                 'pZScore'=>"",
-                                'pLeftVision'=>"20",
-                                'pRightVision'=>"20",
-                                'pLength'=>"63",
-                                'pHeadCirc'=>"46",
-                                'pSkinfoldThickness'=>"46",
-                                'pWaist'=>"48",
-                                'pHip'=>"50",
-                                'pLimbs'=>"40",
-                                'pMidUpperArmCirc'=>"12.5",
+                                'pLeftVision'=>"",
+                                'pRightVision'=>"",
+                                'pLength'=>$vitals ? $vitals->patient_height : "",
+                                'pHeadCirc'=>$vitals ? $vitals->patient_head_circumference : "",
+                                'pSkinfoldThickness'=>$vitals ? $vitals->patient_skinfold_thickness : "",
+                                'pWaist'=>$vitals ? $vitals->patient_waist : "",
+                                'pHip'=>$vitals ? $vitals->patient_hip : "",
+                                'pLimbs'=>$vitals ? $vitals->patient_limbs : "",
+                                'pMidUpperArmCirc'=>$vitals ? $vitals->patient_muac : "",
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
                         ],
                         'BLOODTYPE' => [
                             '_attributes' => [
-                                'pBloodType'=>"B+",
+                                'pBloodType'=>$patient->blood_type_code,
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
                         ],
-                        'PEGENSURVEY' => [
+                        /*'PEGENSURVEY' => [
                             '_attributes' => [
                                 'pGenSurveyId'=>"1",
                                 'pGenSurveyRem'=>"",
@@ -824,10 +961,54 @@ class KonsultaService
                                 'pReportStatus'=>"U",
                                 'pDeficiencyRemarks'=>""
                             ]
-                        ],
+                        ],*/
                     ];
                 });
         $profile['PROFILE'] = [$data->toArray()];
-        return $profile;
+        $result = new ArrayToXml($profile);
+        return $result->dropXmlDeclaration()->toXml();
+        //return $profile;
     }
+
+    public function profilings()
+    {
+        $profile = [];
+        $data = Patient::query()
+            ->with([
+                'patientHistory:patient_id,medical_history_id',
+                'patientHistorySpecifics',
+                'familyHistory:patient_id,medical_history_id',
+                'familyHistorySpecifics',
+                'surgicalHistory',
+                'socialHistory',
+                'menstrualHistory',
+            ])
+            ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+            ->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+            ->get();
+        $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]));
+
+        $profile['PROFILE'] = [$profileResource->resolve()];
+        /*$result = new ArrayToXml($profile);
+        return $result->dropXmlDeclaration()->toXml();*/
+        return $profile;
+        return count($profile['PROFILE'][0]);
+    }
+
+    public function soaps()
+    {
+        $soap = [];
+        $data = Consult::query()
+            ->with(['patient'])
+            ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+            ->get();
+        $soapResource = ConsultationResource::collection($data->whenEmpty(fn() => [[]]));
+
+        $soap['SOAP'] = [$soapResource->resolve()];
+        /*$result = new ArrayToXml($soap);
+        return $result->dropXmlDeclaration()->toXml();*/
+        return $soap;
+    }
+
 }

@@ -26,10 +26,12 @@ class ConsultLaboratoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @queryParam include string Relationship to view: e.g. category Example: laboratory
+     * @queryParam include string Relationship to view: e.g. laboratory,recommendation,requestStatus Example: laboratory
      * @queryParam sort string Sort request_date. Add hyphen (-) to descend the list: e.g. prescription_date. Example: -request_date
      * @queryParam patient_id string Patient to view.
      * @queryParam consult_id string Consult to view.
+     * @queryParam recommendation_code string Recommendation to view. Example: Y
+     * @queryParam request_status_code string Request status to view. Example: RQ
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryResource
@@ -46,9 +48,15 @@ class ConsultLaboratoryController extends Controller
             })
             ->when(isset($request->consult_id), function($query) use($request){
                 return $query->whereConsultId($request->consult_id);
+            })
+            ->when(isset($request->recommendation_code), function($query) use($request){
+                return $query->whereRecommendationCode($request->recommendation_code);
+            })
+            ->when(isset($request->request_status_code), function($query) use($request){
+                return $query->whereRequestStatusCode($request->request_status_code);
             });
         $laboratory = QueryBuilder::for($query)
-            ->allowedIncludes('laboratory')
+            ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')
             ->allowedSorts('request_date');
 

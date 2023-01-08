@@ -91,7 +91,7 @@ class KonsultaController extends Controller
         $credentials = PhilhealthCredential::whereProgramCode('kp')->first();
         $credentialsResource = GetTokenResource::make($credentials)->resolve();
         $result = $service->soapMethod('getToken', $credentialsResource);
-        if($result->success) {
+        if(isset($result->success)) {
             $credentials->update(['token' => $result->result]);
             return response()->json([
                 'message' => 'Successfully added the token in the database!'
@@ -147,15 +147,15 @@ class KonsultaController extends Controller
     {
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
-        return $firstTranche = $konsultaService->generateXml();
+        $firstTranche = $konsultaService->createXml();
         $data = $service->encryptData($firstTranche);
-        return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
-        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
+        //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
+        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>2]);
     }
 
     public function generateXml(KonsultaService $konsultaService)
     {
-        return $e = $konsultaService->profiling();
+        return $e = $konsultaService->createXml();
         return count($e['ENLISTMENT'][0]);
         $enlistments = ['ENLISTMENT' => []];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');

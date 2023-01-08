@@ -122,4 +122,49 @@ class Patient extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function philhealthLatest()
+    {
+        return $this->hasOne(PatientPhilhealth::class)
+            ->latest('effectivity_year');
+    }
+
+    public function patientHistory()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(1);
+    }
+
+    public function patientHistorySpecifics()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(1)->whereNotNull('remarks');
+    }
+
+    public function familyHistory()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(2);
+    }
+
+    public function familyHistorySpecifics()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(2)->whereNotNull('remarks');
+    }
+
+    public function surgicalHistory()
+    {
+        return $this->hasMany(PatientSurgicalHistory::class, 'patient_id', 'id');
+    }
+
+    public function socialHistory()
+    {
+        return $this->hasOne(PatientSocialHistory::class, 'patient_id', 'id');
+    }
+
+    public function menstrualHistory()
+    {
+        return $this->hasOne(PatientMenstrualHistory::class, 'patient_id', 'id');
+    }
+
 }

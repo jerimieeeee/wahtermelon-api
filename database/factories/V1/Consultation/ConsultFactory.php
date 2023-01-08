@@ -29,6 +29,8 @@ class ConsultFactory extends Factory
             'is_pregnant' => fake()->boolean,
             'consult_done' => fake()->boolean,
             'pt_group' => fake()->randomElement(LibPtGroup::pluck('id')->toArray()),
+            'authorization_transaction_code' => 'WALKEDIN',
+            'walkedin_status' => true,
         ];
     }
 }
