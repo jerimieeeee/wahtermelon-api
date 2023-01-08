@@ -111,7 +111,9 @@ class KonsultaController extends Controller
      */
     public function extractRegistrationList(Request $request, SoapService $service): mixed
     {
-        return $service->soapMethod('extractRegistrationList', $request->only('pStartDate', 'pEndDate'));
+        $list = $service->soapMethod('extractRegistrationList', $request->only('pStartDate', 'pEndDate'));
+        $service->saveRegistrationList($list->ASSIGNMENT);
+        return $list;
     }
 
     /**
