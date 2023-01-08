@@ -26,7 +26,8 @@ class SoapService
             ]
         );
 
-        $token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
+        //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
+        $token = auth()->user()->konsultaCredential->token;
 
         $opts['http']['header'] = "Token: $token";
 
@@ -57,7 +58,8 @@ class SoapService
 
         $jsonOutput = json_decode($encryptedOutput->return);
         $decryptor = new PhilHealthEClaimsEncryptor();
-        $cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
 
         if(!isset($jsonOutput->hash))
         {
@@ -80,7 +82,8 @@ class SoapService
     public function encryptData($data)
     {
         $encryptor = new PhilHealthEClaimsEncryptor();
-        $cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
         return $encryptor->encryptXmlPayloadData($data, $cipher_key);
     }
 
