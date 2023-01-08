@@ -14,10 +14,9 @@ class NcdRiskStratificationChartService
      */
     public function getRiskStratificationChart(array $request)
     {
-        $riskAssessment = ConsultNcdRiskAssessment::where('id', $request['id'])->first();
-        $riskAssessment2 = ConsultNcdRiskScreeningBloodLipid::where('id', $request['id'])->first();
-
-        dd($request);
+        // dump($request);
+        $riskAssessment = ConsultNcdRiskAssessment::where('patient_id', $request['patient_id'])->first();
+        $riskAssessment2 = ConsultNcdRiskScreeningBloodLipid::where('patient_id', $request['patient_id'])->first();
 
         $data = LibNcdRiskStratificationChart::join('lib_ncd_risk_stratifications', 'risk_color', '=', 'color');
         $data = $riskAssessment->where('gender', '=', $riskAssessment->gender);

@@ -97,6 +97,9 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryResultSeeder::class,
             LibLaboratorySputumCollectionSeeder::class,
             LibFpMethodSeeder::class,
+            LibLaboratoryStoolColorSeeder::class,
+            LibLaboratoryStoolConsistencySeeder::class,
+            LibLaboratoryBloodInStoolSeeder::class,
         ]);
     }
 }

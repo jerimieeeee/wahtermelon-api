@@ -444,6 +444,46 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-sputum/{sputum}', 'update');
                 Route::delete('consult-laboratory-sputum/{sputum}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryFecalysisController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-fecalysis', 'index');
+                Route::post('consult-laboratory-fecalysis', 'store');
+                Route::put('consult-laboratory-fecalysis/{fecalysis}', 'update');
+                Route::delete('consult-laboratory-fecalysis/{fecalysis}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryLipidProfileController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-lipid-profile', 'index');
+                Route::post('consult-laboratory-lipid-profile', 'store');
+                Route::put('consult-laboratory-lipid-profile/{lipidProfile}', 'update');
+                Route::delete('consult-laboratory-lipid-profile/{lipidProfile}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryUrinalysisController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-urinalysis', 'index');
+                Route::post('consult-laboratory-urinalysis', 'store');
+                Route::put('consult-laboratory-urinalysis/{urinalysis}', 'update');
+                Route::delete('consult-laboratory-urinalysis/{urinalysis}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryOralGlucoseController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-oral-glucose', 'index');
+                Route::post('consult-laboratory-oral-glucose', 'store');
+                Route::put('consult-laboratory-oral-glucose/{oralGlucose}', 'update');
+                Route::delete('consult-laboratory-oral-glucose/{oralGlucose}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryFecalOccultController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-fecal-occult', 'index');
+                Route::post('consult-laboratory-fecal-occult', 'store');
+                Route::put('consult-laboratory-fecal-occult/{fecalOccult}', 'update');
+                Route::delete('consult-laboratory-fecal-occult/{fecalOccult}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs

@@ -34,6 +34,11 @@ class ConsultLaboratory extends Model
         'papsmear',
         'ppd',
         'sputum',
+        'fecalysis',
+        'lipiProfile',
+        'urinalysis',
+        'oralGlucose',
+        'fecalOccult',
     ];
 
     public $incrementing = false;
@@ -122,5 +127,30 @@ class ConsultLaboratory extends Model
     public function sputum()
     {
         return $this->hasOne(ConsultLaboratorySputum::class, 'request_id', 'id');
+    }
+
+    public function fecalysis()
+    {
+        return $this->hasOne(ConsultLaboratoryFecalysis::class, 'request_id', 'id');
+    }
+
+    public function lipiProfile()
+    {
+        return $this->hasOne(ConsultLaboratoryLipidProfile::class, 'request_id', 'id');
+    }
+
+    public function urinalysis()
+    {
+        return $this->hasOne(ConsultLaboratoryUrinalysis::class, 'request_id', 'id');
+    }
+
+    public function oralGlucose()
+    {
+        return $this->hasOne(ConsultLaboratoryOralGlucose::class, 'request_id', 'id');
+    }
+
+    public function fecalOccult()
+    {
+        return $this->hasOne(ConsultLaboratoryFecalOccult::class, 'request_id', 'id');
     }
 }

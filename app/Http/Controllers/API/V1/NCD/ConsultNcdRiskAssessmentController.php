@@ -43,7 +43,7 @@ class ConsultNcdRiskAssessmentController extends Controller
     public function index(Request $request, NcdRiskStratificationChartService $ncdRiskStratService): JsonResponse|ConsultNcdRiskAssessmentResource|ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        // return $ncd = $ncdRiskStratService->getRiskStratificationChart($request->all());
+        return $ncd = $ncdRiskStratService->getRiskStratificationChart($request->all());
 
         $consultNcdRiskAssessment = QueryBuilder::for(ConsultNcdRiskAssessment::class)
         ->when(isset($request->patient_id), function($q) use($request){
