@@ -319,6 +319,12 @@ Route::prefix('v1')->group(function (){
                 Route::get('validate-report', 'validateReport');
                 Route::get('generate-xml', 'generateXml');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('registration-lists', 'index');
+                //Route::put('dispensing/{dispensing}', 'update');
+            });
     });
 
     //Settings

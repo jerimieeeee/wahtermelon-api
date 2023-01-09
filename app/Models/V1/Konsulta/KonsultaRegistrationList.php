@@ -7,7 +7,9 @@ use App\Models\V1\Libraries\LibPhilhealthEnlistmentStatus;
 use App\Models\V1\Libraries\LibPhilhealthMembershipType;
 use App\Models\V1\Libraries\LibPhilhealthPackageType;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
+use App\Traits\HasSearchFilter;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KonsultaRegistrationList extends Model
 {
-    use HasFactory, HasUuids, FilterByUser;
+    use HasFactory, HasUuids, FilterByUser, FilterByFacility, HasSearchFilter;
 
     protected $guarded = [
         'id'
@@ -48,7 +50,7 @@ class KonsultaRegistrationList extends Model
 
     public function assignedStatus()
     {
-        return $this->belongsTo(LibPhilhealthEnlistmentStatus::class, 'enlistment_status_id', 'id');
+        return $this->belongsTo(LibPhilhealthEnlistmentStatus::class, 'assigned_status_id', 'id');
     }
 
     public function packageType()

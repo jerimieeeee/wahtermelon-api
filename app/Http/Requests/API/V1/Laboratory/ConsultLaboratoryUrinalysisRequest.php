@@ -46,8 +46,6 @@ class ConsultLaboratoryUrinalysisRequest extends FormRequest
             'bladder_cells' => 'nullable',
             'squamous_cells' => 'nullable',
             'tubular_cells' => 'nullable',
-            'broad_cast' => 'nullable',
-            'tubular_cells' => 'nullable',
             'epithelial_cast' => 'nullable',
             'granular_cast' => 'nullable',
             'hyaline_cast' => 'nullable',
