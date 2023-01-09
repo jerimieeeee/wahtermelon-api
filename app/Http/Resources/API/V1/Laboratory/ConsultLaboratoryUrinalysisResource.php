@@ -41,6 +41,7 @@ class ConsultLaboratoryUrinalysisResource extends JsonResource
             'bladder_cells' => $this->bladder_cells,
             'squamous_cells' => $this->squamous_cells,
             'tubular_cells' => $this->tubular_cells,
+            'broad_cast' => $this->broad_cast,
             'epithelial_cast' => $this->epithelial_cast,
             'granular_cast' => $this->granular_cast,
             'hyaline_cast' => $this->hyaline_cast,
