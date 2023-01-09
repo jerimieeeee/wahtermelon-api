@@ -26,6 +26,7 @@ class ConsultLaboratoryOralGlucose extends Model
 
     protected $casts = [
         'laboratory_date' => 'date:Y-m-d',
+        'date_added' => 'date:Y-m-d',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

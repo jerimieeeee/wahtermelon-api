@@ -767,6 +767,15 @@ Route::prefix('v1')->group(function (){
         Route::get('laboratory-request-statuses', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRequestStatusController::class, 'index'])->name('laboratory-request-statuses.index');
         Route::get('laboratory-request-statuses/{status}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRequestStatusController::class, 'show'])->name('laboratory-request-statuses.show');
 
+        Route::get('laboratory-blood-stool', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryBloodInStoolController::class, 'index'])->name('laboratory-blood-stool.index');
+        Route::get('laboratory-blood-stool/{bloodStool}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryBloodInStoolController::class, 'show'])->name('laboratory-blood-stool.show');
+
+        Route::get('laboratory-stool-color', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolColorController::class, 'index'])->name('laboratory-stool-color.index');
+        Route::get('laboratory-stool-color/{stoolColor}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolColorController::class, 'show'])->name('laboratory-stool-color.show');
+
+        Route::get('laboratory-stool-consistency', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'index'])->name('laboratory-stool-consistency.index');
+        Route::get('laboratory-stool-consistency/{stoolConsistency}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'show'])->name('laboratory-stool-consistency.show');
+
         //Family Planning Method
         Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
         Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');

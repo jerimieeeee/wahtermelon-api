@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @authenticated
+ * @group Laboratory Management
+ *
+ * APIs for managing laboratories
+ * @subgroup Fecal Occult
+ * @subgroupDescription Consult laboratory for Fecal Occult.
+ */
 class ConsultLaboratoryFecalOccultController extends Controller
 {
     /**

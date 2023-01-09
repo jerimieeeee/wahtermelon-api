@@ -33,6 +33,7 @@ class ConsultLaboratoryOralGlucoseResource extends JsonResource
             'ogtt_one_hour_mmol' => $this->ogtt_one_hour_mmol,
             'ogtt_two_hour_mg' => $this->ogtt_two_hour_mg,
             'ogtt_two_hour_mmol' => $this->ogtt_two_hour_mmol,
+            'date_added' => $this->date_added->format('Y-m-d'),
             'remarks' => $this->remarks,
             'lab_status_code' => $this->when(!$this->relationLoaded('laboratoryStatus'),$this->lab_status_code),
             'lab_status' => $this->whenLoaded('laboratoryStatus'),

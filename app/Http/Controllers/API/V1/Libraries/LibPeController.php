@@ -15,7 +15,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @subgroup Physical Exams
  * @subgroupDescription List of Physical Exams.
  */
-
 class LibPeController extends Controller
 {
 
