@@ -54,6 +54,8 @@ class PatientPhilhealthRequest extends FormRequest
             'employer_pin' => 'required_with:employer_address|nullable',
             'employer_name' => 'required_with:employer_pin|nullable',
             'employer_address' => 'required_with:employer_pin|nullable',
+            'authorization_transaction_code' => 'nullable',
+            'walkedin_status' => 'boolean',
         ];
     }
 
@@ -145,6 +147,14 @@ class PatientPhilhealthRequest extends FormRequest
             'employer_address' => [
                 'description' => 'Employer address',
                 'example' => fake()->address()
+            ],
+            'authorization_transaction_code' => [
+                'description' => 'Konsulta ATC',
+                'example' => 'WALKEDIN',
+            ],
+            'walkedin_status' => [
+                'description' => 'Is patient walkedin?',
+                'consult_done' => true,
             ],
         ];
     }
