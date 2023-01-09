@@ -46,8 +46,8 @@ class KonsultaRegistrationListResource extends JsonResource
             'assigned_status_id' => $this->when(!$this->relationLoaded('assignedStatus'),$this->assigned_status_id),
             'assigned_status' => $this->whenLoaded('assignedStatus'),
             'effectivity_year' => $this->effectivity_year,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
     }
 }
