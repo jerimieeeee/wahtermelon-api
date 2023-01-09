@@ -109,7 +109,7 @@ class KonsultaController extends Controller
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
         //$firstTranche = $konsultaService->generateXml();
-        return $firstTranche = $konsultaService->createXml($request->patientId?? [],$request->tranche);
+        return $firstTranche = $konsultaService->createXml($request->transmittalNumber?? "", $request->patientId?? [],$request->tranche);
         //$data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         //$contents = Storage::disk('spaces')->get('Konsulta/DOH000000000005173/1P91034068_20230109_RP9103406820230100001.xml.enc');
@@ -119,57 +119,6 @@ class KonsultaController extends Controller
     public function generateXml(Request $request, KonsultaService $konsultaService)
     {
         return $e = $konsultaService->createXml($request->patientId?? [],$request->tranche);
-        return count($e['ENLISTMENT'][0]);
-        $enlistments = ['ENLISTMENT' => []];
-        $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
-        $user = User::selectRaw('id, CONCAT(first_name, " ", last_name) AS created_by');
-        $data = PatientPhilhealth::query()
-            ->joinSub($patient, 'patients', function($join){
-                $join->on('patient_philhealth.patient_id', '=', 'patients.id');
-            })
-            ->joinSub($user, 'users', function($join){
-                $join->on('patient_philhealth.user_id', '=', 'users.id');
-            })
-            ->get()->map(function($data, $key){
-            return [
-                '_attributes' => [
-                    'pHciCaseNo' => $data->case_number?? "",
-                    'pHciTransNo' => $data->transaction_number?? "",
-                    'pEffYear' => $data->effectivity_year?? "",
-                    'pEnlistStat' => $data->enlistment_status_id?? "",
-                    'pEnlistDate' => $data->enlistment_date?? "",
-                    'pPackageType' => $data->package_type_id?? "",
-                    'pMemPin' => $data->member_pin?? "",
-                    'pMemFname' => strtoupper($data->member_first_name?? ""),
-                    'pMemMname' => strtoupper($data->member_middle_name?? ""),
-                    'pMemLname' => strtoupper($data->member_last_name?? ""),
-                    'pMemExtname' => strtoupper($data->member_suffix_name == 'NA' ? "" : $data->member_suffix_name),
-                    'pMemDob' => $data->member_birthdate?? "",
-                    'pPatientPin' => $data->philhealth_id?? "",
-                    'pPatientFname' => strtoupper($data->first_name?? ""),
-                    'pPatientMname' => strtoupper($data->middle_name?? ""),
-                    'pPatientLname' => strtoupper($data->last_name?? ""),
-                    'pPatientExtname' => strtoupper($data->suffix_name == 'NA' ? "" : $data->suffix_name),
-                    'pPatientSex' => $data->gender?? "",
-                    'pPatientDob' => $data->birthdate?? "",
-                    'pPatientType' => $data->membership_type_id?? "",
-                    'pPatientMobileNo' => $data->mobile_number?? "",
-                    'pPatientLandlineNo' => "",
-                    'pWithConsent' => isset($data->consent_flag) ? 'Y' : 'N',
-
-                    'pTransDate' => isset($data->created_at) ? $data->created_at->format('Y-m-d') : "",
-                    'pCreatedBy' => strtoupper($data->created_by?? ""),
-                    'pReportStatus' => "U",
-                    'pDeficiencyRemarks' => "",
-                ]
-            ];
-        });
-        //return $data->toArray();
-
-        $enlistments['ENLISTMENT'] = [$data->toArray()];
-        //return $enlistments;
-        $result = new ArrayToXml($enlistments);
-        return $result->dropXmlDeclaration()->toXml();
     }
 
     public function sample()

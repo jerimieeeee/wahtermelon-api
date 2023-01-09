@@ -534,14 +534,19 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
-    public function createXml($patientId = [], $tranche = 1)
+    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1)
     {
-        $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
-        $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+        if(empty($transmittalNumber)) {
+            $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
+            $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+        }
 
-        $enlistmentCount = count($this->enlistments($patientId)['ENLISTMENT'][0]);
-        $profileCount = count($this->profilings($patientId)['PROFILE'][0]);
-        $soapCount = $tranche == 1 ? 0 : count($this->soaps($patientId, $tranche)['SOAP'][0]);
+        $enlistments = $this->enlistments($transmittalNumber, $patientId);
+        $profiling = $this->profilings($patientId);
+        $soaps = $this->soaps($transmittalNumber, $patientId, $tranche);
+        $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
+        $profileCount = count($profiling['PROFILE'][0]);
+        $soapCount = $tranche == 1 ? 0 : count($soaps['SOAP'][0]);
 
         $root = [
             'rootElementName' => 'PCB',
@@ -559,9 +564,9 @@ class KonsultaService
         ];
 
         $array = [
-            'ENLISTMENTS' => [$this->enlistments($patientId)],
-            'PROFILING' => [$this->profilings($patientId)],
-            'SOAPS' => [$this->soaps($patientId, $tranche)],
+            'ENLISTMENTS' => [$enlistments],
+            'PROFILING' => [$profiling],
+            'SOAPS' => [$soaps],
             'DIAGNOSTICEXAMRESULTS' => [
                 'DIAGNOSTICEXAMRESULT' => [
 
@@ -666,23 +671,23 @@ class KonsultaService
 
     }
 
-    public function enlistments($patientId = [])
+    public function enlistments($transmittalNumber = '', $patientId = [])
     {
         $enlistments = [];
-        $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
-        $user = User::selectRaw('id, CONCAT(first_name, " ", last_name) AS created_by');
+        $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
+        $user = User::selectRaw('id AS userID, CONCAT(first_name, " ", last_name) AS created_by');
         $data = PatientPhilhealth::query()
             ->joinSub($patient, 'patients', function($join){
-                $join->on('patient_philhealth.patient_id', '=', 'patients.id');
+                $join->on('patient_philhealth.patient_id', '=', 'patients.patientID');
             })
             ->joinSub($user, 'users', function($join){
-                $join->on('patient_philhealth.user_id', '=', 'users.id');
+                $join->on('patient_philhealth.user_id', '=', 'users.userID');
             })
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
             //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
-
+        $data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
         $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn() => [[]]))->resolve()];
         return $enlistments;
     }
@@ -1030,7 +1035,7 @@ class KonsultaService
         return count($profile['PROFILE'][0]);
     }
 
-    public function soaps($patientId = [], $tranche = 2)
+    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2)
     {
         $soap = [];
         $data = [];
