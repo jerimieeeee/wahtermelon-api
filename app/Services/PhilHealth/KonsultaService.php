@@ -645,7 +645,7 @@ class KonsultaService
         $result = new ArrayToXml($array, $root);
         $xml = $result->dropXmlDeclaration()->toXml();
         return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount);
-        //return $xml;
+        return $xml;
     }
 
     public function saveTransmittal($transmittalNumber, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
@@ -1042,8 +1042,10 @@ class KonsultaService
 
         if($tranche == 2){
             $data = Consult::query()
-                ->with(['patient'])
+                ->with(['patient', 'vitalsLatest', 'consultLaboratory'])
+                ->withWhereHas('finalDiagnosis')
                 ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+                ->whereFacilityCode(auth()->user()->facility_code)
                 ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
                 //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
                 ->get();

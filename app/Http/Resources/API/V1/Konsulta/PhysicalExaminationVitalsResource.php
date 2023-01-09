@@ -18,8 +18,8 @@ class PhysicalExaminationVitalsResource extends JsonResource
             '_attributes' => [
                 'pSystolic' => $this->bp_systolic?? "",
                 'pDiastolic' => $this->bp_diastolic?? "",
-                'pHr' => $this->patient_heart_rate?? "",
-                'pRr' => $this->patient_respiratory_rate?? "",
+                'pHr' => !empty($this->patient_heart_rate) ? number_format($this->patient_heart_rate) : "",
+                'pRr' => !empty($this->patient_respiratory_rate) ? number_format($this->patient_respiratory_rate) : "",
                 'pTemp' => $this->patient_temp?? "",
                 'pHeight' => $this->patient_height?? "",
                 'pWeight' => $this->patient_weight?? "",

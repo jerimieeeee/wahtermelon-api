@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1\Konsulta;
 
+use App\Models\V1\Consultation\Consult;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ConsultationResource extends JsonResource
@@ -14,14 +15,61 @@ class ConsultationResource extends JsonResource
      */
     public function toArray($request)
     {
+        $physicalExam = Consult::query()
+            ->selectRaw("
+                consults.patient_id, consult_notes.id, consult_date,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'SKIN'
+                    THEN konsulta_pe_id
+                END) as skin,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'HEENT'
+                    THEN konsulta_pe_id
+                END) as heent,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'CHEST'
+                    THEN konsulta_pe_id
+                END) as chest,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'HEART'
+                    THEN konsulta_pe_id
+                END) as heart,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'ABDOMEN'
+                    THEN konsulta_pe_id
+                END) as abdomen,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'NEURO'
+                    THEN konsulta_pe_id
+                END) as neuro,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'RECTAL'
+                    THEN konsulta_pe_id
+                END) as rectal,
+                GROUP_CONCAT(CASE
+                    WHEN category_id = 'GENITOURINARY'
+                    THEN konsulta_pe_id
+                END) as genitourinary
+            ")
+            ->join('consult_notes', fn($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id'))
+            ->join('consult_notes_pes', fn($join) => $join->on('consult_notes.id', '=', 'consult_notes_pes.notes_id')->select('notes_id', 'pe_id'))
+            ->join('lib_pes', fn($join) => $join->on('lib_pes.pe_id', '=', 'consult_notes_pes.pe_id')->select('pe_id', 'category_id', 'konsulta_pe_id'))
+            ->whereRaw('!ISNULL(konsulta_pe_id) AND consults.id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id?? "", !empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : ""])
+            ->groupByRaw('consult_notes.id')
+            ->get();
+        $physicalExamSpecific = Consult::query()
+            ->join('consult_notes', fn($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id'))
+            ->join('consult_pe_remarks', fn($join) => $join->on('consult_notes.id', '=', 'consult_pe_remarks.notes_id'))
+            ->whereRaw('consults.id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id?? "", !empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : ""])
+            ->first();
         return [
             '_attributes' => [
                 'pHciCaseNo' => $this->patient->case_number?? "",
-                'pHciTransNo' => $this->transaction_number?? "",
+                'pHciTransNo' => !empty($this->transaction_number) ? 'S'.$this->transaction_number : "",
                 'pSoapDate' => !empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : "",
                 'pPatientPin' => $this->philhealthLatest->philhealth_id?? "",
                 'pPatientType' => $this->philhealthLatest->membership_type_id?? "",
-                'pMemPin' => !empty($this->philhealthLatest->member_pin) ? $this->philhealthLatest->member_pin : $this->philhealth_id?? "",
+                'pMemPin' => !empty($this->philhealthLatest->member_pin) ? $this->philhealthLatest->member_pin : $this->philhealthLatest->philhealth_id?? "",
                 'pEffYear' => $this->philhealthLatest->effectivity_year?? "",
                 'pATC' => $this->authorization_transaction_code?? "",
                 'pIsWalkedIn' => !empty($this->id) ? $this->walkedin_status ? "Y" : "N" : "",
@@ -31,16 +79,16 @@ class ConsultationResource extends JsonResource
                 'pDeficiencyRemarks' => ""
             ],
             'SUBJECTIVE' => [SubjectiveResource::make([[]])->resolve()],
-            'PEPERT' => [PhysicalExaminationVitalsResource::make([[]])->resolve()],
+            'PEPERT' => [PhysicalExaminationVitalsResource::make(!empty($this->vitalsLatest) ? $this->vitalsLatest : [[]])->resolve()],
             'PEMISCS' => [
-                'PEMISC' => [PhysicalExaminationMiscResource::collection([[]])->resolve()],
+                'PEMISC' => [PhysicalExaminationMiscResource::collection(!empty($physicalExam) ? $physicalExam->whenEmpty(fn() => [[]]) : [[]])->resolve()],
             ],
-            'PESPECIFIC' => [PhysicalExaminationSpecificResource::make([[]])->resolve()],
+            'PESPECIFIC' => [PhysicalExaminationSpecificResource::make(!empty($physicalExamSpecific) ? $physicalExamSpecific : [[]])->resolve()],
             'ICDS' => [
-                'ICD' => [DiagnosisResource::collection([[]])->resolve()],
+                'ICD' => [DiagnosisResource::collection(!empty($this->finalDiagnosis) ? $this->finalDiagnosis : [[]])->resolve()],
             ],
             'DIAGNOSTICS' => [
-                'DIAGNOSTIC' => [DiagnosticResource::collection([[]])->resolve()],
+                'DIAGNOSTIC' => [DiagnosticResource::collection(!empty($this->consultLaboratory) ? $this->consultLaboratory : [[]])->resolve()],
             ],
             'MANAGEMENTS' => [
                 'MANAGEMENT' => [ManagementResource::collection([[]])->resolve()],
