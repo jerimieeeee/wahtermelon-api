@@ -13,7 +13,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Laboratory
  *
  * APIs for managing libraries
- * @subgroup LaboratoryStool Color
+ * @subgroup Laboratory Stool Color
  * @subgroupDescription List of Stool Color.
  */
 class LibLaboratoryStoolColorController extends Controller
