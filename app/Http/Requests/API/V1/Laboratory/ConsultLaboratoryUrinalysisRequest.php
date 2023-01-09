@@ -85,10 +85,10 @@ class ConsultLaboratoryUrinalysisRequest extends FormRequest
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
             ],
             'gravity' => [
-                'example' => fake()->text()
+                'example' => fake()->word()
             ],
             'appearance' => [
-                'example' => fake()->text()
+                'example' => fake()->word()
             ],
             'color' => [
                 'example' => fake()->colorName(),

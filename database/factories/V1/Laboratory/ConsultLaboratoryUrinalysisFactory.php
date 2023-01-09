@@ -32,8 +32,8 @@ class ConsultLaboratoryUrinalysisFactory extends Factory
             'request_id' => $consult->id,
             'laboratory_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
 
-            'gravity' => fake()->text(),
-            'appearance' => fake()->text(),
+            'gravity' => fake()->word(),
+            'appearance' => fake()->word(),
             'color' => fake()->colorName(),
             'glucose' => fake()->numberBetween(1, 10),
             'proteins' => fake()->numberBetween(1, 10),
