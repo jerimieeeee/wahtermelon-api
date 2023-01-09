@@ -90,7 +90,7 @@ class ConsultLaboratoryRbsController extends Controller
      * @param ConsultLaboratoryRbs $rbs
      * @return JsonResponse
      */
-    public function update(Request $request, ConsultLaboratoryRbs $rbs): JsonResponse
+    public function update(ConsultLaboratoryRbsRequest $request, ConsultLaboratoryRbs $rbs): JsonResponse
     {
         $rbs->update($request->validated());
         return response()->json(['status' => 'Update successful!'], 200);
