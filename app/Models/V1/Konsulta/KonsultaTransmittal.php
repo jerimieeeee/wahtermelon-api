@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\Konsulta;
 
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KonsultaTransmittal extends Model
 {
-    use HasFactory, HasUuids, FilterByUser;
+    use HasFactory, HasUuids, FilterByUser, FilterByFacility;
 
     protected $guarded = [
         'id'

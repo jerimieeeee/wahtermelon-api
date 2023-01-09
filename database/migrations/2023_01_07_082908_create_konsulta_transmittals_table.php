@@ -18,7 +18,12 @@ return new class extends Migration
             $table->string('facility_code')->index();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('transmittal_number',21)->unique()->index()->nullable();
-            $table->string('konsulta_transaction_number',21)->unique()->index()->nullable();
+            $table->unsignedInteger('total_enlistment')->default(0);
+            $table->unsignedInteger('total_profile')->default(0);
+            $table->unsignedInteger('total_soap')->default(0);
+            $table->string('xml_url')->nullable();
+            $table->string('konsulta_transaction_number',21)->index()->nullable();
+            $table->char('xml_status', 1)->default('U');
             $table->json('xml_errors')->nullable();
             $table->timestamps();
 

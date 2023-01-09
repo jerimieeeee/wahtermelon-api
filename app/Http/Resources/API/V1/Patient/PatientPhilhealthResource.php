@@ -24,6 +24,7 @@ class PatientPhilhealthResource extends JsonResource
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
+            'konsulta_registration' => $this->whenLoaded('konsultaRegistration'),
             'enlistment_date' => $this->enlistment_date,
             'effectivity_year' => $this->effectivity_year,
             'enlistment_status_id' => $this->when(!$this->relationLoaded('enlistmentStatus'),$this->enlistment_status_id),

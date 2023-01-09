@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
 use App\Models\V1\Patient\PatientMenstrualHistory;
@@ -17,6 +18,7 @@ use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\ArrayToXml\ArrayToXml;
 
@@ -532,10 +534,15 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
-    public function createXml()
+    public function createXml($patientId = [], $tranche = 1)
     {
         $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
         $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+
+        $enlistmentCount = count($this->enlistments($patientId)['ENLISTMENT'][0]);
+        $profileCount = count($this->profilings($patientId)['PROFILE'][0]);
+        $soapCount = $tranche == 1 ? 0 : count($this->soaps($patientId, $tranche)['SOAP'][0]);
+
         $root = [
             'rootElementName' => 'PCB',
             '_attributes' => [
@@ -543,17 +550,18 @@ class KonsultaService
                 'pPassword' => "",
                 'pHciAccreNo' => auth()->user()->konsultaCredential->accreditation_number?? "",
                 'pPMCCNo' => auth()->user()->konsultaCredential->pmcc_number?? "",
-                'pEnlistTotalCnt' => count($this->enlistments()['ENLISTMENT'][0]),
-                'pProfileTotalCnt' => count($this->profilings()['PROFILE'][0]),
-                'pSoapTotalCnt' => count($this->soaps()['SOAP'][0]),
+                'pEnlistTotalCnt' => $enlistmentCount,
+                'pProfileTotalCnt' => $profileCount,
+                'pSoapTotalCnt' => $soapCount,
                 'pCertificationId' => auth()->user()->konsultaCredential->software_certification_id?? "",
                 'pHciTransmittalNumber' => $transmittalNumber
             ]
         ];
+
         $array = [
-            'ENLISTMENTS' => [$this->enlistments()],
-            'PROFILING' => [$this->profilings()],
-            'SOAPS' => [$this->soaps()],
+            'ENLISTMENTS' => [$this->enlistments($patientId)],
+            'PROFILING' => [$this->profilings($patientId)],
+            'SOAPS' => [$this->soaps($patientId, $tranche)],
             'DIAGNOSTICEXAMRESULTS' => [
                 'DIAGNOSTICEXAMRESULT' => [
 
@@ -630,10 +638,35 @@ class KonsultaService
             ],
         ];
         $result = new ArrayToXml($array, $root);
-        return $result->dropXmlDeclaration()->toXml();
+        $xml = $result->dropXmlDeclaration()->toXml();
+        return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount);
+        //return $xml;
     }
 
-    public function enlistments()
+    public function saveTransmittal($transmittalNumber, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
+    {
+        KonsultaTransmittal::updateOrCreate(
+            ['transmittal_number' => $transmittalNumber],
+            ['total_enlistment' => $enlistmentCount, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report]
+        );
+    }
+
+    public function storeXml($transmittalNumber = '', $xml, $tranche, $enlistmentCount, $profileCount, $soapCount)
+    {
+        $service = new SoapService();
+        $fileName = "";
+        $fileName = 'Konsulta/'.auth()->user()->facility_code.'/'.$tranche.auth()->user()->konsultaCredential->accreditation_number.'_'.date('Ymd').'_'.$transmittalNumber.'.xml.enc';
+        Storage::disk('spaces')->put($fileName, $service->encryptData($xml));
+        $xmlEnc = Storage::disk('spaces')->get($fileName);
+
+        $report = $service->soapMethod('validateReport', ['pReport' => $xmlEnc, 'pReportTagging' => $tranche]);
+
+        $this->saveTransmittal($transmittalNumber, $enlistmentCount, $profileCount, $soapCount, $fileName, $report, !empty($report->success) ? 'V' : 'F');
+        return $report;
+
+    }
+
+    public function enlistments($patientId = [])
     {
         $enlistments = [];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
@@ -645,8 +678,9 @@ class KonsultaService
             ->joinSub($user, 'users', function($join){
                 $join->on('patient_philhealth.user_id', '=', 'users.id');
             })
-            //->whereIn('membership_type_id', ['MM', 'DD'])
-            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+            ->whereIn('membership_type_id', ['MM', 'DD'])
+            ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
+            //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
 
         $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn() => [[]]))->resolve()];
@@ -970,7 +1004,7 @@ class KonsultaService
         //return $profile;
     }
 
-    public function profilings()
+    public function profilings($patientId = [])
     {
         $profile = [];
         $data = Patient::query()
@@ -984,6 +1018,7 @@ class KonsultaService
             ])
             ->withWhereHas('patientHistory:patient_id,medical_history_id')
             ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+            ->when(!empty($patientId), fn($query) => $query->whereIn('id', $patientId))
             //->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]));
@@ -995,15 +1030,21 @@ class KonsultaService
         return count($profile['PROFILE'][0]);
     }
 
-    public function soaps()
+    public function soaps($patientId = [], $tranche = 2)
     {
         $soap = [];
-        $data = Consult::query()
-            ->with(['patient'])
-            ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
-            ->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac1')
-            ->get();
-        $soapResource = ConsultationResource::collection($data->whenEmpty(fn() => [[]]));
+        $data = [];
+
+        if($tranche == 2){
+            $data = Consult::query()
+                ->with(['patient'])
+                ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+                ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
+                //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+                ->get();
+        }
+
+        $soapResource = ConsultationResource::collection(!empty($data) ? $data->whenEmpty(fn() => [[]]) : [[]]);
 
         $soap['SOAP'] = [$soapResource->resolve()];
         /*$result = new ArrayToXml($soap);

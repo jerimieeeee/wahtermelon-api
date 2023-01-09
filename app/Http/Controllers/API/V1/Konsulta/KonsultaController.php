@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 
 /**
@@ -35,49 +36,7 @@ class KonsultaController extends Controller
         $firstTranche = $konsultaService->generateXml();
         $data = $service->encryptData($firstTranche);
         return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>1]);
-        /*$credentials = PhilhealthCredential::whereProgramCode('kp')->first();
-        $credentialsResource = GetTokenResource::make($credentials)->resolve();
-        $arr = [$credentialsResource,$credentialsResource];
-        $array = [
-            'Body' => [
-                'getToken' => [
-                    '_attributes' => [
-                        'xmlns' => 'http://philhealth.gov.ph/'
-                    ],
-                    'pUserName' => '',
-                    'pUserPassword' => '',
-                    'pSoftwareCertificationId' => [
-                        '_attributes' => [
-                            'xmlns' => '',
-                        ],
-                        '_value' => 'KON-DUMMYSCERTZ09634'
-                    ],
-                    'pHospitalCode' => [
-                        '_attributes' => [
-                            'xmlns' => '',
-                        ],
-                        '_value' => 'P01033020',
-                    ]
-                ],
-            ],
-        ];
-        foreach($arr as $key => $value){
-            $array["enlistment"]["sample"][$key] = ['_attributes' => $value];
-        }
-        //$array["enlistment"]["sample"] = $arr;
-        $result = new ArrayToXml($array, [
-            'rootElementName' => 'PCB',
-            '_attributes' => $credentialsResource,
-        ]);
-        return $result->dropXmlDeclaration()->toXml();*/
-        //$credentials = GetTokenResource::make(PhilhealthCredential::whereProgramCode('kp')->first())->resolve();
-        //return [ $credentials->toArray()];
-        //return $service->soapMethod('isATCValid', ['pPIN' => '190269297550', 'pATC' => '190269297550', 'pEffectivityDate' => '12/31/2022']);
-        //return $service->soapMethod('isMemberDependentRegistered', ['pPIN' => '190269297550', 'pType' => 'MM']);
-       /* return $service->soapMethod('getToken', $credentials);
-        return $service->soapMethod('extractRegistrationList', ['pStartDate' => '12/09/2022', 'pEndDate' => '12/31/2022']);
-        return $service->httpClient();
-        return $service->soapCall();*/
+
     }
 
     /**
@@ -145,19 +104,21 @@ class KonsultaController extends Controller
         return $service->soapMethod('isATCValid', $request->only('pPIN', 'pATC', 'pEffectivityDate'));
     }
 
-    public function validateReport(SoapService $service, KonsultaService $konsultaService)
+    public function validateReport(Request $request, SoapService $service, KonsultaService $konsultaService)
     {
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
-        $firstTranche = $konsultaService->generateXml();
-        $data = $service->encryptData($firstTranche);
+        //$firstTranche = $konsultaService->generateXml();
+        return $firstTranche = $konsultaService->createXml($request->patientId?? [],$request->tranche);
+        //$data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
-        return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' =>2]);
+        //$contents = Storage::disk('spaces')->get('Konsulta/DOH000000000005173/1P91034068_20230109_RP9103406820230100001.xml.enc');
+        //return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' => $request->tranche]);
     }
 
-    public function generateXml(KonsultaService $konsultaService)
+    public function generateXml(Request $request, KonsultaService $konsultaService)
     {
-        return $e = $konsultaService->createXml();
+        return $e = $konsultaService->createXml($request->patientId?? [],$request->tranche);
         return count($e['ENLISTMENT'][0]);
         $enlistments = ['ENLISTMENT' => []];
         $patient = Patient::selectRaw('id, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
