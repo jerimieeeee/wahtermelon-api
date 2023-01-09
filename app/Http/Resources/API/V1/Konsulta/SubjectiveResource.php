@@ -16,7 +16,7 @@ class SubjectiveResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pIllnessHistory' => "",
+                'pIllnessHistory' => "01",
                 'pSignsSymptoms' => "",
                 'pOtherComplaint' => "",
                 'pPainSite' => "",

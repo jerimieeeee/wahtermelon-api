@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('patient_philhealth', function (Blueprint $table) {
             $table->dropForeign(['transmittal_number']);
+            $table->dropUnique(['transmittal_number']);
         });
     }
 

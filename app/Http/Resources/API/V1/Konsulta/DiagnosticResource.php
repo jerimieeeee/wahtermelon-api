@@ -16,10 +16,10 @@ class DiagnosticResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pDiagnosticId' => "",
-                'pOthRemarks' => "",
-                'pIsPhysicianRecommendation' => "",
-                'pPatientRemarks' => "",
+                'pDiagnosticId' => !empty($this->laboratory->konsulta_lab_id) ? $this->laboratory->konsulta_lab_id : 0,
+                'pOthRemarks' => !empty($this->id) && empty($this->laboratory->konsulta_lab_id) ? $this->laboratory->desc : "",
+                'pIsPhysicianRecommendation' => $this->recommendation_code?? "",
+                'pPatientRemarks' => $this->request_status_code?? "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]
