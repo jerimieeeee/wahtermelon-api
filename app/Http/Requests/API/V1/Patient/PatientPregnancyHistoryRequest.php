@@ -101,7 +101,7 @@ class PatientPregnancyHistoryRequest extends FormRequest
             ],
             'delivery_type' => [
                 'description' => 'Pregnancy delivery type',
-                'example' => fake()->randomElement(LibPregnancyDeliveryType::pluck('id')->toArray()),
+                'example' => fake()->randomElement(LibPregnancyDeliveryType::pluck('code')->toArray()),
             ],
             'induced_hypertension' => [
                 'description' => 'Is patient induced hypertension during pregnancy?',

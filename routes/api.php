@@ -522,7 +522,7 @@ Route::prefix('v1')->group(function (){
              ->group(function() {
                 Route::get('history', 'index');
                 Route::post('history', 'store');
-                Route::get('history/{patientMenstrualHistory}', 'show');
+                Route::get('history/{patientPregnancyHistory}', 'show');
             });
         });
 
