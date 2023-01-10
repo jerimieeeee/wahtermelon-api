@@ -100,27 +100,27 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN19', 'pe_desc' => 'Others',                       'konsulta_pe_id' => '99',   'seq_id' => '19', 'konsulta_library_status' => '1', 'modules' => 'cn'],
 
           //EXTREMITIES
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => null,   'seq_id' => '2',  'konsulta_library_status' => null, 'modules' => 'cn'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => null,   'seq_id' => '3', 'konsulta_library_status' => null, 'modules' => 'cn'],
-          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => null, 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => null,   'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => null,   'seq_id' => '3', 'konsulta_library_status' => '0', 'modules' => 'cn'],
+          ['category_id' => 'EXTREMITIES','pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => '0', 'modules' => 'cn'],
 
           //BREAST
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => null,   'seq_id' => '3',  'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => null,   'seq_id' => '5', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'BREAST',     'pe_id' => 'BREAST09', 'pe_desc' => 'Essentially Normal',            'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => null, 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => null,   'seq_id' => '3',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => null,   'seq_id' => '5', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'BREAST',     'pe_id' => 'BREAST09', 'pe_desc' => 'Essentially Normal',            'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
 
           //PELVIC
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC01', 'pe_desc' => 'Vulva: Redness (inflammation)',       'konsulta_pe_id' => null,   'seq_id' => '7',  'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC02', 'pe_desc' => 'Tenderness',                          'konsulta_pe_id' => null,   'seq_id' => '5',  'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC03', 'pe_desc' => 'Ulcers',                              'konsulta_pe_id' => null,   'seq_id' => '6', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC04', 'pe_desc' => 'Blisters',                            'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC05', 'pe_desc' => 'Warts',                               'konsulta_pe_id' => null,   'seq_id' => '8', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC06', 'pe_desc' => 'Cyst',                                'konsulta_pe_id' => null,   'seq_id' => '3', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC07', 'pe_desc' => 'Skin Tags',                           'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC08', 'pe_desc' => 'Other Mass',                          'konsulta_pe_id' => null,   'seq_id' => '9', 'konsulta_library_status' => null, 'modules' => 'ncd'],
-          ['category_id' => 'PELVIC','pe_id' => 'PELVIC09', 'pe_desc' => 'Essentially Normal',                  'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => null, 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC01', 'pe_desc' => 'Vulva: Redness (inflammation)',       'konsulta_pe_id' => null,   'seq_id' => '7',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC02', 'pe_desc' => 'Tenderness',                          'konsulta_pe_id' => null,   'seq_id' => '5',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC03', 'pe_desc' => 'Ulcers',                              'konsulta_pe_id' => null,   'seq_id' => '6', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC04', 'pe_desc' => 'Blisters',                            'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC05', 'pe_desc' => 'Warts',                               'konsulta_pe_id' => null,   'seq_id' => '8', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC06', 'pe_desc' => 'Cyst',                                'konsulta_pe_id' => null,   'seq_id' => '3', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC07', 'pe_desc' => 'Skin Tags',                           'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC08', 'pe_desc' => 'Other Mass',                          'konsulta_pe_id' => null,   'seq_id' => '9', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+          ['category_id' => 'PELVIC','pe_id' => 'PELVIC09', 'pe_desc' => 'Essentially Normal',                  'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
 
           //NEURO
           ['category_id' => 'NEURO', 'pe_id' => 'NEURO01',   'pe_desc' => 'Developmental delay',                'konsulta_pe_id' => '1',    'seq_id' => '6',  'konsulta_library_status' => '0', 'modules' => 'cn'],

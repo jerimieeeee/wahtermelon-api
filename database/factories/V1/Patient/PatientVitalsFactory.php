@@ -41,6 +41,8 @@ class PatientVitalsFactory extends Factory
             'patient_hip' => fake()->numberBetween(24, 150),
             'patient_limbs' => fake()->numberBetween(60, 100),
             'patient_muac' => fake()->numberBetween(60, 100),
+            'patient_left_vision_acuity' => fake()->numberBetween(20, 90),
+            'patient_right_vision_acuity' => fake()->numberBetween(20, 90),
         ];
     }
 }
