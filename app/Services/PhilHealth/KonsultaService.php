@@ -1067,7 +1067,7 @@ class KonsultaService
                 ->withSum('dispensing', 'total_amount')
                 ->with('dispensing', 'user')
                 ->get();
-            //$data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
+            $data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
 
         }
         $soapResource = ConsultationResource::collection(!empty($data) ? $data->whenEmpty(fn() => [[]]) : [[]]);

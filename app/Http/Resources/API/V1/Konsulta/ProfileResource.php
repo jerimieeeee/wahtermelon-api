@@ -117,7 +117,7 @@ class ProfileResource extends JsonResource
                 'PEMISC' => [PhysicalExaminationMiscResource::collection(!empty($physicalExam) ? $physicalExam->whenEmpty(fn() => [[]]) : [[]])->resolve()],
             ],
             'PESPECIFIC' => [PhysicalExaminationSpecificResource::make(!empty($physicalExamSpecific) ? $physicalExamSpecific : [[]])->resolve()],
-            'NCDQANS' => [NonCommunicableDiseaseResource::make([[]])->resolve()],
+            'NCDQANS' => [NonCommunicableDiseaseResource::make(!empty($this->ncdRiskAssessmentLatest) ? $this->ncdRiskAssessmentLatest : [[]])->resolve()],
         ];
     }
 }

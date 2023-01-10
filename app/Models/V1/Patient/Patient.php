@@ -12,6 +12,7 @@ use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\MaternalCare\PatientMc;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
@@ -171,6 +172,12 @@ class Patient extends Model
     public function menstrualHistory()
     {
         return $this->hasOne(PatientMenstrualHistory::class, 'patient_id', 'id');
+    }
+
+    public function ncdRiskAssessmentLatest()
+    {
+        return $this->hasOne(ConsultNcdRiskAssessment::class, 'patient_id', 'id')
+            ->latest('assessment_date');
     }
 
 }
