@@ -28,7 +28,6 @@ class ConsultNotesRequest extends FormRequest
     {
         return [
             'consult_id' => 'required|exists:consults,id',
-
             'complaint' => 'nullable',
             'history' => 'nullable',
             'physical_exam' => 'nullable',
