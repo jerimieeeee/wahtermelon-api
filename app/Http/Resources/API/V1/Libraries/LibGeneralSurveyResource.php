@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Libraries;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LibComplaintResource extends JsonResource
+class LibGeneralSurveyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,8 @@ class LibComplaintResource extends JsonResource
     public function toArray($request)
     {
         return [
-
-            'complaint_id' => $this->complaint_id,
-            'complaint_desc' => $this->complaint_desc,
-            'complaint_active' => $this->complaint_active,
-            'konsulta_complaint_id' => $this->konsulta_complaint_id,
-            'konsulta_library_status' => $this->konsulta_library_status,
+            'code' => $this->code,
+            'desc' => $this->desc,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\Consultation;
 
+use App\Models\V1\Libraries\LibGeneralSurvey;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -51,6 +52,11 @@ class ConsultNotes extends Model
     public function consultNotes()
     {
         return $this->belongsTo(Consult::class, 'consult_id', 'id');
+    }
+
+    public function libGeneralSurvey()
+    {
+        return $this->belongsTo(LibGeneralSurvey::class, 'general_survey_code', 'code');
     }
 
 }

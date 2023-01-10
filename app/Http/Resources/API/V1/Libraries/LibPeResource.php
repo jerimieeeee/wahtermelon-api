@@ -19,6 +19,9 @@ class LibPeResource extends JsonResource
             'category_id' => $this->category_id,
             'pe_id' => $this->pe_id,
             'pe_desc' => $this->pe_desc,
+            'konsulta_pe_id' => $this->konsulta_pe_id,
+            'konsulta_library_status' => $this->konsulta_library_status,
+            'modules' => $this->modules,
         ];
     }
 }
