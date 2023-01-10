@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibPeResource;
 use App\Models\V1\Libraries\LibPe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Libraries for Consultation
@@ -26,9 +27,19 @@ class LibPeController extends Controller
      * @return ResourceCollection
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        return LibPeResource::collection(LibPe::orderBy('seq_id', 'ASC')->get());
+        // return LibPeResource::collection(LibPe::orderBy('seq_id', 'ASC')->get());
+
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $query = QueryBuilder::for(LibPe::class)
+                ->whereKonsultaLibraryStatus(1);
+        return LibPeResource::collection($query->get());
+
+        if ($perPage === 'all') {
+            return LibPeResource::collection($query->get());
+        }
+        return LibPeResource::collection($query->paginate($perPage)->withQueryString()->orderBy('seq_id', 'ASC'));
     }
 
     /**
