@@ -317,7 +317,9 @@ Route::prefix('v1')->group(function (){
                 Route::get('check-registered', 'checkRegistered');
                 Route::get('check-atc', 'checkATC');
                 Route::get('validate-report', 'validateReport');
-                Route::get('generate-xml', 'generateXml');
+                Route::get('validated-xml', 'validatedXml');
+                Route::get('submit-xml', 'submitXml');
+                Route::get('generate-data', 'generateDataForValidation');
             });
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
             ->middleware('auth:api')
@@ -513,6 +515,17 @@ Route::prefix('v1')->group(function (){
                 Route::delete('history/{patientSurgicalHistory}', 'destroy');
             });
     });
+
+    //Patient Pregnancy History APIs
+    Route::prefix('patient-pregnancy-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPregnancyHistoryController::class)
+            ->middleware('auth:api')
+             ->group(function() {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::get('history/{patientPregnancyHistory}', 'show');
+            });
+        });
 
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
@@ -779,6 +792,10 @@ Route::prefix('v1')->group(function (){
         //Family Planning Method
         Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
         Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
+
+        //Patient Pregnancy History
+        Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
+        Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
 
     });
 });

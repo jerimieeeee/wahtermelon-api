@@ -2,6 +2,8 @@
 
 namespace App\Models\V1\Konsulta;
 
+use App\Models\User;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
@@ -28,5 +30,15 @@ class KonsultaTransmittal extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function facility()
+    {
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

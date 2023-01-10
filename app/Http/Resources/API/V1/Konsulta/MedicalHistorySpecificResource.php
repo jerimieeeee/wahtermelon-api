@@ -17,7 +17,7 @@ class MedicalHistorySpecificResource extends JsonResource
         return [
             '_attributes' => [
                 'pMdiseaseCode' => $this->libmedicalHistory->konsulta_history_id?? "",
-                'pSpecificDesc' => $this->remarks?? "",
+                'pSpecificDesc' => strtoupper($this->remarks?? ""),
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

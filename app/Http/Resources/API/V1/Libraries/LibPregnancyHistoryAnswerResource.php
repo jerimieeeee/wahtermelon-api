@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Konsulta;
+namespace App\Http\Resources\API\V1\Libraries;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdviceResource extends JsonResource
+class LibPregnancyHistoryAnswerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,8 @@ class AdviceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            '_attributes' => [
-                'pRemarks' => $this->plan?? "NOT APPLICABLE",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+            'code' => $this->code,
+            'desc' => $this->desc,
         ];
     }
 }

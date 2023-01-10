@@ -109,4 +109,9 @@ class MedicinePrescription extends Model
         return $this->hasMany(MedicineDispensing::class, 'prescription_id', 'id');
     }
 
+    public function dispensingLatest()
+    {
+        return $this->hasOne(MedicineDispensing::class, 'prescription_id', 'id')->latest('dispensing_date');
+    }
+
 }

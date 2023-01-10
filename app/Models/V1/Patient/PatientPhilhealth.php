@@ -106,7 +106,6 @@ class PatientPhilhealth extends Model
 
     public function konsultaRegistration()
     {
-        return $this->hasOne(KonsultaRegistrationList::class, 'philhealth_id', 'philhealth_id')
-            ->latest('effectivity_year');
+        return $this->hasMany(KonsultaRegistrationList::class, 'philhealth_id', 'philhealth_id');
     }
 }
