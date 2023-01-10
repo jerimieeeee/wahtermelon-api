@@ -25,10 +25,17 @@ class LibMedicalHistoryController extends Controller
      * @apiResourceModel App\Models\V1\Libraries\LibMedicalHistory
      * @return ResourceCollection
      */
-    public function index(): ResourceCollection
+    public function index(Request $request): ResourceCollection
     {
-        $query = QueryBuilder::for(LibMedicalHistory::class);
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $query = QueryBuilder::for(LibMedicalHistory::class)
+                ->whereKonsultaLibraryStatus(1);
         return LibMedicalHistoryResource::collection($query->get());
+
+        if ($perPage === 'all') {
+            return LibMedicalHistoryResource::collection($query->get());
+        }
+        return LibMedicalHistoryResource::collection($query->paginate($perPage)->withQueryString());
     }
     /**
      * Display the specified Patient Medical History Resource.
