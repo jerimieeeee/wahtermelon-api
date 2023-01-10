@@ -37,37 +37,37 @@ class KonsultaService
                 'pProfileTotalCnt'=>"1",
                 'pSoapTotalCnt'=>"1",
                 'pCertificationId'=>"KON-DUMMYSCERTZ10681",
-                'pHciTransmittalNumber'=>"RP9103406820221200001"
+                'pHciTransmittalNumber'=>"RP9103406820230100001"
             ]
         ];
         $firstTrancheArray = [
             'ENLISTMENTS' => [
                 'ENLISTMENT' => [
                     '_attributes' => [
-                        'pHciCaseNo'=>"TH9000000120220800001",
-                        'pHciTransNo'=>"PH9000000120220800001",
-                        'pEffYear'=>"2022",
+                        'pHciCaseNo'=>"TP9103406820230100001",
+                        'pHciTransNo'=>"PP9103406820230100001",
+                        'pEffYear'=>"2023",
                         'pEnlistStat'=>"1",
-                        'pEnlistDate'=>"2022-08-26",
+                        'pEnlistDate'=>"2023-01-06",
                         'pPackageType'=>"K",
-                        'pMemPin'=>"190269297542",
-                        'pMemFname'=>"DRHUIII FN NINETY",
-                        'pMemMname'=>"DRHUIII MN NINETY",
-                        'pMemLname'=>"DRHUIII LN NINETY",
+                        'pMemPin'=>"030263078345",
+                        'pMemFname'=>"AOMIDDLENAME",
+                        'pMemMname'=>"AOFIRSTNAME",
+                        'pMemLname'=>"AOLASTNAME",
                         'pMemExtname'=>"",
-                        'pMemDob'=>"1974-04-01",
-                        'pPatientPin'=>"190269297542",
-                        'pPatientFname'=>"a",
-                        'pPatientMname'=>"",
-                        'pPatientLname'=>"a",
+                        'pMemDob'=>"1995-02-14",
+                        'pPatientPin'=>"242500004472",
+                        'pPatientFname'=>"DEP2AOFIRSTNAME",
+                        'pPatientMname'=>"AOMIDDLENAME",
+                        'pPatientLname'=>"AOLASTNAME",
                         'pPatientExtname'=>"",
                         'pPatientSex'=>"F",
-                        'pPatientDob'=>"1974-04-01",
-                        'pPatientType'=>"MM",
+                        'pPatientDob'=>"2020-08-01",
+                        'pPatientType'=>"DD",
                         'pPatientMobileNo'=>"09090000000",
                         'pPatientLandlineNo'=>"",
                         'pWithConsent'=>"Y",
-                        'pTransDate'=>"2022-08-26",
+                        'pTransDate'=>"2023-01-10",
                         'pCreatedBy'=>"TEST01",
                         'pReportStatus'=>"U",
                         'pDeficiencyRemarks'=>""
@@ -79,8 +79,8 @@ class KonsultaService
                 //$this->profiling(),
                 'PROFILE' => [
                     '_attributes' => [
-                        'pHciTransNo'=>"PH9000000120220800001",
-                        'pHciCaseNo'=>"TH9000000120220800001",
+                        'pHciTransNo'=>"PP9103406820230100001",
+                        'pHciCaseNo'=>"TP9103406820230100001",
                         'pProfDate'=>"2022-08-26",
                         'pPatientPin'=>"242500004774",
                         'pPatientType'=>"DD",
@@ -426,8 +426,8 @@ class KonsultaService
                 'DIAGNOSTICEXAMRESULT' => [
 
                         '_attributes' => [
-                            'pHciCaseNo'=>"TH9000000120220800001",
-                            'pHciTransNo'=>"PH9000000120220800001",
+                            'pHciCaseNo'=>"TP9103406820230100001",
+                            'pHciTransNo'=>"PP9103406820230100001",
                             'pPatientPin'=>"242500004774",
                             'pPatientType'=>"DD",
                             'pMemPin'=>"030263078507",
@@ -463,13 +463,13 @@ class KonsultaService
                                 ]
                             ],
                         ],
-                        'CBCS' => [
+                        /*'CBCS' => [
                             'CBC' => [
                                 '_attributes' => [
                                     'pReferralFacility'=>"", 'pLabDate'=>"2022-08-27", 'pHematocrit'=>"35", 'pHemoglobinG'=>"11.9", 'pHemoglobinMmol'=>"-", 'pMhcPg'=>"32.5", 'pMhcFmol'=>"-", 'pMchcGhb'=>"32.5", 'pMchcMmol'=>"-", 'pMcvUm'=>"82.5", 'pMcvFl'=>"-", 'pWbc1000'=>"3.9", 'pWbc10'=>"-", 'pMyelocyte'=>"0", 'pNeutrophilsBnd'=>"0-5", 'pNeutrophilsSeg'=>"40-60", 'pLymphocytes'=>"20-40", 'pMonocytes'=>"4-8", 'pEosinophils'=>"1-3", 'pBasophils'=>"0-1", 'pPlatelet'=>"200,000-500,000", 'pDateAdded'=>"2022-08-31", 'pStatus'=>"D", 'pDiagnosticLabFee'=>"120.00", 'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
                                 ]
                             ],
-                        ],
+                        ],*/
                     /*],
                     [
                         '_attributes' => [
@@ -534,19 +534,19 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
-    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1)
+    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1, $reValidate = false)
     {
         if(empty($transmittalNumber)) {
             $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
             $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
         }
 
-        $enlistments = $this->enlistments($transmittalNumber, $patientId);
-        $profiling = $this->profilings($patientId);
-        $soaps = $this->soaps($transmittalNumber, $patientId, $tranche);
+        $enlistments = $this->enlistments($transmittalNumber, $patientId, $reValidate);
+        $profiling = $this->profilings($transmittalNumber, $patientId, $reValidate);
+        $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $reValidate);
         $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
         $profileCount = count($profiling['PROFILE'][0]);
-        $soapCount = $tranche == 1 ? 0 : count($soaps['SOAP'][0]);
+        $soapCount = count($soaps['SOAP'][0]);
 
         $root = [
             'rootElementName' => 'PCB',
@@ -645,14 +645,14 @@ class KonsultaService
         $result = new ArrayToXml($array, $root);
         $xml = $result->dropXmlDeclaration()->toXml();
         return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount);
-        return $xml;
+        //return $xml;
     }
 
-    public function saveTransmittal($transmittalNumber, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
+    public function saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
     {
         KonsultaTransmittal::updateOrCreate(
             ['transmittal_number' => $transmittalNumber],
-            ['total_enlistment' => $enlistmentCount, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report]
+            ['total_enlistment' => $enlistmentCount, 'tranche' => $tranche, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report]
         );
     }
 
@@ -666,12 +666,12 @@ class KonsultaService
 
         $report = $service->soapMethod('validateReport', ['pReport' => $xmlEnc, 'pReportTagging' => $tranche]);
 
-        $this->saveTransmittal($transmittalNumber, $enlistmentCount, $profileCount, $soapCount, $fileName, $report, !empty($report->success) ? 'V' : 'F');
+        $this->saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $fileName, $report, !empty($report->success) ? 'V' : 'F');
         return $report;
 
     }
 
-    public function enlistments($transmittalNumber = '', $patientId = [])
+    public function enlistments($transmittalNumber = '', $patientId = [], $reValidate = false)
     {
         $enlistments = [];
         $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
@@ -685,6 +685,7 @@ class KonsultaService
             })
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
+            ->when($reValidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
             //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
@@ -1009,7 +1010,7 @@ class KonsultaService
         //return $profile;
     }
 
-    public function profilings($patientId = [])
+    public function profilings($transmittalNumber = '', $patientId = [], $reValidate = false)
     {
         $profile = [];
         $data = Patient::query()
@@ -1022,7 +1023,10 @@ class KonsultaService
                 'menstrualHistory',
             ])
             ->withWhereHas('patientHistory:patient_id,medical_history_id')
-            ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+            ->withWhereHas('philhealthLatest', fn($query) => [
+                $query->whereIn('membership_type_id', ['MM', 'DD']),
+                $query->when($reValidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
+            ])
             ->when(!empty($patientId), fn($query) => $query->whereIn('id', $patientId))
             //->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
@@ -1035,7 +1039,7 @@ class KonsultaService
         return count($profile['PROFILE'][0]);
     }
 
-    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2)
+    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $reValidate)
     {
         $soap = [];
         $data = [];
@@ -1044,7 +1048,10 @@ class KonsultaService
             $data = Consult::query()
                 ->with(['patient', 'vitalsLatest', 'consultLaboratory'])
                 ->withWhereHas('finalDiagnosis')
-                ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+                ->withWhereHas('philhealthLatest', fn($query) => [
+                    $query->whereIn('membership_type_id', ['MM', 'DD']),
+                    $query->when($reValidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
+                ])
                 ->whereFacilityCode(auth()->user()->facility_code)
                 ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
                 //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
