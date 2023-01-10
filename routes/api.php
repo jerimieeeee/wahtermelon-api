@@ -514,6 +514,17 @@ Route::prefix('v1')->group(function (){
             });
     });
 
+    //Patient Pregnancy History APIs
+    Route::prefix('patient-pregnancy-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPregnancyHistoryController::class)
+            ->middleware('auth:api')
+             ->group(function() {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::get('history/{patientMenstrualHistory}', 'show');
+            });
+        });
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');
@@ -779,6 +790,10 @@ Route::prefix('v1')->group(function (){
         //Family Planning Method
         Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
         Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
+
+        //Patient Pregnancy History
+        Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
+        Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
 
     });
 });

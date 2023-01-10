@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Patient\PatientPregnancyHistoryRequest;
 use App\Http\Resources\API\V1\Patient\PatientPregnancyHistoryResource;
 use App\Models\V1\Patient\PatientPregnancyHistory;
 use Illuminate\Http\Request;
@@ -33,9 +34,9 @@ class PatientPregnancyHistoryController extends Controller
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', $request->patient_id);
             })
-            ->when(isset($request->post_partum_id), function($q) use($request){
-                $q->where('post_partum_id', $request->post_partum_id);
-            })
+            // ->when(isset($request->post_partum_id), function($q) use($request){
+            //     $q->where('post_partum_id', $request->post_partum_id);
+            // })
             ->with('postPartum', 'libPregnancyDeliveryType', 'libPregnancyHistoryAnswer', 'inducedHypertension', 'withFamilyPlanning', 'pregnancyHistoryApplicable');
 
         if ($perPage === 'all') {
@@ -51,14 +52,11 @@ class PatientPregnancyHistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PatientPregnancyHistoryRequest $request)
     {
-        $data = DB::transaction(function () use($request) {
-            $data = PatientNcd::create(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]);
-            return $data->riskAssessment()->create($request->validatedWithCasts());
-        });
-
-        return response()->json(['data' => $data], 201);
+        $data = PatientPregnancyHistory::updateOrCreate(['patient_id' => $request['patient_id']],$request->validated());
+        $data1 = new PatientPregnancyHistoryResource($data);
+        return response()->json(['data' => $data1], 201);
     }
 
     /**
@@ -67,9 +65,12 @@ class PatientPregnancyHistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PatientPregnancyHistory $patientPregnancyHistory)
     {
-        //
+        $query = PatientPregnancyHistory::where('id', $patientPregnancyHistory->id);
+        $patientPregnancyHistory = QueryBuilder::for($query)
+            ->first();
+        return new PatientPregnancyHistoryResource($patientPregnancyHistory);
     }
 
     /**

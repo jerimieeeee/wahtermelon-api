@@ -51,12 +51,12 @@ class PatientPregnancyHistory extends Model
 
     public function libPregnancyDeliveryType()
     {
-        return $this->belongsTo(LibPregnancyDeliveryType::class, 'code', 'id');
+        return $this->belongsTo(LibPregnancyDeliveryType::class, 'delivery_type', 'code');
     }
 
     public function libPregnancyHistoryAnswer()
     {
-        return $this->belongsTo(LibPregnancyHistoryAnswer::class, 'code', 'id');
+        return $this->belongsTo(LibPregnancyHistoryAnswer::class, 'code', 'code');
     }
 
     public function inducedHypertension()

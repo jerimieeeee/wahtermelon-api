@@ -102,6 +102,7 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryBloodInStoolSeeder::class,
             LibLaboratoryRecommendationSeeder::class,
             LibLaboratoryRequestStatusSeeder::class,
+            LibPregnancyDeliveryTypeSeeder::class,
         ]);
     }
 }

@@ -9,7 +9,7 @@ class LibPregnancyDeliveryType extends Model
 {
     use HasFactory;
 
-    public $primaryKey = 'id';
+    public $primaryKey = 'code';
     public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;
