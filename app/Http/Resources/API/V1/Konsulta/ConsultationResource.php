@@ -93,7 +93,7 @@ class ConsultationResource extends JsonResource
             'MANAGEMENTS' => [
                 'MANAGEMENT' => [ManagementResource::collection([[]])->resolve()],
             ],
-            'ADVICE' => [AdviceResource::make([[]])->resolve()],
+            'ADVICE' => [AdviceResource::make(!empty($this->consultNotes) ? $this->consultNotes : [[]])->resolve()],
         ];
     }
 }
