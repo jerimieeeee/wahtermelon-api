@@ -202,15 +202,14 @@ class Consult extends Model
         return $this->hasMany(ConsultLaboratory::class, 'consult_id', 'id');
     }
 
-<<<<<<< HEAD
     public function libGeneralSurvey()
     {
         return $this->belongsTo(LibGeneralSurvey::class, 'general_survey_code', 'code');
-=======
+    }
+
     public function prescription()
     {
         return $this->hasMany(MedicinePrescription::class, 'consult_id', 'id');
->>>>>>> 3a3b72149f83c738dc79967737ba83567c50799a
     }
 
 }
