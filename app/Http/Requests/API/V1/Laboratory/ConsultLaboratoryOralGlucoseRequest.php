@@ -36,9 +36,8 @@ class ConsultLaboratoryOralGlucoseRequest extends FormRequest
             'fasting_exam_mmol' => 'nullable',
             'ogtt_one_hour_mg' => 'nullable',
             'ogtt_one_hour_mmol' => 'nullable',
+            'ogtt_two_hour_mg' => 'nullable',
             'ogtt_two_hour_mmol' => 'nullable',
-            'ogtt_two_hour_mmol' => 'nullable',
-            'date_added' => 'nullable|date|date_format:Y-m-d',
             'remarks' => 'nullable',
             'lab_status_code' => 'required|exists:lib_laboratory_statuses,code',
         ];
@@ -86,9 +85,6 @@ class ConsultLaboratoryOralGlucoseRequest extends FormRequest
             ],
             'ogtt_two_hour_mmol' => [
                 'example' => fake()->numberBetween(1, 10)
-            ],
-            'date_added' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
             ],
             'remarks' => [
                 'example' => fake()->sentence()
