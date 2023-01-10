@@ -288,7 +288,6 @@ class LibLaboratoryCategorySeeder extends Seeder
             ['lab_code' => 'OGTT', 'field_name' => 'ogtt_one_hour_mmol', 'field_desc' => 'Result in OGTT 1 Hour Examination (mmol/L)', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '4', 'field_active' => 1],
             ['lab_code' => 'OGTT', 'field_name' => 'ogtt_two_hour_mg', 'field_desc' => 'Result in OGTT 2 Hours Examination (mg/dL)', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '5', 'field_active' => 1],
             ['lab_code' => 'OGTT', 'field_name' => 'ogtt_two_hour_mmol', 'field_desc' => 'Result in OGTT 2 Hours Examination (mmol/L)', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '6', 'field_active' => 1],
-            ['lab_code' => 'OGTT', 'field_name' => 'date_added', 'field_desc' => 'Date the Record was Added', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '7', 'field_active' => 1],
 
             ['lab_code' => 'FBS', 'field_name' => 'glucose', 'field_desc' => 'Glucose', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mg/dl', 'sequence_id' => '1', 'field_active' => 1],
 
