@@ -16,7 +16,7 @@ class AdviceResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pRemarks' => "",
+                'pRemarks' => $this->plan?? "NOT APPLICABLE",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

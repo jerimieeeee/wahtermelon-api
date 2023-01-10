@@ -317,7 +317,8 @@ Route::prefix('v1')->group(function (){
                 Route::get('check-registered', 'checkRegistered');
                 Route::get('check-atc', 'checkATC');
                 Route::get('validate-report', 'validateReport');
-                Route::get('generate-xml', 'generateXml');
+                Route::get('validated-xml', 'validatedXml');
+                Route::get('submit-xml', 'submitXml');
             });
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
             ->middleware('auth:api')

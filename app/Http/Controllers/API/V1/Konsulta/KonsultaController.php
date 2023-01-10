@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\V1\Konsulta;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
+use App\Http\Resources\API\V1\Konsulta\KonsultaTransmittalResource;
 use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
 use App\Models\User;
+use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
@@ -19,6 +21,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
@@ -104,22 +107,80 @@ class KonsultaController extends Controller
         return $service->soapMethod('isATCValid', $request->only('pPIN', 'pATC', 'pEffectivityDate'));
     }
 
-    public function validateReport(Request $request, SoapService $service, KonsultaService $konsultaService)
+    /**
+     * Display a listing of the Konsulta Transmittal resource.
+     *
+     * @queryParam filter[tranche] string Filter by tranche. e.g. 1 or 2 Example: 1
+     * @queryParam include string Relationship to view: e.g. facility,user Example: facility,user
+     * @queryParam sort string Sort created_at. Add hyphen (-) to descend the list: e.g. created_at. Example: created_at
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Konsulta\KonsultaTransmittalResource
+     * @apiResourceModel App\Models\V1\Konsulta\KonsultaTransmittal paginate=15
+     * @return ResourceCollection
+     */
+    public function validatedXml(): ResourceCollection
+    {
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $data = QueryBuilder::for(KonsultaTransmittal::class)
+            ->whereNull('konsulta_transaction_number')
+            ->allowedIncludes('facility', 'user')
+            ->allowedFilters('tranche', 'xml_status')
+            ->defaultSort('created_at')
+            ->allowedSorts(['created_at']);
+        if ($perPage === 'all') {
+            return KonsultaTransmittalResource::collection($data->get());
+        }
+
+        return KonsultaTransmittalResource::collection($data->paginate($perPage)->withQueryString());
+    }
+
+    /**
+     * Generate and Validate XML
+     *
+     * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
+     * @queryParam patient_id string Filter by transmittal number.
+     * @return Exception|mixed
+     */
+    public function validateReport(Request $request, SoapService $service, KonsultaService $konsultaService): mixed
     {
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
         //$firstTranche = $konsultaService->generateXml();
-        return $firstTranche = $konsultaService->createXml($request->transmittalNumber?? "", $request->patientId?? [],$request->tranche);
+        return $firstTranche = $konsultaService->createXml($request->transmittal_number?? "", $request->patient_id?? [], $request->tranche , $request->revalidate);
         //$data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         //$contents = Storage::disk('spaces')->get('Konsulta/DOH000000000005173/1P91034068_20230109_RP9103406820230100001.xml.enc');
         //return $service->soapMethod('validateReport', ['pReport' => $data, 'pReportTagging' => $request->tranche]);
     }
 
-    public function generateXml(Request $request, KonsultaService $konsultaService)
+    /**
+     * Submit Validated XML
+     *
+     * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
+     * @return Exception|mixed
+     */
+    public function submitXml(Request $request, SoapService $service, KonsultaService $konsultaService)
+    {
+        $transactionNumber = null;
+        $data = KonsultaTransmittal::whereTransmittalNumber($request->transmittal_number)->first();
+        $xmlEnc = Storage::disk('spaces')->get($data->xml_url);
+        $submitted = $service->soapMethod('submitReport', ['pTransmittalID' => $data->transmittal_number, 'pReport' => $xmlEnc, 'pReportTagging' => $data->tranche]);
+        if(isset($submitted->success) && !empty($submitted->uploadxmlresult)) {
+            $transactionNumber = $submitted->uploadxmlresult->transactionno;
+        }
+        if(isset($submitted->transactionno)) {
+            $transactionNumber = $submitted->transactionno;
+        }
+        $data->update(['konsulta_transaction_number' => $transactionNumber, 'xml_status' => 'S', 'xml_errors' => $submitted]);
+        return $submitted;
+    }
+
+    /*public function generateXml(Request $request, KonsultaService $konsultaService)
     {
         return $e = $konsultaService->createXml($request->patientId?? [],$request->tranche);
-    }
+    }*/
 
     public function sample()
     {

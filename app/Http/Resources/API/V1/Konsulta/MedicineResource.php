@@ -3,6 +3,7 @@
 namespace App\Http\Resources\API\V1\Konsulta;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class MedicineResource extends JsonResource
 {
@@ -26,21 +27,23 @@ class MedicineResource extends JsonResource
                 'pFormCode'=> $this->konsultaMedicine->form_code?? "",
                 'pUnitCode'=> $this->konsultaMedicine->unit_code?? "",
                 'pPackageCode'=> $this->konsultaMedicine->package_code?? "",
-                'pOtherMedicine'=> $this->added_medicine,
+                'pOtherMedicine'=> strtoupper($this->added_medicine?? ""),
+                'pOthMedDrugGrouping'=> !empty($this->medicinePurpose) && Str::contains($this->medicinePurpose->desc, ['NCD', 'Antibiotic', 'Others'] ? strtoupper($this->medicinePurpose->desc) : ""),
                 'pRoute' => "",
                 'pQuantity' => $this->quantity?? "",
                 'pActualUnitPrice' => "",
-                'pTotalAmtPrice' => "",
-                'pInstructionQuantity'=>"",
-                'pInstructionStrength'=>"",
-                'pInstructionFrequency'=>"",
-                'pPrescribingPhysician'=>"",
-                'pIsDispensed'=>"",
-                'pDateDispensed'=>"",
-                'pDispensingPersonnel'=>"",
-                'pIsApplicable'=>"",
-                'pDateAdded'=>"",
-                'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
+                'pTotalAmtPrice' => !empty($this->dispensing) ? $this->dispensing->unit_price : "",
+                'pInstructionQuantity' => !empty($this->dispensing) ? $this->dispensing->total_amount : "",
+                'pInstructionStrength' => !empty($this->id) ? $this->dosage_quantity.strtoupper($this->dosage_uom) : "",
+                'pInstructionFrequency' => $this->dosageUom->desc?? "",
+                'pPrescribingPhysician'=> !empty($this->id) ? strtoupper($this->prescribedBy->first_name. " " . $this->prescribedBy->last_name) : "",
+                'pIsDispensed' => !empty($this->id) ? !empty($this->dispensing) ? 'Y' : 'N' : "",
+                'pDateDispensed' => !empty($this->dispensing) ? $this->dispensing->dispensing_date : "",
+                'pDispensingPersonnel' => !empty($this->id) ? strtoupper($this->dispensing->user->first_name. " " . $this->dispensing->user->last_name) : "",
+                'pIsApplicable' => !empty($this->id) ? 'Y' : 'N',
+                'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
+                'pReportStatus'=>"U",
+                'pDeficiencyRemarks'=>""
             ]
         ];
     }
