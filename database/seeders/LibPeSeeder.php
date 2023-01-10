@@ -46,7 +46,7 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'HEENT','pe_id' => 'HEENT10', 'pe_desc' => 'Exudates',                         'konsulta_pe_id' => '10',  'seq_id' => '8',     'konsulta_library_status' => '0', 'modules' => 'cn'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT11', 'pe_desc' => 'Essentially Normal',               'konsulta_pe_id' => '11',  'seq_id' => '1',     'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT12', 'pe_desc' => 'Abnormal pupillary reaction',      'konsulta_pe_id' => '12',  'seq_id' => '2',     'konsulta_library_status' => '1', 'modules' => 'cn'],
-          ['category_id' => 'HEENT','pe_id' => 'HEENT13', 'pe_desc' => 'Cervical lympadenopathy',          'konsulta_pe_id' => '13',  'seq_id' => '6',     'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'HEENT','pe_id' => 'HEENT13', 'pe_desc' => 'Cervical lymphadenopathy',          'konsulta_pe_id' => '13',  'seq_id' => '6',     'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT14', 'pe_desc' => 'Dry mucous membrane',              'konsulta_pe_id' => '14',  'seq_id' => '7',     'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT15', 'pe_desc' => 'Icteric sclerae',                  'konsulta_pe_id' => '15',  'seq_id' => '10',    'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'HEENT','pe_id' => 'HEENT16', 'pe_desc' => 'Pale conjunctivae',                'konsulta_pe_id' => '16',  'seq_id' => '15',    'konsulta_library_status' => '1', 'modules' => 'cn'],
@@ -140,7 +140,7 @@ class LibPeSeeder extends Seeder
 
           //DIGITAL RECTAL
           ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL01',  'pe_desc' => 'Essentially normal',                'konsulta_pe_id' => '1',  'seq_id' => '1',  'konsulta_library_status' => '1', 'modules' => 'cn'],
-          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL02',  'pe_desc' => 'Enlarge Prospate',                  'konsulta_pe_id' => '2',  'seq_id' => '2',  'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL02',  'pe_desc' => 'Enlarge Prostate',                  'konsulta_pe_id' => '2',  'seq_id' => '2',  'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL03',  'pe_desc' => 'Mass',                              'konsulta_pe_id' => '3',  'seq_id' => '4',  'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL04',  'pe_desc' => 'Hemorrhoids',                       'konsulta_pe_id' => '4',  'seq_id' => '3',  'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL05',  'pe_desc' => 'Pus',                               'konsulta_pe_id' => '5',  'seq_id' => '6',  'konsulta_library_status' => '1', 'modules' => 'cn'],
