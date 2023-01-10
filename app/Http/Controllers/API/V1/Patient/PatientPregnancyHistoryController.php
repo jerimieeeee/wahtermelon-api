@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API\V1\Patient;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Patient\PatientSocialHistoryRequest;
-use App\Http\Resources\API\V1\Patient\PatientSocialHistoryResource;
-use App\Models\V1\Patient\PatientSocialHistory;
+use App\Http\Resources\API\V1\Patient\PatientPregnancyHistoryResource;
+use App\Models\V1\Patient\PatientPregnancyHistory;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -14,31 +13,36 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Patient History Management
  *
  * APIs for managing Patient History
- * @subgroup Social History
- * @subgroupDescription Patient Social History management.
+ * @subgroup Pregnancy History
+ * @subgroupDescription Patient Pregnancy History management.
  */
-class PatientSocialHistoryController extends Controller
+class PatientPregnancyHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @queryParam patient_id string Patient record to view.
+     * @queryParam patient_id Identification code of the patient.
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        $patientSocialHistory = QueryBuilder::for(PatientSocialHistory::class)
+        $patientPregnancyHistory = QueryBuilder::for(PatientPregnancyHistory::class)
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', $request->patient_id);
-            });
+            })
+            ->when(isset($request->post_partum_id), function($q) use($request){
+                $q->where('post_partum_id', $request->post_partum_id);
+            })
+            ->with('postPartum', 'libPregnancyDeliveryType', 'libPregnancyHistoryAnswer', 'inducedHypertension', 'withFamilyPlanning', 'pregnancyHistoryApplicable');
 
         if ($perPage === 'all') {
-            return PatientSocialHistoryResource::collection($patientSocialHistory->get());
+            return PatientPregnancyHistoryResource::collection($patientPregnancyHistory->get());
         }
 
-        return PatientSocialHistoryResource::collection($patientSocialHistory->paginate($perPage)->withQueryString());
+        return PatientPregnancyHistoryResource::collection($patientPregnancyHistory->paginate($perPage)->withQueryString());
     }
 
     /**
@@ -47,11 +51,14 @@ class PatientSocialHistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PatientSocialHistoryRequest $request)
+    public function store(Request $request)
     {
-        $data = PatientSocialHistory::updateOrCreate(['patient_id' => $request['patient_id']],$request->validated());
-        $data1 = new PatientSocialHistoryResource($data);
-        return response()->json(['data' => $data1], 201);
+        $data = DB::transaction(function () use($request) {
+            $data = PatientNcd::create(['date_enrolled' => $request->assessment_date, 'patient_id' => $request->patient_id]);
+            return $data->riskAssessment()->create($request->validatedWithCasts());
+        });
+
+        return response()->json(['data' => $data], 201);
     }
 
     /**
@@ -60,12 +67,9 @@ class PatientSocialHistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PatientSocialHistory $patientSocialHistory): PatientSocialHistoryResource
+    public function show($id)
     {
-        $query = PatientSocialHistory::where('id', $patientSocialHistory->id);
-        $patientSocialHistory = QueryBuilder::for($query)
-            ->first();
-        return new PatientSocialHistoryResource($patientSocialHistory);
+        //
     }
 
     /**

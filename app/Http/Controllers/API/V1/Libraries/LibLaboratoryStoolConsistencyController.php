@@ -29,7 +29,7 @@ class LibLaboratoryStoolConsistencyController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratoryStoolConsistency::class);
-        return LibLaboratoryStoolConsistency::collection($query->get());
+        return LibLaboratoryStoolConsistencyResource::collection($query->get());
     }
 
     /**

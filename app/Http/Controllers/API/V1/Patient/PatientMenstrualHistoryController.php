@@ -11,10 +11,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
- * @group Patient Menstrual History Management
+ * @group Patient History Management
  *
- * APIs for managing Patient Menstrual History information
- * @subgroup Patient Menstrual History
+ * APIs for managing Patient History
+ * @subgroup Menstrual History
  * @subgroupDescription Patient Menstrual History management.
  */
 class PatientMenstrualHistoryController extends Controller
