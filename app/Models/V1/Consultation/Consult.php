@@ -4,6 +4,7 @@ namespace App\Models\V1\Consultation;
 
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
@@ -198,6 +199,11 @@ class Consult extends Model
     public function consultLaboratory()
     {
         return $this->hasMany(ConsultLaboratory::class, 'consult_id', 'id');
+    }
+
+    public function prescription()
+    {
+        return $this->hasMany(MedicinePrescription::class, 'consult_id', 'id');
     }
 
 }
