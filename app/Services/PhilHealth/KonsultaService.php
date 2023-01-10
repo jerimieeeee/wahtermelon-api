@@ -4,10 +4,12 @@ namespace App\Services\PhilHealth;
 
 use App\Http\Resources\API\V1\Konsulta\ConsultationResource;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
+use App\Http\Resources\API\V1\Konsulta\MedicineResource;
 use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
+use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
 use App\Models\V1\Patient\PatientMenstrualHistory;
@@ -546,7 +548,7 @@ class KonsultaService
         $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $revalidate);
         $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
         $profileCount = count($profiling['PROFILE'][0]);
-        $soapCount = count($soaps['SOAP'][0]);
+        $soapCount = count($soaps[0]['SOAP'][0]);
 
         $root = [
             'rootElementName' => 'PCB',
@@ -562,56 +564,57 @@ class KonsultaService
                 'pHciTransmittalNumber' => $transmittalNumber
             ]
         ];
+        $sample = [[
+
+            '_attributes' => [
+                'pHciCaseNo'=>"TH9000000120220800001",
+                'pHciTransNo'=>"PH9000000120220800001",
+                'pPatientPin'=>"242500004774",
+                'pPatientType'=>"DD",
+                'pMemPin'=>"030263078507",
+                'pEffYear'=>"2022"
+            ],
+            'FBSS' => [
+                'FBS' => [
+                    '_attributes' => [
+                        'pReferralFacility'=>"SAMPLE REFERRAL FACILITY",
+                        'pLabDate'=>"2022-08-26",
+                        'pGlucoseMg'=>"45",
+                        'pGlucoseMmol'=>"7.8",
+                        'pDateAdded'=>"2022-08-27",
+                        'pStatus'=>"D",
+                        'pDiagnosticLabFee'=>"0.00",
+                        'pReportStatus'=>"U",
+                        'pDeficiencyRemarks'=>""
+                    ]
+                ],
+            ],
+            'RBSS' => [
+                'RBS' => [
+                    '_attributes' => [
+                        'pReferralFacility'=>"",
+                        'pLabDate'=>"2022-08-26",
+                        'pGlucoseMg'=>"45",
+                        'pGlucoseMmol'=>"7.8",
+                        'pDateAdded'=>"2022-08-27",
+                        'pStatus'=>"D",
+                        'pDiagnosticLabFee'=>"0.00",
+                        'pReportStatus'=>"U",
+                        'pDeficiencyRemarks'=>""
+                    ]
+                ],
+            ],
+        ],];
 
         $array = [
             'ENLISTMENTS' => [$enlistments],
             'PROFILING' => [$profiling],
-            'SOAPS' => [$soaps],
+            'SOAPS' => [$soaps[0]],
             'DIAGNOSTICEXAMRESULTS' => [
-                'DIAGNOSTICEXAMRESULT' => [
-
-                    '_attributes' => [
-                        'pHciCaseNo'=>"TH9000000120220800001",
-                        'pHciTransNo'=>"PH9000000120220800001",
-                        'pPatientPin'=>"242500004774",
-                        'pPatientType'=>"DD",
-                        'pMemPin'=>"030263078507",
-                        'pEffYear'=>"2022"
-                    ],
-                    'FBSS' => [
-                        'FBS' => [
-                            '_attributes' => [
-                                'pReferralFacility'=>"SAMPLE REFERRAL FACILITY",
-                                'pLabDate'=>"2022-08-26",
-                                'pGlucoseMg'=>"45",
-                                'pGlucoseMmol'=>"7.8",
-                                'pDateAdded'=>"2022-08-27",
-                                'pStatus'=>"D",
-                                'pDiagnosticLabFee'=>"0.00",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                    ],
-                    'RBSS' => [
-                        'RBS' => [
-                            '_attributes' => [
-                                'pReferralFacility'=>"",
-                                'pLabDate'=>"2022-08-26",
-                                'pGlucoseMg'=>"45",
-                                'pGlucoseMmol'=>"7.8",
-                                'pDateAdded'=>"2022-08-27",
-                                'pStatus'=>"D",
-                                'pDiagnosticLabFee'=>"0.00",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                    ],
-                ],
+                'DIAGNOSTICEXAMRESULT' => [array_merge($sample,[])]
             ],
-            'MEDICINES' => [
-                'MEDICINE' => [
+            'MEDICINES' => [$soaps[1]
+                /*'MEDICINE' => [
                     '_attributes' => [
                         'pHciCaseNo'=>"",
                         'pHciTransNo'=>"",
@@ -639,7 +642,7 @@ class KonsultaService
                         'pDateAdded'=>"",
                         'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
                     ]
-                ],
+                ],*/
             ],
         ];
         $result = new ArrayToXml($array, $root);
@@ -1036,14 +1039,14 @@ class KonsultaService
         /*$result = new ArrayToXml($profile);
         return $result->dropXmlDeclaration()->toXml();*/
         return $profile;
-        return count($profile['PROFILE'][0]);
+        //return count($profile['PROFILE'][0]);
     }
 
     public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $revalidate)
     {
         $soap = [];
         $data = [];
-
+        $medicine = [];
         if($tranche == 2){
             $data = Consult::query()
                 ->with(['patient', 'vitalsLatest', 'consultLaboratory'])
@@ -1054,17 +1057,26 @@ class KonsultaService
                 ->whereFacilityCode(auth()->user()->facility_code)
                 ->wherePtGroup('cn')
                 ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
-                //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
                 ->get();
-            $data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
+                //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
+
+            $medicine = MedicinePrescription::query()
+                ->whereIn('consult_id', $data->pluck('id'))
+                ->withSum('dispensing', 'dispense_quantity')
+                ->withSum('dispensing', 'unit_price')
+                ->withSum('dispensing', 'total_amount')
+                ->with('dispensing', 'user')
+                ->get();
+            //$data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
+
         }
-
         $soapResource = ConsultationResource::collection(!empty($data) ? $data->whenEmpty(fn() => [[]]) : [[]]);
+        $medicineResource = MedicineResource::collection(!empty($medicine) ? $medicine->whenEmpty(fn() => [[]]) : [[]]);
 
-        $soap['SOAP'] = [$soapResource->resolve()];
+        $soap[0]['SOAP'] = [$soapResource->resolve()];
+        $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
         /*$result = new ArrayToXml($soap);
         return $result->dropXmlDeclaration()->toXml();*/
         return $soap;
     }
-
 }

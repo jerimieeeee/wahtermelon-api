@@ -5,6 +5,7 @@ namespace App\Models\V1\Consultation;
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibGeneralSurvey;
+use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
@@ -201,9 +202,15 @@ class Consult extends Model
         return $this->hasMany(ConsultLaboratory::class, 'consult_id', 'id');
     }
 
+<<<<<<< HEAD
     public function libGeneralSurvey()
     {
         return $this->belongsTo(LibGeneralSurvey::class, 'general_survey_code', 'code');
+=======
+    public function prescription()
+    {
+        return $this->hasMany(MedicinePrescription::class, 'consult_id', 'id');
+>>>>>>> 3a3b72149f83c738dc79967737ba83567c50799a
     }
 
 }

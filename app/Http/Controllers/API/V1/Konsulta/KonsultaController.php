@@ -206,16 +206,19 @@ class KonsultaController extends Controller
     public function submitXml(Request $request, SoapService $service, KonsultaService $konsultaService)
     {
         $transactionNumber = null;
+        $status = 'F';
         $data = KonsultaTransmittal::whereTransmittalNumber($request->transmittal_number)->first();
         $xmlEnc = Storage::disk('spaces')->get($data->xml_url);
         $submitted = $service->soapMethod('submitReport', ['pTransmittalID' => $data->transmittal_number, 'pReport' => $xmlEnc, 'pReportTagging' => $data->tranche]);
         if(isset($submitted->success) && !empty($submitted->uploadxmlresult)) {
             $transactionNumber = $submitted->uploadxmlresult->transactionno;
+            $status = 'S';
         }
         if(isset($submitted->transactionno)) {
             $transactionNumber = $submitted->transactionno;
+            $status = 'S';
         }
-        $data->update(['konsulta_transaction_number' => $transactionNumber, 'xml_status' => 'S', 'xml_errors' => $submitted]);
+        $data->update(['konsulta_transaction_number' => $transactionNumber, 'xml_status' => $status, 'xml_errors' => $submitted]);
         return $submitted;
     }
 
