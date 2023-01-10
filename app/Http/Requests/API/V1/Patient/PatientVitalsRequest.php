@@ -103,6 +103,8 @@ class PatientVitalsRequest extends FormRequest
             'patient_hip' => 'nullable|numeric',
             'patient_limbs' => 'nullable|numeric',
             'patient_muac' => 'nullable|numeric',
+            'patient_left_vision_acuity' => 'nullable|numeric',
+            'patient_right_vision_acuity' => 'nullable|numeric',
         ];
     }
 
@@ -174,6 +176,12 @@ class PatientVitalsRequest extends FormRequest
             ],
             'patient_muac' => [
                 'example' => fake()->numberBetween(60, 100)
+            ],
+            'patient_left_vision_acuity' => [
+                'example' => fake()->numberBetween(20, 90)
+            ],
+            'patient_right_vision_acuity' => [
+                'example' => fake()->numberBetween(20, 90)
             ],
         ];
     }

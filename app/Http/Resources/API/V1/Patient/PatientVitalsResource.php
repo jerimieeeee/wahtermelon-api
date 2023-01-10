@@ -48,6 +48,8 @@ class PatientVitalsResource extends JsonResource
             'patient_hip' => $this->patient_hip,
             'patient_limbs' => $this->patient_limbs,
             'patient_muac' => $this->patient_muac,
+            'patient_left_vision_acuity' => $this->patient_left_vision_acuity,
+            'patient_right_vision_acuity' => $this->patient_right_vision_acuity,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
