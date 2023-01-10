@@ -111,6 +111,7 @@ class KonsultaController extends Controller
      * Display a listing of the Konsulta Transmittal resource.
      *
      * @queryParam filter[tranche] string Filter by tranche. e.g. 1 or 2 Example: 1
+     * @queryParam filter[xml_status] string Filter by xml_status. e.g. V,F or S Example: V
      * @queryParam include string Relationship to view: e.g. facility,user Example: facility,user
      * @queryParam sort string Sort created_at. Add hyphen (-) to descend the list: e.g. created_at. Example: created_at
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
@@ -124,7 +125,7 @@ class KonsultaController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $data = QueryBuilder::for(KonsultaTransmittal::class)
-            ->whereNull('konsulta_transaction_number')
+            //->whereNull('konsulta_transaction_number')
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('created_at')
