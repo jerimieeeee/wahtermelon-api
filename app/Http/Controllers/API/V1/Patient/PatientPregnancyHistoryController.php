@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1\Patient;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Patient\PatientMenstrualHistoryRequest;
-use App\Http\Resources\API\V1\Patient\PatientMenstrualHistoryResource;
-use App\Models\V1\Patient\PatientMenstrualHistory;
+use App\Http\Requests\API\V1\Patient\PatientPregnancyHistoryRequest;
+use App\Http\Resources\API\V1\Patient\PatientPregnancyHistoryResource;
+use App\Models\V1\Patient\PatientPregnancyHistory;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -14,10 +14,10 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Patient History Management
  *
  * APIs for managing Patient History
- * @subgroup Menstrual History
- * @subgroupDescription Patient Menstrual History management.
+ * @subgroup Pregnancy History
+ * @subgroupDescription Patient Pregnancy History management.
  */
-class PatientMenstrualHistoryController extends Controller
+class PatientPregnancyHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,17 +30,20 @@ class PatientMenstrualHistoryController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        $patientMenstrualHistory = QueryBuilder::for(PatientMenstrualHistory::class)
+        $patientPregnancyHistory = QueryBuilder::for(PatientPregnancyHistory::class)
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', $request->patient_id);
             })
-            ->with('libFpMethod');
+            // ->when(isset($request->post_partum_id), function($q) use($request){
+            //     $q->where('post_partum_id', $request->post_partum_id);
+            // })
+            ->with('libPregnancyDeliveryType', 'libPregnancyHistoryAnswer', 'inducedHypertension', 'withFamilyPlanning', 'pregnancyHistoryApplicable');
 
         if ($perPage === 'all') {
-            return PatientMenstrualHistoryResource::collection($patientMenstrualHistory->get());
+            return PatientPregnancyHistoryResource::collection($patientPregnancyHistory->get());
         }
 
-        return PatientMenstrualHistoryResource::collection($patientMenstrualHistory->paginate($perPage)->withQueryString());
+        return PatientPregnancyHistoryResource::collection($patientPregnancyHistory->paginate($perPage)->withQueryString());
     }
 
     /**
@@ -49,10 +52,10 @@ class PatientMenstrualHistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PatientMenstrualHistoryRequest $request)
+    public function store(PatientPregnancyHistoryRequest $request)
     {
-        $data = PatientMenstrualHistory::updateOrCreate(['patient_id' => $request['patient_id']],$request->validated());
-        $data1 = new PatientMenstrualHistoryResource($data);
+        $data = PatientPregnancyHistory::updateOrCreate(['patient_id' => $request['patient_id']],$request->validated());
+        $data1 = new PatientPregnancyHistoryResource($data);
         return response()->json(['data' => $data1], 201);
     }
 
@@ -62,12 +65,12 @@ class PatientMenstrualHistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PatientMenstrualHistory $patientMenstrualHistory): PatientMenstrualHistoryResource
+    public function show(PatientPregnancyHistory $patientPregnancyHistory)
     {
-        $query = PatientMenstrualHistory::where('id', $patientMenstrualHistory->id);
-        $patientMenstrualHistory = QueryBuilder::for($query)
+        $query = PatientPregnancyHistory::where('id', $patientPregnancyHistory->id);
+        $patientPregnancyHistory = QueryBuilder::for($query)
             ->first();
-        return new PatientMenstrualHistoryResource($patientMenstrualHistory);
+        return new PatientPregnancyHistoryResource($patientPregnancyHistory);
     }
 
     /**

@@ -30,7 +30,7 @@ class LibPatientSocialHistoryAnswerController extends Controller
         $query = QueryBuilder::for(LibPatientSocialHistoryAnswer::class);
         return LibPatientSocialHistoryAnswerResource::collection($query->get());
     }
-        /**
+    /**
      * Display the specified Answer Resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibPatientSocialHistoryAnswerResource

@@ -11,10 +11,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
- * @group Patient Social History Management
+ * @group Patient History Management
  *
- * APIs for managing Patient Social History information
- * @subgroup Patient Social History
+ * APIs for managing Patient History
+ * @subgroup Social History
  * @subgroupDescription Patient Social History management.
  */
 class PatientSocialHistoryController extends Controller
