@@ -15,11 +15,8 @@ class ConsultNotesFinalDx extends Model
     protected $table='consult_notes_final_dxes';
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-      'notes_id',
-      'user_id',
-      'facility_code',
-      'icd10_code',
+    protected $guarded = [
+        'id'
     ];
 
     public function consultNotes(){
