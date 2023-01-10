@@ -534,16 +534,16 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
-    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1, $reValidate = false)
+    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1, $revalidate = false)
     {
         if(empty($transmittalNumber)) {
             $prefix = 'R' . auth()->user()->konsultaCredential->accreditation_number . date('Ym');
             $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
         }
 
-        $enlistments = $this->enlistments($transmittalNumber, $patientId, $reValidate);
-        $profiling = $this->profilings($transmittalNumber, $patientId, $reValidate);
-        $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $reValidate);
+        $enlistments = $this->enlistments($transmittalNumber, $patientId, $revalidate);
+        $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate);
+        $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $revalidate);
         $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
         $profileCount = count($profiling['PROFILE'][0]);
         $soapCount = count($soaps['SOAP'][0]);
@@ -671,7 +671,7 @@ class KonsultaService
 
     }
 
-    public function enlistments($transmittalNumber = '', $patientId = [], $reValidate = false)
+    public function enlistments($transmittalNumber = '', $patientId = [], $revalidate = false)
     {
         $enlistments = [];
         $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
@@ -685,7 +685,7 @@ class KonsultaService
             })
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
-            ->when($reValidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
+            ->when($revalidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
             //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]));
@@ -1010,7 +1010,7 @@ class KonsultaService
         //return $profile;
     }
 
-    public function profilings($transmittalNumber = '', $patientId = [], $reValidate = false)
+    public function profilings($transmittalNumber = '', $patientId = [], $revalidate = false)
     {
         $profile = [];
         $data = Patient::query()
@@ -1025,7 +1025,7 @@ class KonsultaService
             ->withWhereHas('patientHistory:patient_id,medical_history_id')
             ->withWhereHas('philhealthLatest', fn($query) => [
                 $query->whereIn('membership_type_id', ['MM', 'DD']),
-                $query->when($reValidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
+                $query->when($revalidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
             ])
             ->when(!empty($patientId), fn($query) => $query->whereIn('id', $patientId))
             //->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
@@ -1039,7 +1039,7 @@ class KonsultaService
         return count($profile['PROFILE'][0]);
     }
 
-    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $reValidate)
+    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $revalidate)
     {
         $soap = [];
         $data = [];
@@ -1050,7 +1050,7 @@ class KonsultaService
                 ->withWhereHas('finalDiagnosis')
                 ->withWhereHas('philhealthLatest', fn($query) => [
                     $query->whereIn('membership_type_id', ['MM', 'DD']),
-                    $query->when($reValidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
+                    $query->when($revalidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
                 ])
                 ->whereFacilityCode(auth()->user()->facility_code)
                 ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))

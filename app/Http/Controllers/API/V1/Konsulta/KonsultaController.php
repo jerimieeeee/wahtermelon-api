@@ -141,6 +141,8 @@ class KonsultaController extends Controller
      *
      * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
      * @queryParam patient_id string Filter by transmittal number.
+     * @queryParam tranche string Filter by trance number e.g. 1 or 2. Example: 1
+     * @queryParam revalidate boolean Filter by revalidate e.g. 0 or 1. Example: 0
      * @return Exception|mixed
      */
     public function validateReport(Request $request, SoapService $service, KonsultaService $konsultaService): mixed
