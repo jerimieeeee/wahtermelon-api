@@ -5,6 +5,7 @@ namespace App\Models\V1\Patient;
 use App\Models\User;
 use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevService;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Libraries\LibPwdType;
@@ -120,6 +121,11 @@ class Patient extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function consult()
+    {
+        return $this->hasMany(Consult::class, 'patient_id', 'id');
     }
 
     public function philhealthLatest()
