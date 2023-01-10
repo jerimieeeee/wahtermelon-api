@@ -1048,11 +1048,11 @@ class KonsultaService
             $data = Consult::query()
                 ->with(['patient', 'vitalsLatest', 'consultLaboratory'])
                 ->withWhereHas('finalDiagnosis')
-                ->withWhereHas('philhealthLatest', fn($query) => [
-                    $query->whereIn('membership_type_id', ['MM', 'DD']),
-                    $query->when($revalidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
-                ])
+                ->withWhereHas('philhealthLatest', fn($query) => $query->whereIn('membership_type_id', ['MM', 'DD']))
+                ->when($revalidate, fn($query) => $query->where('transmittal_number', $transmittalNumber))
+                ->when($revalidate == false, fn($query) => $query->whereNull('transmittal_number'))
                 ->whereFacilityCode(auth()->user()->facility_code)
+                ->wherePtGroup('cn')
                 ->when(!empty($patientId), fn($query) => $query->whereIn('patient_id', $patientId))
                 //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
                 ->get();

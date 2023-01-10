@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Konsulta;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\KonsultaTransmittalResource;
+use App\Http\Resources\API\V1\Patient\PatientPhilhealthResource;
 use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
 use App\Models\User;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
@@ -105,6 +106,44 @@ class KonsultaController extends Controller
     public function checkATC(Request $request, SoapService $service): mixed
     {
         return $service->soapMethod('isATCValid', $request->only('pPIN', 'pATC', 'pEffectivityDate'));
+    }
+
+    /**
+     * List of Patients for Generation of XML.
+     *
+     * @queryParam tranche string Filter by tranche. e.g. 1 or 2 Example: 1
+     * @queryParam effectivity_year string Filter by effectivity year. e.g. 2023 Example: 2023
+     * @queryParam include string Relationship to view: e.g. facility,user Example: facility,user
+     * @queryParam sort string Sort created_at. Add hyphen (-) to descend the list: e.g. created_at. Example: created_at
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientPhilhealthResource
+     * @apiResourceModel App\Models\V1\Patient\PatientPhilhealth paginate=15
+     * @return ResourceCollection
+     */
+    public function generateDataForValidation(Request $request)
+    {
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $data = QueryBuilder::for(PatientPhilhealth::class)
+            ->whereEffectivityYear($request->effectivity_year)
+            ->withWhereHas('konsultaRegistration', fn($query) => $query->whereEffectivityYear($request->effectivity_year))
+            ->withWhereHas('patient.patientHistory')
+            ->when($request->tranche == 1,
+                fn($query) => $query->whereNull('transmittal_number')
+            )
+            ->when($request->tranche == 2,
+                fn($query) => $query->withWhereHas('patient.consult', fn($q) => $q->whereNull('transmittal_number')->wherePtGroup('cn')->whereHas('patient.consult.finalDiagnosis'))
+            )
+            ->whereIn('membership_type_id', ['MM', 'DD'])
+            ->allowedIncludes('facility', 'user')
+            ->defaultSort('-effectivity_year', 'created_at')
+            ->allowedSorts(['effectivity_year', 'created_at']);
+        if ($perPage === 'all') {
+            return PatientPhilhealthResource::collection($data->get());
+        }
+
+        return PatientPhilhealthResource::collection($data->paginate($perPage)->withQueryString());
     }
 
     /**

@@ -319,6 +319,7 @@ Route::prefix('v1')->group(function (){
                 Route::get('validate-report', 'validateReport');
                 Route::get('validated-xml', 'validatedXml');
                 Route::get('submit-xml', 'submitXml');
+                Route::get('generate-data', 'generateDataForValidation');
             });
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
             ->middleware('auth:api')
