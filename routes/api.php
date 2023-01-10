@@ -796,5 +796,8 @@ Route::prefix('v1')->group(function (){
         Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
         Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
 
+        //Patient Pregnancy History
+        Route::get('general-survey', [\App\Http\Controllers\API\V1\Libraries\LibGeneralSurveyController::class, 'index'])->name('general-survey.index');
+        Route::get('general-survey/{generalSurvey}', [\App\Http\Controllers\API\V1\Libraries\LibGeneralSurveyController::class, 'show'])->name('general-survey.show');
     });
 });
