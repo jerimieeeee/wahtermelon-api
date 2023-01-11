@@ -39,7 +39,7 @@ class PatientNcdRecordRequest extends FormRequest
             'abdomen' => 'required|exists:lib_ncd_physical_exam_answers,id',
             'heart' => 'required|exists:lib_ncd_physical_exam_answers,id',
             'lungs' => 'required|exists:lib_ncd_physical_exam_answers,id',
-            'sensation_feet' => 'required|exists:lib_ncd_physical_exam_answers,id',
+            'sensation_feet' => 'nullable|exists:lib_ncd_physical_exam_answers,id',
             'other_findings' => 'nullable',
             'other_infos' => 'nullable',
         ];
