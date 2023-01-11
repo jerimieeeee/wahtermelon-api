@@ -3,12 +3,14 @@
 namespace App\Services\PhilHealth;
 
 use App\Http\Resources\API\V1\Konsulta\ConsultationResource;
+use App\Http\Resources\API\V1\Konsulta\DiagnosticExamResultResource;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\MedicineResource;
 use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
+use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientHistory;
@@ -20,6 +22,7 @@ use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\ArrayToXml\ArrayToXml;
@@ -547,7 +550,7 @@ class KonsultaService
         $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate);
         $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate);
         $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
-        $profileCount = count($profiling['PROFILE'][0]);
+        $profileCount = count($profiling[0]['PROFILE'][0]);
         $soapCount = count($soaps[0]['SOAP'][0]);
 
         $root = [
@@ -608,10 +611,10 @@ class KonsultaService
 
         $array = [
             'ENLISTMENTS' => [$enlistments],
-            'PROFILING' => [$profiling],
+            'PROFILING' => [$profiling[0]],
             'SOAPS' => [$soaps[0]],
             'DIAGNOSTICEXAMRESULTS' => [
-                'DIAGNOSTICEXAMRESULT' => [array_merge($sample,[])]
+                [$profiling[1]]
             ],
             'MEDICINES' => [$soaps[1]
                 /*'MEDICINE' => [
@@ -1040,9 +1043,35 @@ class KonsultaService
             ->when(!empty($patientId), fn($query) => $query->whereIn('id', $patientId))
             //->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
-        $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]));
+        /*$laboratory = ConsultLaboratory::query()
+            ->where(fn($query) =>
+                $query->whereHas('fbs')
+                ->orWhereHas('rbs')
+            )
+            ->whereIn('lab_code', ['FBS', 'RBS'])
+            ->whereIn('patient_id', $data->pluck('id'))
+            ->get();*/
+        $laboratory = Patient::query()
+            ->whereIn('id', $data->pluck('id'))
+            /*->whereHas('philhealthLatest', fn($query) => [
+                $query->join('consult_laboratories', function($join){
+                    $join->on('consult_laboratories.patient_id', '=', 'patient_philhealth.patient_id');
+                    $join->where(DB::raw("DATE_FORMAT(consult_laboratories.request_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_philhealth.enlistment_date, '%Y-%m-%d')"));
+                })
+            ])*/
+            ->withWhereHas('consultLaboratory', fn($query) => [
+                $query->where(fn($q) =>
+                    $q->whereHas('fbs')
+                        ->orWhereHas('rbs')
+                    )
+            ])
+            ->get();
+        //dump($laboratory);
+        $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]))->resolve();
+        $diagnosticExamResource = DiagnosticExamResultResource::collection($laboratory->whenEmpty(fn() => [[]]))->resolve();
 
-        $profile['PROFILE'] = [$profileResource->resolve()];
+        $profile[0]['PROFILE'] = [$profileResource];
+        $profile[1]['DIAGNOSTICEXAMRESULT'] = [$diagnosticExamResource];
         /*$result = new ArrayToXml($profile);
         return $result->dropXmlDeclaration()->toXml();*/
         return $profile;

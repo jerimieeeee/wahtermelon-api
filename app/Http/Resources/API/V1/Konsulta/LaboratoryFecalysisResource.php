@@ -17,7 +17,7 @@ class LaboratoryFecalysisResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => $this->laboratory_date?? "",
+                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
                 'pColor' => $this->color_code?? "",
                 'pConsistency' => $this->consistency_code?? "",
                 'pRbc' => $this->rbc?? "",

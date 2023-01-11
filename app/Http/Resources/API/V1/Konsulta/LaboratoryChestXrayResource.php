@@ -17,7 +17,7 @@ class LaboratoryChestXrayResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => $this->laboratory_date?? "",
+                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
                 'pFindings' => $this->findings_code?? "",
                 'pRemarksFindings' => strtoupper($this->remarks_findings?? ""),
                 'pObservation' => $this->observation_code?? "",
