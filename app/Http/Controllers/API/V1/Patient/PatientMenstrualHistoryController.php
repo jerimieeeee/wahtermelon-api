@@ -26,6 +26,20 @@ class PatientMenstrualHistoryController extends Controller
      * @queryParam patient_id Identification code of the patient.
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @queryParam patient_id string Patient record to view.
+     * @queryParam patient_id Identification code of the patient.
+     * @queryParam category category. Example: 1
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientMenstrualHistoryResource
+     * @apiResourceModel App\Models\V1\Patient\PatientMenstrualHistory paginate=15
+     * @param Request $request
+     * @return ResourceCollection
+     */
     public function index(Request $request)
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
