@@ -18,7 +18,7 @@ class LaboratoryPpdResource extends JsonResource
             '_attributes' => [
                 'pReferralFacility' => "",
                 'pLabDate' => isset($this->ppd->laboratory_date) ? $this->ppd->laboratory_date->format('Y-m-d') : "",
-                'pFindings' => $this->ppd->findings_code?? "",
+                'pFindings' => strtoupper($this->ppd->findings_code?? ""),
                 'pDateAdded' => isset($this->ppd->created_at) ? $this->ppd->created_at->format('Y-m-d') : "",
                 'pStatus' => $this->ppd->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",

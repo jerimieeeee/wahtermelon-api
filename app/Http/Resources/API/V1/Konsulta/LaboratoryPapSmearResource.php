@@ -18,8 +18,8 @@ class LaboratoryPapSmearResource extends JsonResource
             '_attributes' => [
                 'pReferralFacility' => "",
                 'pLabDate' => isset($this->papsmear->laboratory_date) ? $this->papsmear->laboratory_date->format('Y-m-d') : "",
-                'pFindings' => $this->papsmear->findings?? "",
-                'pImpression' => $this->papsmear->impression?? "",
+                'pFindings' => strtoupper($this->papsmear->findings?? ""),
+                'pImpression' => strtoupper($this->papsmear->impression?? ""),
                 'pDateAdded' => isset($this->papsmear->created_at) ? $this->papsmear->created_at->format('Y-m-d') : "",
                 'pStatus' => $this->papsmear->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",

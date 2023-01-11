@@ -18,10 +18,10 @@ class LaboratoryRbsResource extends JsonResource
             '_attributes' => [
                 'pReferralFacility' => "",
                 'pLabDate' => isset($this->rbs->laboratory_date) ? $this->rbs->laboratory_date->format('Y-m-d') : "",
-                'pGlucoseMg' => $this->rbs->glucose?? "",
+                'pGlucoseMg' => strtoupper($this->rbs->glucose?? ""),
                 'pGlucoseMmol' => "",
                 'pDateAdded' => isset($this->rbs->created_at) ? $this->rbs->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->rbs->lab_status_code?? "",
+                'pStatus' => strtoupper($this->rbs->lab_status_code?? ""),
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
