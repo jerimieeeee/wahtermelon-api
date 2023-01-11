@@ -34,6 +34,7 @@ class MedicinePrescriptionFactory extends Factory
             'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
             'prescription_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),
             'konsulta_medicine_code' => fake()->randomElement(LibKonsultaMedicine::pluck('code')->toArray()),
+            'instruction_quantity' => fake()->numberBetween(1, 500),
             'dosage_quantity' => fake()->numberBetween(1, 500),
             'dosage_uom' => fake()->randomElement(LibMedicineUnitOfMeasurement::pluck('code')->toArray()),
             'dose_regimen' => fake()->randomElement(LibMedicineDoseRegimen::pluck('code')->toArray()),

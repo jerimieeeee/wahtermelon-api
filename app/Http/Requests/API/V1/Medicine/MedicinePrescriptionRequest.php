@@ -39,6 +39,7 @@ class MedicinePrescriptionRequest extends FormRequest
             'prescription_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'konsulta_medicine_code' => 'required_without:added_medicine|exists:lib_konsulta_medicines,code',
             'added_medicine' => 'required_without:konsulta_medicine_code',
+            'instruction_quantity' => 'required:numeric',
             'dosage_quantity' => 'required:numeric',
             'dosage_uom' => 'required:exists:lib_medicine_unit_of_measurements,code',
             'dose_regimen' => 'required:exists:lib_medicine_dose_regimens,code',
@@ -69,6 +70,9 @@ class MedicinePrescriptionRequest extends FormRequest
             ],
             'konsulta_medicine_code' => [
                 'example' => fake()->randomElement(LibKonsultaMedicine::pluck('code')->toArray())
+            ],
+            'instruction_quantity' => [
+                'example' => fake()->numberBetween(1, 500)
             ],
             'dosage_quantity' => [
                 'example' => fake()->numberBetween(1, 500)

@@ -33,7 +33,7 @@ class MedicineResource extends JsonResource
                 'pQuantity' => !empty($this->dispensingLatest) ? $this->dispensing_sum_dispense_quantity : $this->quantity?? "",
                 'pActualUnitPrice' => !empty($this->dispensingLatest) ? $this->dispensing_sum_unit_price : "",
                 'pTotalAmtPrice' => !empty($this->dispensingLatest) ? $this->dispensing_sum_total_amount : "",
-                'pInstructionQuantity' => "1",
+                'pInstructionQuantity' => !empty($this->id) ? $this->instruction_quantity?? "1" : "",
                 'pInstructionStrength' => !empty($this->id) ? $this->dosage_quantity." ".strtoupper($this->dosage_uom) : "",
                 'pInstructionFrequency' => $this->doseRegimen->desc?? "",
                 'pPrescribingPhysician'=> !empty($this->id) ? strtoupper($this->prescribedBy->first_name. " " . $this->prescribedBy->last_name) : "",
