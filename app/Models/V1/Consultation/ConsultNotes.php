@@ -20,29 +20,39 @@ class ConsultNotes extends Model
         'id'
     ];
 
-    public function complaints(){
+    public function complaints()
+    {
         return $this->hasMany(ConsultNotesComplaint::class, 'notes_id', 'id');
     }
 
-    public function initialdx(){
+    public function initialdx()
+    {
         return $this->hasMany(ConsultNotesInitialDx::class, 'notes_id', 'id');
     }
 
-    public function finaldx(){
+    public function finaldx()
+    {
         return $this->hasMany(ConsultNotesFinalDx::class, 'notes_id', 'id');
     }
 
-    public function physicalExam(){
+    public function physicalExam()
+    {
         return $this->hasMany(ConsultNotesPe::class, 'notes_id', 'id');
     }
 
-    public function physicalExamRemarks(){
+    public function physicalExamRemarks()
+    {
         return $this->hasOne(ConsultPeRemarks::class, 'notes_id', 'id');
     }
 
-    public function consultNotes()
+    public function consult()
     {
         return $this->belongsTo(Consult::class, 'consult_id', 'id');
+    }
+
+    public function management()
+    {
+        return $this->belongsTo(ConsultNotesManagement::class, 'notes_id', 'id');
     }
 
     public function libGeneralSurvey()

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @authenticated
- * @group Consultation Chief Complaint Management
+ * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Chief Complaint information
  * @subgroup Patient Consultation Chief Complaint

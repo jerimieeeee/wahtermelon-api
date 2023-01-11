@@ -76,12 +76,12 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientVaccineController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('vaccines', 'store');
-            Route::get('vaccines-records', 'index');
-            Route::get('vaccines-records/{patientvaccine}', 'show');
-            Route::put('vaccines/{id}', 'update');
-            Route::delete('vaccines/{id}', 'destroy');
-        });
+                Route::post('vaccines', 'store');
+                Route::get('vaccines-records', 'index');
+                Route::get('vaccines-records/{patientvaccine}', 'show');
+                Route::put('vaccines/{id}', 'update');
+                Route::delete('vaccines/{id}', 'destroy');
+            });
     });
 
     //Patient Vitals APIs
@@ -101,23 +101,23 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Childcare\PatientCcdevController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cc-records', 'store');
-            Route::put('cc-records/{patient_id}', 'update');
-            Route::get('cc-records/{patientccdev}', 'show');
+                Route::post('cc-records', 'store');
+                Route::put('cc-records/{patient_id}', 'update');
+                Route::get('cc-records/{patientccdev}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevServiceController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cc-services', 'store');
-            Route::get('cc-services', 'index');
-            Route::put('cc-services/{id}', 'update');
-            Route::delete('cc-services/{id}', 'destroy');
+                Route::post('cc-services', 'store');
+                Route::get('cc-services', 'index');
+                Route::put('cc-services/{id}', 'update');
+                Route::delete('cc-services/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Childcare\ConsultCcdevBreastfedController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('cc-breastfed', 'store');
-            Route::get('cc-breastfed/{patientccdevbfed}', 'show');
+                Route::post('cc-breastfed', 'store');
+                Route::get('cc-breastfed/{patientccdevbfed}', 'show');
         });
     });
 
@@ -126,53 +126,59 @@ Route::prefix('v1')->group(function (){
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('records', 'store');
-            Route::put('records/{id}', 'update');
-            // Route::get('cn-records', 'show');
-            Route::get('count', 'show');
-            Route::get('records', 'index');
+                Route::post('records', 'store');
+                Route::put('records/{id}', 'update');
+                // Route::get('cn-records', 'show');
+                Route::get('count', 'show');
+                Route::get('records', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('complaint', 'store');
-            // Route::get('cn-complaint/{consult_id}', 'show');
+                Route::post('complaint', 'store');
+                // Route::get('cn-complaint/{consult_id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesInitialDxController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('initial-diagnosis', 'store');
-            Route::delete('initial-diagnosis/{id}', 'destroy');
-            Route::get('initial-diagnosis/{id}', 'show');
+                Route::post('initial-diagnosis', 'store');
+                Route::delete('initial-diagnosis/{id}', 'destroy');
+                Route::get('initial-diagnosis/{id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesFinalDxController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::post('final-diagnosis', 'store');
-            Route::get('final-diagnosis/{id}', 'show');
-            Route::delete('final-diagnosis/{id}', 'destroy');
+                Route::post('final-diagnosis', 'store');
+                Route::get('final-diagnosis/{id}', 'show');
+                Route::delete('final-diagnosis/{id}', 'destroy');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultStatsController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::get('stats', 'index');
+                Route::get('stats', 'index');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesController::class)
             ->middleware('auth:api')
             ->group(function() {
-            Route::put('notes/{id}', 'update');
+                Route::put('notes/{id}', 'update');
          });
          Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesPeController::class)
-         ->middleware('auth:api')
-         ->group(function() {
-         Route::post('physical-exam', 'store');
-         Route::post('physical-exam/{id}', 'show');
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::post('physical-exam', 'store');
+                Route::post('physical-exam/{id}', 'show');
         });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultPeRemarksController::class)
-        ->middleware('auth:api')
-        ->group(function() {
-        Route::post('physical-exam-remarks', 'store');
-        Route::put('physical-exam-remarks/{id}', 'update');
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::post('physical-exam-remarks', 'store');
+                Route::put('physical-exam-remarks/{id}', 'update');
+        });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesManagementController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::post('management', 'store');
+                Route::put('management/{id}', 'show');
         });
     });
 
@@ -797,8 +803,12 @@ Route::prefix('v1')->group(function (){
         Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
         Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
 
-        //Patient Pregnancy History
+        //General Survey
         Route::get('general-survey', [\App\Http\Controllers\API\V1\Libraries\LibGeneralSurveyController::class, 'index'])->name('general-survey.index');
         Route::get('general-survey/{generalSurvey}', [\App\Http\Controllers\API\V1\Libraries\LibGeneralSurveyController::class, 'show'])->name('general-survey.show');
+
+        //Patient Management
+        Route::get('management', [\App\Http\Controllers\API\V1\Libraries\LibManagementController::class, 'index'])->name('management.index');
+        Route::get('management/{management}', [\App\Http\Controllers\API\V1\Libraries\LibManagementController::class, 'show'])->name('management.show');
     });
 });
