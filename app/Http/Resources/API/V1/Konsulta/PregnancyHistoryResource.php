@@ -21,10 +21,10 @@ class PregnancyHistoryResource extends JsonResource
                 'pDeliveryTyp' => $this->delivery_type?? "",
                 'pFullTermCnt' => $this->full_term?? "",
                 'pPrematureCnt' => $this->preterm?? "",
-                'pAbortionCnt' => $this->abortion,
-                'pLivChildrenCnt' => $this->livebirths,
+                'pAbortionCnt' => $this->abortion?? "",
+                'pLivChildrenCnt' => $this->livebirths?? "",
                 'pWPregIndhyp' => $this->induced_hypertension?? "",
-                'pWFamPlan' => $this->with_family_planning?? "",
+                'pWFamPlan' => $this->with_family_planning?? "N",
                 'pIsApplicable' => !empty($this->id) ? "Y" : "N",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""

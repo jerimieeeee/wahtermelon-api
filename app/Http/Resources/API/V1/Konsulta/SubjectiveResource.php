@@ -16,10 +16,10 @@ class SubjectiveResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pIllnessHistory' => "01",
-                'pSignsSymptoms' => "",
+                'pIllnessHistory' => strtoupper($this->history?? ""),
+                'pSignsSymptoms' => $this->konsulta_complaint_id?? "",
                 'pOtherComplaint' => "",
-                'pPainSite' => "",
+                'pPainSite' => strtoupper($this->complaint_desc?? ""),
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

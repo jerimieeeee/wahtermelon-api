@@ -62,6 +62,24 @@ class ConsultationResource extends JsonResource
             ->join('consult_pe_remarks', fn($join) => $join->on('consult_notes.id', '=', 'consult_pe_remarks.notes_id'))
             ->whereRaw('consults.id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id?? "", !empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : ""])
             ->first();
+
+        $subjective = Consult::query()
+            ->selectRaw("
+                consults.id AS id,
+                GROUP_CONCAT(DISTINCT history) AS history,
+                GROUP_CONCAT(CASE
+                    WHEN konsulta_complaint_id = '38'
+                    THEN complaint_desc
+                END) AS complaint_desc,
+                GROUP_CONCAT(konsulta_complaint_id) AS konsulta_complaint_id
+            ")
+            ->join('consult_notes', fn($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id', 'history'))
+            ->join('consult_notes_complaints', fn($join) => $join->on('consult_notes.id', '=', 'consult_notes_complaints.notes_id')->select('notes_id', 'complaint_id'))
+            ->join('lib_complaints', fn($join) => $join->on('lib_complaints.complaint_id', '=', 'consult_notes_complaints.complaint_id')->select('complaint_id', 'complaint_desc', 'konsulta_complaint_id')->whereNotNull('konsulta_complaint_id'))
+            ->whereRaw("consults.id = ?", $this->id?? "")
+            ->groupByRaw('consults.id')
+            ->first();
+
         return [
             '_attributes' => [
                 'pHciCaseNo' => $this->patient->case_number?? "",
@@ -78,7 +96,8 @@ class ConsultationResource extends JsonResource
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ],
-            'SUBJECTIVE' => [SubjectiveResource::make([[]])->resolve()],
+
+            'SUBJECTIVE' => [SubjectiveResource::make(!empty($subjective) ? $subjective : [[]])->resolve()],
             'PEPERT' => [PhysicalExaminationVitalsResource::make(!empty($this->vitalsLatest) ? $this->vitalsLatest : [[]])->resolve()],
             'PEMISCS' => [
                 'PEMISC' => [PhysicalExaminationMiscResource::collection(!empty($physicalExam) ? $physicalExam->whenEmpty(fn() => [[]]) : [[]])->resolve()],

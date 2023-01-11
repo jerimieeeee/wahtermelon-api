@@ -182,6 +182,7 @@ class KonsultaController extends Controller
      * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
      * @queryParam patient_id string Filter by transmittal number.
      * @queryParam tranche string Filter by trance number e.g. 1 or 2. Example: 1
+     * @queryParam save boolean Filter by revalidate e.g. 0 or 1. Example: 0
      * @queryParam revalidate boolean Filter by revalidate e.g. 0 or 1. Example: 0
      * @return Exception|mixed
      */
@@ -190,7 +191,7 @@ class KonsultaController extends Controller
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
         //$firstTranche = $konsultaService->generateXml();
-        return $firstTranche = $konsultaService->createXml($request->transmittal_number?? "", $request->patient_id?? [], $request->tranche , $request->revalidate);
+        return $firstTranche = $konsultaService->createXml($request->transmittal_number?? "", $request->patient_id?? [], $request->tranche , $request->save, $request->revalidate);
         //$data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         //$contents = Storage::disk('spaces')->get('Konsulta/DOH000000000005173/1P91034068_20230109_RP9103406820230100001.xml.enc');
