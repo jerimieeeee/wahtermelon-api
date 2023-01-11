@@ -56,17 +56,12 @@ class ConsultNotesManagementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @apiResource App\Http\Resources\API\V1\Consultation\ConsultNotesManagementResource
-     * @apiResourceModel App\Models\V1\Consultation\ConsultNotesManagement
-     * @param ConsultNotesManagement $management
-     * @return ConsultNotesManagementResource
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show(ConsultNotesManagement $management): ConsultNotesManagementResource
+    public function show($id)
     {
-        $query = ConsultNotesManagement::where('id', $management->id);
-        $management = QueryBuilder::for($query)
-            ->first();
-        return new ConsultNotesManagementResource($management);
+        //
     }
 
     /**
