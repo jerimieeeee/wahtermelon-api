@@ -16,16 +16,16 @@ class PregnancyHistoryResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pPregCnt' => "",
-                'pDeliveryCnt' => "",
-                'pDeliveryTyp' => "",
-                'pFullTermCnt' => "",
-                'pPrematureCnt' => "",
-                'pAbortionCnt' => "",
-                'pLivChildrenCnt' => "",
-                'pWPregIndhyp' => "",
-                'pWFamPlan' => "N",
-                'pIsApplicable' => "N",
+                'pPregCnt' => $this->gravidity?? "",
+                'pDeliveryCnt' => $this->parity?? "",
+                'pDeliveryTyp' => $this->delivery_type?? "",
+                'pFullTermCnt' => $this->full_term?? "",
+                'pPrematureCnt' => $this->preterm?? "",
+                'pAbortionCnt' => $this->abortion,
+                'pLivChildrenCnt' => $this->livebirths,
+                'pWPregIndhyp' => $this->induced_hypertension?? "",
+                'pWFamPlan' => $this->with_family_planning?? "",
+                'pIsApplicable' => !empty($this->id) ? "Y" : "N",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

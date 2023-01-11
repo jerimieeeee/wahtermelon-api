@@ -28,7 +28,6 @@ class PatientPregnancyHistoryFactory extends Factory
             'delivery_type' => fake()->randomElement(LibPregnancyDeliveryType::pluck('code')->toArray()),
             'induced_hypertension' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
             'with_family_planning' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
-            'pregnancy_history_applicable' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
             'full_term' => fake()->randomNumber(2, true),
             'preterm' => fake()->randomNumber(2, true),
             'abortion' => fake()->randomNumber(2, true),

@@ -25,10 +25,10 @@ return new class extends Migration
             $table->unsignedInteger('preterm');
             $table->unsignedInteger('abortion');
             $table->unsignedInteger('livebirths');
-            $table->char('delivery_type', 10)->constrained();
-            $table->char('induced_hypertension', 10)->constrained();
-            $table->char('with_family_planning', 10)->constrained();
-            $table->char('pregnancy_history_applicable', 10)->constrained();
+            $table->char('delivery_type', 10)->index();
+            $table->char('induced_hypertension', 10)->index();
+            $table->char('with_family_planning', 10)->index();
+            $table->char('pregnancy_history_applicable', 10)->index();
             $table->timestamps();
 
             $table->foreign('facility_code')->references('code')->on('facilities');

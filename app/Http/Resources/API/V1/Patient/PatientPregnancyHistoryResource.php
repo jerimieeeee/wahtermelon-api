@@ -36,8 +36,6 @@ class PatientPregnancyHistoryResource extends JsonResource
             'inducedHypertension' => $this->whenLoaded('inducedHypertension'),
             'with_family_planning' => $this->when(!$this->relationLoaded('withFamilyPlanning'),$this->with_family_planning),
             'withFamilyPlanning' => $this->whenLoaded('withFamilyPlanning'),
-            'pregnancy_history_applicable' => $this->when(!$this->relationLoaded('pregnancyHistoryApplicable'),$this->pregnancy_history_applicable),
-            'pregnancyHistoryApplicable' => $this->whenLoaded('pregnancyHistoryApplicable'),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

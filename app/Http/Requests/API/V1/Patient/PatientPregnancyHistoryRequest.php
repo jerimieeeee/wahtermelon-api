@@ -26,26 +26,6 @@ class PatientPregnancyHistoryRequest extends FormRequest
      * @return array<string, mixed>
      */
 
-    // public function validatedWithCasts(): array
-    // {
-    //     $mcPostPartum = PatientMcPostRegistration::find(request()->post_partum_id);
-    //     $gravidity = $mcPostPartum->gravidity;
-    //     $parity = $mcPostPartum->parity;
-    //     $fullTerm = $mcPostPartum->full_term;
-    //     $preTerm = $mcPostPartum->preterm;
-    //     $abortion = $mcPostPartum->abortion;
-    //     $liveBirths = $mcPostPartum->livebirths;
-
-    //     return array_merge($this->validated(), [
-    //         'gravidity' => $gravidity,
-    //         'parity' => $parity,
-    //         'full_term' => $fullTerm,
-    //         'preterm' => $preTerm,
-    //         'abortion' => $abortion,
-    //         'livebirths' => $liveBirths,
-    //     ]);
-    // }
-
     public function rules()
     {
         return [
@@ -60,7 +40,6 @@ class PatientPregnancyHistoryRequest extends FormRequest
             'delivery_type' => 'required|exists:lib_pregnancy_delivery_types,code',
             'induced_hypertension' => 'required|exists:lib_ncd_answer_s2,id',
             'with_family_planning' => 'required|exists:lib_ncd_answer_s2,id',
-            'pregnancy_history_applicable' => 'required|exists:lib_ncd_answer_s2,id',
         ];
     }
 
@@ -109,10 +88,6 @@ class PatientPregnancyHistoryRequest extends FormRequest
             ],
             'with_family_planning' => [
                 'description' => 'Is patient with family planning?',
-                'example' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
-            ],
-            'pregnancy_history_applicable' => [
-                'description' => 'Is patient pregnancy history applicable?',
                 'example' => fake()->randomElement(LibNcdAnswerS2::pluck('id')->toArray()),
             ],
         ];

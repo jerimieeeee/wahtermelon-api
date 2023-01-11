@@ -43,7 +43,7 @@ class PatientPregnancyHistoryController extends Controller
             // ->when(isset($request->post_partum_id), function($q) use($request){
             //     $q->where('post_partum_id', $request->post_partum_id);
             // })
-            ->with('libPregnancyDeliveryType', 'libPregnancyHistoryAnswer', 'inducedHypertension', 'withFamilyPlanning', 'pregnancyHistoryApplicable');
+            ->with('libPregnancyDeliveryType', 'libPregnancyHistoryAnswer', 'inducedHypertension', 'withFamilyPlanning');
 
         if ($perPage === 'all') {
             return PatientPregnancyHistoryResource::collection($patientPregnancyHistory->get());
