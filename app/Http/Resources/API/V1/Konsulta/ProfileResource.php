@@ -65,6 +65,10 @@ class ProfileResource extends JsonResource
             ->join('consult_pe_remarks', fn($join) => $join->on('consult_notes.id', '=', 'consult_pe_remarks.notes_id'))
             ->whereRaw('consults.patient_id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id?? "", $this->philhealthLatest->enlistment_date?? ""])
             ->first();
+        $genSurvey = Consult::query()
+            ->join('consult_notes', fn($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id'))
+            ->whereRaw('consults.patient_id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id?? "", $this->philhealthLatest->enlistment_date?? ""])
+            ->first();
 
         return [
             '_attributes' => [
@@ -112,7 +116,7 @@ class ProfileResource extends JsonResource
                     'pDeficiencyRemarks'=>""
                 ]
             ],
-            'PEGENSURVEY' => [PhysicalExaminationGeneralSurveyResource::make(!empty($vitals) ? $vitals : [[]])->resolve()],
+            'PEGENSURVEY' => [PhysicalExaminationGeneralSurveyResource::make(!empty($genSurvey) ? $genSurvey : [[]])->resolve()],
             'PEMISCS' => [
                 'PEMISC' => [PhysicalExaminationMiscResource::collection(!empty($physicalExam) ? $physicalExam->whenEmpty(fn() => [[]]) : [[]])->resolve()],
             ],

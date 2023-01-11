@@ -16,8 +16,8 @@ class PhysicalExaminationGeneralSurveyResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pGenSurveyId' => "",
-                'pGenSurveyRem' => "",
+                'pGenSurveyId' => $this->general_survey_code?? "",
+                'pGenSurveyRem' => strtoupper($this->general_survey_remarks?? ""),
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]

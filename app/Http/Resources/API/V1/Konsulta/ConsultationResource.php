@@ -110,7 +110,7 @@ class ConsultationResource extends JsonResource
                 'DIAGNOSTIC' => [DiagnosticResource::collection(!empty($this->consultLaboratory) ? $this->consultLaboratory : [[]])->resolve()],
             ],
             'MANAGEMENTS' => [
-                'MANAGEMENT' => [ManagementResource::collection([[]])->resolve()],
+                'MANAGEMENT' => [ManagementResource::collection(!empty($this->management) ? $this->management : [[]])->resolve()],
             ],
             'ADVICE' => [AdviceResource::make(!empty($this->consultNotes) ? $this->consultNotes : [[]])->resolve()],
         ];

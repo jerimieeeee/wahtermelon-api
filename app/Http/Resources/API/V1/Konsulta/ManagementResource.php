@@ -16,8 +16,8 @@ class ManagementResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pManagementId' => "0",
-                'pOthRemarks' => "",
+                'pManagementId' => $this->management_code?? "",
+                'pOthRemarks' => strtoupper($this->remarks?? ""),
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
             ]
