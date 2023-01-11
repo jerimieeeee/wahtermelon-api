@@ -174,6 +174,11 @@ class Patient extends Model
         return $this->hasOne(PatientMenstrualHistory::class, 'patient_id', 'id');
     }
 
+    public function pregnancyHistory()
+    {
+        return $this->hasOne(PatientPregnancyHistory::class, 'patient_id', 'id');
+    }
+
     public function ncdRiskAssessmentLatest()
     {
         return $this->hasOne(ConsultNcdRiskAssessment::class, 'patient_id', 'id')
