@@ -17,10 +17,10 @@ class LaboratoryCreatinineResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
-                'pFindings' => $this->findings?? "",
-                'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->lab_status_code?? "",
+                'pLabDate' => isset($this->creatinine->laboratory_date) ? $this->creatinine->laboratory_date->format('Y-m-d') : "",
+                'pFindings' => $this->creatinine->findings?? "",
+                'pDateAdded' => isset($this->creatinine->created_at) ? $this->creatinine->created_at->format('Y-m-d') : "",
+                'pStatus' => $this->creatinine->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""

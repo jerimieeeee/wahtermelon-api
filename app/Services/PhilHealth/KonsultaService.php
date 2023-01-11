@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Konsulta\DiagnosticExamResultResource;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\MedicineResource;
 use App\Http\Resources\API\V1\Konsulta\ProfileResource;
+use App\Http\Resources\API\V1\Konsulta\SoapDiagnosticExamResultResource;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
@@ -609,12 +610,17 @@ class KonsultaService
             ],
         ],];
 
+        $diagnosticArray = [$profiling[1]];
+        if(isset($soaps[2])) {
+            $diagnosticArray = [$profiling[1], $soaps[2]];
+        }
+
         $array = [
             'ENLISTMENTS' => [$enlistments],
             'PROFILING' => [$profiling[0]],
             'SOAPS' => [$soaps[0]],
             'DIAGNOSTICEXAMRESULTS' => [
-                [$profiling[1]]
+                $diagnosticArray
             ],
             'MEDICINES' => [$soaps[1]
                 /*'MEDICINE' => [
@@ -1103,6 +1109,27 @@ class KonsultaService
                 ->withSum('dispensing', 'total_amount')
                 ->with('dispensing', 'user')
                 ->get();
+
+            $laboratory = Consult::query()
+                ->whereIn('id', $data->pluck('id'))
+                ->withWhereHas('consultLaboratory', fn($query) =>
+                $query->whereHas('fbs')
+                    ->orWhereHas('rbs')
+                    ->orWhereHas('cbc')
+                    ->orWhereHas('creatinine')
+                    ->orWhereHas('chestXray')
+                    ->orWhereHas('ecg')
+                    ->orWhereHas('hba1c')
+                    ->orWhereHas('papsmear')
+                    ->orWhereHas('ppd')
+                    ->orWhereHas('sputum')
+                    ->orWhereHas('fecalysis')
+                    ->orWhereHas('lipiProfile')
+                    ->orWhereHas('urinalysis')
+                    ->orWhereHas('oralGlucose')
+                    ->orWhereHas('fecalOccult')
+                )
+                ->get();
             $data->when($save, fn($query) =>
                 $data->map(fn($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]))
             );
@@ -1110,9 +1137,14 @@ class KonsultaService
         }
         $soapResource = ConsultationResource::collection(!empty($data) ? $data->whenEmpty(fn() => [[]]) : [[]]);
         $medicineResource = MedicineResource::collection(!empty($medicine) ? $medicine->whenEmpty(fn() => [[]]) : [[]]);
+        $laboratoryResource = SoapDiagnosticExamResultResource::collection(!empty($laboratory) ? $laboratory->whenEmpty(fn() => [[]]) : [[]]);
 
         $soap[0]['SOAP'] = [$soapResource->resolve()];
         $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
+        if(!empty($laboratory)) {
+            $soap[2]['DIAGNOSTICEXAMRESULT'] = [$laboratoryResource->resolve()];
+        }
+
         /*$result = new ArrayToXml($soap);
         return $result->dropXmlDeclaration()->toXml();*/
         return $soap;

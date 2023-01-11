@@ -17,14 +17,14 @@ class LaboratoryLipidProfileResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
-                'pLdl' => $this->ldl?? "",
-                'pHdl' => $this->hdl?? "",
+                'pLabDate' => isset($this->lipiProfile->laboratory_date) ? $this->lipiProfile->laboratory_date->format('Y-m-d') : "",
+                'pLdl' => $this->lipiProfile->ldl?? "",
+                'pHdl' => $this->lipiProfile->hdl?? "",
                 'pTotal' => "",
-                'pCholesterol' => $this->cholesterol?? "",
-                'pTriglycerides' => $this->triglycerides?? "",
-                'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->lab_status_code?? "",
+                'pCholesterol' => $this->lipiProfile->cholesterol?? "",
+                'pTriglycerides' => $this->lipiProfile->triglycerides?? "",
+                'pDateAdded' => isset($this->lipiProfile->created_at) ? $this->lipiProfile->created_at->format('Y-m-d') : "",
+                'pStatus' => $this->lipiProfile->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""

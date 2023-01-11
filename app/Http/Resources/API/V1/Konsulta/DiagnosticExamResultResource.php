@@ -38,12 +38,12 @@ class DiagnosticExamResultResource extends JsonResource
                 'pHciTransNo' => $this->philhealthLatest->transaction_number?? "",
                 'pPatientPin' => $this->philhealthLatest->philhealth_id?? "",
                 'pPatientType' => $this->philhealthLatest->membership_type_id?? "",
-                'pMemPin' => $this->philhealthLatest->member_pin?? "",
+                'pMemPin' => !empty($this->philhealthLatest->membership_pin) ? $this->philhealthLatest->membership_pin : $this->philhealthLatest->philhealth_id?? "",
                 'pEffYear' => $this->philhealthLatest->effectivity_year?? ""
             ],
             //'FBSS' => $this->when($consultLaboratoryFBS , ['FBS' => [LaboratoryFbsResource::collection(!empty($consultLaboratoryFBS) ? $consultLaboratoryFBS : [[]])->resolve()]]),
             //'FBSS' => $this->when(isset($this->fbs) , ['FBS' => [LaboratoryFbsResource::make(!empty($this->fbs) ? $this->fbs : [[]])->resolve()]]),
-            'RBSS' => $this->when(isset($this->rbs) , ['RBS' => [LaboratoryRbsResource::make(!empty($this->rbs) ? $this->rbs : [[]])->resolve()]])
+            //'RBSS' => $this->when(isset($this->rbs) , ['RBS' => [LaboratoryRbsResource::make(!empty($this->rbs) ? $this->rbs : [[]])->resolve()]])
         ];
         if(count($consultLaboratoryFBS)>0){
             $data['FBSS'] = ['FBS' => [LaboratoryFbsResource::collection(!empty($consultLaboratoryFBS) ? $consultLaboratoryFBS : [[]])->resolve()]];

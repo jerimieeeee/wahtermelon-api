@@ -17,11 +17,11 @@ class LaboratoryEcgResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
-                'pFindings' => $this->findings_code?? "",
-                'pRemarks' => strtoupper($this->remarks?? ""),
-                'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->lab_status_code?? "",
+                'pLabDate' => isset($this->ecg->laboratory_date) ? $this->ecg->laboratory_date->format('Y-m-d') : "",
+                'pFindings' => $this->ecg->findings_code?? "",
+                'pRemarks' => strtoupper($this->ecg->remarks?? ""),
+                'pDateAdded' => isset($this->ecg->created_at) ? $this->ecg->created_at->format('Y-m-d') : "",
+                'pStatus' => $this->ecg->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""

@@ -17,13 +17,13 @@ class LaboratoryChestXrayResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
-                'pFindings' => $this->findings_code?? "",
-                'pRemarksFindings' => strtoupper($this->remarks_findings?? ""),
-                'pObservation' => $this->observation_code?? "",
-                'pRemarksObservation' => strtoupper($this->remarks_observation?? ""),
-                'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->lab_status_code?? "",
+                'pLabDate' => isset($this->chestXray->laboratory_date) ? $this->chestXray->laboratory_date->format('Y-m-d') : "",
+                'pFindings' => $this->chestXray->findings_code?? "",
+                'pRemarksFindings' => strtoupper($this->chestXray->remarks_findings?? ""),
+                'pObservation' => $this->chestXray->observation_code?? "",
+                'pRemarksObservation' => strtoupper($this->chestXray->remarks_observation?? ""),
+                'pDateAdded' => isset($this->chestXray->created_at) ? $this->chestXray->created_at->format('Y-m-d') : "",
+                'pStatus' => $this->chestXray->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
