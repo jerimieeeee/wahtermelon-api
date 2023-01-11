@@ -81,7 +81,7 @@ class ProfileResource extends JsonResource
                 'pMemPin' => !empty($this->philhealthLatest->member_pin) ? $this->philhealthLatest->member_pin : $this->philhealthLatest->philhealth_id?? "",
                 'pEffYear' => $this->philhealthLatest->effectivity_year?? "",
                 'pATC' => $this->philhealthLatest->authorization_transaction_code?? "WALKEDIN",
-                'pIsWalkedIn' => !empty($this->philhealthLatest) ? $this->philhealthLatest->walkedin_status ? "Y" : "N" : "",
+                'pIsWalkedIn' => !empty($this->philhealthLatest) ? $this->philhealthLatest->authorization_transaction_code == 'WALKEDIN' ? "Y" : "N" : "",
                 'pTransDate' => isset($this->philhealthLatest->created_at) ? $this->philhealthLatest->created_at->format('Y-m-d') : "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""

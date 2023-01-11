@@ -90,7 +90,7 @@ class ConsultationResource extends JsonResource
                 'pMemPin' => !empty($this->philhealthLatest->member_pin) ? $this->philhealthLatest->member_pin : $this->philhealthLatest->philhealth_id?? "",
                 'pEffYear' => $this->philhealthLatest->effectivity_year?? "",
                 'pATC' => $this->authorization_transaction_code?? "",
-                'pIsWalkedIn' => !empty($this->id) ? $this->walkedin_status ? "Y" : "N" : "",
+                'pIsWalkedIn' => !empty($this->id) ? $this->authorization_transaction_code == 'WALKEDIN' ? "Y" : "N" : "",
                 'pCoPay' => "",
                 'pTransDate' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
                 'pReportStatus' => "U",
