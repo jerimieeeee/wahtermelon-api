@@ -16,7 +16,7 @@ class ImmunizationResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pChildImmcode' => "C01",
+                'pChildImmcode' => "",
                 'pYoungwImmcode' => "",
                 'pPregwImmcode' => "",
                 'pElderlyImmcode' => "",
