@@ -20,11 +20,16 @@ use Spatie\QueryBuilder\QueryBuilder;
 class PatientSurgicalHistoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+    * Display a listing of the resource.
      *
      * @queryParam patient_id string Patient record to view.
      * @queryParam patient_id Identification code of the patient.
-     * @return \Illuminate\Http\Response
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientSurgicalHistoryResource
+     * @apiResourceModel App\Models\V1\Patient\PatientSurgicalHistory paginate=15
+     * @param Request $request
+     * @return ResourceCollection
      */
     public function index(Request $request)
     {

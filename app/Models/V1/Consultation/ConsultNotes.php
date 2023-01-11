@@ -16,18 +16,9 @@ class ConsultNotes extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-        'consult_id',
-        'patient_id',
-        'user_id',
-        'facility_code',
-        'complaint',
-        'history',
-        'physical_exam',
-        'idx_remarks',
-        'fdx_remarks',
-        'plan',
-      ];
+    protected $guarded = [
+        'id'
+    ];
 
     public function complaints(){
         return $this->hasMany(ConsultNotesComplaint::class, 'notes_id', 'id');

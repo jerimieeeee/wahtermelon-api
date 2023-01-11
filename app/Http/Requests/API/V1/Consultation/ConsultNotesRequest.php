@@ -34,7 +34,7 @@ class ConsultNotesRequest extends FormRequest
             'idx_remarks' => 'nullable',
             'fdx_remarks' => 'nullable',
             'plan' => 'nullable',
-            'general_survey_code' => 'required|exists:lib_general_surveys,code',
+            'general_survey_code' => 'nullable|exists:lib_general_surveys,code',
             'general_survey_remarks' => 'nullable',
         ];
     }
