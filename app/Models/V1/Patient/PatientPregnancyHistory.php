@@ -68,9 +68,4 @@ class PatientPregnancyHistory extends Model
     {
         return $this->belongsTo(LibNcdAnswerS2::class, 'with_family_planning', 'id');
     }
-
-    public function pregnancyHistoryApplicable()
-    {
-        return $this->belongsTo(LibNcdAnswerS2::class, 'pregnancy_history_applicable', 'id');
-    }
 }

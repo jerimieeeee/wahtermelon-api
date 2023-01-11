@@ -3,6 +3,8 @@
 namespace App\Models\V1\Konsulta;
 
 use App\Models\User;
+use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -40,5 +42,10 @@ class KonsultaTransmittal extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function patient()
+    {
+        return $this->hasManyThrough(Patient::class, PatientPhilhealth::class, 'transmittal_number', 'id', 'transmittal_number', 'patient_id');
     }
 }

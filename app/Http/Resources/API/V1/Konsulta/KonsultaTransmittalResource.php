@@ -21,6 +21,7 @@ class KonsultaTransmittalResource extends JsonResource
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->whenLoaded('user'),
             'transmittal_number' => $this->transmittal_number,
+            'patient' => $this->whenLoaded('patient'),
             'tranche' => $this->tranche,
             'total_enlistment' => $this->total_enlistment,
             'total_profile' => $this->total_profile,
