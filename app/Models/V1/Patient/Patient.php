@@ -8,6 +8,7 @@ use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
+use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
@@ -183,6 +184,11 @@ class Patient extends Model
     {
         return $this->hasOne(ConsultNcdRiskAssessment::class, 'patient_id', 'id')
             ->latest('assessment_date');
+    }
+
+    public function consultLaboratory()
+    {
+        return $this->hasMany(ConsultLaboratory::class, 'patient_id', 'id');
     }
 
 }

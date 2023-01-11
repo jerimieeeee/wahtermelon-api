@@ -17,7 +17,7 @@ class LaboratoryOralGlucoseResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => $this->laboratory_date?? "",
+                'pLabDate' => isset($this->laboratory_date) ? $this->laboratory_date->format('Y-m-d') : "",
                 'pExamFastingMg' => $this->fasting_exam_mg?? "",
                 'pExamFastingMmol' => $this->fasting_exam_mmol?? "",
                 'pExamOgttOneHrMg' => $this->ogtt_one_hour_mg?? "",

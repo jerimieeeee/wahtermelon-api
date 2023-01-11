@@ -17,11 +17,11 @@ class LaboratoryFbsResource extends JsonResource
         return [
             '_attributes' => [
                 'pReferralFacility' => "",
-                'pLabDate' => $this->laboratory_date?? "",
-                'pGlucoseMg' => $this->glucose?? "",
+                'pLabDate' => isset($this->fbs->laboratory_date) ? $this->fbs->laboratory_date->format('Y-m-d') : "",
+                'pGlucoseMg' => $this->fbs->glucose?? "",
                 'pGlucoseMmol' => "",
-                'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->lab_status_code?? "",
+                'pDateAdded' => isset($this->fbs->created_at) ? $this->fbs->created_at->format('Y-m-d') : "",
+                'pStatus' => $this->fbs->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
