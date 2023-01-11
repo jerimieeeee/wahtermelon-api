@@ -14,14 +14,8 @@ class ConsultNotesComplaint extends Model
     protected $table='consult_notes_complaints';
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-      'notes_id',
-      'consult_id',
-      'patient_id',
-      'complaint_id',
-      'complaint_date',
-      'user_id',
-      'facility_code',
+    protected $guarded = [
+        'id'
     ];
 
     public function consultNotes(){

@@ -15,11 +15,8 @@ class ConsultNotesInitialDx extends Model
     protected $table='consult_notes_initial_dxes';
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-      'notes_id',
-      'user_id',
-      'facility_code',
-      'class_id',
+    protected $guarded = [
+        'id'
     ];
 
     public function diagnosis(): BelongsTo
