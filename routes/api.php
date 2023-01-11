@@ -178,7 +178,7 @@ Route::prefix('v1')->group(function (){
             ->middleware('auth:api')
             ->group(function() {
                 Route::post('management', 'store');
-                Route::put('management/{id}', 'show');
+                Route::get('management/{id}', 'show');
         });
     });
 
