@@ -67,6 +67,7 @@ class ConsultationResource extends JsonResource
             ->selectRaw("
                 consults.id AS id,
                 GROUP_CONCAT(DISTINCT history) AS history,
+                GROUP_CONCAT(DISTINCT complaint) AS complaint,
                 GROUP_CONCAT(CASE
                     WHEN konsulta_complaint_id = '38'
                     THEN complaint_desc

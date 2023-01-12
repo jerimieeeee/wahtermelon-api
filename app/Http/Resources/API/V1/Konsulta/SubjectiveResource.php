@@ -18,7 +18,7 @@ class SubjectiveResource extends JsonResource
             '_attributes' => [
                 'pIllnessHistory' => strtoupper($this->history?? ""),
                 'pSignsSymptoms' => $this->konsulta_complaint_id?? "",
-                'pOtherComplaint' => "",
+                'pOtherComplaint' => strtoupper($this->complaint?? ""),
                 'pPainSite' => strtoupper($this->complaint_desc?? ""),
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""

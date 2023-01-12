@@ -39,7 +39,7 @@ class MedicineResource extends JsonResource
                 'pPrescribingPhysician'=> !empty($this->id) ? strtoupper($this->prescribedBy->first_name. " " . $this->prescribedBy->last_name) : "",
                 'pIsDispensed' => !empty($this->id) ? !empty($this->dispensingLatest) ? 'Y' : 'N' : "",
                 'pDateDispensed' => !empty($this->dispensingLatest) ? $this->dispensingLatest->dispensing_date : "",
-                'pDispensingPersonnel' => !empty($this->id) ? strtoupper($this->dispensingLatest->user->first_name. " " . $this->dispensingLatest->user->last_name) : "",
+                'pDispensingPersonnel' => !empty($this->dispensingLatest) ? strtoupper($this->dispensingLatest->user->first_name. " " . $this->dispensingLatest->user->last_name) : "",
                 'pIsApplicable' => !empty($this->id) ? 'Y' : 'N',
                 'pDateAdded' => isset($this->created_at) ? $this->created_at->format('Y-m-d') : "",
                 'pReportStatus'=>"U",
