@@ -3,6 +3,7 @@
 namespace App\Http\Resources\API\V1\Konsulta;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class SubjectiveResource extends JsonResource
 {
@@ -18,7 +19,7 @@ class SubjectiveResource extends JsonResource
             '_attributes' => [
                 'pIllnessHistory' => strtoupper($this->history?? ""),
                 'pSignsSymptoms' => $this->konsulta_complaint_id?? "",
-                'pOtherComplaint' => !empty($this->konsulta_complaint_id) && $this->konsulta_complaint_id == 'X' ? strtoupper($this->complaint?? "") : "",
+                'pOtherComplaint' => !empty($this->konsulta_complaint_id) && Str::contains($this->konsulta_complaint_id, ['X']) ? strtoupper($this->complaint?? "") : "",
                 'pPainSite' => strtoupper($this->complaint_desc?? ""),
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => ""
