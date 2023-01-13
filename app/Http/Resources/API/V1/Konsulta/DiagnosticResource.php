@@ -16,7 +16,7 @@ class DiagnosticResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pDiagnosticId' => !empty($this->laboratory->konsulta_lab_id) ? $this->laboratory->konsulta_lab_id : 0,
+                'pDiagnosticId' => !empty($this->laboratory->konsulta_lab_id) ? $this->laboratory->konsulta_lab_id : "",
                 'pOthRemarks' => !empty($this->id) && empty($this->laboratory->konsulta_lab_id) ? $this->laboratory->desc : "",
                 'pIsPhysicianRecommendation' => $this->recommendation_code?? "",
                 'pPatientRemarks' => $this->request_status_code?? "",

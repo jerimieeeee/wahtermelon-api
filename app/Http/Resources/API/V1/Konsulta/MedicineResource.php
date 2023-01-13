@@ -18,7 +18,7 @@ class MedicineResource extends JsonResource
         return [
             '_attributes' => [
                 'pHciCaseNo'=> $this->patient->case_number?? "",
-                'pHciTransNo'=> $this->consult->transaction_number?? "",
+                'pHciTransNo'=> !empty($this->consult) ? 'S'.$this->consult->transaction_number : "",
                 'pCategory'=> $this->konsultaMedicine->category?? "",
                 'pDrugCode'=> $this->konsultaMedicine->code?? "",
                 'pGenericCode'=> $this->konsultaMedicine->generic_code?? "",

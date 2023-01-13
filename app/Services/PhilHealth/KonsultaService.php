@@ -22,6 +22,7 @@ use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -568,96 +569,48 @@ class KonsultaService
                 'pHciTransmittalNumber' => $transmittalNumber
             ]
         ];
-        $sample = [[
 
-            '_attributes' => [
-                'pHciCaseNo'=>"TH9000000120220800001",
-                'pHciTransNo'=>"PH9000000120220800001",
-                'pPatientPin'=>"242500004774",
-                'pPatientType'=>"DD",
-                'pMemPin'=>"030263078507",
-                'pEffYear'=>"2022"
-            ],
-            'FBSS' => [
-                'FBS' => [
-                    '_attributes' => [
-                        'pReferralFacility'=>"SAMPLE REFERRAL FACILITY",
-                        'pLabDate'=>"2022-08-26",
-                        'pGlucoseMg'=>"45",
-                        'pGlucoseMmol'=>"7.8",
-                        'pDateAdded'=>"2022-08-27",
-                        'pStatus'=>"D",
-                        'pDiagnosticLabFee'=>"0.00",
-                        'pReportStatus'=>"U",
-                        'pDeficiencyRemarks'=>""
-                    ]
-                ],
-            ],
-            'RBSS' => [
-                'RBS' => [
-                    '_attributes' => [
-                        'pReferralFacility'=>"",
-                        'pLabDate'=>"2022-08-26",
-                        'pGlucoseMg'=>"45",
-                        'pGlucoseMmol'=>"7.8",
-                        'pDateAdded'=>"2022-08-27",
-                        'pStatus'=>"D",
-                        'pDiagnosticLabFee'=>"0.00",
-                        'pReportStatus'=>"U",
-                        'pDeficiencyRemarks'=>""
-                    ]
-                ],
-            ],
-        ],];
-
-        $diagnosticArray = [$profiling[1]];
-        if(isset($soaps[2])) {
-            $diagnosticArray = [$profiling[1], $soaps[2]];
+        $diagnosticArray = [];
+        //$diagnosticArray = [$profiling[1]];
+        if(isset($profiling[1]) && Arr::hasAny($profiling[1]['DIAGNOSTICEXAMRESULT'][0][0], [
+            'FBSS',
+            'RBSS'
+        ])) {
+            $diagnosticArray = $profiling[1];
+        }
+        if(isset($soaps[2]) && Arr::hasAny($soaps[2]['DIAGNOSTICEXAMRESULT'][0][0], [
+            'CBCS',
+            'URINALYSISS',
+            'CHESTXRAYS',
+            'SPUTUMS',
+            'LIPIDPROFILES',
+            'FBSS',
+            'RBSS',
+            'ECGS',
+            'FECALYSISS',
+            'PAPSMEARS',
+            'OGTTS',
+            'FOBTS',
+            'CREATININES',
+            'PPDTests',
+            'HbA1cs'
+        ])) {
+            foreach($soaps[2]['DIAGNOSTICEXAMRESULT'][0] as $value) {
+                $diagnosticArray['DIAGNOSTICEXAMRESULT'][] = $value;
+            }
         }
 
-        $array = [
-            'ENLISTMENTS' => [$enlistments],
-            'PROFILING' => [$profiling[0]],
-            'SOAPS' => [$soaps[0]],
-            'DIAGNOSTICEXAMRESULTS' => [
-                $diagnosticArray
-            ],
-            'MEDICINES' => [$soaps[1]
-                /*'MEDICINE' => [
-                    '_attributes' => [
-                        'pHciCaseNo'=>"",
-                        'pHciTransNo'=>"",
-                        'pCategory'=>"",
-                        'pDrugCode'=>"",
-                        'pGenericCode'=>"",
-                        'pSaltCode'=>"",
-                        'pStrengthCode'=>"",
-                        'pFormCode'=>"",
-                        'pUnitCode'=>"",
-                        'pPackageCode'=>"",
-                        'pOtherMedicine'=>"",
-                        'pRoute'=>"",
-                        'pQuantity'=>"",
-                        'pActualUnitPrice'=>"",
-                        'pTotalAmtPrice'=>"",
-                        'pInstructionQuantity'=>"",
-                        'pInstructionStrength'=>"",
-                        'pInstructionFrequency'=>"",
-                        'pPrescribingPhysician'=>"",
-                        'pIsDispensed'=>"",
-                        'pDateDispensed'=>"",
-                        'pDispensingPersonnel'=>"",
-                        'pIsApplicable'=>"",
-                        'pDateAdded'=>"",
-                        'pReportStatus'=>"U", 'pDeficiencyRemarks'=>""
-                    ]
-                ],*/
-            ],
-        ];
+        $array = [];
+        $array['ENLISTMENTS'] = [$enlistments];
+        $array['PROFILING'] = [$profiling[0]];
+        $array['SOAPS'] = [$soaps[0]];
+        !empty($diagnosticArray) ? $array['DIAGNOSTICEXAMRESULTS'] = [$diagnosticArray] : null;
+        $array['MEDICINES'] = [$soaps[1]];
+
         $result = new ArrayToXml($array, $root);
         $xml = $result->dropXmlDeclaration()->toXml();
         return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save);
-        return $xml;
+        //return $xml;
     }
 
     public function saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
@@ -685,7 +638,6 @@ class KonsultaService
         }
 
         return $report;
-
     }
 
     public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false)
@@ -710,323 +662,6 @@ class KonsultaService
         );
         $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn() => [[]]))->resolve()];
         return $enlistments;
-    }
-
-    public function profiling()
-    {
-        $profile = ['PROFILE' => []];
-        $patient = Patient::selectRaw('id, case_number, birthdate');
-        $data = PatientPhilhealth::query()
-                ->joinSub($patient, 'patients', function($join){
-                    $join->on('patient_philhealth.patient_id', '=', 'patients.id');
-                })
-                ->get()
-                ->map(function($data, $key){
-                    $age = Carbon::parse($data->birthdate)->diff($data->enlistment_date);
-                    $medhistory = PatientHistory::wherePatientId($data->patient_id)->whereCategory(1)->get()
-                        ->map(function($data, $key){
-                            return [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>$data->medical_history_id,
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ]
-                            ];
-                        });
-                    $medhistorySpecific = PatientHistory::wherePatientId($data->patient_id)->whereCategory(1)->whereNotNull('remarks')->get()
-                        ->map(function($data, $key){
-                            return [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>$data->medical_history_id,
-                                    'pSpecificDesc'=>$data->remarks,
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ]
-                            ];
-                        });
-                    $medhistoryDefault = [
-                        '_attributes' => [
-                            'pMdiseaseCode'=>"",
-                            'pReportStatus'=>"U",
-                            'pDeficiencyRemarks'=>""
-                        ]
-                    ];
-                    $medhistorySpecificDefault = [
-                        '_attributes' => [
-                            'pMdiseaseCode'=>"",
-                            'pSpecificDesc'=>"",
-                            'pReportStatus'=>"U",
-                            'pDeficiencyRemarks'=>""
-                        ]
-                    ];
-
-                    $familyHistory = PatientHistory::wherePatientId($data->patient_id)->whereCategory(2)->get()
-                        ->map(function($data, $key){
-                            return [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>$data->medical_history_id,
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ]
-                            ];
-                        });
-                    $familyHistorySpecific = PatientHistory::wherePatientId($data->patient_id)->whereCategory(2)->whereNotNull('remarks')->get()
-                        ->map(function($data, $key){
-                            return [
-                                '_attributes' => [
-                                    'pMdiseaseCode'=>$data->medical_history_id,
-                                    'pSpecificDesc'=>$data->remarks,
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ]
-                            ];
-                        });
-                    $familyHistoryDefault = [
-                        '_attributes' => [
-                            'pMdiseaseCode'=>"",
-                            'pReportStatus'=>"U",
-                            'pDeficiencyRemarks'=>""
-                        ]
-                    ];
-                    $familyHistorySpecificDefault = [
-                        '_attributes' => [
-                            'pMdiseaseCode'=>"",
-                            'pSpecificDesc'=>"",
-                            'pReportStatus'=>"U",
-                            'pDeficiencyRemarks'=>""
-                        ]
-                    ];
-
-                    $surgical = PatientSurgicalHistory::wherePatientId($data->patient_id)->get()
-                        ->map(function($data, $key){
-                            return [
-                                '_attributes' => [
-                                    'pSurgDesc'=>$data->operation,
-                                    'pSurgDate'=>$data->operation_date,
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ]
-                            ];
-                        });
-                    $surgicalDefault = [
-                        '_attributes' => [
-                            'pSurgDesc'=>"",
-                            'pSurgDate'=>"",
-                            'pReportStatus'=>"U",
-                            'pDeficiencyRemarks'=>""
-                        ]
-                    ];
-
-                    $socialHistory = PatientSocialHistory::wherePatientId($data->patient_id)->first();
-
-                    $menstrualHistory = PatientMenstrualHistory::wherePatientId($data->patient_id)->first();
-
-                    $patient = Patient::whereId($data->patient_id)->first();
-
-                    $vitals = PatientVitals::wherePatientId($data->patient_id)->whereRaw("DATE_FORMAT(vitals_date, '%Y-%m-%d') = ?", $data->enlistment_date)->first();
-
-                    return [
-                        '_attributes' => [
-                            'pHciTransNo' => 'P'.$data->transaction_number?? "",
-                            'pHciCaseNo' => $data->case_number?? "",
-                            'pProfDate' => $data->enlistment_date?? "",
-                            'pPatientPin' => $data->philhealth_id?? "",
-                            'pPatientType' => $data->membership_type_id?? "",
-                            'pPatientAge' => "$age->y YR(S), $age->m MO(S), $age->d DAY(S)",
-                            'pMemPin' => $data->member_pin?? "",
-                            'pEffYear' => $data->effectivity_year?? "",
-                            'pATC' => "JruBaQ2Y",
-                            'pIsWalkedIn' => "N",
-                            'pTransDate' => isset($data->created_at) ? $data->created_at->format('Y-m-d') : "",
-                            'pReportStatus' => "U",
-                            'pDeficiencyRemarks' => ""
-                        ],
-                        'MEDHISTS' => [
-                            'MEDHIST' => $medhistory->toArray() ? [$medhistory->toArray()] : [$medhistoryDefault]
-                        ],
-                        'MHSPECIFICS' => [
-                            'MHSPECIFIC' => $medhistorySpecific->toArray() ? [$medhistorySpecific->toArray()] : [$medhistorySpecificDefault]
-                        ],
-                        'SURGHISTS' => [
-                            'SURGHIST' => $surgical->toArray() ? [$surgical->toArray()] : [$surgicalDefault]
-                        ],
-                        'FAMHISTS' => [
-                            'FAMHIST' => $familyHistory->toArray() ? [$familyHistory->toArray()] : [$familyHistoryDefault]
-                        ],
-                        'FHSPECIFICS' => [
-                            'FHSPECIFIC' => $familyHistorySpecific->toArray() ? [$familyHistorySpecific->toArray()] : [$familyHistorySpecificDefault]
-                        ],
-                        'SOCHIST' => [
-                            '_attributes' => [
-                                'pIsSmoker'=>$socialHistory ? $socialHistory->smoking : "",
-                                'pNoCigpk'=>$socialHistory ? $socialHistory->pack_per_year : "",
-                                'pIsAdrinker'=>$socialHistory ? $socialHistory->alcohol : "",
-                                'pNoBottles'=>$socialHistory ? $socialHistory->bottles_per_day : "",
-                                'pIllDrugUser'=>$socialHistory ? $socialHistory->illicit_drugs : "",
-                                'pIsSexuallyActive'=>$socialHistory ? $socialHistory->sexually_active : "",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        'IMMUNIZATIONS' => [
-                            'IMMUNIZATION' => [
-                                '_attributes' => [
-                                    'pChildImmcode'=>"C01",
-                                    'pYoungwImmcode'=>"",
-                                    'pPregwImmcode'=>"",
-                                    'pElderlyImmcode'=>"",
-                                    'pOtherImm'=>"",
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ]
-                            ]
-                        ],
-                        'MENSHIST' => [
-                            '_attributes' => [
-                                'pMenarchePeriod'=>$menstrualHistory ? $menstrualHistory->menarche : "",
-                                'pLastMensPeriod'=>$menstrualHistory ? $menstrualHistory->lmp : "",
-                                'pPeriodDuration'=>$menstrualHistory ? $menstrualHistory->period_duration : "",
-                                'pMensInterval'=>$menstrualHistory ? $menstrualHistory->cycle : "",
-                                'pPadsPerDay'=>$menstrualHistory ? $menstrualHistory->pads_per_day : "",
-                                'pOnsetSexIc'=>$menstrualHistory ? $menstrualHistory->onset_sexual_intercourse : "",
-                                'pBirthCtrlMethod'=>$menstrualHistory ? $menstrualHistory->method : "",
-                                'pIsMenopause'=>$menstrualHistory ? $menstrualHistory->menopause ? "Y" : "N" : "",
-                                'pMenopauseAge'=>$menstrualHistory ? $menstrualHistory->menopause ? $menstrualHistory->menopause_age : "" : "",
-                                'pIsApplicable'=>$menstrualHistory ? $patient->gender == 'F' ? "Y" : "N" : "N",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        'PREGHIST' => [
-                            '_attributes' => [
-                                'pPregCnt'=>"0",
-                                'pDeliveryCnt'=>"0",
-                                'pDeliveryTyp'=>"X",
-                                'pFullTermCnt'=>"0",
-                                'pPrematureCnt'=>"0",
-                                'pAbortionCnt'=>"0",
-                                'pLivChildrenCnt'=>"0",
-                                'pWPregIndhyp'=>"N",
-                                'pWFamPlan'=>"N",
-                                'pIsApplicable'=>"N",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        'PEPERT' => [
-                            '_attributes' => [
-                                'pSystolic'=>$vitals ? $vitals->bp_systolic : "",
-                                'pDiastolic'=>$vitals ? $vitals->bp_diastolic : "",
-                                'pHr'=>$vitals ? $vitals->patient_heart_rate : "",
-                                'pRr'=>$vitals ? $vitals->patient_respiratory_rate : "",
-                                'pTemp'=>$vitals ? $vitals->patient_temp : "",
-                                'pHeight'=>$vitals ? $vitals->patient_height : "",
-                                'pWeight'=>$vitals ? $vitals->patient_weight : "",
-                                'pBMI'=>$vitals ? $vitals->patient_bmi : "",
-                                'pZScore'=>"",
-                                'pLeftVision'=>"",
-                                'pRightVision'=>"",
-                                'pLength'=>$vitals ? $vitals->patient_height : "",
-                                'pHeadCirc'=>$vitals ? $vitals->patient_head_circumference : "",
-                                'pSkinfoldThickness'=>$vitals ? $vitals->patient_skinfold_thickness : "",
-                                'pWaist'=>$vitals ? $vitals->patient_waist : "",
-                                'pHip'=>$vitals ? $vitals->patient_hip : "",
-                                'pLimbs'=>$vitals ? $vitals->patient_limbs : "",
-                                'pMidUpperArmCirc'=>$vitals ? $vitals->patient_muac : "",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        'BLOODTYPE' => [
-                            '_attributes' => [
-                                'pBloodType'=>$patient->blood_type_code,
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        /*'PEGENSURVEY' => [
-                            '_attributes' => [
-                                'pGenSurveyId'=>"1",
-                                'pGenSurveyRem'=>"",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        'PEMISCS' => [
-                            'PEMISC' => [
-                                '_attributes' => [
-                                    'pSkinId'=>"",
-                                    'pHeentId'=>"",
-                                    'pChestId'=>"",
-                                    'pHeartId'=>"",
-                                    'pAbdomenId'=>"",
-                                    'pNeuroId'=>"",
-                                    'pRectalId'=>"",
-                                    'pGuId'=>"",
-                                    'pReportStatus'=>"U",
-                                    'pDeficiencyRemarks'=>""
-                                ],
-                            ],
-                        ],
-                        'PESPECIFIC' => [
-                            '_attributes' => [
-                                'pSkinRem'=>"",
-                                'pHeentRem'=>"",
-                                'pChestRem'=>"",
-                                'pHeartRem'=>"",
-                                'pAbdomenRem'=>"",
-                                'pNeuroRem'=>"",
-                                'pRectalRem'=>"",
-                                'pGuRem'=>"SAMPLE REMARKS",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],
-                        'NCDQANS' => [
-                            '_attributes' => [
-                                'pQid1_Yn'=>"",
-                                'pQid2_Yn'=>"",
-                                'pQid3_Yn'=>"",
-                                'pQid4_Yn'=>"",
-                                'pQid5_Ynx'=>"",
-                                'pQid6_Yn'=>"",
-                                'pQid7_Yn'=>"",
-                                'pQid8_Yn'=>"",
-                                'pQid9_Yn'=>"",
-                                'pQid10_Yn'=>"",
-                                'pQid11_Yn'=>"",
-                                'pQid12_Yn'=>"",
-                                'pQid13_Yn'=>"",
-                                'pQid14_Yn'=>"",
-                                'pQid15_Yn'=>"",
-                                'pQid16_Yn'=>"",
-                                'pQid17_Abcde'=>"",
-                                'pQid18_Yn'=>"",
-                                'pQid19_Yn'=>"",
-                                'pQid19_Fbsmg'=>"",
-                                'pQid19_Fbsmmol'=>"",
-                                'pQid19_Fbsdate'=>"",
-                                'pQid20_Yn'=>"",
-                                'pQid20_Choleval'=>"",
-                                'pQid20_Choledate'=>"",
-                                'pQid21_Yn'=>"",
-                                'pQid21_Ketonval'=>"",
-                                'pQid21_Ketondate'=>"",
-                                'pQid22_Yn'=>"",
-                                'pQid22_Proteinval'=>"",
-                                'pQid22_Proteindate'=>"",
-                                'pQid23_Yn'=>"",
-                                'pQid24_Yn'=>"",
-                                'pReportStatus'=>"U",
-                                'pDeficiencyRemarks'=>""
-                            ]
-                        ],*/
-                    ];
-                });
-        $profile['PROFILE'] = [$data->toArray()];
-        $result = new ArrayToXml($profile);
-        return $result->dropXmlDeclaration()->toXml();
-        //return $profile;
     }
 
     public function profilings($transmittalNumber = '', $patientId = [], $revalidate = false)
@@ -1065,12 +700,6 @@ class KonsultaService
                     $join->where(DB::raw("DATE_FORMAT(consult_laboratories.request_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_philhealth.enlistment_date, '%Y-%m-%d')"));
                 })
             ])*/
-            ->withWhereHas('consultLaboratory', fn($query) => [
-                $query->where(fn($q) =>
-                    $q->whereHas('fbs')
-                        ->orWhereHas('rbs')
-                    )
-            ])
             ->get();
         //dump($laboratory);
         $profileResource = ProfileResource::collection($data->whenEmpty(fn() => [[]]))->resolve();
@@ -1078,10 +707,8 @@ class KonsultaService
 
         $profile[0]['PROFILE'] = [$profileResource];
         $profile[1]['DIAGNOSTICEXAMRESULT'] = [$diagnosticExamResource];
-        /*$result = new ArrayToXml($profile);
-        return $result->dropXmlDeclaration()->toXml();*/
+
         return $profile;
-        //return count($profile['PROFILE'][0]);
     }
 
     public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $save = false, $revalidate = false)
@@ -1089,6 +716,7 @@ class KonsultaService
         $soap = [];
         $data = [];
         $medicine = [];
+        $laboratory = [];
         if($tranche == 2){
             $data = Consult::query()
                 ->with(['patient', 'vitalsLatest', 'consultLaboratory'])
@@ -1140,13 +768,10 @@ class KonsultaService
         $laboratoryResource = SoapDiagnosticExamResultResource::collection(!empty($laboratory) ? $laboratory->whenEmpty(fn() => [[]]) : [[]]);
 
         $soap[0]['SOAP'] = [$soapResource->resolve()];
-        $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
-        if(!empty($laboratory)) {
-            $soap[2]['DIAGNOSTICEXAMRESULT'] = [$laboratoryResource->resolve()];
-        }
 
-        /*$result = new ArrayToXml($soap);
-        return $result->dropXmlDeclaration()->toXml();*/
+        $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
+        !empty($laboratory) ? $soap[2]['DIAGNOSTICEXAMRESULT'] = [$laboratoryResource->resolve()] : null;
+
         return $soap;
     }
 }

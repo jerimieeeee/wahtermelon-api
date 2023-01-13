@@ -35,7 +35,7 @@ class DiagnosticExamResultResource extends JsonResource
         $data = [
             '_attributes' => [
                 'pHciCaseNo' => $this->case_number?? "",
-                'pHciTransNo' => $this->philhealthLatest->transaction_number?? "",
+                'pHciTransNo' => !empty($this->philhealthLatest->transaction_number) ? 'P'.$this->philhealthLatest->transaction_number?? "" : "",
                 'pPatientPin' => $this->philhealthLatest->philhealth_id?? "",
                 'pPatientType' => $this->philhealthLatest->membership_type_id?? "",
                 'pMemPin' => !empty($this->philhealthLatest->membership_pin) ? $this->philhealthLatest->membership_pin : $this->philhealthLatest->philhealth_id?? "",

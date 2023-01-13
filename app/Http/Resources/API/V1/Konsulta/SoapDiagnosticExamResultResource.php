@@ -111,7 +111,7 @@ class SoapDiagnosticExamResultResource extends JsonResource
         $data = [
             '_attributes' => [
                 'pHciCaseNo' => $this->patient->case_number?? "",
-                'pHciTransNo' => $this->transaction_number?? "",
+                'pHciTransNo' => !empty($this->transaction_number) ? 'S'.$this->transaction_number : "",
                 'pPatientPin' => $this->patient->philhealthLatest->philhealth_id?? "",
                 'pPatientType' => $this->patient->philhealthLatest->membership_type_id?? "",
                 'pMemPin' => !empty($this->patient->philhealthLatest->membership_pin) ? $this->patient->philhealthLatest->membership_pin : $this->patient->philhealthLatest->philhealth_id?? "",
