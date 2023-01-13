@@ -228,6 +228,7 @@ class KonsultaController extends Controller
      * Submit Validated XML
      *
      * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
+     * @queryParam konsulta_transaction_number string Filter by konsulta transaction number. Example: P9103406820230100001
      */
     public function downloadXml(Request $request)
     {
@@ -235,9 +236,9 @@ class KonsultaController extends Controller
             ->when($request->transmittal_number, fn($query) =>
                 $query->where('transmittal_number', $request->transmittal_number)
             )
-            /*  ->when($request->transaction_number, fn($query) =>
+             ->when($request->transaction_number, fn($query) =>
                 $query->where('konsulta_transaction_number', $request->konsulta_transaction_number)
-            ) */
+            )
             ->first();
 
         if(empty($konsulta)) {
