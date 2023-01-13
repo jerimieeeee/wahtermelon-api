@@ -27,6 +27,7 @@ class KonsultaTransmittalResource extends JsonResource
             'total_profile' => $this->total_profile,
             'total_soap' => $this->total_soap,
             'xml_url' => $this->xml_url,
+            'file_name' => str_replace("Konsulta/".auth()->user()->facility_code."/","",$this->xml_url),
             'konsulta_transaction_number' => $this->konsulta_transaction_number,
             'xml_status' => $this->xml_status,
             'xml_errors' => $this->xml_errors,
