@@ -225,7 +225,7 @@ class KonsultaController extends Controller
     }
 
     /**
-     * Submit Validated XML
+     * Download XML
      *
      * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
      * @queryParam konsulta_transaction_number string Filter by konsulta transaction number. Example: P9103406820230100001
