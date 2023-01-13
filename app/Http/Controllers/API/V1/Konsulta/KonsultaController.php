@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Konsulta;
 
+use App\Classes\PhilHealthEClaimsEncryptor;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\KonsultaTransmittalResource;
@@ -72,7 +73,7 @@ class KonsultaController extends Controller
      * @param SoapService $service
      * @return Exception|mixed
      */
-    public function extractRegistrationList(Request $request, SoapService $service): mixed
+    public function extractRegistrationList(Request $request, SoapService $service)
     {
         $list = $service->soapMethod('extractRegistrationList', $request->only('pStartDate', 'pEndDate'));
         $service->saveRegistrationList($list->ASSIGNMENT);
@@ -221,6 +222,37 @@ class KonsultaController extends Controller
         }
         $data->update(['konsulta_transaction_number' => $transactionNumber, 'xml_status' => $status, 'xml_errors' => $submitted]);
         return $submitted;
+    }
+
+    /**
+     * Submit Validated XML
+     *
+     * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
+     */
+    public function downloadXml(Request $request)
+    {
+        $konsulta = KonsultaTransmittal::query()
+            ->when($request->transmittal_number, fn($query) =>
+                $query->where('transmittal_number', $request->transmittal_number)
+            )
+            /*  ->when($request->transaction_number, fn($query) =>
+                $query->where('konsulta_transaction_number', $request->konsulta_transaction_number)
+            ) */
+            ->first();
+
+        if(empty($konsulta)) {
+            return 'File not found!';
+        }
+
+        $fileStorage = Storage::disk('spaces');
+
+        if($request->raw) {
+            $fileContent = $fileStorage->get($konsulta->xml_url);
+            $decryptor = new PhilHealthEClaimsEncryptor();
+            $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+            return $decryptor->decryptPayloadDataToXml($fileContent, $cipher_key);
+        }
+        return $fileStorage->download($konsulta->xml_url);
     }
 
 }

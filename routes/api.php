@@ -325,12 +325,12 @@ Route::prefix('v1')->group(function (){
                 Route::get('validated-xml', 'validatedXml');
                 Route::get('submit-xml', 'submitXml');
                 Route::get('generate-data', 'generateDataForValidation');
+                Route::get('download-xml', 'downloadXml');
             });
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
             ->middleware('auth:api')
             ->group(function() {
                 Route::get('registration-lists', 'index');
-                //Route::put('dispensing/{dispensing}', 'update');
             });
     });
 
