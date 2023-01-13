@@ -229,6 +229,7 @@ class KonsultaController extends Controller
      *
      * @queryParam transmittal_number string Filter by transmittal number. Example: RP9103406820230100001
      * @queryParam konsulta_transaction_number string Filter by konsulta transaction number. Example: P9103406820230100001
+     * @queryParam raw string Filter by file type e.g. 1 or 2. Example: 0
      */
     public function downloadXml(Request $request)
     {
