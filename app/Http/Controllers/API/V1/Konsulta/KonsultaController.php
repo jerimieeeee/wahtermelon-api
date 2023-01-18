@@ -257,4 +257,18 @@ class KonsultaController extends Controller
         return $fileStorage->download($konsulta->xml_url);
     }
 
+    public function uploadXml(Request $request)
+    {
+        $file = $request->file('file');
+        $arrValue = [];
+        foreach($file as $key => $value) {
+            $fileContent = file_get_contents($value);
+            $arrValue[] = XML2JSON($fileContent);
+        }
+        return $arrValue;
+        //$fileContent = file_get_contents($file);
+        //return $xml = simplexml_load_string($fileContent);
+        return XML2JSON($fileContent);
+    }
+
 }
