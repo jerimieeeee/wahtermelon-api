@@ -268,8 +268,9 @@ class KonsultaController extends Controller
     public function uploadXml(Request $request)
     {
         //throw_if(!request()->hasFile('xml'), 'No File to be uploaded');
-        return $file = $request->file('xml');
-        return $file->getMimeType();
+        $file = $request->file('xml');
+        $fileContent = file_get_contents($file);
+        return $jsonXml = XML2JSON($fileContent);
         /*if (request()->hasFile('xml')) {
             $file = $request->file('xml');
             return $file->getPathName();
