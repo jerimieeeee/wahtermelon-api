@@ -267,16 +267,10 @@ class KonsultaController extends Controller
      */
     public function uploadXml(Request $request)
     {
-        //throw_if(!request()->hasFile('xml'), 'No File to be uploaded');
+        throw_if(!request()->hasFile('xml'), 'No File to be uploaded');
+
         $file = $request->file('xml');
-        $fileContent = file_get_contents($file);
-        return $jsonXml = XML2JSON($fileContent);
-        /*if (request()->hasFile('xml')) {
-            $file = $request->file('xml');
-            return $file->getPathName();
-            return $file->getMimeType();
-            throw_if(!in_array($file->getMimeType(), ['application/xml', 'text/xml']), 'Invalid File Type');
-        }
+
         if (!is_array($file)) {
             $fileContent = file_get_contents($file);
             $jsonXml = XML2JSON($fileContent);
@@ -294,7 +288,7 @@ class KonsultaController extends Controller
         }
         return response()->json([
             'status' => 'File successfully uploaded'
-        ], 201);*/
+        ], 201);
     }
 
 }
