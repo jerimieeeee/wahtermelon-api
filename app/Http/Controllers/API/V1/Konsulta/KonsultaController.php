@@ -25,6 +25,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @authenticated
@@ -262,12 +263,28 @@ class KonsultaController extends Controller
      * Upload XML
      *
      * @bodyParam xml file required The xml.
+     * @throws Throwable
      */
     public function uploadXml(Request $request)
     {
-        $file = $request->file('xml');
+        throw_if(!request()->hasFile('xml'), 'No File to be uploaded');
+        return $request->file('xml');
+        if (request()->hasFile('xml')) {
+            $file = $request->file('xml');
+            return $file->getPathName();
+            return $file->getMimeType();
+            throw_if(!in_array($file->getMimeType(), ['application/xml', 'text/xml']), 'Invalid File Type');
+        }
+        if (!is_array($file)) {
+            $fileContent = file_get_contents($file);
+            $jsonXml = XML2JSON($fileContent);
+            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
+            return response()->json([
+                'status' => 'File successfully uploaded'
+            ], 201);
+        }
         //$arrValue = [];
-        foreach($file as $key => $value) {
+        foreach ($file as $key => $value) {
             $fileContent = file_get_contents($value);
             $jsonXml = XML2JSON($fileContent);
             //return $jsonXml->ENLISTMENTS;
