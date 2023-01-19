@@ -9,6 +9,7 @@ use App\Http\Resources\API\V1\Konsulta\KonsultaTransmittalResource;
 use App\Http\Resources\API\V1\Patient\PatientPhilhealthResource;
 use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
 use App\Models\User;
+use App\Models\V1\Konsulta\KonsultaImport;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
@@ -257,18 +258,24 @@ class KonsultaController extends Controller
         return $fileStorage->download($konsulta->xml_url);
     }
 
+    /**
+     * Upload XML
+     *
+     * @bodyParam xml file required The xml.
+     */
     public function uploadXml(Request $request)
     {
-        $file = $request->file('file');
-        $arrValue = [];
+        $file = $request->file('xml');
+        //$arrValue = [];
         foreach($file as $key => $value) {
             $fileContent = file_get_contents($value);
-            $arrValue[] = XML2JSON($fileContent);
+            $jsonXml = XML2JSON($fileContent);
+            //return $jsonXml->ENLISTMENTS;
+            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => json_encode($jsonXml->ENLISTMENTS), 'imported_xml' => $jsonXml]);
         }
-        return $arrValue;
-        //$fileContent = file_get_contents($file);
-        //return $xml = simplexml_load_string($fileContent);
-        return XML2JSON($fileContent);
+        return response()->json([
+            'status' => 'File successfully uploaded'
+        ], 201);
     }
 
 }
