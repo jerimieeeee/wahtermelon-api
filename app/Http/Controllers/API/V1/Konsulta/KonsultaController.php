@@ -271,7 +271,7 @@ class KonsultaController extends Controller
             $fileContent = file_get_contents($value);
             $jsonXml = XML2JSON($fileContent);
             //return $jsonXml->ENLISTMENTS;
-            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => json_encode($jsonXml->ENLISTMENTS), 'imported_xml' => $jsonXml]);
+            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
         }
         return response()->json([
             'status' => 'File successfully uploaded'
