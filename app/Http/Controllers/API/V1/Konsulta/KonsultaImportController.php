@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @authenticated
+ * @group Konsulta Information
+ *
+ * APIs for managing Konsulta Information
+ * @subgroup Imported XML Lists
+ * @subgroupDescription Imported XML lists.
+ */
 class KonsultaImportController extends Controller
 {
     /**
@@ -16,7 +24,7 @@ class KonsultaImportController extends Controller
      *
      * @queryParam filter[transmittal_number] string Filter by transmittal_number.
      * @queryParam include string Relationship to view: e.g. facility,user Example: facility,user
-     * @queryParam sort string Sort last_name, first_name, middle_name, birthdate, effectivity_year of the patient. Add hyphen (-) to descend the list: e.g. last_name,birthdate. Example: last_name
+     * @queryParam sort string Sort created_at. Add hyphen (-) to descend the list. Example: created_at
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Konsulta\KonsultaImportResource
