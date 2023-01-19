@@ -24,6 +24,7 @@ class KonsultaImport extends Model
     protected $keyType = 'string';
 
     protected $casts = [
+        'enlistments' => 'array',
         'imported_xml' => 'array',
     ];
 

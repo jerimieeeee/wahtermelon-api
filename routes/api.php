@@ -333,6 +333,11 @@ Route::prefix('v1')->group(function (){
             ->group(function() {
                 Route::get('registration-lists', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaImportController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('imported-xml', 'index');
+            });
     });
 
     //Settings
