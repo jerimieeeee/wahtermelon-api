@@ -17,7 +17,7 @@ class ConsultLaboratoryCreatinineTest extends TestCase
      *
      * @return void
      */
-    public function test_consult_laboratory_creatinine_can_store_data()
+    public function test_consult_laboratory_creatinine_can_store_data(): void
     {
         Passport::actingAs(
             User::factory()->create()
