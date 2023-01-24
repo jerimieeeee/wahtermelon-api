@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*', 'https://apiwahtermelon-staging.wah.ph'],
+    'allowed_origins' => ['http://localhost:4200', 'https://apiwahtermelon-staging.wah.ph', 'https://wahtermelon-staging.wah.ph', 'https://wahtermelon.wah.ph'],
 
     'allowed_origins_patterns' => [],
 
