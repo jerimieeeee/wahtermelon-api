@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Validation\ValidationException;
 use Laravel\Passport\RefreshToken;
 use Laravel\Passport\Token;
@@ -40,7 +41,7 @@ class AuthenticationController extends Controller
             'access_token' => $tokenResult,
             'token_type' => 'Bearer',
             'user' => Auth::user()->load('konsultaCredential')?? Auth::user(),
-        ]);
+        ])->withCookie(Cookie::make('access_token', $tokenResult, 3600, '/', null, true, true, false, 'None'));;
     }
 
     /**
