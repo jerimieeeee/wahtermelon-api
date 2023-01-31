@@ -538,6 +538,15 @@ Route::prefix('v1')->group(function (){
             });
         });
 
+    //ChildCare Report
+    Route::prefix('childcare-report')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Reports\ChildCareReport2018Controller::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('stats', 'index');
+            });
+    });
+
     Route::prefix('libraries')->group(function () {
         Route::get('regions', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'index'])->name('region.index');
         Route::get('regions/{region}', [\App\Http\Controllers\API\V1\PSGC\RegionController::class, 'show'])->name('region.show');
