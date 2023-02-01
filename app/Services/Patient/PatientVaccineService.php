@@ -11,16 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class PatientVaccineService
 {
-    public function get_immunize_status($patient_id)
-    {
-
-        $vax = $this->get_immunization_status($patient_id);
-
-    }
-
     public function get_immunization_status($patient_id)
     {
-
         return DB::table(function ($query) use($patient_id){
             $query->selectRaw('
                 SUM(CASE
@@ -72,6 +64,5 @@ class PatientVaccineService
 	            END AS immunization_status,
                 vaccine_date
         ');
-
     }
 }

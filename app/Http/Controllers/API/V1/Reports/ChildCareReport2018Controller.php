@@ -70,6 +70,14 @@ class ChildCareReport2018Controller extends Controller
         $mrgr7_m =  $childCareReportService->get_vaccines($request, 'MRGR7', '1', 'M')->get();
         $mrgr7_f =  $childCareReportService->get_vaccines($request, 'MRGR7', '1', 'F')->get();
 
+        //HEPB within 24hrs
+        $hepb_m_0 =  $childCareReportService->get_hepb($request, 'M', 0)->get();
+        $hepb_f_0 =  $childCareReportService->get_hepb($request, 'F', 0)->get();
+
+        //HEPB after 24hrs
+        $hepb_m_2 =  $childCareReportService->get_hepb($request, 'M', 2)->get();
+        $hepb_f_2 =  $childCareReportService->get_hepb($request, 'F', 2)->get();
+
         return [
             //CPAB
             'CPAB_Male' => $cpab_m,
@@ -82,8 +90,10 @@ class ChildCareReport2018Controller extends Controller
             //PENTA
             'PENTA1_Male' => $penta1_m,
             'PENTA1_Female' => $penta1_f,
+
             'PENTA2_Male' => $penta2_m,
             'PENTA2_Female' => $penta2_f,
+
             'PENTA3_Male' => $penta3_m,
             'PENTA3_Female' => $penta3_f,
 
@@ -98,14 +108,17 @@ class ChildCareReport2018Controller extends Controller
             //PCV
             'PCV1_Male' => $pcv1_m,
             'PCV1_Female' => $pcv1_f,
+
             'PCV2_Male' => $pcv2_m,
             'PCV2_Female' => $pcv2_f,
+
             'PCV3_Male' => $pcv3_m,
             'PCV3_Female' => $pcv3_f,
 
             //MCV
             'MCV1_Male' => $mcv1_m,
             'MCV1_Female' => $mcv1_f,
+
             'MCV2_Male' => $mcv2_m,
             'MCV2_Female' => $mcv2_f,
 
@@ -124,6 +137,14 @@ class ChildCareReport2018Controller extends Controller
             //MRGR7
             'MRGR7_Male' => $mrgr7_m,
             'MRGR7_Female' => $mrgr7_f,
+
+            //HEPB within 24hrs
+            'HEPB_Male_within_24' => $hepb_m_0,
+            'HEPB_Female_within_24' => $hepb_f_0,
+
+            //HEPB after 24hrs
+            'HEPB_Male_after_24' => $hepb_m_2,
+            'HEPB_Female_after_24' => $hepb_f_2,
         ];
     }
 
