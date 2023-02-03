@@ -59,7 +59,8 @@ class SoapService
                 $credentialsResource = GetTokenResource::make($credentials)->resolve();
                 $result = $this->soapMethod('getToken', $credentialsResource);
                 if(isset($result->success)) {
-                    $credentials->update(['token' => $result->result]);
+                    $result = (array) $result;
+                    $credentials->update(['token' => $result['result']]);
                     return response()->json([
                         'message' => 'Successfully added the token in the database! You may now use konsulta webservice.'
                     ], 201);
