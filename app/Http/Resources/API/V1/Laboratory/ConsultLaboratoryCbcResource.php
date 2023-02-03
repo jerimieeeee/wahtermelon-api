@@ -23,7 +23,7 @@ class ConsultLaboratoryCbcResource extends JsonResource
             'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
-            'user' => $this->whenLoaded('user'),
+            'user' => $this->when($this->relationLoaded('user'),$this->user->first_name . ' ' . $this->user->middle_name . ' ' . $this->user->last_name),
             'laboratory_date' => $this->laboratory_date->format('Y-m-d'),
             'request_id' => $this->when(!$this->relationLoaded('laboratoryRequest'),$this->request_id),
             'request' => $this->whenLoaded('laboratoryRequest'),

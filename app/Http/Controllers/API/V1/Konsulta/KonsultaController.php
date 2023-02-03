@@ -19,6 +19,7 @@ use App\Services\PhilHealth\SoapService;
 use Carbon\Carbon;
 use Exception;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -298,15 +299,17 @@ class KonsultaController extends Controller
      *
      * @bodyParam date_from date From date format Y-m-d. Example: 2022-01-01
      * @bodyParam date_to date To date format Y-m-d. Example: 2023-01-31
-     * @throws Throwable
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getAge(Request $request): string
+    public function getAge(Request $request): JsonResponse
     {
         $request->validate([
             'date_from' => 'required|date|date_format:Y-m-d',
             'date_to' => 'required|date|date_format:Y-m-d',
         ]);
-        return Carbon::parse($request->date_from)->diff($request->date_to)->y . " YR(S), " .  Carbon::parse($request->date_from)->diff($request->date_to)->m . " MO(S), " . Carbon::parse($request->date_from)->diff($request->date_to)->d . " DAY(S)";
+        $age = Carbon::parse($request->date_from)->diff($request->date_to)->y . " YR(S), " .  Carbon::parse($request->date_from)->diff($request->date_to)->m . " MO(S), " . Carbon::parse($request->date_from)->diff($request->date_to)->d . " DAY(S)";
+        return response()->json(['data' => $age]);
     }
 
 }

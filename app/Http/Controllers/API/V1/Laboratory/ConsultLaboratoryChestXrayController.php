@@ -50,7 +50,7 @@ class ConsultLaboratoryChestXrayController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['findings', 'observation'])
+            ->with(['findings', 'observation', 'user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 

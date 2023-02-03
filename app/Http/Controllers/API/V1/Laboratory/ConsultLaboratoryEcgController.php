@@ -50,7 +50,7 @@ class ConsultLaboratoryEcgController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['findings'])
+            ->with(['findings', 'user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 
