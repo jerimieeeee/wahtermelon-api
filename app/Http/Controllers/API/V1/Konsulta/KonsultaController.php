@@ -16,6 +16,7 @@ use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\PhilHealth\KonsultaService;
 use App\Services\PhilHealth\SoapService;
+use Carbon\Carbon;
 use Exception;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
@@ -58,7 +59,8 @@ class KonsultaController extends Controller
         $credentialsResource = GetTokenResource::make($credentials)->resolve();
         $result = $service->soapMethod('getToken', $credentialsResource);
         if(isset($result->success)) {
-            $credentials->update(['token' => $result->result]);
+            $result = (array) $result;
+            $credentials->update(['token' => $result['result']]);
             return response()->json([
                 'message' => 'Successfully added the token in the database!'
             ], 201);
@@ -289,6 +291,22 @@ class KonsultaController extends Controller
         return response()->json([
             'status' => 'File successfully uploaded'
         ], 201);
+    }
+
+    /**
+     * Generate Age with the difference of Two Dates
+     *
+     * @bodyParam date_from date From date format Y-m-d. Example: 2022-01-01
+     * @bodyParam date_to date To date format Y-m-d. Example: 2023-01-31
+     * @throws Throwable
+     */
+    public function getAge(Request $request): string
+    {
+        $request->validate([
+            'date_from' => 'required|date|date_format:Y-m-d',
+            'date_to' => 'required|date|date_format:Y-m-d',
+        ]);
+        return Carbon::parse($request->date_from)->diff($request->date_to)->y . " YR(S), " .  Carbon::parse($request->date_from)->diff($request->date_to)->m . " MO(S), " . Carbon::parse($request->date_from)->diff($request->date_to)->d . " DAY(S)";
     }
 
 }

@@ -60,7 +60,6 @@ class AuthenticationController extends Controller
         $user->revoke();
         Cookie::queue(Cookie::forget('access_token'));
 
-
         /*
          * This will revoke all the access and refresh tokens issued to that user.
          * This will log the user out from everywhere.
