@@ -304,8 +304,12 @@ class KonsultaController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function getAge(Request $request): JsonResponse
+    public function getAge(Request $request)
     {
+        //return json_encode($request->xml);
+        /*$decryptor = new PhilHealthEClaimsEncryptor();
+        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+        return $decryptor->decryptPayloadDataToXml($request->xml, $cipher_key);*/
         $request->validate([
             'date_from' => 'required|date|date_format:Y-m-d',
             'date_to' => 'required|date|date_format:Y-m-d',

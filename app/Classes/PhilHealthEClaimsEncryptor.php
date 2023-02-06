@@ -93,6 +93,12 @@ class PhilHealthEClaimsEncryptor
         $decryptedXml = $this->decryptUsingAES($encryptedData, $cipherKey, $cipherIV);
         //truncates decrypted data up to the position of the null ('\0') character
         $nullCharPos = strpos($decryptedXml, "\0");
+
+        //check if the value is null and return directly the decrypted data - 02/06/2023 Emmanuel Perez - WAH
+        if(!$nullCharPos){
+            return $decryptedXml;
+        }
+
         if($nullCharPos >= 0){
             $decryptedXml = substr($decryptedXml,0, $nullCharPos); //msm2018-02-16:  Changed $nullCharPos-1 to $nullCharPos;
         }
@@ -229,7 +235,7 @@ class PhilHealthEClaimsEncryptor
     {
         $blockSizeInBits = 256;
         $method = "AES-{$blockSizeInBits}-CBC";
-        $data = $this->pad($data, $blockSizeInBits/8);
+        //$data = $this->pad($data, $blockSizeInBits/8); remove data conversion to simplify the decryption and to work properly - 02/06/2023 Emmanuel Perez - WAH
         $options = OPENSSL_ZERO_PADDING + OPENSSL_RAW_DATA;
         //$options = OPENSSL_ZERO_PADDING;
         $this->log("decryptUsingAES:: cipherIV len: ".strlen($cipherIV) ."; cipherIV: $cipherIV");
