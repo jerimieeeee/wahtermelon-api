@@ -73,11 +73,8 @@ class ConsultCcdevServiceController extends Controller
             ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
         }
 
-        $ccdevservices = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
-
         return response()->json([
             'message' => 'Services Successfully Saved',
-            'data' => $ccdevservices
         ], 201);
     }
 
