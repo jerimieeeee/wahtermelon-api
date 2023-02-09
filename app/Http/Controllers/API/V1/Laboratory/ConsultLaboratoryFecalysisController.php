@@ -49,7 +49,7 @@ class ConsultLaboratoryFecalysisController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['color', 'consistency', 'blood'])
+            ->with(['color', 'consistency', 'blood', 'user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 

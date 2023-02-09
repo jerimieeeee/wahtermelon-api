@@ -2,7 +2,12 @@
 
 namespace App\Models\V1\Laboratory;
 
+use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibLaboratoryResult;
+use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

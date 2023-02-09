@@ -2,9 +2,14 @@
 
 namespace App\Models\V1\Laboratory;
 
+use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibLaboratoryBloodInStool;
+use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Libraries\LibLaboratoryStoolColor;
 use App\Models\V1\Libraries\LibLaboratoryStoolConsistency;
+use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

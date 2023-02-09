@@ -52,7 +52,7 @@ class ConsultLaboratorySputumController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['findings', 'sputumCollection'])
+            ->with(['findings', 'sputumCollection', 'user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 

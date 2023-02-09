@@ -50,6 +50,7 @@ class ConsultLaboratoryRbsController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
+            ->with(['user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 

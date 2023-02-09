@@ -21,7 +21,7 @@ Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $req
 
 Route::prefix('v1')->group(function (){
     Route::post('login', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'login']);
-    Route::post('logout', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'logout'])->middleware('auth:api');
+    Route::get('logout', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'logout'])->middleware('auth:api');
     Route::get('email/verify/{id}', [\App\Http\Controllers\API\Auth\VerificationController::class, 'verify'])->name('verification.verify');
     Route::get('email/resend', [\App\Http\Controllers\API\Auth\VerificationController::class, 'resend'])->name('verification.resend');
     Route::post('forgot-password', [\App\Http\Controllers\API\Auth\PasswordResetLinkController::class, 'sendPasswordResetEmail'])
@@ -327,6 +327,7 @@ Route::prefix('v1')->group(function (){
                 Route::get('generate-data', 'generateDataForValidation');
                 Route::get('download-xml', 'downloadXml');
                 Route::post('upload-xml', 'uploadXml');
+                Route::post('generate-age', 'getAge');
             });
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
             ->middleware('auth:api')
