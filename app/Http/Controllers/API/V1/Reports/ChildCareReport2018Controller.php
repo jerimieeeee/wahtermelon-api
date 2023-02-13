@@ -7,12 +7,23 @@ use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Childcare\ChildCareReportService;
 use Illuminate\Http\Request;
 
+/**
+ * @authenticated
+ * @group Reports 2018
+ *
+ * APIs for managing Child Care Report Information
+ * @subgroup M1 Child Care Report
+ * @subgroupDescription M1 FHSIS 2018 Child Care Report.
+ */
 class ChildCareReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return array
+     * @queryParam year date to view.
+     * @queryParam month date to view.
+     * @param Request $request
+     * @param ChildCareReportService $childCareReportService
      */
     public function index(Request $request, ChildCareReportService $childCareReportService): array
     {
