@@ -186,7 +186,7 @@ class ChildCareReport2018Controller extends Controller
         $pnemonia_case_0_59_with_treatment_f =  $childCareReportService->get_pneumonia_with_treatment($request, 'F', 'PNEUMONIA')->get();
 
         return [
-/*            //CPAB
+           //CPAB
             'CPAB_Male' => $cpab_m,
             'CPAB_Female' => $cpab_f,
 
@@ -343,7 +343,7 @@ class ChildCareReport2018Controller extends Controller
 
             //Get EBF
             'ebf_5months_29days_Male' => $ebf_5months_29days_m,
-            'ebf_5months_29days_Female' => $ebf_5months_29days_f,*/
+            'ebf_5months_29days_Female' => $ebf_5months_29days_f,
 
             //Pneumonia 0-59 months with treatment
             'pneumonia_0_59_months_with_treatment_Male' => $pnemonia_case_0_59_with_treatment_m,
