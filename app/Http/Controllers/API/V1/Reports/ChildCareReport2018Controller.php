@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Reports\ChildcareReport2018Resource;
 use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Childcare\ChildCareReportService;
 use Illuminate\Http\Request;
@@ -185,8 +186,21 @@ class ChildCareReport2018Controller extends Controller
         $pnemonia_case_0_59_with_treatment_m =  $childCareReportService->get_pneumonia_with_treatment($request, 'M', 'PNEUMONIA')->get();
         $pnemonia_case_0_59_with_treatment_f =  $childCareReportService->get_pneumonia_with_treatment($request, 'F', 'PNEUMONIA')->get();
 
-        return [
-           //CPAB
+        //0-59 MONTHS OVERWEIGHT & OBESE
+        $obese_overweight_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'overweight/obese')->get();
+        $obese_overweight_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'overweight/obese')->get();
+
+        //0-59 MONTHS NORMAL
+        $normal_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'normal')->get();
+        $normal_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'normal')->get();
+
+        //6-11 MONTHS COMPLIMENTARY FEEDING
+        $comp_feeding_6_11_months_m =  $childCareReportService->get_complimentary_feeding($request, 'M')->get();
+        $comp_feeding_6_11_months_f =  $childCareReportService->get_complimentary_feeding($request, 'F')->get();
+
+       return [
+
+            //CPAB
             'CPAB_Male' => $cpab_m,
             'CPAB_Female' => $cpab_f,
 
@@ -348,6 +362,14 @@ class ChildCareReport2018Controller extends Controller
             //Pneumonia 0-59 months with treatment
             'pneumonia_0_59_months_with_treatment_Male' => $pnemonia_case_0_59_with_treatment_m,
             'pneumonia_0_59_months_with_treatment_Female' => $pnemonia_case_0_59_with_treatment_f,
+
+           //0-59 MONTHS Overweight & Obese
+           'obese_overweight_0_59_months_Male' => $obese_overweight_0_59_months_m,
+           'obese_overweight_0_59_months_Female' => $obese_overweight_0_59_months_f,
+
+           //0-59 MONTHS Normal
+           'normal_0_59_months_Male' => $normal_0_59_months_m,
+           'normal_0_59_months_Female' => $normal_0_59_months_f,
 
         ];
     }
