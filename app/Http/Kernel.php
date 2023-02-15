@@ -43,6 +43,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \App\Http\Middleware\ScopeBouncer::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            //\App\Http\Middleware\ContentSecurityPolicy::class,
         ],
     ];
 

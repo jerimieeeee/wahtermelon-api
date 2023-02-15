@@ -73,25 +73,9 @@ class ConsultCcdevServiceController extends Controller
             ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
         }
 
-        $ccdevservices = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
-
         return response()->json([
             'message' => 'Services Successfully Saved',
-            'data' => $ccdevservices
         ], 201);
-
-        // $service = $request->input('service');
-        // foreach($service as $value){
-        //    ConsultCcdevService::updateOrCreate(['patient_id' => $request->patient_id, 'service_id' => $value['service_id'], 'service_date' => $value['service_date']],
-        //     ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
-        // }
-
-        // $patientservice = ConsultCcdevService::where('patient_id', '=', $request->patient_id)->orderBy('service_date', 'ASC')->get();
-
-        // return response()->json([
-        //     'message' => 'Services Successfully Saved',
-        //     'data' => $patientservice
-        // ], 201);
     }
 
     /**

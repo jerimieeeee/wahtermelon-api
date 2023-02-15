@@ -36,6 +36,8 @@ class ConsultRequest extends FormRequest
             'is_pregnant' => 'nullable|boolean',
             'consult_done' => 'required|boolean',
             'pt_group' => 'required|exists:lib_pt_groups,id',
+            'authorization_transaction_code' => 'nullable',
+            'walkedin_status' => 'boolean',
         ];
     }
 
@@ -73,6 +75,14 @@ class ConsultRequest extends FormRequest
             'pt_group' => [
                 'description' => 'ID of Patient Group',
                 'example' => fake()->randomElement(LibPtGroup::pluck('id')->toArray()),
+            ],
+            'authorization_transaction_code' => [
+                'description' => 'Konsulta ATC',
+                'example' => 'WALKEDIN',
+            ],
+            'walkedin_status' => [
+                'description' => 'Is patient walkedin?',
+                'consult_done' => true,
             ],
         ];
 

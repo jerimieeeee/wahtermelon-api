@@ -54,7 +54,7 @@ class ConsultController extends Controller
         ->when(isset($request->id), function($q) use($request){
             $q->where('id', '=', $request->id);
         })
-        ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'consultNotes.complaints.libComplaints', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10')
+        ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement')
 
         ->defaultSort('consult_date')
         ->allowedSorts('consult_date');
@@ -91,7 +91,7 @@ class ConsultController extends Controller
 
             return response()->json([
                 'data' => $data1,
-                'message' => 'Complaint Successfully Saved',
+                'message' => 'Consult Successfully Saved',
             ], 201);
     }
 

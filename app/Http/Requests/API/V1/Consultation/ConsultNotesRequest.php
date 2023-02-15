@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\Consultation;
 
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Libraries\LibGeneralSurvey;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,13 +28,14 @@ class ConsultNotesRequest extends FormRequest
     {
         return [
             'consult_id' => 'required|exists:consults,id',
-            'patient_id' => 'required|exists:patients,id',
             'complaint' => 'nullable',
             'history' => 'nullable',
             'physical_exam' => 'nullable',
-            'idx_remark' => 'nullable',
-            'fdx_remark' => 'nullable',
+            'idx_remarks' => 'nullable',
+            'fdx_remarks' => 'nullable',
             'plan' => 'nullable',
+            'general_survey_code' => 'nullable|exists:lib_general_surveys,code',
+            'general_survey_remarks' => 'nullable',
         ];
     }
 
@@ -60,16 +62,24 @@ class ConsultNotesRequest extends FormRequest
                 'description' => 'remarks of consult_notes_pes',
                 'example' => fake()->sentence(),
             ],
-            'idx_remark' => [
+            'idx_remarks' => [
                 'description' => 'remarks of initial diagnosis',
                 'example' => fake()->sentence(),
             ],
-            'fdx_remark' => [
+            'fdx_remarks' => [
                 'description' => 'remarks of final diagnosis',
                 'example' => fake()->sentence(),
             ],
             'plan' => [
                 'description' => 'remarks of treatment plan',
+                'example' => fake()->sentence(),
+            ],
+            'general_survey_code' => [
+                'description' => 'code of general survey library.',
+                'example' => fake()->randomElement(LibGeneralSurvey::pluck('code')->toArray()),
+            ],
+            'general_survey_remarks' => [
+                'description' => 'remarks of general survey',
                 'example' => fake()->sentence(),
             ],
         ];

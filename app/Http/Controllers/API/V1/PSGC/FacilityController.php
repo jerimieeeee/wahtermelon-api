@@ -45,7 +45,7 @@ class FacilityController extends Controller
             return FacilityResource::collection($facilities->get());
         }
 
-        return FacilityResource::collection($facilities->paginate($perPage));
+        return FacilityResource::collection($facilities->paginate($perPage)->withQueryString());
     }
 
     /**

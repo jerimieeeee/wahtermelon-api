@@ -34,7 +34,7 @@ class ConsultNotesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConsultNotes $request) : JsonResponse
+    public function store(ConsultNotesRequest $request) : JsonResponse
     {
         $data = ConsultNotes::create($request->all());
         return response()->json(['data' => $data], 201);
@@ -61,7 +61,7 @@ class ConsultNotesController extends Controller
      */
     public function update(ConsultNotesRequest $request, $id): JsonResponse
     {
-        ConsultNotes::findorfail($id)->update($request->only('complaint', 'history', 'physical_exam', 'plan'));
+        ConsultNotes::findorfail($id)->update($request->validated());
         return response()->json('Consult Notes Successfully Updated');
     }
 

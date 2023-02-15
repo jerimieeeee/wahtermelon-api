@@ -27,6 +27,7 @@ class UserController extends Controller
      * @authenticated
      *
      * @queryParam filter[search] string Filter by last_name, first_name or middle_name. Example: Juwahn Dela Cruz
+     * @queryParam designation_code string Filter by designation code. Example: MD
      * @queryParam sort string Sort last_name, first_name, middle_name, birthdate of the user. Add hyphen (-) to descend the list: e.g. last_name,birthdate. Example: last_name
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
@@ -43,6 +44,9 @@ class UserController extends Controller
         $user = QueryBuilder::for(User::class)
             ->when(isset($request->filter['search']), function($q) use($request, $columns) {
                 $q->search($request->filter['search'], $columns);
+            })
+            ->when(isset($request->designation_code), function($q) use($request) {
+                $q->whereDesignationCode($request->designation_code);
             })
             ->with('facility', 'designation', 'employer')
             ->allowedIncludes('suffixName')

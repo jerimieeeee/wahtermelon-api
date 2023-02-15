@@ -42,19 +42,28 @@ class ConsultNotesInitialDxController extends Controller
      */
     public function store(ConsultNotesInitialDxRequest $request) : JsonResponse
     {
-            $initialdx = $request->input('initial_diagnosis');
-            $initialdx_array = [];
-            foreach($initialdx as $value){
-                $data = ConsultNotesInitialDx::firstOrNew(['notes_id' => $request->input('notes_id'), 'class_id' => $value]);
-                $data->user_id = $request->input('user_id');
-                $data->class_id = $value;
-                $data->save();
-                array_push($initialdx_array, $value);
+        try {
+            $initialdx = $request->initial_diagnosis;
+            foreach ($initialdx as $value) {
+                ConsultNotesInitialDx::firstOrCreate(['notes_id' => $request->safe()->notes_id, 'class_id' => $value]);
             }
+
+            ConsultNotesInitialDx::query()
+                ->whereNotin('class_id', $initialdx)
+                ->where('notes_id', $request->safe()->notes_id)
+                ->delete();
 
             return response()->json([
                 'message' => 'Initial Dx Successfully Saved',
             ], 201);
+
+        } catch (Exception $error) {
+            return response()->json([
+                'Error' => $error,
+                'status_code' => 500,
+                'message' => 'Initial Dx Saving Error',
+            ]);
+        }
     }
 
     /**

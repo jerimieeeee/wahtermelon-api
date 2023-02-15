@@ -13,6 +13,7 @@ use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -41,7 +42,8 @@ class PatientTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
-        $patient = Patient::factory()->create()->toArray();
+        PhilhealthCredential::factory()->create(['program_code' => 'kp']);
+        $patient = Patient::factory()->make()->toArray();
         $response = $this->post('api/v1/patient', $patient);
         $response->assertCreated();
     }

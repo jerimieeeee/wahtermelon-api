@@ -18,20 +18,9 @@ class ConsultNotesPeResource extends JsonResource
             'notes_id' => $this->notes_id,
             'user_id' => $this->user_id,
             'facility_code' => $this->facility_code,
-            'remarks' => $this->remarks,
-            'breast_screen' => $this->breast_screen,
-            'breast_remarks' => $this->breast_remarks,
-            'skin_code' => $this->skin_code,
-            'heent_code' => $this->heent_code,
-            'heent_remarks' => $this->heent_remarks,
-            'chest_code' => $this->chest_code,
-            'chest_remarks' => $this->chest_remarks,
-            'heart_code' => $this->heart_code,
-            'heart_remarks' => $this->heart_remarks,
-            'abdomen_code' => $this->abdomen_code,
-            'abdome_remarks' => $this->abdome_remarks,
-            'extremities_code' => $this->extremities_code,
-            'extremities_remarks' => $this->extremities_remarks,
+            'pe_id' => $this->pe_id,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }

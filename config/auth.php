@@ -38,6 +38,7 @@ return [
     'guards' => [
         'api' => [
             'driver' => 'passport',
+            'storage' => 'cookie',
             'provider' => 'users',
         ],
 

@@ -30,7 +30,7 @@ class PatientMcPostRegistrationRequest extends FormRequest
     public function validatedWithCasts(): array
     {
         $patient = Patient::find(request()->patient_id);
-        $age = $patient->birthdate->diff(request()->post_registration_date)->y;
+        $age = Carbon::parse($patient->birthdate)->diff(request()->post_registration_date)->y;
         return array_merge($this->validated(), [
             'patient_age' => $age,
         ]);
