@@ -29,8 +29,7 @@ class ConsultController extends Controller
      * @queryParam patient_id Identification code of the patient.
      * @queryParam pt_group Patient group. Example: cn
      * @queryParam sort string Sort consult_date. Add hyphen (-) to descend the list: e.g. consult_date. Example: consult_date
-     * @queryParam consult_done Consultation Status. Example: 1
-     * @queryParam id of Consultation Status. Example: 1
+     * @queryParam consult_done Is consult_done? Example: 1
      * @queryParam physician_id of Physician Status.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
