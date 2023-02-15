@@ -26,7 +26,7 @@ class ChildCareReport2018Controller extends Controller
      * @param Request $request
      * @param ChildCareReportService $childCareReportService
      */
-    public function index(Request $request, ChildCareReportService $childCareReportService): array
+    public function index(Request $request, ChildCareReportService $childCareReportService)
     {
         //CPAB
         $cpab_m =  $childCareReportService->get_cpab($request, 'M')->get();

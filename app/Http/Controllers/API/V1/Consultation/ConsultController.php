@@ -30,7 +30,8 @@ class ConsultController extends Controller
      * @queryParam pt_group Patient group. Example: cn
      * @queryParam sort string Sort consult_date. Add hyphen (-) to descend the list: e.g. consult_date. Example: consult_date
      * @queryParam consult_done Consultation Status. Example: 1
-     * @queryParam id Consultation Status. Example: 1
+     * @queryParam id of Consultation Status. Example: 1
+     * @queryParam physician_id of Physician Status.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Consultation\ConsultResource
@@ -54,6 +55,9 @@ class ConsultController extends Controller
         ->when(isset($request->id), function($q) use($request){
             $q->where('id', '=', $request->id);
         })
+       ->when(isset($request->physician_id), function($q) use($request){
+                $q->where('physician_id', '=', $request->physician_id);
+       })
         ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement')
 
         ->defaultSort('consult_date')

@@ -572,10 +572,8 @@ class ChildCareReportService
                         ['bfed_month3', '=', '1'],
                         ['bfed_month4', '=', '1']
                     ])
-                        ->whereNotNull([
-                            ['ebf_date'],
-                            ['comp_fed_date']
-                    ])
+                        ->whereNotNull('ebf_date')
+                        ->whereNotNull('comp_fed_date')
             )
             ->havingRaw('(age_month >= 6) AND year(comp_fed_date) = ? AND month(comp_fed_date) = ?', [$request->year, $request->month])
             ->whereGender($patient_gender)
