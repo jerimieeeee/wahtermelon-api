@@ -1021,7 +1021,7 @@ class LibDiagnosisSeeder extends Seeder
           ['class_id' => '1036', 'class_name' => 't/c Acute Uncomplicated cystitis', 'icd10' => 'N39.0', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
           ['class_id' => '1037', 'class_name' => 't/c Pyelonephritis', 'icd10' => 'N39.0', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
           ['class_id' => '1038', 'class_name' => 't/c Anxiety reaction', 'icd10' => 'F41.9', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
-          ['class_id' => '1039', 'class_name' => 'Tonsillophayngitis, viral', 'icd10' => 'J06.9', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
+          ['class_id' => '1039', 'class_name' => 'Tonsillopharyngitis, viral', 'icd10' => 'J06.9', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
           ['class_id' => '1040', 'class_name' => 't/c Opthalmia Neonatorum', 'icd10' => 'P39.1', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
           ['class_id' => '1041', 'class_name' => 't/c Degenarative O.A.', 'icd10' => 'M15.0', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
           ['class_id' => '1042', 'class_name' => 'Degenarative O.A', 'icd10' => 'M15.0', 'notifiable_flag' => 0, 'morbidity_flag' => 1],
