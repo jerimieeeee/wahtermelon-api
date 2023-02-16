@@ -3,18 +3,30 @@
 namespace App\Http\Controllers\API\V1\Reports;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Reports\ChildcareReport2018Resource;
 use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Childcare\ChildCareReportService;
 use Illuminate\Http\Request;
 
+/**
+ * @authenticated
+ * @group Reports 2018
+ *
+ * APIs for managing Child Care Report Information
+ * @subgroup M1 Child Care Report
+ * @subgroupDescription M1 FHSIS 2018 Child Care Report.
+ */
 class ChildCareReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return array
+     * @queryParam year date to view.
+     * @queryParam month date to view.
+     * @param Request $request
+     * @param ChildCareReportService $childCareReportService
      */
-    public function index(Request $request, ChildCareReportService $childCareReportService): array
+    public function index(Request $request, ChildCareReportService $childCareReportService)
     {
         //CPAB
         $cpab_m =  $childCareReportService->get_cpab($request, 'M')->get();
@@ -150,8 +162,45 @@ class ChildCareReport2018Controller extends Controller
         $mnp2_12_23_Male =  $childCareReportService->get_mnp($request, 'MNP2', 'M')->get();
         $mnp2_12_23_Female =  $childCareReportService->get_mnp($request, 'MNP2', 'F')->get();
 
-        return [
-           //CPAB
+        //Sick Infant 6-11 months with vitamin A
+        $sick_infant_6_11_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 6)->get();
+        $sick_infant_6_11_vit_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 6)->get();
+
+        //Sick Children 12-59 months with vitamin A
+        $sick_children_12_59_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 12)->get();
+        $sick_children_12_59_vita_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 12)->get();
+
+        //0-59 MONTHS DIARRHEA GIVEN ORS
+        $diarrhea_case_0_59_ors_m =  $childCareReportService->get_diarrhea_ors_and_ors_with_zinc($request, 'M', 'ORS')->get();
+        $diarrhea_case_0_59_ors_f =  $childCareReportService->get_diarrhea_ors_and_ors_with_zinc($request, 'F', 'ORS')->get();
+
+        //0-59 MONTHS DIARRHEA GIVEN ORS WITH ZINC
+        $diarrhea_case_0_59_ors_zinc_m =  $childCareReportService->get_diarrhea_ors_and_ors_with_zinc($request, 'M', 'ORS WITH ZINC')->get();
+        $diarrhea_case_0_59_ors_zinc_f =  $childCareReportService->get_diarrhea_ors_and_ors_with_zinc($request, 'F', 'ORS WITH ZINC')->get();
+
+        //Get EBF
+        $ebf_5months_29days_m =  $childCareReportService->get_ebf($request, 'M')->get();
+        $ebf_5months_29days_f =  $childCareReportService->get_ebf($request, 'F')->get();
+
+        //0-59 MONTHS PNEUMONIA WITH TREATMENT
+        $pnemonia_case_0_59_with_treatment_m =  $childCareReportService->get_pneumonia_with_treatment($request, 'M', 'PNEUMONIA')->get();
+        $pnemonia_case_0_59_with_treatment_f =  $childCareReportService->get_pneumonia_with_treatment($request, 'F', 'PNEUMONIA')->get();
+
+        //0-59 MONTHS OVERWEIGHT & OBESE
+        $obese_overweight_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'overweight/obese')->get();
+        $obese_overweight_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'overweight/obese')->get();
+
+        //0-59 MONTHS NORMAL
+        $normal_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'normal')->get();
+        $normal_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'normal')->get();
+
+        //6-11 MONTHS COMPLIMENTARY FEEDING
+        $comp_feeding_6_11_months_m =  $childCareReportService->get_complimentary_feeding($request, 'M')->get();
+        $comp_feeding_6_11_months_f =  $childCareReportService->get_complimentary_feeding($request, 'F')->get();
+
+       return [
+
+            //CPAB
             'CPAB_Male' => $cpab_m,
             'CPAB_Female' => $cpab_f,
 
@@ -290,6 +339,37 @@ class ChildCareReport2018Controller extends Controller
             'mnp2_12_23_months_Male' => $mnp2_12_23_Male,
             'mnp2_12_23_months_Female' => $mnp2_12_23_Female,
 
+            //Sick Infant 6-11 months with vitamin A
+            'sick_infant_6_to_11_months_with_vit_a_Male' => $sick_infant_6_11_vit_a_m,
+            'sick_infant_6_to_11_months_with_vita_a_Female' => $sick_infant_6_11_vit_a_f,
+
+            //Sick Children 12-59 months with vitamin A
+            'sick_children_12_to_59_months_with_vit_a_Male' => $sick_children_12_59_vit_a_m,
+            'sick_children_12_to_59_months_with_vit_a_Female' => $sick_children_12_59_vita_a_f,
+
+            //0-59 MONTHS DIARRHEA GIVEN ORS
+            'diarrhea_0_59_months_with_ors_Male' => $diarrhea_case_0_59_ors_m,
+            'diarrhea_0_59_months_with_ors_Female' => $diarrhea_case_0_59_ors_f,
+
+            //0-59 MONTHS DIARRHEA GIVEN ORS WITH ZINC
+            'diarrhea_0_59_months_with_ors_zinc_Male' => $diarrhea_case_0_59_ors_zinc_m,
+            'diarrhea_0_59_months_with_ors_zinc_Female' => $diarrhea_case_0_59_ors_zinc_f,
+
+            //Get EBF
+            'ebf_5months_29days_Male' => $ebf_5months_29days_m,
+            'ebf_5months_29days_Female' => $ebf_5months_29days_f,
+
+            //Pneumonia 0-59 months with treatment
+            'pneumonia_0_59_months_with_treatment_Male' => $pnemonia_case_0_59_with_treatment_m,
+            'pneumonia_0_59_months_with_treatment_Female' => $pnemonia_case_0_59_with_treatment_f,
+
+           //0-59 MONTHS Overweight & Obese
+           'obese_overweight_0_59_months_Male' => $obese_overweight_0_59_months_m,
+           'obese_overweight_0_59_months_Female' => $obese_overweight_0_59_months_f,
+
+           //0-59 MONTHS Normal
+           'normal_0_59_months_Male' => $normal_0_59_months_m,
+           'normal_0_59_months_Female' => $normal_0_59_months_f,
 
         ];
     }
