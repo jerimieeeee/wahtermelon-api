@@ -160,6 +160,10 @@ class LibIcd10NotifiableSeeder extends Seeder
     DB::table('lib_icd10s')
         ->whereIn('icd10_code', ['Q02'])
         ->update(['notifiable_name' => 'Zika']);
+
+    DB::table('lib_icd10s')
+        ->whereIn('icd10_code', ['U07.1'])
+        ->update(['notifiable_cat' => 2, 'is_morbidity' => 1]);
   }
 
   /**
