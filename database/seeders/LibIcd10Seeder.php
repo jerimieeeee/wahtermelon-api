@@ -9777,6 +9777,7 @@ class LibIcd10Seeder extends Seeder
         ['icd10_code' => 'T98.2', 'icd10_desc' => 'Sequelae of certain early complications of trauma'],
         ['icd10_code' => 'T98.3', 'icd10_desc' => 'Sequelae of complications of surgical and medical care, not elsewhere classified'],
         ['icd10_code' => 'U04.9', 'icd10_desc' => 'SEVERE ACUTE RESPIRATORY SYNDROME (SARS)'],
+        ['icd10_code' => 'U07.1', 'icd10_desc' => 'COVID-19 CONFIRMED'],
         ['icd10_code' => 'V01', 'icd10_desc' => 'Pedestrian injured in collision with pedal cycle'],
         ['icd10_code' => 'V02', 'icd10_desc' => 'Pedestrian injured in collision with two- or three-wheeled motor vehicle'],
         ['icd10_code' => 'V03', 'icd10_desc' => 'Pedestrian injured in collision with car, pick-up truck or van'],
