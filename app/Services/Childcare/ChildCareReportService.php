@@ -11,6 +11,7 @@ class ChildCareReportService
         return DB::table('patient_vaccines')
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
+	                    gender,
 	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',',?), ',', - 1) AS vax_date
                     ", [$vaccine_seq])
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
@@ -56,8 +57,8 @@ class ChildCareReportService
         return DB::table('patient_vaccines')
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
-	                    patients.gender,
-	                    patients.birthdate,
+	                    gender,
+	                    birthdate,
 	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 1), ',', - 1) AS vax_date,
 	                    TIMESTAMPDIFF(day, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 1), ',', - 1)) AS age_day
                     ")
@@ -500,27 +501,6 @@ class ChildCareReportService
             ->orderBy('name', 'ASC');
     }
 
-//    public function get_overweight_obese1($request)
-//    {
-//        return DB::table(function ($query) {
-//            $query->selectRaw("
-//                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-//                            CASE WHEN patient_weight_for_age = 'Overweight' THEN
-//                                'Overweight'
-//                            ELSE
-//                                'Obese'
-//                            END AS 'bmi',
-//                            patient_age_months
-//            ")
-//                ->from('patient_vitals')
-//                ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id');
-//        })
-//        ->whereIn('patient_weight_for_age', ['Overweight', 'Obese'])
-//        ->groupBy('patient_id', 'patient_weight_for_age', 'patient_age_months')
-//        ->havingRaw('(bmi = Overweight AND Obese) AND (patient_age_months BETWEEN 0 AND 59) AND year(vitals_date) = ? AND month(vitals_date) = ?', [$request->year, $request->month])
-//        ->orderBy('name', 'ASC');
-//    }
-
     public function get_overweight_obese($request, $patient_gender, $class)
     {
         return DB::table('patient_vitals')
@@ -576,6 +556,46 @@ class ChildCareReportService
                         ->whereNotNull('comp_fed_date')
             )
             ->havingRaw('(age_month >= 6) AND year(comp_fed_date) = ? AND month(comp_fed_date) = ?', [$request->year, $request->month])
+            ->whereGender($patient_gender)
+            ->orderBy('name', 'ASC');
+    }
+
+    public function get_complimentary_feeding_stop_bfed($request, $patient_gender)
+    {
+        return DB::table('consult_ccdev_breastfeds')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        comp_fed_date,
+                        TIMESTAMPDIFF(MONTH, birthdate, comp_fed_date) AS age_month
+                    ")
+            ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
+            ->whereNull('ebf_date')
+            ->whereNotNull('comp_fed_date')
+            ->havingRaw('(age_month >= 6) AND year(comp_fed_date) = ? AND month(comp_fed_date) = ?', [$request->year, $request->month])
+            ->whereGender($patient_gender)
+            ->orderBy('name', 'ASC');
+    }
+
+    public function get_stunted_wasted($request, $patient_gender, $class)
+    {
+        return DB::table('patient_vitals')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        gender,
+                        DATE_FORMAT(vitals_date, '%Y-%m-%d') AS vitals_date,
+                        patient_age_months,
+                        patient_height_for_age AS height_for_age
+                    ")
+            ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
+            ->when($class == 'Stunted', fn($query) =>
+                    $query->whereIn('patient_height_for_age', ['Stunted', 'Severely Stunted'])
+                          ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(vitals_date) = ? AND month(vitals_date) = ?', [$request->year, $request->month])
+                 )
+            ->when($class == 'Wasted', fn($query) =>
+                    $query->wherePatientHeightForAge($class)
+                          ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(vitals_date) = ? AND month(vitals_date) = ?', [$request->year, $request->month])
+                 )
             ->whereGender($patient_gender)
             ->orderBy('name', 'ASC');
     }

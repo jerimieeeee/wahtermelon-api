@@ -198,6 +198,14 @@ class ChildCareReport2018Controller extends Controller
         $comp_feeding_6_11_months_m =  $childCareReportService->get_complimentary_feeding($request, 'M')->get();
         $comp_feeding_6_11_months_f =  $childCareReportService->get_complimentary_feeding($request, 'F')->get();
 
+        //6-11 MONTHS STOP BFED RECEIVED COMPLIMENTARY FEEDING
+        $recv_comp_feeding_6_11_months_m =  $childCareReportService->get_complimentary_feeding_stop_bfed($request, 'M')->get();
+        $recv_comp_feeding_6_11_months_f =  $childCareReportService->get_complimentary_feeding_stop_bfed($request, 'F')->get();
+
+        //0-59 MONTHS STUNTED
+        $stunted_0_59_months_m =  $childCareReportService->get_stunted_wasted($request, 'M', 'Stunted')->get();
+        $stunted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Wasted')->get();
+
        return [
 
             //CPAB
@@ -370,6 +378,18 @@ class ChildCareReport2018Controller extends Controller
            //0-59 MONTHS Normal
            'normal_0_59_months_Male' => $normal_0_59_months_m,
            'normal_0_59_months_Female' => $normal_0_59_months_f,
+
+           //6-11 MONTHS COMPLIMENTARY FEEDING
+           'complimentary_6_11_months_Male' => $comp_feeding_6_11_months_m,
+           'complimentary_6_11_months_Female' => $comp_feeding_6_11_months_f,
+
+           //6-11 MONTHS STOP BFED RECEIVED COMPLIMENTARY FEEDING
+           'stop_bfed_complimentary_6_11_months_Male' => $recv_comp_feeding_6_11_months_m,
+           'stop_bfed_complimentary_6_11_months_Female' => $recv_comp_feeding_6_11_months_f,
+
+           //0-59 MONTHS Stunted
+           'stunted_0_59_months_Male' => $stunted_0_59_months_m,
+           'stunted_0_59_months_Female' => $stunted_0_59_months_f,
 
         ];
     }

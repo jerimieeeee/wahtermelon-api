@@ -30,7 +30,7 @@ class ConsultController extends Controller
      * @queryParam pt_group Patient group. Example: cn
      * @queryParam sort string Sort consult_date. Add hyphen (-) to descend the list: e.g. consult_date. Example: consult_date
      * @queryParam consult_done Is consult_done? Example: 1
-     * @queryParam physician_id of Physician Status.
+     * @queryParam physician_id of Physician.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @apiResourceCollection App\Http\Resources\API\V1\Consultation\ConsultResource
@@ -81,7 +81,7 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        Consult::query()
+        $data = Consult::query()
                 ->when(request('pt_group') == 'cn', function ($q) use($request){
                 return $q->create($request->validated())->consultNotes()->create($request->validated());
             })
@@ -89,11 +89,10 @@ class ConsultController extends Controller
                 return $q->create($request->except(['physician_id', 'is_pregnant']));
             });
 
-            $data = ConsultResource::collection(Consult::where('patient_id', $request->patient_id)->get());
-            $data1 = ConsultResource::collection($data)->last();
+            $data = new ConsultResource($data);
 
             return response()->json([
-                'data' => $data1,
+                'data' => $data,
                 'message' => 'Consult Successfully Saved',
             ], 201);
     }
