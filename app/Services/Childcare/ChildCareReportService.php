@@ -589,7 +589,7 @@ class ChildCareReportService
                     ")
             ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
             ->when($class == 'Stunted', fn($query) =>
-                    $query->whereIn('patient_height_for_age', ['Stunted', 'Severely Stunted'])
+                    $query->whereIn('patient_height_for_age', ['Stunted'])
                           ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(vitals_date) = ? AND month(vitals_date) = ?', [$request->year, $request->month])
                  )
             ->when($class == 'Wasted', fn($query) =>

@@ -539,13 +539,22 @@ Route::prefix('v1')->group(function (){
             });
         });
 
-    //ChildCare Report
-    Route::prefix('childcare-report')->group(function () {
-        Route::controller(\App\Http\Controllers\API\V1\Reports\ChildCareReport2018Controller::class)
-            ->middleware('auth:api')
-            ->group(function() {
-                Route::get('stats', 'index');
+    //Reports 2018
+    Route::prefix('reports-2018')->group(function () {
+        Route::prefix('child-care')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\ChildCareReport2018Controller::class)
+                ->middleware('auth:api')
+                 ->group(function() {
+                    Route::get('m1', 'index');
             });
+        });
+        Route::prefix('maternal-care')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\MaternalCareReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function() {
+                    Route::get('m1', 'index');
+                });
+        });
     });
 
     Route::prefix('libraries')->group(function () {

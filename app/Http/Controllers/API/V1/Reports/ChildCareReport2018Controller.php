@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API\V1\Reports;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Reports\ChildcareReport2018Resource;
-use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Childcare\ChildCareReportService;
 use Illuminate\Http\Request;
 
