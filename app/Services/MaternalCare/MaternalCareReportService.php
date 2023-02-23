@@ -287,7 +287,7 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function pregnant_syphillis_test($class, $request, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_test($class, $class2, $request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table('consult_mc_services')
             ->selectRaw("
@@ -299,13 +299,13 @@ class MaternalCareReportService
                         TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
                     ")
             ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
-            ->when($class == 'SYPHILIS', fn($query) =>
-                     $query->whereServiceId('SYP')
+            ->when($class == $class,  fn($query) =>
+                     $query->whereServiceId($class2)
                            ->whereVisitStatus('Prenatal')
                            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
                 )
-            ->when($class == 'SYPHILIS+', fn($query) =>
-                     $query->whereServiceId('SYP')
+            ->when($class == $class, fn($query) =>
+                     $query->whereServiceId($class2)
                            ->wherePositiveResult('1')
                            ->whereVisitStatus('Prenatal')
                            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
@@ -313,99 +313,94 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function pregnant_hepatitis_test($class, $request, $age_year_bracket1, $age_year_bracket2)
+    public function get_no_of_births($request, $age_year_bracket1, $age_year_bracket2)
     {
-        return DB::table('consult_mc_services')
+        return DB::table('patient_mc_post_registrations')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
-                        service_id,
-                        positive_result,
-                        visit_status,
-                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
+                        birthdate,
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        outcome_code,
+                        TIMESTAMPDIFF(YEAR, birthdate, delivery_date) AS age_year
                     ")
-            ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
-            ->when($class == 'HEPATITIS', fn($query) =>
-            $query->whereServiceId('HEPB')
-                ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
+            ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
+            ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->orderBy('name', 'ASC');
+    }
+
+    public function get_no_of_livebirths($request, $gender, $age_year_bracket1, $age_year_bracket2)
+    {
+        return DB::table('patient_mc_post_registrations')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        outcome_code,
+                        TIMESTAMPDIFF(YEAR, birthdate, delivery_date) AS age_year
+                    ")
+            ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
+            ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
+            ->when($gender == 'MALE',  fn($query) =>
+                     $query->whereIn('outcome_code', ['LSCM', 'NSDM'])
+                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
-            ->when($class == 'HEPATITIS+', fn($query) =>
-            $query->whereServiceId('HEPB')
-                ->wherePositiveResult('1')
-                ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->when($gender == 'FEMALE',  fn($query) =>
+            $query->whereIn('outcome_code', ['LSCF', 'NSDF'])
+                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
             ->orderBy('name', 'ASC');
     }
 
-    public function pregnant_hiv_test($request, $age_year_bracket1, $age_year_bracket2)
+    public function get_no_of_deliveries_professional($request, $age_year_bracket1, $age_year_bracket2)
+    {
+        return DB::table('patient_mc_post_registrations')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        attendant_code,
+                        TIMESTAMPDIFF(YEAR, birthdate, delivery_date) AS age_year
+                    ")
+            ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
+            ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
+            ->whereIn('attendant_code', ['MD', 'MW', 'RN'])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->orderBy('name', 'ASC');
+    }
+
+    public function post_partum_2_checkup($request, $age_year_bracket1, $age_year_bracket2)
+    {
+        return DB::table('consult_mc_postparta')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        postpartum_date,
+                        visit_sequence,
+                        TIMESTAMPDIFF(YEAR, birthdate, postpartum_date) AS age_year
+                    ")
+            ->join('patients', 'consult_mc_postparta.patient_id', '=', 'patients.id')
+            ->whereVisitSequence('2')
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(postpartum_date) = ? AND month(postpartum_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->orderBy('name', 'ASC');
+    }
+
+    public function post_partum_vitamin_a($request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
+	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(service_date ORDER BY service_date ASC), ',', 1), ',', - 1) AS service_date,
                         service_id,
-                        positive_result,
+                        service_qty,
                         visit_status,
                         TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
                     ")
             ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
-            ->whereServiceId('HIV')
-            ->whereVisitStatus('Prenatal')
+            ->whereServiceId('VITA')
+            ->whereVisitStatus('Postpartum')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
-            ->orderBy('name', 'ASC');
-    }
-
-    public function pregnant_cbc_hct_test($class, $request, $age_year_bracket1, $age_year_bracket2)
-    {
-        return DB::table('consult_mc_services')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
-                        service_id,
-                        positive_result,
-                        visit_status,
-                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
-                    ")
-            ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
-            ->when($class == 'CBC', fn($query) =>
-            $query->whereServiceId('CBC')
-                ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
-            )
-            ->when($class == 'CBC+', fn($query) =>
-            $query->whereServiceId('CBC')
-                ->wherePositiveResult('1')
-                ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
-            )
-            ->orderBy('name', 'ASC');
-    }
-
-    public function pregnant_gastro_diabetes_hct_test($class, $request, $age_year_bracket1, $age_year_bracket2)
-    {
-        return DB::table('consult_mc_services')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
-                        service_id,
-                        positive_result,
-                        visit_status,
-                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
-                    ")
-            ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
-            ->when($class == 'DIBTS', fn($query) =>
-            $query->whereServiceId('DIBTS')
-                ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
-            )
-            ->when($class == 'DIBTS+', fn($query) =>
-            $query->whereServiceId('DIBTS')
-                ->wherePositiveResult('1')
-                ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
-            )
             ->orderBy('name', 'ASC');
     }
 

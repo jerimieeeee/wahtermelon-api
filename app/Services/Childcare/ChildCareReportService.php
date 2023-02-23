@@ -12,6 +12,7 @@ class ChildCareReportService
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
 	                    gender,
+	                    birthdate,
 	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',',?), ',', - 1) AS vax_date
                     ", [$vaccine_seq])
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
@@ -76,6 +77,8 @@ class ChildCareReportService
         return DB::table('patient_vaccines')
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
+	                    gender,
+	                    birthdate,
 	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',',1), ',', - 1) AS vax_date
                     ")
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
@@ -171,6 +174,7 @@ class ChildCareReportService
             ->selectRaw('
                 name,
                 gender,
+                birthdate,
                 vaccine_date,
                 CASE
                     WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13
@@ -195,6 +199,7 @@ class ChildCareReportService
                         patient_id,
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
 	                    gender,
+	                    birthdate,
                         breastfeeding,
                         breastfed_date
                     ")
@@ -506,6 +511,7 @@ class ChildCareReportService
         return DB::table('patient_vitals')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
                         CASE
                             WHEN patient_weight_for_age = 'Overweight'
                             THEN 'Overweight'
@@ -583,6 +589,7 @@ class ChildCareReportService
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         gender,
+                        birthdate,
                         DATE_FORMAT(vitals_date, '%Y-%m-%d') AS vitals_date,
                         patient_age_months,
                         patient_height_for_age AS height_for_age
