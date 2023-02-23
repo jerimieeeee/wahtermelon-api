@@ -6,6 +6,7 @@ use App\Http\Resources\API\V1\Konsulta\ConsultationResource;
 use App\Http\Resources\API\V1\Konsulta\DiagnosticExamResultResource;
 use App\Http\Resources\API\V1\Konsulta\EnlistmentResource;
 use App\Http\Resources\API\V1\Konsulta\MedicineResource;
+use App\Http\Resources\API\V1\Konsulta\NoMedicineResource;
 use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Http\Resources\API\V1\Konsulta\SoapDiagnosticExamResultResource;
 use App\Models\User;
@@ -716,6 +717,7 @@ class KonsultaService
         $soap = [];
         $data = [];
         $medicine = [];
+        $noMedicine = [];
         $laboratory = [];
         if($tranche == 2){
             $data = Consult::query()
@@ -736,6 +738,10 @@ class KonsultaService
                 ->withSum('dispensing', 'unit_price')
                 ->withSum('dispensing', 'total_amount')
                 ->with('dispensing', 'user')
+                ->get();
+            $noMedicine = Consult::query()
+                ->whereIn('id', $data->pluck('id'))
+                ->whereDoesntHave('prescription')
                 ->get();
 
             $laboratory = Consult::query()
@@ -765,11 +771,16 @@ class KonsultaService
         }
         $soapResource = ConsultationResource::collection(!empty($data) ? $data->whenEmpty(fn() => [[]]) : [[]]);
         $medicineResource = MedicineResource::collection(!empty($medicine) ? $medicine->whenEmpty(fn() => [[]]) : [[]]);
+        $noMedicineResource = NoMedicineResource::collection(!empty($noMedicine) ? $noMedicine->whenEmpty(fn() => [[]]) : [[]]);
         $laboratoryResource = SoapDiagnosticExamResultResource::collection(!empty($laboratory) ? $laboratory->whenEmpty(fn() => [[]]) : [[]]);
 
         $soap[0]['SOAP'] = [$soapResource->resolve()];
 
-        $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
+        if($tranche == 2) {
+            $soap[1]['MEDICINE'] = array_filter([count($medicine) != 0 ? $medicineResource->resolve() : '', count($noMedicine) != 0 ? $noMedicineResource->resolve() : '']);
+        } else{
+            $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
+        }
         !empty($laboratory) ? $soap[2]['DIAGNOSTICEXAMRESULT'] = [$laboratoryResource->resolve()] : null;
 
         return $soap;
