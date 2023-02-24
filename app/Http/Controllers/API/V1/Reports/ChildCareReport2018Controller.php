@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API\V1\Reports;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Reports\ChildcareReport2018Resource;
-use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Childcare\ChildCareReportService;
 use Illuminate\Http\Request;
 
@@ -154,6 +152,10 @@ class ChildCareReport2018Controller extends Controller
         $pneumonia_0_59_Male =  $childCareReportService->get_diarrhea_pneumonia($request, 'PNEUMONIA', 'M')->get();
         $pneumonia_0_59_Female =  $childCareReportService->get_diarrhea_pneumonia($request, 'PNEUMONIA', 'F')->get();
 
+        //DIARRHEA 0-59 months
+        $diarrhea_0_59_Male =  $childCareReportService->get_diarrhea_pneumonia($request, 'PNEUMONIA', 'M')->get();
+        $diarrhea_0_59_Female =  $childCareReportService->get_diarrhea_pneumonia($request, 'PNEUMONIA', 'F')->get();
+
         //MNP 6-11 months
         $mnp_6_11_Male =  $childCareReportService->get_mnp($request, 'MNP', 'M')->get();
         $mnp_6_11_Female =  $childCareReportService->get_mnp($request, 'MNP', 'F')->get();
@@ -162,9 +164,9 @@ class ChildCareReport2018Controller extends Controller
         $mnp2_12_23_Male =  $childCareReportService->get_mnp($request, 'MNP2', 'M')->get();
         $mnp2_12_23_Female =  $childCareReportService->get_mnp($request, 'MNP2', 'F')->get();
 
-        //Sick Infant 6-11 months with vitamin A
-        $sick_infant_6_11_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 6)->get();
-        $sick_infant_6_11_vit_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 6)->get();
+        //Sick Children 6-11 months with vitamin A
+        $sick_children_6_11_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 6)->get();
+        $sick_children_6_11_vita_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 6)->get();
 
         //Sick Children 12-59 months with vitamin A
         $sick_children_12_59_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 12)->get();
@@ -204,7 +206,11 @@ class ChildCareReport2018Controller extends Controller
 
         //0-59 MONTHS STUNTED
         $stunted_0_59_months_m =  $childCareReportService->get_stunted_wasted($request, 'M', 'Stunted')->get();
-        $stunted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Wasted')->get();
+        $stunted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Stunted')->get();
+
+        //0-59 MONTHS WASTED
+        $wasted_0_59_months_m =  $childCareReportService->get_stunted_wasted($request, 'M', 'Wasted')->get();
+        $wasted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Wasted')->get();
 
        return [
 
@@ -300,12 +306,12 @@ class ChildCareReport2018Controller extends Controller
             'Initiated_Breastfeeding_90mins_Female' => $init_bfed_f,
 
             //Vitamin A 1st Dose
-            '6_11_months_vit_a_Male' => $vit_a_1st_m,
-            '6_11_months_vit_a_Female' => $vit_a_1st_f,
+            'vit_a_6_11_months_Male' => $vit_a_1st_m,
+            'vit_a_6_11_months_Female' => $vit_a_1st_f,
 
             //Vitamin A 2nd & 3rd Dose
-            '12_59_months_vit_a_Male' => $vit_a_2nd_3rd_m,
-            '12_59_months_vit_a_Female' => $vit_a_2nd_3rd_f,
+            'vit_a_12_59_months_Male' => $vit_a_2nd_3rd_m,
+            'vit_a_12_59_months_Female' => $vit_a_2nd_3rd_f,
 
             //Preterm/LBW Iron
             'preterm_iron_Male' => $preterm_iron_m,
@@ -332,12 +338,16 @@ class ChildCareReport2018Controller extends Controller
             'sick_infant_6_to_11_months_Female' => $sick_infant_6_11_f,
 
             //Sick Children 12-59 months
-            'deworming_12_to_59_months_Male' => $sick_children_12_59_m,
-            'deworming_12_to_59_months_Female' => $sick_children_12_59_f,
+            'sick_children_12_to_59_months_Male' => $sick_children_12_59_m,
+            'sick_children_12_to_59_months_Female' => $sick_children_12_59_f,
 
             //Pneumonia 0-59 months
             'pneumonia_0_59_months_Male' => $pneumonia_0_59_Male,
             'pneumonia_0_59_months_Female' => $pneumonia_0_59_Female,
+
+           //Diarrhea 0-59 months
+           'diarrhea_0_59_months_Male' => $diarrhea_0_59_Male,
+           'diarrhea_0_59_months_Female' => $diarrhea_0_59_Female,
 
             //MNP 6-11 months
             'mnp_6_11_months_Male' => $mnp_6_11_Male,
@@ -347,9 +357,9 @@ class ChildCareReport2018Controller extends Controller
             'mnp2_12_23_months_Male' => $mnp2_12_23_Male,
             'mnp2_12_23_months_Female' => $mnp2_12_23_Female,
 
-            //Sick Infant 6-11 months with vitamin A
-            'sick_infant_6_to_11_months_with_vit_a_Male' => $sick_infant_6_11_vit_a_m,
-            'sick_infant_6_to_11_months_with_vita_a_Female' => $sick_infant_6_11_vit_a_f,
+            //Sick Children 12-59 months with vitamin A
+            'sick_children_6_to_11_months_with_vit_a_Male' => $sick_children_6_11_vit_a_m,
+            'sick_children_6_to_11_months_with_vit_a_Female' => $sick_children_6_11_vita_a_f,
 
             //Sick Children 12-59 months with vitamin A
             'sick_children_12_to_59_months_with_vit_a_Male' => $sick_children_12_59_vit_a_m,
@@ -390,6 +400,10 @@ class ChildCareReport2018Controller extends Controller
            //0-59 MONTHS Stunted
            'stunted_0_59_months_Male' => $stunted_0_59_months_m,
            'stunted_0_59_months_Female' => $stunted_0_59_months_f,
+
+           //0-59 MONTHS WASTED
+           'wasted_0_59_months_Male' => $wasted_0_59_months_m,
+           'wasted_0_59_months_Female' => $wasted_0_59_months_f,
 
         ];
     }

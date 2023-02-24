@@ -4,10 +4,10 @@ use Carbon\Carbon;
 
 if(!function_exists('get_aog')) {
     /**
-    * @param date $lmp_date
-    * @param date $visit_date
-    * @return array
-    */
+     * @param date $lmp_date
+     * @param date $visit_date
+     * @return array
+     */
 
     function get_aog($lmp_date, $visit_date)
     {
@@ -25,7 +25,7 @@ if(!function_exists('get_trimester')) {
      * @param date $trimester1_date
      * @param date $trimester2_date
      * @return integer
-    */
+     */
 
     function get_trimester($visit_date, $trimester1_date, $trimester2_date)
     {
@@ -47,7 +47,7 @@ if(!function_exists('get_postpartum_week')) {
      * @param date $visit_date
      * @param date $delivery_date
      * @return integer
-    */
+     */
 
     function get_postpartum_week($visit_date, $delivery_date)
     {

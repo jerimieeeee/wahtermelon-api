@@ -82,7 +82,7 @@ class KonsultaController extends Controller
     {
         $list = $service->soapMethod('extractRegistrationList', $request->only('pStartDate', 'pEndDate'));
         if(isset($list->ASSIGNMENT)) {
-            $service->saveRegistrationList($list->ASSIGNMENT);
+            $service->saveRegistrationList(array_filter($list->ASSIGNMENT));
         }
         return $list;
     }
