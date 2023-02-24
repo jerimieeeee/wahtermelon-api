@@ -302,12 +302,12 @@ class ChildCareReport2018Controller extends Controller
             'Initiated_Breastfeeding_90mins_Female' => $init_bfed_f,
 
             //Vitamin A 1st Dose
-            '6_11_months_vit_a_Male' => $vit_a_1st_m,
-            '6_11_months_vit_a_Female' => $vit_a_1st_f,
+            'vit_a_6_11_months_Male' => $vit_a_1st_m,
+            'vit_a_6_11_months_Female' => $vit_a_1st_f,
 
             //Vitamin A 2nd & 3rd Dose
-            '12_59_months_vit_a_Male' => $vit_a_2nd_3rd_m,
-            '12_59_months_vit_a_Female' => $vit_a_2nd_3rd_f,
+            'vit_a_12_59_months_Male' => $vit_a_2nd_3rd_m,
+            'vit_a_12_59_months_Female' => $vit_a_2nd_3rd_f,
 
             //Preterm/LBW Iron
             'preterm_iron_Male' => $preterm_iron_m,
