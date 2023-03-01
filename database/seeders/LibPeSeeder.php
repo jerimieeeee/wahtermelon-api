@@ -136,7 +136,7 @@ class LibPeSeeder extends Seeder
           ['category_id' => 'NEURO', 'pe_id' => 'NEURO11',  'pe_desc' => 'Poor/altered memory',                 'konsulta_pe_id' => '11',   'seq_id' => '11',  'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'NEURO', 'pe_id' => 'NEURO12',  'pe_desc' => 'Poor muscle tone/strength',           'konsulta_pe_id' => '12',   'seq_id' => '10',  'konsulta_library_status' => '1', 'modules' => 'cn'],
           ['category_id' => 'NEURO', 'pe_id' => 'NEURO13',  'pe_desc' => 'Poor coordination',                   'konsulta_pe_id' => '13',   'seq_id' => '9',  'konsulta_library_status' => '1', 'modules' => 'cn'],
-          ['category_id' => 'NEURO', 'pe_id' => 'NEURO14',  'pe_desc' => 'Others',                              'konsulta_pe_id' => '14',   'seq_id' => '1',  'konsulta_library_status' => '1', 'modules' => 'cn'],
+          ['category_id' => 'NEURO', 'pe_id' => 'NEURO14',  'pe_desc' => 'Others',                              'konsulta_pe_id' => '99',   'seq_id' => '1',  'konsulta_library_status' => '1', 'modules' => 'cn'],
 
           //DIGITAL RECTAL
           ['category_id' => 'RECTAL', 'pe_id' => 'RECTAL01',  'pe_desc' => 'Essentially normal',                'konsulta_pe_id' => '1',  'seq_id' => '1',  'konsulta_library_status' => '1', 'modules' => 'cn'],
