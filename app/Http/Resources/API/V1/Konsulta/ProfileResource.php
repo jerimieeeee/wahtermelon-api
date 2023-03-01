@@ -211,8 +211,8 @@ class ProfileResource extends JsonResource
         array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationYoungWomenResource::collection(!empty($immunizationYoungWomen) ? $immunizationYoungWomen->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
         array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationPregnantWomenResource::collection(!empty($immunizationPregnant) ? $immunizationPregnant->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
         array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationElderlyResource::collection(!empty($immunizationElderly) ? $immunizationElderly->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
-        if(!empty($immunizationOther)){
-            array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationOtherResource::collection(!empty($immunizationOther) ? $immunizationOther : [[]])->resolve()]);
+        if(count($immunizationOther) > 0){
+            array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationOtherResource::collection(count($immunizationOther) > 0 ? $immunizationOther : [[]])->resolve()]);
         }
         return $profile;
     }
