@@ -164,6 +164,10 @@ class ChildCareReport2018Controller extends Controller
         $mnp2_12_23_Male =  $childCareReportService->get_mnp($request, 'MNP2', 'M')->get();
         $mnp2_12_23_Female =  $childCareReportService->get_mnp($request, 'MNP2', 'F')->get();
 
+        //Sick Children 6-11 months with vitamin A
+        $sick_children_6_11_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 6)->get();
+        $sick_children_6_11_vita_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 6)->get();
+
         //Sick Children 12-59 months with vitamin A
         $sick_children_12_59_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 12)->get();
         $sick_children_12_59_vita_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 12)->get();
@@ -302,12 +306,12 @@ class ChildCareReport2018Controller extends Controller
             'Initiated_Breastfeeding_90mins_Female' => $init_bfed_f,
 
             //Vitamin A 1st Dose
-            '6_11_months_vit_a_Male' => $vit_a_1st_m,
-            '6_11_months_vit_a_Female' => $vit_a_1st_f,
+            'vit_a_6_11_months_Male' => $vit_a_1st_m,
+            'vit_a_6_11_months_Female' => $vit_a_1st_f,
 
             //Vitamin A 2nd & 3rd Dose
-            '12_59_months_vit_a_Male' => $vit_a_2nd_3rd_m,
-            '12_59_months_vit_a_Female' => $vit_a_2nd_3rd_f,
+            'vit_a_12_59_months_Male' => $vit_a_2nd_3rd_m,
+            'vit_a_12_59_months_Female' => $vit_a_2nd_3rd_f,
 
             //Preterm/LBW Iron
             'preterm_iron_Male' => $preterm_iron_m,
@@ -352,6 +356,10 @@ class ChildCareReport2018Controller extends Controller
             //MNP2 12-23 months
             'mnp2_12_23_months_Male' => $mnp2_12_23_Male,
             'mnp2_12_23_months_Female' => $mnp2_12_23_Female,
+
+            //Sick Children 12-59 months with vitamin A
+            'sick_children_6_to_11_months_with_vit_a_Male' => $sick_children_6_11_vit_a_m,
+            'sick_children_6_to_11_months_with_vit_a_Female' => $sick_children_6_11_vita_a_f,
 
             //Sick Children 12-59 months with vitamin A
             'sick_children_12_to_59_months_with_vit_a_Male' => $sick_children_12_59_vit_a_m,
