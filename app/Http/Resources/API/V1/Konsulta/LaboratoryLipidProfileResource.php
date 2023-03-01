@@ -20,7 +20,7 @@ class LaboratoryLipidProfileResource extends JsonResource
                 'pLabDate' => isset($this->lipiProfile->laboratory_date) ? $this->lipiProfile->laboratory_date->format('Y-m-d') : "",
                 'pLdl' => strtoupper($this->lipiProfile->ldl?? ""),
                 'pHdl' => strtoupper($this->lipiProfile->hdl?? ""),
-                'pTotal' => "",
+                'pTotal' => strtoupper($this->lipiProfile->cholesterol?? ""),
                 'pCholesterol' => strtoupper($this->lipiProfile->cholesterol?? ""),
                 'pTriglycerides' => strtoupper($this->lipiProfile->triglycerides?? ""),
                 'pDateAdded' => isset($this->lipiProfile->created_at) ? $this->lipiProfile->created_at->format('Y-m-d') : "",
