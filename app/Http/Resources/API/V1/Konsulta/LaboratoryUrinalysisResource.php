@@ -16,7 +16,7 @@ class LaboratoryUrinalysisResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => "",
+                'pReferralFacility' => $this->referral_facility?? "",
                 'pLabDate' => isset($this->urinalysis->laboratory_date) ? $this->urinalysis->laboratory_date->format('Y-m-d') : "",
                 'pGravity' => strtoupper($this->urinalysis->gravity?? ""),
                 'pAppearance' => strtoupper($this->urinalysis->appearance?? ""),
