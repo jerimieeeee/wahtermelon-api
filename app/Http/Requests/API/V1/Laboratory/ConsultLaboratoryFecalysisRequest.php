@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibLaboratoryBloodInStool;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Libraries\LibLaboratoryStoolColor;
 use App\Models\V1\Libraries\LibLaboratoryStoolConsistency;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
@@ -35,6 +36,7 @@ class ConsultLaboratoryFecalysisRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'referral_facility' => 'nullable',
             'color_code' => 'required|exists:lib_laboratory_stool_colors,code',
             'consistency_code' => 'required|exists:lib_laboratory_stool_colors,code',
             'rbc' => 'nullable',
@@ -72,6 +74,9 @@ class ConsultLaboratoryFecalysisRequest extends FormRequest
             ],
             'laboratory_date' => [
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+            ],
+            'referral_facility' => [
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
             ],
             'color_code' => [
                 'example' => fake()->randomElement(LibLaboratoryStoolColor::pluck('code')->toArray())
