@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Konsulta;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ImmunizationResource extends JsonResource
+class ImmunizationPregnantWomenResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,9 @@ class ImmunizationResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pChildImmcode' => !empty($this->child_vaccine) ? $this->child_vaccine : "999",
+                'pChildImmcode' => "",
                 'pYoungwImmcode' => "",
-                'pPregwImmcode' => "",
+                'pPregwImmcode' => !empty($this->pregnant_women_vaccine) ? $this->pregnant_women_vaccine : "999",
                 'pElderlyImmcode' => "",
                 'pOtherImm' => "",
                 'pReportStatus' => "U",
