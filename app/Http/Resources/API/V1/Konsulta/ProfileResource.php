@@ -3,9 +3,12 @@
 namespace App\Http\Resources\API\V1\Konsulta;
 
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Patient\PatientVaccine;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+
+use function PHPUnit\Framework\isNull;
 
 class ProfileResource extends JsonResource
 {
@@ -70,7 +73,87 @@ class ProfileResource extends JsonResource
             ->whereRaw('consults.patient_id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id?? "", $this->philhealthLatest->enlistment_date?? ""])
             ->first();
 
-        return [
+        $immunizationChild = PatientVaccine::select('patient_id', 'vaccine_id')
+            ->selectRaw('
+                ROW_NUMBER() OVER (PARTITION BY patient_id, vaccine_id ORDER BY vaccine_id) as group_increment,
+                CASE
+                    WHEN vaccine_id = "BCG"
+                    THEN "C01"
+                    WHEN vaccine_id = "OPV"
+                    THEN CONCAT("C0",ROW_NUMBER() OVER (PARTITION BY patient_id, vaccine_id ORDER BY vaccine_id) + 1)
+                    WHEN vaccine_id = "DPT"
+                    THEN CONCAT("C0",ROW_NUMBER() OVER (PARTITION BY patient_id, vaccine_id ORDER BY vaccine_id) + 4)
+                    WHEN vaccine_id = "MCV"
+                    THEN "C08"
+                    WHEN vaccine_id = "HEPB"
+                    THEN CONCAT("C", LPAD(8 + ROW_NUMBER() OVER (PARTITION BY patient_id, vaccine_id ORDER BY vaccine_id), 2, "0"))
+                    WHEN vaccine_id = "HEPA"
+                    THEN "C12"
+                    WHEN vaccine_id = "CPV"
+                    THEN "C13"
+                END AS child_vaccine
+            ')
+            ->whereIn('vaccine_id', ['BCG', 'OPV', 'DPT', 'MCV', 'HEPB', 'CPV'])
+            // ->whereIn('vaccine_id', ['x'])
+            ->wherePatientId($this->id?? "")
+            ->get();
+
+        $immunizationYoungWomen = PatientVaccine::query()
+            ->selectRaw('
+                CASE
+                    WHEN vaccine_id = "HPV"
+                    THEN "Y01"
+                    WHEN vaccine_id IN ("MRGR", "MRGR7")
+                    THEN "Y02"
+                END AS young_women_vaccine
+            ')
+            ->whereHas('patient', fn($query) => $query->where('gender', 'F'))
+            ->whereIn('vaccine_id', ['HPV', 'MRGR', 'MRGR7'])
+            // ->whereIn('vaccine_id', ['x'])
+            ->wherePatientId($this->id?? "")
+            ->groupBy('vaccine_id')
+            ->get();
+
+        $immunizationPregnant = PatientVaccine::query()
+            ->selectRaw('
+                CASE
+                    WHEN vaccine_id = "TD"
+                    THEN "P01"
+                END AS pregnant_women_vaccine
+            ')
+            ->whereHas('patient', fn($query) => $query->where('gender', 'F'))
+            ->where('vaccine_id', 'TD')
+            // ->whereIn('vaccine_id', ['x'])
+            ->wherePatientId($this->id?? "")
+            ->groupBy('vaccine_id')
+            ->get();
+
+        $immunizationElderly = PatientVaccine::query()
+            ->selectRaw('
+                CASE
+                    WHEN vaccine_id = "PPV"
+                    THEN "E01"
+                    WHEN vaccine_id = "FLU"
+                    THEN "E02"
+                END AS elderly_vaccine
+            ')
+            ->whereIn('vaccine_id', ['PPV', 'FLU'])
+            // ->whereIn('vaccine_id', ['x'])
+            ->wherePatientId($this->id?? "")
+            ->groupBy('vaccine_id')
+            ->get();
+
+        $immunizationOther = PatientVaccine::query()
+            ->select('vaccine_id')
+            ->with('vaccines')
+            ->whereNotIn('vaccine_id', ['BCG', 'OPV', 'DPT', 'MCV', 'HEPB', 'CPV', 'HPV', 'MRGR', 'MRGR7', 'TD', 'PPV', 'FLU'])
+            // ->whereIn('vaccine_id', ['x'])
+            ->wherePatientId($this->id?? "")
+            ->groupBy('vaccine_id')
+            ->get();
+
+
+        $profile = [
             '_attributes' => [
                 'pHciTransNo' => !empty($this->philhealthLatest->transaction_number) ? 'P'.$this->philhealthLatest->transaction_number : "",
                 'pHciCaseNo' => $this->case_number?? "",
@@ -103,7 +186,7 @@ class ProfileResource extends JsonResource
             ],
             'SOCHIST' => [SocialHistoryResource::make(!empty($this->socialHistory) ? $this->socialHistory : [[]])->resolve()],
             'IMMUNIZATIONS' => [
-                'IMMUNIZATION' => [ImmunizationResource::collection(!empty($this->immunization) ? $this->immunization->whenEmpty(fn() => [[]]) : [[]])->resolve()]
+                'IMMUNIZATION' => []
             ],
             'MENSHIST' => [MenstrualHistoryResource::make(!empty($this->menstrualHistory) ? $this->menstrualHistory : [[]])->resolve()],
             'PREGHIST' => [PregnancyHistoryResource::make(!empty($this->pregnancyHistory) ? $this->pregnancyHistory : [[]])->resolve()],
@@ -111,7 +194,7 @@ class ProfileResource extends JsonResource
             'BLOODTYPE' => [
                 '_attributes' => [
 
-                    'pBloodType'=>$this->blood_type_code?? "",
+                    'pBloodType'=> isset($this->blood_type_code) &&  $this->blood_type_code != "NA" ? $this->blood_type_code : "",
                     'pReportStatus'=>"U",
                     'pDeficiencyRemarks'=>""
                 ]
@@ -123,5 +206,12 @@ class ProfileResource extends JsonResource
             'PESPECIFIC' => [PhysicalExaminationSpecificResource::make(!empty($physicalExamSpecific) ? $physicalExamSpecific : [[]])->resolve()],
             'NCDQANS' => [NonCommunicableDiseaseResource::make(!empty($this->ncdRiskAssessmentLatest) ? $this->ncdRiskAssessmentLatest : [[]])->resolve()],
         ];
+
+        array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationResource::collection(!empty($immunizationChild) ? $immunizationChild->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
+        array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationYoungWomenResource::collection(!empty($immunizationYoungWomen) ? $immunizationYoungWomen->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
+        array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationPregnantWomenResource::collection(!empty($immunizationPregnant) ? $immunizationPregnant->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
+        array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationElderlyResource::collection(!empty($immunizationElderly) ? $immunizationElderly->whenEmpty(fn() => [[]]) : [[]])->resolve()]);
+        array_push($profile['IMMUNIZATIONS']['IMMUNIZATION'], [ImmunizationOtherResource::collection(!empty($immunizationOther) ? $immunizationOther : [[]])->resolve()]);
+        return $profile;
     }
 }
