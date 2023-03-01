@@ -16,7 +16,7 @@ class LaboratoryRbsResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => $this->referral_facility?? "",
+                'pReferralFacility' => strtoupper($this->rbs->referral_facility?? ""),
                 'pLabDate' => isset($this->rbs->laboratory_date) ? $this->rbs->laboratory_date->format('Y-m-d') : "",
                 'pGlucoseMg' => strtoupper($this->rbs->glucose?? ""),
                 'pGlucoseMmol' => "",

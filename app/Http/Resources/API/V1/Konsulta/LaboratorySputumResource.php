@@ -16,7 +16,7 @@ class LaboratorySputumResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => $this->referral_facility?? "",
+                'pReferralFacility' => strtoupper($this->sputum->referral_facility?? ""),
                 'pLabDate' => isset($this->sputum->laboratory_date) ? $this->sputum->laboratory_date->format('Y-m-d') : "",
                 'pDataCollection' => $this->sputum->data_collection_code?? "",
                 'pFindings' => $this->sputum->findings_code?? "",

@@ -16,7 +16,7 @@ class LaboratoryHba1cResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => $this->referral_facility?? "",
+                'pReferralFacility' => strtoupper($this->hba1c->referral_facility?? ""),
                 'pLabDate' => isset($this->hba1c->laboratory_date) ? $this->hba1c->laboratory_date->format('Y-m-d') : "",
                 'pFindings' => strtoupper($this->hba1c->findings_code?? ""),
                 'pDateAdded' => isset($this->hba1c->created_at) ? $this->hba1c->created_at->format('Y-m-d') : "",
