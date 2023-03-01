@@ -5,6 +5,7 @@ namespace App\Http\Requests\API\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
@@ -32,6 +33,7 @@ class ConsultLaboratoryOralGlucoseRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'referral_facility' => 'nullable',
             'fasting_exam_mg' => 'nullable',
             'fasting_exam_mmol' => 'nullable',
             'ogtt_one_hour_mg' => 'nullable',
@@ -67,6 +69,9 @@ class ConsultLaboratoryOralGlucoseRequest extends FormRequest
             ],
             'laboratory_date' => [
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+            ],
+            'referral_facility' => [
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
             ],
             'fasting_exam_mg' => [
                 'example' => fake()->numberBetween(1, 10)

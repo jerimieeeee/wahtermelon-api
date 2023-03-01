@@ -25,6 +25,7 @@ class ConsultLaboratoryFbsResource extends JsonResource
             'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
             'user' => $this->when($this->relationLoaded('user'),$this->user->first_name . ' ' . $this->user->middle_name . ' ' . $this->user->last_name),
             'laboratory_date' => $this->laboratory_date->format('Y-m-d'),
+            'referral_facility' => $this->referral_facility,
             'request_id' => $this->when(!$this->relationLoaded('laboratoryRequest'),$this->request_id),
             'request' => $this->whenLoaded('laboratoryRequest'),
             'glucose' => $this->glucose,

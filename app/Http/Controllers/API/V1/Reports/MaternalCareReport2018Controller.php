@@ -47,13 +47,13 @@ class MaternalCareReport2018Controller extends Controller
 
         ///////////////////////
         //PRENATAL NORMAL BMI AGE 10-14 YEARS
-        $prenatal_normal_bmi_10_14 =  $maternalCareReportService->pregnant_normal_bmi($request, 'NORMAL', '10', '14')->get();
+        $prenatal_normal_bmi_10_14 =  $maternalCareReportService->pregnant_normal_bmi($request, '10', '14')->get();
 
         //PRENATAL NORMAL BMI AGE 15-19 YEARS
-        $prenatal_normal_bmi_15_19 =  $maternalCareReportService->pregnant_normal_bmi($request, 'NORMAL', '15', '19')->get();
+        $prenatal_normal_bmi_15_19 =  $maternalCareReportService->pregnant_normal_bmi($request, '15', '19')->get();
 
         //PRENATAL NORMAL BMI AGE 20-49 YEARS
-        $prenatal_normal_bmi__20_49 =  $maternalCareReportService->pregnant_normal_bmi($request, 'NORMAL', '20', '49')->get();
+        $prenatal_normal_bmi__20_49 =  $maternalCareReportService->pregnant_normal_bmi($request, '20', '49')->get();
 
 
         //////////////////////

@@ -29,7 +29,7 @@ class MaternalCareReportService
                         ELSE
                             NULL
                         END) AS trimester3,
-                      DATE_FORMAT(GROUP_CONCAT(DISTINCT delivery_date), '%Y-%m-%d') AS delivery_date,
+                      DATE_FORMAT(GROUP_CONCAT(DISTINCT delivery_date), '%Y-%m-%d') AS date_of_service,
                       TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(DISTINCT delivery_date)) AS age_year
                 ")
                 ->from('consult_mc_prenatals')
@@ -43,12 +43,12 @@ class MaternalCareReportService
                         SUM(trimester1) AS trimester1_count,
                         SUM(trimester2) AS trimester2_count,
                         SUM(trimester3) AS trimester3_count,
-                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        DATE_FORMAT(date_of_service, '%Y-%m-%d') AS date_of_service,
                         age_year
             ")
-            ->whereYear('delivery_date', $request->year)
-            ->whereMonth('delivery_date', $request->month)
-            ->groupBy('name', 'delivery_date', 'age_year')
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
+            ->groupBy('name', 'date_of_service', 'age_year')
             ->havingRaw('(trimester1_count >= 1 AND trimester2_count >= 1 AND trimester3_count >= 2) AND (age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -59,7 +59,7 @@ class MaternalCareReportService
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
 	                    birthdate,
-	                    prenatal_date,
+	                    prenatal_date AS date_of_service,
 	                    trimester,
 	                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(prenatal_date)) AS age_year
                     ")
@@ -77,35 +77,37 @@ class MaternalCareReportService
     }
 
 
-    public function pregnant_normal_bmi($request, $bmi_status, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_normal_bmi($request, $age_year_bracket1, $age_year_bracket2)
     {
-        return DB::table(function ($query) {
+        return DB::table(function ($query) use($request) {
             $query->selectRaw("
-                    CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                    ROUND(patient_weight / POWER((patient_height / 100), 2), 1) AS bmi,
-                    prenatal_date,
-                    trimester,
-                    birthdate
+                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                            ROUND(patient_weight / POWER((patient_height / 100), 2), 1) AS bmi,
+                            GROUP_CONCAT(DATE_FORMAT(prenatal_date, '%Y-%m-%d')) AS prenatal_date,
+                            trimester,
+                            birthdate,
                 ")
                 ->from('consult_mc_prenatals')
-                ->join('patients', 'consult_mc_prenatals.patient_id', '=', 'patients.id');
+                ->join('patients', 'consult_mc_prenatals.patient_id', '=', 'patients.id')
+                ->whereTrimester('1')
+                ->whereYear('prenatal_date', $request->year)
+                ->whereMonth('prenatal_date', $request->month)
+                ->groupBy('patient_id', 'patient_weight', 'patient_height', 'trimester');
         })
             ->selectRaw("
-                    name,
-                    CASE WHEN bmi BETWEEN 18.5 AND 22.9 THEN
-                        'NORMAL'
-                    ELSE
-                        NULL
-                    END AS bmi_status,
-                    birthdate,
-                    prenatal_date,
-                    trimester,
-                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(prenatal_date)) AS age_year
+                        name,
+                        CASE WHEN bmi BETWEEN 18.5
+                            AND 22.9 THEN
+                            'NORMAL'
+                        ELSE
+                            NULL
+                        END AS bmi_status,
+                        birthdate,
+                        SUBSTRING_INDEX(prenatal_date, ',', - 1) AS date_of_service,
+                        trimester
             ")
-            ->whereYear('prenatal_date', $request->year)
-            ->whereMonth('prenatal_date', $request->month)
-            ->groupBy('name', 'bmi', 'prenatal_date', 'trimester', 'birthdate')
-            ->havingRaw('(bmi_status = ? AND trimester = 1) AND (age_year BETWEEN ? AND ?)', [$bmi_status, $age_year_bracket1, $age_year_bracket2])
+            ->groupBy('name', 'bmi', 'date_of_service', 'trimester', 'birthdate')
+            ->havingRaw('(bmi_status = Normal AND trimester = 1) AND (age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
 
@@ -115,7 +117,7 @@ class MaternalCareReportService
             $query->selectRaw("
                     CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                     ROUND(patient_weight / POWER((patient_height / 100), 2), 1) AS bmi,
-                    prenatal_date,
+                    prenatal_date AS date_of_service,
                     trimester,
                     birthdate
                 ")
@@ -130,13 +132,13 @@ class MaternalCareReportService
                         NULL
                     END AS bmi_status,
                     birthdate,
-                    prenatal_date,
+                    date_of_service,
                     trimester,
-                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(prenatal_date)) AS age_year
+                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(date_of_service)) AS age_year
             ")
-            ->whereYear('prenatal_date', $request->year)
-            ->whereMonth('prenatal_date', $request->month)
-            ->groupBy('name', 'bmi', 'prenatal_date', 'trimester', 'birthdate')
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
+            ->groupBy('name', 'bmi', 'date_of_service', 'trimester', 'birthdate')
             ->havingRaw('(bmi_status = ? AND trimester = 1) AND (age_year BETWEEN ? AND ?)', [$bmi_status, $age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -147,7 +149,7 @@ class MaternalCareReportService
             $query->selectRaw("
                     CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                     ROUND(patient_weight / POWER((patient_height / 100), 2), 1) AS bmi,
-                    prenatal_date,
+                    prenatal_date AS date_of_service,
                     trimester,
                     birthdate
                 ")
@@ -162,13 +164,13 @@ class MaternalCareReportService
                         NULL
                     END AS bmi_status,
                     birthdate,
-                    prenatal_date,
+                    date_of_service,
                     trimester,
-                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(prenatal_date)) AS age_year
+                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(date_of_service)) AS age_year
             ")
-            ->whereYear('prenatal_date', $request->year)
-            ->whereMonth('prenatal_date', $request->month)
-            ->groupBy('name', 'bmi', 'prenatal_date', 'trimester', 'birthdate')
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
+            ->groupBy('name', 'bmi', 'date_of_service', 'trimester', 'birthdate')
             ->havingRaw('(bmi_status = ? AND trimester = 1) AND (age_year BETWEEN ? AND ?)', [$bmi_status, $age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -180,7 +182,7 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         vaccine_id,
                         birthdate,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 2), ',', - 1) AS vaccine_date,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 2), ',', - 1) AS date_of_service,
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY status_id DESC), ',', 2), ',', - 1) AS status_id,
                         TIMESTAMPDIFF(YEAR, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 2), ',', - 1)) AS age_year
                     ")
@@ -188,7 +190,7 @@ class MaternalCareReportService
             ->join('patient_vaccines', 'consult_mc_prenatals.patient_id', '=', 'patient_vaccines.patient_id')
             ->whereVaccineId('TD')
             ->groupBy('consult_mc_prenatals.patient_id', 'vaccine_id')
-            ->havingRaw('COUNT(vaccine_id) = 2 AND status_id = 1 AND (age_year BETWEEN ? AND ?) AND year(vaccine_date) = ? AND month(vaccine_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('COUNT(vaccine_id) = 2 AND status_id = 1 AND (age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -199,7 +201,7 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         vaccine_id,
                         birthdate,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 3), ',', - 1) AS vaccine_date,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 3), ',', - 1) AS date_of_service,
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY status_id DESC), ',', 3), ',', - 1) AS status_id,
                         TIMESTAMPDIFF(YEAR, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 2), ',', - 1)) AS age_year
                     ")
@@ -207,7 +209,7 @@ class MaternalCareReportService
             ->join('patient_vaccines', 'consult_mc_prenatals.patient_id', '=', 'patient_vaccines.patient_id')
             ->whereVaccineId('TD')
             ->groupBy('consult_mc_prenatals.patient_id', 'vaccine_id')
-            ->havingRaw('COUNT(vaccine_id) = 3 AND status_id = 1 AND (age_year BETWEEN ? AND ?) AND year(vaccine_date) = ? AND month(vaccine_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('COUNT(vaccine_id) = 3 AND status_id = 1 AND (age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -216,7 +218,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
+                        service_date AS date_of_service,
                         service_id,
                         service_qty,
                         visit_status,
@@ -226,7 +228,7 @@ class MaternalCareReportService
             ->whereServiceId('IRON')
             ->where('service_qty', '>=', 180)
             ->whereVisitStatus('Prenatal')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -235,7 +237,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
+                        service_date AS date_of_service,
                         service_id,
                         service_qty,
                         visit_status,
@@ -245,7 +247,7 @@ class MaternalCareReportService
             ->whereServiceId('CALC')
             ->where('service_qty', '>=', 420)
             ->whereVisitStatus('Prenatal')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -254,7 +256,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
+                        service_date AS date_of_service,
                         service_id,
                         service_qty,
                         visit_status,
@@ -264,7 +266,7 @@ class MaternalCareReportService
             ->whereServiceId('IODN')
             ->where('service_qty', '>=', 2)
             ->whereVisitStatus('Prenatal')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -273,7 +275,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
+                        service_date AS date_of_service,
                         service_id,
                         service_qty,
                         visit_status,
@@ -283,7 +285,7 @@ class MaternalCareReportService
             ->whereServiceId('DWRMG')
             ->where('service_qty', '>=', 1)
             ->whereVisitStatus('Prenatal')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -292,7 +294,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_date,
+                        service_date AS date_of_service,
                         service_id,
                         positive_result,
                         visit_status,
@@ -302,13 +304,13 @@ class MaternalCareReportService
             ->when($class == $class,  fn($query) =>
                      $query->whereServiceId($class2)
                            ->whereVisitStatus('Prenatal')
-                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
                 )
             ->when($class == $class, fn($query) =>
                      $query->whereServiceId($class2)
                            ->wherePositiveResult('1')
                            ->whereVisitStatus('Prenatal')
-                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
                 )
             ->orderBy('name', 'ASC');
     }
@@ -319,14 +321,14 @@ class MaternalCareReportService
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
-                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service,
                         outcome_code,
                         TIMESTAMPDIFF(YEAR, birthdate, delivery_date) AS age_year
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -336,7 +338,7 @@ class MaternalCareReportService
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
-                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service,
                         outcome_code,
                         TIMESTAMPDIFF(YEAR, birthdate, delivery_date) AS age_year
                     ")
@@ -344,11 +346,11 @@ class MaternalCareReportService
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
             ->when($gender == 'MALE',  fn($query) =>
                      $query->whereIn('outcome_code', ['LSCM', 'NSDM'])
-                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                           ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
             ->when($gender == 'FEMALE',  fn($query) =>
             $query->whereIn('outcome_code', ['LSCF', 'NSDF'])
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
             ->orderBy('name', 'ASC');
     }
@@ -359,14 +361,14 @@ class MaternalCareReportService
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
-                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS delivery_date,
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service,
                         attendant_code,
                         TIMESTAMPDIFF(YEAR, birthdate, delivery_date) AS age_year
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
             ->whereIn('attendant_code', ['MD', 'MW', 'RN'])
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(delivery_date) = ? AND month(delivery_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -376,13 +378,13 @@ class MaternalCareReportService
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
-                        postpartum_date,
+                        postpartum_date AS date_of_service,
                         visit_sequence,
                         TIMESTAMPDIFF(YEAR, birthdate, postpartum_date) AS age_year
                     ")
             ->join('patients', 'consult_mc_postparta.patient_id', '=', 'patients.id')
             ->whereVisitSequence('2')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(postpartum_date) = ? AND month(postpartum_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -391,7 +393,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(service_date ORDER BY service_date ASC), ',', 1), ',', - 1) AS service_date,
+	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(service_date ORDER BY service_date ASC), ',', 1), ',', - 1) AS date_of_service,
                         service_id,
                         service_qty,
                         visit_status,
@@ -400,7 +402,7 @@ class MaternalCareReportService
             ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
             ->whereServiceId('VITA')
             ->whereVisitStatus('Postpartum')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(service_date) = ? AND month(service_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
