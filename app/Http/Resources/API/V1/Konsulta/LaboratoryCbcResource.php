@@ -16,7 +16,7 @@ class LaboratoryCbcResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => "",
+                'pReferralFacility' => $this->referral_facility?? "",
                 'pLabDate' => isset($this->cbc->laboratory_date) ? $this->cbc->laboratory_date->format('Y-m-d') : "",
                 'pHematocrit' => $this->cbc->hematocrit?? "",
                 'pHemoglobinG' => $this->cbc->hemoglobin?? "",
