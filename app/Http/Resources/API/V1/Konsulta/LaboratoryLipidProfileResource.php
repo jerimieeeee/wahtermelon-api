@@ -16,7 +16,7 @@ class LaboratoryLipidProfileResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => $this->referral_facility?? "",
+                'pReferralFacility' => strtoupper($this->lipiProfile->referral_facility?? ""),
                 'pLabDate' => isset($this->lipiProfile->laboratory_date) ? $this->lipiProfile->laboratory_date->format('Y-m-d') : "",
                 'pLdl' => strtoupper($this->lipiProfile->ldl?? ""),
                 'pHdl' => strtoupper($this->lipiProfile->hdl?? ""),
