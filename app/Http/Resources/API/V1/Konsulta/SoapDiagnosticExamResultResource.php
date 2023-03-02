@@ -108,6 +108,14 @@ class SoapDiagnosticExamResultResource extends JsonResource
             ->where('lab_code', 'HBA')
             ->where('consult_id', $this->id?? "")
             ->get();
+
+        //Other Diagnostic Exam
+        $gramStain = ConsultLaboratory::query()
+            ->whereHas('gramStain')
+            ->where('lab_code', 'GRMS')
+            ->where('consult_id', $this->id?? "")
+            ->get();
+
         $data = [
             '_attributes' => [
                 'pHciCaseNo' => $this->patient->case_number?? "",
@@ -163,6 +171,17 @@ class SoapDiagnosticExamResultResource extends JsonResource
         }
         if(count($hba1c)>0){
             $data['HbA1cs'] = ['HbA1c' => [LaboratoryHba1cResource::collection(!empty($hba1c) ? $hba1c : [[]])->resolve()]];
+        }
+
+        //Other Diagnostic Exam
+        $data['OTHERDIAGEXAMS'] = ['OTHERDIAGEXAM' => []];
+        if(count($gramStain)>0){
+            //$data['OTHERDIAGEXAMS'] = ['OTHERDIAGEXAM' => [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]];
+            array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]);
+        }
+
+        if(count($gramStain)==0) {
+            unset($data['OTHERDIAGEXAMS']);
         }
         return $data;
     }
