@@ -45,6 +45,8 @@ class MedicinePrescriptionResource extends JsonResource
             'quantity' => $this->quantity,
             'quantity_preparation' => $this->when(!$this->relationLoaded('quantityPreparation'),$this->quantity_preparation),
             'preparation' => $this->whenLoaded('quantityPreparation'),
+            'medicine_route_code' => $this->when(!$this->relationLoaded('medicineRoute'),$this->medicine_route_code),
+            'medicine_route' => $this->whenLoaded('medicineRoute'),
             'dispensing' => $this->whenLoaded('dispensing'),
             'total_dispensed' => $this->when($this->dispensing_sum_dispense_quantity, $this->dispensing_sum_dispense_quantity),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
