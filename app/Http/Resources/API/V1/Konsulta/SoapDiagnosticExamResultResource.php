@@ -4,6 +4,7 @@ namespace App\Http\Resources\API\V1\Konsulta;
 
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 
 class SoapDiagnosticExamResultResource extends JsonResource
 {
@@ -111,8 +112,16 @@ class SoapDiagnosticExamResultResource extends JsonResource
 
         //Other Diagnostic Exam
         $gramStain = ConsultLaboratory::query()
+            ->selectRaw("*, 'gramStain' AS lab")
             ->whereHas('gramStain')
             ->where('lab_code', 'GRMS')
+            ->where('consult_id', $this->id?? "")
+            ->get();
+
+        $microscopy = ConsultLaboratory::query()
+            ->selectRaw("*, 'microscopy' AS lab")
+            ->whereHas('microscopy')
+            ->where('lab_code', 'MCRP')
             ->where('consult_id', $this->id?? "")
             ->get();
 
@@ -180,7 +189,12 @@ class SoapDiagnosticExamResultResource extends JsonResource
             array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]);
         }
 
-        if(count($gramStain)==0) {
+        if(count($microscopy)>0){
+            //$data['OTHERDIAGEXAMS'] = ['OTHERDIAGEXAM' => [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]];
+            array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($microscopy) ? $microscopy : [[]])->resolve()]);
+        }
+
+        if(count($gramStain)==0 && count($microscopy)>0) {
             unset($data['OTHERDIAGEXAMS']);
         }
         return $data;
