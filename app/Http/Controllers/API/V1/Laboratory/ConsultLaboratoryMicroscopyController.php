@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\API\V1\Laboratory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryChestXrayRequest;
 use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryGramStainRequest;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryCbcResource;
+use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryMicroscopyRequest;
 use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryGramStainResource;
-use App\Models\V1\Laboratory\ConsultLaboratoryCbc;
-use App\Models\V1\Laboratory\ConsultLaboratoryChestXray;
+use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryMicroscopyResource;
 use App\Models\V1\Laboratory\ConsultLaboratoryGramStain;
+use App\Models\V1\Laboratory\ConsultLaboratoryMicroscopy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -21,10 +20,10 @@ use Throwable;
  * @group Laboratory Management
  *
  * APIs for managing laboratories
- * @subgroup Gram Stain
- * @subgroupDescription Consult laboratory for gram stain.
+ * @subgroup Microscopy
+ * @subgroupDescription Consult laboratory for microscopy.
  */
-class ConsultLaboratoryGramStainController extends Controller
+class ConsultLaboratoryMicroscopyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,15 +34,15 @@ class ConsultLaboratoryGramStainController extends Controller
      * @queryParam request_id string Consult Laboratory id to view.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
-     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryGramStainResource
-     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryGramStain paginate=15
+     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryMicroscopyResource
+     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryMicroscopy paginate=15
      * @param Request $request
      * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = ConsultLaboratoryGramStain::query()
+        $query = ConsultLaboratoryMicroscopy::query()
             ->when(isset($request->patient_id), function($query) use($request){
                 return $query->wherePatientId($request->patient_id);
             })
@@ -59,58 +58,58 @@ class ConsultLaboratoryGramStainController extends Controller
             ->allowedSorts('laboratory_date');
 
         if ($perPage == 'all') {
-            return ConsultLaboratoryGramStainResource::collection($laboratory->get());
+            return ConsultLaboratoryMicroscopyResource::collection($laboratory->get());
         }
 
-        return ConsultLaboratoryGramStainResource::collection($laboratory->paginate($perPage)->withQueryString());
+        return ConsultLaboratoryMicroscopyResource::collection($laboratory->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConsultLaboratoryGramStainRequest $request
+     * @param ConsultLaboratoryMicroscopyRequest $request
      * @return JsonResponse
      */
-    public function store(ConsultLaboratoryGramStainRequest $request): JsonResponse
+    public function store(ConsultLaboratoryMicroscopyRequest $request): JsonResponse
     {
-        $data = ConsultLaboratoryGramStain::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
-        return response()->json(['data' => new ConsultLaboratoryGramStainResource($data), 'status' => 'Success'], 201);
+        $data = ConsultLaboratoryMicroscopy::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+        return response()->json(['data' => new ConsultLaboratoryMicroscopyResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param ConsultLaboratoryGramStain $gramStain
-     * @return ConsultLaboratoryGramStainResource
+     * @param ConsultLaboratoryMicroscopy $microscopy
+     * @return ConsultLaboratoryMicroscopyResource
      */
-    public function show(ConsultLaboratoryGramStain $gramStain): ConsultLaboratoryGramStainResource
+    public function show(ConsultLaboratoryMicroscopy $microscopy): ConsultLaboratoryMicroscopyResource
     {
-        return new ConsultLaboratoryGramStainResource($gramStain);
+        return new ConsultLaboratoryMicroscopyResource($microscopy);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ConsultLaboratoryGramStainRequest $request
-     * @param ConsultLaboratoryGramStain $gramStain
+     * @param ConsultLaboratoryMicroscopyRequest $request
+     * @param ConsultLaboratoryMicroscopy $microscopy
      * @return JsonResponse
      */
-    public function update(ConsultLaboratoryGramStainRequest $request, ConsultLaboratoryGramStain $gramStain): JsonResponse
+    public function update(ConsultLaboratoryMicroscopyRequest $request, ConsultLaboratoryMicroscopy $microscopy): JsonResponse
     {
-        $gramStain->update($request->validated());
+        $microscopy->update($request->validated());
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConsultLaboratoryGramStain $gramStain
+     * @param ConsultLaboratoryMicroscopy $microscopy
      * @return JsonResponse
      * @throws Throwable
      */
-    public function destroy(ConsultLaboratoryGramStain $gramStain): JsonResponse
+    public function destroy(ConsultLaboratoryMicroscopy $microscopy): JsonResponse
     {
-        $gramStain->deleteOrFail();
+        $microscopy->deleteOrFail();
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

@@ -41,7 +41,8 @@ class ConsultLaboratory extends Model
         'urinalysis',
         'oralGlucose',
         'fecalOccult',
-        'gramStain'
+        'gramStain',
+        'microscopy'
     ];
 
     public $incrementing = false;
@@ -170,5 +171,10 @@ class ConsultLaboratory extends Model
     public function gramStain()
     {
         return $this->hasOne(ConsultLaboratoryGramStain::class, 'request_id', 'id');
+    }
+
+    public function microscopy()
+    {
+        return $this->hasOne(ConsultLaboratoryMicroscopy::class, 'request_id', 'id');
     }
 }

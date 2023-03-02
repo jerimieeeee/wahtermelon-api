@@ -513,6 +513,15 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-gram-stain/{gramStain}', 'update');
                 Route::delete('consult-laboratory-gram-stain/{gramStain}', 'destroy');
             });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryMicroscopyController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-microscopy', 'index');
+                Route::post('consult-laboratory-microscopy', 'store');
+                Route::put('consult-laboratory-microscopy/{microscopy}', 'update');
+                Route::delete('consult-laboratory-microscopy/{microscopy}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs
