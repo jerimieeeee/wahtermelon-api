@@ -9,6 +9,7 @@ use App\Models\V1\Libraries\LibMedicineDoseRegimen;
 use App\Models\V1\Libraries\LibMedicineDurationFrequency;
 use App\Models\V1\Libraries\LibMedicinePreparation;
 use App\Models\V1\Libraries\LibMedicinePurpose;
+use App\Models\V1\Libraries\LibMedicineRoute;
 use App\Models\V1\Libraries\LibMedicineUnitOfMeasurement;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -43,6 +44,7 @@ class MedicinePrescriptionFactory extends Factory
             'duration_frequency' => fake()->randomElement(LibMedicineDurationFrequency::pluck('code')->toArray()),
             'quantity' => fake()->numberBetween(1, 50),
             'quantity_preparation' => fake()->randomElement(LibMedicinePreparation::pluck('code')->toArray()),
+            'medicine_route_code' => fake()->randomElement(LibMedicineRoute::pluck('code')->toArray()),
         ];
     }
 }
