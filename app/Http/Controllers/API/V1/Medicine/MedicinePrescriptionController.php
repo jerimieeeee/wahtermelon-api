@@ -51,7 +51,7 @@ class MedicinePrescriptionController extends Controller
                     ->havingRaw('quantity > dispensing_sum_dispense_quantity OR dispensing_sum_dispense_quantity IS NULL');
             });
         $prescription = QueryBuilder::for($query)
-            ->with(['konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'prescribedBy', 'dispensing'])
+            ->with(['konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'medicineRoute', 'prescribedBy', 'dispensing'])
             ->defaultSort('-prescription_date')
             ->allowedSorts('prescription_date');
 
