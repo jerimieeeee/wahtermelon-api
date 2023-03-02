@@ -171,4 +171,9 @@ class ConsultLaboratory extends Model
     {
         return $this->hasOne(ConsultLaboratoryGramStain::class, 'request_id', 'id');
     }
+
+    public function getRelatedModel($model)
+    {
+        return $this->$model();
+    }
 }

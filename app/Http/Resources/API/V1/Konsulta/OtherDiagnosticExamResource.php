@@ -16,12 +16,12 @@ class OtherDiagnosticExamResource extends JsonResource
     {
         return [
             '_attributes'  => [
-                'pReferralFacility' => strtoupper($this->gramStain->referral_facility?? ""),
-                'pLabDate' => isset($this->gramStain->laboratory_date) ? $this->gramStain->laboratory_date->format('Y-m-d') : "",
+                'pReferralFacility' => strtoupper($this->getRelatedModel('gramStain')->referral_facility?? ""),
+                'pLabDate' => isset($this->getRelatedModel('gramStain')->laboratory_date) ? $this->getRelatedModel('gramStain')->laboratory_date->format('Y-m-d') : "",
                 'pOthDiagExam' => strtoupper($this->laboratory->desc?? ""),
-                'pFindings' => strtoupper($this->gramStain->remarks?? ""),
-                'pDateAdded' => isset($this->gramStain->created_at) ? $this->gramStain->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->gramStain->lab_status_code?? "",
+                'pFindings' => strtoupper($this->getRelatedModel('gramStain')->remarks?? ""),
+                'pDateAdded' => isset($this->getRelatedModel('gramStain')->created_at) ? $this->getRelatedModel('gramStain')->created_at->format('Y-m-d') : "",
+                'pStatus' => $this->getRelatedModel('gramStain')->lab_status_code?? "",
                 'pDiagnosticLabFee' => "",
                 'pReportStatus' => "U",
                 'pDeficiencyRemarks' => "",
