@@ -29,7 +29,7 @@ class ConsultLaboratoryGramStainFactory extends Factory
             'consult_id' => $consult->consult_id,
             'laboratory_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             'referral_facility' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'nugen_score' => fake()->randomDigit(),
+            'nugent_score' => fake()->randomDigit(),
             'fungal_elements' => fake()->randomDigit(),
             'pus_cells' => fake()->randomDigit(),
             'gram_negative' => fake()->randomDigit(),
