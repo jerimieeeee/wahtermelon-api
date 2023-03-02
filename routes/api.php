@@ -504,6 +504,15 @@ Route::prefix('v1')->group(function (){
                 Route::put('consult-laboratory-fecal-occult/{fecalOccult}', 'update');
                 Route::delete('consult-laboratory-fecal-occult/{fecalOccult}', 'destroy');
             });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryGramStainController::class)
+            ->middleware('auth:api')
+            ->group(function() {
+                Route::get('consult-laboratory-gram-stain', 'index');
+                Route::post('consult-laboratory-gram-stain', 'store');
+                Route::put('consult-laboratory-gram-stain/{gramStain}', 'update');
+                Route::delete('consult-laboratory-gram-stain/{gramStain}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs

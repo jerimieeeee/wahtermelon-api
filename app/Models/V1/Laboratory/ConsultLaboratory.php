@@ -41,6 +41,7 @@ class ConsultLaboratory extends Model
         'urinalysis',
         'oralGlucose',
         'fecalOccult',
+        'gramStain'
     ];
 
     public $incrementing = false;
@@ -164,5 +165,10 @@ class ConsultLaboratory extends Model
     public function fecalOccult()
     {
         return $this->hasOne(ConsultLaboratoryFecalOccult::class, 'request_id', 'id');
+    }
+
+    public function gramStain()
+    {
+        return $this->hasOne(ConsultLaboratoryGramStain::class, 'request_id', 'id');
     }
 }
