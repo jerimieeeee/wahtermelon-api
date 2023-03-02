@@ -29,7 +29,7 @@ class MedicineResource extends JsonResource
                 'pPackageCode'=> $this->konsultaMedicine->package_code?? "",
                 'pOtherMedicine'=> strtoupper($this->added_medicine?? ""),
                 'pOthMedDrugGrouping'=> !empty($this->medicinePurpose) && Str::contains($this->medicinePurpose->desc, ['NCD', 'Antibiotic', 'Others']) ? strtoupper($this->medicinePurpose->desc) : (!empty($this->medicinePurpose) && !Str::contains($this->medicinePurpose->desc, ['NCD', 'Antibiotic', 'Others']) ? "OTHERS" : ""),
-                'pRoute' => "",
+                'pRoute' => !empty($this->medicineRoute) ? strtoupper($this->medicineRoute->desc) : "",
                 'pQuantity' => !empty($this->dispensingLatest) ? $this->dispensing_sum_dispense_quantity : $this->quantity?? "",
                 'pActualUnitPrice' => !empty($this->dispensingLatest) ? $this->dispensing_sum_unit_price : 0,
                 'pTotalAmtPrice' => !empty($this->dispensingLatest) ? $this->dispensing_sum_total_amount : 0,
