@@ -176,5 +176,11 @@ class ConsultLaboratory extends Model
     public function microscopy()
     {
         return $this->hasOne(ConsultLaboratoryMicroscopy::class, 'request_id', 'id');
+
+    }
+
+    public function getRelatedModel($model)
+    {
+        return $this->$model();
     }
 }
