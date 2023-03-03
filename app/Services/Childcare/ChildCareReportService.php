@@ -65,6 +65,7 @@ class ChildCareReportService
                     ")
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
             ->whereVaccineId('HEPB')
+            ->whereStatusId('1')
             ->where('gender', $gender)
             ->groupBy('patient_id')
             ->when($age_day >= 2, fn($query) => $query->havingRaw('age_day > ? AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_day, $request->year, $request->month]))
@@ -508,52 +509,26 @@ class ChildCareReportService
 
     public function get_overweight_obese($request, $patient_gender, $class)
     {
-        return DB::table(function ($query) use($class, $request) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            gender,
-                            CASE WHEN patient_weight_for_age = 'Overweight' THEN
-                                'Overweight'
-                            END AS 'bmi_overweight',
-                            CASE WHEN patient_weight_for_age = 'Obese' THEN
-                                'Obese'
-                            END AS 'bmi_obese',
-                            CASE WHEN patient_weight_for_age = 'Normal' THEN
-                                'Normal'
-                            ELSE
-                                NULL
-                            END AS 'bmi_normal',
-                            birthdate,
-                            GROUP_CONCAT(DATE_FORMAT(vitals_date, '%Y-%m-%d')) AS vitals_date,
-                            patient_age_months
-                ")
-                ->from('patient_vitals')
-                ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
-                ->when($class == 'overweight/obese', fn($query) =>
-                    $query->whereIn('patient_weight_for_age', ['Overweight', 'Obese'])
-                          ->whereYear('vitals_date', $request->year)
-                          ->whereMonth('vitals_date', $request->month)
-                    )
-                ->when($class == 'normal', fn($query) =>
-                    $query->where('patient_weight_for_age', 'Normal')
-                        ->whereYear('vitals_date', $request->year)
-                        ->whereMonth('vitals_date', $request->month)
-                    )
-                ->groupBy('patient_id', 'patient_weight_for_age', 'patient_age_months');
-        })
+        return DB::table('patient_vitals')
             ->selectRaw("
-                        name,
-                        gender,
-                        bmi_normal,
-                        bmi_obese,
-                        bmi_overweight,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
-                        SUBSTRING_INDEX(vitals_date,',', -1) AS date_of_service,
-                        patient_age_months
-            ")
+                        gender,
+                        DATE_FORMAT(SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vitals_date ORDER BY vitals_date DESC), ',', 1), ',', - 1), '%Y-%m-%d') AS date_of_service,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(patient_weight_for_age ORDER BY vitals_date DESC), ',', 1), ',', - 1) AS weight_for_age,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(patient_age_months ORDER BY vitals_date DESC), ',', 1), ',', - 1) AS patient_age_months
+                    ")
+            ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
+            ->when($class == 'Obese', fn($query) =>
+                $query->whereIn('patient_weight_for_age', ['Obese', 'Overweight'])
+                    ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+            )
+            ->when($class == 'Normal', fn($query) =>
+                $query->whereIn('patient_weight_for_age', ['Normal'])
+                    ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+            )
             ->whereGender($patient_gender)
-            ->groupBy('name', 'bmi_normal', 'bmi_obese', 'bmi_overweight', 'vitals_date', 'patient_age_months', 'gender', 'birthdate')
-            ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 

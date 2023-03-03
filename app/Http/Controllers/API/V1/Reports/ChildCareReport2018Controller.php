@@ -189,12 +189,12 @@ class ChildCareReport2018Controller extends Controller
         $pnemonia_case_0_59_with_treatment_f =  $childCareReportService->get_pneumonia_with_treatment($request, 'F', 'PNEUMONIA')->get();
 
         //0-59 MONTHS OVERWEIGHT & OBESE
-        $obese_overweight_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'overweight/obese')->get();
-        $obese_overweight_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'overweight/obese')->get();
+        $obese_overweight_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'Obese')->get();
+        $obese_overweight_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'Obese')->get();
 
         //0-59 MONTHS NORMAL
-        $normal_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'normal')->get();
-        $normal_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'normal')->get();
+        $normal_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'Normal')->get();
+        $normal_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'Normal')->get();
 
         //6-11 MONTHS COMPLIMENTARY FEEDING
         $comp_feeding_6_11_months_m =  $childCareReportService->get_complimentary_feeding($request, 'M')->get();
@@ -214,7 +214,7 @@ class ChildCareReport2018Controller extends Controller
 
        return [
 
-            //CPAB
+/*            //CPAB
             'CPAB_Male' => $cpab_m,
             'CPAB_Female' => $cpab_f,
 
@@ -379,7 +379,7 @@ class ChildCareReport2018Controller extends Controller
 
             //Pneumonia 0-59 months with treatment
             'pneumonia_0_59_months_with_treatment_Male' => $pnemonia_case_0_59_with_treatment_m,
-            'pneumonia_0_59_months_with_treatment_Female' => $pnemonia_case_0_59_with_treatment_f,
+            'pneumonia_0_59_months_with_treatment_Female' => $pnemonia_case_0_59_with_treatment_f,*/
 
            //0-59 MONTHS Overweight & Obese
            'obese_overweight_0_59_months_Male' => $obese_overweight_0_59_months_m,
@@ -389,7 +389,7 @@ class ChildCareReport2018Controller extends Controller
            'normal_0_59_months_Male' => $normal_0_59_months_m,
            'normal_0_59_months_Female' => $normal_0_59_months_f,
 
-           //6-11 MONTHS COMPLIMENTARY FEEDING
+/*           //6-11 MONTHS COMPLIMENTARY FEEDING
            'complimentary_6_11_months_Male' => $comp_feeding_6_11_months_m,
            'complimentary_6_11_months_Female' => $comp_feeding_6_11_months_f,
 
@@ -403,7 +403,7 @@ class ChildCareReport2018Controller extends Controller
 
            //0-59 MONTHS WASTED
            'wasted_0_59_months_Male' => $wasted_0_59_months_m,
-           'wasted_0_59_months_Female' => $wasted_0_59_months_f,
+           'wasted_0_59_months_Female' => $wasted_0_59_months_f,*/
 
         ];
     }
