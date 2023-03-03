@@ -279,7 +279,7 @@ class KonsultaController extends Controller
         if (!is_array($file)) {
             $fileContent = file_get_contents($file);
             $jsonXml = XML2JSON($fileContent);
-            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
+            //KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
             return response()->json([
                 'status' => 'File successfully uploaded'
             ], 201);
@@ -287,10 +287,14 @@ class KonsultaController extends Controller
         //$arrValue = [];
         foreach ($file as $key => $value) {
             $fileContent = file_get_contents($value);
-            $jsonXml = XML2JSON($fileContent);
+            $decryptor = new PhilHealthEClaimsEncryptor();
+            $cipher_key = $request->cipher_key;
+            $data = $decryptor->decryptPayloadDataToXml($fileContent, $cipher_key);
+            $arrValue[] = XML2JSON($data);
             //return $jsonXml->ENLISTMENTS;
-            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
+            //KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
         }
+        return $arrValue;
         return response()->json([
             'status' => 'File successfully uploaded'
         ], 201);
