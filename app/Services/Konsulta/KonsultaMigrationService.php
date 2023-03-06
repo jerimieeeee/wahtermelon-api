@@ -6,6 +6,7 @@ use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class KonsultaMigrationService
 {
@@ -16,10 +17,10 @@ class KonsultaMigrationService
             return collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
                 if(is_array($enlistment)){
                     return collect($enlistment)->map(function($enlistment) use($value){
-                        return $this->extracted($enlistment, $value);
+                        return $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
-                    return $this->extracted($enlistment, $value);
+                    return $this->saveFirstPatientEncounter($enlistment, $value);
                 }
             });
         });
@@ -46,7 +47,7 @@ class KonsultaMigrationService
      * @param $patient
      * @return mixed
      */
-    public function extracted($enlistment, $value): mixed
+    public function saveFirstPatientEncounter($enlistment, $value): mixed
     {
         $patient = Patient::updateOrCreate(['case_number' => $enlistment->pHciCaseNo], [
             'last_name' => $enlistment->pPatientLname,
@@ -61,11 +62,13 @@ class KonsultaMigrationService
         if(is_array($value->PROFILING->PROFILE)){
             collect($value->PROFILING)->map(function($profiling) use($patient){
                 $profile = collect($profiling)->where('pHciCaseNo', $patient->case_number)->first();
-                $this->getMedHistory($profile, $patient);
+                $this->getMedHistory($profile, $patient, 'MEDHISTS', 'MHSPECIFICS');
+                $this->getMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
             });
         } else{
             $profile = collect($value->PROFILING)->where('pHciCaseNo', $patient->case_number)->first();
-            $this->getMedHistory($profile, $patient);
+            $this->getMedHistory($profile, $patient, 'MEDHISTS', 'MHSPECIFICS');
+            $this->getMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
         }
 
         return $patient;
@@ -74,17 +77,24 @@ class KonsultaMigrationService
     /**
      * @param mixed $profile
      * @param $patient
-     * @return void
      */
-    public function getMedHistory(mixed $profile, $patient): void
+    public function getMedHistory(mixed $profile, $patient, $dataGroup, $dataGroupSpecific)
     {
-        collect($profile->MEDHISTS)->map(function ($history) use ($patient) {
+        collect($profile->$dataGroup)->map(function ($history) use ($patient, $profile, $dataGroup, $dataGroupSpecific) {
+            $category = 1;
+            if($dataGroup != 'MEDHISTS'){
+                $category = 2;
+            }
             if (is_array($history)) {
-                collect($history)->map(function ($history) use ($patient) {
-                    $patient->patientHistory()->updateOrCreate(['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => 1]);
+                collect($history)->map(function ($history) use ($patient, $profile, $dataGroup, $dataGroupSpecific, $category) {
+                    $group = Str::singular($dataGroup);
+                    $specific = Str::singular($dataGroupSpecific);
+                    $remarks = collect($profile->$dataGroupSpecific->$specific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
+                    $patient->patientHistory()->updateOrCreate(['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc?? ""]);
                 });
             } else {
-                $patient->patientHistory()->updateOrCreate(['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => 1]);
+                $remarks = collect($profile->$dataGroupSpecific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
+                $patient->patientHistory()->updateOrCreate(['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc?? ""]);
             }
         });
     }
