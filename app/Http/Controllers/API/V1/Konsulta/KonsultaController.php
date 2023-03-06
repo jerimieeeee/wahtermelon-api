@@ -14,6 +14,7 @@ use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
+use App\Services\Konsulta\KonsultaMigrationService;
 use App\Services\PhilHealth\KonsultaService;
 use App\Services\PhilHealth\SoapService;
 use Carbon\Carbon;
@@ -270,7 +271,7 @@ class KonsultaController extends Controller
      * @bodyParam xml file required The xml.
      * @throws Throwable
      */
-    public function uploadXml(Request $request)
+    public function uploadXml(Request $request, KonsultaMigrationService $migrationService)
     {
         throw_if(!request()->hasFile('xml'), 'No File to be uploaded');
 
@@ -294,7 +295,7 @@ class KonsultaController extends Controller
             //return $jsonXml->ENLISTMENTS;
             //KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
         }
-        return $arrValue;
+        return $migrationService->saveProfile(collect($arrValue));
         return response()->json([
             'status' => 'File successfully uploaded'
         ], 201);
