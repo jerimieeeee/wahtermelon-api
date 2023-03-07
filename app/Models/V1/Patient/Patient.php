@@ -201,4 +201,9 @@ class Patient extends Model
         return $this->hasMany(PatientHistory::class, 'patient_id', 'id');
     }
 
+    public function patientVitals()
+    {
+        return $this->hasMany(PatientVitals::class, 'patient_id', 'id');
+    }
+
 }
