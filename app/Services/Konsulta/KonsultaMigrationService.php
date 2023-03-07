@@ -151,14 +151,15 @@ class KonsultaMigrationService
 
         $socialHistory = $profile->SOCHIST;
         if(!empty($socialHistory->pIsSmoker)){
-            $patient->socialHistory()->updateOrCreate(['patient_id' => $patient->id], [
+            $data = [
                 'smoking' => $socialHistory->pIsSmoker,
-                'pack_per_year' => !empty($socialHistory->pNoCigpk) ? $socialHistory->pNoCigpk : 0,
                 'alcohol' => $socialHistory->pIsAdrinker,
-                'bottles_per_day' => !empty($socialHistory->pNoBottles) ? : 0,
                 'illicit_drugs' => $socialHistory->pIllDrugUser,
                 'sexually_active' => $socialHistory->pIsSexuallyActive,
-            ]);
+            ];
+            !empty($socialHistory->pNoCigpk) ? $data['pack_per_year'] = $socialHistory->pNoCigpk : null;
+            !empty($socialHistory->pNoBottles) ? $data['bottles_per_day'] = $socialHistory->pNoBottles : null;
+            $patient->socialHistory()->updateOrCreate(['patient_id' => $patient->id], $data);
         }
         $menstrualHistory = $profile->MENSHIST;
         if($menstrualHistory->pIsApplicable == 'Y'){
