@@ -17,7 +17,7 @@ class KonsultaMigrationService
             return collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
                 if(is_array($enlistment)){
                     return collect($enlistment)->map(function($enlistment) use($value){
-                        $this->saveFirstPatientEncounter($enlistment, $value);
+                        return $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
                     return $this->saveFirstPatientEncounter($enlistment, $value);
@@ -370,16 +370,18 @@ class KonsultaMigrationService
     function saveDiagnostic($value, $patient, $profile)
     {
         if (isset($value->DIAGNOSTICEXAMRESULTS)) {
+            //return $value->DIAGNOSTICEXAMRESULTS;
+            return collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)->first();
             //if (is_array($value->DIAGNOSTICEXAMRESULTS)) {
                 return collect($value->DIAGNOSTICEXAMRESULTS)->map(function ($diagnostic) use ($value, $profile, $patient) {
                     if(is_array($diagnostic)){
                         return collect($diagnostic)->map(function ($diagnostic) use ($value, $profile, $patient) {
-                            return 'ok';
                             return collect($diagnostic)->where('pHciCaseNo', $patient->case_number)->first();
                             return Str::startsWith($diagnostic->pHciTransNo, 'P');
                         });
                     } else{
-                        return 'no';
+                        return $diagnostic;
+                        return collect($diagnostic)->where('pHciCaseNo', $patient->case_number)->first();
                         return $diagnostic->pHciTransNo;
                     }
                 });
