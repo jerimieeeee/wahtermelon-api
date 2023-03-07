@@ -17,7 +17,7 @@ class KonsultaMigrationService
             return collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
                 if(is_array($enlistment)){
                     return collect($enlistment)->map(function($enlistment) use($value){
-                        return $this->saveFirstPatientEncounter($enlistment, $value);
+                        $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
                     return $this->saveFirstPatientEncounter($enlistment, $value);
@@ -69,7 +69,8 @@ class KonsultaMigrationService
                 $this->saveMedHistory($profile, $patient, 'MEDHISTS', 'MHSPECIFICS');
                 $this->saveMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
                 $this->saveSurgicalHistory($profile, $patient);
-                return $this->saveImmunization($profile, $patient);
+                $this->saveImmunization($profile, $patient);
+                return $this->saveDiagnostic($value, $patient, $profile);
 
             });
         } else{
@@ -78,7 +79,8 @@ class KonsultaMigrationService
             $this->saveMedHistory($profile, $patient, 'MEDHISTS', 'MHSPECIFICS');
             $this->saveMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
             $this->saveSurgicalHistory($profile, $patient);
-            return $this->saveImmunization($profile, $patient);
+            $this->saveImmunization($profile, $patient);
+            return $this->saveDiagnostic($value, $patient, $profile);
         }
 
         return $patient;
@@ -358,6 +360,32 @@ class KonsultaMigrationService
                 'vaccine_id' => $vaccine_id,
                 'status_id' => 1
             ]);
+        }
+    }
+
+    /**
+     * @param $value
+     * @return void
+     */
+    function saveDiagnostic($value, $patient, $profile)
+    {
+        if (isset($value->DIAGNOSTICEXAMRESULTS)) {
+            //if (is_array($value->DIAGNOSTICEXAMRESULTS)) {
+                return collect($value->DIAGNOSTICEXAMRESULTS)->map(function ($diagnostic) use ($value, $profile, $patient) {
+                    if(is_array($diagnostic)){
+                        return collect($diagnostic)->map(function ($diagnostic) use ($value, $profile, $patient) {
+                            return 'ok';
+                            return collect($diagnostic)->where('pHciCaseNo', $patient->case_number)->first();
+                            return Str::startsWith($diagnostic->pHciTransNo, 'P');
+                        });
+                    } else{
+                        return 'no';
+                        return $diagnostic->pHciTransNo;
+                    }
+                });
+            //} else {
+               // return $value->DIAGNOSTICEXAMRESULTS;
+            //}
         }
     }
 
