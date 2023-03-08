@@ -2,8 +2,10 @@
 
 namespace App\Services\Konsulta;
 
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibMedicalHistory;
+use App\Models\V1\Libraries\LibPe;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Support\Collection;
@@ -14,17 +16,18 @@ class KonsultaMigrationService
     public function saveProfile(Collection $collection)
     {
         //return $collection;
-        return $collection->map(function ($value) {
-            return collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
+        $collection->map(function ($value) {
+            collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
                 if(is_array($enlistment)){
-                    return collect($enlistment)->map(function($enlistment) use($value){
-                        return $this->saveFirstPatientEncounter($enlistment, $value);
+                    collect($enlistment)->map(function($enlistment) use($value){
+                        $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
-                    return $this->saveFirstPatientEncounter($enlistment, $value);
+                    $this->saveFirstPatientEncounter($enlistment, $value);
                 }
             });
         });
+        return $collection;
     }
 
     public function getSuffixName($suffix)
@@ -71,6 +74,7 @@ class KonsultaMigrationService
                 $this->saveMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
                 $this->saveSurgicalHistory($profile, $patient);
                 $this->saveImmunization($profile, $patient);
+                return $this->savePhysicalExam($profile, $patient);
                 return $this->saveDiagnostic($value, $patient, $profile);
 
             });
@@ -81,6 +85,7 @@ class KonsultaMigrationService
             $this->saveMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
             $this->saveSurgicalHistory($profile, $patient);
             $this->saveImmunization($profile, $patient);
+            return $this->savePhysicalExam($profile, $patient);
             return $this->saveDiagnostic($value, $patient, $profile);
         }
 
@@ -369,6 +374,49 @@ class KonsultaMigrationService
     }
 
     /**
+     * @param mixed $profile
+     * @param $patient
+     */
+    public function savePhysicalExam(mixed $profile, $patient)
+    {
+        if(isset($profile->PEMISCS)){
+            return collect($profile->PEMISCS)->map(function ($pe) use ($patient, $profile) {
+                $consult = Consult::updateOrCreate([
+                    'patient_id' => $patient->id,
+                    'consult_date' => $profile->pProfDate,
+                    'pt_group' => 'cn',
+                    'consult_done' => 1,
+                ]);
+                $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
+                if(!empty($profile->PESPECIFIC->pSkinRem) || !empty($profile->PESPECIFIC->pHeentRem)
+                    || !empty($profile->PESPECIFIC->pChestRem) || !empty($profile->PESPECIFIC->pHeartRem)
+                    || !empty($profile->PESPECIFIC->pAbdomenRem) || !empty($profile->PESPECIFIC->pNeuroRem)
+                    || !empty($profile->PESPECIFIC->pRectalRem) || !empty($profile->PESPECIFIC->pGuRem)){
+                    $notes->physicalExamRemarks()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],
+                        [
+                            'skin_remarks' => $profile->PESPECIFIC->pSkinRem,
+                            'heent_remarks' => $profile->PESPECIFIC->pHeentRem,
+                            'chest_remarks' => $profile->PESPECIFIC->pChestRem,
+                            'heart_remarks' => $profile->PESPECIFIC->pHeartRem,
+                            'abdomen_remarks' => $profile->PESPECIFIC->pAbdomenRem,
+                            'neuro_remarks' => $profile->PESPECIFIC->pNeuroRem,
+                            'rectal_remarks' => $profile->PESPECIFIC->pRectalRem,
+                            'genitourinary_remarks' => $profile->PESPECIFIC->pGuRem,
+                        ]
+                    );
+                }
+                if (is_array($pe)) {
+                    return collect($pe)->map(function ($pe) use ($patient, $profile, $notes) {
+                        $this->physicalExam($pe, $notes);
+                    });
+                } else {
+                    $this->physicalExam($pe, $notes);
+                }
+            });
+        }
+    }
+
+    /**
      * @param $value
      * @return void
      */
@@ -474,6 +522,71 @@ class KonsultaMigrationService
                 ];
                 $lab->rbs()->updateOrCreate($rbsData);
             }
+        }
+    }
+
+    /**
+     * @param $pe
+     * @param $notes
+     * @return void
+     */
+    public function physicalExam($pe, $notes): void
+    {
+        if (!empty($pe->pSkinId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pSkinId)
+                ->where('category_id', 'SKIN')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pHeentId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pHeentId)
+                ->where('category_id', 'HEENT')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pChestId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pChestId)
+                ->where('category_id', 'CHEST')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pHeartId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pHeartId)
+                ->where('category_id', 'HEART')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pAbdomenId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pAbdomenId)
+                ->where('category_id', 'ABDOMEN')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pNeuroId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pNeuroId)
+                ->where('category_id', 'NEURO')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pRectalId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pRectalId)
+                ->where('category_id', 'RECTAL')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+        if (!empty($pe->pGuId)) {
+            $lib = LibPe::query()
+                ->where('konsulta_pe_id', $pe->pGuId)
+                ->where('category_id', 'GENITOURINARY')
+                ->first();
+            $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
     }
 
