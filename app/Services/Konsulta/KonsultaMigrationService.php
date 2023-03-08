@@ -103,13 +103,17 @@ class KonsultaMigrationService
             if (is_array($history)) {
                 collect($history)->map(function ($history) use ($patient, $profile, $dataGroup, $dataGroupSpecific, $category) {
                     //$group = Str::singular($dataGroup);
-                    $specific = Str::singular($dataGroupSpecific);
-                    $remarks = collect($profile->$dataGroupSpecific->$specific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
-                    $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc?? ""]);
+                    if(!empty($history->pMdiseaseCode)) {
+                        $specific = Str::singular($dataGroupSpecific);
+                        $remarks = collect($profile->$dataGroupSpecific->$specific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
+                        $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc ?? ""]);
+                    }
                 });
             } else {
-                $remarks = collect($profile->$dataGroupSpecific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
-                $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc?? ""]);
+                if(!empty($history->pMdiseaseCode)) {
+                    $remarks = collect($profile->$dataGroupSpecific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
+                    $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc ?? ""]);
+                }
             }
         });
     }
