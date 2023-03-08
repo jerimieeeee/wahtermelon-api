@@ -2,6 +2,7 @@
 
 namespace App\Services\Konsulta;
 
+use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Patient\Patient;
@@ -371,23 +372,67 @@ class KonsultaMigrationService
     {
         if (isset($value->DIAGNOSTICEXAMRESULTS)) {
             //return $value->DIAGNOSTICEXAMRESULTS;
-            return collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)->first();
-            //if (is_array($value->DIAGNOSTICEXAMRESULTS)) {
-                return collect($value->DIAGNOSTICEXAMRESULTS)->map(function ($diagnostic) use ($value, $profile, $patient) {
-                    if(is_array($diagnostic)){
-                        return collect($diagnostic)->map(function ($diagnostic) use ($value, $profile, $patient) {
-                            return collect($diagnostic)->where('pHciCaseNo', $patient->case_number)->first();
-                            return Str::startsWith($diagnostic->pHciTransNo, 'P');
-                        });
-                    } else{
-                        return $diagnostic;
-                        return collect($diagnostic)->where('pHciCaseNo', $patient->case_number)->first();
-                        return $diagnostic->pHciTransNo;
-                    }
+            //return collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)->first();
+            if (is_array($value->DIAGNOSTICEXAMRESULTS->DIAGNOSTICEXAMRESULT)) {
+                $laboratory = collect($value->DIAGNOSTICEXAMRESULTS->DIAGNOSTICEXAMRESULT)->where('pHciCaseNo', $patient->case_number)
+                    ->filter(function ($transaction) {
+                        return str_starts_with(strtolower($transaction->pHciTransNo), 'p');
+                    })->first();
+            } else{
+                $laboratory = collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)
+                    ->filter(function ($transaction) {
+                        return str_starts_with(strtolower($transaction->pHciTransNo), 'p');
+                    })->first();
+            }
+            return $this->saveLaboratory($laboratory, $value, $profile, $patient);
+        }
+    }
+
+    /**
+     * @param mixed $laboratory
+     * @param $value
+     * @param $profile
+     * @param $patient
+     * @return void
+     */
+    public function saveLaboratory(mixed $laboratory, $value, $profile, $patient)
+    {
+        if (isset($laboratory->FBSS)) {
+            if (is_array($laboratory->FBSS)) {
+                 collect($laboratory->FBSS)->map(function ($fbs) use ($value, $profile, $patient) {
+                    $data = [
+                        'request_date' => $profile->pProfDate,
+                        'lab_code' => 'FBS',
+                    ];
+                    $lab = ConsultLaboratory::query()
+                        ->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $profile->pProfDate, 'lab_code' => 'FBS']);
+
+                    $fbsData = [
+                        'referral_facility' => $fbs->pReferralFacility,
+                        'patient_id' => $patient->id,
+                        'laboratory_date' => $fbs->pLabDate,
+                        'glucose' => $fbs->pGlucoseMg,
+                        'lab_status_code' => $fbs->pStatus,
+                    ];
+                    $lab->fbs()->updateOrCreate($fbsData);
                 });
-            //} else {
-               // return $value->DIAGNOSTICEXAMRESULTS;
-            //}
+            } else {
+                //return $laboratory->FBSS->FBS->pReferralFacility;
+                $data = [
+                    'request_date' => $profile->pProfDate,
+                    'lab_code' => 'FBS',
+                ];
+                $lab = ConsultLaboratory::query()
+                    ->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $profile->pProfDate, 'lab_code' => 'FBS']);
+                $fbsData = [
+                    'referral_facility' => $laboratory->FBSS->FBS->pReferralFacility,
+                    'patient_id' => $patient->id,
+                    'laboratory_date' => $laboratory->FBSS->FBS->pLabDate,
+                    'glucose' => $laboratory->FBSS->FBS->pGlucoseMg,
+                    'lab_status_code' => $laboratory->FBSS->FBS->pStatus,
+                ];
+                $lab->fbs()->updateOrCreate($fbsData);
+            }
         }
     }
 
