@@ -434,6 +434,43 @@ class KonsultaMigrationService
                 $lab->fbs()->updateOrCreate($fbsData);
             }
         }
+        if (isset($laboratory->RBSS)) {
+            if (is_array($laboratory->RBSS)) {
+                collect($laboratory->RBSS)->map(function ($rbs) use ($value, $profile, $patient) {
+                    $data = [
+                        'request_date' => $profile->pProfDate,
+                        'lab_code' => 'RBS',
+                    ];
+                    $lab = ConsultLaboratory::query()
+                        ->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $profile->pProfDate, 'lab_code' => 'RBS']);
+
+                    $rbsData = [
+                        'referral_facility' => $rbs->pReferralFacility,
+                        'patient_id' => $patient->id,
+                        'laboratory_date' => $rbs->pLabDate,
+                        'glucose' => $rbs->pGlucoseMg,
+                        'lab_status_code' => $rbs->pStatus,
+                    ];
+                    $lab->rbs()->updateOrCreate($rbsData);
+                });
+            } else {
+                //return $laboratory->FBSS->FBS->pReferralFacility;
+                $data = [
+                    'request_date' => $profile->pProfDate,
+                    'lab_code' => 'RBS',
+                ];
+                $lab = ConsultLaboratory::query()
+                    ->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $profile->pProfDate, 'lab_code' => 'RBS']);
+                $rbsData = [
+                    'referral_facility' => $laboratory->RBSS->RBS->pReferralFacility,
+                    'patient_id' => $patient->id,
+                    'laboratory_date' => $laboratory->RBSS->RBS->pLabDate,
+                    'glucose' => $laboratory->RBSS->RBS->pGlucoseMg,
+                    'lab_status_code' => $laboratory->RBSS->RBS->pStatus,
+                ];
+                $lab->rbs()->updateOrCreate($rbsData);
+            }
+        }
     }
 
 }
