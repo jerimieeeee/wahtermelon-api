@@ -17,14 +17,14 @@ class KonsultaMigrationService
     public function saveProfile(Collection $collection)
     {
         //return $collection;
-        $collection->map(function ($value) {
-            collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
+        return $collection->map(function ($value) {
+            return collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
                 if(is_array($enlistment)){
-                    collect($enlistment)->map(function($enlistment) use($value){
+                    return collect($enlistment)->map(function($enlistment) use($value){
                         $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
-                    $this->saveFirstPatientEncounter($enlistment, $value);
+                    return $this->saveFirstPatientEncounter($enlistment, $value);
                 }
             });
         });
@@ -627,10 +627,10 @@ class KonsultaMigrationService
     {
         if(is_array($value->SOAPS->SOAP)) {
             $soap = collect($value->SOAPS->SOAP)->where('pHciCaseNo', $patient->case_number)->first();
-            $this->saveSubjective($soap, $patient, $value);
+            return $this->saveSubjective($soap, $patient, $value);
         } else{
             $soap = collect($value->SOAPS)->where('pHciCaseNo', $patient->case_number)->first();
-            $this->saveSubjective($soap, $patient, $value);
+            return $this->saveSubjective($soap, $patient, $value);
         }
     }
 
@@ -667,15 +667,17 @@ class KonsultaMigrationService
                     $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => $complaintId->complaint_id]);
                 }
             }
-//            if (isset($soap->PEMISCS)) {
-//                if (is_array($soap->PEMISCS->PEMISC)) {
-//                    return collect($soap->PEMISCS->PEMISC)->map(function ($pe) use ($notes) {
-//                        $this->physicalExam($pe, $notes);
-//                    });
-//                } else {
-//                    $this->physicalExam($soap->PEMISCS->PEMISC, $notes);
-//                }
-//            }
+            if (isset($soap->PEMISCS)) {
+                //return $soap->PEMISCS;
+                $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
+                if (is_array($soap->PEMISCS->PEMISC)) {
+                    return collect($soap->PEMISCS->PEMISC)->map(function ($pe) use ($notes) {
+                        $this->physicalExam($pe, $notes);
+                    });
+                } else {
+                    $this->physicalExam($soap->PEMISCS->PEMISC, $notes);
+                }
+            }
         }
     }
 

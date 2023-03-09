@@ -17,15 +17,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class KonsultaRegistrationList extends Model
 {
-    use HasFactory, HasUuids, FilterByUser, FilterByFacility, HasSearchFilter;
+    use HasFactory, FilterByUser, FilterByFacility, HasSearchFilter;
 
     protected $guarded = [
         'id'
     ];
 
-    public $incrementing = false;
+    //public $incrementing = false;
 
-    protected $keyType = 'string';
+    //protected $keyType = 'string';
 
     protected $casts = [
         'assigned_date' => 'date:Y-m-d',
