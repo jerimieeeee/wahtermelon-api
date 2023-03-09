@@ -4,6 +4,7 @@ namespace App\Services\Konsulta;
 
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibPe;
 use App\Models\V1\Libraries\LibSuffixName;
@@ -74,8 +75,9 @@ class KonsultaMigrationService
                 $this->saveMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
                 $this->saveSurgicalHistory($profile, $patient);
                 $this->saveImmunization($profile, $patient);
-                return $this->savePhysicalExam($profile, $patient);
-                return $this->saveDiagnostic($value, $patient, $profile);
+                $this->savePhysicalExam($profile, $patient);
+                $this->saveDiagnostic($value, $patient, $profile);
+                return $this->saveConsultation($value, $profile, $patient);
 
             });
         } else{
@@ -85,8 +87,9 @@ class KonsultaMigrationService
             $this->saveMedHistory($profile, $patient, 'FAMHISTS', 'FHSPECIFICS');
             $this->saveSurgicalHistory($profile, $patient);
             $this->saveImmunization($profile, $patient);
-            return $this->savePhysicalExam($profile, $patient);
-            return $this->saveDiagnostic($value, $patient, $profile);
+            $this->savePhysicalExam($profile, $patient);
+            $this->saveDiagnostic($value, $patient, $profile);
+            return $this->saveConsultation($value, $profile, $patient);
         }
 
         return $patient;
@@ -238,6 +241,24 @@ class KonsultaMigrationService
 
         $patient->patientVitals()->updateOrCreate(['patient_id' => $patient->id], $data);
 
+        if(isset($profile->PEGENSURVEY) && !empty($profile->PEGENSURVEY->pGenSurveyId)){
+            $consult = Consult::updateOrCreate([
+                'patient_id' => $patient->id,
+                'consult_date' => $profile->pProfDate,
+                'pt_group' => 'cn',
+                'consult_done' => 1,
+            ]);
+            $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id],
+                [
+                    'complaint' => 'Health Screening and Assessment',
+                    'history' => 'Health Screening and Assessment',
+                    'general_survey_code' => $profile->PEGENSURVEY->pGenSurveyId,
+                    'general_survey_remarks' => $profile->PEGENSURVEY->pGenSurveyRem
+                ]
+            );
+            $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => 'OTHERS']);
+        }
+
     }
 
     /**
@@ -387,7 +408,14 @@ class KonsultaMigrationService
                     'pt_group' => 'cn',
                     'consult_done' => 1,
                 ]);
-                $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
+                //$notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
+                $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id],
+                    [
+                        'complaint' => 'Health Screening and Assessment',
+                        'history' => 'Health Screening and Assessment',
+                    ]
+                );
+                $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => 'OTHERS']);
                 if(!empty($profile->PESPECIFIC->pSkinRem) || !empty($profile->PESPECIFIC->pHeentRem)
                     || !empty($profile->PESPECIFIC->pChestRem) || !empty($profile->PESPECIFIC->pHeartRem)
                     || !empty($profile->PESPECIFIC->pAbdomenRem) || !empty($profile->PESPECIFIC->pNeuroRem)
@@ -587,6 +615,67 @@ class KonsultaMigrationService
                 ->where('category_id', 'GENITOURINARY')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
+        }
+    }
+
+    /**
+     * @param $value
+     * @param $profile
+     * @param $patient
+     */
+    public function saveConsultation($value, $profile, $patient)
+    {
+        if(is_array($value->SOAPS->SOAP)) {
+            $soap = collect($value->SOAPS->SOAP)->where('pHciCaseNo', $patient->case_number)->first();
+            $this->saveSubjective($soap, $patient, $value);
+        } else{
+            $soap = collect($value->SOAPS)->where('pHciCaseNo', $patient->case_number)->first();
+            $this->saveSubjective($soap, $patient, $value);
+        }
+    }
+
+    /**
+     * @param mixed $soap
+     * @param $patient
+     * @param $value
+     * @return void
+     */
+    public function saveSubjective(mixed $soap, $patient, $value)
+    {
+        if ($soap) {
+            $consult = Consult::updateOrCreate([
+                'patient_id' => $patient->id,
+                'consult_date' => $soap->pSoapDate,
+                'pt_group' => 'cn',
+                'consult_done' => 1,
+            ], [
+                'transaction_number' => Str::replaceFirst('S', '', $soap->pHciTransNo),
+                'authorization_transaction_code' => $soap->pATC,
+                'walkedin_status' => $soap->pIsWalkedIn == 'Y' ? 1 : 0
+            ]);
+            if (isset($soap->SUBJECTIVE)) {
+                $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id], [
+                    'history' => $soap->SUBJECTIVE->pIllnessHistory,
+                    'complaint' => $soap->SUBJECTIVE->pOtherComplaint
+                ]);
+                $konsultaComplaints = explode(';', $soap->SUBJECTIVE->pSignsSymptoms);
+                foreach ($konsultaComplaints as $value) {
+                    $complaintId = LibComplaint::query()
+                        ->when($value == '38', fn($query) => $query->where('complaint_desc', 'LIKE', '%' . $soap->SUBJECTIVE->pPainSite . '%'))
+                        ->when($value != '38', fn($query) => $query->where('konsulta_complaint_id', $value))
+                        ->first();
+                    $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => $complaintId->complaint_id]);
+                }
+            }
+//            if (isset($soap->PEMISCS)) {
+//                if (is_array($soap->PEMISCS->PEMISC)) {
+//                    return collect($soap->PEMISCS->PEMISC)->map(function ($pe) use ($notes) {
+//                        $this->physicalExam($pe, $notes);
+//                    });
+//                } else {
+//                    $this->physicalExam($soap->PEMISCS->PEMISC, $notes);
+//                }
+//            }
         }
     }
 
