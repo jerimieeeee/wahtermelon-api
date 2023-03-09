@@ -23,7 +23,7 @@ class PhysicalExaminationVitalsResource extends JsonResource
                 'pTemp' => $this->patient_temp?? "",
                 'pHeight' => $this->patient_height?? "",
                 'pWeight' => $this->patient_weight?? "",
-                'pBMI' => $this->patient_bmi?? "",
+                'pBMI' => $this->patient_bmi?? "0",
                 'pZScore' => "",
                 'pLeftVision' => $this->patient_left_vision_acuity?? "",
                 'pRightVision' => $this->patient_right_vision_acuity?? "",
