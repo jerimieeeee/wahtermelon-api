@@ -5,6 +5,7 @@ namespace App\Http\Resources\API\V1\Konsulta;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isNull;
 
 class SoapDiagnosticExamResultResource extends JsonResource
 {
@@ -194,7 +195,7 @@ class SoapDiagnosticExamResultResource extends JsonResource
             array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($microscopy) ? $microscopy : [[]])->resolve()]);
         }
 
-        if((empty($gramStain) || count($gramStain)==0) && (empty($gramStain) || count($microscopy)>0)) {
+        if(isNull($gramStain) && isNull($microscopy)) {
             unset($data['OTHERDIAGEXAMS']);
         }
         return $data;
