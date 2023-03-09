@@ -52,7 +52,7 @@ class ConsultNotes extends Model
 
     public function management()
     {
-        return $this->belongsTo(ConsultNotesManagement::class, 'notes_id', 'id');
+        return $this->hasMany(ConsultNotesManagement::class, 'notes_id', 'id');
     }
 
     public function libGeneralSurvey()

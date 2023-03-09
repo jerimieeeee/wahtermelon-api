@@ -5,6 +5,7 @@ namespace App\Services\Konsulta;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibComplaint;
+use App\Models\V1\Libraries\LibLaboratory;
 use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibPe;
 use App\Models\V1\Libraries\LibSuffixName;
@@ -653,6 +654,8 @@ class KonsultaMigrationService
                 'authorization_transaction_code' => $soap->pATC,
                 'walkedin_status' => $soap->pIsWalkedIn == 'Y' ? 1 : 0
             ]);
+            $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
+
             if (isset($soap->SUBJECTIVE)) {
                 $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id], [
                     'history' => $soap->SUBJECTIVE->pIllnessHistory,
@@ -667,15 +670,92 @@ class KonsultaMigrationService
                     $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => $complaintId->complaint_id]);
                 }
             }
+
             if (isset($soap->PEMISCS)) {
                 //return $soap->PEMISCS;
-                $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
                 if (is_array($soap->PEMISCS->PEMISC)) {
-                    return collect($soap->PEMISCS->PEMISC)->map(function ($pe) use ($notes) {
+                    collect($soap->PEMISCS->PEMISC)->map(function ($pe) use ($notes) {
                         $this->physicalExam($pe, $notes);
                     });
                 } else {
                     $this->physicalExam($soap->PEMISCS->PEMISC, $notes);
+                }
+                if(!empty($soap->PESPECIFIC->pSkinRem) || !empty($soap->PESPECIFIC->pHeentRem)
+                    || !empty($soap->PESPECIFIC->pChestRem) || !empty($soap->PESPECIFIC->pHeartRem)
+                    || !empty($soap->PESPECIFIC->pAbdomenRem) || !empty($soap->PESPECIFIC->pNeuroRem)
+                    || !empty($soap->PESPECIFIC->pRectalRem) || !empty($soap->PESPECIFIC->pGuRem)){
+                    $notes->physicalExamRemarks()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],
+                        [
+                            'skin_remarks' => $soap->PESPECIFIC->pSkinRem,
+                            'heent_remarks' => $soap->PESPECIFIC->pHeentRem,
+                            'chest_remarks' => $soap->PESPECIFIC->pChestRem,
+                            'heart_remarks' => $soap->PESPECIFIC->pHeartRem,
+                            'abdomen_remarks' => $soap->PESPECIFIC->pAbdomenRem,
+                            'neuro_remarks' => $soap->PESPECIFIC->pNeuroRem,
+                            'rectal_remarks' => $soap->PESPECIFIC->pRectalRem,
+                            'genitourinary_remarks' => $soap->PESPECIFIC->pGuRem,
+                        ]
+                    );
+                }
+            }
+
+            if(isset($soap->ICDS)){
+                if(is_array($soap->ICDS->ICD)){
+                    collect($soap->ICDS->ICD)->map(function ($icd) use ($notes) {
+                        $notes->finaldx()->updateOrCreate(['notes_id' => $notes->id, 'icd10_code' => $icd->pIcdCode]);
+                    });
+                } else{
+                    $notes->finaldx()->updateOrCreate(['notes_id' => $notes->id, 'icd10_code' => $soap->ICDS->ICD->pIcdCode]);
+                }
+            }
+
+            if(isset($soap->MANAGEMENTS)){
+                if(is_array($soap->MANAGEMENTS->MANAGEMENT)){
+                    collect($soap->MANAGEMENTS->MANAGEMENT)->map(function ($management) use ($notes, $patient) {
+                        $notes->management()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],[
+                            'management_code' => $management->pManagementId,
+                            'remarks' => $management->pOthRemarks
+                        ]);
+                    });
+                } else{
+                    $notes->management()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],[
+                        'management_code' => $soap->MANAGEMENTS->MANAGEMENT->pManagementId,
+                        'remarks' => $soap->MANAGEMENTS->MANAGEMENT->pOthRemarks
+                    ]);
+                }
+            }
+
+            if(isset($soap->ADVICE)){
+                $notes->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id],[
+                    'plan' => $soap->ADVICE->pRemarks
+                ]);
+            }
+
+            if(isset($soap->DIAGNOSTICS)){
+                if(is_array($soap->DIAGNOSTICS->DIAGNOSTIC)){
+                    collect($soap->DIAGNOSTICS->DIAGNOSTIC)->map(function ($diagnostic) use ($consult, $patient, $soap) {
+                        $labId = LibLaboratory::query()
+                            ->where('konsulta_lab_id', $diagnostic->pDiagnosticId)
+                            ->first();
+                        if(!empty($labId)){
+                            ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
+                                'consult_id' => $consult->id,
+                                'recommendation_code' => $diagnostic->pIsPhysicianRecommendation,
+                                'request_status_code' => $diagnostic->pPatientRemarks
+                            ]);
+                        }
+                    });
+                } else{
+                    $labId = LibLaboratory::query()
+                        ->where('konsulta_lab_id', $soap->DIAGNOSTICS->DIAGNOSTIC->pDiagnosticId)
+                        ->first();
+                    if(!empty($labId)){
+                        ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
+                            'consult_id' => $consult->id,
+                            'recommendation_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pIsPhysicianRecommendation,
+                            'request_status_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks
+                        ]);
+                    }
                 }
             }
         }
