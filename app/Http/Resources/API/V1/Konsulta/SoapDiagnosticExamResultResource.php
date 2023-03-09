@@ -194,7 +194,7 @@ class SoapDiagnosticExamResultResource extends JsonResource
             array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($microscopy) ? $microscopy : [[]])->resolve()]);
         }
 
-        if(count($gramStain)==0 && count($microscopy)>0) {
+        if((empty($gramStain) || count($gramStain)==0) && (empty($gramStain) || count($microscopy)>0)) {
             unset($data['OTHERDIAGEXAMS']);
         }
         return $data;
