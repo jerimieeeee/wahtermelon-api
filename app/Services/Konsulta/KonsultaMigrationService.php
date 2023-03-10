@@ -18,14 +18,14 @@ class KonsultaMigrationService
     public function saveProfile(Collection $collection)
     {
         //return $collection;
-        return $collection->map(function ($value) {
-            return collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
+         $collection->map(function ($value) {
+             collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
                 if(is_array($enlistment)){
-                    return collect($enlistment)->map(function($enlistment) use($value){
+                     collect($enlistment)->map(function($enlistment) use($value){
                         $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
-                    return $this->saveFirstPatientEncounter($enlistment, $value);
+                     $this->saveFirstPatientEncounter($enlistment, $value);
                 }
             });
         });
@@ -641,7 +641,7 @@ class KonsultaMigrationService
      * @param $value
      * @return void
      */
-    public function saveSubjective(mixed $soap, $patient, $value)
+    public function saveSubjective(mixed $soap, $patient, $collection)
     {
         if ($soap) {
             $consult = Consult::updateOrCreate([
@@ -661,7 +661,8 @@ class KonsultaMigrationService
                     'history' => $soap->SUBJECTIVE->pIllnessHistory,
                     'complaint' => $soap->SUBJECTIVE->pOtherComplaint
                 ]);
-                $konsultaComplaints = explode(';', $soap->SUBJECTIVE->pSignsSymptoms);
+                //$konsultaComplaints = explode(';', $soap->SUBJECTIVE->pSignsSymptoms);
+                $konsultaComplaints = preg_split("/[,;]/", $soap->SUBJECTIVE->pSignsSymptoms);
                 foreach ($konsultaComplaints as $value) {
                     $complaintId = LibComplaint::query()
                         ->when($value == '38', fn($query) => $query->where('complaint_desc', 'LIKE', '%' . $soap->SUBJECTIVE->pPainSite . '%'))
@@ -733,16 +734,20 @@ class KonsultaMigrationService
 
             if(isset($soap->DIAGNOSTICS)){
                 if(is_array($soap->DIAGNOSTICS->DIAGNOSTIC)){
-                    collect($soap->DIAGNOSTICS->DIAGNOSTIC)->map(function ($diagnostic) use ($consult, $patient, $soap) {
+                    return collect($soap->DIAGNOSTICS->DIAGNOSTIC)->map(function ($diagnostic) use ($consult, $patient, $soap, $collection) {
                         $labId = LibLaboratory::query()
                             ->where('konsulta_lab_id', $diagnostic->pDiagnosticId)
                             ->first();
                         if(!empty($labId)){
-                            ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
+                            $consultLab = ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
                                 'consult_id' => $consult->id,
                                 'recommendation_code' => $diagnostic->pIsPhysicianRecommendation,
                                 'request_status_code' => $diagnostic->pPatientRemarks
                             ]);
+                            if($diagnostic->pPatientRemarks == 'RQ'){
+                                $this->saveSoapDiagnostic($collection, $patient, $soap->pHciTransNo, $consultLab);
+                            }
+
                         }
                     });
                 } else{
@@ -750,14 +755,90 @@ class KonsultaMigrationService
                         ->where('konsulta_lab_id', $soap->DIAGNOSTICS->DIAGNOSTIC->pDiagnosticId)
                         ->first();
                     if(!empty($labId)){
-                        ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
+                        $consultLab = ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
                             'consult_id' => $consult->id,
                             'recommendation_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pIsPhysicianRecommendation,
                             'request_status_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks
                         ]);
+                        if($soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks == 'RQ'){
+                            $this->saveSoapDiagnostic($collection, $patient, $soap->pHciTransNo, $consultLab);
+                        }
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * @param $value
+     * @return void
+     */
+    function saveSoapDiagnostic($value, $patient, $transaction, $consultLaboratory)
+    {
+        if (isset($value->DIAGNOSTICEXAMRESULTS)) {
+            //return $value->DIAGNOSTICEXAMRESULTS;
+            //return collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)->first();
+            if (is_array($value->DIAGNOSTICEXAMRESULTS->DIAGNOSTICEXAMRESULT)) {
+                $laboratory = collect($value->DIAGNOSTICEXAMRESULTS->DIAGNOSTICEXAMRESULT)
+                    ->where('pHciCaseNo', $patient->case_number)
+                    ->where('pHciTransNo', $transaction)
+                    ->filter(function ($transaction) {
+                        return str_starts_with(strtolower($transaction->pHciTransNo), 's');
+                    })->first();
+                if(isset($laboratory->CBCS) && $consultLaboratory->lab_code == 'CBC'){
+                    if(is_array($laboratory->CBCS->CBC) ){
+                        collect($laboratory->CBCS->CBC)->map(function ($cbc) use ($consultLaboratory, $patient) {
+                            $cbcData = [
+                                'referral_facility' => $cbc->pReferralFacility,
+                                'laboratory_date' => $cbc->pLabDate,
+                                'hematocrit' => $cbc->pHematocrit,
+                                'hemoglobin' => $cbc->pHemoglobinG,
+                                'mch' => $cbc->pMhcPg,
+                                'mcv' => $cbc->pMcvFl,
+                                'wbc' => $cbc->pWbc1000,
+                                'neutrophils' => $cbc->pNeutrophilsBnd,
+                                'lymphocytes' => $cbc->pLymphocytes,
+                                'monocytes' => $cbc->pMonocytes,
+                                'eosinophils' => $cbc->pEosinophils,
+                                'basophils' => $cbc->pBasophils,
+                                'platelets' => $cbc->pPlatelet,
+                                'lab_status_code' => $cbc->pStatus,
+                            ];
+                            $consultLaboratory->cbc()->updateOrCreate([
+                                'request_id' => $consultLaboratory->id,
+                                'patient_id' => $patient->id,
+                            ], $cbcData);
+                        });
+                    } else{
+                        $cbcData = [
+                            'referral_facility' => $laboratory->CBCS->CBC->pReferralFacility,
+                            'laboratory_date' => $laboratory->CBCS->CBC->pLabDate,
+                            'hematocrit' => $laboratory->CBCS->CBC->pHematocrit,
+                            'hemoglobin' => $laboratory->CBCS->CBC->pHemoglobinG,
+                            'mch' => $laboratory->CBCS->CBC->pMhcPg,
+                            'mcv' => $laboratory->CBCS->CBC->pMcvFl,
+                            'wbc' => $laboratory->CBCS->CBC->pWbc1000,
+                            'neutrophils' => $laboratory->CBCS->CBC->pNeutrophilsBnd,
+                            'lymphocytes' => $laboratory->CBCS->CBC->pLymphocytes,
+                            'monocytes' => $laboratory->CBCS->CBC->pMonocytes,
+                            'eosinophils' => $laboratory->CBCS->CBC->pEosinophils,
+                            'basophils' => $laboratory->CBCS->CBC->pBasophils,
+                            'platelets' => $laboratory->CBCS->CBC->pPlatelet,
+                            'lab_status_code' => $laboratory->CBCS->CBC->pStatus,
+                        ];
+                        $consultLaboratory->cbc()->updateOrCreate([
+                            'request_id' => $consultLaboratory->id,
+                            'patient_id' => $patient->id,
+                        ], $cbcData);
+                    }
+                }
+            } else{
+                return $laboratory = collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)
+                    ->filter(function ($transaction) {
+                        return str_starts_with(strtolower($transaction->pHciTransNo), 's');
+                    })->first();
+            }
+            //return $this->saveLaboratory($laboratory, $value, $profile, $patient);
         }
     }
 
