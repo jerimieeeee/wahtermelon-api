@@ -561,17 +561,24 @@ Route::prefix('v1')->group(function (){
     //Reports 2018
     Route::prefix('reports-2018')->group(function () {
         Route::prefix('child-care')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Reports\ChildCareReport2018Controller::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\ChildCareReport2018Controller::class)
                 ->middleware('auth:api')
                  ->group(function() {
                     Route::get('m1', 'index');
             });
         });
         Route::prefix('maternal-care')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Reports\MaternalCareReport2018Controller::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MaternalCareReport2018Controller::class)
                 ->middleware('auth:api')
                 ->group(function() {
                     Route::get('m1', 'index');
+                });
+        });
+        Route::prefix('user')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\UserStats\UserStatsController::class)
+                ->middleware('auth:api')
+                ->group(function() {
+                    Route::get('patient-registered', 'index');
                 });
         });
     });

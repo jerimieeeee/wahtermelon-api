@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Reports;
+namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\MaternalCare\MaternalCareReportService;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * @authenticated
- * @group Reports 2018
+ * @group FHSIS Reports 2018
  *
  * APIs for managing Maternal Care Report Information
  * @subgroup M1 Maternal Care Report
@@ -299,7 +299,7 @@ class MaternalCareReport2018Controller extends Controller
 
         return [
 
-/*            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
+            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
             'Prenatal_give_birth_10_14' => $prenatal_give_birth_10_14,
 
             //4 PRENATAL GIVE BIRTH AGE 15-19 YEARS
@@ -415,7 +415,7 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_with_1_deworming_15_19' =>  $pregnant_with_1_deworming_15_19,
 
             //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,*/
+            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,
 
 
             ///////////////////////

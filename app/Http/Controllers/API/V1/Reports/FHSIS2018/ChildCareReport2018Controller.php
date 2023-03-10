@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Reports;
+namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\Childcare\ChildCareReportService;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * @authenticated
- * @group Reports 2018
+ * @group FHSIS Reports 2018
  *
  * APIs for managing Child Care Report Information
  * @subgroup M1 Child Care Report
