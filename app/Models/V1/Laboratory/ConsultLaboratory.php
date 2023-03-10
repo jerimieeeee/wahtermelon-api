@@ -181,6 +181,5 @@ class ConsultLaboratory extends Model
     public function getRelatedModel($model)
     {
         return $this->$model;
-
     }
 }

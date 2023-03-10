@@ -14,6 +14,7 @@ use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
+use App\Services\Konsulta\KonsultaMigrationService;
 use App\Services\PhilHealth\KonsultaService;
 use App\Services\PhilHealth\SoapService;
 use Carbon\Carbon;
@@ -270,7 +271,7 @@ class KonsultaController extends Controller
      * @bodyParam xml file required The xml.
      * @throws Throwable
      */
-    public function uploadXml(Request $request)
+    public function uploadXml(Request $request, KonsultaMigrationService $migrationService)
     {
         throw_if(!request()->hasFile('xml'), 'No File to be uploaded');
 
@@ -279,7 +280,7 @@ class KonsultaController extends Controller
         if (!is_array($file)) {
             $fileContent = file_get_contents($file);
             $jsonXml = XML2JSON($fileContent);
-            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
+            //KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
             return response()->json([
                 'status' => 'File successfully uploaded'
             ], 201);
@@ -287,10 +288,14 @@ class KonsultaController extends Controller
         //$arrValue = [];
         foreach ($file as $key => $value) {
             $fileContent = file_get_contents($value);
-            $jsonXml = XML2JSON($fileContent);
+            $decryptor = new PhilHealthEClaimsEncryptor();
+            $cipher_key = $request->cipher_key;
+            $data = $decryptor->decryptPayloadDataToXml($fileContent, $cipher_key);
+            $arrValue[] = XML2JSON($data);
             //return $jsonXml->ENLISTMENTS;
-            KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
+            //KonsultaImport::updateOrCreate(['transmittal_number' => $jsonXml->pHciTransmittalNumber], ['enlistments' => $jsonXml->ENLISTMENTS, 'imported_xml' => $jsonXml]);
         }
+        return $migrationService->saveProfile(collect($arrValue));
         return response()->json([
             'status' => 'File successfully uploaded'
         ], 201);
