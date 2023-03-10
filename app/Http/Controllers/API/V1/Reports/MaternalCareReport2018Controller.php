@@ -263,7 +263,7 @@ class MaternalCareReport2018Controller extends Controller
 
         return [
 
-/*            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
+            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
             'Prenatal_give_birth_10_14' => $prenatal_give_birth_10_14,
 
             //4 PRENATAL GIVE BIRTH AGE 15-19 YEARS
@@ -315,7 +315,7 @@ class MaternalCareReport2018Controller extends Controller
             'prenatal_low_bmi_15_19' => $prenatal_low_bmi_15_19,
 
             //PRENATAL LOW BMI AGE 20-49 YEARS
-            'prenatal_low_bmi_20_49' => $prenatal_low_bmi_20_49,*/
+            'prenatal_low_bmi_20_49' => $prenatal_low_bmi_20_49,
 
 
            ///////////////////////
@@ -329,7 +329,7 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_2_TD_vaccine_20_49' => $pregnant_2_td_vaccine_20_49,
 
 
-/*           ///////////////////////
+           ///////////////////////
             //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
             'pregnant_with_180_iron_folic_10_14' => $pregnant_with_180_iron_folic_10_14,
 
@@ -368,9 +368,9 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_with_1_deworming_15_19' =>  $pregnant_with_1_deworming_15_19,
 
             //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,*/
+            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,
 
-/*            ///////////////////////
+            ///////////////////////
             //PREGNANT SCREENED SYPHILIS AGE 10-14 YEARS
             'pregnant_screened_syphilis_10_14' => $pregnant_screened_syphilis_10_14,
 
@@ -477,7 +477,7 @@ class MaternalCareReport2018Controller extends Controller
             'no_of_deliveries_15_29' => $no_of_deliveries_15_19,
 
             //NO. OF DELIVERIES AGE 20-49 YEARS
-            'no_of_deliveries_20_49' => $no_of_deliveries_20_49,*/
+            'no_of_deliveries_20_49' => $no_of_deliveries_20_49,
 
             ];
     }
