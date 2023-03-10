@@ -80,13 +80,25 @@ class MaternalCareReport2018Controller extends Controller
 
         /////////////////////
         //PREGNANT WITH 2 TD VACCINE AGE 10-14 YEARS
-        $pregnant_2_td_vaccine_10_14 =  $maternalCareReportService->pregnant_2_td_vaccine($request, '10', '14')->get();
+        $pregnant_2_td_vaccine_10_14 =  $maternalCareReportService->pregnant_td_vaccine($request, 'TD2', '10', '14')->get();
 
         //PREGNANT WITH 2 TD VACCINE AGE 15-19 YEARS
-        $pregnant_2_td_vaccine_15_19 =  $maternalCareReportService->pregnant_2_td_vaccine($request, '15', '19')->get();
+        $pregnant_2_td_vaccine_15_19 =  $maternalCareReportService->pregnant_td_vaccine($request, 'TD2', '15', '19')->get();
 
         //PREGNANT WITH 2 TD VACCINE AGE 20-49 YEARS
-        $pregnant_2_td_vaccine_20_49 =  $maternalCareReportService->pregnant_2_td_vaccine($request, '20', '49')->get();
+        $pregnant_2_td_vaccine_20_49 =  $maternalCareReportService->pregnant_td_vaccine($request, 'TD2',  '20', '49')->get();
+
+
+        /////////////////////
+        //PREGNANT WITH 3 TD VACCINE AGE 10-14 YEARS
+        $pregnant_3_td_vaccine_10_14 =  $maternalCareReportService->pregnant_td_vaccine($request, 'TD3', '10', '14')->get();
+
+        //PREGNANT WITH 3 TD VACCINE AGE 15-19 YEARS
+        $pregnant_3_td_vaccine_15_19 =  $maternalCareReportService->pregnant_td_vaccine($request, 'TD3', '15', '19')->get();
+
+        //PREGNANT WITH 3 TD VACCINE AGE 20-49 YEARS
+        $pregnant_3_td_vaccine_20_49 =  $maternalCareReportService->pregnant_td_vaccine($request, 'TD3',  '20', '49')->get();
+
 
         /////////////////////
         //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
@@ -229,7 +241,31 @@ class MaternalCareReport2018Controller extends Controller
         $pregnant_screened_gastro_diabetes_positive_20_49 =  $maternalCareReportService->pregnant_test('DIBTS+', 'DIBTS', $request, '20', '49')->get();
 
 
+
         /////////////////////
+        //NO. OF DELIVERIES AGE 10-14 YEARS
+        $no_of_deliveries_10_14 =  $maternalCareReportService->post_partum_2_checkup($request,  '10', '14')->get();
+
+        //NO. OF DELIVERIES AGE 15-19 YEARS
+        $no_of_deliveries_15_19 =  $maternalCareReportService->post_partum_2_checkup($request,  '15', '19')->get();
+
+        //NO. OF DELIVERIES AGE 20-49 YEARS
+        $no_of_deliveries_20_49 =  $maternalCareReportService->post_partum_2_checkup($request,  '20', '49')->get();
+
+
+
+        /////////////////////
+        //NO. OF POSTPARTUM WOMEN WITH VIT A AGE 10-14 YEARS
+        $no_of_postpartum_women_with_vita_10_14 =  $maternalCareReportService->post_partum_vitamin_a($request,  '10', '14')->get();
+
+        //NO. OF POSTPARTUM WOMEN WITH VIT A  AGE 15-19 YEARS
+        $no_of_postpartum_women_with_vita_15_19 =  $maternalCareReportService->post_partum_vitamin_a($request,  '15', '19')->get();
+
+        //NO. OF POSTPARTUM WOMEN WITH VIT A  AGE 20-49 YEARS
+        $no_of_postpartum_women_with_vita_20_49 =  $maternalCareReportService->post_partum_vitamin_a($request,  '20', '49')->get();
+
+
+/*        /////////////////////
         //NO. OF DELIVERIES AGE 10-14 YEARS
         $no_of_deliveries_10_14 =  $maternalCareReportService->get_no_of_births($request,  '10', '14')->get();
 
@@ -259,11 +295,11 @@ class MaternalCareReport2018Controller extends Controller
         $no_of_livebirths_15_19 =  $maternalCareReportService->get_no_of_livebirths($request, 'FEMALE', '15', '19')->get();
 
         //NO. OF DELIVERIES AGE 20-49 YEARS
-        $no_of_livebirths_20_49 =  $maternalCareReportService->get_no_of_livebirths($request, 'FEMALE', '20', '49')->get();
+        $no_of_livebirths_20_49 =  $maternalCareReportService->get_no_of_livebirths($request, 'FEMALE', '20', '49')->get();*/
 
         return [
 
-            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
+/*            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
             'Prenatal_give_birth_10_14' => $prenatal_give_birth_10_14,
 
             //4 PRENATAL GIVE BIRTH AGE 15-19 YEARS
@@ -329,7 +365,18 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_2_TD_vaccine_20_49' => $pregnant_2_td_vaccine_20_49,
 
 
-           ///////////////////////
+            ///////////////////////
+            //PREGNANT WITH 3 TD VACCINE AGE 10-14 YEARS
+            'pregnant_3_TD_vaccine_10_14' => $pregnant_3_td_vaccine_10_14,
+
+            //PREGNANT WITH 3 TD VACCINE AGE 15-19 YEARS
+            'pregnant_3_TD_vaccine_15_19' => $pregnant_3_td_vaccine_15_19,
+
+            //PREGNANT WITH 3 TD VACCINE AGE 20-49 YEARS
+            'pregnant_3_TD_vaccine_20_49' => $pregnant_3_td_vaccine_20_49,
+
+
+            ///////////////////////
             //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
             'pregnant_with_180_iron_folic_10_14' => $pregnant_with_180_iron_folic_10_14,
 
@@ -368,7 +415,8 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_with_1_deworming_15_19' =>  $pregnant_with_1_deworming_15_19,
 
             //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,
+            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,*/
+
 
             ///////////////////////
             //PREGNANT SCREENED SYPHILIS AGE 10-14 YEARS
@@ -471,13 +519,24 @@ class MaternalCareReport2018Controller extends Controller
 
             ///////////////////////
             //NO. OF DELIVERIES AGE 10-14 YEARS
-            'no_of_deliveries_10_14' => $no_of_deliveries_10_14,
+            'no_of_postpartum_women_with_2_checkup_10_14' => $no_of_deliveries_10_14,
 
             //NO. OF DELIVERIES AGE 15-29 YEARS
-            'no_of_deliveries_15_29' => $no_of_deliveries_15_19,
+            'no_of_postpartum_women_with_2_checkup_15_29' => $no_of_deliveries_15_19,
 
             //NO. OF DELIVERIES AGE 20-49 YEARS
-            'no_of_deliveries_20_49' => $no_of_deliveries_20_49,
+            'no_of_postpartum_women_with_2_checkup_20_49' => $no_of_deliveries_20_49,
+
+
+            /////////////////////
+            //NO. OF POSTPARTUM WOMEN WITH VIT A AGE 10-14 YEARS
+            'no_of_postpartum_women_with_vita_10_14' => $no_of_postpartum_women_with_vita_10_14,
+
+            //NO. OF POSTPARTUM WOMEN WITH VIT A  AGE 15-19 YEARS
+            'no_of_postpartum_women_with_vita_15_19' => $no_of_postpartum_women_with_vita_15_19,
+
+            //NO. OF POSTPARTUM WOMEN WITH VIT A  AGE 20-49 YEARS
+            'no_of_postpartum_women_with_vita_20_49' => $no_of_postpartum_women_with_vita_20_49,
 
             ];
     }

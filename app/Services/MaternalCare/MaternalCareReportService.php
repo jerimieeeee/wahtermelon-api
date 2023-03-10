@@ -173,7 +173,7 @@ class MaternalCareReportService
            });
     }
 
-    public function pregnant_2_td_vaccine($request, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_td_vaccine($request, $vaccine, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table(function ($query) use($request) {
             $query->selectRaw("
@@ -214,26 +214,12 @@ class MaternalCareReportService
                         barangay_code
             ")
             ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code', 'birthdate', 'vaccine_id', 'status_id')
-            ->havingRaw('(vaccine_seq = 2 AND status_id = 1) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ? AND (age_year BETWEEN ? AND ?)', [$request->year, $request->month, $age_year_bracket1, $age_year_bracket2])
-            ->orderBy('name', 'ASC');
-    }
-
-    public function pregnant_3_above_td_vaccine($request, $age_year_bracket1, $age_year_bracket2)
-    {
-        return DB::table('consult_mc_prenatals')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        vaccine_id,
-                        birthdate,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 3), ',', - 1) AS date_of_service,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY status_id DESC), ',', 3), ',', - 1) AS status_id,
-                        TIMESTAMPDIFF(YEAR, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date ASC), ',', 2), ',', - 1)) AS age_year
-                    ")
-            ->join('patients', 'consult_mc_prenatals.patient_id', '=', 'patients.id')
-            ->join('patient_vaccines', 'consult_mc_prenatals.patient_id', '=', 'patient_vaccines.patient_id')
-            ->whereVaccineId('TD')
-            ->groupBy('consult_mc_prenatals.patient_id', 'vaccine_id')
-            ->havingRaw('COUNT(vaccine_id) = 3 AND status_id = 1 AND (age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->when($vaccine == 'TD2',  function($query) use($request, $age_year_bracket1, $age_year_bracket2){
+                $query->havingRaw('(vaccine_seq = 2 AND status_id = 1) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ? AND (age_year BETWEEN ? AND ?)', [$request->year, $request->month, $age_year_bracket1, $age_year_bracket2]);
+            })
+            ->when($vaccine == 'TD3',  function($query) use($request, $age_year_bracket1, $age_year_bracket2){
+                $query->havingRaw('(vaccine_seq >= 3 AND status_id = 1) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ? AND (age_year BETWEEN ? AND ?)', [$request->year, $request->month, $age_year_bracket1, $age_year_bracket2]);
+            })
             ->orderBy('name', 'ASC');
     }
 
@@ -306,9 +292,20 @@ class MaternalCareReportService
                         service_id,
                         positive_result,
                         visit_status,
-                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
+                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year,
+                        municipality_code,
+                        barangay_code
                     ")
             ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_services.patient_id');
+            })
+            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', $request->municipality_code);
+            })
+            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', $request->barangay_code);
+            })
             ->when($class == $class,  fn($query) =>
                      $query->whereServiceId($class2)
                            ->whereVisitStatus('Prenatal')
@@ -323,7 +320,7 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function get_no_of_births($request, $age_year_bracket1, $age_year_bracket2)
+/*    public function get_no_of_births($request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table('patient_mc_post_registrations')
             ->selectRaw("
@@ -378,7 +375,7 @@ class MaternalCareReportService
             ->whereIn('attendant_code', ['MD', 'MW', 'RN'])
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
-    }
+    }*/
 
     public function post_partum_2_checkup($request, $age_year_bracket1, $age_year_bracket2)
     {
@@ -388,9 +385,20 @@ class MaternalCareReportService
                         birthdate,
                         postpartum_date AS date_of_service,
                         visit_sequence,
-                        TIMESTAMPDIFF(YEAR, birthdate, postpartum_date) AS age_year
+                        TIMESTAMPDIFF(YEAR, birthdate, postpartum_date) AS age_year,
+                        municipality_code,
+                        barangay_code
                     ")
             ->join('patients', 'consult_mc_postparta.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_postparta.patient_id');
+            })
+            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', $request->municipality_code);
+            })
+            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', $request->barangay_code);
+            })
             ->whereVisitSequence('2')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
@@ -401,13 +409,23 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-	                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(service_date ORDER BY service_date ASC), ',', 1), ',', - 1) AS date_of_service,
+	                    service_date AS date_of_service,
                         service_id,
-                        service_qty,
                         visit_status,
-                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
+                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year,
+                        municipality_code,
+                        barangay_code
                     ")
             ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_services.patient_id');
+            })
+            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', $request->municipality_code);
+            })
+            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', $request->barangay_code);
+            })
             ->whereServiceId('VITA')
             ->whereVisitStatus('Postpartum')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
