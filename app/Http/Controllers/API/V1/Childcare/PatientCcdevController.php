@@ -37,13 +37,16 @@ class PatientCcdevController extends Controller
      * @apiResourceModel App\Models\V1\Childcare\PatientCcdev paginate=15
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request): ResourceCollection
+    public function index(Request $request, PatientChildcareService $ccdevStatus): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $ccdev = QueryBuilder::for(PatientCcdev::class)
             ->when(isset($request->patient_id), function($q) use($request){
                 $q->where('patient_id', '=', $request->patient_id);
+            })
+            ->leftJoinSub($ccdevStatus->get_cpab(), 'patientccdev', function($join) {
+                $join->on('patient_ccdevs.mothers_id', '=', 'patientccdev.mothersId');
             })
 
             ->defaultSort('admission_date')
