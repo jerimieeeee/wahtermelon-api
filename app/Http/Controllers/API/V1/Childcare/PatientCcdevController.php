@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Consultation\ConsultResource;
+use App\Models\V1\Consultation\Consult;
 use Illuminate\Http\Request;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
@@ -10,6 +12,7 @@ use App\Http\Resources\API\V1\Childcare\PatientCcdevResource;
 use App\Services\Childcare\PatientChildcareService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -26,11 +29,31 @@ class PatientCcdevController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @queryParam patient_id Identification code of the patient.
+     * @queryParam sort string Sort consult_date. Add hyphen (-) to descend the list: e.g. admission_date. Example: admission_date
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\API\V1\Childcare\PatientCcdevResource
+     * @apiResourceModel App\Models\V1\Childcare\PatientCcdev paginate=15
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): ResourceCollection
     {
-        //
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $ccdev = QueryBuilder::for(PatientCcdev::class)
+            ->when(isset($request->patient_id), function($q) use($request){
+                $q->where('patient_id', '=', $request->patient_id);
+            })
+
+            ->defaultSort('admission_date')
+            ->allowedSorts('admission_date');
+
+        if ($perPage === 'all') {
+            return PatientCcdevResource::collection($ccdev->get());
+        }
+
+        return PatientCcdevResource::collection($ccdev->paginate($perPage)->withQueryString());
     }
 
     /**

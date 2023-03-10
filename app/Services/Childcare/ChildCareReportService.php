@@ -216,38 +216,29 @@ class ChildCareReportService
 
     public function init_breastfeeding($request, $patient_gender)
     {
-        return DB::table(function ($query) use($request, $patient_gender) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            birthdate,
-                            breastfed_date AS date_of_service,
-                            municipalities_brgy.barangay_code,
-                            municipalities_brgy.municipality_code
+        return DB::table('patient_mc_post_registrations')
+            ->selectRaw("
+	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
+	                    birthdate,
+                        breastfed_date AS date_of_service,
+                        municipalities_brgy.municipality_code AS municipality_code,
+                        municipalities_brgy.barangay_code AS barangay_code
                     ")
-                ->from('patient_mc_post_registrations')
-                ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
-                ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
-                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
-                })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('municipality_code', $request->municipality_code);
-                })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
-                })
+            ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
+            ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
+            })
+            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', $request->municipality_code);
+            })
+            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
+                $q->whereIn('municipalities_brgy.barangay_code', $request->barangay_code);
+            })
             ->whereBreastfeeding(1)
             ->whereGender($patient_gender)
-            ->orderBy('name', 'ASC');
-        })
-            ->selectRaw("
-                            name,
-                            birthdate,
-                            date_of_service,
-                            barangay_code,
-                            municipality_code
-            ")
-            ->havingRaw('(year(date_of_service) = ? AND month(date_of_service) = ?)', [$request->year, $request->month])
+            ->whereYear('breastfed_date', $request->year)
+            ->whereMonth('breastfed_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 
@@ -256,6 +247,7 @@ class ChildCareReportService
         return DB::table(function ($query) use($request, $patient_gender) {
             $query->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        gender,
                         birth_weight,
                         birthdate,
                         service_date AS date_of_service,
@@ -287,6 +279,8 @@ class ChildCareReportService
         })
             ->selectRaw("
                         name,
+                        gender,
+                        birth_weight,
                         birthdate,
                         date_of_service,
                         service_id,
@@ -296,7 +290,7 @@ class ChildCareReportService
                         municipality_code,
                         barangay_code
             ")
-            ->havingRaw('(age_month BETWEEN 1 AND 3 AND days <= 29) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+            ->havingRaw('(birth_weight < 2.5) AND (age_month BETWEEN 1 AND 3 AND days <= 29) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
@@ -305,7 +299,6 @@ class ChildCareReportService
         return DB::table(function ($query) use($request, $patient_gender) {
             $query->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birth_weight,
                         birthdate,
                         service_date AS date_of_service,
                         service_id,
@@ -745,7 +738,7 @@ class ChildCareReportService
                     ])
                         ->whereNotNull('comp_fed_date')
             )
-            ->havingRaw('(age_month >= 6) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+            ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             ->whereGender($patient_gender)
             ->orderBy('name', 'ASC');
     }

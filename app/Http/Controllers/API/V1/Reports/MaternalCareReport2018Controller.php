@@ -45,37 +45,37 @@ class MaternalCareReport2018Controller extends Controller
         //PRENATAL ASSESSED NUTRITION AGE 20-49 YEARS
         $prenatal_assessed_20_49 =  $maternalCareReportService->pregnant_assessed_nutrition($request, '20', '49')->get();
 
-        ///////////////////////
+      ///////////////////////
         //PRENATAL NORMAL BMI AGE 10-14 YEARS
-        $prenatal_normal_bmi_10_14 =  $maternalCareReportService->pregnant_normal_bmi($request, '10', '14')->get();
+        $prenatal_normal_bmi_10_14 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'NORMAL', '10', '14')->get();
 
         //PRENATAL NORMAL BMI AGE 15-19 YEARS
-        $prenatal_normal_bmi_15_19 =  $maternalCareReportService->pregnant_normal_bmi($request, '15', '19')->get();
+        $prenatal_normal_bmi_15_19 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'NORMAL', '15', '19')->get();
 
         //PRENATAL NORMAL BMI AGE 20-49 YEARS
-        $prenatal_normal_bmi__20_49 =  $maternalCareReportService->pregnant_normal_bmi($request, '20', '49')->get();
+        $prenatal_normal_bmi__20_49 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'NORMAL', '20', '49')->get();
 
 
         //////////////////////
         //PRENATAL LOW BMI AGE 10-14 YEARS
-        $prenatal_low_bmi_10_14 =  $maternalCareReportService->pregnant_low_bmi($request, 'LOW', '10', '14')->get();
+        $prenatal_low_bmi_10_14 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'LOW', '10', '14')->get();
 
         //PRENATAL LOW BMI AGE 15-19 YEARS
-        $prenatal_low_bmi_15_19 =  $maternalCareReportService->pregnant_low_bmi($request, 'LOW', '15', '19')->get();
+        $prenatal_low_bmi_15_19 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'LOW', '15', '19')->get();
 
         //PRENATAL LOW BMI AGE 20-49 YEARS
-        $prenatal_low_bmi_20_49 =  $maternalCareReportService->pregnant_low_bmi($request, 'LOW', '20', '49')->get();
+        $prenatal_low_bmi_20_49 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'LOW', '20', '49')->get();
 
 
         //////////////////////
         //PRENATAL HIGH BMI AGE 10-14 YEARS
-        $prenatal_high_bmi_10_14 =  $maternalCareReportService->pregnant_high_bmi($request, 'HIGH', '10', '14')->get();
+        $prenatal_high_bmi_10_14 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'HIGH', '10', '14')->get();
 
         //PRENATAL HIGH BMI AGE 15-19 YEARS
-        $prenatal_high_bmi_15_19 =  $maternalCareReportService->pregnant_high_bmi($request, 'HIGH', '15', '19')->get();
+        $prenatal_high_bmi_15_19 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'HIGH', '15', '19')->get();
 
         //PRENATAL HIGH BMI AGE 20-49 YEARS
-        $prenatal_high_bmi_20_49 =  $maternalCareReportService->pregnant_high_bmi($request, 'HIGH', '20', '49')->get();
+        $prenatal_high_bmi_20_49 =  $maternalCareReportService->pregnant_assessed_bmi($request, 'HIGH', '20', '49')->get();
 
 
         /////////////////////
@@ -90,45 +90,45 @@ class MaternalCareReport2018Controller extends Controller
 
         /////////////////////
         //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
-        $pregnant_with_180_iron_folic_10_14 =  $maternalCareReportService->pregnant_iron_folic($request, '10', '14')->get();
+        $pregnant_with_180_iron_folic_10_14 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'IRON', '180', 'Prenatal', '10', '14')->get();
 
         //PREGNANT WITH 180 IRON FOLIC ACID AGE 15-19 YEARS
-        $pregnant_with_180_iron_folic_15_19 =  $maternalCareReportService->pregnant_iron_folic($request, '15', '19')->get();
+        $pregnant_with_180_iron_folic_15_19 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'IRON', '180', 'Prenatal', '15', '19')->get();
 
         //PREGNANT WITH 180 IRON FOLIC ACID AGE 20-49 YEARS
-        $pregnant_with_180_iron_folic_20_49 =  $maternalCareReportService->pregnant_iron_folic($request, '20', '49')->get();
+        $pregnant_with_180_iron_folic_20_49 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'IRON', '180', 'Prenatal', '20', '49')->get();
 
         /////////////////////
-        //PREGNANT WITH 480 CALCIUM CARBONATE AGE 10-14 YEARS
-        $pregnant_with_480_calcium_carbonate_10_14 =  $maternalCareReportService->pregnant_calcium_carbonate($request, '10', '14')->get();
+        //PREGNANT WITH 420 CALCIUM CARBONATE AGE 10-14 YEARS
+        $pregnant_with_420_calcium_carbonate_10_14 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'CALC', '420', 'Prenatal', '10', '14')->get();
 
-        //PREGNANT WITH 480 CALCIUM CARBONATE AGE 15-19 YEARS
-        $pregnant_with_480_calcium_carbonate_15_19 =  $maternalCareReportService->pregnant_calcium_carbonate($request, '15', '19')->get();
+        //PREGNANT WITH 420 CALCIUM CARBONATE AGE 15-19 YEARS
+        $pregnant_with_420_calcium_carbonate_15_19 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'CALC', '420', 'Prenatal', '15', '19')->get();
 
-        //PREGNANT WITH 480 CALCIUM CARBONATE AGE 20-49 YEARS
-        $pregnant_with_480_calcium_carbonate_20_49 =  $maternalCareReportService->pregnant_calcium_carbonate($request, '20', '49')->get();
+        //PREGNANT WITH 420 CALCIUM CARBONATE AGE 20-49 YEARS
+        $pregnant_with_420_calcium_carbonate_20_49 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'CALC', '420', 'Prenatal', '20', '49')->get();
 
 
         /////////////////////
         //PREGNANT WITH 2 IODINE CAPSULE AGE 10-14 YEARS
-        $pregnant_with_2_iodine_capsule_10_14 =  $maternalCareReportService->pregnant_iodine_capsule($request, '10', '14')->get();
+        $pregnant_with_2_iodine_capsule_10_14 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'IODN', '1', 'Prenatal', '10', '14')->get();
 
         //PREGNANT WITH 2 IODINE CAPSULE AGE 15-19 YEARS
-        $pregnant_with_2_iodine_capsule_15_19 =  $maternalCareReportService->pregnant_iodine_capsule($request, '15', '19')->get();
+        $pregnant_with_2_iodine_capsule_15_19 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'IODN', '1', 'Prenatal', '15', '19')->get();
 
         //PREGNANT WITH 2 IODINE CAPSULE AGE 20-49 YEARS
-        $pregnant_with_2_iodine_capsule_20_49 =  $maternalCareReportService->pregnant_iodine_capsule($request, '20', '49')->get();
+        $pregnant_with_2_iodine_capsule_20_49 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'IODN', '1', 'Prenatal', '20', '49')->get();
 
 
         /////////////////////
         //PREGNANT WITH 1 DEWORMING TABLET AGE 10-14 YEARS
-        $pregnant_with_1_deworming_10_14 =  $maternalCareReportService->pregnant_deworming_tablet($request, '10', '14')->get();
+        $pregnant_with_1_deworming_10_14 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'DWRMG', '1', 'Prenatal', '10', '14')->get();
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 15-19 YEARS
-        $pregnant_with_1_deworming_15_19 =  $maternalCareReportService->pregnant_deworming_tablet($request, '15', '19')->get();
+        $pregnant_with_1_deworming_15_19 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'DWRMG', '1', 'Prenatal', '15', '19')->get();
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-        $pregnant_with_1_deworming_20_49 =  $maternalCareReportService->pregnant_deworming_tablet($request, '20', '49')->get();
+        $pregnant_with_1_deworming_20_49 =  $maternalCareReportService->pregnant_mc_services_with_qty($request, 'DWRMG', '1', 'Prenatal', '20', '49')->get();
 
 
         /////////////////////
@@ -263,7 +263,7 @@ class MaternalCareReport2018Controller extends Controller
 
         return [
 
-            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
+/*            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
             'Prenatal_give_birth_10_14' => $prenatal_give_birth_10_14,
 
             //4 PRENATAL GIVE BIRTH AGE 15-19 YEARS
@@ -274,6 +274,18 @@ class MaternalCareReport2018Controller extends Controller
 
 
             ///////////////////////
+            //PRENATAL ASSESSED NUTRITION AGE 10-14 YEARS
+            'prenatal_assessed_10_14' => $prenatal_assessed_10_14,
+
+            //PRENATAL ASSESSED NUTRITION AGE 15-19 YEARS
+            'prenatal_assessed_15_19' => $prenatal_assessed_15_19,
+
+            //PRENATAL ASSESSED NUTRITION AGE 20-49 YEARS
+            'prenatal_assessed_20_49' => $prenatal_assessed_20_49,
+
+
+
+           ///////////////////////
             //PRENATAL HIGH BMI AGE 10-14 YEARS
             'prenatal_high_bmi_10_14' => $prenatal_high_bmi_10_14,
 
@@ -303,21 +315,10 @@ class MaternalCareReport2018Controller extends Controller
             'prenatal_low_bmi_15_19' => $prenatal_low_bmi_15_19,
 
             //PRENATAL LOW BMI AGE 20-49 YEARS
-            'prenatal_low_bmi_20_49' => $prenatal_low_bmi_20_49,
+            'prenatal_low_bmi_20_49' => $prenatal_low_bmi_20_49,*/
 
 
-            ///////////////////////
-            //PRENATAL ASSESSED NUTRITION AGE 10-14 YEARS
-            'prenatal_assessed_10_14' => $prenatal_assessed_10_14,
-
-            //PRENATAL ASSESSED NUTRITION AGE 15-19 YEARS
-            'prenatal_assessed_15_19' => $prenatal_assessed_15_19,
-
-            //PRENATAL ASSESSED NUTRITION AGE 20-49 YEARS
-            'prenatal_assessed_20_49' => $prenatal_assessed_20_49,
-
-
-            ///////////////////////
+           ///////////////////////
             //PREGNANT WITH 2 TD VACCINE AGE 10-14 YEARS
             'pregnant_2_TD_vaccine_10_14' => $pregnant_2_td_vaccine_10_14,
 
@@ -328,7 +329,7 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_2_TD_vaccine_20_49' => $pregnant_2_td_vaccine_20_49,
 
 
-            ///////////////////////
+/*           ///////////////////////
             //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
             'pregnant_with_180_iron_folic_10_14' => $pregnant_with_180_iron_folic_10_14,
 
@@ -338,6 +339,15 @@ class MaternalCareReport2018Controller extends Controller
             //PREGNANT WITH 180 IRON FOLIC ACID AGE 20-49 YEARS
             'pregnant_with_180_iron_folic_20_49' => $pregnant_with_180_iron_folic_20_49,
 
+            /////////////////////
+            //PREGNANT WITH 420 CALCIUM CARBONATE AGE 10-14 YEARS
+            'pregnant_with_420_calcium_carbonate_10_14' => $pregnant_with_420_calcium_carbonate_10_14,
+
+            //PREGNANT WITH 420 CALCIUM CARBONATE AGE 15-19 YEARS
+            'pregnant_with_420_calcium_carbonate_15_19' => $pregnant_with_420_calcium_carbonate_15_19,
+
+            //PREGNANT WITH 420 CALCIUM CARBONATE AGE 20-49 YEARS
+            'pregnant_with_420_calcium_carbonate_20_49' => $pregnant_with_420_calcium_carbonate_20_49,
 
             ///////////////////////
             //PREGNANT WITH 2 IODINE CAPSULE AGE 10-14 YEARS
@@ -358,10 +368,9 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_with_1_deworming_15_19' =>  $pregnant_with_1_deworming_15_19,
 
             //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,
+            'pregnant_with_1_deworming_20_49' => $pregnant_with_1_deworming_20_49,*/
 
-
-            ///////////////////////
+/*            ///////////////////////
             //PREGNANT SCREENED SYPHILIS AGE 10-14 YEARS
             'pregnant_screened_syphilis_10_14' => $pregnant_screened_syphilis_10_14,
 
@@ -468,7 +477,7 @@ class MaternalCareReport2018Controller extends Controller
             'no_of_deliveries_15_29' => $no_of_deliveries_15_19,
 
             //NO. OF DELIVERIES AGE 20-49 YEARS
-            'no_of_deliveries_20_49' => $no_of_deliveries_20_49,
+            'no_of_deliveries_20_49' => $no_of_deliveries_20_49,*/
 
             ];
     }

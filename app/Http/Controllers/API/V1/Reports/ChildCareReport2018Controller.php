@@ -308,7 +308,7 @@ class ChildCareReport2018Controller extends Controller
             'CIC_Male' => $cic_m,
             'CIC_Female' => $cic_f,
 
-           //Initiated breastfeeding
+            //Initiated breastfeeding
             'Initiated_Breastfeeding_90mins_Male' => $init_bfed_m,
             'Initiated_Breastfeeding_90mins_Female' => $init_bfed_f,
 
