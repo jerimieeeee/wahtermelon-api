@@ -64,7 +64,7 @@ class ChildCareReport2018Controller extends Controller
 
         //IPV 1
         $ipv1_m =  $childCareReportService->get_vaccines($request, 'IPV', '1',  'M')->get();
-        $ipv1_f =  $childCareReportService->get_vaccines($request, 'IPV', '1', 'M')->get();
+        $ipv1_f =  $childCareReportService->get_vaccines($request, 'IPV', '1', 'F')->get();
 
         //IPV2 Routine
         $ipv2_r_m =  $childCareReportService->get_ipv2($request, 'M', '2',  0)->get();
@@ -99,9 +99,9 @@ class ChildCareReport2018Controller extends Controller
         $cic_m =  $childCareReportService->get_fic_cic($request, 'M', 'CIC')->get();
         $cic_f =  $childCareReportService->get_fic_cic($request, 'F', 'CIC')->get();
 
-        //TDRGR1
-        $tdrgr1_m =  $childCareReportService->get_vaccines($request, 'TDRGR1', '1', 'M')->get();
-        $tdrgr1_f =  $childCareReportService->get_vaccines($request, 'TDRGR1', '1', 'F')->get();
+        //TDGR1
+        $tdrgr1_m =  $childCareReportService->get_vaccines($request, 'TDGR1', '1', 'M')->get();
+        $tdrgr1_f =  $childCareReportService->get_vaccines($request, 'TDGR1', '1', 'F')->get();
 
         //MRGR1
         $mrgr1_m =  $childCareReportService->get_vaccines($request, 'MRGR', '1', 'M')->get();
@@ -308,7 +308,7 @@ class ChildCareReport2018Controller extends Controller
             'CIC_Male' => $cic_m,
             'CIC_Female' => $cic_f,
 
-            //Initiated breastfeeding
+/*            //Initiated breastfeeding
             'Initiated_Breastfeeding_90mins_Male' => $init_bfed_m,
             'Initiated_Breastfeeding_90mins_Female' => $init_bfed_f,
 
@@ -410,7 +410,7 @@ class ChildCareReport2018Controller extends Controller
 
            //0-59 MONTHS WASTED
            'wasted_0_59_months_Male' => $wasted_0_59_months_m,
-           'wasted_0_59_months_Female' => $wasted_0_59_months_f,
+           'wasted_0_59_months_Female' => $wasted_0_59_months_f,*/
 
         ];
     }

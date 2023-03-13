@@ -58,8 +58,7 @@ class ChildCareReportService
                     $q->whereIn('barangay_code', $request->barangay_code);
                 })
                 ->whereVaccineId($vaccine_id)
-                ->whereGender($patient_gender)
-                ->whereStatusId('1');
+                ->whereGender($patient_gender);
         })
             ->selectRaw("
                         name,
@@ -71,7 +70,11 @@ class ChildCareReportService
                         municipality_code,
                         barangay_code
             ")
-            ->havingRaw('(vaccine_seq = ?) AND (year(date_of_service) = ? AND month(date_of_service) = ?)', [$vaccine_seq, $request->year, $request->month])
+             ->whereYear('date_of_service', $request->year)
+             ->whereMonth('date_of_service', $request->month)
+             ->whereStatusId('1')
+             ->whereVaccineSeq($vaccine_seq)
+//            ->havingRaw('(vaccine_seq = ?) AND (status_id = 1) AND (year(date_of_service) = ? AND month(date_of_service) = ?)', [$vaccine_seq, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
