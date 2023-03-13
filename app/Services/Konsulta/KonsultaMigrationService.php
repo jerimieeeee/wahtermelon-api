@@ -824,6 +824,7 @@ class KonsultaMigrationService
                         'basophils' => $cbc->pBasophils,
                         'platelets' => $cbc->pPlatelet,
                         'lab_status_code' => $cbc->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
                     ];
                     $consultLaboratory->cbc()->updateOrCreate([
                         'request_id' => $consultLaboratory->id,
@@ -846,6 +847,7 @@ class KonsultaMigrationService
                     'basophils' => $laboratory->CBCS->CBC->pBasophils,
                     'platelets' => $laboratory->CBCS->CBC->pPlatelet,
                     'lab_status_code' => $laboratory->CBCS->CBC->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
                 ];
                 $consultLaboratory->cbc()->updateOrCreate([
                     'request_id' => $consultLaboratory->id,
@@ -884,6 +886,7 @@ class KonsultaMigrationService
                         'albumin' => $urinalysis->pAlbumin,
                         'pus_cells' => $urinalysis->pPusCells,
                         'lab_status_code' => $urinalysis->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
                     ];
                     $consultLaboratory->urinalysis()->updateOrCreate([
                         'request_id' => $consultLaboratory->id,
@@ -918,6 +921,7 @@ class KonsultaMigrationService
                     'albumin' => $laboratory->URINALYSISS->URINALYSIS->pAlbumin,
                     'pus_cells' => $laboratory->URINALYSISS->URINALYSIS->pPusCells,
                     'lab_status_code' => $laboratory->URINALYSISS->URINALYSIS->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
                 ];
                 $consultLaboratory->urinalysis()->updateOrCreate([
                     'request_id' => $consultLaboratory->id,
@@ -937,6 +941,7 @@ class KonsultaMigrationService
                         'observation_code' => $cxray->pObservation,
                         'remarks_observation' => $cxray->pRemarksObservation,
                         'lab_status_code' => $cxray->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
                     ];
                     $consultLaboratory->chestXray()->updateOrCreate([
                         'request_id' => $consultLaboratory->id,
@@ -954,11 +959,292 @@ class KonsultaMigrationService
                     'observation_code' => $laboratory->CHESTXRAYS->CHESTXRAY->pObservation,
                     'remarks_observation' => $laboratory->CHESTXRAYS->CHESTXRAY->pRemarksObservation,
                     'lab_status_code' => $laboratory->CHESTXRAYS->CHESTXRAY->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
                 ];
                 $consultLaboratory->chestXray()->updateOrCreate([
                     'request_id' => $consultLaboratory->id,
                     'patient_id' => $patient->id,
                 ], $cxrayData);
+            }
+        }
+
+        if (isset($laboratory->SPUTUMS) && $consultLaboratory->lab_code == 'SPTM') {
+            if (is_array($laboratory->SPUTUMS->SPUTUM)) {
+                collect($laboratory->SPUTUMS->SPUTUM)->map(function ($sputum) use ($consultLaboratory, $patient) {
+                    $sputumData = [
+                        'referral_facility' => $sputum->pReferralFacility,
+                        'laboratory_date' => $sputum->pLabDate,
+                        'data_collection_code' => $sputum->pDataCollection,
+                        'findings_code' => $sputum->pFindings,
+                        'remarks' => $sputum->pRemarks,
+                        'reading' => $sputum->pNoPlusses,
+                        'lab_status_code' => $sputum->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->sputum()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $sputumData);
+                });
+            } else {
+                $sputumData = [
+                    'referral_facility' => $laboratory->SPUTUMS->SPUTUM->pReferralFacility,
+                    'laboratory_date' => $laboratory->SPUTUMS->SPUTUM->pLabDate,
+                    'data_collection_code' => $laboratory->SPUTUMS->SPUTUM->pDataCollection,
+                    'findings_code' => $laboratory->SPUTUMS->SPUTUM->pFindings,
+                    'remarks' => $laboratory->SPUTUMS->SPUTUM->pRemarks,
+                    'reading' => $laboratory->SPUTUMS->SPUTUM->pNoPlusses,
+                    'lab_status_code' => $laboratory->SPUTUMS->SPUTUM->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->sputum()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $sputumData);
+            }
+        }
+
+        if (isset($laboratory->LIPIDPROFILES) && $consultLaboratory->lab_code == 'LPFL') {
+            if (is_array($laboratory->LIPIDPROFILES->LIPIDPROFILE)) {
+                collect($laboratory->LIPIDPROFILES->LIPIDPROFILE)->map(function ($lipid) use ($consultLaboratory, $patient) {
+                    $lipidData = [
+                        'referral_facility' => $lipid->pReferralFacility,
+                        'laboratory_date' => $lipid->pLabDate,
+                        'ldl' => $lipid->pLdl,
+                        'hdl' => $lipid->pHdl,
+                        'cholesterol' => $lipid->pCholesterol,
+                        'triglycerides' => $lipid->pTriglycerides,
+                        'lab_status_code' => $lipid->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->lipiProfile()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $lipidData);
+                });
+            } else {
+                $lipidData = [
+                    'referral_facility' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pReferralFacility,
+                    'laboratory_date' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pLabDate,
+                    'ldl' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pLdl,
+                    'hdl' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pHdl,
+                    'cholesterol' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pCholesterol,
+                    'triglycerides' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pTriglycerides,
+                    'lab_status_code' => $laboratory->LIPIDPROFILES->LIPIDPROFILE->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->lipiProfile()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $lipidData);
+            }
+        }
+
+        if (isset($laboratory->FBSS) && $consultLaboratory->lab_code == 'FBS') {
+            if (is_array($laboratory->FBSS->FBS)) {
+                collect($laboratory->FBSS->FBS)->map(function ($fbs) use ($consultLaboratory, $patient) {
+                    $fbsData = [
+                        'referral_facility' => $fbs->pReferralFacility,
+                        'laboratory_date' => $fbs->pLabDate,
+                        'glucose' => $fbs->pGlucoseMg,
+                        'lab_status_code' => $fbs->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->fbs()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $fbsData);
+                });
+            } else {
+                $fbsData = [
+                    'referral_facility' => $laboratory->FBSS->FBS->pReferralFacility,
+                    'laboratory_date' => $laboratory->FBSS->FBS->pLabDate,
+                    'glucose' => $laboratory->FBSS->FBS->pGlucoseMg,
+                    'lab_status_code' => $laboratory->FBSS->FBS->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->fbs()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $fbsData);
+            }
+        }
+
+        if (isset($laboratory->RBSS) && $consultLaboratory->lab_code == 'RBS') {
+            if (is_array($laboratory->RBSS->RBS)) {
+                collect($laboratory->RBSS->RBS)->map(function ($rbs) use ($consultLaboratory, $patient) {
+                    $rbsData = [
+                        'referral_facility' => $rbs->pReferralFacility,
+                        'laboratory_date' => $rbs->pLabDate,
+                        'glucose' => $rbs->pGlucoseMg,
+                        'lab_status_code' => $rbs->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->rbs()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $rbsData);
+                });
+            } else {
+                $rbsData = [
+                    'referral_facility' => $laboratory->RBSS->RBS->pReferralFacility,
+                    'laboratory_date' => $laboratory->RBSS->RBS->pLabDate,
+                    'glucose' => $laboratory->RBSS->RBS->pGlucoseMg,
+                    'lab_status_code' => $laboratory->RBSS->RBS->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->rbs()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $rbsData);
+            }
+        }
+
+        if (isset($laboratory->ECGS) && $consultLaboratory->lab_code == 'ECG') {
+            if (is_array($laboratory->ECGS->ECG)) {
+                collect($laboratory->ECGS->ECG)->map(function ($ecg) use ($consultLaboratory, $patient) {
+                    $ecgData = [
+                        'referral_facility' => $ecg->pReferralFacility,
+                        'laboratory_date' => $ecg->pLabDate,
+                        'findings_code' => $ecg->pFindings,
+                        'remarks' => $ecg->pRemarks,
+                        'lab_status_code' => $ecg->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->ecg()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $ecgData);
+                });
+            } else {
+                $ecgData = [
+                    'referral_facility' => $laboratory->ECGS->ECG->pReferralFacility,
+                    'laboratory_date' => $laboratory->ECGS->ECG->pLabDate,
+                    'findings_code' => $laboratory->ECGS->ECG->pFindings,
+                    'remarks' => $laboratory->ECGS->ECG->pRemarks,
+                    'lab_status_code' => $laboratory->ECGS->ECG->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->ecg()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $ecgData);
+            }
+        }
+
+        if (isset($laboratory->FECALYSISS) && $consultLaboratory->lab_code == 'FCAL') {
+            if (is_array($laboratory->FECALYSISS->FECALYSIS)) {
+                collect($laboratory->FECALYSISS->FECALYSIS)->map(function ($fecalysis) use ($consultLaboratory, $patient) {
+                    $fecalysisData = [
+                        'referral_facility' => $fecalysis->pReferralFacility,
+                        'laboratory_date' => $fecalysis->pLabDate,
+                        'color_code' => $fecalysis->pColor,
+                        'consistency_code' => $fecalysis->pConsistency,
+                        'rbc' => $fecalysis->pRbc,
+                        'wbc' => $fecalysis->pWbc,
+                        'ova' => $fecalysis->pOva,
+                        'parasite' => $fecalysis->pParasite,
+                        'blood_code' => $fecalysis->pBlood,
+                        'pus_cells' => $fecalysis->pPusCells,
+                        'lab_status_code' => $fecalysis->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->fecalysis()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $fecalysisData);
+                });
+            } else {
+                $fecalysisData = [
+                    'referral_facility' => $laboratory->FECALYSISS->FECALYSIS->pReferralFacility,
+                    'laboratory_date' => $laboratory->FECALYSISS->FECALYSIS->pLabDate,
+                    'color_code' => $laboratory->FECALYSISS->FECALYSIS->pColor,
+                    'consistency_code' => $laboratory->FECALYSISS->FECALYSIS->pConsistency,
+                    'rbc' => $laboratory->FECALYSISS->FECALYSIS->pRbc,
+                    'wbc' => $laboratory->FECALYSISS->FECALYSIS->pWbc,
+                    'ova' => $laboratory->FECALYSISS->FECALYSIS->pOva,
+                    'parasite' => $laboratory->FECALYSISS->FECALYSIS->pParasite,
+                    'blood_code' => $laboratory->FECALYSISS->FECALYSIS->pBlood,
+                    'pus_cells' => $laboratory->FECALYSISS->FECALYSIS->pPusCells,
+                    'lab_status_code' => $laboratory->FECALYSISS->FECALYSIS->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->fecalysis()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $fecalysisData);
+            }
+        }
+
+        if (isset($laboratory->PAPSMEARS) && $consultLaboratory->lab_code == 'PSMR') {
+            if (is_array($laboratory->PAPSMEARS->PAPSMEAR)) {
+                collect($laboratory->PAPSMEARS->PAPSMEAR)->map(function ($papsmear) use ($consultLaboratory, $patient) {
+                    $papsmearData = [
+                        'referral_facility' => $papsmear->pReferralFacility,
+                        'laboratory_date' => $papsmear->pLabDate,
+                        'findings' => $papsmear->pFindings,
+                        'impression' => $papsmear->pImpression,
+                        'lab_status_code' => $papsmear->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->papsmear()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $papsmearData);
+                });
+            } else {
+                $papsmearData = [
+                    'referral_facility' => $laboratory->PAPSMEARS->PAPSMEAR->pReferralFacility,
+                    'laboratory_date' => $laboratory->PAPSMEARS->PAPSMEAR->pLabDate,
+                    'findings' => $laboratory->PAPSMEARS->PAPSMEAR->pFindings,
+                    'impression' => $laboratory->PAPSMEARS->PAPSMEAR->pImpression,
+                    'lab_status_code' => $laboratory->PAPSMEARS->PAPSMEAR->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->papsmear()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $papsmearData);
+            }
+        }
+
+        if (isset($laboratory->OGTTS) && $consultLaboratory->lab_code == 'OGTT') {
+            if (is_array($laboratory->OGTTS->OGTT)) {
+                collect($laboratory->OGTTS->OGTT)->map(function ($ogtt) use ($consultLaboratory, $patient) {
+                    $ogttData = [
+                        'referral_facility' => $ogtt->pReferralFacility,
+                        'laboratory_date' => $ogtt->pLabDate,
+                        'fasting_exam_mg' => $ogtt->pExamFastingMg,
+                        'fasting_exam_mmol' => $ogtt->pExamFastingMmol,
+                        'ogtt_one_hour_mg' => $ogtt->pExamOgttOneHrMg,
+                        'ogtt_one_hour_mmol' => $ogtt->pExamOgttOneHrMmol,
+                        'ogtt_two_hour_mg' => $ogtt->pExamOgttTwoHrMg,
+                        'ogtt_two_hour_mmol' => $ogtt->pExamOgttTwoHrMmol,
+                        'lab_status_code' => $ogtt->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->oralGlucose()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $ogttData);
+                });
+            } else {
+                $ogttData = [
+                    'referral_facility' => $laboratory->OGTTS->OGTT->pReferralFacility,
+                    'laboratory_date' => $laboratory->OGTTS->OGTT->pLabDate,
+                    'fasting_exam_mg' => $laboratory->OGTTS->OGTT->pExamFastingMg,
+                    'fasting_exam_mmol' => $laboratory->OGTTS->OGTT->pExamFastingMmol,
+                    'ogtt_one_hour_mg' => $laboratory->OGTTS->OGTT->pExamOgttOneHrMg,
+                    'ogtt_one_hour_mmol' => $laboratory->OGTTS->OGTT->pExamOgttOneHrMmol,
+                    'ogtt_two_hour_mg' => $laboratory->OGTTS->OGTT->pExamOgttTwoHrMg,
+                    'ogtt_two_hour_mmol' => $laboratory->OGTTS->OGTT->pExamOgttTwoHrMmol,
+                    'lab_status_code' => $laboratory->OGTTS->OGTT->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->oralGlucose()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $ogttData);
             }
         }
     }
