@@ -108,8 +108,8 @@ class ChildCareReport2018Controller extends Controller
         $mrgr1_f =  $childCareReportService->get_vaccines($request, 'MRGR', '1', 'F')->get();
 
         //TDRGR7
-        $tdrgr7_m =  $childCareReportService->get_vaccines($request, 'TDRGR7', '1', 'M')->get();
-        $tdrgr7_f =  $childCareReportService->get_vaccines($request, 'TDRGR7', '1', 'F')->get();
+        $tdrgr7_m =  $childCareReportService->get_vaccines($request, 'TDGR7', '1', 'M')->get();
+        $tdrgr7_f =  $childCareReportService->get_vaccines($request, 'TDGR7', '1', 'F')->get();
 
         //MRGR7
         $mrgr7_m =  $childCareReportService->get_vaccines($request, 'MRGR7', '1', 'M')->get();
@@ -225,7 +225,7 @@ class ChildCareReport2018Controller extends Controller
             'CPAB_Male' => $cpab_m,
             'CPAB_Female' => $cpab_f,
 
-            //BCG
+/*            //BCG
             'BCG_Male' => $bcg_m,
             'BCG_Female' => $bcg_f,
 
@@ -410,7 +410,7 @@ class ChildCareReport2018Controller extends Controller
 
            //0-59 MONTHS WASTED
            'wasted_0_59_months_Male' => $wasted_0_59_months_m,
-           'wasted_0_59_months_Female' => $wasted_0_59_months_f,
+           'wasted_0_59_months_Female' => $wasted_0_59_months_f,*/
 
         ];
     }

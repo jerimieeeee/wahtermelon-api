@@ -84,11 +84,23 @@ class ChildCareReportService
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
 	                    birthdate,
-	                    gender
+	                    birthdate AS date_of_service,
+	                    gender,
+	                    municipality_code,
+	                    barangay_code
                     ")
             ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
             ->joinSub($this->get_mother_vaccine(), 'mother_vaccine', function ($join) {
                 $join->on('mother_vaccine.patient_id', '=', 'patient_ccdevs.mothers_id');
+            })
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
+            })
+            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', $request->municipality_code);
+            })
+            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', $request->barangay_code);
             })
             ->whereYear('birthdate', $request->year)
             ->whereMonth('birthdate', $request->month)
