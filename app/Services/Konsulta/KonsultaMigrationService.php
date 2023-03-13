@@ -785,60 +785,181 @@ class KonsultaMigrationService
                     ->filter(function ($transaction) {
                         return str_starts_with(strtolower($transaction->pHciTransNo), 's');
                     })->first();
-                if(isset($laboratory->CBCS) && $consultLaboratory->lab_code == 'CBC'){
-                    if(is_array($laboratory->CBCS->CBC) ){
-                        collect($laboratory->CBCS->CBC)->map(function ($cbc) use ($consultLaboratory, $patient) {
-                            $cbcData = [
-                                'referral_facility' => $cbc->pReferralFacility,
-                                'laboratory_date' => $cbc->pLabDate,
-                                'hematocrit' => $cbc->pHematocrit,
-                                'hemoglobin' => $cbc->pHemoglobinG,
-                                'mch' => $cbc->pMhcPg,
-                                'mcv' => $cbc->pMcvFl,
-                                'wbc' => $cbc->pWbc1000,
-                                'neutrophils' => $cbc->pNeutrophilsBnd,
-                                'lymphocytes' => $cbc->pLymphocytes,
-                                'monocytes' => $cbc->pMonocytes,
-                                'eosinophils' => $cbc->pEosinophils,
-                                'basophils' => $cbc->pBasophils,
-                                'platelets' => $cbc->pPlatelet,
-                                'lab_status_code' => $cbc->pStatus,
-                            ];
-                            $consultLaboratory->cbc()->updateOrCreate([
-                                'request_id' => $consultLaboratory->id,
-                                'patient_id' => $patient->id,
-                            ], $cbcData);
-                        });
-                    } else{
-                        $cbcData = [
-                            'referral_facility' => $laboratory->CBCS->CBC->pReferralFacility,
-                            'laboratory_date' => $laboratory->CBCS->CBC->pLabDate,
-                            'hematocrit' => $laboratory->CBCS->CBC->pHematocrit,
-                            'hemoglobin' => $laboratory->CBCS->CBC->pHemoglobinG,
-                            'mch' => $laboratory->CBCS->CBC->pMhcPg,
-                            'mcv' => $laboratory->CBCS->CBC->pMcvFl,
-                            'wbc' => $laboratory->CBCS->CBC->pWbc1000,
-                            'neutrophils' => $laboratory->CBCS->CBC->pNeutrophilsBnd,
-                            'lymphocytes' => $laboratory->CBCS->CBC->pLymphocytes,
-                            'monocytes' => $laboratory->CBCS->CBC->pMonocytes,
-                            'eosinophils' => $laboratory->CBCS->CBC->pEosinophils,
-                            'basophils' => $laboratory->CBCS->CBC->pBasophils,
-                            'platelets' => $laboratory->CBCS->CBC->pPlatelet,
-                            'lab_status_code' => $laboratory->CBCS->CBC->pStatus,
-                        ];
-                        $consultLaboratory->cbc()->updateOrCreate([
-                            'request_id' => $consultLaboratory->id,
-                            'patient_id' => $patient->id,
-                        ], $cbcData);
-                    }
-                }
+                $this->saveSoapLaboratory($laboratory, $consultLaboratory, $patient);
             } else{
-                return $laboratory = collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)
+                $laboratory = collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)
                     ->filter(function ($transaction) {
                         return str_starts_with(strtolower($transaction->pHciTransNo), 's');
                     })->first();
+
+                $this->saveSoapLaboratory($laboratory, $consultLaboratory, $patient);
             }
             //return $this->saveLaboratory($laboratory, $value, $profile, $patient);
+        }
+    }
+
+    /**
+     * @param mixed $laboratory
+     * @param $consultLaboratory
+     * @param $patient
+     * @return void
+     */
+    public function saveSoapLaboratory(mixed $laboratory, $consultLaboratory, $patient): void
+    {
+        if (isset($laboratory->CBCS) && $consultLaboratory->lab_code == 'CBC') {
+            if (is_array($laboratory->CBCS->CBC)) {
+                collect($laboratory->CBCS->CBC)->map(function ($cbc) use ($consultLaboratory, $patient) {
+                    $cbcData = [
+                        'referral_facility' => $cbc->pReferralFacility,
+                        'laboratory_date' => $cbc->pLabDate,
+                        'hematocrit' => $cbc->pHematocrit,
+                        'hemoglobin' => $cbc->pHemoglobinG,
+                        'mch' => $cbc->pMhcPg,
+                        'mcv' => $cbc->pMcvFl,
+                        'wbc' => $cbc->pWbc1000,
+                        'neutrophils' => $cbc->pNeutrophilsBnd,
+                        'lymphocytes' => $cbc->pLymphocytes,
+                        'monocytes' => $cbc->pMonocytes,
+                        'eosinophils' => $cbc->pEosinophils,
+                        'basophils' => $cbc->pBasophils,
+                        'platelets' => $cbc->pPlatelet,
+                        'lab_status_code' => $cbc->pStatus,
+                    ];
+                    $consultLaboratory->cbc()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $cbcData);
+                });
+            } else {
+                $cbcData = [
+                    'referral_facility' => $laboratory->CBCS->CBC->pReferralFacility,
+                    'laboratory_date' => $laboratory->CBCS->CBC->pLabDate,
+                    'hematocrit' => $laboratory->CBCS->CBC->pHematocrit,
+                    'hemoglobin' => $laboratory->CBCS->CBC->pHemoglobinG,
+                    'mch' => $laboratory->CBCS->CBC->pMhcPg,
+                    'mcv' => $laboratory->CBCS->CBC->pMcvFl,
+                    'wbc' => $laboratory->CBCS->CBC->pWbc1000,
+                    'neutrophils' => $laboratory->CBCS->CBC->pNeutrophilsBnd,
+                    'lymphocytes' => $laboratory->CBCS->CBC->pLymphocytes,
+                    'monocytes' => $laboratory->CBCS->CBC->pMonocytes,
+                    'eosinophils' => $laboratory->CBCS->CBC->pEosinophils,
+                    'basophils' => $laboratory->CBCS->CBC->pBasophils,
+                    'platelets' => $laboratory->CBCS->CBC->pPlatelet,
+                    'lab_status_code' => $laboratory->CBCS->CBC->pStatus,
+                ];
+                $consultLaboratory->cbc()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $cbcData);
+            }
+        }
+
+        if (isset($laboratory->URINALYSISS) && $consultLaboratory->lab_code == 'URN') {
+            if (is_array($laboratory->URINALYSISS->URINALYSIS)) {
+                collect($laboratory->URINALYSISS->URINALYSIS)->map(function ($urinalysis) use ($consultLaboratory, $patient) {
+                    $urinalysisData = [
+                        'referral_facility' => $urinalysis->pReferralFacility,
+                        'laboratory_date' => $urinalysis->pLabDate,
+                        'gravity' => $urinalysis->pGravity,
+                        'appearance' => $urinalysis->pAppearance,
+                        'color' => $urinalysis->pColor,
+                        'glucose' => $urinalysis->pGlucose,
+                        'proteins' => $urinalysis->pProteins,
+                        'ketones' => $urinalysis->pKetones,
+                        'ph' => $urinalysis->pPh,
+                        'rb_cells' => $urinalysis->pRbCells,
+                        'wb_cells' =>  $urinalysis->pWbCells,
+                        'bacteria' => $urinalysis->pBacteria,
+                        'crystals' => $urinalysis->pCrystals,
+                        'bladder_cells' => $urinalysis->pBladderCell,
+                        'squamous_cells' => $urinalysis->pSquamousCell,
+                        'tubular_cells' => $urinalysis->pTubularCell,
+                        'broad_cast' => $urinalysis->pBroadCasts,
+                        'epithelial_cast' => $urinalysis->pEpithelialCast,
+                        'granular_cast' =>  $urinalysis->pGranularCast,
+                        'hyaline_cast' => $urinalysis->pHyalineCast,
+                        'rbc_cast' => $urinalysis->pRbcCast,
+                        'waxy_cast' => $urinalysis->pWaxyCast,
+                        'wc_cast' => $urinalysis->pWcCast,
+                        'albumin' => $urinalysis->pAlbumin,
+                        'pus_cells' => $urinalysis->pPusCells,
+                        'lab_status_code' => $urinalysis->pStatus,
+                    ];
+                    $consultLaboratory->urinalysis()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $urinalysisData);
+                });
+            } else {
+                $urinalysisData = [
+                    'referral_facility' => $laboratory->URINALYSISS->URINALYSIS->pReferralFacility,
+                    'laboratory_date' => $laboratory->URINALYSISS->URINALYSIS->pLabDate,
+                    'gravity' => $laboratory->URINALYSISS->URINALYSIS->pGravity,
+                    'appearance' => $laboratory->URINALYSISS->URINALYSIS->pAppearance,
+                    'color' => $laboratory->URINALYSISS->URINALYSIS->pColor,
+                    'glucose' => $laboratory->URINALYSISS->URINALYSIS->pGlucose,
+                    'proteins' => $laboratory->URINALYSISS->URINALYSIS->pProteins,
+                    'ketones' => $laboratory->URINALYSISS->URINALYSIS->pKetones,
+                    'ph' => $laboratory->URINALYSISS->URINALYSIS->pPh,
+                    'rb_cells' => $laboratory->URINALYSISS->URINALYSIS->pRbCells,
+                    'wb_cells' =>  $laboratory->URINALYSISS->URINALYSIS->pWbCells,
+                    'bacteria' => $laboratory->URINALYSISS->URINALYSIS->pBacteria,
+                    'crystals' => $laboratory->URINALYSISS->URINALYSIS->pCrystals,
+                    'bladder_cells' => $laboratory->URINALYSISS->URINALYSIS->pBladderCell,
+                    'squamous_cells' => $laboratory->URINALYSISS->URINALYSIS->pSquamousCell,
+                    'tubular_cells' => $laboratory->URINALYSISS->URINALYSIS->pTubularCell,
+                    'broad_cast' => $laboratory->URINALYSISS->URINALYSIS->pBroadCasts,
+                    'epithelial_cast' => $laboratory->URINALYSISS->URINALYSIS->pEpithelialCast,
+                    'granular_cast' =>  $laboratory->URINALYSISS->URINALYSIS->pGranularCast,
+                    'hyaline_cast' => $laboratory->URINALYSISS->URINALYSIS->pHyalineCast,
+                    'rbc_cast' => $laboratory->URINALYSISS->URINALYSIS->pRbcCast,
+                    'waxy_cast' => $laboratory->URINALYSISS->URINALYSIS->pWaxyCast,
+                    'wc_cast' => $laboratory->URINALYSISS->URINALYSIS->pWcCast,
+                    'albumin' => $laboratory->URINALYSISS->URINALYSIS->pAlbumin,
+                    'pus_cells' => $laboratory->URINALYSISS->URINALYSIS->pPusCells,
+                    'lab_status_code' => $laboratory->URINALYSISS->URINALYSIS->pStatus,
+                ];
+                $consultLaboratory->urinalysis()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $urinalysisData);
+            }
+        }
+
+        if (isset($laboratory->CHESTXRAYS) && $consultLaboratory->lab_code == 'CXRAY') {
+            if (is_array($laboratory->CHESTXRAYS->CHESTXRAY)) {
+                collect($laboratory->CHESTXRAYS->CHESTXRAY)->map(function ($cxray) use ($consultLaboratory, $patient) {
+                    $cxrayData = [
+                        'referral_facility' => $cxray->pReferralFacility,
+                        'laboratory_date' => $cxray->pLabDate,
+                        'findings_code' => $cxray->pFindings,
+                        'remarks_findings' => $cxray->pRemarksFindings,
+                        'observation_code' => $cxray->pObservation,
+                        'remarks_observation' => $cxray->pRemarksObservation,
+                        'lab_status_code' => $cxray->pStatus,
+                    ];
+                    $consultLaboratory->chestXray()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $cxrayData);
+                });
+            } else {
+                $cxrayData = [
+                    'referral_facility' => $laboratory->CHESTXRAYS->CHESTXRAY->pReferralFacility,
+                    'laboratory_date' => $laboratory->CHESTXRAYS->CHESTXRAY->pLabDate,
+                    'referral_facility' => $laboratory->CHESTXRAYS->CHESTXRAY->pReferralFacility,
+                    'laboratory_date' => $laboratory->CHESTXRAYS->CHESTXRAY->pLabDate,
+                    'findings_code' => $laboratory->CHESTXRAYS->CHESTXRAY->pFindings,
+                    'remarks_findings' => $laboratory->CHESTXRAYS->CHESTXRAY->pRemarksFindings,
+                    'observation_code' => $laboratory->CHESTXRAYS->CHESTXRAY->pObservation,
+                    'remarks_observation' => $laboratory->CHESTXRAYS->CHESTXRAY->pRemarksObservation,
+                    'lab_status_code' => $laboratory->CHESTXRAYS->CHESTXRAY->pStatus,
+                ];
+                $consultLaboratory->chestXray()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $cxrayData);
+            }
         }
     }
 
