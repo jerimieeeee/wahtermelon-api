@@ -192,11 +192,11 @@ class ChildCareReportService
                     ELSE
                         0
                     END) AS 'MCV',
-                SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY status_id ASC), ',', 1), ',', - 1) AS status_id,
+                SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY status_id DESC), ',', 1), ',', - 1) AS status_id,
                 municipality_code,
                 barangay_code
         ")
-            ->groupBy('birthdate', 'status_id', 'municipality_code', 'barangay_code', 'name', 'gender')
+            ->groupBy('birthdate', 'municipality_code', 'barangay_code', 'name', 'gender')
             ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
                 $q->whereIn('municipality_code', $request->municipality_code);
             })
