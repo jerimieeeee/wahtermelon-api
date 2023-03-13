@@ -1247,6 +1247,126 @@ class KonsultaMigrationService
                 ], $ogttData);
             }
         }
+
+        if (isset($laboratory->FOBTS) && $consultLaboratory->lab_code == 'FOBT') {
+            if (is_array($laboratory->FOBTS->FOBT)) {
+                collect($laboratory->FOBTS->FOBT)->map(function ($fobt) use ($consultLaboratory, $patient) {
+                    $fobtData = [
+                        'referral_facility' => $fobt->pReferralFacility,
+                        'laboratory_date' => $fobt->pLabDate,
+                        'findings_code' => $fobt->pFindings,
+                        'lab_status_code' => $fobt->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->fecalOccult()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $fobtData);
+                });
+            } else {
+                $fobtData = [
+                    'referral_facility' => $laboratory->FOBTS->FOBT->pReferralFacility,
+                    'laboratory_date' => $laboratory->FOBTS->FOBT->pLabDate,
+                    'findings_code' => $laboratory->FOBTS->FOBT->pFindings,
+                    'lab_status_code' => $laboratory->FOBTS->FOBT->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->fecalOccult()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $fobtData);
+            }
+        }
+
+        if (isset($laboratory->CREATININES) && $consultLaboratory->lab_code == 'CRTN') {
+            if (is_array($laboratory->CREATININES->CREATININE)) {
+                collect($laboratory->CREATININES->CREATININE)->map(function ($creatinine) use ($consultLaboratory, $patient) {
+                    $creatinineData = [
+                        'referral_facility' => $creatinine->pReferralFacility,
+                        'laboratory_date' => $creatinine->pLabDate,
+                        'findings' => $creatinine->pFindings,
+                        'lab_status_code' => $creatinine->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->creatinine()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $creatinineData);
+                });
+            } else {
+                $creatinineData = [
+                    'referral_facility' => $laboratory->CREATININES->CREATININE->pReferralFacility,
+                    'laboratory_date' => $laboratory->CREATININES->CREATININE->pLabDate,
+                    'findings' => $laboratory->CREATININES->CREATININE->pFindings,
+                    'lab_status_code' => $laboratory->CREATININES->CREATININE->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->creatinine()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $creatinineData);
+            }
+        }
+
+        if (isset($laboratory->PPDTests) && $consultLaboratory->lab_code == 'PPD') {
+            if (is_array($laboratory->PPDTests->PPDTest)) {
+                collect($laboratory->PPDTests->PPDTest)->map(function ($ppd) use ($consultLaboratory, $patient) {
+                    $ppdData = [
+                        'referral_facility' => $ppd->pReferralFacility,
+                        'laboratory_date' => $ppd->pLabDate,
+                        'findings_code' => $ppd->pFindings,
+                        'lab_status_code' => $ppd->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->ppd()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $ppdData);
+                });
+            } else {
+                $ppdData = [
+                    'referral_facility' => $laboratory->PPDTests->PPDTest->pReferralFacility,
+                    'laboratory_date' => $laboratory->PPDTests->PPDTest->pLabDate,
+                    'findings_code' => $laboratory->PPDTests->PPDTest->pFindings,
+                    'lab_status_code' => $laboratory->PPDTests->PPDTest->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->ppd()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $ppdData);
+            }
+        }
+
+        if (isset($laboratory->HbA1cs) && $consultLaboratory->lab_code == 'HBA') {
+            if (is_array($laboratory->HbA1cs->HbA1c)) {
+                collect($laboratory->HbA1cs->HbA1c)->map(function ($hba) use ($consultLaboratory, $patient) {
+                    $hbaData = [
+                        'referral_facility' => $hba->pReferralFacility,
+                        'laboratory_date' => $hba->pLabDate,
+                        'findings_code' => $hba->pFindings,
+                        'lab_status_code' => $hba->pStatus,
+                        'consult_id' => $consultLaboratory->consult_id,
+                    ];
+                    $consultLaboratory->hba1c()->updateOrCreate([
+                        'request_id' => $consultLaboratory->id,
+                        'patient_id' => $patient->id,
+                    ], $hbaData);
+                });
+            } else {
+                $ppdData = [
+                    'referral_facility' => $laboratory->HbA1cs->HbA1c->pReferralFacility,
+                    'laboratory_date' => $laboratory->HbA1cs->HbA1c->pLabDate,
+                    'findings_code' => $laboratory->HbA1cs->HbA1c->pFindings,
+                    'lab_status_code' => $laboratory->HbA1cs->HbA1c->pStatus,
+                    'consult_id' => $consultLaboratory->consult_id,
+                ];
+                $consultLaboratory->hba1c()->updateOrCreate([
+                    'request_id' => $consultLaboratory->id,
+                    'patient_id' => $patient->id,
+                ], $ppdData);
+            }
+        }
     }
 
 }
