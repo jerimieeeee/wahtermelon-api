@@ -69,11 +69,11 @@ class MaternalCareReportService
                         municipality_code,
                         barangay_code
             ")
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereYear('date_of_service', $request->year)
             ->whereMonth('date_of_service', $request->month)
@@ -98,11 +98,11 @@ class MaternalCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_prenatals.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereNotNull('patient_weight')
             ->where('patient_weight', '!=', 0)
@@ -134,11 +134,11 @@ class MaternalCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_prenatals.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('municipality_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->groupBy('consult_mc_prenatals.patient_id', 'prenatal_date', 'patient_weight', 'patient_height', 'trimester', 'municipality_code', 'barangay_code');
         })
@@ -162,6 +162,12 @@ class MaternalCareReportService
                         barangay_code
             ")
            ->groupBy('name', 'bmi', 'birthdate', 'trimester', 'municipality_code', 'barangay_code')
+           ->when(isset($request->municipality_code), function($q) use($request){
+               $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
+           })
+           ->when(isset($request->barangay_code), function($q) use($request){
+               $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
+           })
            ->when($bmi_status == 'NORMAL',  function($query) use($age_year_bracket1, $age_year_bracket2){
                $query->havingRaw("(bmi_status = 'NORMAL' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
            })
@@ -193,11 +199,11 @@ class MaternalCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_prenatals.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('municipality_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->whereVaccineId('TD')
                 ->groupBy('consult_mc_prenatals.patient_id', 'vaccine_id', 'vaccine_date', 'status_id', 'municipality_code', 'barangay_code');
@@ -260,11 +266,11 @@ class MaternalCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_services.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('municipality_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->groupBy('name', 'consult_mc_services.patient_id', 'birthdate', 'service_id', 'municipality_code', 'barangay_code')
                 ->whereVisitStatus($visit)
@@ -300,11 +306,11 @@ class MaternalCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_services.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($class == $class,  fn($query) =>
                      $query->whereServiceId($class2)
@@ -393,11 +399,11 @@ class MaternalCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_postparta.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereVisitSequence('2')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
@@ -420,11 +426,11 @@ class MaternalCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_services.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereServiceId('VITA')
             ->whereVisitStatus('Postpartum')

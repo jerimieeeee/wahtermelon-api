@@ -51,11 +51,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('municipality_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->whereVaccineId($vaccine_id)
                 ->whereGender($patient_gender);
@@ -96,11 +96,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereYear('birthdate', $request->year)
             ->whereMonth('birthdate', $request->month)
@@ -127,11 +127,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('municipality_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->whereVaccineId('IPV')
                 ->whereGender($patient_gender)
@@ -209,11 +209,11 @@ class ChildCareReportService
                 barangay_code
         ")
             ->groupBy('birthdate', 'municipality_code', 'barangay_code', 'name', 'gender')
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($immunization_status == 'FIC', function($query) use($patient_gender, $request) {
                 $query->whereGender($patient_gender)
@@ -244,11 +244,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('municipalities_brgy.barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereBreastfeeding(1)
             ->whereGender($patient_gender)
@@ -281,11 +281,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->whereServiceId('IRON')
                 ->whereGender($patient_gender)
@@ -331,11 +331,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->whereServiceId('VITA')
                 ->whereGender($patient_gender)
@@ -380,11 +380,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
                 })
-                ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->municipality_code);
+                ->when(isset($request->municipality_code), function($q) use($request){
+                    $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
                 })
-                ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                    $q->whereIn('barangay_code', $request->barangay_code);
+                ->when(isset($request->barangay_code), function($q) use($request){
+                    $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
                 })
                 ->whereIn('service_id', ['VITA2', 'VITA3'])
                 ->whereGender($patient_gender)
@@ -423,11 +423,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'medicine_prescriptions.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereIn('konsulta_medicine_code', ['ALBED0000000006SUS1400195BOTTL', 'ALBED0000000006SUS1400231BOTTL', 'ALBED0000000006SUS1400379BOTTL', 'ALBED0000000006SUS1400469BOTTL', 'ALBED0000000034TAB490000000000'])
             ->whereGender($patient_gender)
@@ -454,11 +454,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09','E86.0','E86.1','E86.2','E86.9','K52.9','K58.0','K58.9','K59.1','P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
@@ -486,11 +486,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($disease == 'DIARRHEA', fn($query) =>
                                 $query->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09','E86.0','E86.1','E86.2','E86.9','K52.9','K58.0','K58.9','K59.1','P78.3'])
@@ -520,11 +520,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($service == 'MNP', fn($query) =>
                     $query->whereServiceId('MNP')
@@ -557,11 +557,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09','E86.0','E86.1','E86.2','E86.9','K52.9','K58.0','K58.9','K59.1','P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
@@ -598,11 +598,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($medicine == 'ORS', fn($query) =>
             $query->whereIn('konsulta_medicine_code', ['ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01', 'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01', 'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'])
@@ -633,11 +633,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->where(fn($query) =>
                     $query->where([
@@ -671,11 +671,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
             ->when($disease == 'PNEUMONIA', fn($query) =>
@@ -704,11 +704,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vitals.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($class == 'Obese', fn($query) =>
                 $query->whereIn('patient_weight_for_age', ['Obese', 'Overweight'])
@@ -738,11 +738,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->where(fn($query) =>
                     $query->where([
@@ -773,11 +773,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereNull('ebf_date')
             ->whereNotNull('comp_fed_date')
@@ -803,11 +803,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vitals.patient_id');
             })
-            ->when(isset($request->municipality_code) && is_array($request->municipality_code), function($q) use($request){
-                $q->whereIn('municipality_code', $request->municipality_code);
+            ->when(isset($request->municipality_code), function($q) use($request){
+                $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
-            ->when(isset($request->barangay_code) && is_array($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', $request->barangay_code);
+            ->when(isset($request->barangay_code), function($q) use($request){
+                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
             })
             ->when($class == 'Stunted', fn($query) =>
                     $query->whereIn('patient_height_for_age', ['Stunted'])
