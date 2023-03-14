@@ -248,7 +248,7 @@ class ChildCareReportService
                 $q->whereIn('municipality_code', explode(',' ,$request->municipality_code));
             })
             ->when(isset($request->barangay_code), function($q) use($request){
-                $q->whereIn('barangay_code', explode(',' ,$request->barangay_code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',' ,$request->barangay_code));
             })
             ->whereBreastfeeding(1)
             ->whereGender($patient_gender)
