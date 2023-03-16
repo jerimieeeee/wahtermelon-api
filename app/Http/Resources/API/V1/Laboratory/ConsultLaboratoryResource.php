@@ -14,6 +14,25 @@ class ConsultLaboratoryResource extends JsonResource
      */
     public function toArray($request)
     {
+        $lab_result = match ($this->lab_code) {
+            'CBC' => 'cbc',
+            'CRTN' => 'creatinine',
+            'CXRAY' => 'chestXray',
+            'ECG' => 'ecg',
+            'FBS' => 'fbs',
+            'RBS' => 'rbs',
+            'HBA' => 'hba1c',
+            'PSMR' => 'papsmear',
+            'PPD' => 'ppd',
+            'SPTM' => 'sputum',
+            'FCAL' => 'fecalysis',
+            'LPFL' => 'lipiProfile',
+            'URN' => 'urinalysis',
+            'OGTT' => 'oralGlucose',
+            'FOBT' => 'fecalOccult',
+            'GRMS' => 'gramStain',
+            'MCRP' => 'microscopy'
+        };
         return [
             'id' => $this->id,
             'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
@@ -27,6 +46,7 @@ class ConsultLaboratoryResource extends JsonResource
             'request_date' => $this->request_date->format('Y-m-d'),
             'lab_code' => $this->when(!$this->relationLoaded('laboratory'),$this->lab_code),
             'laboratory' => $this->whenLoaded('laboratory'),
+            'lab_result' => $this->whenLoaded($lab_result),
             'recommendation_code' => $this->when(!$this->relationLoaded('recommendation'),$this->recommendation_code),
             'recommendation' => $this->whenLoaded('recommendation'),
             'request_status_code' => $this->when(!$this->relationLoaded('requestStatus'),$this->request_status_code),
