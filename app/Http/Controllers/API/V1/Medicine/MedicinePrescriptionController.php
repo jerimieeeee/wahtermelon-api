@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @authenticated
@@ -101,11 +102,13 @@ class MedicinePrescriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param MedicinePrescription $prescription
+     * @return JsonResponse
+     * @throws Throwable
      */
-    public function destroy($id)
+    public function destroy(MedicinePrescription $prescription): JsonResponse
     {
-        //
+        $prescription->deleteOrFail();
+        return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

@@ -29,6 +29,8 @@ class MedicinePrescription extends Model
         'id',
     ];
 
+    protected $cascadeDeletes = ['dispensing'];
+
     public $incrementing = false;
 
     protected $keyType = 'string';

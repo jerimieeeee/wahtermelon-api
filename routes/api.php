@@ -303,6 +303,7 @@ Route::prefix('v1')->group(function (){
                 Route::get('prescriptions', 'index');
                 Route::post('prescriptions', 'store');
                 Route::put('prescriptions/{prescription}', 'update');
+                Route::delete('prescriptions/{prescription}', 'destroy');
             });
         Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicineDispensingController::class)
             ->middleware('auth:api')

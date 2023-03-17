@@ -56,6 +56,23 @@ class ConsultLaboratoryController extends Controller
                 return $query->whereRequestStatusCode($request->request_status_code);
             });
         $laboratory = QueryBuilder::for($query)
+            ->with('cbc',
+                'creatinine',
+                'chestXray',
+                'ecg',
+                'fbs',
+                'rbs',
+                'hba1c',
+                'papsmear',
+                'ppd',
+                'sputum',
+                'fecalysis',
+                'lipiProfile',
+                'urinalysis',
+                'oralGlucose',
+                'fecalOccult',
+                'gramStain',
+                'microscopy')
             ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')
             ->allowedSorts('request_date');
