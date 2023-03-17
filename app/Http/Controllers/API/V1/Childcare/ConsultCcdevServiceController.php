@@ -60,17 +60,17 @@ class ConsultCcdevServiceController extends Controller
      */
     public function store(ConsultCcdevServiceRequest $request): JsonResponse
     {
-
         $service = $request->input('services');
 
         ConsultCcdevService::query()
-        ->whereHas('services', function($q) use($request){
-            $q->where('essential', $request->essential);
-        })->delete();
+            ->where('patient_id', $request->safe()->patient_id)
+            ->whereHas('services', function($q) use($request){
+                $q->where('essential', $request->essential);
+            })->delete();
 
         foreach($service as $value){
             ConsultCcdevService::updateOrCreate(['patient_id' => $request->patient_id, 'service_id' => $value['service_id']],
-            ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
+                $value);
         }
 
         return response()->json([
