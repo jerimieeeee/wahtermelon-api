@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\V1\Household\HouseholdMember;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Schema;
 
 trait FilterByFacility
 {
@@ -15,7 +17,17 @@ trait FilterByFacility
     {
         if (auth()->check()) {
             static::addGlobalScope('facility', function (Builder $builder) {
-                $builder->where('facility_code', auth()->user()->facility_code);
+                // Disable the scope if querying through the hasOneThrough relationship
+                if ($builder->getQuery()->joins && count($builder->getQuery()->joins) === 1) {
+                    $join = $builder->getQuery()->joins[0];
+                    if ($join->table === (new HouseholdMember)->getTable() && $join->type === 'inner') {
+                        return;
+                    }
+                }
+
+                if(Schema::hasColumn($builder->getQuery()->from, 'facility_code') && isset(auth()->user()->facility_code)){
+                    $builder->where($builder->getQuery()->from.'.facility_code', auth()->user()->facility_code);
+                }
             });
         }
     }

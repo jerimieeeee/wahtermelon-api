@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Consultation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
 use App\Http\Resources\API\V1\Consultation\ConsultResource;
+use App\Http\Resources\API\V1\MaternalCare\PatientMcResource;
 use App\Models\V1\Consultation\Consult;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -81,20 +82,14 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        $data = Consult::query()
-                ->when(request('pt_group') == 'cn', function ($q) use($request){
-                return $q->create($request->validated())->consultNotes()->create($request->validated());
-            })
-                ->when(request('pt_group') != 'cn', function ($q) use($request){
-                return $q->create($request->except(['physician_id', 'is_pregnant']));
-            });
+        if(request('pt_group') == 'cn'){
+            $data = Consult::create($request->validated());
+            $data->consultNotes()->create($request->validated());
+        } else{
+            $data = Consult::create($request->except(['physician_id', 'is_pregnant']));
+        }
 
-            $data = new ConsultResource($data);
-
-            return response()->json([
-                'data' => $data,
-                'message' => 'Consult Successfully Saved',
-            ], 201);
+        return new ConsultResource($data);
     }
 
     /**

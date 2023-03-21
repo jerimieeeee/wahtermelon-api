@@ -16,7 +16,7 @@ class ImmunizationResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pChildImmcode' => "",
+                'pChildImmcode' => !empty($this->child_vaccine) ? $this->child_vaccine : "999",
                 'pYoungwImmcode' => "",
                 'pPregwImmcode' => "",
                 'pElderlyImmcode' => "",

@@ -72,7 +72,7 @@ class ConsultationResource extends JsonResource
                     WHEN konsulta_complaint_id = '38'
                     THEN complaint_desc
                 END) AS complaint_desc,
-                GROUP_CONCAT(konsulta_complaint_id) AS konsulta_complaint_id
+                GROUP_CONCAT(konsulta_complaint_id SEPARATOR ';') AS konsulta_complaint_id
             ")
             ->join('consult_notes', fn($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id', 'history'))
             ->join('consult_notes_complaints', fn($join) => $join->on('consult_notes.id', '=', 'consult_notes_complaints.notes_id')->select('notes_id', 'complaint_id'))

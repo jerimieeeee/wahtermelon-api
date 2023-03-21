@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibLaboratoryFindings;
 use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratorySputumCollection;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
@@ -35,6 +36,7 @@ class ConsultLaboratorySputumRequest extends FormRequest
             'consult_id' => 'nullable|exists:consults,id',
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'referral_facility' => 'nullable',
             'visual_appearance' => 'nullable',
             'reading' => 'nullable',
             'data_collection_code' => 'nullable|exists:lib_laboratory_sputum_collections,code',
@@ -65,6 +67,9 @@ class ConsultLaboratorySputumRequest extends FormRequest
             ],
             'laboratory_date' => [
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+            ],
+            'referral_facility' => [
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
             ],
             'request_id' => [
                 'example' => $consult->id

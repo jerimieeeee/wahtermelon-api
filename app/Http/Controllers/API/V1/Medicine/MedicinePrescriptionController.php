@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
 /**
  * @authenticated
@@ -51,7 +52,7 @@ class MedicinePrescriptionController extends Controller
                     ->havingRaw('quantity > dispensing_sum_dispense_quantity OR dispensing_sum_dispense_quantity IS NULL');
             });
         $prescription = QueryBuilder::for($query)
-            ->with(['konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'prescribedBy', 'dispensing'])
+            ->with(['konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'medicineRoute', 'prescribedBy', 'dispensing'])
             ->defaultSort('-prescription_date')
             ->allowedSorts('prescription_date');
 
@@ -101,11 +102,13 @@ class MedicinePrescriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param MedicinePrescription $prescription
+     * @return JsonResponse
+     * @throws Throwable
      */
-    public function destroy($id)
+    public function destroy(MedicinePrescription $prescription): JsonResponse
     {
-        //
+        $prescription->deleteOrFail();
+        return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

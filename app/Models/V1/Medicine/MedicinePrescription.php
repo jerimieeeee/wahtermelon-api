@@ -9,6 +9,7 @@ use App\Models\V1\Libraries\LibMedicineDoseRegimen;
 use App\Models\V1\Libraries\LibMedicineDurationFrequency;
 use App\Models\V1\Libraries\LibMedicinePreparation;
 use App\Models\V1\Libraries\LibMedicinePurpose;
+use App\Models\V1\Libraries\LibMedicineRoute;
 use App\Models\V1\Libraries\LibMedicineUnitOfMeasurement;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -27,6 +28,8 @@ class MedicinePrescription extends Model
     protected $guarded = [
         'id',
     ];
+
+    protected $cascadeDeletes = ['dispensing'];
 
     public $incrementing = false;
 
@@ -112,6 +115,11 @@ class MedicinePrescription extends Model
     public function dispensingLatest()
     {
         return $this->hasOne(MedicineDispensing::class, 'prescription_id', 'id')->latest('dispensing_date');
+    }
+
+    public function medicineRoute()
+    {
+        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route_code', 'code');
     }
 
 }

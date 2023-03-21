@@ -105,6 +105,7 @@ class DatabaseSeeder extends Seeder
             LibPregnancyDeliveryTypeSeeder::class,
             LibGeneralSurveySeeder::class,
             LibManagementSeeder::class,
+            LibMedicineRouteSeeder::class,
         ]);
     }
 }

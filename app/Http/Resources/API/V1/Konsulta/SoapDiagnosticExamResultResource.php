@@ -4,6 +4,8 @@ namespace App\Http\Resources\API\V1\Konsulta;
 
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isNull;
 
 class SoapDiagnosticExamResultResource extends JsonResource
 {
@@ -108,6 +110,22 @@ class SoapDiagnosticExamResultResource extends JsonResource
             ->where('lab_code', 'HBA')
             ->where('consult_id', $this->id?? "")
             ->get();
+
+        //Other Diagnostic Exam
+        $gramStain = ConsultLaboratory::query()
+            ->selectRaw("*, 'gramStain' AS lab")
+            ->whereHas('gramStain')
+            ->where('lab_code', 'GRMS')
+            ->where('consult_id', $this->id?? "")
+            ->get();
+
+        $microscopy = ConsultLaboratory::query()
+            ->selectRaw("*, 'microscopy' AS lab")
+            ->whereHas('microscopy')
+            ->where('lab_code', 'MCRP')
+            ->where('consult_id', $this->id?? "")
+            ->get();
+
         $data = [
             '_attributes' => [
                 'pHciCaseNo' => $this->patient->case_number?? "",
@@ -163,6 +181,22 @@ class SoapDiagnosticExamResultResource extends JsonResource
         }
         if(count($hba1c)>0){
             $data['HbA1cs'] = ['HbA1c' => [LaboratoryHba1cResource::collection(!empty($hba1c) ? $hba1c : [[]])->resolve()]];
+        }
+
+        //Other Diagnostic Exam
+        $data['OTHERDIAGEXAMS'] = ['OTHERDIAGEXAM' => []];
+        if(count($gramStain)>0){
+            //$data['OTHERDIAGEXAMS'] = ['OTHERDIAGEXAM' => [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]];
+            array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]);
+        }
+
+        if(count($microscopy)>0){
+            //$data['OTHERDIAGEXAMS'] = ['OTHERDIAGEXAM' => [OtherDiagnosticExamResource::collection(!empty($gramStain) ? $gramStain : [[]])->resolve()]];
+            array_push($data['OTHERDIAGEXAMS']['OTHERDIAGEXAM'], [OtherDiagnosticExamResource::collection(!empty($microscopy) ? $microscopy : [[]])->resolve()]);
+        }
+
+        if(isNull($gramStain) && isNull($microscopy)) {
+            unset($data['OTHERDIAGEXAMS']);
         }
         return $data;
     }

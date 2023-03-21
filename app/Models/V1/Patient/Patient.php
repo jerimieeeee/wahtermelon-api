@@ -191,4 +191,19 @@ class Patient extends Model
         return $this->hasMany(ConsultLaboratory::class, 'patient_id', 'id');
     }
 
+    public function philhealth()
+    {
+        return $this->hasMany(PatientPhilhealth::class);
+    }
+
+    public function pastPatientHistory()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id');
+    }
+
+    public function patientVitals()
+    {
+        return $this->hasMany(PatientVitals::class, 'patient_id', 'id');
+    }
+
 }

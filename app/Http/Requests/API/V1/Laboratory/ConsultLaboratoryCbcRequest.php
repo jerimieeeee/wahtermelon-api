@@ -5,6 +5,7 @@ namespace App\Http\Requests\API\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
 
@@ -33,6 +34,7 @@ class ConsultLaboratoryCbcRequest extends FormRequest
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'hemoglobin' => 'nullable',
+            'referral_facility' => 'nullable',
             'hematocrit' => 'nullable',
             'rbc' => 'nullable',
             'mcv' => 'nullable',
@@ -78,6 +80,9 @@ class ConsultLaboratoryCbcRequest extends FormRequest
             ],
             'laboratory_date' => [
                 'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+            ],
+            'referral_facility' => [
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
             ],
             'request_id' => [
                 'example' => $consult->id

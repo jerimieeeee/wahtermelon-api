@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Reports;
+namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Reports\ChildcareReport2018Resource;
-use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Childcare\ChildCareReportService;
 use Illuminate\Http\Request;
 
 /**
  * @authenticated
- * @group Reports 2018
+ * @group FHSIS Reports 2018
  *
  * APIs for managing Child Care Report Information
  * @subgroup M1 Child Care Report
@@ -37,52 +35,59 @@ class ChildCareReport2018Controller extends Controller
         $bcg_f =  $childCareReportService->get_vaccines($request, 'BCG', '1', 'F')->get();
 
         //HEPB within 24hrs
-        $hepb_m_0 =  $childCareReportService->get_hepb($request, 'M', 0)->get();
-        $hepb_f_0 =  $childCareReportService->get_hepb($request, 'F', 0)->get();
+        $hepb_m_0 =  $childCareReportService->get_vaccines($request, 'HEPB', '1', 'M')->get();
+        $hepb_f_0 =  $childCareReportService->get_vaccines($request, 'HEPB', '1', 'F')->get();
 
         //HEPB after 24hrs
-        $hepb_m_2 =  $childCareReportService->get_hepb($request, 'M', 2)->get();
-        $hepb_f_2 =  $childCareReportService->get_hepb($request, 'F', 2)->get();
+        $hepb_m_2 =  $childCareReportService->get_vaccines($request, 'HEPBV', '1', 'M')->get();
+        $hepb_f_2 =  $childCareReportService->get_vaccines($request, 'HEPBV', '1', 'F')->get();
 
         //PENTA
         $penta1_m =  $childCareReportService->get_vaccines($request, 'PENTA', '1', 'M')->get();
         $penta1_f =  $childCareReportService->get_vaccines($request, 'PENTA', '1', 'F')->get();
+
         $penta2_m =  $childCareReportService->get_vaccines($request, 'PENTA', '2', 'M')->get();
         $penta2_f =  $childCareReportService->get_vaccines($request, 'PENTA', '2', 'F')->get();
+
         $penta3_m =  $childCareReportService->get_vaccines($request, 'PENTA', '3', 'M')->get();
         $penta3_f =  $childCareReportService->get_vaccines($request, 'PENTA', '3', 'F')->get();
 
           //OPV
         $opv1_m =  $childCareReportService->get_vaccines($request, 'OPV', '1', 'M')->get();
         $opv1_f =  $childCareReportService->get_vaccines($request, 'OPV', '1', 'F')->get();
+
         $opv2_m =  $childCareReportService->get_vaccines($request, 'OPV', '2', 'M')->get();
         $opv2_f =  $childCareReportService->get_vaccines($request, 'OPV', '2', 'F')->get();
+
         $opv3_m =  $childCareReportService->get_vaccines($request, 'OPV', '3', 'M')->get();
         $opv3_f =  $childCareReportService->get_vaccines($request, 'OPV', '3', 'F')->get();
 
         //IPV 1
-        $ipv1_m =  $childCareReportService->get_ipv1($request, 'M')->get();
-        $ipv1_f =  $childCareReportService->get_ipv1($request, 'F')->get();
+        $ipv1_m =  $childCareReportService->get_vaccines($request, 'IPV', '1',  'M')->get();
+        $ipv1_f =  $childCareReportService->get_vaccines($request, 'IPV', '1', 'F')->get();
 
         //IPV2 Routine
-        $ipv2_r_m =  $childCareReportService->get_ipv2($request, 'M', 0)->get();
-        $ipv2_r_f =  $childCareReportService->get_ipv2($request, 'F', 0)->get();
+        $ipv2_r_m =  $childCareReportService->get_ipv2($request, 'M', '2',  0)->get();
+        $ipv2_r_f =  $childCareReportService->get_ipv2($request, 'F', '2', 0)->get();
 
         //IPV2 Catch up
-        $ipv2_c_m =  $childCareReportService->get_ipv2($request, 'M', 1)->get();
-        $ipv2_c_f =  $childCareReportService->get_ipv2($request, 'F', 1)->get();
+        $ipv2_c_m =  $childCareReportService->get_ipv2($request, 'M', '2',  1)->get();
+        $ipv2_c_f =  $childCareReportService->get_ipv2($request, 'F', '2', 1)->get();
 
         //PCV
         $pcv1_m =  $childCareReportService->get_vaccines($request, 'PCV', '1', 'M')->get();
         $pcv1_f =  $childCareReportService->get_vaccines($request, 'PCV', '1', 'F')->get();
+
         $pcv2_m =  $childCareReportService->get_vaccines($request, 'PCV', '2', 'M')->get();
         $pcv2_f =  $childCareReportService->get_vaccines($request, 'PCV', '2', 'F')->get();
+
         $pcv3_m =  $childCareReportService->get_vaccines($request, 'PCV', '3', 'M')->get();
         $pcv3_f =  $childCareReportService->get_vaccines($request, 'PCV', '3', 'F')->get();
 
         //MCV
         $mcv1_m =  $childCareReportService->get_vaccines($request, 'MCV', '1', 'M')->get();
         $mcv1_f =  $childCareReportService->get_vaccines($request, 'MCV', '1', 'F')->get();
+
         $mcv2_m =  $childCareReportService->get_vaccines($request, 'MCV', '2', 'M')->get();
         $mcv2_f =  $childCareReportService->get_vaccines($request, 'MCV', '2', 'F')->get();
 
@@ -94,17 +99,17 @@ class ChildCareReport2018Controller extends Controller
         $cic_m =  $childCareReportService->get_fic_cic($request, 'M', 'CIC')->get();
         $cic_f =  $childCareReportService->get_fic_cic($request, 'F', 'CIC')->get();
 
-        //TDRGR1
-        $tdrgr1_m =  $childCareReportService->get_vaccines($request, 'TDRGR1', '1', 'M')->get();
-        $tdrgr1_f =  $childCareReportService->get_vaccines($request, 'TDRGR1', '1', 'F')->get();
+        //TDGR1
+        $tdrgr1_m =  $childCareReportService->get_vaccines($request, 'TDGR1', '1', 'M')->get();
+        $tdrgr1_f =  $childCareReportService->get_vaccines($request, 'TDGR1', '1', 'F')->get();
 
         //MRGR1
         $mrgr1_m =  $childCareReportService->get_vaccines($request, 'MRGR', '1', 'M')->get();
         $mrgr1_f =  $childCareReportService->get_vaccines($request, 'MRGR', '1', 'F')->get();
 
         //TDRGR7
-        $tdrgr7_m =  $childCareReportService->get_vaccines($request, 'TDRGR7', '1', 'M')->get();
-        $tdrgr7_f =  $childCareReportService->get_vaccines($request, 'TDRGR7', '1', 'F')->get();
+        $tdrgr7_m =  $childCareReportService->get_vaccines($request, 'TDGR7', '1', 'M')->get();
+        $tdrgr7_f =  $childCareReportService->get_vaccines($request, 'TDGR7', '1', 'F')->get();
 
         //MRGR7
         $mrgr7_m =  $childCareReportService->get_vaccines($request, 'MRGR7', '1', 'M')->get();
@@ -115,8 +120,8 @@ class ChildCareReport2018Controller extends Controller
         $init_bfed_f =  $childCareReportService->init_breastfeeding($request, 'F')->get();
 
         //Preterm/LBW Iron
-        $preterm_iron_m =  $childCareReportService->get_lbw_iron($request, 'M', 1)->get();
-        $preterm_iron_f =  $childCareReportService->get_lbw_iron($request, 'F', 1)->get();
+        $preterm_iron_m =  $childCareReportService->get_lbw_iron($request, 'M')->get();
+        $preterm_iron_f =  $childCareReportService->get_lbw_iron($request, 'F')->get();
 
         //VIT A 1st Dose
         $vit_a_1st_m =  $childCareReportService->get_vit_a_1st($request, 'M')->get();
@@ -154,6 +159,10 @@ class ChildCareReport2018Controller extends Controller
         $pneumonia_0_59_Male =  $childCareReportService->get_diarrhea_pneumonia($request, 'PNEUMONIA', 'M')->get();
         $pneumonia_0_59_Female =  $childCareReportService->get_diarrhea_pneumonia($request, 'PNEUMONIA', 'F')->get();
 
+        //DIARRHEA 0-59 months
+        $diarrhea_0_59_Male =  $childCareReportService->get_diarrhea_pneumonia($request, 'DIARRHEA', 'M')->get();
+        $diarrhea_0_59_Female =  $childCareReportService->get_diarrhea_pneumonia($request, 'DIARRHEA', 'F')->get();
+
         //MNP 6-11 months
         $mnp_6_11_Male =  $childCareReportService->get_mnp($request, 'MNP', 'M')->get();
         $mnp_6_11_Female =  $childCareReportService->get_mnp($request, 'MNP', 'F')->get();
@@ -162,9 +171,9 @@ class ChildCareReport2018Controller extends Controller
         $mnp2_12_23_Male =  $childCareReportService->get_mnp($request, 'MNP2', 'M')->get();
         $mnp2_12_23_Female =  $childCareReportService->get_mnp($request, 'MNP2', 'F')->get();
 
-        //Sick Infant 6-11 months with vitamin A
-        $sick_infant_6_11_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 6)->get();
-        $sick_infant_6_11_vit_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 6)->get();
+        //Sick Children 6-11 months with vitamin A
+        $sick_children_6_11_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 6)->get();
+        $sick_children_6_11_vita_a_f =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'F', 6)->get();
 
         //Sick Children 12-59 months with vitamin A
         $sick_children_12_59_vit_a_m =  $childCareReportService->get_sick_infant_children_with_vit_a($request, 'M', 12)->get();
@@ -187,12 +196,12 @@ class ChildCareReport2018Controller extends Controller
         $pnemonia_case_0_59_with_treatment_f =  $childCareReportService->get_pneumonia_with_treatment($request, 'F', 'PNEUMONIA')->get();
 
         //0-59 MONTHS OVERWEIGHT & OBESE
-        $obese_overweight_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'overweight/obese')->get();
-        $obese_overweight_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'overweight/obese')->get();
+        $obese_overweight_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'Obese')->get();
+        $obese_overweight_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'Obese')->get();
 
         //0-59 MONTHS NORMAL
-        $normal_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'normal')->get();
-        $normal_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'normal')->get();
+        $normal_0_59_months_m =  $childCareReportService->get_overweight_obese($request, 'M', 'Normal')->get();
+        $normal_0_59_months_f =  $childCareReportService->get_overweight_obese($request, 'F', 'Normal')->get();
 
         //6-11 MONTHS COMPLIMENTARY FEEDING
         $comp_feeding_6_11_months_m =  $childCareReportService->get_complimentary_feeding($request, 'M')->get();
@@ -204,7 +213,11 @@ class ChildCareReport2018Controller extends Controller
 
         //0-59 MONTHS STUNTED
         $stunted_0_59_months_m =  $childCareReportService->get_stunted_wasted($request, 'M', 'Stunted')->get();
-        $stunted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Wasted')->get();
+        $stunted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Stunted')->get();
+
+        //0-59 MONTHS WASTED
+        $wasted_0_59_months_m =  $childCareReportService->get_stunted_wasted($request, 'M', 'Wasted')->get();
+        $wasted_0_59_months_f =  $childCareReportService->get_stunted_wasted($request, 'F', 'Wasted')->get();
 
        return [
 
@@ -291,7 +304,7 @@ class ChildCareReport2018Controller extends Controller
             'FIC_Male' => $fic_m,
             'FIC_Female' => $fic_f,
 
-            //FIC
+            //CIC
             'CIC_Male' => $cic_m,
             'CIC_Female' => $cic_f,
 
@@ -300,12 +313,12 @@ class ChildCareReport2018Controller extends Controller
             'Initiated_Breastfeeding_90mins_Female' => $init_bfed_f,
 
             //Vitamin A 1st Dose
-            '6_11_months_vit_a_Male' => $vit_a_1st_m,
-            '6_11_months_vit_a_Female' => $vit_a_1st_f,
+            'vit_a_6_11_months_Male' => $vit_a_1st_m,
+            'vit_a_6_11_months_Female' => $vit_a_1st_f,
 
             //Vitamin A 2nd & 3rd Dose
-            '12_59_months_vit_a_Male' => $vit_a_2nd_3rd_m,
-            '12_59_months_vit_a_Female' => $vit_a_2nd_3rd_f,
+            'vit_a_12_59_months_Male' => $vit_a_2nd_3rd_m,
+            'vit_a_12_59_months_Female' => $vit_a_2nd_3rd_f,
 
             //Preterm/LBW Iron
             'preterm_iron_Male' => $preterm_iron_m,
@@ -327,17 +340,21 @@ class ChildCareReport2018Controller extends Controller
             'deworming_10_to_19_yo_Male' => $deworm_10_19_m,
             'deworming_10_to_19_yo_Female' => $deworm_10_19_f,
 
-            //Sick Infant 6-11 months
+           //Sick Infant 6-11 months
             'sick_infant_6_to_11_months_Male' => $sick_infant_6_11_m,
             'sick_infant_6_to_11_months_Female' => $sick_infant_6_11_f,
 
             //Sick Children 12-59 months
-            'deworming_12_to_59_months_Male' => $sick_children_12_59_m,
-            'deworming_12_to_59_months_Female' => $sick_children_12_59_f,
+            'sick_children_12_to_59_months_Male' => $sick_children_12_59_m,
+            'sick_children_12_to_59_months_Female' => $sick_children_12_59_f,
 
-            //Pneumonia 0-59 months
+           //Pneumonia 0-59 months
             'pneumonia_0_59_months_Male' => $pneumonia_0_59_Male,
             'pneumonia_0_59_months_Female' => $pneumonia_0_59_Female,
+
+           //Diarrhea 0-59 months
+           'diarrhea_0_59_months_Male' => $diarrhea_0_59_Male,
+           'diarrhea_0_59_months_Female' => $diarrhea_0_59_Female,
 
             //MNP 6-11 months
             'mnp_6_11_months_Male' => $mnp_6_11_Male,
@@ -347,9 +364,9 @@ class ChildCareReport2018Controller extends Controller
             'mnp2_12_23_months_Male' => $mnp2_12_23_Male,
             'mnp2_12_23_months_Female' => $mnp2_12_23_Female,
 
-            //Sick Infant 6-11 months with vitamin A
-            'sick_infant_6_to_11_months_with_vit_a_Male' => $sick_infant_6_11_vit_a_m,
-            'sick_infant_6_to_11_months_with_vita_a_Female' => $sick_infant_6_11_vit_a_f,
+            //Sick Children 12-59 months with vitamin A
+            'sick_children_6_to_11_months_with_vit_a_Male' => $sick_children_6_11_vit_a_m,
+            'sick_children_6_to_11_months_with_vit_a_Female' => $sick_children_6_11_vita_a_f,
 
             //Sick Children 12-59 months with vitamin A
             'sick_children_12_to_59_months_with_vit_a_Male' => $sick_children_12_59_vit_a_m,
@@ -390,6 +407,10 @@ class ChildCareReport2018Controller extends Controller
            //0-59 MONTHS Stunted
            'stunted_0_59_months_Male' => $stunted_0_59_months_m,
            'stunted_0_59_months_Female' => $stunted_0_59_months_f,
+
+           //0-59 MONTHS WASTED
+           'wasted_0_59_months_Male' => $wasted_0_59_months_m,
+           'wasted_0_59_months_Female' => $wasted_0_59_months_f,
 
         ];
     }

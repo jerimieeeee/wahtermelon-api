@@ -9,6 +9,7 @@ use App\Models\V1\Libraries\LibMedicineDoseRegimen;
 use App\Models\V1\Libraries\LibMedicineDurationFrequency;
 use App\Models\V1\Libraries\LibMedicinePreparation;
 use App\Models\V1\Libraries\LibMedicinePurpose;
+use App\Models\V1\Libraries\LibMedicineRoute;
 use App\Models\V1\Libraries\LibMedicineUnitOfMeasurement;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
@@ -49,6 +50,7 @@ class MedicinePrescriptionRequest extends FormRequest
             'duration_frequency' => 'required:exists:lib_medicine_duration_frequencies,code',
             'quantity' => 'required:numeric',
             'quantity_preparation' => 'required:exists:lib_medicine_preparations,code',
+            'medicine_route_code' => 'required:exists:lib_medicine_routes,code',
         ];
     }
 
@@ -97,6 +99,9 @@ class MedicinePrescriptionRequest extends FormRequest
             ],
             'quantity_preparation' => [
                 'example' => fake()->randomElement(LibMedicinePreparation::pluck('code')->toArray())
+            ],
+            'medicine_route_code' => [
+                'example' => fake()->randomElement(LibMedicineRoute::pluck('code')->toArray())
             ],
         ];
     }
