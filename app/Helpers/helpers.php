@@ -126,3 +126,46 @@ if(!function_exists('isJson')) {
         return false;
     }
 }
+
+if(!function_exists('get_completed_services')) {
+    /**
+     * @param array $iron
+     * @param date $date
+     * @param int $tablet
+     * @return array
+     */
+
+    function get_completed_services($request, $service, $serviceQty, $age_year_bracket1, $age_year_bracket2)
+    {
+        $serviceArray = [];
+        $ageBracket1 = $age_year_bracket1;
+        $ageBracket2 = $age_year_bracket2;
+
+        foreach($service as $value){
+            $quantity = explode(",",$value->service_qty);
+            $dates = explode(",", $value->service_dates);
+            $year = explode(",", $value->service_dates_year);
+            $month = explode(",", $value->service_dates_month);
+            $subtotal = 0;
+            $serviceObject = [];
+            foreach($quantity as $k => $qty){
+                $subtotal += $qty;
+                $age = Carbon::parse($value->birthdate)->diffInYears(Carbon::parse($dates[$k]));
+                if($subtotal >= $serviceQty){
+                    if ($request->year == $year[$k] && $request->month == $month[$k]) {
+                        $serviceObject["name"] = $value->name;
+                        $serviceObject["birthdate"] = $value->birthdate;
+                        $serviceObject["date_of_service"] = $dates[$k];
+                        $serviceObject["municipality_code"] = $value->municipality_code;
+                        $serviceObject["barangay_code"] = $value->barangay_code;
+                        if($age >= $ageBracket1 && $age <= $ageBracket2){
+                            $serviceArray[] = $serviceObject;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return $serviceArray;
+    }
+}
