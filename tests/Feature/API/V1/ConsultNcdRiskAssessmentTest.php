@@ -3,6 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\Patient\Patient;
@@ -22,9 +23,10 @@ class ConsultNcdRiskAssessmentTest extends TestCase
             User::factory()->create()
         );
         $patient = Patient::factory()->create()->toArray();
+        $consult = Consult::factory()->create(['pt_group' => 'ncd'])->toArray();
         $patientNcd = PatientNcd::factory()->create()->toArray();
         $consultNcdRiskAssessment = ConsultNcdRiskAssessment::factory()->make()->toArray();
-        $response = $this->post('api/v1/non-communicable-disease/risk-assessment', array_merge($consultNcdRiskAssessment, ['patient_ncd_id' => $patientNcd['id']], ['patient_id' => $patient['id']], ['date_enrolled' => $patientNcd['date_enrolled']]));
+        $response = $this->post('api/v1/non-communicable-disease/risk-assessment', array_merge($consultNcdRiskAssessment, ['patient_ncd_id' => $patientNcd['id']], ['consult_id' => $consult['id']], ['patient_id' => $patient['id']], ['date_enrolled' => $patientNcd['date_enrolled']]));
         $response->assertCreated();
     }
 }
