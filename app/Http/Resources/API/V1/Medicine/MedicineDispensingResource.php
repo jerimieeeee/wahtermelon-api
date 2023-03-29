@@ -16,14 +16,14 @@ class MedicineDispensingResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
+            'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
             'patient' => $this->whenLoaded('patient'),
-            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'dispensing_date' => $this->dispensing_date->format('Y-m-d'),
-            'prescription_id' => $this->when(!$this->relationLoaded('prescription'),$this->prescription_id),
+            'prescription_id' => $this->when(! $this->relationLoaded('prescription'), $this->prescription_id),
             'prescription' => $this->when($this->relationLoaded('prescription'), new MedicinePrescriptionResource($this->prescription->load('konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'prescribedBy', 'dispensing'))),
             'dispense_quantity' => $this->dispense_quantity,
             'unit_price' => $this->unit_price,

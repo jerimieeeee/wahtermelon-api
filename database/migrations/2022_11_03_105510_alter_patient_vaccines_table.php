@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (Schema::hasColumn('patient_vaccines', 'pt_group')){
-
+        if (Schema::hasColumn('patient_vaccines', 'pt_group')) {
             Schema::table('patient_vaccines', function (Blueprint $table) {
                 $table->dropColumn('pt_group');
                 $table->unsignedBigInteger('status_id')->nullable()->index()->constrained()->after('vaccine_date');

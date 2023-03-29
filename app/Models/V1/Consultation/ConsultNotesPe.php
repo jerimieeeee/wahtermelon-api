@@ -14,11 +14,13 @@ class ConsultNotesPe extends Model
     use HasFactory, HasUuid, FilterByUser;
 
     protected $primaryKey = 'id';
+
     protected $guarded = ['id'];
 
     protected $keyType = 'string';
 
-    public function consultNotes(){
+    public function consultNotes()
+    {
         return $this->hasMany(ConsultNotes::class);
     }
 
@@ -26,5 +28,4 @@ class ConsultNotesPe extends Model
     {
         return $this->belongsTo(LibPe::class, 'pe_id', 'pe_id');
     }
-
 }

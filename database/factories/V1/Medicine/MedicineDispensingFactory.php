@@ -23,6 +23,7 @@ class MedicineDispensingFactory extends Factory
         $quantity = fake()->numberBetween(1, 50);
         $unitPrice = fake()->numberBetween(1, 500);
         $totalAmount = $quantity * $unitPrice;
+
         return [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),

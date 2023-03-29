@@ -12,8 +12,6 @@ class DistrictController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
      */
     public function index(Request $request)
     {
@@ -30,9 +28,6 @@ class DistrictController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param Request $request
-     * @param District  $district
      */
     public function show(Request $request, District $district)
     {

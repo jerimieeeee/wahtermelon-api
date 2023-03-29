@@ -5,8 +5,6 @@ namespace Tests\Feature\API\V1;
 use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Libraries\LibDiagnosis;
 use App\Models\V1\Libraries\LibIcd10;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ConsultationLibraryTest extends TestCase

@@ -10,7 +10,10 @@ class LibPregnancyHistoryAnswer extends Model
     use HasFactory;
 
     public $primaryKey = 'id';
+
     public $incrementing = false;
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

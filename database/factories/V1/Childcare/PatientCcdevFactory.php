@@ -28,7 +28,7 @@ class PatientCcdevFactory extends Factory
             'mothers_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'admission_date' => fake()->date($format = 'Y-m-d H:i:s', $max = 'now'),
             'discharge_date' => fake()->date($format = 'Y-m-d H:i:s', $max = 'now'),
-            'nbs_filter' => fake()->regexify('[0-9]{10}')
+            'nbs_filter' => fake()->regexify('[0-9]{10}'),
         ];
     }
 }

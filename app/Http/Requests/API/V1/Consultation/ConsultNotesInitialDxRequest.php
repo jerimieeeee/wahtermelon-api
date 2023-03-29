@@ -55,6 +55,5 @@ class ConsultNotesInitialDxRequest extends FormRequest
                 'example' => fake()->randomElement(LibDiagnosis::pluck('class_id')->toArray()),
             ],
         ];
-
     }
 }

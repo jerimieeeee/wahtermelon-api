@@ -60,37 +60,37 @@ class ParseNHFRFileCommand extends Command
     private function performTask($properties)
     {
         $data = [
-            'code'                          => $properties['Health Facility Code'],
-            'short_code'                    => $properties['Health Facility Code Short'],
-            'facility_name'                 => $properties['Facility Name'],
-            'old_facility_name_1'           => !empty(trim($properties['Old Health Facility Name 1'])) ? $properties['Old Health Facility Name 1'] : null,
-            'old_facility_name_2'           => !empty(trim($properties['Old Health Facility Name 2'])) ? $properties['Old Health Facility Name 2'] : null,
-            'old_facility_name_3'           => !empty(trim($properties['Old Health Facility Name 3'])) ? $properties['Old Health Facility Name 3'] : null,
-            'facility_major_type'           => !empty(trim($properties["Facility Major Type"])) ? $properties["Facility Major Type"] : null,
-            'health_facility_type'          => !empty(trim($properties["Health Facility Type"])) ? $properties["Health Facility Type"] : null,
-            'ownership_classification'      => $properties["Ownership Major Classification"],
-            'ownership_sub_classification'  => $properties["Ownership Major Classification"] == 'Government' ? $properties["Ownership Sub-Classification for Government facilities"] : $properties["Ownership Sub-Classification for private facilities"],
-            'region_code'                     => $properties["Region PSGC"],
-            'province_code'                   => $properties["Province PSGC"],
-            'municipality_code'               => $properties["City/Municipality PSGC"],
-            'barangay_code'                   => $properties["Barangay PSGC"],
-            'service_capability'            => $properties["Service Capability"],
-            'bed_capacity'                  => intval(str_replace(",","",$properties["Bed Capacity"])),
+            'code' => $properties['Health Facility Code'],
+            'short_code' => $properties['Health Facility Code Short'],
+            'facility_name' => $properties['Facility Name'],
+            'old_facility_name_1' => ! empty(trim($properties['Old Health Facility Name 1'])) ? $properties['Old Health Facility Name 1'] : null,
+            'old_facility_name_2' => ! empty(trim($properties['Old Health Facility Name 2'])) ? $properties['Old Health Facility Name 2'] : null,
+            'old_facility_name_3' => ! empty(trim($properties['Old Health Facility Name 3'])) ? $properties['Old Health Facility Name 3'] : null,
+            'facility_major_type' => ! empty(trim($properties['Facility Major Type'])) ? $properties['Facility Major Type'] : null,
+            'health_facility_type' => ! empty(trim($properties['Health Facility Type'])) ? $properties['Health Facility Type'] : null,
+            'ownership_classification' => $properties['Ownership Major Classification'],
+            'ownership_sub_classification' => $properties['Ownership Major Classification'] == 'Government' ? $properties['Ownership Sub-Classification for Government facilities'] : $properties['Ownership Sub-Classification for private facilities'],
+            'region_code' => $properties['Region PSGC'],
+            'province_code' => $properties['Province PSGC'],
+            'municipality_code' => $properties['City/Municipality PSGC'],
+            'barangay_code' => $properties['Barangay PSGC'],
+            'service_capability' => $properties['Service Capability'],
+            'bed_capacity' => intval(str_replace(',', '', $properties['Bed Capacity'])),
         ];
 
         $data = array_filter($data);
 
-        $data['region_code'] = $this->processPSGC($data, 'region_code', $properties["Region Name"]);
-        $data['province_code'] = $this->processPSGC($data, 'province_code', $properties["Province Name"]);
-        $data['municipality_code'] = $this->processPSGC($data, 'municipality_code', $properties["City/Municipality Name"]);
-        $data['barangay_code'] = $this->processPSGC($data, 'barangay_code', $properties["Barangay Name"]);
+        $data['region_code'] = $this->processPSGC($data, 'region_code', $properties['Region Name']);
+        $data['province_code'] = $this->processPSGC($data, 'province_code', $properties['Province Name']);
+        $data['municipality_code'] = $this->processPSGC($data, 'municipality_code', $properties['City/Municipality Name']);
+        $data['barangay_code'] = $this->processPSGC($data, 'barangay_code', $properties['Barangay Name']);
 
         $this->processData($data);
     }
 
     private function processPSGC($data, $label, $location)
     {
-        if(!isset($data[$label])) {
+        if (! isset($data[$label])) {
             return;
         }
         $data[$label] = (Str::length($data[$label]) == 8 ? '0'.$data[$label] : Str::length($data[$label]) == 7) ? $data[$label].'0' : $data[$label];
@@ -100,7 +100,7 @@ class ParseNHFRFileCommand extends Command
         if ($data[$label] == '129800000') {
             $data[$label] = '153800000';
         }
-        if (str_starts_with($data[$label], '18')){
+        if (str_starts_with($data[$label], '18')) {
             switch ($label) {
                 case 'region_code' && str_starts_with($data['province_code'], '1845'):
                 case 'province_code' && str_starts_with($data['province_code'], '1845'):
@@ -123,7 +123,7 @@ class ParseNHFRFileCommand extends Command
         //$modelName = '\\App\\Models\\V1\\PSGC\\'.$modelName;
         //$id = $modelName::select('id')->whereCode($data[$label])->pluck('id')->first();
         //return $id;
-        return !ctype_space($data[$label]) ? $data[$label] : null;
+        return ! ctype_space($data[$label]) ? $data[$label] : null;
     }
 
     private function processData($data)

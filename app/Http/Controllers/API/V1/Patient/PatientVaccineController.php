@@ -7,22 +7,23 @@ use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
 use App\Http\Requests\API\V1\Patient\PatientVaccineUpdateRequest;
 use App\Http\Resources\API\V1\Patient\PatientVaccineResource;
 use App\Models\V1\Patient\PatientVaccine;
+use App\Services\Patient\PatientVaccineService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Services\Patient\PatientVaccineService;
 
 /**
  * @authenticated
+ *
  * @group Patient Vaccine Management
  *
  * APIs for managing Patient Vaccine information
+ *
  * @subgroup Patient Vaccine
+ *
  * @subgroupDescription Patient Vaccine management.
  */
-
 class PatientVaccineController extends Controller
 {
     /**
@@ -30,18 +31,19 @@ class PatientVaccineController extends Controller
      *
      * @queryParam sort string Sort vaccine_id, vaccine_date, of the patient. Example: -vaccine_id
      * @queryParam patient_id string Patient to view.
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientVaccineResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientVaccine paginate=15
-     * @param Request $request
+     *
      * @return ResourceCollection
      */
     public function index(Request $request)
     {
-
         $patientvax = new PatientVaccineService();
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
-                ->when(isset($request->patient_id), function($query) use($request){
+                ->when(isset($request->patient_id), function ($query) use ($request) {
                     return $query->wherePatientId($request->patient_id);
                 });
 
@@ -49,8 +51,9 @@ class PatientVaccineController extends Controller
                 ->defaultSort('-vaccine_date', '-vaccine_id')
                 ->allowedSorts(['vaccine_date', 'vaccine_id']);
 
-        if(isset($request->patient_id)) {
+        if (isset($request->patient_id)) {
             $data = $patientvax->get_immunization_status($request->patient_id)->first();
+
             return PatientVaccineResource::collection($vaccines->get())
                     ->additional(['status' => $data]);
         }
@@ -58,41 +61,42 @@ class PatientVaccineController extends Controller
         if ($perPage == 'all') {
             return PatientVaccineResource::collection($vaccines->first());
         }
-        return PatientVaccineResource::collection($vaccines->paginate($perPage)->withQueryString());
 
+        return PatientVaccineResource::collection($vaccines->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created Patient Vaccine resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Patient\PatientVaccineResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientVaccine
-     * @param PatientVaccineRequest $request
-     * @return JsonResponse
      */
     public function store(PatientVaccineRequest $request): JsonResponse
     {
-            $vaccine = $request->input('vaccines');
-            foreach($vaccine as $value){
-               PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
-                ['patient_id' => $request->input('patient_id'),'user_id' => $request->input('user_id')] + $value);
-            }
+        $vaccine = $request->input('vaccines');
+        foreach ($vaccine as $value) {
+            PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
+                ['patient_id' => $request->input('patient_id'), 'user_id' => $request->input('user_id')] + $value);
+        }
 
-            $patientvaccines = PatientVaccine::where('patient_id', '=', $request->patient_id)->orderBy('vaccine_date', 'ASC')->get();
+        $patientvaccines = PatientVaccine::where('patient_id', '=', $request->patient_id)->orderBy('vaccine_date', 'ASC')->get();
 
-            return response()->json([
-                'message' => 'Vaccine Successfully Saved',
-                'data' => $patientvaccines
-            ], 201);
+        return response()->json([
+            'message' => 'Vaccine Successfully Saved',
+            'data' => $patientvaccines,
+        ], 201);
     }
 
     /**
      * Show the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Patient\PatientVaccineResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientVaccine
-     * @param PatientVaccine $patientvaccine
+     *
      * @return PatientVaccineResource
      */
     public function show(PatientVaccine $patientvaccine)
@@ -102,7 +106,6 @@ class PatientVaccineController extends Controller
         ->get();
 
         return PatientVaccineResource::collection($query);
-
     }
 
     /**
@@ -115,6 +118,7 @@ class PatientVaccineController extends Controller
     public function update(PatientVaccineUpdateRequest $request, $id): JsonResponse
     {
         PatientVaccine::findorfail($id)->update($request->all());
+
         return response()->json('Vaccine Successfully Updated');
     }
 
@@ -127,6 +131,7 @@ class PatientVaccineController extends Controller
     public function destroy(Request $request, $id)
     {
         PatientVaccine::findorfail($id)->forceDelete($request->all());
+
         return response()->json('Vaccine Successfully Deleted');
     }
 }

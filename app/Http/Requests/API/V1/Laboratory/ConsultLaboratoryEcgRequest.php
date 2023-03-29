@@ -48,36 +48,37 @@ class ConsultLaboratoryEcgRequest extends FormRequest
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'ECG']);
         $findings = fake()->randomElement(LibLaboratoryFindings::pluck('code')->toArray());
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'findings_code' => [
-                'example' => $findings
+                'example' => $findings,
             ],
             'remarks' => [
-                'example' => $findings == '2' ? fake()->sentence() : null
+                'example' => $findings == '2' ? fake()->sentence() : null,
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

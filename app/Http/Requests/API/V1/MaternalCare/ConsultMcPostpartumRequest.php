@@ -27,6 +27,7 @@ class ConsultMcPostpartumRequest extends FormRequest
         $mc = PatientMcPostRegistration::select('delivery_date')->where('patient_mc_id', request()->patient_mc_id)->first();
 
         $weeks = get_postpartum_week(request()->postpartum_date, $mc->delivery_date);
+
         return array_merge($this->validated(), [
             'postpartum_week' => $weeks,
             'visit_sequence' => 0,

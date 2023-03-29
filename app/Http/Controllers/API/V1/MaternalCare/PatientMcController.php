@@ -14,10 +14,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
+ *
  * @subgroup Maternal Care Record
+ *
  * @subgroupDescription Maternal care management.
  */
 class PatientMcController extends Controller
@@ -27,38 +30,37 @@ class PatientMcController extends Controller
      *
      * @queryParam type string Type of query. To view all records of patient: e.g. type=all. To view the latest record of patient: e.g. type=latest. Example: latest
      * @queryParam patient_id string Patient to view.
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\MaternalCare\PatientMcResource
+     *
      * @apiResourceModel App\Models\V1\MaternalCare\PatientMc
-     * @param Request $request
-     * @param MaternalCareRecordService $maternalCareRecordService
-     * @return JsonResponse|PatientMcResource|ResourceCollection
      */
     public function index(Request $request, MaternalCareRecordService $maternalCareRecordService): JsonResponse|PatientMcResource|ResourceCollection
     {
-        if($request->type == 'latest')
-        {
+        if ($request->type == 'latest') {
             $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
-            if(!$mc) {
+            if (! $mc) {
                 return response()->json(['message' => 'No existing or pending record.'], 200);
             }
             $query = PatientMc::where('id', $mc->id);
             $patientMc = QueryBuilder::for($query)
                 ->with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')
                 ->first();
-            return  new PatientMcResource($patientMc);
 
+            return  new PatientMcResource($patientMc);
         }
 
-        if($request->type == 'all')
-        {
+        if ($request->type == 'all') {
             $query = PatientMc::where('patient_id', $request->patient_id);
             $patientMc = QueryBuilder::for($query)
                 ->with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')
                 ->get();
+
             return PatientMcResource::collection($patientMc->sortByDesc('preRegister.pre_registration_date')->sortBy('postRegister.post_registration_date'));
         }
 
         $data = PatientMc::with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')->get();
+
         return PatientMcResource::collection($data)->response();
     }
 
@@ -71,6 +73,7 @@ class PatientMcController extends Controller
     public function store(PatientMcRequest $request)
     {
         $data = PatientMc::create($request->all());
+
         return $data;
     }
 
@@ -88,7 +91,6 @@ class PatientMcController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

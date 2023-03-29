@@ -2,7 +2,6 @@
 
 namespace App\Services\User;
 
-
 use Illuminate\Support\Facades\DB;
 
 class UserStatsService

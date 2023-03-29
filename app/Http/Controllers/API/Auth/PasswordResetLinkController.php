@@ -37,7 +37,7 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return response()->json(array("status" => 200, "message" => trans($status)));
+            return response()->json(['status' => 200, 'message' => trans($status)]);
         }
 
         throw ValidationException::withMessages([
@@ -53,7 +53,7 @@ class PasswordResetLinkController extends Controller
 
     public function validEmail($email)
     {
-        return !!User::where('email', $email)->first();
+        return (bool) User::where('email', $email)->first();
     }
 
     public function generateToken($email)
@@ -64,14 +64,16 @@ class PasswordResetLinkController extends Controller
         }
         $token = Str::random(60);
         $this->storeToken($token, $email);
+
         return $token;
     }
+
     public function storeToken($token, $email)
     {
         DB::table('password_resets')->insert([
             'email' => $email,
             'token' => $token,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now(),
         ]);
     }
 }

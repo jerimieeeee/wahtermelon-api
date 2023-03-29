@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibNcdLocation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -21,8 +20,8 @@ class LibNcdLocationSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibNcdLocation::upsert([
-          ['desc' => 'Community Level'],
-          ['desc' => 'Health Facility'],
+            ['desc' => 'Community Level'],
+            ['desc' => 'Health Facility'],
         ], ['id']);
     }
 }

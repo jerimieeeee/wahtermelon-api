@@ -16,15 +16,15 @@ class SocialHistoryResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pIsSmoker' => $this->smoking?? "",
-                'pNoCigpk' => $this->pack_per_year?? "",
-                'pIsAdrinker' => $this->alcohol?? "",
-                'pNoBottles' => $this->bottles_per_day?? "",
-                'pIllDrugUser' => $this->illicit_drugs?? "",
-                'pIsSexuallyActive' => $this->sexually_active?? "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pIsSmoker' => $this->smoking ?? '',
+                'pNoCigpk' => $this->pack_per_year ?? '',
+                'pIsAdrinker' => $this->alcohol ?? '',
+                'pNoBottles' => $this->bottles_per_day ?? '',
+                'pIllDrugUser' => $this->illicit_drugs ?? '',
+                'pIsSexuallyActive' => $this->sexually_active ?? '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

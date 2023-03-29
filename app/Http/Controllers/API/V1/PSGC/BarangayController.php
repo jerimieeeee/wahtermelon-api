@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Address Information
  *
  * APIs for managing libraries
+ *
  * @subgroup Barangays
+ *
  * @subgroupDescription Philippine Standard Geographic Code (PSGC) Libraries for Barangays.
  */
 class BarangayController extends Controller
@@ -23,8 +25,9 @@ class BarangayController extends Controller
      *
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @responseFile 200 responses/barangays.get.json
-     * @param Request $request
+     *
      * @return ResourceCollection
      */
     public function index(Request $request)
@@ -44,10 +47,8 @@ class BarangayController extends Controller
      * Display the specified Barangay resource.
      *
      * @urlParam barangay_code string Barangay code. Example: 012801001
+     *
      * @responseFile 200 responses/barangay.get.json
-     * @param Request $request
-     * @param Barangay $barangay
-     * @return BarangayResource
      */
     public function show(Request $request, Barangay $barangay): BarangayResource
     {

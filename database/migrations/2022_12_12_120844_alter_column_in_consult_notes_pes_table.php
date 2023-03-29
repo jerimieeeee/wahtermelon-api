@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('consult_notes_pes', function (Blueprint $table) {
-
             $table->dropColumn('remarks');
             $table->dropColumn('breast_screen');
             $table->dropColumn('breast_remarks');
@@ -50,7 +49,6 @@ return new class extends Migration
     public function down()
     {
         Schema::table('consult_notes_pes', function (Blueprint $table) {
-
             $table->dropForeign(['notes_id']);
             $table->dropForeign(['facility_code']);
             $table->dropForeign(['pe_id']);
@@ -75,7 +73,6 @@ return new class extends Migration
             $table->string('abdome_remarks');
             $table->string('extremities_code');
             $table->string('extremities_remarks');
-
         });
     }
 };

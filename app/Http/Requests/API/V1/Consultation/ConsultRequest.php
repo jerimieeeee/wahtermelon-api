@@ -85,6 +85,5 @@ class ConsultRequest extends FormRequest
                 'consult_done' => true,
             ],
         ];
-
     }
 }

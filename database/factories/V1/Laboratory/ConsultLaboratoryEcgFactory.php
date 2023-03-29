@@ -26,6 +26,7 @@ class ConsultLaboratoryEcgFactory extends Factory
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'ECG']);
         $findings = fake()->randomElement(LibLaboratoryFindings::pluck('code')->toArray());
+
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

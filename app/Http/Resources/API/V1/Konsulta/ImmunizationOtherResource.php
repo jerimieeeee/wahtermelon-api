@@ -16,14 +16,14 @@ class ImmunizationOtherResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pChildImmcode' => "",
-                'pYoungwImmcode' => "",
-                'pPregwImmcode' => "",
-                'pElderlyImmcode' => "",
-                'pOtherImm' => !empty($this->vaccines) ? strtoupper($this->vaccines->vaccine_desc) : "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pChildImmcode' => '',
+                'pYoungwImmcode' => '',
+                'pPregwImmcode' => '',
+                'pElderlyImmcode' => '',
+                'pOtherImm' => ! empty($this->vaccines) ? strtoupper($this->vaccines->vaccine_desc) : '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

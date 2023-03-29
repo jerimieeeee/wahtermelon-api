@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ConsultCcdevService extends Model
 {
     use HasFactory, FilterByUser;
+
     protected $guarded = [
         'id',
     ];
@@ -24,15 +25,14 @@ class ConsultCcdevService extends Model
         return 'patient_id';
     }
 
-    public function patientccdev(){
-
+    public function patientccdev()
+    {
         return $this->belongsTo(PatientCcdev::class);
-
     }
 
-    public function patient(){
-
-        return $this->belongsTo(Patient::class, 'patient_id') ;
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 
     public function services(): BelongsTo

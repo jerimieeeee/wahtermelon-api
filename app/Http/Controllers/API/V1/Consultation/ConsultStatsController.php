@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation information
+ *
  * @subgroup Patient Consultation
+ *
  * @subgroupDescription Patient Consultation management.
  */
 class ConsultStatsController extends Controller
@@ -27,28 +30,27 @@ class ConsultStatsController extends Controller
         $date_today = Carbon::today()->toDateString();
 
         $today_count = DB::table('consults')
-                         ->whereDate('consult_date','=', $date_today)
+                         ->whereDate('consult_date', '=', $date_today)
                          ->count();
 
         $pt_count = DB::table('consults')
                          ->select('pt_group as Patient Group', DB::raw('count(*) as count'))
-                         ->whereDate('consult_date','=', $date_today)
+                         ->whereDate('consult_date', '=', $date_today)
                          ->groupBy('pt_group')
                          ->get();
 
-         $patient_count = DB::table('consults')
-         ->whereDate('created_at','=', $date_today)
-         ->count();
+        $patient_count = DB::table('consults')
+        ->whereDate('created_at', '=', $date_today)
+        ->count();
 
-         return ['consult_count' => $today_count,
-                 'program_count' => $pt_count,
-                 'patient_registered' => $patient_count,];
+        return ['consult_count' => $today_count,
+            'program_count' => $pt_count,
+            'patient_registered' => $patient_count, ];
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -70,7 +72,6 @@ class ConsultStatsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

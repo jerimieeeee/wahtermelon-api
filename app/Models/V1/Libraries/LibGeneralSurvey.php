@@ -10,7 +10,10 @@ class LibGeneralSurvey extends Model
     use HasFactory;
 
     public $primaryKey = 'code';
+
     public $incrementing = false;
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

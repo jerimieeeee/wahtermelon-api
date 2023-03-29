@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibNcdRiskScreeningUrineKetones;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -21,12 +20,12 @@ class LibNcdRiskScreeningUrineKetonesSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibNcdRiskScreeningUrineKetones::upsert([
-          ['desc' => 'Negative'],
-          ['desc' => '0.5'],
-          ['desc' => '1.5'],
-          ['desc' => '4.0'],
-          ['desc' => '8.0'],
-          ['desc' => '16'],
+            ['desc' => 'Negative'],
+            ['desc' => '0.5'],
+            ['desc' => '1.5'],
+            ['desc' => '4.0'],
+            ['desc' => '8.0'],
+            ['desc' => '16'],
         ], ['id']);
     }
 }

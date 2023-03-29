@@ -16,9 +16,9 @@ class KonsultaImportResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'transmittal_number' => $this->transmittal_number,
             'enlistments' => $this->enlistments,

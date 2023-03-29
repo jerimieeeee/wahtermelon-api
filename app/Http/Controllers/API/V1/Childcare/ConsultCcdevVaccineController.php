@@ -3,22 +3,24 @@
 namespace App\Http\Controllers\API\V1\Childcare;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Exception;
-use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevVaccineRequest;
 use App\Models\V1\Childcare\ConsultCcdevVaccine;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Childcare Vaccine Management
  *
  * APIs for managing Childcare Vaccine information
+ *
  * @subgroup Childcare Vaccine
+ *
  * @subgroupDescription Childcare Vaccine management.
  */
-
 class ConsultCcdevVaccineController extends Controller
 {
     /**
@@ -35,43 +37,41 @@ class ConsultCcdevVaccineController extends Controller
      * Store a newly created Childcare Vaccine resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevVaccineResource
+     *
      * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevVaccine
-     * @param ConsultCcdevVaccineRequest $request
-     * @return JsonResponse
      */
-    public function store(ConsultCcdevVaccineRequest $request) : JsonResponse
+    public function store(ConsultCcdevVaccineRequest $request): JsonResponse
     {
-        try{
+        try {
             $vaccine = $request->input('vaccines');
             $vaccine_array = [];
-            foreach($vaccine as $key => $value){
+            foreach ($vaccine as $key => $value) {
                 $data = ConsultCcdevVaccine::firstOrNew(['patient_ccdev_id' => $request->input('patient_ccdev_id'), 'vaccine_id' => $value]);
                 $data->patient_id = $request->input('patient_id');
                 $data->patient_ccdev_id = $request->input('patient_ccdev_id');
                 $data->user_id = $request->input('user_id');
                 $data->vaccine_id = $value;
                 $data->vaccine_date = $request->input('vaccine_date')[$key] == null ? null : Carbon::parse($request->input('vaccine_date')[$key])->format('Y/m/d');
-            $data->save();
-            array_push($vaccine_array, $value);
-
+                $data->save();
+                array_push($vaccine_array, $value);
             }
             ConsultCcdevVaccine::whereNotIn('vaccine_id', $vaccine_array)
-            ->where('patient_ccdev_id', '=', $data->patient_ccdev_id )
+            ->where('patient_ccdev_id', '=', $data->patient_ccdev_id)
             ->delete();
 
             return response()->json([
                 // 'status_code' => 200,
                 'message' => 'Vaccine Successfully Saved',
             ], 201);
-
-            }catch(Exception $error) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Vaccine Saving Error',
-                    'error' => $error,
-                ]);
-            }
+        } catch(Exception $error) {
+            return response()->json([
+                'status_code' => 500,
+                'message' => 'Vaccine Saving Error',
+                'error' => $error,
+            ]);
+        }
     }
 
     /**
@@ -84,13 +84,11 @@ class ConsultCcdevVaccineController extends Controller
     {
         return ConsultCcdevVaccine::where('patient_id', '=', $id)
         ->get();
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

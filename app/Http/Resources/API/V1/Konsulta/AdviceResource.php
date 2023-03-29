@@ -16,10 +16,10 @@ class AdviceResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pRemarks' => strtoupper($this->plan?? "NOT APPLICABLE"),
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pRemarks' => strtoupper($this->plan ?? 'NOT APPLICABLE'),
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

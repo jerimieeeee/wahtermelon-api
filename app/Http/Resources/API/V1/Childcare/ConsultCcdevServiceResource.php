@@ -20,7 +20,7 @@ class ConsultCcdevServiceResource extends JsonResource
             'user_id' => $this->user_id,
             'facility_code' => $this->facility_code,
             'service_id' => $this->service_id,
-            'service_date' => !is_null($this->service_date) ? $this->service_date->format('Y-m-d') : null,
+            'service_date' => ! is_null($this->service_date) ? $this->service_date->format('Y-m-d') : null,
             'quantity' => $this->quantity,
             'status_id' => $this->status_id,
             'services' => $this->whenLoaded('services'),

@@ -14,8 +14,6 @@ class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -39,7 +37,7 @@ class UserRequest extends FormRequest
             'birthdate' => 'required|date',
             'contact_number' => 'required|min:11|max:13', //'required|min:11|max:11|unique:users' . (request()->has('id') ? ',contact_number, ' . request()->input('id') : ''),
             //'username' => 'required|min:4|unique:users',// . (request()->has('id') ? ',username, ' . request()->input('id') : ''),
-            'email' => 'nullable|email|unique:users' . (request()->has('id') ? ',email, ' . request()->input('id') : ''),
+            'email' => 'nullable|email|unique:users'.(request()->has('id') ? ',email, '.request()->input('id') : ''),
             'is_active' => 'nullable|boolean',
             'photo_url' => 'nullable|url',
             'tin_number' => 'sometimes|max:9',
@@ -53,10 +51,10 @@ class UserRequest extends FormRequest
                     ->letters()
                     ->mixedCase()
                     ->numbers()
-                    ->symbols()
-                    //->uncompromised()
+                    ->symbols(),
+                //->uncompromised()
             ],
-            'password_confirmation' => 'required:password'
+            'password_confirmation' => 'required:password',
         ];
     }
 
@@ -64,6 +62,7 @@ class UserRequest extends FormRequest
     {
         $gender = fake()->randomElement(['male', 'female']);
         $fakePassword = fake()->password();
+
         return [
             'facility_code' => [
                 'description' => 'ID of facility library',

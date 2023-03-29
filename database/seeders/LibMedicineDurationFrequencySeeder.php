@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibMedicineDurationFrequency;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibMedicineDurationFrequencySeeder extends Seeder
@@ -22,7 +21,7 @@ class LibMedicineDurationFrequencySeeder extends Seeder
             ['code' => 'Q', 'desc' => 'Quarter', 'sequence' => 4],
             ['code' => 'Y', 'desc' => 'Year', 'sequence' => 5],
             ['code' => 'I', 'desc' => 'Indefinite', 'sequence' => 6],
-            ['code' => 'O', 'desc' => 'Others', 'sequence' => 7]
+            ['code' => 'O', 'desc' => 'Others', 'sequence' => 7],
         ], ['code']);
     }
 }

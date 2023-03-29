@@ -14,7 +14,7 @@ class ConsultPeRemarks extends Model
     protected $keyType = 'string';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function facility()
@@ -31,5 +31,4 @@ class ConsultPeRemarks extends Model
     {
         return $this->belongsTo(Patient::class);
     }
-
 }

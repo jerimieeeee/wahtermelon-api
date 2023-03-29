@@ -5,7 +5,6 @@ namespace App\Http\Requests\API\V1\MaternalCare;
 use App\Models\User;
 use App\Models\V1\Libraries\LibMcLocation;
 use App\Models\V1\Libraries\LibMcPresentation;
-use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -32,7 +31,7 @@ class ConsultMcPrenatalRequest extends FormRequest
     {
         $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->where('patient_mc_id', request()->patient_mc_id)->first();
 
-        list($weeks,$remainingDays) = get_aog($mc->lmp_date, request()->prenatal_date);
+        [$weeks, $remainingDays] = get_aog($mc->lmp_date, request()->prenatal_date);
         $trimester = get_trimester(request()->prenatal_date, $mc->trimester1_date, $mc->trimester2_date);
 
         return array_merge($this->validated(), [
@@ -65,7 +64,7 @@ class ConsultMcPrenatalRequest extends FormRequest
             'fhr' => 'numeric',
             'location_code' => 'required|exists:lib_mc_locations,code',
             'private' => 'boolean',
-            'remarks' => 'nullable'
+            'remarks' => 'nullable',
         ];
     }
 
@@ -97,32 +96,32 @@ class ConsultMcPrenatalRequest extends FormRequest
                 'example' => fake()->randomElement(LibMcLocation::pluck('code')->toArray()),
             ],
             'patient_height' => [
-                'description'  => 'Height of the patient',
-                'example' => fake()->numberBetween(100, 200)
+                'description' => 'Height of the patient',
+                'example' => fake()->numberBetween(100, 200),
             ],
             'patient_weight' => [
-                'description'  => 'Weight of the patient',
-                'example' => fake()->numberBetween(40, 200)
+                'description' => 'Weight of the patient',
+                'example' => fake()->numberBetween(40, 200),
             ],
             'bp_systolic' => [
-                'description'  => 'Blood pressure systolic',
-                'example' => fake()->numberBetween(100, 200)
+                'description' => 'Blood pressure systolic',
+                'example' => fake()->numberBetween(100, 200),
             ],
             'bp_diastolic' => [
-                'description'  => 'Blood pressure diastolic',
-                'example' => fake()->numberBetween(70, 100)
+                'description' => 'Blood pressure diastolic',
+                'example' => fake()->numberBetween(70, 100),
             ],
             'fundic_height' => [
-                'example' => fake()->numberBetween(0, 50)
+                'example' => fake()->numberBetween(0, 50),
             ],
             'fhr' => [
-                'example' => fake()->numberBetween(0, 50)
+                'example' => fake()->numberBetween(0, 50),
             ],
             'private' => [
-                'example' => fake()->boolean()
+                'example' => fake()->boolean(),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
         ];
     }

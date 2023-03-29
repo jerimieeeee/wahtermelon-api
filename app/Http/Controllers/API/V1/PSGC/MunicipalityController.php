@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Address Information
  *
  * APIs for managing libraries
+ *
  * @subgroup Municipalities
+ *
  * @subgroupDescription Philippine Standard Geographic Code (PSGC) Libraries for Municipalities.
  */
 class MunicipalityController extends Controller
@@ -24,9 +26,8 @@ class MunicipalityController extends Controller
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @queryParam include string Relationship to view: e.g. barangays Example: barangays
+     *
      * @responseFile 200 responses/municipalities.get.json
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
@@ -45,11 +46,10 @@ class MunicipalityController extends Controller
      * Display the specified Municipality resource.
      *
      * @urlParam municipality_code string Province code. Example: 012801000
+     *
      * @queryParam include string Relationship to view: e.g. barangays Example: barangays
+     *
      * @responseFile 200 responses/municipality.get.json
-     * @param Request $request
-     * @param Municipality $municipality
-     * @return MunicipalityResource
      */
     public function show(Request $request, Municipality $municipality): MunicipalityResource
     {

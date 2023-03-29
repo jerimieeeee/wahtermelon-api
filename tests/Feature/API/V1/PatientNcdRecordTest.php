@@ -9,12 +9,6 @@ use App\Models\V1\Libraries\LibNcdRecordTargetOrgan;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\NCD\PatientNcdRecord;
-use App\Models\V1\NCD\PatientNcdRecordCounselling;
-use App\Models\V1\NCD\PatientNcdRecordDiagnosis;
-use App\Models\V1\NCD\PatientNcdRecordTargetOrgan;
-use App\Models\V1\Patient\Patient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -35,16 +29,16 @@ class PatientNcdRecordTest extends TestCase
         $patientNcdRecord = PatientNcdRecord::factory()->make()->toArray();
         $response = $this->post('api/v1/non-communicable-disease/patient-record',
             [
-                "diagnosis_code" => [
+                'diagnosis_code' => [
                     fake()->randomElement(LibNcdRecordDiagnosis::pluck('id')->toArray()),
                     fake()->randomElement(LibNcdRecordDiagnosis::pluck('id')->toArray()),
                 ],
-                "counselling_code" => [
+                'counselling_code' => [
                     fake()->randomElement(LibNcdRecordCounselling::pluck('id')->toArray()),
                     fake()->randomElement(LibNcdRecordCounselling::pluck('id')->toArray()),
                     fake()->randomElement(LibNcdRecordCounselling::pluck('id')->toArray()),
                 ],
-                "target_organ_code" => [
+                'target_organ_code' => [
                     fake()->randomElement(LibNcdRecordTargetOrgan::pluck('id')->toArray()),
                 ],
                 'patient_ncd_id' => $patientncd['id'],

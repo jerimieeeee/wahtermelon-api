@@ -3,11 +3,10 @@
 namespace App\Models\V1\NCD;
 
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ConsultNcdRiskScreeningBloodLipid extends Model
 {
@@ -16,7 +15,7 @@ class ConsultNcdRiskScreeningBloodLipid extends Model
     protected $table = 'consult_ncd_risk_screening_lipid';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function getRouteKeyName()

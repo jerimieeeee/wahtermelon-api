@@ -35,8 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
-            if(config('app.env') != 'local'){
-                $token = substr($url, strpos($url, "verify/") + 7);
+            if (config('app.env') != 'local') {
+                $token = substr($url, strpos($url, 'verify/') + 7);
                 $url = config('app.frontend_url').'/#/verify;id='.$token;
             }
 
@@ -48,9 +48,10 @@ class AuthServiceProvider extends ServiceProvider
 
         ResetPassword::createUrlUsing(function ($user, string $token) {
             $url = 'http://wahtermelon.test/api/v1/reset-password?token=';
-            if(config('app.env')!= 'local'){
+            if (config('app.env') != 'local') {
                 $url = config('app.frontend_url').'/#/reset-password?token=';
             }
+
             return $url.$token.'&email='.urlencode($user->email);
         });
     }

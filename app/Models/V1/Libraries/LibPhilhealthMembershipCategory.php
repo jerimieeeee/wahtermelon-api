@@ -10,5 +10,6 @@ class LibPhilhealthMembershipCategory extends Model
     use HasFactory;
 
     public $primaryKey = 'id';
+
     public $timestamps = false;
 }

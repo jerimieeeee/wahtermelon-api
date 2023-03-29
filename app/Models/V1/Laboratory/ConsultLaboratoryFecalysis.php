@@ -11,11 +11,11 @@ use App\Models\V1\Libraries\LibLaboratoryStoolConsistency;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConsultLaboratoryFecalysis extends Model
@@ -25,7 +25,7 @@ class ConsultLaboratoryFecalysis extends Model
     protected $table = 'consult_laboratory_fecalysis';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

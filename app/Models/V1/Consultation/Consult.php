@@ -4,35 +4,31 @@ namespace App\Models\V1\Consultation;
 
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
-use App\Models\V1\Libraries\LibGeneralSurvey;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
-use DateTime;
-use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
 class Consult extends Model
 {
     use HasFactory, FilterByUser, FilterByFacility;
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
 
-    protected $table='consults';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $table = 'consults';
 
     protected $primaryKey = 'id';
-    protected $guarded = ['id',];
+
+    protected $guarded = ['id'];
 
     protected $casts = [
         'consult_date' => 'datetime:Y-m-d H:i:s',
@@ -51,7 +47,8 @@ class Consult extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function consultNotes(){
+    public function consultNotes()
+    {
         return $this->hasOne(ConsultNotes::class, 'consult_id', 'id');
     }
 
@@ -129,9 +126,9 @@ class Consult extends Model
                 patient_vitals.created_at,
                 patient_vitals.updated_at
             ')
-            ->join('patient_vitals', function($join){
-                $join->on(DB::raw("consults.patient_id"), "=", DB::raw("patient_vitals.patient_id"));
-                $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
+            ->join('patient_vitals', function ($join) {
+                $join->on(DB::raw('consults.patient_id'), '=', DB::raw('patient_vitals.patient_id'));
+                $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), '=', DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
             })
             ->orderBy('vitals_date', 'DESC');
     }
@@ -180,9 +177,9 @@ class Consult extends Model
                 patient_vitals.created_at,
                 patient_vitals.updated_at
             ')
-            ->join('patient_vitals', function($join){
-                $join->on(DB::raw("consults.patient_id"), "=", DB::raw("patient_vitals.patient_id"));
-                $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
+            ->join('patient_vitals', function ($join) {
+                $join->on(DB::raw('consults.patient_id'), '=', DB::raw('patient_vitals.patient_id'));
+                $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), '=', DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
             })
             ->orderBy('vitals_date', 'DESC');
     }
@@ -212,5 +209,4 @@ class Consult extends Model
     {
         return $this->hasManyThrough(ConsultNotesManagement::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
     }
-
 }

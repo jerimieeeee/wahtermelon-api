@@ -3,10 +3,9 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\ConsultNcdRiskQuestionnaire;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -22,9 +21,10 @@ class ConsultNcdRiskQuestionnaireTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
-        $ncdRisk = ConsultNcdRiskAssessment::factory()->make()->toArray();
-        $ncdRiskQuestionnaire = ConsultNcdRiskQuestionnaire::factory()->make()->toArray();
-        $response = $this->post('api/v1/non-communicable-disease/risk-questionnaire', $ncdRiskQuestionnaire);
+        $consult = Consult::factory()->create(['pt_group' => 'ncd'])->toArray();
+        $ncdRisk = ConsultNcdRiskAssessment::factory()->create()->toArray();
+        $ncdRiskQuestionnaire = ConsultNcdRiskQuestionnaire::factory()->create()->toArray();
+        $response = $this->post('api/v1/non-communicable-disease/risk-questionnaire', array_merge($ncdRisk, $ncdRiskQuestionnaire, ['consult_id' => $consult['id']]));
         $response->assertCreated();
     }
 }

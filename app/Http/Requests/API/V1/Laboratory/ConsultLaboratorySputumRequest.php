@@ -5,7 +5,6 @@ namespace App\Http\Requests\API\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryFindings;
-use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratorySputumCollection;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\PSGC\Facility;
@@ -52,45 +51,46 @@ class ConsultLaboratorySputumRequest extends FormRequest
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'SPTM']);
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'visual_appearance' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'reading' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'data_collection_code' => [
-                'example' => fake()->randomElement(LibLaboratorySputumCollection::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratorySputumCollection::pluck('code')->toArray()),
             ],
             'findings_code' => [
-                'example' => fake()->randomElement(LibLaboratoryFindings::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryFindings::pluck('code')->toArray()),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

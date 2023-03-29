@@ -33,7 +33,7 @@ class UserUpdateRequest extends FormRequest
             'birthdate' => 'required|date',
             'contact_number' => 'required|min:11|max:13', //'required|min:11|max:11|unique:users' . (request()->has('id') ? ',contact_number, ' . request()->input('id') : ''),
             //'username' => 'required|min:4|unique:users',// . (request()->has('id') ? ',username, ' . request()->input('id') : ''),
-            'email' => 'nullable|email|unique:users' . (request()->has('id') ? ',email, ' . auth()->user()->id : ''),
+            'email' => 'nullable|email|unique:users'.(request()->has('id') ? ',email, '.auth()->user()->id : ''),
             'is_active' => 'nullable|boolean',
             'photo_url' => 'nullable|url',
             'tin_number' => 'sometimes|max:9',
@@ -42,5 +42,4 @@ class UserUpdateRequest extends FormRequest
             'employer_code' => 'required|exists:lib_employers,code',
         ];
     }
-
 }

@@ -12,8 +12,6 @@ class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
      */
     public function index(Request $request)
     {
@@ -30,9 +28,6 @@ class CityController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param Request $request
-     * @param City  $city
      */
     public function show(Request $request, City $city)
     {

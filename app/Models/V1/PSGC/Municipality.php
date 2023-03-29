@@ -46,8 +46,6 @@ class Municipality extends Model
 
     /**
      * Province or District that this municipality belongs to.
-     *
-     * @return MorphTo
      */
     public function geographic(): MorphTo
     {

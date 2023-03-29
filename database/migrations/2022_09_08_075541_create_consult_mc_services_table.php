@@ -19,9 +19,9 @@ return new class extends Migration
             // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patient_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
-            $table->char('service_id',5);
-            $table->char('visit_type',10);
-            $table->char('visit_status',10);
+            $table->char('service_id', 5);
+            $table->char('visit_type', 10);
+            $table->char('visit_status', 10);
             $table->date('service_date');
             $table->unsignedInteger('service_qty')->nullable();
             $table->boolean('positive_result');

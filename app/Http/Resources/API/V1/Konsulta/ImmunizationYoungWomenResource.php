@@ -16,14 +16,14 @@ class ImmunizationYoungWomenResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pChildImmcode' => "",
-                'pYoungwImmcode' => !empty($this->young_women_vaccine) ? $this->young_women_vaccine : "999",
-                'pPregwImmcode' => "",
-                'pElderlyImmcode' => "",
-                'pOtherImm' => "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pChildImmcode' => '',
+                'pYoungwImmcode' => ! empty($this->young_women_vaccine) ? $this->young_women_vaccine : '999',
+                'pPregwImmcode' => '',
+                'pElderlyImmcode' => '',
+                'pOtherImm' => '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

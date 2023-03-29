@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('patient_vitals', function (Blueprint $table) {
-            $table->decimal('patient_chest',10,2)->nullable()->index()->after('patient_pulse_rate');
-            $table->decimal('patient_abdomen',10,2)->nullable()->index()->after('patient_chest');
+            $table->decimal('patient_chest', 10, 2)->nullable()->index()->after('patient_pulse_rate');
+            $table->decimal('patient_abdomen', 10, 2)->nullable()->index()->after('patient_chest');
             $table->unsignedInteger('patient_spo2')->nullable()->index()->after('patient_pulse_rate');
         });
     }

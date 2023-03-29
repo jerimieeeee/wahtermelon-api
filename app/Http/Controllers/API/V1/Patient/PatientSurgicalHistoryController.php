@@ -11,24 +11,29 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Patient History Management
  *
  * APIs for managing Patient History
+ *
  * @subgroup Surgical History
+ *
  * @subgroupDescription Patient Surgical History management.
  */
 class PatientSurgicalHistoryController extends Controller
 {
     /**
-    * Display a listing of the resource.
+     * Display a listing of the resource.
      *
      * @queryParam patient_id string Patient record to view.
      * @queryParam patient_id Identification code of the patient.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientSurgicalHistoryResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientSurgicalHistory paginate=15
-     * @param Request $request
+     *
      * @return ResourceCollection
      */
     public function index(Request $request)
@@ -36,7 +41,7 @@ class PatientSurgicalHistoryController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $patientSurgicalHistory = QueryBuilder::for(PatientSurgicalHistory::class)
-            ->when(isset($request->patient_id), function($q) use($request){
+            ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             });
 
@@ -51,14 +56,17 @@ class PatientSurgicalHistoryController extends Controller
      * Store a newly created Patient Surgical History resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Patient\PatientSurgicalHistoryResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientSurgicalHistory
-     * @param PatientSurgicalHistoryRequest $request
+     *
      * @return JsonResponse
      */
     public function store(PatientSurgicalHistoryRequest $request)
     {
         $data = PatientSurgicalHistory::create($request->validated());
+
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 
@@ -76,7 +84,6 @@ class PatientSurgicalHistoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -88,13 +95,14 @@ class PatientSurgicalHistoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param PatientSurgicalHistory $patientSurgicalHistory
      * @return JsonResponse
+     *
      * @throws Throwable
      */
     public function destroy(PatientSurgicalHistory $patientSurgicalHistory)
     {
         $patientSurgicalHistory->deleteOrFail();
+
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

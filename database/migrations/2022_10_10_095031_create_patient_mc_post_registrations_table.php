@@ -22,7 +22,7 @@ return new class extends Migration
             $table->dateTime('admission_date')->index();
             $table->dateTime('discharge_date')->index();
             $table->dateTime('delivery_date')->index();
-            $table->char('delivery_location_code',10)->index();
+            $table->char('delivery_location_code', 10)->index();
             $table->string('barangay_code')->index();
             $table->unsignedInteger('gravidity')->default(0);
             $table->unsignedInteger('parity')->default(0);
@@ -30,10 +30,10 @@ return new class extends Migration
             $table->unsignedInteger('preterm')->default(0);
             $table->unsignedInteger('abortion')->default(0);
             $table->unsignedInteger('livebirths')->default(0);
-            $table->char('outcome_code',10)->index();
+            $table->char('outcome_code', 10)->index();
             $table->boolean('healthy_baby');
-            $table->decimal('birth_weight',5,2);
-            $table->char('attendant_code',5)->index();
+            $table->decimal('birth_weight', 5, 2);
+            $table->char('attendant_code', 5)->index();
             $table->boolean('breastfeeding')->default(0);
             $table->date('breastfed_date')->nullable()->index();
             $table->boolean('end_pregnancy')->default('0');

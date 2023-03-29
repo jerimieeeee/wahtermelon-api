@@ -26,7 +26,9 @@ class ParsePSGCJsonFileCommand extends Command
      * @var string
      */
     protected $description = 'Parse PSGC Publication';
+
     protected $latest = '';
+
     /**
      * Execute the console command.
      *
@@ -38,15 +40,14 @@ class ParsePSGCJsonFileCommand extends Command
         $json = json_decode($file);
 
         foreach ($json as $key => $properties) {
-
             $data = [
-                'code'                  => $properties->code,
-                'psgc_10_digit_code'    => $properties->psgc10DigitCode,
-                'name'                  => $properties->name,
-                'level'                 => $properties->geographicLevel,
-                'city_class'            => $properties->cityClass,
-                'income_class'          => $properties->incomeClassification,
-                'urban_rural'           => $properties->urbanRural,
+                'code' => $properties->code,
+                'psgc_10_digit_code' => $properties->psgc10DigitCode,
+                'name' => $properties->name,
+                'level' => $properties->geographicLevel,
+                'city_class' => $properties->cityClass,
+                'income_class' => $properties->incomeClassification,
+                'urban_rural' => $properties->urbanRural,
             ];
 
             $data = array_filter($data);
@@ -57,6 +58,7 @@ class ParsePSGCJsonFileCommand extends Command
                 $this->$methods($data);
             }
         }
+
         return 0;
     }
 
@@ -85,7 +87,7 @@ class ParsePSGCJsonFileCommand extends Command
 
     private function processCity($data)
     {
-        $region   = Region::orderBy('id', 'desc')->first();
+        $region = Region::orderBy('id', 'desc')->first();
         $province = Province::orderBy('id', 'desc')->first();
         $district = District::orderBy('id', 'desc')->first();
 

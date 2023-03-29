@@ -9,7 +9,6 @@ use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,7 +32,7 @@ class PhilhealthCredential extends Model
 
     public function setFacilityNameAttribute($value)
     {
-        $this->attributes["facility_name"] = strtoupper($value);
+        $this->attributes['facility_name'] = strtoupper($value);
     }
 
     public function facility()

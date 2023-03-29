@@ -45,7 +45,7 @@ class PatientSurgicalHistoryRequest extends FormRequest
             'operation_date' => [
                 'description' => 'date of operation',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            ]
+            ],
         ];
     }
 }

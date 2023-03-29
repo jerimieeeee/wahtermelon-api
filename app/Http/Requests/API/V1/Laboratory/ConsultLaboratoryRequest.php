@@ -47,19 +47,19 @@ class ConsultLaboratoryRequest extends FormRequest
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
             'request_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'consult_id' => [
-                'example' => fake()->randomElement(Consult::pluck('id')->toArray())
+                'example' => fake()->randomElement(Consult::pluck('id')->toArray()),
             ],
             'lab_code' => [
                 'example' => fake()->randomElement(LibLaboratory::pluck('code')->toArray()),
             ],
             'recommendation_code' => [
-                'example' => fake()->randomElement(LibLaboratoryRecommendation::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryRecommendation::pluck('code')->toArray()),
             ],
             'request_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryRequestStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryRequestStatus::pluck('code')->toArray()),
             ],
         ];
     }

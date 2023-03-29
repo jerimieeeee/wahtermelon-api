@@ -11,10 +11,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Patient History Management
  *
  * APIs for managing Patient History
+ *
  * @subgroup Pregnancy History
+ *
  * @subgroupDescription Patient Pregnancy History management.
  */
 class PatientPregnancyHistoryController extends Controller
@@ -26,9 +29,11 @@ class PatientPregnancyHistoryController extends Controller
      * @queryParam patient_id Identification code of the patient.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientPregnancyHistoryResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientPregnancyHistory paginate=15
-     * @param Request $request
+     *
      * @return ResourceCollection
      */
     public function index(Request $request)
@@ -36,7 +41,7 @@ class PatientPregnancyHistoryController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $patientPregnancyHistory = QueryBuilder::for(PatientPregnancyHistory::class)
-            ->when(isset($request->patient_id), function($q) use($request){
+            ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
             // ->when(isset($request->post_partum_id), function($q) use($request){
@@ -59,8 +64,9 @@ class PatientPregnancyHistoryController extends Controller
      */
     public function store(PatientPregnancyHistoryRequest $request)
     {
-        $data = PatientPregnancyHistory::updateOrCreate(['patient_id' => $request['patient_id']],$request->validated());
+        $data = PatientPregnancyHistory::updateOrCreate(['patient_id' => $request['patient_id']], $request->validated());
         $data1 = new PatientPregnancyHistoryResource($data);
+
         return response()->json(['data' => $data1], 201);
     }
 
@@ -75,13 +81,13 @@ class PatientPregnancyHistoryController extends Controller
         $query = PatientPregnancyHistory::where('id', $patientPregnancyHistory->id);
         $patientPregnancyHistory = QueryBuilder::for($query)
             ->first();
+
         return new PatientPregnancyHistoryResource($patientPregnancyHistory);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

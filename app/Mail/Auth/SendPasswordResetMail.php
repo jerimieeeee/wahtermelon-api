@@ -3,7 +3,6 @@
 namespace App\Mail\Auth;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -14,7 +13,9 @@ class SendPasswordResetMail extends Mailable
     use Queueable, SerializesModels;
 
     public $token;
+
     public $email;
+
     /**
      * Create a new message instance.
      *
@@ -31,10 +32,12 @@ class SendPasswordResetMail extends Mailable
      *
      * @return $this
      */
-    public function build(){
+    public function build()
+    {
         $url = config('app.env') != 'local' ? config('app.frontend_url') : config('app.url');
+
         return $this->markdown('Email.resetPassword')->with([
-            'url' => $url . '?token=' . $this->token .'&email='.urlencode($this->email)
+            'url' => $url.'?token='.$this->token.'&email='.urlencode($this->email),
         ]);
     }
 

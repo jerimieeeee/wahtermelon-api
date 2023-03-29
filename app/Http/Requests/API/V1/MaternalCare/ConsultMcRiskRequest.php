@@ -5,8 +5,6 @@ namespace App\Http\Requests\API\V1\MaternalCare;
 use App\Models\User;
 use App\Models\V1\Libraries\LibMcRiskFactor;
 use App\Models\V1\MaternalCare\PatientMc;
-use App\Models\V1\MaternalCare\PatientMcPreRegistration;
-use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -42,6 +40,7 @@ class ConsultMcRiskRequest extends FormRequest
     public function bodyParameters()
     {
         $mcId = PatientMc::whereHas('preRegister')->inRandomOrder()->limit(1)->first();
+
         return [
             'patient_mc_id' => [
                 'description' => 'ID of maternal care record',
@@ -65,8 +64,8 @@ class ConsultMcRiskRequest extends FormRequest
             ],
             'date_detected' => [
                 'description' => 'Detected date of risk factor',
-                'example' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d'),
-            ]
+                'example' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d'),
+            ],
         ];
     }
 }

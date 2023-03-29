@@ -10,7 +10,10 @@ class LibPe extends Model
     use HasFactory;
 
     protected $primaryKey = 'pe_id';
+
     public $incrementing = 'false';
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

@@ -16,17 +16,17 @@ class PhysicalExaminationSpecificResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pSkinRem' => strtoupper($this->skin_remarks?? ""),
-                'pHeentRem' => strtoupper($this->heent_remarks?? ""),
-                'pChestRem' => strtoupper($this->chest_remarks?? ""),
-                'pHeartRem' => strtoupper($this->heart_remarks?? ""),
-                'pAbdomenRem' => strtoupper($this->abdomen_remarks?? ""),
-                'pNeuroRem' => strtoupper($this->neuro_remarks?? ""),
-                'pRectalRem' => strtoupper($this->rectal_remarks?? ""),
-                'pGuRem' => strtoupper($this->genitourinary_remarks?? ""),
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pSkinRem' => strtoupper($this->skin_remarks ?? ''),
+                'pHeentRem' => strtoupper($this->heent_remarks ?? ''),
+                'pChestRem' => strtoupper($this->chest_remarks ?? ''),
+                'pHeartRem' => strtoupper($this->heart_remarks ?? ''),
+                'pAbdomenRem' => strtoupper($this->abdomen_remarks ?? ''),
+                'pNeuroRem' => strtoupper($this->neuro_remarks ?? ''),
+                'pRectalRem' => strtoupper($this->rectal_remarks ?? ''),
+                'pGuRem' => strtoupper($this->genitourinary_remarks ?? ''),
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

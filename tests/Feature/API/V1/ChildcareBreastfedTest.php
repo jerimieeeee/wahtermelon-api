@@ -15,9 +15,9 @@ use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use Illuminate\Support\Str;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 
 class ChildcareBreastfedTest extends TestCase
 {
@@ -26,7 +26,6 @@ class ChildcareBreastfedTest extends TestCase
      *
      * @return void
      */
-
     public function test_childcare_breastfed_can_be_created()
     {
         Passport::actingAs(
@@ -49,8 +48,8 @@ class ChildcareBreastfedTest extends TestCase
             'remember_token' => Str::random(10),
         ]);
 
-            //Create Patient
-            $response = $this->post('api/v1/patient', [
+        //Create Patient
+        $response = $this->post('api/v1/patient', [
             'facility_id' => fake()->randomElement(Facility::pluck('id')->toArray()),
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName($gender),
@@ -58,7 +57,7 @@ class ChildcareBreastfedTest extends TestCase
             'suffix_name' => $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : 'NA',
             'gender' => substr(Str::ucfirst($gender), 0, 1),
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'mothers_name' => fake()->firstName('female') . ' ' . $middle,
+            'mothers_name' => fake()->firstName('female').' '.$middle,
             'mobile_number' => fake()->phoneNumber(),
             'pwd_type_code' => fake()->randomElement(LibPwdType::pluck('code')->toArray()),
             'indegenous_flag' => fake()->boolean,
@@ -70,7 +69,7 @@ class ChildcareBreastfedTest extends TestCase
             'consent_flag' => fake()->boolean,
         ]);
 
-             $response = $this->post('api/v1/child-care/cc-records', [
+        $response = $this->post('api/v1/child-care/cc-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
@@ -79,11 +78,11 @@ class ChildcareBreastfedTest extends TestCase
             'mothers_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'admission_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'discharge_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'nbs_filter' => fake()->regexify('[0-9]{10}')
+            'nbs_filter' => fake()->regexify('[0-9]{10}'),
         ]);
 
-            //Create Bfed
-            $response = $this->post('api/v1/child-care/cc-breastfed', [
+        //Create Bfed
+        $response = $this->post('api/v1/child-care/cc-breastfed', [
             'patient_ccdev_id' => fake()->randomElement(PatientCcdev::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -110,6 +109,4 @@ class ChildcareBreastfedTest extends TestCase
         $response = $this->get("api/v1/child-care/cc-breastfed/$id");
         $response->assertOk();
     }
-
-
 }

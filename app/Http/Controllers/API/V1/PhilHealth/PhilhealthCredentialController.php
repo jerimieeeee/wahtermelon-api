@@ -13,10 +13,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Settings
  *
  * APIs for managing philhealth information
+ *
  * @subgroup Philhealth Credentials
+ *
  * @subgroupDescription Philhealth credentials.
  */
 class PhilhealthCredentialController extends Controller
@@ -28,10 +31,10 @@ class PhilhealthCredentialController extends Controller
      * @queryParam filter[program_code] string Program to view. Example: kp
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\PhilHealth\PhilhealthCredentialResource
+     *
      * @apiResourceModel App\Models\V1\PhilHealth\PhilhealthCredential paginate=15
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
@@ -51,12 +54,12 @@ class PhilhealthCredentialController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PhilhealtCredentialRequest $request
      * @return JsonResponse
      */
     public function store(PhilhealtCredentialRequest $request)
     {
         $data = PhilhealthCredential::updateOrCreate(['program_code' => $request->program_code], $request->all());
+
         return response()->json(['data' => new PhilhealthCredentialResource($data), 'status' => 'Success'], 201);
     }
 
@@ -74,7 +77,6 @@ class PhilhealthCredentialController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

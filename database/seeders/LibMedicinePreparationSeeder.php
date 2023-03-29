@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibMedicinePreparation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibMedicinePreparationSeeder extends Seeder
@@ -24,7 +23,7 @@ class LibMedicinePreparationSeeder extends Seeder
             ['code' => 'SACH', 'desc' => 'Sachet'],
             ['code' => 'SUSP', 'desc' => 'Suspension'],
             ['code' => 'TAB', 'desc' => 'Tablet'],
-            ['code' => 'VIAL', 'desc' => 'Vial']
+            ['code' => 'VIAL', 'desc' => 'Vial'],
         ], ['code']);
     }
 }

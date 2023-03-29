@@ -9,15 +9,17 @@ use App\Models\V1\MaternalCare\ConsultMcService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
+ *
  * @subgroup Services
+ *
  * @subgroupDescription Service management.
  */
 class ConsultMcServiceController extends Controller
@@ -28,10 +30,10 @@ class ConsultMcServiceController extends Controller
      * @queryParam filter[patient_mc_id] string Filter by patient_mc_id.
      * @queryParam filter[service_id] string Filter by service_id.
      * @queryParam filter[visit_status] string Filter by visit_status e.g. Prenatal or Postpartum. Example: Prenatal
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\MaternalCare\ConsultMcServiceResource
+     *
      * @apiResourceModel App\Models\V1\MaternalCare\ConsultMcService
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
@@ -40,6 +42,7 @@ class ConsultMcServiceController extends Controller
             ->with('service')
             ->allowedFilters(['patient_mc_id', 'service_id', 'visit_status'])
             ->get();
+
         return ConsultMcServiceResource::collection($service);
     }
 
@@ -47,10 +50,10 @@ class ConsultMcServiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\MaternalCare\ConsultMcServiceResource
+     *
      * @apiResourceModel App\Models\V1\MaternalCare\ConsultMcService
-     * @param ConsultMcServiceRequest $request
-     * @return JsonResponse
      */
     public function store(ConsultMcServiceRequest $request): JsonResponse
     {
@@ -62,6 +65,7 @@ class ConsultMcServiceController extends Controller
             ],
             $request->validated()
         );
+
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 
@@ -78,14 +82,11 @@ class ConsultMcServiceController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param ConsultMcServiceRequest $request
-     * @param ConsultMcService $mcService
-     * @return JsonResponse
      */
     public function update(ConsultMcServiceRequest $request, ConsultMcService $mcService): JsonResponse
     {
         $mcService->update($request->validated());
+
         return response()->json(['data' => $mcService, 'status' => 'Success'], 200);
     }
 

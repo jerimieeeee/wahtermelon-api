@@ -15,34 +15,34 @@ class NonCommunicableDiseaseResource extends JsonResource
      */
     public function toArray($request)
     {
-        if(!empty($this->id)){
+        if (! empty($this->id)) {
             $totalCholesterol = 0;
             $age = 40;
-            if($this->location == 2) {
-                $totalCholesterol = round($this->riskScreeningLipid->total_cholesterol?? 0);
-                if($totalCholesterol > 8){
+            if ($this->location == 2) {
+                $totalCholesterol = round($this->riskScreeningLipid->total_cholesterol ?? 0);
+                if ($totalCholesterol > 8) {
                     $totalCholesterol = 8;
-                } elseif($totalCholesterol>0 && $totalCholesterol<=4){
+                } elseif ($totalCholesterol > 0 && $totalCholesterol <= 4) {
                     $totalCholesterol = 4;
                 }
             }
-            if($this->smoking = 1) {
+            if ($this->smoking = 1) {
                 $smoking = 0;
-                if($this->smoking = 2){
+                if ($this->smoking = 2) {
                     $smoking = 0;
-                } elseif($this->smoking = 3 && $this->smoking = 4){
+                } elseif ($this->smoking = 3 && $this->smoking = 4) {
                     $smoking = 1;
                 }
             }
-            if($this->presence_diabetes = 'N') {
+            if ($this->presence_diabetes = 'N') {
                 $presence_diabetes = 0;
-                if($this->presence_diabetes = 'Y'){
+                if ($this->presence_diabetes = 'Y') {
                     $presence_diabetes = 1;
-                } elseif($this->smoking = 'X'){
+                } elseif ($this->smoking = 'X') {
                     $presence_diabetes = 0;
                 }
             }
-            if($this->age >= 20 && $this->age <= 49) {
+            if ($this->age >= 20 && $this->age <= 49) {
                 $age = 40;
                 if ($this->age >= 50 && $this->age <= 59) {
                     $age = 50;
@@ -52,18 +52,18 @@ class NonCommunicableDiseaseResource extends JsonResource
                     $age = 70;
                 }
             }
-            if($this->avg_systolic<=139) {
+            if ($this->avg_systolic <= 139) {
                 $sbp = 120;
-            } else if($this->avg_systolic>=140 && $this->avg_systolic<=159) {
+            } elseif ($this->avg_systolic >= 140 && $this->avg_systolic <= 159) {
                 $sbp = 140;
-            } else if($this->avg_systolic>=160 && $this->avg_systolic<=179) {
+            } elseif ($this->avg_systolic >= 160 && $this->avg_systolic <= 179) {
                 $sbp = 160;
-            } else if($this->avg_systolic>=180) {
+            } elseif ($this->avg_systolic >= 180) {
                 $sbp = 180;
             } else {
                 $sbp = 'N/A';
             }
-            if($this->location == 2) {
+            if ($this->location == 2) {
                 $location = 'facility';
             } else {
                 $location = 'community';
@@ -82,42 +82,42 @@ class NonCommunicableDiseaseResource extends JsonResource
 
         return [
             '_attributes' => [
-                'pQid1_Yn' => $this->high_fat??  "",
-                'pQid2_Yn' => $this->intake_vegetables??  "",
-                'pQid3_Yn' => $this->intake_fruits??  "",
-                'pQid4_Yn' => $this->physical_activity??  "",
-                'pQid5_Ynx' => $this->presence_diabetes??  "",
-                'pQid6_Yn' => $this->polyphagia??  "",
-                'pQid7_Yn' => $this->polydipsia??  "",
-                'pQid8_Yn' => $this->polyuria??  "",
-                'pQid9_Yn' => $this->riskQuestionnaire->question1??  "",
-                'pQid10_Yn' => $this->riskQuestionnaire->question2??  "",
-                'pQid11_Yn' => $this->riskQuestionnaire->question3??  "",
-                'pQid12_Yn' => $this->riskQuestionnaire->question4??  "",
-                'pQid13_Yn' => $this->riskQuestionnaire->question5??  "",
-                'pQid14_Yn' => $this->riskQuestionnaire->question6??  "",
-                'pQid15_Yn' => $this->riskQuestionnaire->question7??  "",
-                'pQid16_Yn' => $this->riskQuestionnaire->question8??  "",
-                'pQid17_Abcde' => $riskStrat->konsulta_risk_stratifcation_id?? "",
-                'pQid18_Yn' => $this->diabetes_medications??  "",
-                'pQid19_Yn' => $this->riskScreeningGlucose->raised_blood_glucose??  "",
-                'pQid19_Fbsmg' => $this->riskScreeningGlucose->fbs??  "",
-                'pQid19_Fbsmmol' => "",
-                'pQid19_Fbsdate' => !empty($this->riskScreeningGlucose->date_taken) ? $this->riskScreeningGlucose->date_taken?->format('Y-m-d') :  "",
-                'pQid20_Yn' => $this->riskScreeningLipid->raised_blood_lipid??  "",
-                'pQid20_Choleval' => $this->riskScreeningLipid->total_cholesterol??  "",
-                'pQid20_Choledate' => !empty($this->riskScreeningLipid->date_taken) ? $this->riskScreeningLipid->date_taken?->format('Y-m-d') : "",
-                'pQid21_Yn' => $this->riskScreeningKetones->presence_of_urine_ketone??  "",
-                'pQid21_Ketonval' => $this->riskScreeningKetones->ketone??  "",
-                'pQid21_Ketondate' => !empty($this->riskScreeningKetones->date_taken) ? $this->riskScreeningKetones->date_taken?->format('Y-m-d') : "",
-                'pQid22_Yn' => $this->riskScreeningProtein->presence_of_urine_protein??  "",
-                'pQid22_Proteinval' => $this->riskScreeningProtein->protein??  "",
-                'pQid22_Proteindate' => !empty($this->riskScreeningProtein->date_taken) ? $this->riskScreeningProtein->date_taken?->format('Y-m-d') : "",
-                'pQid23_Yn' => $this->riskQuestionnaire->angina_heart_attack??  "",
-                'pQid24_Yn' => $this->riskQuestionnaire->stroke_tia??  "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pQid1_Yn' => $this->high_fat ?? '',
+                'pQid2_Yn' => $this->intake_vegetables ?? '',
+                'pQid3_Yn' => $this->intake_fruits ?? '',
+                'pQid4_Yn' => $this->physical_activity ?? '',
+                'pQid5_Ynx' => $this->presence_diabetes ?? '',
+                'pQid6_Yn' => $this->polyphagia ?? '',
+                'pQid7_Yn' => $this->polydipsia ?? '',
+                'pQid8_Yn' => $this->polyuria ?? '',
+                'pQid9_Yn' => $this->riskQuestionnaire->question1 ?? '',
+                'pQid10_Yn' => $this->riskQuestionnaire->question2 ?? '',
+                'pQid11_Yn' => $this->riskQuestionnaire->question3 ?? '',
+                'pQid12_Yn' => $this->riskQuestionnaire->question4 ?? '',
+                'pQid13_Yn' => $this->riskQuestionnaire->question5 ?? '',
+                'pQid14_Yn' => $this->riskQuestionnaire->question6 ?? '',
+                'pQid15_Yn' => $this->riskQuestionnaire->question7 ?? '',
+                'pQid16_Yn' => $this->riskQuestionnaire->question8 ?? '',
+                'pQid17_Abcde' => $riskStrat->konsulta_risk_stratifcation_id ?? '',
+                'pQid18_Yn' => $this->diabetes_medications ?? '',
+                'pQid19_Yn' => $this->riskScreeningGlucose->raised_blood_glucose ?? '',
+                'pQid19_Fbsmg' => $this->riskScreeningGlucose->fbs ?? '',
+                'pQid19_Fbsmmol' => '',
+                'pQid19_Fbsdate' => ! empty($this->riskScreeningGlucose->date_taken) ? $this->riskScreeningGlucose->date_taken?->format('Y-m-d') : '',
+                'pQid20_Yn' => $this->riskScreeningLipid->raised_blood_lipid ?? '',
+                'pQid20_Choleval' => $this->riskScreeningLipid->total_cholesterol ?? '',
+                'pQid20_Choledate' => ! empty($this->riskScreeningLipid->date_taken) ? $this->riskScreeningLipid->date_taken?->format('Y-m-d') : '',
+                'pQid21_Yn' => $this->riskScreeningKetones->presence_of_urine_ketone ?? '',
+                'pQid21_Ketonval' => $this->riskScreeningKetones->ketone ?? '',
+                'pQid21_Ketondate' => ! empty($this->riskScreeningKetones->date_taken) ? $this->riskScreeningKetones->date_taken?->format('Y-m-d') : '',
+                'pQid22_Yn' => $this->riskScreeningProtein->presence_of_urine_protein ?? '',
+                'pQid22_Proteinval' => $this->riskScreeningProtein->protein ?? '',
+                'pQid22_Proteindate' => ! empty($this->riskScreeningProtein->date_taken) ? $this->riskScreeningProtein->date_taken?->format('Y-m-d') : '',
+                'pQid23_Yn' => $this->riskQuestionnaire->angina_heart_attack ?? '',
+                'pQid24_Yn' => $this->riskQuestionnaire->stroke_tia ?? '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

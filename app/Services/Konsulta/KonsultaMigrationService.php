@@ -18,17 +18,18 @@ class KonsultaMigrationService
     public function saveProfile(Collection $collection)
     {
         //return $collection;
-         $collection->map(function ($value) {
-             collect($value->ENLISTMENTS)->map(function ($enlistment) use($value){
-                if(is_array($enlistment)){
-                     collect($enlistment)->map(function($enlistment) use($value){
+        $collection->map(function ($value) {
+            collect($value->ENLISTMENTS)->map(function ($enlistment) use ($value) {
+                if (is_array($enlistment)) {
+                    collect($enlistment)->map(function ($enlistment) use ($value) {
                         $this->saveFirstPatientEncounter($enlistment, $value);
                     });
                 } else {
-                     $this->saveFirstPatientEncounter($enlistment, $value);
+                    $this->saveFirstPatientEncounter($enlistment, $value);
                 }
             });
         });
+
         return $collection;
     }
 
@@ -47,11 +48,8 @@ class KonsultaMigrationService
     }
 
     /**
-     * @param $enlistment
-     * @param $value
      * @param $profile
      * @param $patient
-     * @return mixed
      */
     public function saveFirstPatientEncounter($enlistment, $value): mixed
     {
@@ -59,17 +57,15 @@ class KonsultaMigrationService
             'last_name' => $enlistment->pPatientLname,
             'first_name' => $enlistment->pPatientFname,
             'middle_name' => $enlistment->pPatientMname,
-            'suffix_name' => $this->getSuffixName($enlistment->pPatientExtname) ?? "NA",
+            'suffix_name' => $this->getSuffixName($enlistment->pPatientExtname) ?? 'NA',
             'gender' => $enlistment->pPatientSex,
             'birthdate' => $enlistment->pPatientDob,
             'mobile_number' => $enlistment->pPatientMobileNo,
             'consent_flag' => true,
         ]);
 
-
-
-        if(is_array($value->PROFILING->PROFILE)){
-            return collect($value->PROFILING)->map(function($profiling) use($patient, $enlistment, $value){
+        if (is_array($value->PROFILING->PROFILE)) {
+            return collect($value->PROFILING)->map(function ($profiling) use ($patient, $enlistment, $value) {
                 $profile = collect($profiling)->where('pHciCaseNo', $patient->case_number)->first();
                 $this->saveEnlistment($patient, $enlistment, $value, $profile);
                 $this->saveMedHistory($profile, $patient, 'MEDHISTS', 'MHSPECIFICS');
@@ -78,10 +74,10 @@ class KonsultaMigrationService
                 $this->saveImmunization($profile, $patient);
                 $this->savePhysicalExam($profile, $patient);
                 $this->saveDiagnostic($value, $patient, $profile);
-                return $this->saveConsultation($value, $profile, $patient);
 
+                return $this->saveConsultation($value, $profile, $patient);
             });
-        } else{
+        } else {
             $profile = collect($value->PROFILING)->where('pHciCaseNo', $patient->case_number)->first();
             $this->saveEnlistment($patient, $enlistment, $value, $profile);
             $this->saveMedHistory($profile, $patient, 'MEDHISTS', 'MHSPECIFICS');
@@ -90,50 +86,38 @@ class KonsultaMigrationService
             $this->saveImmunization($profile, $patient);
             $this->savePhysicalExam($profile, $patient);
             $this->saveDiagnostic($value, $patient, $profile);
+
             return $this->saveConsultation($value, $profile, $patient);
         }
 
         return $patient;
     }
 
-    /**
-     * @param mixed $profile
-     * @param $patient
-     * @param $dataGroup
-     * @param $dataGroupSpecific
-     */
     public function saveMedHistory(mixed $profile, $patient, $dataGroup, $dataGroupSpecific)
     {
         collect($profile->$dataGroup)->map(function ($history) use ($patient, $profile, $dataGroup, $dataGroupSpecific) {
             $category = 1;
-            if($dataGroup != 'MEDHISTS'){
+            if ($dataGroup != 'MEDHISTS') {
                 $category = 2;
             }
             if (is_array($history)) {
-                collect($history)->map(function ($history) use ($patient, $profile, $dataGroup, $dataGroupSpecific, $category) {
+                collect($history)->map(function ($history) use ($patient, $profile, $dataGroupSpecific, $category) {
                     //$group = Str::singular($dataGroup);
-                    if(!empty($history->pMdiseaseCode)) {
+                    if (! empty($history->pMdiseaseCode)) {
                         $specific = Str::singular($dataGroupSpecific);
                         $remarks = collect($profile->$dataGroupSpecific->$specific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
-                        $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc ?? ""]);
+                        $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc ?? '']);
                     }
                 });
             } else {
-                if(!empty($history->pMdiseaseCode)) {
+                if (! empty($history->pMdiseaseCode)) {
                     $remarks = collect($profile->$dataGroupSpecific)->where('pMdiseaseCode', $history->pMdiseaseCode)->first();
-                    $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc ?? ""]);
+                    $patient->pastPatientHistory()->updateOrCreate(['patient_id' => $patient->id, 'medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category], ['medical_history_id' => $this->getMedicalHistory($history->pMdiseaseCode)->id, 'category' => $category, 'remarks' => $remarks->pSpecificDesc ?? '']);
                 }
             }
         });
     }
 
-    /**
-     * @param $patient
-     * @param $enlistment
-     * @param $value
-     * @param $profile
-     * @return void
-     */
     public function saveEnlistment($patient, $enlistment, $value, $profile): void
     {
         $patient->philhealth()->updateOrCreate(
@@ -156,55 +140,55 @@ class KonsultaMigrationService
                 'member_last_name' => $enlistment->pPatientType == 'DD' ? $enlistment->pMemLname : null,
                 'member_first_name' => $enlistment->pPatientType == 'DD' ? $enlistment->pMemFname : null,
                 'member_middle_name' => $enlistment->pPatientType == 'DD' ? $enlistment->pMemFname : null,
-                'member_suffix_name' => $enlistment->pPatientType == 'DD' ? $this->getSuffixName($enlistment->pPatientExtname) ?? "NA" : null,
+                'member_suffix_name' => $enlistment->pPatientType == 'DD' ? $this->getSuffixName($enlistment->pPatientExtname) ?? 'NA' : null,
                 'member_birthdate' => $enlistment->pPatientType == 'DD' ? $enlistment->pMemDob : null,
                 'member_gender' => $enlistment->pPatientType == 'DD' ? $enlistment->pPatientSex : null,
                 'authorization_transaction_code' => $profile->pATC,
                 'walkedin_status' => $profile->pIsWalkedIn == 'N' ? 0 : 1,
             ]);
 
-        $patient->update(['blood_type_code' => $profile->BLOODTYPE->pBloodType?? "NA"]);
+        $patient->update(['blood_type_code' => $profile->BLOODTYPE->pBloodType ?? 'NA']);
 
         $socialHistory = $profile->SOCHIST;
-        if(!empty($socialHistory->pIsSmoker)){
+        if (! empty($socialHistory->pIsSmoker)) {
             $data = [
                 'smoking' => $socialHistory->pIsSmoker,
                 'alcohol' => $socialHistory->pIsAdrinker,
                 'illicit_drugs' => $socialHistory->pIllDrugUser,
                 'sexually_active' => $socialHistory->pIsSexuallyActive,
             ];
-            !empty($socialHistory->pNoCigpk) ? $data['pack_per_year'] = $socialHistory->pNoCigpk : null;
-            !empty($socialHistory->pNoBottles) ? $data['bottles_per_day'] = $socialHistory->pNoBottles : null;
+            ! empty($socialHistory->pNoCigpk) ? $data['pack_per_year'] = $socialHistory->pNoCigpk : null;
+            ! empty($socialHistory->pNoBottles) ? $data['bottles_per_day'] = $socialHistory->pNoBottles : null;
             $patient->socialHistory()->updateOrCreate(['patient_id' => $patient->id], $data);
         }
         $menstrualHistory = $profile->MENSHIST;
-        if($menstrualHistory->pIsApplicable == 'Y'){
+        if ($menstrualHistory->pIsApplicable == 'Y') {
             $data = [
                 'menarche' => $menstrualHistory->pMenarchePeriod,
                 'lmp' => $menstrualHistory->pLastMensPeriod,
                 'method' => $menstrualHistory->pBirthCtrlMethod,
                 'menopause' => $menstrualHistory->pIsMenopause == 'Y' ? 1 : 0,
             ];
-            if(!empty($menstrualHistory->pPeriodDuration)){
+            if (! empty($menstrualHistory->pPeriodDuration)) {
                 $data['period_duration'] = $menstrualHistory->pPeriodDuration;
             }
-            if(!empty($menstrualHistory->pMensInterval)){
+            if (! empty($menstrualHistory->pMensInterval)) {
                 $data['cycle'] = $menstrualHistory->pMensInterval;
             }
-            if(!empty($menstrualHistory->pPadsPerDay)){
+            if (! empty($menstrualHistory->pPadsPerDay)) {
                 $data['pads_per_day'] = $menstrualHistory->pPadsPerDay;
             }
-            if(!empty($menstrualHistory->pOnsetSexIc)){
+            if (! empty($menstrualHistory->pOnsetSexIc)) {
                 $data['onset_sexual_intercourse'] = $menstrualHistory->pOnsetSexIc;
             }
-            if(!empty($menstrualHistory->pMenopauseAge)){
+            if (! empty($menstrualHistory->pMenopauseAge)) {
                 $data['menopause_age'] = $menstrualHistory->pMenopauseAge;
             }
             $patient->menstrualHistory()->updateOrCreate(['patient_id' => $patient->id], $data);
         }
 
         $pregnancyHistory = $profile->PREGHIST;
-        if($pregnancyHistory->pIsApplicable == 'Y'){
+        if ($pregnancyHistory->pIsApplicable == 'Y') {
             $data = [
                 'gravidity' => $pregnancyHistory->pPregCnt,
                 'parity' => $pregnancyHistory->pDeliveryCnt,
@@ -221,28 +205,28 @@ class KonsultaMigrationService
 
         $patientVitals = $profile->PEPERT;
         $data = [
-            'vitals_date' => $profile->pProfDate
+            'vitals_date' => $profile->pProfDate,
         ];
-        !empty($patientVitals->pSystolic) ? $data['bp_systolic'] = $patientVitals->pSystolic : null;
-        !empty($patientVitals->pDiastolic) ? $data['bp_diastolic'] = $patientVitals->pDiastolic : null;
-        !empty($patientVitals->pHr) ? $data['patient_heart_rate'] = $patientVitals->pHr : null;
-        !empty($patientVitals->pRr) ? $data['patient_respiratory_rate'] = $patientVitals->pRr : null;
-        !empty($patientVitals->pTemp) ? $data['patient_temp'] = $patientVitals->pTemp : null;
-        !empty($patientVitals->pHeight) ? $data['patient_height'] = $patientVitals->pHeight : null;
-        !empty($patientVitals->pWeight) ? $data['patient_weight'] = $patientVitals->pWeight : null;
-        !empty($patientVitals->pBMI) ? $data['patient_bmi'] = $patientVitals->pBMI : null;
-        !empty($patientVitals->pLeftVision) ? $data['patient_left_vision_acuity'] = $patientVitals->pLeftVision : null;
-        !empty($patientVitals->pRightVision) ? $data['patient_right_vision_acuity'] = $patientVitals->pRightVision : null;
-        !empty($patientVitals->pHeadCirc) ? $data['patient_head_circumference'] = $patientVitals->pHeadCirc : null;
-        !empty($patientVitals->pSkinfoldThickness) ? $data['patient_skinfold_thickness'] = $patientVitals->pSkinfoldThickness : null;
-        !empty($patientVitals->pWaist) ? $data['patient_waist'] = $patientVitals->pWaist : null;
-        !empty($patientVitals->pHip) ? $data['patient_hip'] = $patientVitals->pHip : null;
-        !empty($patientVitals->pLimbs) ? $data['patient_limbs'] = $patientVitals->pLimbs : null;
-        !empty($patientVitals->pMidUpperArmCirc) ? $data['patient_muac'] = $patientVitals->pMidUpperArmCirc : null;
+        ! empty($patientVitals->pSystolic) ? $data['bp_systolic'] = $patientVitals->pSystolic : null;
+        ! empty($patientVitals->pDiastolic) ? $data['bp_diastolic'] = $patientVitals->pDiastolic : null;
+        ! empty($patientVitals->pHr) ? $data['patient_heart_rate'] = $patientVitals->pHr : null;
+        ! empty($patientVitals->pRr) ? $data['patient_respiratory_rate'] = $patientVitals->pRr : null;
+        ! empty($patientVitals->pTemp) ? $data['patient_temp'] = $patientVitals->pTemp : null;
+        ! empty($patientVitals->pHeight) ? $data['patient_height'] = $patientVitals->pHeight : null;
+        ! empty($patientVitals->pWeight) ? $data['patient_weight'] = $patientVitals->pWeight : null;
+        ! empty($patientVitals->pBMI) ? $data['patient_bmi'] = $patientVitals->pBMI : null;
+        ! empty($patientVitals->pLeftVision) ? $data['patient_left_vision_acuity'] = $patientVitals->pLeftVision : null;
+        ! empty($patientVitals->pRightVision) ? $data['patient_right_vision_acuity'] = $patientVitals->pRightVision : null;
+        ! empty($patientVitals->pHeadCirc) ? $data['patient_head_circumference'] = $patientVitals->pHeadCirc : null;
+        ! empty($patientVitals->pSkinfoldThickness) ? $data['patient_skinfold_thickness'] = $patientVitals->pSkinfoldThickness : null;
+        ! empty($patientVitals->pWaist) ? $data['patient_waist'] = $patientVitals->pWaist : null;
+        ! empty($patientVitals->pHip) ? $data['patient_hip'] = $patientVitals->pHip : null;
+        ! empty($patientVitals->pLimbs) ? $data['patient_limbs'] = $patientVitals->pLimbs : null;
+        ! empty($patientVitals->pMidUpperArmCirc) ? $data['patient_muac'] = $patientVitals->pMidUpperArmCirc : null;
 
         $patient->patientVitals()->updateOrCreate(['patient_id' => $patient->id], $data);
 
-        if(isset($profile->PEGENSURVEY) && !empty($profile->PEGENSURVEY->pGenSurveyId)){
+        if (isset($profile->PEGENSURVEY) && ! empty($profile->PEGENSURVEY->pGenSurveyId)) {
             $consult = Consult::updateOrCreate([
                 'patient_id' => $patient->id,
                 'consult_date' => $profile->pProfDate,
@@ -254,24 +238,19 @@ class KonsultaMigrationService
                     'complaint' => 'Health Screening and Assessment',
                     'history' => 'Health Screening and Assessment',
                     'general_survey_code' => $profile->PEGENSURVEY->pGenSurveyId,
-                    'general_survey_remarks' => $profile->PEGENSURVEY->pGenSurveyRem
+                    'general_survey_remarks' => $profile->PEGENSURVEY->pGenSurveyRem,
                 ]
             );
             $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => 'OTHERS']);
         }
-
     }
 
-    /**
-     * @param mixed $profile
-     * @param $patient
-     */
     public function saveSurgicalHistory(mixed $profile, $patient)
     {
-        collect($profile->SURGHISTS)->map(function ($history) use ($patient, $profile) {
+        collect($profile->SURGHISTS)->map(function ($history) use ($patient) {
             if (is_array($history)) {
-                collect($history)->map(function ($history) use ($patient, $profile) {
-                    if(!empty($history->pSurgDesc)){
+                collect($history)->map(function ($history) use ($patient) {
+                    if (! empty($history->pSurgDesc)) {
                         $patient->surgicalHistory()->updateOrCreate(
                             [
                                 'operation' => $history->pSurgDesc,
@@ -281,7 +260,7 @@ class KonsultaMigrationService
                     }
                 });
             } else {
-                if(!empty($history->pSurgDesc)){
+                if (! empty($history->pSurgDesc)) {
                     $patient->surgicalHistory()->updateOrCreate(
                         [
                             'operation' => $history->pSurgDesc,
@@ -293,15 +272,11 @@ class KonsultaMigrationService
         });
     }
 
-    /**
-     * @param mixed $profile
-     * @param $patient
-     */
     public function saveImmunization(mixed $profile, $patient)
     {
-        return collect($profile->IMMUNIZATIONS)->map(function ($immunization) use ($patient, $profile) {
+        return collect($profile->IMMUNIZATIONS)->map(function ($immunization) use ($patient) {
             if (is_array($immunization)) {
-                return collect($immunization)->map(function ($immunization) use ($patient, $profile) {
+                return collect($immunization)->map(function ($immunization) use ($patient) {
                     //if(!empty($immunization->pChildImmcode) && $immunization->pChildImmcode != '999'){
                     $this->immunization($immunization, $patient);
 
@@ -313,15 +288,10 @@ class KonsultaMigrationService
         });
     }
 
-    /**
-     * @param $immunization
-     * @param $patient
-     * @return void
-     */
     public function immunization($immunization, $patient): void
     {
         $vaccine_id = '';
-        if (!empty($immunization->pChildImmcode) && $immunization->pChildImmcode != '999') {
+        if (! empty($immunization->pChildImmcode) && $immunization->pChildImmcode != '999') {
             switch ($immunization->pChildImmcode) {
                 case 'C01':
                     $vaccine_id = 'BCG';
@@ -354,7 +324,7 @@ class KonsultaMigrationService
                     break;
             }
         }
-        if (!empty($immunization->pYoungwImmcode) && $immunization->pYoungwImmcode != '999') {
+        if (! empty($immunization->pYoungwImmcode) && $immunization->pYoungwImmcode != '999') {
             switch ($immunization->pYoungwImmcode) {
                 case 'Y01':
                     $vaccine_id = 'HPV';
@@ -366,7 +336,7 @@ class KonsultaMigrationService
                     break;
             }
         }
-        if (!empty($immunization->pPregwImmcode) && $immunization->pPregwImmcode != '999') {
+        if (! empty($immunization->pPregwImmcode) && $immunization->pPregwImmcode != '999') {
             switch ($immunization->pPregwImmcode) {
                 case 'P01':
                     $vaccine_id = 'TD';
@@ -375,7 +345,7 @@ class KonsultaMigrationService
                     break;
             }
         }
-        if (!empty($immunization->pElderlyImmcode) && $immunization->pElderlyImmcode != '999') {
+        if (! empty($immunization->pElderlyImmcode) && $immunization->pElderlyImmcode != '999') {
             switch ($immunization->pElderlyImmcode) {
                 case 'E01':
                     $vaccine_id = 'PPV';
@@ -387,21 +357,17 @@ class KonsultaMigrationService
                     break;
             }
         }
-        if (!empty($vaccine_id)) {
+        if (! empty($vaccine_id)) {
             $patient->patientvaccine()->create([
                 'vaccine_id' => $vaccine_id,
-                'status_id' => 1
+                'status_id' => 1,
             ]);
         }
     }
 
-    /**
-     * @param mixed $profile
-     * @param $patient
-     */
     public function savePhysicalExam(mixed $profile, $patient)
     {
-        if(isset($profile->PEMISCS)){
+        if (isset($profile->PEMISCS)) {
             return collect($profile->PEMISCS)->map(function ($pe) use ($patient, $profile) {
                 $consult = Consult::updateOrCreate([
                     'patient_id' => $patient->id,
@@ -417,10 +383,10 @@ class KonsultaMigrationService
                     ]
                 );
                 $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => 'OTHERS']);
-                if(!empty($profile->PESPECIFIC->pSkinRem) || !empty($profile->PESPECIFIC->pHeentRem)
-                    || !empty($profile->PESPECIFIC->pChestRem) || !empty($profile->PESPECIFIC->pHeartRem)
-                    || !empty($profile->PESPECIFIC->pAbdomenRem) || !empty($profile->PESPECIFIC->pNeuroRem)
-                    || !empty($profile->PESPECIFIC->pRectalRem) || !empty($profile->PESPECIFIC->pGuRem)){
+                if (! empty($profile->PESPECIFIC->pSkinRem) || ! empty($profile->PESPECIFIC->pHeentRem)
+                    || ! empty($profile->PESPECIFIC->pChestRem) || ! empty($profile->PESPECIFIC->pHeartRem)
+                    || ! empty($profile->PESPECIFIC->pAbdomenRem) || ! empty($profile->PESPECIFIC->pNeuroRem)
+                    || ! empty($profile->PESPECIFIC->pRectalRem) || ! empty($profile->PESPECIFIC->pGuRem)) {
                     $notes->physicalExamRemarks()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],
                         [
                             'skin_remarks' => $profile->PESPECIFIC->pSkinRem,
@@ -435,7 +401,7 @@ class KonsultaMigrationService
                     );
                 }
                 if (is_array($pe)) {
-                    return collect($pe)->map(function ($pe) use ($patient, $profile, $notes) {
+                    return collect($pe)->map(function ($pe) use ($notes) {
                         $this->physicalExam($pe, $notes);
                     });
                 } else {
@@ -446,10 +412,9 @@ class KonsultaMigrationService
     }
 
     /**
-     * @param $value
      * @return void
      */
-    function saveDiagnostic($value, $patient, $profile)
+    public function saveDiagnostic($value, $patient, $profile)
     {
         if (isset($value->DIAGNOSTICEXAMRESULTS)) {
             //return $value->DIAGNOSTICEXAMRESULTS;
@@ -459,28 +424,25 @@ class KonsultaMigrationService
                     ->filter(function ($transaction) {
                         return str_starts_with(strtolower($transaction->pHciTransNo), 'p');
                     })->first();
-            } else{
+            } else {
                 $laboratory = collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)
                     ->filter(function ($transaction) {
                         return str_starts_with(strtolower($transaction->pHciTransNo), 'p');
                     })->first();
             }
+
             return $this->saveLaboratory($laboratory, $value, $profile, $patient);
         }
     }
 
     /**
-     * @param mixed $laboratory
-     * @param $value
-     * @param $profile
-     * @param $patient
      * @return void
      */
     public function saveLaboratory(mixed $laboratory, $value, $profile, $patient)
     {
         if (isset($laboratory->FBSS)) {
             if (is_array($laboratory->FBSS)) {
-                 collect($laboratory->FBSS)->map(function ($fbs) use ($value, $profile, $patient) {
+                collect($laboratory->FBSS)->map(function ($fbs) use ($profile, $patient) {
                     $data = [
                         'request_date' => $profile->pProfDate,
                         'lab_code' => 'FBS',
@@ -517,7 +479,7 @@ class KonsultaMigrationService
         }
         if (isset($laboratory->RBSS)) {
             if (is_array($laboratory->RBSS)) {
-                collect($laboratory->RBSS)->map(function ($rbs) use ($value, $profile, $patient) {
+                collect($laboratory->RBSS)->map(function ($rbs) use ($profile, $patient) {
                     $data = [
                         'request_date' => $profile->pProfDate,
                         'lab_code' => 'RBS',
@@ -554,63 +516,58 @@ class KonsultaMigrationService
         }
     }
 
-    /**
-     * @param $pe
-     * @param $notes
-     * @return void
-     */
     public function physicalExam($pe, $notes): void
     {
-        if (!empty($pe->pSkinId)) {
+        if (! empty($pe->pSkinId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pSkinId)
                 ->where('category_id', 'SKIN')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pHeentId)) {
+        if (! empty($pe->pHeentId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pHeentId)
                 ->where('category_id', 'HEENT')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pChestId)) {
+        if (! empty($pe->pChestId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pChestId)
                 ->where('category_id', 'CHEST')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pHeartId)) {
+        if (! empty($pe->pHeartId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pHeartId)
                 ->where('category_id', 'HEART')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pAbdomenId)) {
+        if (! empty($pe->pAbdomenId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pAbdomenId)
                 ->where('category_id', 'ABDOMEN')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pNeuroId)) {
+        if (! empty($pe->pNeuroId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pNeuroId)
                 ->where('category_id', 'NEURO')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pRectalId)) {
+        if (! empty($pe->pRectalId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pRectalId)
                 ->where('category_id', 'RECTAL')
                 ->first();
             $notes->physicalExam()->updateOrCreate(['notes_id' => $notes->id, 'pe_id' => $lib->pe_id]);
         }
-        if (!empty($pe->pGuId)) {
+        if (! empty($pe->pGuId)) {
             $lib = LibPe::query()
                 ->where('konsulta_pe_id', $pe->pGuId)
                 ->where('category_id', 'GENITOURINARY')
@@ -619,25 +576,20 @@ class KonsultaMigrationService
         }
     }
 
-    /**
-     * @param $value
-     * @param $profile
-     * @param $patient
-     */
     public function saveConsultation($value, $profile, $patient)
     {
-        if(is_array($value->SOAPS->SOAP)) {
+        if (is_array($value->SOAPS->SOAP)) {
             $soap = collect($value->SOAPS->SOAP)->where('pHciCaseNo', $patient->case_number)->first();
+
             return $this->saveSubjective($soap, $patient, $value);
-        } else{
+        } else {
             $soap = collect($value->SOAPS)->where('pHciCaseNo', $patient->case_number)->first();
+
             return $this->saveSubjective($soap, $patient, $value);
         }
     }
 
     /**
-     * @param mixed $soap
-     * @param $patient
      * @param $value
      * @return void
      */
@@ -652,21 +604,21 @@ class KonsultaMigrationService
             ], [
                 'transaction_number' => Str::replaceFirst('S', '', $soap->pHciTransNo),
                 'authorization_transaction_code' => $soap->pATC,
-                'walkedin_status' => $soap->pIsWalkedIn == 'Y' ? 1 : 0
+                'walkedin_status' => $soap->pIsWalkedIn == 'Y' ? 1 : 0,
             ]);
             $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id]);
 
             if (isset($soap->SUBJECTIVE)) {
                 $notes = $consult->consultNotes()->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id], [
                     'history' => $soap->SUBJECTIVE->pIllnessHistory,
-                    'complaint' => $soap->SUBJECTIVE->pOtherComplaint
+                    'complaint' => $soap->SUBJECTIVE->pOtherComplaint,
                 ]);
                 //$konsultaComplaints = explode(';', $soap->SUBJECTIVE->pSignsSymptoms);
-                $konsultaComplaints = preg_split("/[,;]/", $soap->SUBJECTIVE->pSignsSymptoms);
+                $konsultaComplaints = preg_split('/[,;]/', $soap->SUBJECTIVE->pSignsSymptoms);
                 foreach ($konsultaComplaints as $value) {
                     $complaintId = LibComplaint::query()
-                        ->when($value == '38', fn($query) => $query->where('complaint_desc', 'LIKE', '%' . $soap->SUBJECTIVE->pPainSite . '%'))
-                        ->when($value != '38', fn($query) => $query->where('konsulta_complaint_id', $value))
+                        ->when($value == '38', fn ($query) => $query->where('complaint_desc', 'LIKE', '%'.$soap->SUBJECTIVE->pPainSite.'%'))
+                        ->when($value != '38', fn ($query) => $query->where('konsulta_complaint_id', $value))
                         ->first();
                     $complaint = $notes->complaints()->updateOrCreate(['notes_id' => $notes->id, 'consult_id' => $consult->id, 'patient_id' => $patient->id, 'complaint_id' => $complaintId->complaint_id]);
                 }
@@ -681,10 +633,10 @@ class KonsultaMigrationService
                 } else {
                     $this->physicalExam($soap->PEMISCS->PEMISC, $notes);
                 }
-                if(!empty($soap->PESPECIFIC->pSkinRem) || !empty($soap->PESPECIFIC->pHeentRem)
-                    || !empty($soap->PESPECIFIC->pChestRem) || !empty($soap->PESPECIFIC->pHeartRem)
-                    || !empty($soap->PESPECIFIC->pAbdomenRem) || !empty($soap->PESPECIFIC->pNeuroRem)
-                    || !empty($soap->PESPECIFIC->pRectalRem) || !empty($soap->PESPECIFIC->pGuRem)){
+                if (! empty($soap->PESPECIFIC->pSkinRem) || ! empty($soap->PESPECIFIC->pHeentRem)
+                    || ! empty($soap->PESPECIFIC->pChestRem) || ! empty($soap->PESPECIFIC->pHeartRem)
+                    || ! empty($soap->PESPECIFIC->pAbdomenRem) || ! empty($soap->PESPECIFIC->pNeuroRem)
+                    || ! empty($soap->PESPECIFIC->pRectalRem) || ! empty($soap->PESPECIFIC->pGuRem)) {
                     $notes->physicalExamRemarks()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],
                         [
                             'skin_remarks' => $soap->PESPECIFIC->pSkinRem,
@@ -700,67 +652,66 @@ class KonsultaMigrationService
                 }
             }
 
-            if(isset($soap->ICDS)){
-                if(is_array($soap->ICDS->ICD)){
+            if (isset($soap->ICDS)) {
+                if (is_array($soap->ICDS->ICD)) {
                     collect($soap->ICDS->ICD)->map(function ($icd) use ($notes) {
                         $notes->finaldx()->updateOrCreate(['notes_id' => $notes->id, 'icd10_code' => $icd->pIcdCode]);
                     });
-                } else{
+                } else {
                     $notes->finaldx()->updateOrCreate(['notes_id' => $notes->id, 'icd10_code' => $soap->ICDS->ICD->pIcdCode]);
                 }
             }
 
-            if(isset($soap->MANAGEMENTS)){
-                if(is_array($soap->MANAGEMENTS->MANAGEMENT)){
+            if (isset($soap->MANAGEMENTS)) {
+                if (is_array($soap->MANAGEMENTS->MANAGEMENT)) {
                     collect($soap->MANAGEMENTS->MANAGEMENT)->map(function ($management) use ($notes, $patient) {
-                        $notes->management()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],[
+                        $notes->management()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id], [
                             'management_code' => $management->pManagementId,
-                            'remarks' => $management->pOthRemarks
+                            'remarks' => $management->pOthRemarks,
                         ]);
                     });
-                } else{
-                    $notes->management()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id],[
+                } else {
+                    $notes->management()->updateOrCreate(['notes_id' => $notes->id, 'patient_id' => $patient->id], [
                         'management_code' => $soap->MANAGEMENTS->MANAGEMENT->pManagementId,
-                        'remarks' => $soap->MANAGEMENTS->MANAGEMENT->pOthRemarks
+                        'remarks' => $soap->MANAGEMENTS->MANAGEMENT->pOthRemarks,
                     ]);
                 }
             }
 
-            if(isset($soap->ADVICE)){
-                $notes->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id],[
-                    'plan' => $soap->ADVICE->pRemarks
+            if (isset($soap->ADVICE)) {
+                $notes->updateOrCreate(['consult_id' => $consult->id, 'patient_id' => $consult->patient_id], [
+                    'plan' => $soap->ADVICE->pRemarks,
                 ]);
             }
 
-            if(isset($soap->DIAGNOSTICS)){
-                if(is_array($soap->DIAGNOSTICS->DIAGNOSTIC)){
+            if (isset($soap->DIAGNOSTICS)) {
+                if (is_array($soap->DIAGNOSTICS->DIAGNOSTIC)) {
                     return collect($soap->DIAGNOSTICS->DIAGNOSTIC)->map(function ($diagnostic) use ($consult, $patient, $soap, $collection) {
                         $labId = LibLaboratory::query()
                             ->where('konsulta_lab_id', $diagnostic->pDiagnosticId)
                             ->first();
-                        if(!empty($labId)){
+                        if (! empty($labId)) {
                             $consultLab = ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
                                 'consult_id' => $consult->id,
                                 'recommendation_code' => $diagnostic->pIsPhysicianRecommendation,
-                                'request_status_code' => $diagnostic->pPatientRemarks
+                                'request_status_code' => $diagnostic->pPatientRemarks,
                             ]);
-                            if($diagnostic->pPatientRemarks == 'RQ'){
+                            if ($diagnostic->pPatientRemarks == 'RQ') {
                                 $this->saveSoapDiagnostic($collection, $patient, $soap->pHciTransNo, $consultLab);
                             }
-
                         }
                     });
-                } else{
+                } else {
                     $labId = LibLaboratory::query()
                         ->where('konsulta_lab_id', $soap->DIAGNOSTICS->DIAGNOSTIC->pDiagnosticId)
                         ->first();
-                    if(!empty($labId)){
+                    if (! empty($labId)) {
                         $consultLab = ConsultLaboratory::query()->updateOrCreate(['patient_id' => $patient->id, 'request_date' => $soap->pSoapDate, 'lab_code' => $labId->code], [
                             'consult_id' => $consult->id,
                             'recommendation_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pIsPhysicianRecommendation,
-                            'request_status_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks
+                            'request_status_code' => $soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks,
                         ]);
-                        if($soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks == 'RQ'){
+                        if ($soap->DIAGNOSTICS->DIAGNOSTIC->pPatientRemarks == 'RQ') {
                             $this->saveSoapDiagnostic($collection, $patient, $soap->pHciTransNo, $consultLab);
                         }
                     }
@@ -770,10 +721,9 @@ class KonsultaMigrationService
     }
 
     /**
-     * @param $value
      * @return void
      */
-    function saveSoapDiagnostic($value, $patient, $transaction, $consultLaboratory)
+    public function saveSoapDiagnostic($value, $patient, $transaction, $consultLaboratory)
     {
         if (isset($value->DIAGNOSTICEXAMRESULTS)) {
             //return $value->DIAGNOSTICEXAMRESULTS;
@@ -786,7 +736,7 @@ class KonsultaMigrationService
                         return str_starts_with(strtolower($transaction->pHciTransNo), 's');
                     })->first();
                 $this->saveSoapLaboratory($laboratory, $consultLaboratory, $patient);
-            } else{
+            } else {
                 $laboratory = collect($value->DIAGNOSTICEXAMRESULTS)->where('pHciCaseNo', $patient->case_number)
                     ->filter(function ($transaction) {
                         return str_starts_with(strtolower($transaction->pHciTransNo), 's');
@@ -798,12 +748,6 @@ class KonsultaMigrationService
         }
     }
 
-    /**
-     * @param mixed $laboratory
-     * @param $consultLaboratory
-     * @param $patient
-     * @return void
-     */
     public function saveSoapLaboratory(mixed $laboratory, $consultLaboratory, $patient): void
     {
         if (isset($laboratory->CBCS) && $consultLaboratory->lab_code == 'CBC') {
@@ -870,7 +814,7 @@ class KonsultaMigrationService
                         'ketones' => $urinalysis->pKetones,
                         'ph' => $urinalysis->pPh,
                         'rb_cells' => $urinalysis->pRbCells,
-                        'wb_cells' =>  $urinalysis->pWbCells,
+                        'wb_cells' => $urinalysis->pWbCells,
                         'bacteria' => $urinalysis->pBacteria,
                         'crystals' => $urinalysis->pCrystals,
                         'bladder_cells' => $urinalysis->pBladderCell,
@@ -878,7 +822,7 @@ class KonsultaMigrationService
                         'tubular_cells' => $urinalysis->pTubularCell,
                         'broad_cast' => $urinalysis->pBroadCasts,
                         'epithelial_cast' => $urinalysis->pEpithelialCast,
-                        'granular_cast' =>  $urinalysis->pGranularCast,
+                        'granular_cast' => $urinalysis->pGranularCast,
                         'hyaline_cast' => $urinalysis->pHyalineCast,
                         'rbc_cast' => $urinalysis->pRbcCast,
                         'waxy_cast' => $urinalysis->pWaxyCast,
@@ -905,7 +849,7 @@ class KonsultaMigrationService
                     'ketones' => $laboratory->URINALYSISS->URINALYSIS->pKetones,
                     'ph' => $laboratory->URINALYSISS->URINALYSIS->pPh,
                     'rb_cells' => $laboratory->URINALYSISS->URINALYSIS->pRbCells,
-                    'wb_cells' =>  $laboratory->URINALYSISS->URINALYSIS->pWbCells,
+                    'wb_cells' => $laboratory->URINALYSISS->URINALYSIS->pWbCells,
                     'bacteria' => $laboratory->URINALYSISS->URINALYSIS->pBacteria,
                     'crystals' => $laboratory->URINALYSISS->URINALYSIS->pCrystals,
                     'bladder_cells' => $laboratory->URINALYSISS->URINALYSIS->pBladderCell,
@@ -913,7 +857,7 @@ class KonsultaMigrationService
                     'tubular_cells' => $laboratory->URINALYSISS->URINALYSIS->pTubularCell,
                     'broad_cast' => $laboratory->URINALYSISS->URINALYSIS->pBroadCasts,
                     'epithelial_cast' => $laboratory->URINALYSISS->URINALYSIS->pEpithelialCast,
-                    'granular_cast' =>  $laboratory->URINALYSISS->URINALYSIS->pGranularCast,
+                    'granular_cast' => $laboratory->URINALYSISS->URINALYSIS->pGranularCast,
                     'hyaline_cast' => $laboratory->URINALYSISS->URINALYSIS->pHyalineCast,
                     'rbc_cast' => $laboratory->URINALYSISS->URINALYSIS->pRbcCast,
                     'waxy_cast' => $laboratory->URINALYSISS->URINALYSIS->pWaxyCast,
@@ -1368,5 +1312,4 @@ class KonsultaMigrationService
             }
         }
     }
-
 }

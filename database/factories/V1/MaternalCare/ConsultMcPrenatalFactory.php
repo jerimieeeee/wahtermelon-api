@@ -5,7 +5,6 @@ namespace Database\Factories\V1\MaternalCare;
 use App\Models\User;
 use App\Models\V1\Libraries\LibMcLocation;
 use App\Models\V1\Libraries\LibMcPresentation;
-use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -30,15 +29,15 @@ class ConsultMcPrenatalFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'prenatal_date' => fake()->date('Y-m-d'),
             'presentation_code' => fake()->randomElement(LibMcPresentation::pluck('code')->toArray()),
-            'location_code' =>fake()->randomElement(LibMcLocation::pluck('code')->toArray()),
-            'patient_height' =>fake()->numberBetween(100, 200),
+            'location_code' => fake()->randomElement(LibMcLocation::pluck('code')->toArray()),
+            'patient_height' => fake()->numberBetween(100, 200),
             'patient_weight' => fake()->numberBetween(40, 200),
             'bp_systolic' => fake()->numberBetween(100, 200),
             'bp_diastolic' => fake()->numberBetween(70, 100),
             'fundic_height' => fake()->numberBetween(0, 50),
             'fhr' => fake()->numberBetween(0, 50),
             'private' => fake()->boolean(),
-            'remarks' => fake()->sentence()
+            'remarks' => fake()->sentence(),
         ];
     }
 }

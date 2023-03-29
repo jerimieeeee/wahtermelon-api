@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('abdome_remarks', 255);
             $table->string('extremities_code', 100);
             $table->string('extremities_remarks', 255);
-
         });
     }
 

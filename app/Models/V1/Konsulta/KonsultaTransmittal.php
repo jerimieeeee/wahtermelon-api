@@ -18,7 +18,7 @@ class KonsultaTransmittal extends Model
     use HasFactory, HasUuids, FilterByUser, FilterByFacility;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

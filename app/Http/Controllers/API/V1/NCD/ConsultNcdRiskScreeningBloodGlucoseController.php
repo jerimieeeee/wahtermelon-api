@@ -11,10 +11,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Non-Communicable Disease Management
  *
  * APIs for managing Non-Communicable Disease information
+ *
  * @subgroup Risk Screening Blood Glucose
+ *
  * @subgroupDescription Risk Screening Blood Glucose management.
  */
 class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
@@ -23,16 +26,18 @@ class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
      * Display a listing of the resource.
      *
      * @queryParam consult_ncd_risk_id string Patient record to view.
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         $query = ConsultNcdRiskScreeningBloodGlucose::query();
         $consultNcdRiskBloodGlucose = QueryBuilder::for($query)
-            ->when(isset($request->consult_ncd_risk_id), function ($q) use($request){
+            ->when(isset($request->consult_ncd_risk_id), function ($q) use ($request) {
                 $q->whereConsultNcdRiskId($request->consult_ncd_risk_id);
             })
             ->get();
+
         return ConsultNcdRiskScreeningBloodGlucoseResoure::collection($consultNcdRiskBloodGlucose);
     }
 
@@ -40,15 +45,18 @@ class ConsultNcdRiskScreeningBloodGlucoseController extends Controller
      * Store a newly created Consult Risk Screening Blood Glucose resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\NCD\ConsultNcdRiskScreeningBloodGlucoseResoure
+     *
      * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskScreeningBloodGlucose
-     * @param ConsultNcdRiskScreeningBloodGlucoseRequest $request
+     *
      * @return JsonResponse
      */
     public function store(ConsultNcdRiskScreeningBloodGlucoseRequest $request)
     {
-        $data = ConsultNcdRiskScreeningBloodGlucose::updateOrCreate(['consult_ncd_risk_id' => $request['consult_ncd_risk_id']],$request->validated());
+        $data = ConsultNcdRiskScreeningBloodGlucose::updateOrCreate(['consult_ncd_risk_id' => $request['consult_ncd_risk_id']], $request->validated());
         $data1 = new ConsultNcdRiskScreeningBloodGlucoseResoure($data);
+
         return response()->json(['data' => $data1], 201);
     }
 

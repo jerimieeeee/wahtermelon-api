@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibMedicineDoseRegimen;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibMedicineDoseRegimenSeeder extends Seeder
@@ -22,7 +21,7 @@ class LibMedicineDoseRegimenSeeder extends Seeder
             ['code' => 'QID', 'sequence' => 4, 'desc' => '4 x a day - Every 6 hours'],
             ['code' => 'QOD', 'sequence' => 5, 'desc' => 'Every other day'],
             ['code' => 'QHS', 'sequence' => 6, 'desc' => 'Every bedtime'],
-            ['code' => 'OTH', 'sequence' => 7, 'desc' => 'Others']
+            ['code' => 'OTH', 'sequence' => 7, 'desc' => 'Others'],
         ], ['code']);
     }
 }

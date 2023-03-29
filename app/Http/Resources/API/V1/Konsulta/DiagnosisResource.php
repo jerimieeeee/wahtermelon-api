@@ -16,10 +16,10 @@ class DiagnosisResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pIcdCode' => $this->icd10_code?? "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pIcdCode' => $this->icd10_code ?? '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

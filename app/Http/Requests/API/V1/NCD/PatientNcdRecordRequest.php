@@ -6,7 +6,6 @@ use App\Models\V1\Libraries\LibNcdPhysicalExamAnswer;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\Patient\Patient;
-use Database\Seeders\LibNcdPhysicalExamAnswerSeeder;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientNcdRecordRequest extends FormRequest

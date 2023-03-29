@@ -7,15 +7,17 @@ use App\Http\Requests\API\V1\Patient\PatientHistoryRequest;
 use App\Http\Resources\API\V1\Patient\PatientHistoryResource;
 use App\Models\V1\Patient\PatientHistory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Patient History Management
  *
  * APIs for managing Patient History information
+ *
  * @subgroup Patient History
+ *
  * @subgroupDescription Patient History management.
  */
 class PatientHistoryController extends Controller
@@ -28,9 +30,11 @@ class PatientHistoryController extends Controller
      * @queryParam category category. Example: 1
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientHistoryResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientHistory paginate=15
-     * @param Request $request
+     *
      * @return ResourceCollection
      */
     public function index(Request $request)
@@ -38,10 +42,10 @@ class PatientHistoryController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $patientHistory = QueryBuilder::for(PatientHistory::class)
-            ->when(isset($request->patient_id), function($q) use($request){
+            ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-            ->when(isset($request->category), function($q) use($request){
+            ->when(isset($request->category), function ($q) use ($request) {
                 $q->where('category', $request->category);
             })
             ->with('libmedicalHistory', 'libmedicalHistoryCategory');
@@ -61,43 +65,42 @@ class PatientHistoryController extends Controller
      */
     public function store(PatientHistoryRequest $request)
     {
-            $medical_history = $request->input('medical_history');
-            PatientHistory::query()
-                ->where('patient_id', $request->safe()->patient_id)
-                ->where('category', $medical_history[0]['category'])
-                ->delete();
+        $medical_history = $request->input('medical_history');
+        PatientHistory::query()
+            ->where('patient_id', $request->safe()->patient_id)
+            ->where('category', $medical_history[0]['category'])
+            ->delete();
 
-                if (isset($request->medical_history)) {
-                    foreach($medical_history as $value){
-                        PatientHistory::create(['patient_id' => $request->input('patient_id')] + $value);
-                    }
-                }
+        if (isset($request->medical_history)) {
+            foreach ($medical_history as $value) {
+                PatientHistory::create(['patient_id' => $request->input('patient_id')] + $value);
+            }
+        }
 
-            return response()->json([
-                'message' => 'Patient History Successfully Saved',
-            ], 201);
+        return response()->json([
+            'message' => 'Patient History Successfully Saved',
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Patient\PatientHistoryResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientHistory
-     * @param PatientHistory $patientHistory
-     * @return PatientHistoryResource
      */
     public function show(PatientHistory $patientHistory): PatientHistoryResource
     {
         $query = PatientHistory::where('id', $patientHistory->id);
         $patientHistory = QueryBuilder::for($query)
             ->first();
+
         return new PatientHistoryResource($patientHistory);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

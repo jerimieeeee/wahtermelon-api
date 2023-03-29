@@ -35,7 +35,7 @@ class District extends Model
         return 'code';
     }
 
-    public function cities(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function cities(): MorphMany
     {
         return $this->morphMany(City::class, 'geographic');
     }

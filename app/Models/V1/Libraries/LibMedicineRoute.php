@@ -10,5 +10,6 @@ class LibMedicineRoute extends Model
     use HasFactory;
 
     public $primaryKey = 'code';
+
     public $timestamps = false;
 }

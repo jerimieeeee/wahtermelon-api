@@ -22,18 +22,18 @@ return new class extends Migration
             $table->dateTime('vitals_date')->index();
             $table->unsignedInteger('patient_age_years')->nullable()->index();
             $table->unsignedInteger('patient_age_months')->nullable()->index();
-            $table->decimal('patient_temp',10,1)->nullable()->index();
-            $table->decimal('patient_height',10,2)->nullable()->index();
-            $table->decimal('patient_weight',10,2)->nullable()->index();
+            $table->decimal('patient_temp', 10, 1)->nullable()->index();
+            $table->decimal('patient_height', 10, 2)->nullable()->index();
+            $table->decimal('patient_weight', 10, 2)->nullable()->index();
             $table->unsignedInteger('bp_systolic')->nullable()->index();
             $table->unsignedInteger('bp_diastolic')->nullable()->index();
-            $table->decimal('patient_heart_rate',10,2)->nullable()->index();
-            $table->decimal('patient_respiratory_rate',10,2)->nullable()->index();
-            $table->decimal('patient_pulse_rate',10,2)->nullable()->index();
-            $table->decimal('patient_waist',10,2)->nullable()->index();
-            $table->decimal('patient_hip',10,2)->nullable()->index();
-            $table->decimal('patient_limbs',10,2)->nullable()->index();
-            $table->decimal('patient_muac',10,2)->nullable()->index();
+            $table->decimal('patient_heart_rate', 10, 2)->nullable()->index();
+            $table->decimal('patient_respiratory_rate', 10, 2)->nullable()->index();
+            $table->decimal('patient_pulse_rate', 10, 2)->nullable()->index();
+            $table->decimal('patient_waist', 10, 2)->nullable()->index();
+            $table->decimal('patient_hip', 10, 2)->nullable()->index();
+            $table->decimal('patient_limbs', 10, 2)->nullable()->index();
+            $table->decimal('patient_muac', 10, 2)->nullable()->index();
             $table->timestamps();
         });
     }

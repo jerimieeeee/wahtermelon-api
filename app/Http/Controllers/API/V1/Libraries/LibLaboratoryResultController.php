@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Laboratory
  *
  * APIs for managing libraries
+ *
  * @subgroup Laboratory Results
+ *
  * @subgroupDescription List of laboratory results.
  */
 class LibLaboratoryResultController extends Controller
@@ -22,19 +24,19 @@ class LibLaboratoryResultController extends Controller
      * Display a listing of the resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibLaboratoryResultResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibLaboratoryResult
-     * @return ResourceCollection
      */
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratoryResult::class);
+
         return LibLaboratoryResultResource::collection($query->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,22 +48,21 @@ class LibLaboratoryResultController extends Controller
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibLaboratoryResultResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibLaboratoryResult
-     * @param LibLaboratoryResult $result
-     * @return LibLaboratoryResultResource
      */
     public function show(LibLaboratoryResult $result): LibLaboratoryResultResource
     {
         $query = LibLaboratoryResult::where('code', $result->code);
         $result = QueryBuilder::for($query)
             ->first();
+
         return new LibLaboratoryResultResource($result);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

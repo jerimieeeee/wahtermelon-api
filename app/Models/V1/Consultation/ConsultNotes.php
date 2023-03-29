@@ -6,18 +6,17 @@ use App\Models\V1\Libraries\LibGeneralSurvey;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ConsultNotes extends Model
 {
     use HasFactory, FilterByUser;
 
-    protected $table='consult_notes';
+    protected $table = 'consult_notes';
 
     protected $primaryKey = 'id';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function complaints()
@@ -59,5 +58,4 @@ class ConsultNotes extends Model
     {
         return $this->belongsTo(LibGeneralSurvey::class, 'general_survey_code', 'code');
     }
-
 }

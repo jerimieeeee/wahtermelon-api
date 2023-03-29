@@ -4,7 +4,6 @@ namespace App\Http\Requests\API\V1\Childcare;
 
 use App\Models\User;
 use App\Models\V1\Libraries\LibCcdevService;
-use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;

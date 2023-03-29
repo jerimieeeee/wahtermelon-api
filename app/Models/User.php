@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\V1\PhilHealth\PhilhealthCredential;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Models\V1\Libraries\LibDesignation;
 use App\Models\V1\Libraries\LibEmployer;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasSearchFilter;
+    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasSearchFilter, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $guarded = [
@@ -66,17 +67,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes["last_name"] = ucwords(strtolower($value));
+        $this->attributes['last_name'] = ucwords(strtolower($value));
     }
 
     public function setFirstNameAttribute($value)
     {
-        $this->attributes["first_name"] = ucwords(strtolower($value));
+        $this->attributes['first_name'] = ucwords(strtolower($value));
     }
 
     public function setMiddleNameAttribute($value)
     {
-        $this->attributes["middle_name"] = ucwords(strtolower($value));
+        $this->attributes['middle_name'] = ucwords(strtolower($value));
     }
 
     public function suffixName(): BelongsTo
@@ -109,5 +110,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')
             ->whereProgramCode('kp');
     }
-
 }

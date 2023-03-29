@@ -5,11 +5,8 @@ namespace App\Http\Controllers\API\V1\Childcare;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevServiceRequest;
 use App\Http\Requests\API\V1\Childcare\ConsultCcdevServiceUpdateRequest;
-use App\Http\Resources\API\V1\Childcare\ConsultCcdevResource;
 use App\Http\Resources\API\V1\Childcare\ConsultCcdevServiceResource;
-use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevService;
-use App\Models\V1\Libraries\LibCcdevService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -17,13 +14,15 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Childcare Service Management
  *
  * APIs for managing Childcare Service information
+ *
  * @subgroup Childcare Service
+ *
  * @subgroupDescription Childcare Service management.
  */
-
 class ConsultCcdevServiceController extends Controller
 {
     /**
@@ -31,15 +30,15 @@ class ConsultCcdevServiceController extends Controller
      *
      * @queryParam sort string Sort service_id, service_date, of the patient. Example: -service_id
      * @queryParam patient_id string Patient to view.
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Childcare\ConsultCcdevServiceResource
+     *
      * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevService
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $query = ConsultCcdevService::query()->with(['services:service_id,service_name,essential'])
-                ->when(isset($request->patient_id), function($query) use($request){
+                ->when(isset($request->patient_id), function ($query) use ($request) {
                     return $query->wherePatientId($request->patient_id);
                 });
         $services = QueryBuilder::for($query)
@@ -53,10 +52,10 @@ class ConsultCcdevServiceController extends Controller
      * Store a newly created Childcare Service resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Childcare\ConsultCcdevServiceResource
+     *
      * @apiResourceModel App\Models\V1\Childcare\ConsultCcdevService
-     * @param ConsultCcdevServiceRequest $request
-     * @return JsonResponse
      */
     public function store(ConsultCcdevServiceRequest $request): JsonResponse
     {
@@ -64,11 +63,11 @@ class ConsultCcdevServiceController extends Controller
 
         ConsultCcdevService::query()
             ->where('patient_id', $request->safe()->patient_id)
-            ->whereHas('services', function($q) use($request){
+            ->whereHas('services', function ($q) use ($request) {
                 $q->where('essential', $request->essential);
             })->delete();
 
-        foreach($service as $value){
+        foreach ($service as $value) {
             ConsultCcdevService::updateOrCreate(['patient_id' => $request->patient_id, 'service_id' => $value['service_id']],
                 $value);
         }
@@ -99,6 +98,7 @@ class ConsultCcdevServiceController extends Controller
     public function update(ConsultCcdevServiceUpdateRequest $request, $id)
     {
         ConsultCcdevService::findorfail($id)->update($request->all());
+
         return response()->json('Service Successfully Updated');
     }
 
@@ -111,6 +111,7 @@ class ConsultCcdevServiceController extends Controller
     public function destroy(Request $request, $id)
     {
         ConsultCcdevService::findorfail($id)->forceDelete($request->all());
+
         return response()->json('Service Successfully Deleted');
     }
 }

@@ -27,7 +27,7 @@ class PatientHistoryFactory extends Factory
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'medical_history_id' => fake()->randomElement(LibMedicalHistory::pluck('id')->toArray()),
             'category' => fake()->randomElement(LibMedicalHistoryCategory::pluck('id')->toArray()),
-            'remarks' => fake()->sentence
+            'remarks' => fake()->sentence,
         ];
     }
 }

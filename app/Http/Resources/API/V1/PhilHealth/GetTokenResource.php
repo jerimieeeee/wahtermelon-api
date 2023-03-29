@@ -15,10 +15,10 @@ class GetTokenResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'pUserName' => $this->username?? "",
-            'pUserPassword' =>  $this->password?? "",
+            'pUserName' => $this->username ?? '',
+            'pUserPassword' => $this->password ?? '',
             'pSoftwareCertificationId' => $this->software_certification_id,
-            'pHospitalCode' => $this->accreditation_number
+            'pHospitalCode' => $this->accreditation_number,
         ];
     }
 }

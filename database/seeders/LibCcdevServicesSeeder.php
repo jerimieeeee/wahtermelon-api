@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Libraries\LibCcdevService;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class LibCcdevServicesSeeder extends Seeder
 {

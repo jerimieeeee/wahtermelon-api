@@ -25,6 +25,7 @@ class ConsultLaboratoryCbcFactory extends Factory
         );
         //$consult = ConsultLaboratory::whereLabCode('CBC')->inRandomOrder()->limit(1)->first();
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CBC']);
+
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

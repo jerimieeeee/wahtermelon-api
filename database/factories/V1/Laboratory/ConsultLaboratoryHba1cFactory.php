@@ -24,6 +24,7 @@ class ConsultLaboratoryHba1cFactory extends Factory
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'HBA']);
+
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

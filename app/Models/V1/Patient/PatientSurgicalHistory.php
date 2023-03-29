@@ -3,10 +3,10 @@
 namespace App\Models\V1\Patient;
 
 use App\Traits\FilterByUser;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use DateTimeInterface;
 
 class PatientSurgicalHistory extends Model
 {
@@ -15,7 +15,7 @@ class PatientSurgicalHistory extends Model
     protected $table = 'patient_surgical_histories';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

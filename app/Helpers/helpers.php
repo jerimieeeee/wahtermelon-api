@@ -2,101 +2,95 @@
 
 use Carbon\Carbon;
 
-if(!function_exists('get_aog')) {
+if (! function_exists('get_aog')) {
     /**
-     * @param date $lmp_date
-     * @param date $visit_date
+     * @param  date  $lmp_date
+     * @param  date  $visit_date
      * @return array
      */
-
     function get_aog($lmp_date, $visit_date)
     {
         $numberOfDays = $lmp_date->diff($visit_date)->days;
         $weeks = floor(($numberOfDays) / 7);
         $remainingDays = $numberOfDays % 7;
 
-        return array($weeks,$remainingDays);
+        return [$weeks, $remainingDays];
     }
 }
 
-if(!function_exists('get_trimester')) {
+if (! function_exists('get_trimester')) {
     /**
-     * @param date $visit_date
-     * @param date $trimester1_date
-     * @param date $trimester2_date
-     * @return integer
+     * @param  date  $visit_date
+     * @param  date  $trimester1_date
+     * @param  date  $trimester2_date
+     * @return int
      */
-
     function get_trimester($visit_date, $trimester1_date, $trimester2_date)
     {
         $trimester = 0;
         if ($visit_date <= $trimester1_date) {
             $trimester = 1;
-        } else if ($visit_date > $trimester1_date && $visit_date <= $trimester2_date) {
+        } elseif ($visit_date > $trimester1_date && $visit_date <= $trimester2_date) {
             $trimester = 2;
         } else {
             $trimester = 3;
         }
+
         return $trimester;
     }
-
 }
 
-if(!function_exists('get_postpartum_week')) {
+if (! function_exists('get_postpartum_week')) {
     /**
-     * @param date $visit_date
-     * @param date $delivery_date
-     * @return integer
+     * @param  date  $visit_date
+     * @param  date  $delivery_date
+     * @return int
      */
-
     function get_postpartum_week($visit_date, $delivery_date)
     {
         $visit_date = Carbon::parse($visit_date);
+
         return $visit_date->diffInWeeks(Carbon::parse($delivery_date)->format('Y-m-d'));
     }
-
 }
 
-if(!function_exists('compute_bmi')) {
-    /**
-     * @param float $weight
-     * @param float $height
-     * @return array
-     */
-
+if (! function_exists('compute_bmi')) {
     function compute_bmi(float $weight, float $height): array
     {
         $height = $height / 100;
-        $bmi = number_format($weight / ($height * $height),1);
-        $bmiClass = "";
+        $bmi = number_format($weight / ($height * $height), 1);
+        $bmiClass = '';
         if ($bmi < 18.5) {
-            $bmiClass = "Underweight";
-            $obesity = "N";
-        } else if ($bmi >= 18.5 && $bmi < 23) {
-            $bmiClass = "Normal";
-            $obesity = "N";
-        } else if ($bmi >= 23 && $bmi < 25) {
-            $bmiClass = "Overweight";
-            $obesity = "N";
-        } else if ($bmi >= 25) {
-            $bmiClass = "Obese";
-            $obesity = "Y";
+            $bmiClass = 'Underweight';
+            $obesity = 'N';
+        } elseif ($bmi >= 18.5 && $bmi < 23) {
+            $bmiClass = 'Normal';
+            $obesity = 'N';
+        } elseif ($bmi >= 23 && $bmi < 25) {
+            $bmiClass = 'Overweight';
+            $obesity = 'N';
+        } elseif ($bmi >= 25) {
+            $bmiClass = 'Obese';
+            $obesity = 'Y';
         }
-        return array($bmi, $bmiClass);
-    }
 
+        return [$bmi, $bmiClass];
+    }
 }
 
-if(!function_exists('XML2JSON')) {
-    function XML2JSON($xml) {
+if (! function_exists('XML2JSON')) {
+    function XML2JSON($xml)
+    {
         $result = null;
         normalizeSimpleXML(simplexml_load_string($xml), $result);
+
         return json_decode(json_encode($result));
     }
 }
 
-if(!function_exists('normalizeSimpleXML')) {
-    function normalizeSimpleXML($obj, &$result) {
+if (! function_exists('normalizeSimpleXML')) {
+    function normalizeSimpleXML($obj, &$result)
+    {
         $data = $obj;
         if (is_object($data)) {
             $data = get_object_vars($data);
@@ -117,12 +111,57 @@ if(!function_exists('normalizeSimpleXML')) {
     }
 }
 
-if(!function_exists('isJson')) {
-    function isJson($data) {
-        if (!empty($data)) {
+if (! function_exists('isJson')) {
+    function isJson($data)
+    {
+        if (! empty($data)) {
             return is_string($data) &&
             is_array(json_decode($data, true)) ? true : false;
         }
+
         return false;
+    }
+}
+
+if (! function_exists('get_completed_services')) {
+    /**
+     * @param  array  $iron
+     * @param  date  $date
+     * @param  int  $tablet
+     * @return array
+     */
+    function get_completed_services($request, $service, $serviceQty, $age_year_bracket1, $age_year_bracket2)
+    {
+        $serviceArray = [];
+        $ageBracket1 = $age_year_bracket1;
+        $ageBracket2 = $age_year_bracket2;
+
+        foreach ($service as $value) {
+            $quantity = explode(',', $value->service_qty);
+            $dates = explode(',', $value->service_dates);
+            $year = explode(',', $value->service_dates_year);
+            $month = explode(',', $value->service_dates_month);
+            $subtotal = 0;
+            $serviceObject = [];
+            foreach ($quantity as $k => $qty) {
+                $subtotal += $qty;
+                $age = Carbon::parse($value->birthdate)->diffInYears(Carbon::parse($dates[$k]));
+                if ($subtotal >= $serviceQty) {
+                    if ($request->year == $year[$k] && $request->month == $month[$k]) {
+                        $serviceObject['name'] = $value->name;
+                        $serviceObject['birthdate'] = $value->birthdate;
+                        $serviceObject['date_of_service'] = $dates[$k];
+                        $serviceObject['municipality_code'] = $value->municipality_code;
+                        $serviceObject['barangay_code'] = $value->barangay_code;
+                        if ($age >= $ageBracket1 && $age <= $ageBracket2) {
+                            $serviceArray[] = $serviceObject;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        return $serviceArray;
     }
 }

@@ -11,8 +11,8 @@ use App\Models\V1\Libraries\LibNcdLocation;
 use App\Models\V1\Libraries\LibNcdSmokingAnswer;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\Patient\Patient;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\NCD\ConsultNcdRiskAssessment>
@@ -27,6 +27,7 @@ class ConsultNcdRiskAssessmentFactory extends Factory
     public function definition()
     {
         $gender = fake()->randomElement(['male', 'female']);
+
         return [
             'patient_ncd_id' => fake()->randomElement(PatientNcd::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),

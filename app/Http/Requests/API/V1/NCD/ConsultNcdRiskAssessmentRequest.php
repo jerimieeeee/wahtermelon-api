@@ -37,6 +37,7 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
         $patient = Patient::find(request()->patient_id);
         $gender = $patient->gender;
         $age = Carbon::parse($patient->birthdate)->diff(request()->assessment_date)->y;
+
         return array_merge($this->validated(), [
             'age' => $age,
             'gender' => $gender,
@@ -89,15 +90,16 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-         $this->merge([
+        $this->merge([
             'date_enrolled' => $this->assessment_date,
-            'patient_ncd_id' => $this->id
+            'patient_ncd_id' => $this->id,
         ]);
     }
 
     public function bodyParameters()
     {
         $gender = fake()->randomElement(['M', 'F', 'I']);
+
         return [
             'patient_ncd_id' => [
                 'description' => 'ID of patient_ncd',
@@ -256,6 +258,5 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
             //     'example' => fake()->randomNumber(2, true),
             // ],
         ];
-
     }
 }

@@ -25,7 +25,7 @@ class HouseholdFolderFactory extends Factory
             'address' => fake()->address(),
             'barangay_code' => fake()->randomElement(Barangay::pluck('code')->toArray()),
             'cct_date' => fake()->optional()->date('Y-m-d'),
-            'cct_id' => fake()->optional()->randomDigit()
+            'cct_id' => fake()->optional()->randomDigit(),
         ];
     }
 }

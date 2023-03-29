@@ -13,9 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-
         Schema::table('consults', function (Blueprint $table) {
-
             $table->foreign('pt_group')->references('id')->on('lib_pt_groups');
         });
     }
@@ -28,7 +26,6 @@ return new class extends Migration
     public function down()
     {
         Schema::table('consults', function (Blueprint $table) {
-
             $table->dropForeign('pt_group');
         });
     }

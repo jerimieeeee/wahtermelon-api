@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibNcdAnswer;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -21,10 +20,10 @@ class LibNcdAnswerSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibNcdAnswer::upsert([
-          ['id' => 'Y', 'desc' => 'Yes'],
-          ['id' => 'N', 'desc' => 'No'],
-          ['id' => 'X', 'desc' => 'Unknown'],
-        //   ['id' => 'NA', 'desc' => 'Not Applicable'],
+            ['id' => 'Y', 'desc' => 'Yes'],
+            ['id' => 'N', 'desc' => 'No'],
+            ['id' => 'X', 'desc' => 'Unknown'],
+            //   ['id' => 'NA', 'desc' => 'Not Applicable'],
         ], ['id']);
     }
 }

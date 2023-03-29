@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('consult_ccdev_breastfeds', function(Blueprint $table) {
+        Schema::table('consult_ccdev_breastfeds', function (Blueprint $table) {
             $table->renameColumn('patient_ccdevs_id', 'patient_ccdev_id');
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('consult_ccdev_breastfeds', function(Blueprint $table) {
+        Schema::table('consult_ccdev_breastfeds', function (Blueprint $table) {
             $table->renameColumn('patient_ccdev_id', 'patient_ccdevs_id');
         });
     }

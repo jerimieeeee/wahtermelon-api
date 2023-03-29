@@ -4,8 +4,6 @@ namespace Tests\Feature\API\V1;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Libraries\LibPtGroup;
-use App\Models\V1\Patient\Patient;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibWeightForAge;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibWeightForAgeSeeder extends Seeder
@@ -592,7 +591,7 @@ class LibWeightForAgeSeeder extends Seeder
             ['age_month' => '71', 'weight_min' => '13.4', 'weight_max' => '13.4', 'gender' => 'F', 'wt_class' => 'Severely Underweight'],
             ['age_month' => '71', 'weight_min' => '13.5', 'weight_max' => '15.1', 'gender' => 'F', 'wt_class' => 'Underweight'],
             ['age_month' => '71', 'weight_min' => '15.2', 'weight_max' => '27.6', 'gender' => 'F', 'wt_class' => 'Normal'],
-            ['age_month' => '71', 'weight_min' => '27.7', 'weight_max' => '27.7', 'gender' => 'F', 'wt_class' => 'Overweight']
+            ['age_month' => '71', 'weight_min' => '27.7', 'weight_max' => '27.7', 'gender' => 'F', 'wt_class' => 'Overweight'],
         ], ['age_month', 'weight_min', 'weight_max', 'gender', 'wt_class'], ['age_month', 'weight_min', 'weight_max', 'gender', 'wt_class']);
     }
 }

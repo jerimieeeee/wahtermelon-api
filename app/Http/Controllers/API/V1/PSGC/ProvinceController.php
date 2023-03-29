@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Address Information
  *
  * APIs for managing libraries
+ *
  * @subgroup Provinces
+ *
  * @subgroupDescription Philippine Standard Geographic Code (PSGC) Libraries for Provinces.
  */
 class ProvinceController extends Controller
@@ -24,9 +26,8 @@ class ProvinceController extends Controller
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      * @queryParam include string Relationship to view: e.g. municipalities Example: municipalities
+     *
      * @responseFile 200 responses/provinces.get.json
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
@@ -45,11 +46,10 @@ class ProvinceController extends Controller
      * Display the specified Province resource.
      *
      * @urlParam province_code string Province code. Example: 012800000
+     *
      * @queryParam include string Relationship to view: e.g. municipalities Example: municipalities
+     *
      * @responseFile 200 responses/province.get.json
-     * @param Request $request
-     * @param Province $province
-     * @return ProvinceResource
      */
     public function show(Request $request, Province $province): ProvinceResource
     {

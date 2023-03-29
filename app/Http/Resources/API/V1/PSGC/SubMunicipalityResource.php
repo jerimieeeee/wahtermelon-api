@@ -17,13 +17,13 @@ class SubMunicipalityResource extends JsonResource
         $condition = $request->include != 'subMunicipalities' && ! is_null($request->subMunicipality);
 
         return [
-            'code'       => $this->code,
-            'name'       => $this->name,
+            'code' => $this->code,
+            'name' => $this->name,
             'population' => $this->population,
-            'barangays'  => BarangayResource::collection($this->whenLoaded('barangays')),
-            'city'       => $this->when($condition, new CityResource($this->city)),
-            'district'   => $this->when($condition, new DistrictResource($this->city->geographic)),
-            'region'     => $this->when($condition, new RegionResource($this->city->geographic->region)),
+            'barangays' => BarangayResource::collection($this->whenLoaded('barangays')),
+            'city' => $this->when($condition, new CityResource($this->city)),
+            'district' => $this->when($condition, new DistrictResource($this->city->geographic)),
+            'region' => $this->when($condition, new RegionResource($this->city->geographic->region)),
         ];
     }
 }

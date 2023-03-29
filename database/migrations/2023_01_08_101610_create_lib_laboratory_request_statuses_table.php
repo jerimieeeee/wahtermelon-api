@@ -15,14 +15,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_laboratory_request_statuses', function (Blueprint $table) {
-            $table->char('code',10)->index()->primary();
+            $table->char('code', 10)->index()->primary();
             $table->string('desc')->index();
             $table->unsignedInteger('sequence');
         });
 
         Artisan::call('db:seed', [
             '--class' => 'LibLaboratoryRequestStatusSeeder',
-            '--force' => true
+            '--force' => true,
         ]);
     }
 

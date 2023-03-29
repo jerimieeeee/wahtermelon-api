@@ -3,7 +3,6 @@
 namespace App\Models\V1\Patient;
 
 use App\Models\User;
-use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Household\HouseholdFolder;
@@ -17,14 +16,12 @@ use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
-use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
 
 class Patient extends Model
 {
@@ -52,22 +49,22 @@ class Patient extends Model
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes["last_name"] = ucwords(strtolower($value));
+        $this->attributes['last_name'] = ucwords(strtolower($value));
     }
 
     public function setFirstNameAttribute($value)
     {
-        $this->attributes["first_name"] = ucwords(strtolower($value));
+        $this->attributes['first_name'] = ucwords(strtolower($value));
     }
 
     public function setMiddleNameAttribute($value)
     {
-        $this->attributes["middle_name"] = ucwords(strtolower($value));
+        $this->attributes['middle_name'] = ucwords(strtolower($value));
     }
 
     public function setMothersNameAttribute($value)
     {
-        $this->attributes["mothers_name"] = ucwords(strtolower($value));
+        $this->attributes['mothers_name'] = ucwords(strtolower($value));
     }
 
     public function suffixName(): BelongsTo
@@ -205,5 +202,4 @@ class Patient extends Model
     {
         return $this->hasMany(PatientVitals::class, 'patient_id', 'id');
     }
-
 }

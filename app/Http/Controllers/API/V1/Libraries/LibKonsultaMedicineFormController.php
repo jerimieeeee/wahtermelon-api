@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Konsulta Medicine
  *
  * APIs for managing libraries
+ *
  * @subgroup Medicine Forms
+ *
  * @subgroupDescription List of medicine forms.
  */
 class LibKonsultaMedicineFormController extends Controller
@@ -23,9 +25,10 @@ class LibKonsultaMedicineFormController extends Controller
      *
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibKonsultaMedicineFormResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibKonsultaMedicineForm
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
@@ -35,6 +38,7 @@ class LibKonsultaMedicineFormController extends Controller
         if ($perPage === 'all') {
             return LibKonsultaMedicineFormResource::collection($query->get());
         }
+
         return LibKonsultaMedicineFormResource::collection($query->paginate($perPage)->withQueryString());
     }
 
@@ -42,16 +46,15 @@ class LibKonsultaMedicineFormController extends Controller
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibKonsultaMedicineFormResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibKonsultaMedicineForm
-     * @param LibKonsultaMedicineForm $medicineForm
-     * @return LibKonsultaMedicineFormResource
      */
     public function show(LibKonsultaMedicineForm $medicineForm): LibKonsultaMedicineFormResource
     {
         $query = LibKonsultaMedicineForm::where('code', $medicineForm->code);
         $medicineForm = QueryBuilder::for($query)
             ->first();
+
         return new LibKonsultaMedicineFormResource($medicineForm);
     }
-
 }

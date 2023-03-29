@@ -3,9 +3,8 @@
 namespace App\Models\V1\NCD;
 
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
-use Dyrynda\Database\Support\CascadeSoftDeletes;
 use DateTimeInterface;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +17,7 @@ class PatientNcd extends Model
     protected $table = 'patient_ncd';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;
@@ -63,5 +62,4 @@ class PatientNcd extends Model
     // {
     //     return $this->hasMany(ConsultNcdRiskScreeningBloodLipid::class);
     // }
-
 }

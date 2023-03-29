@@ -49,45 +49,46 @@ class ConsultLaboratoryLipidProfileRequest extends FormRequest
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'LPFL']);
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'ldl' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'hdl' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'cholesterol' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'triglycerides' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

@@ -39,7 +39,7 @@ class MedicinePrescription extends Model
         'prescription_date' => 'date:Y-m-d',
         'dosage_quantity' => 'integer',
         'duration_intake' => 'integer',
-        'quantity' => 'integer'
+        'quantity' => 'integer',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -49,7 +49,7 @@ class MedicinePrescription extends Model
 
     public function setAddedMedicineAttribute($value)
     {
-        $this->attributes["added_medicine"] = ucwords(strtolower($value));
+        $this->attributes['added_medicine'] = ucwords(strtolower($value));
     }
 
     public function facility()
@@ -121,5 +121,4 @@ class MedicinePrescription extends Model
     {
         return $this->belongsTo(LibMedicineRoute::class, 'medicine_route_code', 'code');
     }
-
 }

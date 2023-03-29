@@ -11,7 +11,10 @@ class LibIcd10 extends Model
     use HasFactory, HasSearchFilter;
 
     protected $primaryKey = 'icd10_code';
+
     public $incrementing = 'false';
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

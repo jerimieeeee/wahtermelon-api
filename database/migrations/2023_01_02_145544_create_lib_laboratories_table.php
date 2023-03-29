@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_laboratories', function (Blueprint $table) {
-            $table->char('code',10)->index()->primary();
+            $table->char('code', 10)->index()->primary();
             $table->string('desc')->index();
             $table->boolean('lab_active')->default(0);
             $table->boolean('konsulta_active')->default(0);

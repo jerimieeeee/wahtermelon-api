@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('pus_cells')->nullable();
 
             $table->string('remarks')->nullable();
-            $table->char('lab_status_code',10)->index();
+            $table->char('lab_status_code', 10)->index();
             $table->softDeletes();
             $table->timestamps();
 

@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('lib_length_height_for_ages', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('age_month');
-            $table->decimal('length_min',5,2);
-            $table->decimal('length_max',5,2);
+            $table->decimal('length_min', 5, 2);
+            $table->decimal('length_max', 5, 2);
             $table->enum('gender', ['M', 'F']);
-            $table->string('lt_class',25);
+            $table->string('lt_class', 25);
         });
     }
 

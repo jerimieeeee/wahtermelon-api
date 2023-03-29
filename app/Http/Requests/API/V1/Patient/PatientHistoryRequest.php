@@ -30,7 +30,7 @@ class PatientHistoryRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'medical_history.*.medical_history_id' => 'required|exists:lib_medical_histories,id',
             'medical_history.*.category' => 'required|exists:lib_medical_history_categories,id',
-            'medical_history.*.remarks' => 'nullable'
+            'medical_history.*.remarks' => 'nullable',
         ];
     }
 

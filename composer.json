@@ -14,6 +14,7 @@
         "laravel/passport": "^11.8.3",
         "laravel/sanctum": "^3.2.1",
         "laravel/tinker": "^2.8.1",
+        "silber/bouncer": "^1.0",
         "league/flysystem-aws-s3-v3": "^3.12.2",
         "spatie/array-to-xml": "^3.1.5",
         "spatie/laravel-query-builder": "^5.2",

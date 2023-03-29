@@ -32,7 +32,7 @@ class HouseholdFolderRequest extends FormRequest
             'address' => 'required',
             'barangay_code' => 'required|exists:barangays,code',
             'cct_date' => 'date|date_format:Y-m-d|before:tomorrow|nullable',
-            'cct_id' => 'nullable'
+            'cct_id' => 'nullable',
         ];
     }
 
@@ -45,24 +45,24 @@ class HouseholdFolderRequest extends FormRequest
             ],
             'family_role_code' => [
                 'description' => 'Family role of the patient',
-                'example' => fake()->randomElement(LibFamilyRole::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibFamilyRole::pluck('code')->toArray()),
             ],
             'address' => [
                 'description' => 'Household address',
-                'example' => fake()->address()
+                'example' => fake()->address(),
             ],
             'barangay_code' => [
                 'description' => 'Household barangay code',
-                'example' => fake()->randomElement(Barangay::pluck('code')->toArray())
+                'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
             ],
             'cct_date' => [
                 'description' => 'CCT Date of the household',
-                'example' => fake()->optional()->date('Y-m-d')
+                'example' => fake()->optional()->date('Y-m-d'),
             ],
             'cct_id' => [
                 'description' => 'CCT Id of the household',
-                'example' => fake()->optional()->randomDigit()
-            ]
+                'example' => fake()->optional()->randomDigit(),
+            ],
         ];
     }
 }

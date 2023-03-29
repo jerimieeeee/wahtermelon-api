@@ -32,9 +32,9 @@ class PatientNcdRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-         $this->merge([
+        $this->merge([
             'assessment_date' => $this->date_enrolled,
-            'id' => $this->patient_ncd_id
+            'id' => $this->patient_ncd_id,
         ]);
     }
 
@@ -50,6 +50,5 @@ class PatientNcdRequest extends FormRequest
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
             ],
         ];
-
     }
 }

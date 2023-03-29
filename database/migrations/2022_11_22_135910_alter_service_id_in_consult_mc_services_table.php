@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('consult_mc_services', function (Blueprint $table) {
             $table->string('facility_code')->index()->after('patient_mc_id');
-            $table->char('service_id',10)->change();
+            $table->char('service_id', 10)->change();
             $table->boolean('positive_result')->nullable()->change();
             $table->boolean('intake_penicillin')->nullable()->change();
             $table->dropColumn('visit_type');
@@ -36,7 +36,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::table('consult_mc_services', function (Blueprint $table) {
-            $table->char('visit_type',10);
+            $table->char('visit_type', 10);
             $table->dropForeign(['visit_type_code']);
             $table->dropColumn('visit_type_code');
 
@@ -44,11 +44,10 @@ return new class extends Migration
             $table->dropColumn('facility_code');
 
             $table->dropForeign(['service_id']);
-            $table->char('service_id',5)->change();
+            $table->char('service_id', 5)->change();
 
             $table->boolean('positive_result')->nullable(0)->change();
             $table->boolean('intake_penicillin')->nullable(0)->change();
-
         });
         Schema::enableForeignKeyConstraints();
     }

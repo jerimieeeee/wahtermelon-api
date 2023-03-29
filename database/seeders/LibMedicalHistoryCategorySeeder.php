@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibMedicalHistoryCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -21,8 +20,8 @@ class LibMedicalHistoryCategorySeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibMedicalHistoryCategory::upsert([
-          ['desc' => 'Past'],
-          ['desc' => 'Family'],
+            ['desc' => 'Past'],
+            ['desc' => 'Family'],
         ], ['id']);
     }
 }
