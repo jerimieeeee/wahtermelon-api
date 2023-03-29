@@ -15,17 +15,17 @@ class OtherDiagnosticExamResource extends JsonResource
     public function toArray($request)
     {
         return [
-            '_attributes'  => [
-                'pReferralFacility' => strtoupper($this->getRelatedModel($this->lab)->referral_facility?? ""),
-                'pLabDate' => isset($this->getRelatedModel($this->lab)->laboratory_date) ? $this->getRelatedModel($this->lab)->laboratory_date->format('Y-m-d') : "",
-                'pOthDiagExam' => strtoupper($this->laboratory->desc?? ""),
-                'pFindings' => strtoupper($this->getRelatedModel($this->lab)->remarks?? ""),
-                'pDateAdded' => isset($this->getRelatedModel($this->lab)->created_at) ? $this->getRelatedModel($this->lab)->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->getRelatedModel($this->lab)->lab_status_code?? "",
-                'pDiagnosticLabFee' => "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => "",
-            ]
+            '_attributes' => [
+                'pReferralFacility' => strtoupper($this->getRelatedModel($this->lab)->referral_facility ?? ''),
+                'pLabDate' => isset($this->getRelatedModel($this->lab)->laboratory_date) ? $this->getRelatedModel($this->lab)->laboratory_date->format('Y-m-d') : '',
+                'pOthDiagExam' => strtoupper($this->laboratory->desc ?? ''),
+                'pFindings' => strtoupper($this->getRelatedModel($this->lab)->remarks ?? ''),
+                'pDateAdded' => isset($this->getRelatedModel($this->lab)->created_at) ? $this->getRelatedModel($this->lab)->created_at->format('Y-m-d') : '',
+                'pStatus' => $this->getRelatedModel($this->lab)->lab_status_code ?? '',
+                'pDiagnosticLabFee' => '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

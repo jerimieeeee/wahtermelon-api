@@ -29,7 +29,7 @@ class MedicineDispensing extends Model
         'dispensing_date' => 'date:Y-m-d',
         'quantity' => 'integer',
         'unit_price' => 'float',
-        'total_amount' => 'integer'
+        'total_amount' => 'integer',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibMedicineUnitOfMeasurement;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibMedicineUnitOfMeasurementSeeder extends Seeder
@@ -25,7 +24,7 @@ class LibMedicineUnitOfMeasurementSeeder extends Seeder
             ['code' => 'pt', 'desc' => 'Pint'],
             ['code' => 'qt', 'desc' => 'Quart'],
             ['code' => 'T, tbs', 'desc' => 'Tablespoon'],
-            ['code' => 't, tsp', 'desc' => 'Teaspoon']
+            ['code' => 't, tsp', 'desc' => 'Teaspoon'],
         ], ['code']);
     }
 }

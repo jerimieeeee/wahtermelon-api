@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibReligion;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibReligionSeeder extends Seeder

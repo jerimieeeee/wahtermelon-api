@@ -3,11 +3,10 @@
 namespace App\Models\V1\NCD;
 
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PatientNcdRecordTargetOrgan extends Model
@@ -17,7 +16,7 @@ class PatientNcdRecordTargetOrgan extends Model
     protected $table = 'patient_ncd_record_target_organs';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function getRouteKeyName()

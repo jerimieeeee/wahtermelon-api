@@ -10,16 +10,14 @@ class ConsultCcdev extends Model
 {
     use HasFactory, FilterByUser;
 
-    protected $guarded = ['id',];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'visit_date' => 'date:Y-m-d',
     ];
 
-
-    public function patientccdev(){
-
+    public function patientccdev()
+    {
         return $this->belongsTo(PatientCcdev::class);
-
     }
 }

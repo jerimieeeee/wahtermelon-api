@@ -4,20 +4,8 @@ namespace Tests\Feature\API\V1;
 
 use App\Models\User;
 use App\Models\V1\Childcare\ConsultCcdevBreastfed;
-use App\Models\V1\Libraries\LibBloodType;
-use App\Models\V1\Libraries\LibCivilStatus;
-use App\Models\V1\Libraries\LibEducation;
-use App\Models\V1\Libraries\LibOccupation;
-use App\Models\V1\Libraries\LibPwdType;
-use App\Models\V1\Libraries\LibReligion;
-use App\Models\V1\Libraries\LibSuffixName;
-use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
-use App\Models\V1\PSGC\Facility;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Str;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -25,8 +13,6 @@ class PatientTest extends TestCase
 {
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
     public function test_model_patient_can_be_instantiated(): void
     {

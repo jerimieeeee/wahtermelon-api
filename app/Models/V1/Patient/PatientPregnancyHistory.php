@@ -7,17 +7,17 @@ use App\Models\V1\Libraries\LibPregnancyDeliveryType;
 use App\Models\V1\Libraries\LibPregnancyHistoryAnswer;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
 use App\Traits\FilterByUser;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PatientPregnancyHistory extends Model
 {
     use HasFactory, HasUuids, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

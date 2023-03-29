@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibPtGroup;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class LibPtGroupSeeder extends Seeder
 {
@@ -21,12 +20,12 @@ class LibPtGroupSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibPtGroup::upsert([
-          ['id' => 'cn', 'desc' => 'Consultation'],
-          ['id' => 'mc', 'desc' => 'Maternal Care'],
-          ['id' => 'cc', 'desc' => 'Child Care'],
-          ['id' => 'ab', 'desc' => 'Animal Bite'],
-          ['id' => 'ncd', 'desc' => 'Noncommunicable disease'],
-          ['id' => 'cv', 'desc' => 'COVID-19'],
+            ['id' => 'cn', 'desc' => 'Consultation'],
+            ['id' => 'mc', 'desc' => 'Maternal Care'],
+            ['id' => 'cc', 'desc' => 'Child Care'],
+            ['id' => 'ab', 'desc' => 'Animal Bite'],
+            ['id' => 'ncd', 'desc' => 'Noncommunicable disease'],
+            ['id' => 'cv', 'desc' => 'COVID-19'],
         ], ['id']);
     }
 }

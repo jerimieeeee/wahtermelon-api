@@ -16,15 +16,15 @@ class LaboratoryEcgResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => strtoupper($this->ecg->referral_facility?? ""),
-                'pLabDate' => isset($this->ecg->laboratory_date) ? $this->ecg->laboratory_date->format('Y-m-d') : "",
-                'pFindings' => $this->ecg->findings_code?? "",
-                'pRemarks' => strtoupper($this->ecg->remarks?? ""),
-                'pDateAdded' => isset($this->ecg->created_at) ? $this->ecg->created_at->format('Y-m-d') : "",
-                'pStatus' => $this->ecg->lab_status_code?? "",
-                'pDiagnosticLabFee' => "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
+                'pReferralFacility' => strtoupper($this->ecg->referral_facility ?? ''),
+                'pLabDate' => isset($this->ecg->laboratory_date) ? $this->ecg->laboratory_date->format('Y-m-d') : '',
+                'pFindings' => $this->ecg->findings_code ?? '',
+                'pRemarks' => strtoupper($this->ecg->remarks ?? ''),
+                'pDateAdded' => isset($this->ecg->created_at) ? $this->ecg->created_at->format('Y-m-d') : '',
+                'pStatus' => $this->ecg->lab_status_code ?? '',
+                'pDiagnosticLabFee' => '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
             ],
         ];
     }

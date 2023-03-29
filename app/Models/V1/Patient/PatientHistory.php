@@ -5,10 +5,10 @@ namespace App\Models\V1\Patient;
 use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibMedicalHistoryCategory;
 use App\Traits\FilterByUser;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PatientHistory extends Model
 {
@@ -17,7 +17,7 @@ class PatientHistory extends Model
     protected $table = 'patient_histories';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

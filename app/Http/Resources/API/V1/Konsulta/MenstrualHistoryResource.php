@@ -16,19 +16,19 @@ class MenstrualHistoryResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pMenarchePeriod' => $this->menarche?? "",
-                'pLastMensPeriod' => $this->lmp?? "",
-                'pPeriodDuration' => $this->period_duration?? "",
-                'pMensInterval' => $this->cycle?? "",
-                'pPadsPerDay' => $this->pads_per_day?? "",
-                'pOnsetSexIc' => $this->onset_sexual_intercourse?? "",
-                'pBirthCtrlMethod' => $this->method?? "",
-                'pIsMenopause'=> !empty($this->id) ? $this->menopause ? "Y" : "N" : "",
-                'pMenopauseAge' => !empty($this->menopause) ? $this->menopause_age : "",
-                'pIsApplicable' => !empty($this->id) ? "Y" : "N",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pMenarchePeriod' => $this->menarche ?? '',
+                'pLastMensPeriod' => $this->lmp ?? '',
+                'pPeriodDuration' => $this->period_duration ?? '',
+                'pMensInterval' => $this->cycle ?? '',
+                'pPadsPerDay' => $this->pads_per_day ?? '',
+                'pOnsetSexIc' => $this->onset_sexual_intercourse ?? '',
+                'pBirthCtrlMethod' => $this->method ?? '',
+                'pIsMenopause' => ! empty($this->id) ? $this->menopause ? 'Y' : 'N' : '',
+                'pMenopauseAge' => ! empty($this->menopause) ? $this->menopause_age : '',
+                'pIsApplicable' => ! empty($this->id) ? 'Y' : 'N',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

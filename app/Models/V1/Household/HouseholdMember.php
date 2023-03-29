@@ -14,7 +14,6 @@ class HouseholdMember extends Model
 {
     use HasFactory, SoftDeletes, FilterByUser;
 
-
     protected $fillable = ['household_folder_id', 'patient_id', 'user_id', 'family_role_code'];
 
     protected function serializeDate(DateTimeInterface $date)

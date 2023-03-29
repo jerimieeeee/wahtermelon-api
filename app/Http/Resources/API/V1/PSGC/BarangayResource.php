@@ -15,41 +15,41 @@ class BarangayResource extends JsonResource
     protected $level1Geographics = [
         City::class => [
             'resource' => CityResource::class,
-            'index'    => 'city',
+            'index' => 'city',
         ],
         Municipality::class => [
             'resource' => MunicipalityResource::class,
-            'index'    => 'municipality',
+            'index' => 'municipality',
         ],
         SubMunicipality::class => [
             'resource' => SubMunicipalityResource::class,
-            'index'    => 'sub_municipality',
+            'index' => 'sub_municipality',
         ],
     ];
 
     protected $level2Geographics = [
         Region::class => [
             'resource' => RegionResource::class,
-            'index'    => 'region',
+            'index' => 'region',
         ],
         Province::class => [
             'resource' => ProvinceResource::class,
-            'index'    => 'province',
+            'index' => 'province',
         ],
         District::class => [
             'resource' => DistrictResource::class,
-            'index'    => 'district',
+            'index' => 'district',
         ],
         City::class => [
             'resource' => CityResource::class,
-            'index'    => 'city',
+            'index' => 'city',
         ],
     ];
 
     protected $level3Geographics = [
         District::class => [
             'resource' => DistrictResource::class,
-            'index'    => 'district',
+            'index' => 'district',
         ],
     ];
 
@@ -63,23 +63,23 @@ class BarangayResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->condition = $request->include != 'barangays'  && ! is_null($request->barangay) || $request->location == 'show';
+        $this->condition = $request->include != 'barangays' && ! is_null($request->barangay) || $request->location == 'show';
 
-        list($level1, $level1Resource, $level1Index) = $this->level1();
-        list($level2, $level2Resource, $level2Index) = $this->level2($level1);
-        list($level3, $level3Value, $level3Index) = $this->level3($level2);
+        [$level1, $level1Resource, $level1Index] = $this->level1();
+        [$level2, $level2Resource, $level2Index] = $this->level2($level1);
+        [$level3, $level3Value, $level3Index] = $this->level3($level2);
 
         $region = isset($level3) ? $level3->region : (get_class($level2) != Region::class ? $level2->region : $level2);
 
         return array_filter([
-            'code'        => $this->code,
-            'name'        => $this->name,
+            'code' => $this->code,
+            'name' => $this->name,
             'urban_rural' => $this->urban_rural,
-            'population'  => $this->population,
-            $level1Index  => $this->when($this->condition, new $level1Resource($level1)),
-            $level2Index  => $this->when($this->condition, new $level2Resource($level2)),
-            $level3Index  => isset($level3Value) ? $level3Value : '',
-            'region'      => $this->when($this->condition, new RegionResource($region)),
+            'population' => $this->population,
+            $level1Index => $this->when($this->condition, new $level1Resource($level1)),
+            $level2Index => $this->when($this->condition, new $level2Resource($level2)),
+            $level3Index => isset($level3Value) ? $level3Value : '',
+            'region' => $this->when($this->condition, new RegionResource($region)),
         ]);
     }
 
@@ -132,8 +132,8 @@ class BarangayResource extends JsonResource
 
         return [
             isset($level3) ? $level3 : null,
-                $level3Value ?? null,
-                $level3Index ?? null,
+            $level3Value ?? null,
+            $level3Index ?? null,
         ];
     }
 }

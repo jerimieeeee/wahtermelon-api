@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\V1\Libraries\LibMcAttendant;
 use App\Models\V1\Libraries\LibMcDeliveryLocation;
 use App\Models\V1\Libraries\LibMcOutcome;
-use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -21,7 +20,7 @@ class PatientMcPostRegistration extends Model
     use HasFactory, SoftDeletes, HasUuid, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

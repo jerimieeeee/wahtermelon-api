@@ -27,12 +27,13 @@ class KonsultaTransmittalFactory extends Factory
             'program_code' => 'kp',
             'facility_name' => 'TONDO FORESHORE SUPER HEALTH CENTER',
         ]);
-        $prefix = 'R' . $philhealth->accreditation_number . date('Ym');
+        $prefix = 'R'.$philhealth->accreditation_number.date('Ym');
         $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+
         return [
             'facility_code' => $philhealth->facility_code,
             'user_id' => $philhealth->user_id,
-            'transmittal_number' => $transmittalNumber
+            'transmittal_number' => $transmittalNumber,
         ];
     }
 }

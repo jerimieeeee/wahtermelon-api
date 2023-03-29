@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API\V1\Childcare;
 
 use App\Models\User;
-use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
@@ -73,9 +72,8 @@ class PatientCcdevRequest extends FormRequest
             ],
             'nbs_filter' => [
                 'description' => 'New born screen filter number',
-                'example' => fake()->regexify('[0-9]{10}')
+                'example' => fake()->regexify('[0-9]{10}'),
             ],
         ];
-
     }
 }

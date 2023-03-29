@@ -9,17 +9,17 @@ use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use App\Traits\HasUuid;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DateTimeInterface;
 
 class ConsultMcService extends Model
 {
     use HasFactory, SoftDeletes, HasUuid, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

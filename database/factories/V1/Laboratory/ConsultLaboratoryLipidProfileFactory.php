@@ -24,6 +24,7 @@ class ConsultLaboratoryLipidProfileFactory extends Factory
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'LPFL']);
+
         return [
             'facility_code' => $consult->facility_code,
             'consult_id' => $consult->consult_id,

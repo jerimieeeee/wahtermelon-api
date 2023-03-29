@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('patient_philhealth', function (Blueprint $table) {
             $table->id();
-            $table->string('philhealth_id',14)->index();
+            $table->string('philhealth_id', 14)->index();
             $table->string('facility_code')->index();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->nullable()->index()->constrained();
@@ -25,15 +25,15 @@ return new class extends Migration
             $table->char('package_type_id')->index();
             $table->char('membership_type_id')->index();
             $table->foreignId('membership_category_id')->index()->constrained('lib_philhealth_membership_categories');
-            $table->string('member_pin',14)->index()->nullable();
+            $table->string('member_pin', 14)->index()->nullable();
             $table->string('member_last_name')->index()->nullable();
             $table->string('member_first_name')->index()->nullable();
             $table->string('member_middle_name')->index()->nullable();
             $table->string('member_suffix_name')->index()->nullable();
             $table->date('member_birthdate')->index()->nullable();
             $table->enum('member_gender', ['M', 'F'])->index()->nullable();
-            $table->char('member_relation_id',1)->index()->nullable();
-            $table->string('employer_pin',12)->index()->nullable();
+            $table->char('member_relation_id', 1)->index()->nullable();
+            $table->string('employer_pin', 12)->index()->nullable();
             $table->string('employer_address')->index()->nullable();
             $table->timestamps();
 

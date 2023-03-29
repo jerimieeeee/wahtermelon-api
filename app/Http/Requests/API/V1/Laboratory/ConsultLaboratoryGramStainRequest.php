@@ -4,10 +4,7 @@ namespace App\Http\Requests\API\V1\Laboratory;
 
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
-use App\Models\V1\Libraries\LibLaboratoryBloodInStool;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
-use App\Models\V1\Libraries\LibLaboratoryStoolColor;
-use App\Models\V1\Libraries\LibLaboratoryStoolConsistency;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Passport\Passport;
@@ -52,27 +49,28 @@ class ConsultLaboratoryGramStainRequest extends FormRequest
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'GRMS']);
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'nugent_score' => [
                 'example' => fake()->randomDigit(),
@@ -87,10 +85,10 @@ class ConsultLaboratoryGramStainRequest extends FormRequest
                 'example' => fake()->randomDigit(),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

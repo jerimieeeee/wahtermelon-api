@@ -4,10 +4,10 @@ namespace App\Models\V1\Patient;
 
 use App\Models\V1\Libraries\LibFpMethod;
 use App\Traits\FilterByUser;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use DateTimeInterface;
 
 class PatientMenstrualHistory extends Model
 {
@@ -16,7 +16,7 @@ class PatientMenstrualHistory extends Model
     protected $table = 'patient_menstrual_histories';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

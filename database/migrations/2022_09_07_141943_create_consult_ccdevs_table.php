@@ -20,7 +20,6 @@ return new class extends Migration
             $table->dateTime('visit_date');
             $table->boolean('visit_ended');
             $table->timestamps();
-
         });
     }
 

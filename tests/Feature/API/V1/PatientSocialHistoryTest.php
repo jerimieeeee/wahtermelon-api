@@ -6,8 +6,6 @@ use App\Models\User;
 use App\Models\V1\Libraries\LibNcdAnswerS2;
 use App\Models\V1\Libraries\LibPatientSocialHistoryAnswer;
 use App\Models\V1\Patient\Patient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 

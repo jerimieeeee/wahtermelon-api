@@ -6,8 +6,6 @@ use App\Models\User;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Libraries\LibFamilyRole;
 use App\Models\V1\Patient\Patient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -26,7 +24,7 @@ class HouseholdFolderTest extends TestCase
         $householdFactory = HouseholdFolder::factory()->make()->toArray();
         $response = $this->post('api/v1/households/household-folders', $householdFactory + [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'family_role_code' => fake()->randomElement(LibFamilyRole::pluck('code')->toArray())
+            'family_role_code' => fake()->randomElement(LibFamilyRole::pluck('code')->toArray()),
         ]);
 
         $response->assertCreated();

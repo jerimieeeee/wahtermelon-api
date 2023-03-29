@@ -26,7 +26,7 @@ return new class extends Migration
             $table->char('observation_code', 10)->index()->nullable();
             $table->string('remarks_observation')->nullable();
             $table->string('remarks')->nullable();
-            $table->char('lab_status_code',10)->index();
+            $table->char('lab_status_code', 10)->index();
             $table->softDeletes();
             $table->timestamps();
 

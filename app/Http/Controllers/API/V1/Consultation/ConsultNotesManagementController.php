@@ -4,17 +4,18 @@ namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesManagementRequest;
-use App\Http\Resources\API\V1\Consultation\ConsultNotesManagementResource;
 use App\Models\V1\Consultation\ConsultNotesManagement;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Management information
+ *
  * @subgroup Patient Consultation Management
+ *
  * @subgroupDescription Patient Consultation Management.
  */
 class ConsultNotesManagementController extends Controller
@@ -32,7 +33,6 @@ class ConsultNotesManagementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConsultNotesManagementRequest $request
      * @return JsonResponse
      */
     public function store(ConsultNotesManagementRequest $request)
@@ -42,11 +42,11 @@ class ConsultNotesManagementController extends Controller
             ->where('notes_id', $request->safe()->notes_id)
             ->delete();
 
-            if (isset($request->management)) {
-                foreach($management as $value){
-                    ConsultNotesManagement::create(['notes_id' => $request->input('notes_id'), 'patient_id' => $request->input('patient_id')] + $value);
-                }
+        if (isset($request->management)) {
+            foreach ($management as $value) {
+                ConsultNotesManagement::create(['notes_id' => $request->input('notes_id'), 'patient_id' => $request->input('patient_id')] + $value);
             }
+        }
 
         return response()->json([
             'message' => 'consult management successfully Saved',
@@ -67,7 +67,6 @@ class ConsultNotesManagementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

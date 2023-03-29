@@ -8,15 +8,17 @@ use App\Http\Resources\API\V1\MaternalCare\PatientMcPostRegistrationResource;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
 use App\Services\MaternalCare\MaternalCareRecordService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
  * @authenticated
+ *
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
+ *
  * @subgroup Post Registration
+ *
  * @subgroupDescription Post Registration management.
  */
 class PatientMcPostRegistrationController extends Controller
@@ -41,18 +43,17 @@ class PatientMcPostRegistrationController extends Controller
     {
         //return $data = PatientMcPostRegistration::create($request->all());
         $mc = $maternalCareRecordService->getLatestMcRecord($request->all());
-        if(!$mc){
-            $mc = PatientMc::create($request-> validatedWithCasts());
+        if (! $mc) {
+            $mc = PatientMc::create($request->validatedWithCasts());
+
             return $mc->postRegister()->create($request->validated());
         }
-        return PatientMc::find($mc->id)->postRegister()->updateOrCreate(['patient_mc_id' => $mc->id],$request->validated());
+
+        return PatientMc::find($mc->id)->postRegister()->updateOrCreate(['patient_mc_id' => $mc->id], $request->validated());
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param PatientMcPostRegistration $postRegistration
-     * @return PatientMcPostRegistrationResource
      */
     public function show(PatientMcPostRegistration $postRegistration): PatientMcPostRegistrationResource
     {
@@ -62,13 +63,12 @@ class PatientMcPostRegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PatientMcPostRegistrationRequest $request
-     * @param PatientMcPostRegistration $postRegistration
      * @return Response
      */
     public function update(PatientMcPostRegistrationRequest $request, PatientMcPostRegistration $postRegistration)
     {
         $postRegistration->update($request->validatedWithCasts());
+
         return $postRegistration;
     }
 

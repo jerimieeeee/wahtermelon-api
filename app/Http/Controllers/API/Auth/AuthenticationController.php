@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +18,6 @@ class AuthenticationController extends Controller
     /**
      * User Login API
      *
-     * @param LoginRequest $request
-     * @return JsonResponse
      * @throws ValidationException
      */
     public function login(LoginRequest $request): JsonResponse
@@ -33,22 +30,21 @@ class AuthenticationController extends Controller
             $abilities = ["*"];
         }*/
 
-
         $tokenResult = $user->createToken(request()->ip())->accessToken;
 
         return response()->json([
             'status_code' => 200,
             'access_token' => $tokenResult,
             'token_type' => 'Bearer',
-            'user' => Auth::user()->load('konsultaCredential')?? Auth::user(),
-        ])->withCookie(Cookie::make('access_token', $tokenResult, 3600, '/', null, true, true, true, 'None'));;
+            'user' => Auth::user()->load('konsultaCredential') ?? Auth::user(),
+        ])->withCookie(Cookie::make('access_token', $tokenResult, 3600, '/', null, true, true, true, 'None'));
     }
 
     /**
      * User Logout API
+     *
      * @authenticated
      *
-     * @param Request $request
      * @return JsonResponse
      */
     public function logout(Request $request)
@@ -72,9 +68,7 @@ class AuthenticationController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'You have successfully logged out!'
+            'message' => 'You have successfully logged out!',
         ]);
     }
-
-
 }

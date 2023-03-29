@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('code')->index()->unique();
             $table->string('desc')->index();
-            $table->char('generic_code',10)->index();
-            $table->char('salt_code',10)->index();
-            $table->char('form_code',10)->index();
-            $table->char('strength_code',10)->index();
-            $table->char('unit_code',10)->index();
-            $table->char('package_code',10)->index();
+            $table->char('generic_code', 10)->index();
+            $table->char('salt_code', 10)->index();
+            $table->char('form_code', 10)->index();
+            $table->char('strength_code', 10)->index();
+            $table->char('unit_code', 10)->index();
+            $table->char('package_code', 10)->index();
             $table->string('category')->index();
 
             $table->foreign('generic_code')->references('code')->on('lib_konsulta_medicine_generics');

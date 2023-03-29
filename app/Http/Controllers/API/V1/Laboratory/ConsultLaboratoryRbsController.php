@@ -14,10 +14,13 @@ use Throwable;
 
 /**
  * @authenticated
+ *
  * @group Laboratory Management
  *
  * APIs for managing laboratories
+ *
  * @subgroup RBS
+ *
  * @subgroupDescription Consult laboratory for RBS.
  */
 class ConsultLaboratoryRbsController extends Controller
@@ -31,22 +34,22 @@ class ConsultLaboratoryRbsController extends Controller
      * @queryParam request_id string Consult Laboratory id to view.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryRbsResource
+     *
      * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryRbs paginate=15
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = ConsultLaboratoryRbs::query()
-            ->when(isset($request->patient_id), function($query) use($request){
+            ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             })
-            ->when(isset($request->consult_id), function($query) use($request){
+            ->when(isset($request->consult_id), function ($query) use ($request) {
                 return $query->whereConsultId($request->consult_id);
             })
-            ->when(isset($request->request_id), function($query) use($request){
+            ->when(isset($request->request_id), function ($query) use ($request) {
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
@@ -63,21 +66,16 @@ class ConsultLaboratoryRbsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param ConsultLaboratoryRbsRequest $request
-     * @return JsonResponse
      */
     public function store(ConsultLaboratoryRbsRequest $request): JsonResponse
     {
         $data = ConsultLaboratoryRbs::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+
         return response()->json(['data' => new ConsultLaboratoryRbsResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param ConsultLaboratoryRbs $rbs
-     * @return ConsultLaboratoryRbsResource
      */
     public function show(ConsultLaboratoryRbs $rbs): ConsultLaboratoryRbsResource
     {
@@ -86,27 +84,23 @@ class ConsultLaboratoryRbsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param ConsultLaboratoryRbsRequest $request
-     * @param ConsultLaboratoryRbs $rbs
-     * @return JsonResponse
      */
     public function update(ConsultLaboratoryRbsRequest $request, ConsultLaboratoryRbs $rbs): JsonResponse
     {
         $rbs->update($request->validated());
+
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConsultLaboratoryRbs $rbs
-     * @return JsonResponse
      * @throws Throwable
      */
     public function destroy(ConsultLaboratoryRbs $rbs): JsonResponse
     {
         $rbs->deleteOrFail();
+
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

@@ -13,20 +13,22 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Consultation
  *
  * APIs for managing libraries
+ *
  * @subgroup Physical Exams
+ *
  * @subgroupDescription List of Physical Exams.
  */
 class LibPeController extends Controller
 {
-
     /**
      * Display a listing of the Physical Exams resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibPeResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibPe
+     *
      * @return ResourceCollection
      */
-
     public function index(Request $request)
     {
         // return LibPeResource::collection(LibPe::orderBy('seq_id', 'ASC')->get());
@@ -34,18 +36,19 @@ class LibPeController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = QueryBuilder::for(LibPe::class)
                 ->whereKonsultaLibraryStatus(1);
+
         return LibPeResource::collection($query->get());
 
         if ($perPage === 'all') {
             return LibPeResource::collection($query->get());
         }
+
         return LibPeResource::collection($query->paginate($perPage)->withQueryString()->orderBy('seq_id', 'ASC'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -57,8 +60,9 @@ class LibPeController extends Controller
      * Display the specified Physical Exams resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibPeResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibPe
-     * @param LibPe $pe_id
+     *
      * @return LibPeResource
      */
     public function show(LibPe $pe_id, string $id): JsonResource
@@ -69,7 +73,6 @@ class LibPeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

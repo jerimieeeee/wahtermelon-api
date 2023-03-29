@@ -26,6 +26,7 @@ class ConsultLaboratoryFecalOccultFactory extends Factory
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'FOBT']);
         $findings = fake()->randomElement(LibLaboratoryResult::pluck('code')->toArray());
+
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

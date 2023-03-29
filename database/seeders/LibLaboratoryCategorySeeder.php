@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibLaboratoryCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibLaboratoryCategorySeeder extends Seeder
@@ -107,7 +106,6 @@ class LibLaboratoryCategorySeeder extends Seeder
             // ['lab_code' => 'URN', 'field_name' => 'red_cell', 'field_desc' => 'Red Cell Cast', 'group_cat' => 'CASTS', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '3', 'field_active' => 1],
             // ['lab_code' => 'URN', 'field_name' => 'hyaline', 'field_desc' => 'Hyaline Cast', 'group_cat' => 'CASTS', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '4', 'field_active' => 1],
             // ['lab_code' => 'URN', 'field_name' => 'waxy', 'field_desc' => 'Waxy Cast', 'group_cat' => 'CASTS', 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '5', 'field_active' => 1],
-
 
             ['lab_code' => 'URN', 'field_name' => 'gravity',         'field_desc' => 'Gravity',                    'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
             ['lab_code' => 'URN', 'field_name' => 'appearance',      'field_desc' => 'Appearance',                 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],

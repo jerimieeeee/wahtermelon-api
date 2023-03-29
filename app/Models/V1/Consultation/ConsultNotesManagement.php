@@ -15,7 +15,7 @@ class ConsultNotesManagement extends Model
     protected $keyType = 'string';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function getRouteKeyName()

@@ -65,90 +65,91 @@ class ConsultLaboratoryCbcRequest extends FormRequest
         );
         //$consult = ConsultLaboratory::whereLabCode('CBC')->inRandomOrder()->limit(1)->first();
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CBC']);
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'hemoglobin' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'hematocrit' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'rbc' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'mcv' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'mch' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'mchc' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'wbc' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'neutrophils' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'lymphocytes' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'basophils' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'monocytes' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'eosinophils' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'stab' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'juvenile' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'platelets' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'reticulocytes' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'bleeding_time' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'clothing_time' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'esr' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

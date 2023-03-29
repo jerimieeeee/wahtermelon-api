@@ -40,7 +40,6 @@ class ConsultPeRemarksRequest extends FormRequest
             'rectal_remarks' => 'nullable',
             'genitourinary_remarks' => 'nullable',
         ];
-
     }
 
     public function bodyParameters()
@@ -99,6 +98,5 @@ class ConsultPeRemarksRequest extends FormRequest
                 'example' => fake()->sentence(),
             ],
         ];
-
     }
 }

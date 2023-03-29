@@ -11,10 +11,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Patient History Management
  *
  * APIs for managing Patient History
+ *
  * @subgroup Menstrual History
+ *
  * @subgroupDescription Patient Menstrual History management.
  */
 class PatientMenstrualHistoryController extends Controller
@@ -24,6 +27,7 @@ class PatientMenstrualHistoryController extends Controller
      *
      * @queryParam patient_id string Patient record to view.
      * @queryParam patient_id Identification code of the patient.
+     *
      * @return \Illuminate\Http\Response
      */
 
@@ -34,9 +38,11 @@ class PatientMenstrualHistoryController extends Controller
      * @queryParam patient_id Identification code of the patient.
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientMenstrualHistoryResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientMenstrualHistory paginate=15
-     * @param Request $request
+     *
      * @return ResourceCollection
      */
     public function index(Request $request)
@@ -44,7 +50,7 @@ class PatientMenstrualHistoryController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $patientMenstrualHistory = QueryBuilder::for(PatientMenstrualHistory::class)
-            ->when(isset($request->patient_id), function($q) use($request){
+            ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
             ->with('libFpMethod');
@@ -64,8 +70,9 @@ class PatientMenstrualHistoryController extends Controller
      */
     public function store(PatientMenstrualHistoryRequest $request)
     {
-        $data = PatientMenstrualHistory::updateOrCreate(['patient_id' => $request['patient_id']],$request->validated());
+        $data = PatientMenstrualHistory::updateOrCreate(['patient_id' => $request['patient_id']], $request->validated());
         $data1 = new PatientMenstrualHistoryResource($data);
+
         return response()->json(['data' => $data1], 201);
     }
 
@@ -80,13 +87,13 @@ class PatientMenstrualHistoryController extends Controller
         $query = PatientMenstrualHistory::where('id', $patientMenstrualHistory->id);
         $patientMenstrualHistory = QueryBuilder::for($query)
             ->first();
+
         return new PatientMenstrualHistoryResource($patientMenstrualHistory);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

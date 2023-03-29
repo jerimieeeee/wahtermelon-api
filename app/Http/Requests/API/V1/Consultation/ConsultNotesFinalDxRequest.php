@@ -4,7 +4,6 @@ namespace App\Http\Requests\API\V1\Consultation;
 
 use App\Models\User;
 use App\Models\V1\Consultation\ConsultNotes;
-use App\Models\V1\Libraries\LibDiagnosis;
 use App\Models\V1\Libraries\LibIcd10;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
@@ -56,6 +55,5 @@ class ConsultNotesFinalDxRequest extends FormRequest
                 'example' => fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
             ],
         ];
-
     }
 }

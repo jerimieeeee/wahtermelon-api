@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_laboratory_chestxray_observations', function (Blueprint $table) {
-            $table->char('code',10)->index()->primary();
+            $table->char('code', 10)->index()->primary();
             $table->string('desc')->index();
             $table->boolean('library_status')->default(1);
         });

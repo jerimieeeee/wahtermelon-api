@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('consult_id')->nullable()->index()->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->char('lab_code',10)->index();
+            $table->char('lab_code', 10)->index();
             $table->softDeletes();
             $table->timestamps();
 

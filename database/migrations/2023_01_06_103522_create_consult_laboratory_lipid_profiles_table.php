@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('triglycerides', 50)->nullable();
 
             $table->string('remarks')->nullable();
-            $table->char('lab_status_code',10)->index();
+            $table->char('lab_status_code', 10)->index();
             $table->softDeletes();
             $table->timestamps();
 

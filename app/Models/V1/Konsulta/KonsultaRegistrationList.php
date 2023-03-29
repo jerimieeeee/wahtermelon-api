@@ -11,7 +11,6 @@ use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +19,7 @@ class KonsultaRegistrationList extends Model
     use HasFactory, FilterByUser, FilterByFacility, HasSearchFilter;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     //public $incrementing = false;

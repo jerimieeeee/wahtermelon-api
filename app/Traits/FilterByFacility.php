@@ -25,7 +25,7 @@ trait FilterByFacility
                     }
                 }
 
-                if(Schema::hasColumn($builder->getQuery()->from, 'facility_code') && isset(auth()->user()->facility_code)){
+                if (Schema::hasColumn($builder->getQuery()->from, 'facility_code') && isset(auth()->user()->facility_code)) {
                     $builder->where($builder->getQuery()->from.'.facility_code', auth()->user()->facility_code);
                 }
             });

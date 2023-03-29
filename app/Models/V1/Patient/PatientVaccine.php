@@ -28,14 +28,13 @@ class PatientVaccine extends Model
         return 'patient_id';
     }
 
-    public function patient(){
-
-        return $this->belongsTo(Patient::class, 'patient_id') ;
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 
     public function vaccines(): BelongsTo
     {
         return $this->belongsTo(LibVaccine::class, 'vaccine_id', 'vaccine_id');
     }
-
 }

@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Consultation\ConsultNotesPe;
-use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesPeRequest;
+use App\Models\V1\Consultation\ConsultNotesPe;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Physical Exam information
+ *
  * @subgroup Patient Consultation Physical Exam
+ *
  * @subgroupDescription Patient Consultation Physical Exam.
  */
 class ConsultNotesPeController extends Controller
@@ -33,12 +36,12 @@ class ConsultNotesPeController extends Controller
      * Store a newly created Consultation Physical Exam resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesPeResource
+     *
      * @apiResourceModel App\Models\V1\Consultation\ConsultNotesPe
-     * @param ConsultNotesPeRequest $request
-     * @return JsonResponse
      */
-    public function store(ConsultNotesPeRequest $request) : JsonResponse
+    public function store(ConsultNotesPeRequest $request): JsonResponse
     {
         try {
             $pe_id = $request->physical_exam;
@@ -53,7 +56,6 @@ class ConsultNotesPeController extends Controller
             return response()->json([
                 'message' => 'Physical Exam Successfully Saved',
             ], 201);
-
         } catch (Exception $error) {
             return response()->json([
                 'Error' => $error,
@@ -81,7 +83,6 @@ class ConsultNotesPeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

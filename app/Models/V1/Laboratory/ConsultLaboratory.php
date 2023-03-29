@@ -22,7 +22,7 @@ class ConsultLaboratory extends Model
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $cascadeDeletes = [
@@ -42,7 +42,7 @@ class ConsultLaboratory extends Model
         'oralGlucose',
         'fecalOccult',
         'gramStain',
-        'microscopy'
+        'microscopy',
     ];
 
     public $incrementing = false;

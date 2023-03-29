@@ -16,11 +16,11 @@ class ManagementResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pManagementId' => $this->management_code?? "",
-                'pOthRemarks' => strtoupper($this->remarks?? ""),
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pManagementId' => $this->management_code ?? '',
+                'pOthRemarks' => strtoupper($this->remarks ?? ''),
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

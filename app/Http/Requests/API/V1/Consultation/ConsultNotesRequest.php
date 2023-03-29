@@ -83,6 +83,5 @@ class ConsultNotesRequest extends FormRequest
                 'example' => fake()->sentence(),
             ],
         ];
-
     }
 }

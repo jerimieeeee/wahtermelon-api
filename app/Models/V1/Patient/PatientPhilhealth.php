@@ -28,11 +28,11 @@ class PatientPhilhealth extends Model
         'id',
     ];
 
-   /* protected $casts = [
-        'enlistment_date' => 'date:Y-m-d',
-        'member_birthdate' => 'date:Y-m-d',
-        'effectivity_year' => 'date:Y'
-    ];*/
+    /* protected $casts = [
+         'enlistment_date' => 'date:Y-m-d',
+         'member_birthdate' => 'date:Y-m-d',
+         'effectivity_year' => 'date:Y'
+     ];*/
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -41,22 +41,22 @@ class PatientPhilhealth extends Model
 
     public function setMemberLastNameAttribute($value)
     {
-        $this->attributes["member_last_name"] = ucwords(strtolower($value));
+        $this->attributes['member_last_name'] = ucwords(strtolower($value));
     }
 
     public function setMemberFirstNameAttribute($value)
     {
-        $this->attributes["member_first_name"] = ucwords(strtolower($value));
+        $this->attributes['member_first_name'] = ucwords(strtolower($value));
     }
 
     public function setMemberMiddleNameAttribute($value)
     {
-        $this->attributes["member_middle_name"] = ucwords(strtolower($value));
+        $this->attributes['member_middle_name'] = ucwords(strtolower($value));
     }
 
     public function setEmployerAddressAttribute($value)
     {
-        $this->attributes["employer_address"] = ucwords(strtolower($value));
+        $this->attributes['employer_address'] = ucwords(strtolower($value));
     }
 
     public function memberSuffixName(): BelongsTo

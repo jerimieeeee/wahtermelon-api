@@ -28,20 +28,18 @@ class PatientCcdev extends Model
         return 'patient_id';
     }
 
-    public function consultccdev(){
-
+    public function consultccdev()
+    {
         return $this->hasOne(PatientCcdev::class);
-
     }
 
-    public function patient(){
-
+    public function patient()
+    {
         return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 
-    public function consultccdevbfed(){
-
+    public function consultccdevbfed()
+    {
         return $this->hasOne(ConsultCcdevBreastfed::class);
-
     }
 }

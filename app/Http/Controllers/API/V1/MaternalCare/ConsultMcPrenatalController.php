@@ -8,15 +8,17 @@ use App\Http\Resources\API\V1\MaternalCare\ConsultMcPrenatalResource;
 use App\Models\V1\MaternalCare\ConsultMcPrenatal;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Services\MaternalCare\MaternalCareRecordService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
  * @authenticated
+ *
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
+ *
  * @subgroup Prenatal Visit
+ *
  * @subgroupDescription Prenatal visit management.
  */
 class ConsultMcPrenatalController extends Controller
@@ -34,7 +36,6 @@ class ConsultMcPrenatalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConsultMcPrenatalRequest $request
      * @return Response
      */
     public function store(ConsultMcPrenatalRequest $request)
@@ -46,14 +47,12 @@ class ConsultMcPrenatalController extends Controller
         //return $request->validatedWithCasts();
         ConsultMcPrenatal::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'prenatal_date' => $request->prenatal_date], $request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
+
         return ConsultMcPrenatalResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date'));
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param ConsultMcPrenatal $mcPrenatal
-     * @return ConsultMcPrenatalResource
      */
     public function show(ConsultMcPrenatal $mcPrenatal): ConsultMcPrenatalResource
     {
@@ -63,14 +62,13 @@ class ConsultMcPrenatalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  ConsultMcPrenatalRequest $request
-     * @param  ConsultMcPrenatal $mcPrenatal
      * @return \Illuminate\Http\Response
      */
     public function update(ConsultMcPrenatalRequest $request, ConsultMcPrenatal $mcPrenatal)
     {
         $mcPrenatal->update($request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
+
         return ConsultMcPrenatalResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPrenatal', 'prenatal_date'));
     }
 

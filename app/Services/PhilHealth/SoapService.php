@@ -15,7 +15,7 @@ class SoapService
 {
     private function _client()
     {
-        $opts = array(
+        $opts = [
             'http' => [
                 'user_agent' => 'PHPSoapClient',
             ],
@@ -23,49 +23,52 @@ class SoapService
                 // set some SSL/TLS specific options
                 'verify_peer' => false,
                 'verify_peer_name' => false,
-                'allow_self_signed' => true
-            ]
-        );
+                'allow_self_signed' => true,
+            ],
+        ];
 
         //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
         $token = auth()->user()->konsultaCredential->token;
 
         $opts['http']['header'] = "Token: $token";
 
-        $wsdlUrl = "https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl";
+        $wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
 
         $context = stream_context_create($opts);
-        $soapClientOptions = array(
+        $soapClientOptions = [
             'location' => $wsdlUrl,
             'stream_context' => $context,
             'cache_wsdl' => WSDL_CACHE_NONE,
             'exceptions' => true,
-            'keep_alive' => false
-        );
+            'keep_alive' => false,
+        ];
 
-        try{
+        try {
             return new LocalSoapClient($wsdlUrl, $soapClientOptions);
-        }catch(\Exception $e){
+        } catch(\Exception $e) {
             $desc = $e->getMessage();
+
             return $desc;
         }
     }
 
     private function decryptResponse($encryptedOutput)
     {
-        if (!isJson($encryptedOutput->return)) {
+        if (! isJson($encryptedOutput->return)) {
             if (Str::contains($encryptedOutput->return, ['Please enter Valid', 'Koken', 'token'])) {
                 $credentials = auth()->user()->konsultaCredential;
                 $credentialsResource = GetTokenResource::make($credentials)->resolve();
                 $result = $this->soapMethod('getToken', $credentialsResource);
-                if(isset($result->success)) {
+                if (isset($result->success)) {
                     $result = (array) $result;
                     $credentials->update(['token' => $result['result']]);
+
                     return response()->json([
-                        'message' => 'Successfully added the token in the database! You may now use konsulta webservice.'
+                        'message' => 'Successfully added the token in the database! You may now use konsulta webservice.',
                     ], 201);
                 }
             }
+
             return $encryptedOutput;
         }
 
@@ -74,21 +77,21 @@ class SoapService
         //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
         $cipher_key = auth()->user()->konsultaCredential->cipher_key;
 
-        if(!isset($jsonOutput->hash))
-        {
-            if(isset($jsonOutput->encryptedxmlerrors))
-            {
+        if (! isset($jsonOutput->hash)) {
+            if (isset($jsonOutput->encryptedxmlerrors)) {
                 $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
+
                 return json_decode($decryptedData);
             }
-            if(isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors))
-            {
-                    return json_decode($jsonOutput->uploadxmlresult->errors);
+            if (isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors)) {
+                return json_decode($jsonOutput->uploadxmlresult->errors);
             }
+
             return $jsonOutput;
         }
 
         $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
+
         return XML2JSON($decryptedData);
     }
 
@@ -97,6 +100,7 @@ class SoapService
         $encryptor = new PhilHealthEClaimsEncryptor();
         //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
         $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+
         return $encryptor->encryptXmlPayloadData($data, $cipher_key);
     }
 
@@ -105,18 +109,18 @@ class SoapService
         //return $this->getToken();
         $this->client = $this->_client($params);
         try {
-          $result = $this->client->$method($params);
-          return $this->decryptResponse($result);
-        }
-        catch (\Exception $e) {
-             return $e;       // just re-throw it
+            $result = $this->client->$method($params);
+
+            return $this->decryptResponse($result);
+        } catch (\Exception $e) {
+            return $e;       // just re-throw it
         }
     }
 
     public function saveRegistrationList(array $data)
     {
         $newArray = [];
-        foreach($data as $key => $value){
+        foreach ($data as $key => $value) {
             $newArray[$key]['facility_code'] = auth()->user()->facility_code;
             $newArray[$key]['user_id'] = auth()->id();
             $newArray[$key]['custom_id'] = auth()->user()->facility_code.$value->pAssignedPin.$value->pEffYear;
@@ -176,12 +180,12 @@ class SoapService
     public function httpClient()
     {
         //return $response = Http::post('https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl');
-        $wsdlUrl = "https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl";
+        $wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
         $array = [
             'Body' => [
                 'getToken' => [
                     '_attributes' => [
-                        'xmlns' => 'http://philhealth.gov.ph/'
+                        'xmlns' => 'http://philhealth.gov.ph/',
                     ],
                     'pUserName' => '',
                     'pUserPassword' => '',
@@ -189,14 +193,14 @@ class SoapService
                         '_attributes' => [
                             'xmlns' => '',
                         ],
-                        '_value' => 'KON-DUMMYSCERTZ09634'
+                        '_value' => 'KON-DUMMYSCERTZ09634',
                     ],
                     'pHospitalCode' => [
                         '_attributes' => [
                             'xmlns' => '',
                         ],
                         '_value' => 'P01033020',
-                    ]
+                    ],
                 ],
             ],
         ];
@@ -211,18 +215,19 @@ class SoapService
             'pUserName' => '',
             'pUserPassword' => '',
             'pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634',
-            'pHospitalCode' => 'P01033020'
+            'pHospitalCode' => 'P01033020',
         ];
         //return Http::post($wsdlUrl,$postArray);
 
-        $http=Http::withHeaders([
+        $http = Http::withHeaders([
             'Content-Type' => 'text/xml; charset=utf-8',
-            'SOAPAction'=>'getToken'
-        ])->post($wsdlUrl,$postArray);
+            'SOAPAction' => 'getToken',
+        ])->post($wsdlUrl, $postArray);
+
         return $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'SOAPAction'=>'getToken'
+            'SOAPAction' => 'getToken',
         ])->post(
             $wsdlUrl,
             $postArray
@@ -232,9 +237,7 @@ class SoapService
 
         return response($http->body())
             ->withHeaders([
-                'Content-Type' => 'text/xml'
+                'Content-Type' => 'text/xml',
             ]);
     }
-
-
 }

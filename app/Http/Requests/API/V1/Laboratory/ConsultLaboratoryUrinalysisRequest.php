@@ -68,102 +68,103 @@ class ConsultLaboratoryUrinalysisRequest extends FormRequest
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'URN']);
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'gravity' => [
-                'example' => fake()->word()
+                'example' => fake()->word(),
             ],
             'appearance' => [
-                'example' => fake()->word()
+                'example' => fake()->word(),
             ],
             'color' => [
                 'example' => fake()->colorName(),
             ],
             'glucose' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'proteins' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'ketones' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'ph' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'rb_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'wb_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'bacteria' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'crystals' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'bladder_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'squamous_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'tubular_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'broad_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'epithelial_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'granular_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'hyaline_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'rbc_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'waxy_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'wc_cast' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'albumin' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'pus_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

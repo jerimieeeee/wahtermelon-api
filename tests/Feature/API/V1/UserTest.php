@@ -3,12 +3,7 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibDesignation;
-use App\Models\V1\Libraries\LibEmployer;
-use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -41,17 +36,16 @@ class UserTest extends TestCase
     public function test_user_able_to_login()
     {
         $details = [
-                'email' => fake()->safeEmail(),
-                'password' => 'Password2!',
-                'email_verified_at' => now(),
-                'is_active' => 1,
-            ];
-        User::factory()->create($details+[]);
+            'email' => fake()->safeEmail(),
+            'password' => 'Password2!',
+            'email_verified_at' => now(),
+            'is_active' => 1,
+        ];
+        User::factory()->create($details + []);
 
         $response = $this->post('api/v1/login', $details);
         $response->assertOk()
-            ->assertJsonStructure(['token_type','status_code','access_token','user']);
-
+            ->assertJsonStructure(['token_type', 'status_code', 'access_token', 'user']);
     }
 
     public function test_multiple_invalid_login_attempts_are_throttled()

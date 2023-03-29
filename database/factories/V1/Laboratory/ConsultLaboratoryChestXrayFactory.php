@@ -29,6 +29,7 @@ class ConsultLaboratoryChestXrayFactory extends Factory
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CXRAY']);
         $findings = fake()->randomElement(LibLaboratoryChestxrayFindings::pluck('code')->toArray());
         $observation = fake()->randomElement(LibLaboratoryChestxrayObservation::pluck('code')->toArray());
+
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,

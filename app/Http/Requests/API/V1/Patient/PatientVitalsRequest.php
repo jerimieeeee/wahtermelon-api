@@ -4,7 +4,6 @@ namespace App\Http\Requests\API\V1\Patient;
 
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
-use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Facility;
 use App\Services\Patient\PatientVitalsService;
 use Carbon\Carbon;
@@ -34,33 +33,32 @@ class PatientVitalsRequest extends FormRequest
         $years = Carbon::parse($patient->birthdate)->diffInYears(request()->vitals_date);
         $months = Carbon::parse($patient->birthdate)->diffInMonths(request()->vitals_date);
         $patientVitals = new PatientVitalsService();
-        if($years > 6) {
-            list($weight, $height, $bmi, $bmiClass) = $patientVitals->get_patient_bmi();
-        } else{
-            $height = "";
-            $weight = "";
+        if ($years > 6) {
+            [$weight, $height, $bmi, $bmiClass] = $patientVitals->get_patient_bmi();
+        } else {
+            $height = '';
+            $weight = '';
         }
-        if($months < 72) {
-            $weightForAge = "";
-            $heightForAge = "";
-            $weightForHeight = "";
-            if(isset(request()->patient_weight)) {
+        if ($months < 72) {
+            $weightForAge = '';
+            $heightForAge = '';
+            $weightForHeight = '';
+            if (isset(request()->patient_weight)) {
                 $weightForAge = $patientVitals->get_weight_for_age($months, $gender, request()->patient_weight);
                 $weightForAgeClass = $weightForAge ? $weightForAge->wt_class : null;
             }
-            if(isset(request()->patient_height)) {
+            if (isset(request()->patient_height)) {
                 $heightForAge = $patientVitals->get_height_for_age($months, $gender, request()->patient_height);
                 $heightForAgeClass = $heightForAge ? $heightForAge->lt_class : null;
             }
-            if(isset(request()->patient_weight) && isset(request()->patient_height)) {
+            if (isset(request()->patient_weight) && isset(request()->patient_height)) {
                 $weightForHeight = $patientVitals->get_weight_for_height($months, $gender, request()->patient_weight, request()->patient_height);
                 $weightForHeightClass = $weightForHeight ? $weightForHeight->wt_class : null;
             }
-
         } else {
-            $weightForAge = "";
-            $heightForAge = "";
-            $weightForHeight = "";
+            $weightForAge = '';
+            $heightForAge = '';
+            $weightForHeight = '';
         }
 
         return array_merge($this->validated(), [
@@ -70,7 +68,7 @@ class PatientVitalsRequest extends FormRequest
             'patient_height_for_age' => $heightForAge != null ? $heightForAgeClass : null,
             'patient_weight_for_height' => $weightForHeight != null ? $weightForHeightClass : null,
             'patient_age_years' => $years,
-            'patient_age_months' => $months
+            'patient_age_months' => $months,
         ]);
     }
 
@@ -124,64 +122,64 @@ class PatientVitalsRequest extends FormRequest
                 'example' => fake()->randomElement(User::pluck('id')->toArray()),
             ], */
             'vitals_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d H:i:s'),
             ],
             'patient_temp' => [
-                'example' => fake()->numberBetween(35, 40)
+                'example' => fake()->numberBetween(35, 40),
             ],
             'patient_height' => [
-                'example' => fake()->numberBetween(100, 200)
+                'example' => fake()->numberBetween(100, 200),
             ],
             'patient_weight' => [
-                'example' => fake()->numberBetween(40, 200)
+                'example' => fake()->numberBetween(40, 200),
             ],
             'patient_head_circumference' => [
-                'example' => fake()->numberBetween(0, 30)
+                'example' => fake()->numberBetween(0, 30),
             ],
             'patient_skinfold_thickness' => [
-                'example' => fake()->numberBetween(0, 30)
+                'example' => fake()->numberBetween(0, 30),
             ],
             'bp_systolic' => [
-                'example' => fake()->numberBetween(100, 200)
+                'example' => fake()->numberBetween(100, 200),
             ],
             'bp_diastolic' => [
-                'example' => fake()->numberBetween(70, 100)
+                'example' => fake()->numberBetween(70, 100),
             ],
             'patient_heart_rate' => [
-                'example' => fake()->numberBetween(60, 100)
+                'example' => fake()->numberBetween(60, 100),
             ],
             'patient_respiratory_rate' => [
-                'example' => fake()->numberBetween(12, 60)
+                'example' => fake()->numberBetween(12, 60),
             ],
             'patient_pulse_rate' => [
-                'example' => fake()->numberBetween(60, 100)
+                'example' => fake()->numberBetween(60, 100),
             ],
             'patient_spo2' => [
-                'example' => fake()->numberBetween(60, 100)
+                'example' => fake()->numberBetween(60, 100),
             ],
             'patient_chest' => [
-                'example' => fake()->numberBetween(24, 150)
+                'example' => fake()->numberBetween(24, 150),
             ],
             'patient_abdomen' => [
-                'example' => fake()->numberBetween(24, 150)
+                'example' => fake()->numberBetween(24, 150),
             ],
             'patient_waist' => [
-                'example' => fake()->numberBetween(24, 150)
+                'example' => fake()->numberBetween(24, 150),
             ],
             'patient_hip' => [
-                'example' => fake()->numberBetween(24, 150)
+                'example' => fake()->numberBetween(24, 150),
             ],
             'patient_limbs' => [
-                'example' => fake()->numberBetween(60, 100)
+                'example' => fake()->numberBetween(60, 100),
             ],
             'patient_muac' => [
-                'example' => fake()->numberBetween(60, 100)
+                'example' => fake()->numberBetween(60, 100),
             ],
             'patient_left_vision_acuity' => [
-                'example' => fake()->numberBetween(20, 90)
+                'example' => fake()->numberBetween(20, 90),
             ],
             'patient_right_vision_acuity' => [
-                'example' => fake()->numberBetween(20, 90)
+                'example' => fake()->numberBetween(20, 90),
             ],
         ];
     }

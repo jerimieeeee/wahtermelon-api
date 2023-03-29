@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Consultation\ConsultNotesFinalDx;
-use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesFinalDxRequest;
+use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Final Dx information
+ *
  * @subgroup Patient Consultation Final Dx
+ *
  * @subgroupDescription Patient Consultation Final Dx management.
  */
 class ConsultNotesFinalDxController extends Controller
@@ -33,12 +36,12 @@ class ConsultNotesFinalDxController extends Controller
      * Store a newly created Consultation Final Dx resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesFinalDxResource
+     *
      * @apiResourceModel App\Models\V1\Consultation\ConsultNotesFinalDx
-     * @param ConsultNotesFinalDxRequest $request
-     * @return JsonResponse
      */
-    public function store(ConsultNotesFinalDxRequest $request) : JsonResponse
+    public function store(ConsultNotesFinalDxRequest $request): JsonResponse
     {
         try {
             $finaldx = $request->final_diagnosis;
@@ -54,7 +57,6 @@ class ConsultNotesFinalDxController extends Controller
             return response()->json([
                 'message' => 'Final Dx Successfully Saved',
             ], 201);
-
         } catch (Exception $error) {
             return response()->json([
                 'Error' => $error,
@@ -82,7 +84,6 @@ class ConsultNotesFinalDxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -101,6 +102,7 @@ class ConsultNotesFinalDxController extends Controller
     public function destroy($id)
     {
         ConsultNotesFinalDx::findorfail($id)->delete();
+
         return response()->json('Final Dx successfully deleted');
     }
 }

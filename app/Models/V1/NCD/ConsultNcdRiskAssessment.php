@@ -3,7 +3,6 @@
 namespace App\Models\V1\NCD;
 
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -100,5 +99,4 @@ class ConsultNcdRiskAssessment extends Model
     {
         return $this->hasMany(PatientNcdRecordCounselling::class, 'consult_ncd_risk_id', 'id');
     }
-
 }

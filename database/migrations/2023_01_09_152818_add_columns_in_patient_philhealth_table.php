@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('patient_philhealth', function (Blueprint $table) {
-            $table->string('transmittal_number',21)->unique()->index()->nullable()->after('transaction_number');
-            $table->string('authorization_transaction_code',21)->default('WALKEDIN')->index()->nullable()->after('employer_address');
+            $table->string('transmittal_number', 21)->unique()->index()->nullable()->after('transaction_number');
+            $table->string('authorization_transaction_code', 21)->default('WALKEDIN')->index()->nullable()->after('employer_address');
             $table->boolean('walkedin_status')->index()->default(1)->after('authorization_transaction_code');
 
             $table->foreign('transmittal_number')->references('transmittal_number')->on('konsulta_transmittals');

@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('patient_vitals', function (Blueprint $table) {
-            $table->decimal('patient_head_circumference',10,2)->nullable()->index()->after('patient_weight');
-            $table->decimal('patient_skinfold_thickness',10,2)->nullable()->index()->after('patient_head_circumference');
+            $table->decimal('patient_head_circumference', 10, 2)->nullable()->index()->after('patient_weight');
+            $table->decimal('patient_skinfold_thickness', 10, 2)->nullable()->index()->after('patient_head_circumference');
         });
     }
 

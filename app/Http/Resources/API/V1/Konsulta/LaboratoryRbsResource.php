@@ -16,15 +16,15 @@ class LaboratoryRbsResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pReferralFacility' => strtoupper($this->rbs->referral_facility?? ""),
-                'pLabDate' => isset($this->rbs->laboratory_date) ? $this->rbs->laboratory_date->format('Y-m-d') : "",
-                'pGlucoseMg' => strtoupper($this->rbs->glucose?? ""),
-                'pGlucoseMmol' => "",
-                'pDateAdded' => isset($this->rbs->created_at) ? $this->rbs->created_at->format('Y-m-d') : "",
-                'pStatus' => strtoupper($this->rbs->lab_status_code?? ""),
-                'pDiagnosticLabFee' => "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
+                'pReferralFacility' => strtoupper($this->rbs->referral_facility ?? ''),
+                'pLabDate' => isset($this->rbs->laboratory_date) ? $this->rbs->laboratory_date->format('Y-m-d') : '',
+                'pGlucoseMg' => strtoupper($this->rbs->glucose ?? ''),
+                'pGlucoseMmol' => '',
+                'pDateAdded' => isset($this->rbs->created_at) ? $this->rbs->created_at->format('Y-m-d') : '',
+                'pStatus' => strtoupper($this->rbs->lab_status_code ?? ''),
+                'pDiagnosticLabFee' => '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
             ],
         ];
     }

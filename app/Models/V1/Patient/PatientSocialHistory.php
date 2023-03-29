@@ -3,11 +3,10 @@
 namespace App\Models\V1\Patient;
 
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PatientSocialHistory extends Model
 {
@@ -16,7 +15,7 @@ class PatientSocialHistory extends Model
     protected $table = 'patient_social_histories';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

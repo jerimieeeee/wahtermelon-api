@@ -9,19 +9,19 @@ use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
+use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DateTimeInterface;
 
 class ConsultLaboratoryFecalOccult extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

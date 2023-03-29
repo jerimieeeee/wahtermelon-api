@@ -6,8 +6,6 @@ use App\Models\User;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
 use App\Models\V1\Patient\Patient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -26,7 +24,7 @@ class ConsultNcdRiskAssessmentTest extends TestCase
         $patient = Patient::factory()->create()->toArray();
         $patientNcd = PatientNcd::factory()->create()->toArray();
         $consultNcdRiskAssessment = ConsultNcdRiskAssessment::factory()->make()->toArray();
-        $response = $this->post('api/v1/non-communicable-disease/risk-assessment', array_merge($consultNcdRiskAssessment,['patient_ncd_id' => $patientNcd['id']],['patient_id' => $patient['id']], ['date_enrolled' => $patientNcd['date_enrolled']]));
+        $response = $this->post('api/v1/non-communicable-disease/risk-assessment', array_merge($consultNcdRiskAssessment, ['patient_ncd_id' => $patientNcd['id']], ['patient_id' => $patient['id']], ['date_enrolled' => $patientNcd['date_enrolled']]));
         $response->assertCreated();
     }
 }

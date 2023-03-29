@@ -3,11 +3,8 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibFpMethod;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientMenstrualHistory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 

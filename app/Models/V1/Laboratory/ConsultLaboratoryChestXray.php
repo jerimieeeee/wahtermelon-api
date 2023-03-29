@@ -22,7 +22,7 @@ class ConsultLaboratoryChestXray extends Model
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

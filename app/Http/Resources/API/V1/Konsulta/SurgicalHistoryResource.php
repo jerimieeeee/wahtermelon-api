@@ -16,11 +16,11 @@ class SurgicalHistoryResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pSurgDesc' => strtoupper($this->operation?? ""),
-                'pSurgDate' => $this->operation_date?? "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pSurgDesc' => strtoupper($this->operation ?? ''),
+                'pSurgDate' => $this->operation_date ?? '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

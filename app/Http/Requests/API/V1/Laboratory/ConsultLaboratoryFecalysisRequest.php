@@ -56,57 +56,58 @@ class ConsultLaboratoryFecalysisRequest extends FormRequest
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'FCAL']);
+
         return [
             'facility_code' => [
-                'example' => $consult->facility_code
+                'example' => $consult->facility_code,
             ],
             'consult_id' => [
-                'example' => $consult->consult_id
+                'example' => $consult->consult_id,
             ],
             'patient_id' => [
-                'example' => $consult->patient_id
+                'example' => $consult->patient_id,
             ],
             'user_id' => [
-                'example' => $consult->user_id
+                'example' => $consult->user_id,
             ],
             'request_id' => [
-                'example' => $consult->id
+                'example' => $consult->id,
             ],
             'laboratory_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'referral_facility' => [
-                'example' => fake()->randomElement(Facility::pluck('code')->toArray())
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             ],
             'color_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStoolColor::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStoolColor::pluck('code')->toArray()),
             ],
             'consistency_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStoolConsistency::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStoolConsistency::pluck('code')->toArray()),
             ],
             'rbc' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'wbc' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'ova' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'parasite' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'blood_code' => [
-                'example' => fake()->randomElement(LibLaboratoryBloodInStool::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryBloodInStool::pluck('code')->toArray()),
             ],
             'pus_cells' => [
-                'example' => fake()->numberBetween(1, 10)
+                'example' => fake()->numberBetween(1, 10),
             ],
             'remarks' => [
-                'example' => fake()->sentence()
+                'example' => fake()->sentence(),
             ],
             'lab_status_code' => [
-                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
             ],
         ];
     }

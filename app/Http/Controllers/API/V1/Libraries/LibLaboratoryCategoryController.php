@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Laboratory
  *
  * APIs for managing libraries
+ *
  * @subgroup Laboratory Categories
+ *
  * @subgroupDescription List of Laboratory Categories.
  */
 class LibLaboratoryCategoryController extends Controller
@@ -24,9 +26,10 @@ class LibLaboratoryCategoryController extends Controller
      * @queryParam filter[lab_code] string Filter by lab_code. Example: CBC
      * @queryParam include string Relationship to view: e.g. laboratory Example: laboratory
      * @queryParam sort string Sort lab_code, sequence_id. Add hyphen (-) to descend the list: e.g. lab_code,sequence_id. Example: lab_code,sequence_id
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibLaboratoryCategoryResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibLaboratoryCategory
-     * @return ResourceCollection
      */
     public function index(): ResourceCollection
     {
@@ -37,13 +40,13 @@ class LibLaboratoryCategoryController extends Controller
                 ->allowedSorts(['lab_code', 'sequence_id'])
                 ->whereFieldActive(1)
                 ->whereRelation('laboratory', 'lab_active', true);
+
         return LibLaboratoryCategoryResource::collection($query->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -65,7 +68,6 @@ class LibLaboratoryCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

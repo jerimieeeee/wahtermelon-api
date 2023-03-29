@@ -22,7 +22,7 @@ class ConsultLaboratorySputum extends Model
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $table = 'consult_laboratory_sputum';

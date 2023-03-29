@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Libraries\LibIcd10;
-use App\Models\V1\Patient\Patient;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -25,11 +24,11 @@ class ConsultNotesFinalDxTest extends TestCase
 
         $response = $this->post('api/v1/consultation/final-diagnosis', [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
-            "final_diagnosis" => [
+            'final_diagnosis' => [
                 fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
                 fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
-                fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray())
-            ]
+                fake()->randomElement(LibIcd10::pluck('icd10_code')->toArray()),
+            ],
         ]);
 
         $response->assertCreated();
@@ -41,7 +40,7 @@ class ConsultNotesFinalDxTest extends TestCase
             User::factory()->create()
         );
         $fdx = ConsultNotesFinalDx::factory()->create();
-        $response = $this->delete('api/v1/consultation/final-diagnosis/'. $fdx->id);
+        $response = $this->delete('api/v1/consultation/final-diagnosis/'.$fdx->id);
         $response->assertOk();
     }
 }

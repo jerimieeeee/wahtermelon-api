@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('consult_ccdev_breastfeds', function (Blueprint $table) {
-
             $table->date('comp_fed_date')->nullable()->after('ebf_date');
         });
     }
@@ -27,7 +26,6 @@ return new class extends Migration
     public function down()
     {
         Schema::table('consult_ccdev_breastfeds', function (Blueprint $table) {
-
             $table->dropColumn('comp_fed_date');
         });
     }

@@ -4,7 +4,6 @@ namespace App\Models\V1\Laboratory;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Libraries\LibLaboratoryFindings;
 use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
@@ -22,7 +21,7 @@ class ConsultLaboratoryPpd extends Model
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

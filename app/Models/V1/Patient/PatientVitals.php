@@ -25,7 +25,7 @@ class PatientVitals extends Model
     protected $casts = [
         'vitals_date' => 'datetime:Y-m-d H:i:s',
         'bp_diastolic' => 'integer',
-        'bp_systolic' => 'integer'
+        'bp_systolic' => 'integer',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

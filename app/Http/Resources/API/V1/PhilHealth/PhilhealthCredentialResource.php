@@ -16,11 +16,11 @@ class PhilhealthCredentialResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
-            'program_code' => $this->when(!$this->relationLoaded('program'),$this->program_code),
+            'program_code' => $this->when(! $this->relationLoaded('program'), $this->program_code),
             'program' => $this->whenLoaded('program'),
             'facility_name' => $this->facility_name,
             'accreditation_number' => $this->accreditation_number,

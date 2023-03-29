@@ -62,46 +62,46 @@ class MedicinePrescriptionRequest extends FormRequest
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
             'prescription_date' => [
-                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d')
+                'example' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
             ],
             'prescribed_by' => [
-                'example' => fake()->randomElement(User::pluck('id')->toArray())
+                'example' => fake()->randomElement(User::pluck('id')->toArray()),
             ],
             'consult_id' => [
-                'example' => fake()->randomElement(Consult::pluck('id')->toArray())
+                'example' => fake()->randomElement(Consult::pluck('id')->toArray()),
             ],
             'konsulta_medicine_code' => [
-                'example' => fake()->randomElement(LibKonsultaMedicine::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibKonsultaMedicine::pluck('code')->toArray()),
             ],
             'instruction_quantity' => [
-                'example' => fake()->numberBetween(1, 500)
+                'example' => fake()->numberBetween(1, 500),
             ],
             'dosage_quantity' => [
-                'example' => fake()->numberBetween(1, 500)
+                'example' => fake()->numberBetween(1, 500),
             ],
             'dosage_uom' => [
-                'example' => fake()->randomElement(LibMedicineUnitOfMeasurement::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMedicineUnitOfMeasurement::pluck('code')->toArray()),
             ],
             'dose_regimen' => [
-                'example' => fake()->randomElement(LibMedicineDoseRegimen::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMedicineDoseRegimen::pluck('code')->toArray()),
             ],
             'medicine_purpose' => [
-                'example' => fake()->randomElement(LibMedicinePurpose::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMedicinePurpose::pluck('code')->toArray()),
             ],
             'duration_intake' => [
-                'example' => fake()->numberBetween(1, 50)
+                'example' => fake()->numberBetween(1, 50),
             ],
             'duration_frequency' => [
-                'example' => fake()->randomElement(LibMedicineDurationFrequency::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMedicineDurationFrequency::pluck('code')->toArray()),
             ],
             'quantity' => [
-                'example' => fake()->numberBetween(1, 50)
+                'example' => fake()->numberBetween(1, 50),
             ],
             'quantity_preparation' => [
-                'example' => fake()->randomElement(LibMedicinePreparation::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMedicinePreparation::pluck('code')->toArray()),
             ],
             'medicine_route_code' => [
-                'example' => fake()->randomElement(LibMedicineRoute::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMedicineRoute::pluck('code')->toArray()),
             ],
         ];
     }

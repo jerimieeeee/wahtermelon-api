@@ -70,5 +70,4 @@ class PatientSocialHistoryRequest extends FormRequest
             ],
         ];
     }
-
 }

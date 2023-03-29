@@ -34,7 +34,7 @@ class PhilhealtCredentialRequest extends FormRequest
             'cipher_key' => 'required',
             'username' => 'nullable',
             'password' => 'nullable',
-            'token' => 'nullable'
+            'token' => 'nullable',
         ];
     }
 
@@ -42,40 +42,41 @@ class PhilhealtCredentialRequest extends FormRequest
     {
         $pmcc = fake()->bothify('Z#####');
         $user = User::with('facility')->whereNotNull('facility_code')->inRandomOrder()->limit(1)->first();
+
         return [
             'facility_code' => [
-                'example' => $user->facility_code
+                'example' => $user->facility_code,
             ],
             'user_id' => [
-                'example' => $user->id
+                'example' => $user->id,
             ],
             'program_code' => [
-                'example' => fake()->randomElement(LibPhilhealthProgram::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibPhilhealthProgram::pluck('code')->toArray()),
             ],
             'facility_name' => [
-                'example' => $user->facility->facility_name
+                'example' => $user->facility->facility_name,
             ],
             'accreditation_number' => [
-                'example' => fake()->bothify('P########')
+                'example' => fake()->bothify('P########'),
             ],
             'pmcc_number' => [
-                'example' => $pmcc
+                'example' => $pmcc,
             ],
             'software_certification_id' => [
-                'example' => 'KON-DUMMYSCERTZ' . $pmcc
+                'example' => 'KON-DUMMYSCERTZ'.$pmcc,
             ],
             'cipher_key' => [
-                'example' => 'PHilheaLthDuMmyciPHerKeyS'
+                'example' => 'PHilheaLthDuMmyciPHerKeyS',
             ],
             'username' => [
-                'example' => 'TEST'
+                'example' => 'TEST',
             ],
             'password' => [
-                'example' => 'TEST'
+                'example' => 'TEST',
             ],
             'token' => [
-                'example' => fake()->sha256()
-            ]
+                'example' => fake()->sha256(),
+            ],
         ];
     }
 }

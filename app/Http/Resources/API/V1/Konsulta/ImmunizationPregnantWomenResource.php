@@ -16,14 +16,14 @@ class ImmunizationPregnantWomenResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pChildImmcode' => "",
-                'pYoungwImmcode' => "",
-                'pPregwImmcode' => !empty($this->pregnant_women_vaccine) ? $this->pregnant_women_vaccine : "999",
-                'pElderlyImmcode' => "",
-                'pOtherImm' => "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pChildImmcode' => '',
+                'pYoungwImmcode' => '',
+                'pPregwImmcode' => ! empty($this->pregnant_women_vaccine) ? $this->pregnant_women_vaccine : '999',
+                'pElderlyImmcode' => '',
+                'pOtherImm' => '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

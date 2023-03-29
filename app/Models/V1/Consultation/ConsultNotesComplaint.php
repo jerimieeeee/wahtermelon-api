@@ -11,14 +11,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ConsultNotesComplaint extends Model
 {
     use HasFactory, FilterByUser;
-    protected $table='consult_notes_complaints';
+
+    protected $table = 'consult_notes_complaints';
+
     protected $primaryKey = 'id';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
-    public function consultNotes(){
+    public function consultNotes()
+    {
         return $this->belongsTo(ConsultNotes::class, 'notes_id', 'id');
     }
 
@@ -26,5 +29,4 @@ class ConsultNotesComplaint extends Model
     {
         return $this->belongsTo(LibComplaint::class, 'complaint_id', 'complaint_id');
     }
-
 }

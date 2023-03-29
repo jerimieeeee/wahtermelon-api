@@ -16,16 +16,16 @@ class PhysicalExaminationMiscResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pSkinId' => $this->skin?? "",
-                'pHeentId' => $this->heent?? "",
-                'pChestId' => $this->chest?? "",
-                'pHeartId' => $this->heart?? "",
-                'pAbdomenId' => $this->abdomen?? "",
-                'pNeuroId' => $this->neuro?? "",
-                'pRectalId' => $this->rectal?? "",
-                'pGuId' => $this->genitourinary?? "",
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
+                'pSkinId' => $this->skin ?? '',
+                'pHeentId' => $this->heent ?? '',
+                'pChestId' => $this->chest ?? '',
+                'pHeartId' => $this->heart ?? '',
+                'pAbdomenId' => $this->abdomen ?? '',
+                'pNeuroId' => $this->neuro ?? '',
+                'pRectalId' => $this->rectal ?? '',
+                'pGuId' => $this->genitourinary ?? '',
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
             ],
         ];
     }

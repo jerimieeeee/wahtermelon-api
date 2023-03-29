@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibPhilhealthMembershipCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -43,7 +42,7 @@ class LibPhilhealthMembershipCategorySeeder extends Seeder
             ['desc' => 'Sponsored - Others'],
             ['desc' => 'Lifetime Member - Retiree/Pensioner'],
             ['desc' => 'Lifetime Member - With 120 months contribution and has reached retirement age'],
-            ['desc' => 'DepEd']
+            ['desc' => 'DepEd'],
         ], ['desc']);
     }
 }

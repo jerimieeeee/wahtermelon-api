@@ -21,7 +21,7 @@ class PatientMc extends Model
     protected $table = 'patient_mc';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\API\V1;
 
-use App\Http\Requests\API\V1\Patient\PatientSurgicalHistoryRequest;
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientSurgicalHistory;
@@ -34,7 +33,7 @@ class PatientSurgicalHistoryTest extends TestCase
         );
         $patientSurgicalHistory = PatientSurgicalHistory::factory()->create();
 
-        $response = $this->delete('api/v1/patient-surgical-history/history/'. $patientSurgicalHistory->id, []);
+        $response = $this->delete('api/v1/patient-surgical-history/history/'.$patientSurgicalHistory->id, []);
         $response->assertOk();
     }
 }

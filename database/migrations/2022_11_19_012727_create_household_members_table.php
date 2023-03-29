@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignUuid('household_folder_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('patient_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
-            $table->char('family_role_code',10)->index();
+            $table->char('family_role_code', 10)->index();
             $table->timestamps();
 
             $table->foreign('family_role_code')->references('code')->on('lib_family_roles');

@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('ogtt_two_hour_mmol', 50)->nullable();
 
             $table->string('remarks')->nullable();
-            $table->char('lab_status_code',10)->index();
+            $table->char('lab_status_code', 10)->index();
             $table->softDeletes();
             $table->timestamps();
 

@@ -17,13 +17,13 @@ class SubjectiveResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pIllnessHistory' => strtoupper($this->history?? ""),
-                'pSignsSymptoms' => $this->konsulta_complaint_id?? "",
-                'pOtherComplaint' => !empty($this->konsulta_complaint_id) && Str::contains($this->konsulta_complaint_id, ['X']) ? strtoupper($this->complaint?? "") : "",
-                'pPainSite' => strtoupper($this->complaint_desc?? ""),
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pIllnessHistory' => strtoupper($this->history ?? ''),
+                'pSignsSymptoms' => $this->konsulta_complaint_id ?? '',
+                'pOtherComplaint' => ! empty($this->konsulta_complaint_id) && Str::contains($this->konsulta_complaint_id, ['X']) ? strtoupper($this->complaint ?? '') : '',
+                'pPainSite' => strtoupper($this->complaint_desc ?? ''),
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

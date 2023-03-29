@@ -9,10 +9,10 @@ use App\Models\V1\PSGC\Municipality;
 use App\Models\V1\PSGC\Province;
 use App\Models\V1\PSGC\Region;
 use App\Models\V1\PSGC\SubMunicipality;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
-use Exception;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ParsePSGCFileCommand extends Command
@@ -81,15 +81,15 @@ class ParsePSGCFileCommand extends Command
     private function performTask($properties)
     {
         $data = [
-            'code'                  => $properties['Code'],
-            'psgc_10_digit_code'    => $properties['10-digit PSGC'],
-            'name'                  => $properties['Name'],
-            'level'                 => $properties['Geographic Level'],
-            'geo_level'             => $properties['Geographic Level'],
-            'city_class'            => $properties['City Class'],
-            'income_class'          => $properties["Income\nClassification"],
-            'urban_rural'           => $properties["Urban / Rural\n(based on 2015 Population)"],
-            'population'            => preg_replace('/\D+/', '', $properties["2020 Population"]),
+            'code' => $properties['Code'],
+            'psgc_10_digit_code' => $properties['10-digit PSGC'],
+            'name' => $properties['Name'],
+            'level' => $properties['Geographic Level'],
+            'geo_level' => $properties['Geographic Level'],
+            'city_class' => $properties['City Class'],
+            'income_class' => $properties["Income\nClassification"],
+            'urban_rural' => $properties["Urban / Rural\n(based on 2015 Population)"],
+            'population' => preg_replace('/\D+/', '', $properties['2020 Population']),
         ];
 
         $data = array_filter($data);
@@ -131,7 +131,7 @@ class ParsePSGCFileCommand extends Command
 
     private function processCity($data)
     {
-        $region   = Region::orderBy('id', 'desc')->first();
+        $region = Region::orderBy('id', 'desc')->first();
         $province = Province::orderBy('id', 'desc')->first();
         $district = District::orderBy('id', 'desc')->first();
 
@@ -183,5 +183,4 @@ class ParsePSGCFileCommand extends Command
         $data['geographic_id'] = $geographic->id;
         Barangay::create($data);
     }
-
 }

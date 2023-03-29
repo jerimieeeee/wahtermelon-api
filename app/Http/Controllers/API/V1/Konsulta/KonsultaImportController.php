@@ -11,10 +11,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Konsulta Information
  *
  * APIs for managing Konsulta Information
+ *
  * @subgroup Imported XML Lists
+ *
  * @subgroupDescription Imported XML lists.
  */
 class KonsultaImportController extends Controller
@@ -27,9 +30,10 @@ class KonsultaImportController extends Controller
      * @queryParam sort string Sort created_at. Add hyphen (-) to descend the list. Example: created_at
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Konsulta\KonsultaImportResource
+     *
      * @apiResourceModel App\Models\V1\Konsulta\KonsultaImport paginate=15
-     * @return ResourceCollection
      */
     public function index(): ResourceCollection
     {
@@ -50,7 +54,6 @@ class KonsultaImportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,7 +75,6 @@ class KonsultaImportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

@@ -16,11 +16,11 @@ class MedicalHistorySpecificResource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pMdiseaseCode' => $this->libmedicalHistory->konsulta_history_id?? "",
-                'pSpecificDesc' => strtoupper($this->remarks?? ""),
-                'pReportStatus' => "U",
-                'pDeficiencyRemarks' => ""
-            ]
+                'pMdiseaseCode' => $this->libmedicalHistory->konsulta_history_id ?? '',
+                'pSpecificDesc' => strtoupper($this->remarks ?? ''),
+                'pReportStatus' => 'U',
+                'pDeficiencyRemarks' => '',
+            ],
         ];
     }
 }

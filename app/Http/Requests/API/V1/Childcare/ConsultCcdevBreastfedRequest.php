@@ -91,7 +91,5 @@ class ConsultCcdevBreastfedRequest extends FormRequest
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
             ],
         ];
-
     }
-
 }

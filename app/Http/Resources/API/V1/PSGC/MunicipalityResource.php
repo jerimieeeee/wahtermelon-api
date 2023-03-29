@@ -21,14 +21,14 @@ class MunicipalityResource extends JsonResource
         $resource = get_class($this->geographic) == Province::class ? ProvinceResource::class : DistrictResource::class;
 
         return [
-            'code'         => $this->code,
-            'name'         => $this->name,
-            'geo_level'    => $this->geo_level,
+            'code' => $this->code,
+            'name' => $this->name,
+            'geo_level' => $this->geo_level,
             'income_class' => $this->income_class,
-            'population'   => $this->population,
-            'barangays'    => BarangayResource::collection($this->whenLoaded('barangays')),
-            $geographic    => $this->when($condition, new $resource($this->geographic)),
-            'region'       => $this->when($condition, new RegionResource($this->geographic->region)),
+            'population' => $this->population,
+            'barangays' => BarangayResource::collection($this->whenLoaded('barangays')),
+            $geographic => $this->when($condition, new $resource($this->geographic)),
+            'region' => $this->when($condition, new RegionResource($this->geographic->region)),
         ];
     }
 }

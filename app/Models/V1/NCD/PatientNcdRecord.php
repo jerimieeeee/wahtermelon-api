@@ -2,14 +2,11 @@
 
 namespace App\Models\V1\NCD;
 
-use App\Models\V1\Libraries\LibNcdRecordDiagnosis;
 use App\Traits\FilterByUser;
-use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PatientNcdRecord extends Model
 {
@@ -18,7 +15,7 @@ class PatientNcdRecord extends Model
     protected $table = 'patient_ncd_records';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function getRouteKeyName()
@@ -74,5 +71,4 @@ class PatientNcdRecord extends Model
     {
         return $this->hasMany(PatientNcdRecordCounselling::class, 'patient_ncd_record_id', 'id');
     }
-
 }

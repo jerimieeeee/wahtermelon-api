@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibLengthHeightForAge;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibLengthHeightForAgeSeeder extends Seeder
@@ -593,7 +592,7 @@ class LibLengthHeightForAgeSeeder extends Seeder
             ['age_month' => '71', 'length_min' => '99.3', 'length_max' => '99.3', 'gender' => 'F', 'lt_class' => 'Severely Stunted'],
             ['age_month' => '71', 'length_min' => '99.4', 'length_max' => '104.4', 'gender' => 'F', 'lt_class' => 'Stunted'],
             ['age_month' => '71', 'length_min' => '104.5', 'length_max' => '124.8', 'gender' => 'F', 'lt_class' => 'Normal'],
-            ['age_month' => '71', 'length_min' => '124.9', 'length_max' => '124.9', 'gender' => 'F', 'lt_class' => 'Tall']
+            ['age_month' => '71', 'length_min' => '124.9', 'length_max' => '124.9', 'gender' => 'F', 'lt_class' => 'Tall'],
         ], ['age_month', 'length_min', 'length_max', 'gender', 'lt_class']);
     }
 }

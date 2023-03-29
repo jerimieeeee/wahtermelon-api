@@ -27,6 +27,7 @@ class PatientFactory extends Factory
     public function definition()
     {
         $gender = fake()->randomElement(['male', 'female']);
+
         return [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
@@ -36,7 +37,7 @@ class PatientFactory extends Factory
             'suffix_name' => $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : 'NA',
             'gender' => substr(Str::ucfirst($gender), 0, 1),
             'birthdate' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'mothers_name' => fake()->firstName('female') . ' ' . $middle,
+            'mothers_name' => fake()->firstName('female').' '.$middle,
             'mobile_number' => fake()->phoneNumber(),
             'pwd_type_code' => fake()->randomElement(LibPwdType::pluck('code')->toArray()),
             'indegenous_flag' => fake()->boolean,

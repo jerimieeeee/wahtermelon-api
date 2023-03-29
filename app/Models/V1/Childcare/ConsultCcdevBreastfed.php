@@ -14,7 +14,7 @@ class ConsultCcdevBreastfed extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser;
 
-    protected $guarded = ['id',];
+    protected $guarded = ['id'];
 
     // protected $dates = ['deleted_at'];
 
@@ -32,8 +32,8 @@ class ConsultCcdevBreastfed extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function patientccdev(){
-
+    public function patientccdev()
+    {
         return $this->belongsTo(PatientCcdev::class);
     }
 

@@ -24,6 +24,7 @@ class ConsultLaboratoryUrinalysisFactory extends Factory
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'URN']);
+
         return [
             'facility_code' => $consult->facility_code,
             'consult_id' => $consult->consult_id,

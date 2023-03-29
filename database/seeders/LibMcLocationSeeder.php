@@ -18,7 +18,7 @@ class LibMcLocationSeeder extends Seeder
             ['code' => 'LLQ', 'desc' => 'Left Lower Quadrant'],
             ['code' => 'RLQ', 'desc' => 'Right Lower Quadrant'],
             ['code' => 'LUQ', 'desc' => 'Left Upper Quadrant'],
-            ['code' => 'RUQ', 'desc'=> 'Right Upper Quadrant'],
+            ['code' => 'RUQ', 'desc' => 'Right Upper Quadrant'],
             ['code' => 'NA', 'desc' => 'N/A'],
         ], ['desc']);
     }

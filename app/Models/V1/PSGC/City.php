@@ -38,8 +38,6 @@ class City extends Model
 
     /**
      * Province or District that this city belongs to.
-     *
-     * @return MorphTo
      */
     public function geographic(): MorphTo
     {

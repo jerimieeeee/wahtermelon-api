@@ -10,7 +10,10 @@ class LibComplaint extends Model
     use HasFactory;
 
     protected $primaryKey = 'complaint_id';
+
     public $incrementing = 'false';
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

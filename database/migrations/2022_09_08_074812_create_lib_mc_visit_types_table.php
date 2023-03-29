@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_mc_visit_types', function (Blueprint $table) {
-            $table->char('code',10)->primary();
+            $table->char('code', 10)->primary();
             $table->string('desc');
         });
     }

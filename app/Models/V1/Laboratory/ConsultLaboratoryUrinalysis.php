@@ -8,12 +8,12 @@ use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
+use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DateTimeInterface;
 
 class ConsultLaboratoryUrinalysis extends Model
 {
@@ -22,7 +22,7 @@ class ConsultLaboratoryUrinalysis extends Model
     protected $table = 'consult_laboratory_urinalysis';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

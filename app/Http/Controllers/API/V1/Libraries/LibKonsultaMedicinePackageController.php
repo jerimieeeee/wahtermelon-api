@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Konsulta Medicine
  *
  * APIs for managing libraries
+ *
  * @subgroup Medicine Packages
+ *
  * @subgroupDescription List of medicine packages.
  */
 class LibKonsultaMedicinePackageController extends Controller
@@ -23,10 +25,10 @@ class LibKonsultaMedicinePackageController extends Controller
      *
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibKonsultaMedicinePackageResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibKonsultaMedicinePackage
-     * @param Request $request
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
@@ -45,16 +47,15 @@ class LibKonsultaMedicinePackageController extends Controller
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibKonsultaMedicinePackageResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibKonsultaMedicinePackage
-     * @param LibKonsultaMedicinePackage $medicinePackage
-     * @return LibKonsultaMedicinePackageResource
      */
     public function show(LibKonsultaMedicinePackage $medicinePackage): LibKonsultaMedicinePackageResource
     {
         $query = LibKonsultaMedicinePackage::where('code', $medicinePackage->code);
         $medicinePackage = QueryBuilder::for($query)
             ->first();
+
         return new LibKonsultaMedicinePackageResource($medicinePackage);
     }
-
 }

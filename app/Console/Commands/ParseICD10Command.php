@@ -37,7 +37,7 @@ class ParseICD10Command extends Command
                 'Please choose the file to upload',
                 Storage::disk('upload')->files(),
             );
-            $filePath = storage_path('uploads/' . $fileName);
+            $filePath = storage_path('uploads/'.$fileName);
             $start = now();
             $this->info("Reading $fileName file...");
             $rows = SimpleExcelReader::create($filePath)->getRows()->toArray();
@@ -58,9 +58,9 @@ class ParseICD10Command extends Command
     public function performTask($properties)
     {
         $data = [
-            'icd10_code'        => $properties['ICD Code'],
-            'icd10_desc'        => $properties['ICD Description'],
-            'is_morbidity'      => 1,
+            'icd10_code' => $properties['ICD Code'],
+            'icd10_desc' => $properties['ICD Description'],
+            'is_morbidity' => 1,
         ];
         $this->processData($data);
     }

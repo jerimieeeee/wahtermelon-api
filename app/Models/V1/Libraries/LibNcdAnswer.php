@@ -10,7 +10,9 @@ class LibNcdAnswer extends Model
     use HasFactory;
 
     protected $primaryKey = 'id';
+
     public $timestamps = false;
+
     public $keyType = 'string';
 
     protected $guarded = [

@@ -12,14 +12,16 @@ class ConsultNotesFinalDx extends Model
 {
     use HasFactory, FilterByUser;
 
-    protected $table='consult_notes_final_dxes';
+    protected $table = 'consult_notes_final_dxes';
+
     protected $primaryKey = 'id';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
-    public function consultNotes(){
+    public function consultNotes()
+    {
         return $this->belongsTo(ConsultNotes::class, 'notes_id', 'id');
     }
 
@@ -27,5 +29,4 @@ class ConsultNotesFinalDx extends Model
     {
         return $this->belongsTo(LibIcd10::class, 'icd10_code', 'icd10_code');
     }
-
 }

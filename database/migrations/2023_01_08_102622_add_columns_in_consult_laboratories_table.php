@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('consult_laboratories', function (Blueprint $table) {
-            $table->char('recommendation_code',10)->index()->nullable()->default('Y')->after('lab_code');
-            $table->char('request_status_code',10)->index()->nullable()->default('RQ')->after('recommendation_code');
+            $table->char('recommendation_code', 10)->index()->nullable()->default('Y')->after('lab_code');
+            $table->char('request_status_code', 10)->index()->nullable()->default('RQ')->after('recommendation_code');
 
             $table->foreign('recommendation_code')->references('code')->on('lib_laboratory_recommendations');
             $table->foreign('request_status_code')->references('code')->on('lib_laboratory_request_statuses');

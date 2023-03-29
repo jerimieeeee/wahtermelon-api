@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use Exception;
-use Illuminate\Http\Request;
-use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
-use App\Http\Resources\API\V1\Consultation\ConsultNotesInitialDxResource;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Final Dx information
+ *
  * @subgroup Patient Consultation Final Dx
+ *
  * @subgroupDescription Patient Consultation Final Dx management.
  */
 class ConsultNotesInitialDxController extends Controller
@@ -35,12 +36,12 @@ class ConsultNotesInitialDxController extends Controller
      * Store a newly created Consultation Initial Dx resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesInitialDxResource
+     *
      * @apiResourceModel App\Models\V1\Consultation\ConsultNotesInitialDx
-     * @param ConsultNotesInitialDxRequest $request
-     * @return JsonResponse
      */
-    public function store(ConsultNotesInitialDxRequest $request) : JsonResponse
+    public function store(ConsultNotesInitialDxRequest $request): JsonResponse
     {
         try {
             $initialdx = $request->initial_diagnosis;
@@ -56,7 +57,6 @@ class ConsultNotesInitialDxController extends Controller
             return response()->json([
                 'message' => 'Initial Dx Successfully Saved',
             ], 201);
-
         } catch (Exception $error) {
             return response()->json([
                 'Error' => $error,
@@ -84,7 +84,6 @@ class ConsultNotesInitialDxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -103,6 +102,7 @@ class ConsultNotesInitialDxController extends Controller
     public function destroy($id)
     {
         ConsultNotesInitialDx::findorfail($id)->delete();
+
         return response()->json('Initial Dx successfully deleted');
     }
 }

@@ -28,9 +28,9 @@ class PatientChildcareTest extends TestCase
             'birth_weight' => fake()->randomFloat(2, 0, 1),
             'ccdev_ended' => fake()->boolean,
             'mothers_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'admission_date' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d H:i:s'),
-            'discharge_date' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d H:i:s'),
-            'nbs_filter' => fake()->regexify('[0-9]{10}')
+            'admission_date' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
+            'discharge_date' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
+            'nbs_filter' => fake()->regexify('[0-9]{10}'),
         ]);
         $response->assertCreated();
     }
@@ -44,5 +44,4 @@ class PatientChildcareTest extends TestCase
         $response = $this->get("api/v1/child-care/cc-records/$id");
         $response->assertOk();
     }
-
 }

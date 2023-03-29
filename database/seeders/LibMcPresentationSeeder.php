@@ -18,7 +18,7 @@ class LibMcPresentationSeeder extends Seeder
             ['code' => 'CEPH', 'desc' => 'Cephalic'],
             ['code' => 'BREECH', 'desc' => 'Breech'],
             ['code' => 'TRANS', 'desc' => 'Transverse'],
-            ['code' => 'MASS', 'desc'=> 'Mass Palpable - NA']
+            ['code' => 'MASS', 'desc' => 'Mass Palpable - NA'],
         ], ['desc']);
     }
 }

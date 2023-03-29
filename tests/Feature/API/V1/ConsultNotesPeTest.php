@@ -5,11 +5,8 @@ namespace Tests\Feature\API\V1;
 use App\Models\User;
 use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Libraries\LibPe;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
-
 
 class ConsultNotesPeTest extends TestCase
 {
@@ -26,11 +23,11 @@ class ConsultNotesPeTest extends TestCase
 
         $response = $this->post('api/v1/consultation/physical-exam', [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
-            "physical_exam" => [
+            'physical_exam' => [
                 fake()->randomElement(LibPe::pluck('pe_id')->toArray()),
                 fake()->randomElement(LibPe::pluck('pe_id')->toArray()),
-                fake()->randomElement(LibPe::pluck('pe_id')->toArray())
-            ]
+                fake()->randomElement(LibPe::pluck('pe_id')->toArray()),
+            ],
         ]);
 
         $response->assertCreated();

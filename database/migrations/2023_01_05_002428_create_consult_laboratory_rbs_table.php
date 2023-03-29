@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('laboratory_date')->index();
             $table->string('glucose')->nullable();
             $table->string('remarks')->nullable();
-            $table->char('lab_status_code',10)->index();
+            $table->char('lab_status_code', 10)->index();
             $table->softDeletes();
             $table->timestamps();
 

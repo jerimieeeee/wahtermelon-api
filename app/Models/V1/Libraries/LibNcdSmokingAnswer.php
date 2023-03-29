@@ -10,6 +10,7 @@ class LibNcdSmokingAnswer extends Model
     use HasFactory;
 
     protected $primaryKey = 'id';
+
     public $timestamps = false;
 
     protected $guarded = [

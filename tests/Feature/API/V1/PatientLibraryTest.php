@@ -10,16 +10,12 @@ use App\Models\V1\Libraries\LibOccupationCategory;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PatientLibraryTest extends TestCase
 {
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
     public function test_can_view_all_blood_types(): void
     {

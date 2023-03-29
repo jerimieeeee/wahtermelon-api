@@ -49,6 +49,5 @@ class PatientNcdRecordDiagnosisRequest extends FormRequest
                 'example' => fake()->randomElement(LibNcdRecordDiagnosis::pluck('id')->toArray()),
             ],
         ];
-
     }
 }

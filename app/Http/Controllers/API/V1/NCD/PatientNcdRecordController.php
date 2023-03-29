@@ -15,10 +15,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Non-Communicable Disease Management
  *
  * APIs for managing Non-Communicable Disease information
+ *
  * @subgroup Patient NCD Record
+ *
  * @subgroupDescription Patient NCD Record management.
  */
 class PatientNcdRecordController extends Controller
@@ -27,6 +30,7 @@ class PatientNcdRecordController extends Controller
      * Display a listing of the resource.
      *
      * @queryParam consult_ncd_risk_id string Patient record to view.
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -34,16 +38,16 @@ class PatientNcdRecordController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $patientNcdRecord = QueryBuilder::for(PatientNcdRecord::class)
-        ->when(isset($request->patient_ncd_id), function($q) use($request){
+        ->when(isset($request->patient_ncd_id), function ($q) use ($request) {
             $q->where('patient_ncd_id', $request->patient_ncd_id);
         })
-        ->when(isset($request->consult_ncd_risk_id), function($q) use($request){
+        ->when(isset($request->consult_ncd_risk_id), function ($q) use ($request) {
             $q->where('consult_ncd_risk_id', '=', $request->consult_ncd_risk_id);
         })
-        ->when(isset($request->patient_id), function($q) use($request){
+        ->when(isset($request->patient_id), function ($q) use ($request) {
             $q->where('patient_id', '=', $request->patient_id);
         })
-        ->when(isset($request->id), function($q) use($request){
+        ->when(isset($request->id), function ($q) use ($request) {
             $q->where('id', '=', $request->id);
         })
         ->with('ncdRecordDiagnosis', 'ncdRecordTargetOrgan', 'ncdRecordCounselling')
@@ -61,13 +65,11 @@ class PatientNcdRecordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PatientNcdRecordRequest $request
      * @return Response
      */
     public function store(PatientNcdRecordRequest $request)
     {
-        return DB::transaction(function () use($request) {
-
+        return DB::transaction(function () use ($request) {
             $data = PatientNcdRecord::updateOrCreate($request->validated());
 
             $diagnosis_code = $request->diagnosis_code;
@@ -86,23 +88,23 @@ class PatientNcdRecordController extends Controller
                 ->where('consult_ncd_risk_id', $request->safe()->consult_ncd_risk_id)
                 ->delete();
 
-                if (isset($request->diagnosis_code)) {
-                    foreach ($diagnosis_code as $value) {
-                        PatientNcdRecordDiagnosis::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'diagnosis_code' => $value]);
-                    }
+            if (isset($request->diagnosis_code)) {
+                foreach ($diagnosis_code as $value) {
+                    PatientNcdRecordDiagnosis::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'diagnosis_code' => $value]);
                 }
+            }
 
-                if (isset($request->target_organ_code)) {
-                    foreach ($target_organ_code as $value) {
-                        PatientNcdRecordTargetOrgan::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'target_organ_code' => $value]);
-                    }
+            if (isset($request->target_organ_code)) {
+                foreach ($target_organ_code as $value) {
+                    PatientNcdRecordTargetOrgan::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'target_organ_code' => $value]);
                 }
+            }
 
-                if (isset($request->counselling_code)) {
-                    foreach ($counselling_code as $value) {
-                        PatientNcdRecordCounselling::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'counselling_code' => $value]);
-                    }
+            if (isset($request->counselling_code)) {
+                foreach ($counselling_code as $value) {
+                    PatientNcdRecordCounselling::where('patient_ncd_record_id', $data->id)->updateOrCreate(['patient_ncd_record_id' => $data->id, 'consult_ncd_risk_id' => $request->consult_ncd_risk_id, 'counselling_code' => $value]);
                 }
+            }
 
             return response()->json([
                 'message' => 'Successfully Saved',
@@ -124,7 +126,6 @@ class PatientNcdRecordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

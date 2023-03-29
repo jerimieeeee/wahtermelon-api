@@ -22,6 +22,7 @@ class ConsultLaboratoryGramStainFactory extends Factory
             User::factory()->create()
         );
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'GRMS']);
+
         return [
             'facility_code' => $consult->facility_code,
             'user_id' => $consult->user_id,
