@@ -294,4 +294,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB Registration Group
     Route::get('tb-previous-treatment', [\App\Http\Controllers\API\V1\Libraries\LibTbPreviousTbTreatmentController::class, 'index'])->name('tb-previous-treatment.index');
 
+    //Yes or No answer
+    Route::get('answer-yn', [\App\Http\Controllers\API\V1\Libraries\LibAnswerYnController::class, 'index'])->name('answer-yn.index');
+
 });

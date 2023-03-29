@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\V1\Libraries\LibAnswerYn;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -108,7 +109,8 @@ class DatabaseSeeder extends Seeder
             LibMedicineRouteSeeder::class,
             LibTbPatientSourceSeeder::class,
             LibTbRegGroupSeeder::class,
-            LibTbPreviousTbTreatmentSeeder::class
+            LibTbPreviousTbTreatmentSeeder::class,
+            LibAnswerYnSeeder::class
         ]);
     }
 }
