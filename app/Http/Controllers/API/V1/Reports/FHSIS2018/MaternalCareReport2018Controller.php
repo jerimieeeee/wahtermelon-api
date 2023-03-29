@@ -154,93 +154,93 @@ class MaternalCareReport2018Controller extends Controller
 
         /////////////////////
         //PREGNANT SCREENED SYPHILIS AGE 10-14 YEARS
-        $pregnant_screened_syphilis_10_14 = $maternalCareReportService->pregnant_test('SYPHILIS', 'SYP', $request, '10', '14')->get();
+        $pregnant_screened_syphilis_10_14 = $maternalCareReportService->pregnant_test('N', 'SYP', $request, '10', '14')->get();
 
         //PREGNANT SCREENED SYPHILIS AGE 15-19 YEARS
-        $pregnant_screened_syphilis_15_19 = $maternalCareReportService->pregnant_test('SYPHILIS', 'SYP', $request, '15', '19')->get();
+        $pregnant_screened_syphilis_15_19 = $maternalCareReportService->pregnant_test('N', 'SYP', $request, '15', '19')->get();
 
         //PREGNANT SCREENED SYPHILIS AGE 20-49 YEARS
-        $pregnant_screened_syphilis_20_49 = $maternalCareReportService->pregnant_test('SYPHILIS', 'SYP', $request, '20', '49')->get();
+        $pregnant_screened_syphilis_20_49 = $maternalCareReportService->pregnant_test('N', 'SYP', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED SYPHILIS POSITIVE AGE 10-14 YEARS
-        $pregnant_screened_syphilis_positive_10_14 = $maternalCareReportService->pregnant_test('SYPHILIS+', 'SYP', $request, '10', '14')->get();
+        $pregnant_screened_syphilis_positive_10_14 = $maternalCareReportService->pregnant_test('Y', 'SYP', $request, '10', '14')->get();
 
         //PREGNANT SCREENED SYPHILIS POSITIVE AGE 15-19 YEARS
-        $pregnant_screened_syphilis_positive_15_19 = $maternalCareReportService->pregnant_test('SYPHILIS+', 'SYP', $request, '15', '19')->get();
+        $pregnant_screened_syphilis_positive_15_19 = $maternalCareReportService->pregnant_test('Y', 'SYP', $request, '15', '19')->get();
 
         //PREGNANT SCREENED SYPHILIS POSITIVE AGE 20-49 YEARS
-        $pregnant_screened_syphilis_positive_20_49 = $maternalCareReportService->pregnant_test('SYPHILIS+', 'SYP', $request, '20', '49')->get();
+        $pregnant_screened_syphilis_positive_20_49 = $maternalCareReportService->pregnant_test('Y', 'SYP', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED HEPATITIS B AGE 10-14 YEARS
-        $pregnant_screened_hepatitis_10_14 = $maternalCareReportService->pregnant_test('HEPATITIS', 'HEPB', $request, '10', '14')->get();
+        $pregnant_screened_hepatitis_10_14 = $maternalCareReportService->pregnant_test('N', 'HEPB', $request, '10', '14')->get();
 
         //PREGNANT SCREENED HEPATITIS B AGE 15-19 YEARS
-        $pregnant_screened_hepatitis_15_19 = $maternalCareReportService->pregnant_test('HEPATITIS', 'HEPB', $request, '15', '19')->get();
+        $pregnant_screened_hepatitis_15_19 = $maternalCareReportService->pregnant_test('N', 'HEPB', $request, '15', '19')->get();
 
         //PREGNANT SCREENED HEPATITIS B AGE 20-49 YEARS
-        $pregnant_screened_hepatitis_20_49 = $maternalCareReportService->pregnant_test('HEPATITIS', 'HEPB', $request, '20', '49')->get();
+        $pregnant_screened_hepatitis_20_49 = $maternalCareReportService->pregnant_test('N', 'HEPB', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED HEPATITIS B POSITIVE AGE 10-14 YEARS
-        $pregnant_screened_hepatitis_positive_10_14 = $maternalCareReportService->pregnant_test('HEPATITIS+', 'HEPB', $request, '10', '14')->get();
+        $pregnant_screened_hepatitis_positive_10_14 = $maternalCareReportService->pregnant_test('Y', 'HEPB', $request, '10', '14')->get();
 
         //PREGNANT SCREENED HEPATITIS B POSITIVE AGE 15-19 YEARS
-        $pregnant_screened_hepatitis_positive_15_19 = $maternalCareReportService->pregnant_test('HEPATITIS+', 'HEPB', $request, '15', '19')->get();
+        $pregnant_screened_hepatitis_positive_15_19 = $maternalCareReportService->pregnant_test('Y', 'HEPB', $request, '15', '19')->get();
 
         //PREGNANT SCREENED HEPATITIS B POSITIVE AGE 20-49 YEARS
-        $pregnant_screened_hepatitis_positive_20_49 = $maternalCareReportService->pregnant_test('HEPATITIS+', 'HEPB', $request, '20', '49')->get();
+        $pregnant_screened_hepatitis_positive_20_49 = $maternalCareReportService->pregnant_test('Y', 'HEPB', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED HIV AGE 10-14 YEARS
-        $pregnant_screened_hiv_10_14 = $maternalCareReportService->pregnant_test('HIV', 'HIV', $request, '10', '14')->get();
+        $pregnant_screened_hiv_10_14 = $maternalCareReportService->pregnant_test('N', 'HIV', $request, '10', '14')->get();
 
         //PREGNANT SCREENED HIV AGE 15-19 YEARS
-        $pregnant_screened_hiv_15_19 = $maternalCareReportService->pregnant_test('HIV', 'HIV', $request, '15', '19')->get();
+        $pregnant_screened_hiv_15_19 = $maternalCareReportService->pregnant_test('N', 'HIV', $request, '15', '19')->get();
 
         //PREGNANT SCREENED HIV AGE 20-49 YEARS
-        $pregnant_screened_hiv_20_49 = $maternalCareReportService->pregnant_test('HIV', 'HIV', $request, '20', '49')->get();
+        $pregnant_screened_hiv_20_49 = $maternalCareReportService->pregnant_test('N', 'HIV', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED CBC AGE 10-14 YEARS
-        $pregnant_screened_cbc_10_14 = $maternalCareReportService->pregnant_test('CBC', 'CBC', $request, '10', '14')->get();
+        $pregnant_screened_cbc_10_14 = $maternalCareReportService->pregnant_test('N', 'CBC', $request, '10', '14')->get();
 
         //PREGNANT SCREENED CBC AGE 15-19 YEARS
-        $pregnant_screened_cbc_15_19 = $maternalCareReportService->pregnant_test('CBC', 'CBC', $request, '15', '19')->get();
+        $pregnant_screened_cbc_15_19 = $maternalCareReportService->pregnant_test('N', 'CBC', $request, '15', '19')->get();
 
         //PREGNANT SCREENED CBC AGE 20-49 YEARS
-        $pregnant_screened_cbc_20_49 = $maternalCareReportService->pregnant_test('CBC', 'CBC', $request, '20', '49')->get();
+        $pregnant_screened_cbc_20_49 = $maternalCareReportService->pregnant_test('N', 'CBC', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED CBC POSITIVE AGE 10-14 YEARS
-        $pregnant_screened_cbc_positive_10_14 = $maternalCareReportService->pregnant_test('CBC+', 'CBC', $request, '10', '14')->get();
+        $pregnant_screened_cbc_positive_10_14 = $maternalCareReportService->pregnant_test('Y', 'CBC', $request, '10', '14')->get();
 
         //PREGNANT SCREENED CBC POSITIVE AGE 15-19 YEARS
-        $pregnant_screened_cbc_positive_15_19 = $maternalCareReportService->pregnant_test('CBC+', 'CBC', $request, '15', '19')->get();
+        $pregnant_screened_cbc_positive_15_19 = $maternalCareReportService->pregnant_test('Y', 'CBC', $request, '15', '19')->get();
 
         //PREGNANT SCREENED CBC POSITIVE AGE 20-49 YEARS
-        $pregnant_screened_cbc_positive_20_49 = $maternalCareReportService->pregnant_test('CBC+', 'CBC', $request, '20', '49')->get();
+        $pregnant_screened_cbc_positive_20_49 = $maternalCareReportService->pregnant_test('Y', 'CBC', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED GASTRO DIABETES AGE 10-14 YEARS
-        $pregnant_screened_gastro_diabetes_10_14 = $maternalCareReportService->pregnant_test('DIBTS', 'DIBTS', $request, '10', '14')->get();
+        $pregnant_screened_gastro_diabetes_10_14 = $maternalCareReportService->pregnant_test('N', 'DIBTS', $request, '10', '14')->get();
 
         //PREGNANT SCREENED GASTRO DIABETES AGE 15-19 YEARS
-        $pregnant_screened_gastro_diabetes_15_19 = $maternalCareReportService->pregnant_test('DIBTS', 'DIBTS', $request, '15', '19')->get();
+        $pregnant_screened_gastro_diabetes_15_19 = $maternalCareReportService->pregnant_test('N', 'DIBTS', $request, '15', '19')->get();
 
         //PREGNANT SCREENED GASTRO DIABETES AGE 20-49 YEARS
-        $pregnant_screened_gastro_diabetes_20_49 = $maternalCareReportService->pregnant_test('DIBTS', 'DIBTS', $request, '20', '49')->get();
+        $pregnant_screened_gastro_diabetes_20_49 = $maternalCareReportService->pregnant_test('N', 'DIBTS', $request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT SCREENED GASTRO DIABETES POSITIVE AGE 10-14 YEARS
-        $pregnant_screened_gastro_diabetes_positive_10_14 = $maternalCareReportService->pregnant_test('DIBTS+', 'DIBTS', $request, '10', '14')->get();
+        $pregnant_screened_gastro_diabetes_positive_10_14 = $maternalCareReportService->pregnant_test('Y', 'DIBTS', $request, '10', '14')->get();
 
         //PREGNANT SCREENED GASTRO DIABETES POSITIVE AGE 15-19 YEARS
-        $pregnant_screened_gastro_diabetes_positive_15_19 = $maternalCareReportService->pregnant_test('DIBTS+', 'DIBTS', $request, '15', '19')->get();
+        $pregnant_screened_gastro_diabetes_positive_15_19 = $maternalCareReportService->pregnant_test('Y', 'DIBTS', $request, '15', '19')->get();
 
         //PREGNANT SCREENED GASTRO DIABETES POSITIVE AGE 20-49 YEARS
-        $pregnant_screened_gastro_diabetes_positive_20_49 = $maternalCareReportService->pregnant_test('DIBTS+', 'DIBTS', $request, '20', '49')->get();
+        $pregnant_screened_gastro_diabetes_positive_20_49 = $maternalCareReportService->pregnant_test('Y', 'DIBTS', $request, '20', '49')->get();
 
         /////////////////////
         //NO. OF POSTPARTUM WITH 2 POSTPARTUM CHECKUP AGE 10-14 YEARS
