@@ -601,7 +601,7 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function get_no_of_pregnancy_outcome_all($request, $status)
+    public function get_no_of_pregnancy_outcome_all($request)
     {
         return DB::table(function ($query) {
             $query->selectRaw("
@@ -609,7 +609,6 @@ class MaternalCareReportService
                     patients.birthdate AS birthdate,
                     lmp_date,
                     DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service,
-                    TIMESTAMPDIFF(YEAR, patients.birthdate, delivery_date) AS age_year,
                     CASE
                         WHEN FLOOR((DATEDIFF(delivery_date, lmp_date)) / 7) BETWEEN 37 AND 42 THEN 'full_term'
                         WHEN FLOOR((DATEDIFF(delivery_date, lmp_date)) / 7) BETWEEN 22 AND 36 THEN 'pre_term'
@@ -645,12 +644,10 @@ class MaternalCareReportService
             ->when(isset($request->facility_code), function ($q) use ($request) {
                 $q->whereIn('users.facility_code', explode(',', $request->facility_code));
             })
-            ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code')
-            ->when($status == 'ALL', fn ($query) => $query->whereIn('status', ['full_term', 'pre_term'])
-                ->whereIn('outcome_code', ['FDU', 'FDUF', 'SB', 'SBF'])
-                ->whereIn('pregnancy_termination_code', ['SPON', 'IND'])
-                ->havingRaw('(year(date_of_service) = ? AND month(date_of_service) = ?) OR (year(pregnancy_termination_date) = ? AND month(pregnancy_termination_date) = ?)', [$request->year, $request->month, $request->year, $request->month])
-            )
+            ->whereIn('status', ['full_term', 'pre_term'])
+            ->whereIn('outcome_code', ['FDU', 'FDUF', 'SB', 'SBF'])
+            ->whereIn('pregnancy_termination_code', ['SPON', 'IND'])
+            ->havingRaw('(year(date_of_service) = ? AND month(date_of_service)) = ? OR year(pregnancy_termination_date) = ? AND month(pregnancy_termination_date) = ?', [$request->year, $request->month, $request->year, $request->month])
             ->groupBy('birthdate', 'status', 'name', 'lmp_date', 'date_of_service', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code', 'facility_name', 'facility_code', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
     }

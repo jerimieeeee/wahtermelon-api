@@ -362,7 +362,7 @@ class MaternalCareReport2018Controller extends Controller
 
         /////////////////////
         //NO. OF PREGNANCY OUTCOME ALL
-        $no_of_pregnancy_outcome_all = $maternalCareReportService->get_no_of_pregnancy_outcome_all($request, 'ALL')->get();
+        $no_of_pregnancy_outcome_all = $maternalCareReportService->get_no_of_pregnancy_outcome_all($request)->get();
 
         /////////////////////
         //NO. OF PREGNANCY OUTCOME FULLTERM AGE 10-14 YEARS
