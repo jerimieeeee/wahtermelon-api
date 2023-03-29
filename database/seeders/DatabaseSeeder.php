@@ -106,7 +106,8 @@ class DatabaseSeeder extends Seeder
             LibGeneralSurveySeeder::class,
             LibManagementSeeder::class,
             LibMedicineRouteSeeder::class,
-            LibTbPatientSourceSeeder::class
+            LibTbPatientSourceSeeder::class,
+            LibTbRegGroupSeeder::class
         ]);
     }
 }
