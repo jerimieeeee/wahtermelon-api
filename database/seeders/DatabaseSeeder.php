@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibAnswerYn;
 use App\Models\V1\Libraries\LibTbSymptoms;
+use App\Models\V1\Libraries\LibTbTreatmentOutcome;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -112,7 +113,8 @@ class DatabaseSeeder extends Seeder
             LibTbRegGroupSeeder::class,
             LibTbPreviousTbTreatmentSeeder::class,
             LibAnswerYnSeeder::class,
-            LibTbSymptomsSeeder::class
+            LibTbSymptomsSeeder::class,
+            LibTbTreatmentOutcomeSeeder::class
         ]);
     }
 }

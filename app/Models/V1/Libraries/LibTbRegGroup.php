@@ -10,7 +10,7 @@ class LibTbRegGroup extends Model
     use HasFactory;
 
     public $primaryKey = 'code';
-    public $increment = false;
+    public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;
 

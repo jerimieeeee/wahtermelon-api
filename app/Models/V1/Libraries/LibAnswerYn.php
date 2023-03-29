@@ -12,7 +12,7 @@ class LibAnswerYn extends Model
     protected $table = 'lib_answer_yn';
 
     public $primaryKey = 'code';
-    public $increment = false;
+    public $incrementing = false;
     public $keyType = 'string';
     public $timestamps = false;
 

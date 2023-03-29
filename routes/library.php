@@ -299,4 +299,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB Symptoms
     Route::get('tb-symptoms', [\App\Http\Controllers\API\V1\Libraries\LibTbSymptomsController::class, 'index'])->name('tb-symptoms.index');
 
+    //TB Treatment Outcome
+    Route::get('tb-treatment-outcome', [\App\Http\Controllers\API\V1\Libraries\LibTbTreatmentOutcomeController::class, 'index'])->name('tb-treatment-outcome.index');
+
 });

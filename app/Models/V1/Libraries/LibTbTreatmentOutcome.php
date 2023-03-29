@@ -5,7 +5,7 @@ namespace App\Models\V1\Libraries;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LibTbSymptoms extends Model
+class LibTbTreatmentOutcome extends Model
 {
     use HasFactory;
 
