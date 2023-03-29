@@ -115,7 +115,8 @@ class DatabaseSeeder extends Seeder
             LibAnswerYnSeeder::class,
             LibTbSymptomsSeeder::class,
             LibTbTreatmentOutcomeSeeder::class,
-            LibTbPeSeeder::class
+            LibTbPeSeeder::class,
+            LibTbRiskFactorSeeder::class
         ]);
     }
 }

@@ -305,4 +305,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB PE
     Route::get('tb-pe', [\App\Http\Controllers\API\V1\Libraries\LibTbPeController::class, 'index'])->name('tb-pe.index');
 
+    //TB Risk Factor
+    Route::get('tb-risk-factor', [\App\Http\Controllers\API\V1\Libraries\LibTbRiskFactorController::class, 'index'])->name('tb-risk-factor.index');
+
 });
