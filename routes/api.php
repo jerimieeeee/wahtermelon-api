@@ -590,4 +590,12 @@ Route::prefix('v1')->group(function () {
                 });
         });
     });
+
+    Route::prefix('tbdots')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\TBLibrariesController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tb-libraries', 'index');
+            });
+    });
 });
