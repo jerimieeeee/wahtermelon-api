@@ -297,4 +297,7 @@ Route::prefix('v1/libraries')->group(function () {
     //Yes or No answer
     Route::get('answer-yn', [\App\Http\Controllers\API\V1\Libraries\LibAnswerYnController::class, 'index'])->name('answer-yn.index');
 
+    //TB Symptoms
+    Route::get('tb-symptoms', [\App\Http\Controllers\API\V1\Libraries\LibTbSymptomsController::class, 'index'])->name('tb-symptoms.index');
+
 });

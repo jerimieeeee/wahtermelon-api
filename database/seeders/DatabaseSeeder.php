@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\V1\Libraries\LibAnswerYn;
+use App\Models\V1\Libraries\LibTbSymptoms;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -110,7 +111,8 @@ class DatabaseSeeder extends Seeder
             LibTbPatientSourceSeeder::class,
             LibTbRegGroupSeeder::class,
             LibTbPreviousTbTreatmentSeeder::class,
-            LibAnswerYnSeeder::class
+            LibAnswerYnSeeder::class,
+            LibTbSymptomsSeeder::class
         ]);
     }
 }
