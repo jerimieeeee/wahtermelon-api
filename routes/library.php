@@ -285,4 +285,6 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('medicine-route', [\App\Http\Controllers\API\V1\Libraries\LibMedicineRouteController::class, 'index'])->name('medicine-route.index');
     Route::get('medicine-route/{medicineRoute}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineRouteController::class, 'show'])->name('medicine-route.show');
 
+    //Patient Source
+    Route::get('tb-patient-source', [\App\Http\Controllers\API\V1\Libraries\LibTbPatientSourceController::class, 'index'])->name('tb-patient-source.index');
 });
