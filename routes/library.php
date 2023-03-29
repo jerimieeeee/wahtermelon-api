@@ -308,4 +308,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB Risk Factor
     Route::get('tb-risk-factor', [\App\Http\Controllers\API\V1\Libraries\LibTbRiskFactorController::class, 'index'])->name('tb-risk-factor.index');
 
+    //TB Exam Period
+    Route::get('tb-exam-period', [\App\Http\Controllers\API\V1\Libraries\LibTbExamPeriodController::class, 'index'])->name('tb-exam-period.index');
+
 });

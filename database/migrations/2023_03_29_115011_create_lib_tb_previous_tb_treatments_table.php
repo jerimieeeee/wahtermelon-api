@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lib_tb_previous_tb_treatments', function (Blueprint $table) {
-            $table->char('code');
+            $table->char('code')->primary();
             $table->string('desc', 50);
         });
     }
