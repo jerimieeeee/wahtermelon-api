@@ -290,4 +290,8 @@ Route::prefix('v1/libraries')->group(function () {
 
     //TB Registration Group
     Route::get('tb-reg-group', [\App\Http\Controllers\API\V1\Libraries\LibTbRegGroupController::class, 'index'])->name('tb-reg-group.index');
+
+    //TB Registration Group
+    Route::get('tb-previous-treatment', [\App\Http\Controllers\API\V1\Libraries\LibTbPreviousTbTreatmentController::class, 'index'])->name('tb-previous-treatment.index');
+
 });
