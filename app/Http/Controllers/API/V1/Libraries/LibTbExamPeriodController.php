@@ -13,7 +13,8 @@ class LibTbExamPeriodController extends Controller
     /**
      * Display a listing of the resource.
      *
-     *
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibTbExamPeriodResource
+     * @apiResourceModel App\Models\V1\Libraries\LibTbExamPeriod
      */
     public function index()
     {

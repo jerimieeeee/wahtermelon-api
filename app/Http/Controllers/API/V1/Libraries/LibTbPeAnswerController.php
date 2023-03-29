@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Libraries\LibTbRiskFactorResource;
-use App\Models\V1\Libraries\LibTbRiskFactor;
+use App\Http\Resources\API\V1\Libraries\LibTbPeAnswerResource;
+use App\Models\V1\Libraries\LibTbPeAnswer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class LibTbRiskFactorController extends Controller
+class LibTbPeAnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibTbRiskFactorResource
-     * @apiResourceModel App\Models\V1\Libraries\LibTbRiskFactor
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibTbPeAnswerResource
+     * @apiResourceModel App\Models\V1\Libraries\LibTbPeAnswer
      */
-    public function index()
+    public function index(): ResourceCollection
     {
-        $query = QueryBuilder::for(LibTbRiskFactor::class)
-            ->defaultSort('sequence');
-        return LibTbRiskFactorResource::collection($query->get());
+        $query = QueryBuilder::for(LibTbPeAnswer::class);
+        return LibTbPeAnswerResource::collection($query->get());
     }
 
     /**

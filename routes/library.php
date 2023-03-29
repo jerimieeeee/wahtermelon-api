@@ -311,4 +311,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB Exam Period
     Route::get('tb-exam-period', [\App\Http\Controllers\API\V1\Libraries\LibTbExamPeriodController::class, 'index'])->name('tb-exam-period.index');
 
+    //TB PE Answers
+    Route::get('tb-pe-answer', [\App\Http\Controllers\API\V1\Libraries\LibTbPeAnswerController::class, 'index'])->name('tb-pe-answer.index');
+
 });
