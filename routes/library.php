@@ -302,4 +302,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB Treatment Outcome
     Route::get('tb-treatment-outcome', [\App\Http\Controllers\API\V1\Libraries\LibTbTreatmentOutcomeController::class, 'index'])->name('tb-treatment-outcome.index');
 
+    //TB PE
+    Route::get('tb-pe', [\App\Http\Controllers\API\V1\Libraries\LibTbPeController::class, 'index'])->name('tb-pe.index');
+
 });

@@ -3,25 +3,22 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Libraries\LibTbTreatmentOutcomeResource;
-use App\Models\V1\Libraries\LibTbTreatmentOutcome;
+use App\Http\Resources\API\V1\Libraries\LibTbPeResource;
+use App\Models\V1\Libraries\LibTbPe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class LibTbTreatmentOutcomeController extends Controller
+class LibTbPeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibTbTreatmentOutcomeResource
-     * @apiResourceModel App\Models\V1\Libraries\LibTbTreatmentOutcome
      */
     public function index(): ResourceCollection
     {
-        $query = QueryBuilder::for(LibTbTreatmentOutcome::class)
+        $query = QueryBuilder::for(LibTbPe::class)
             ->defaultSort('sequence');
-        return LibTbTreatmentOutcomeResource::collection($query->get());
+        return LibTbPeResource::collection($query->get());
     }
 
     /**
