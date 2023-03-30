@@ -22,6 +22,7 @@ class TBLibrariesController extends Controller
         $tb_risk_factors = DB::table('lib_tb_risk_factors')->get();
         $tb_symptoms = DB::table('lib_tb_symptoms')->get();
         $tb_treatment_outcomes = DB::table('lib_tb_treatment_outcomes')->get();
+        $tb_answers_yn = DB::table('lib_answer_yn')->get();
 
         return [
             'tb_patient_sources'        => $tb_patient_sources,
@@ -31,7 +32,8 @@ class TBLibrariesController extends Controller
             'tb_reg_groups'             => $tb_reg_groups,
             'tb_risk_factors'           => $tb_risk_factors,
             'tb_symptoms'               => $tb_symptoms,
-            'tb_treatment_outcomes'     => $tb_treatment_outcomes
+            'tb_treatment_outcomes'     => $tb_treatment_outcomes,
+            'tb_answers_yn'             => $tb_answers_yn
         ];
     }
 
