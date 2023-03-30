@@ -35,7 +35,7 @@ class PatientVaccineService
                     THEN vaccine_date
                     ELSE NULL
                 END ORDER BY vaccine_date ASC),",", 2),",", -1) AS vaccine_date,
-                TIMESTAMPDIFF(MONTH, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(CASE
+                TIMESTAMPDIFF(MONTH, GROUP_CONCAT(DISTINCT birthdate), SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN vaccine_id = "MCV"
                     THEN vaccine_date
                     ELSE NULL
