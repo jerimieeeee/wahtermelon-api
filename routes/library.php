@@ -314,4 +314,7 @@ Route::prefix('v1/libraries')->group(function () {
     //TB PE Answers
     Route::get('tb-pe-answer', [\App\Http\Controllers\API\V1\Libraries\LibTbPeAnswerController::class, 'index'])->name('tb-pe-answer.index');
 
+    //TB Enrollment Type
+    Route::get('tb-enroll-as', [\App\Http\Controllers\API\V1\Libraries\LibTbEnrollAsController::class, 'index'])->name('tb-enroll-as.index');
+
 });

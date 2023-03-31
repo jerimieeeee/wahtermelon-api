@@ -14,19 +14,19 @@ class LibTbPeSeeder extends Seeder
     public function run(): void
     {
         LibTbPe::upsert([
-            ['code' => 'A',     'desc' => 'Abdomen',                    'sequence' => 8],
-            ['code' => 'BCG',   'desc' => 'BCG Scar',                   'sequence' => 3],
-            ['code' => 'C',     'desc' => 'Cardiovascular',             'sequence' => 5],
-            ['code' => 'E',     'desc' => 'Extremities',                'sequence' => 10],
-            ['code' => 'EC',    'desc' => 'Endocrine',                  'sequence' => 13],
-            ['code' => 'GH',    'desc' => 'General Health',             'sequence' => 1],
-            ['code' => 'GU',    'desc' => 'Genito-urinary',             'sequence' => 9],
-            ['code' => 'LN',    'desc' => 'Lymph Nodes',                'sequence' => 12],
-            ['code' => 'N',     'desc' => 'Neurological',               'sequence' => 11],
-            ['code' => 'O',     'desc' => 'Oropharynx',                 'sequence' => 4],
-            ['code' => 'S',     'desc' => 'Skin',                       'sequence' => 2],
-            ['code' => 'TL',    'desc' => 'Thorax & Lungs',             'sequence' => 6],
-            ['code' => 'UAM',   'desc' => 'Use of Accessory Muscles',   'sequence' => 7]
+            ['code' => 'abodomen',      'desc' => 'Abdomen',                    'sequence' => 8],
+            ['code' => 'bcg',           'desc' => 'BCG Scar',                   'sequence' => 3],
+            ['code' => 'cardiovascular','desc' => 'Cardiovascular',             'sequence' => 5],
+            ['code' => 'extremities',   'desc' => 'Extremities',                'sequence' => 10],
+            ['code' => 'endocrine',     'desc' => 'Endocrine',                  'sequence' => 13],
+            ['code' => 'ghealth',       'desc' => 'General Health',             'sequence' => 1],
+            ['code' => 'gurinary',      'desc' => 'Genito-urinary',             'sequence' => 9],
+            ['code' => 'lnodes',        'desc' => 'Lymph Nodes',                'sequence' => 12],
+            ['code' => 'neurological',  'desc' => 'Neurological',               'sequence' => 11],
+            ['code' => 'oropharynx',    'desc' => 'Oropharynx',                 'sequence' => 4],
+            ['code' => 'skin',          'desc' => 'Skin',                       'sequence' => 2],
+            ['code' => 'thoraxlungs',   'desc' => 'Thorax & Lungs',             'sequence' => 6],
+            ['code' => 'amuscles',      'desc' => 'Use of Accessory Muscles',   'sequence' => 7]
         ], ['code']);
     }
 }

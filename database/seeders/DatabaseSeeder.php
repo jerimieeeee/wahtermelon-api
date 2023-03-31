@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\V1\Libraries\LibAnswerYn;
+use App\Models\V1\Libraries\LibTbEnrollAs;
 use App\Models\V1\Libraries\LibTbSymptoms;
 use App\Models\V1\Libraries\LibTbTreatmentOutcome;
 use Illuminate\Database\Seeder;
@@ -118,7 +119,8 @@ class DatabaseSeeder extends Seeder
             LibTbPeSeeder::class,
             LibTbRiskFactorSeeder::class,
             LibTbExamPeriodSeeder::class,
-            LibTbPeAnswerSeeder::class
+            LibTbPeAnswerSeeder::class,
+            LibTbEnrollAsSeeder::class
         ]);
     }
 }

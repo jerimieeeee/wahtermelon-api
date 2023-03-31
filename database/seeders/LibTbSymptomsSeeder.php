@@ -14,15 +14,15 @@ class LibTbSymptomsSeeder extends Seeder
     public function run(): void
     {
         LibTbSymptoms::upsert([
-            ['code' => 'BCP',   'desc' => 'Back/Chest Pain'],
-            ['code' => 'C',     'desc' => 'Cough'],
-            ['code' => 'DAR',   'desc' => 'Dyspnea at rest'],
-            ['code' => 'DOE',   'desc' => 'Dyspnea on exertion'],
-            ['code' => 'F',     'desc' => 'Fever'],
-            ['code' => 'H',     'desc' => 'Hemoptysis'],
-            ['code' => 'NS',    'desc' => 'Night Sweats'],
-            ['code' => 'PE',    'desc' => 'Pedal Edema'],
-            ['code' => 'WL',    'desc' => 'Weight Loss']
+            ['code' => 'bcpain',   'desc' => 'Back/Chest Pain'],
+            ['code' => 'cough',     'desc' => 'Cough'],
+            ['code' => 'drest',   'desc' => 'Dyspnea at rest'],
+            ['code' => 'dexertion',   'desc' => 'Dyspnea on exertion'],
+            ['code' => 'fever',     'desc' => 'Fever'],
+            ['code' => 'hemoptysis',     'desc' => 'Hemoptysis'],
+            ['code' => 'nsweats',    'desc' => 'Night Sweats'],
+            ['code' => 'pedema',    'desc' => 'Pedal Edema'],
+            ['code' => 'wloss',    'desc' => 'Weight Loss']
         ], ['code']);
     }
 }
