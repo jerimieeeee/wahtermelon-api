@@ -597,5 +597,10 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('tb-libraries', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\TBLibrariesCaseHoldingController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tb-libraries-caseholding', 'index');
+            });
     });
 });
