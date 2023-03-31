@@ -120,7 +120,10 @@ class DatabaseSeeder extends Seeder
             LibTbRiskFactorSeeder::class,
             LibTbExamPeriodSeeder::class,
             LibTbPeAnswerSeeder::class,
-            LibTbEnrollAsSeeder::class
+            LibTbEnrollAsSeeder::class,
+            LibTbBacteriologicalStatusSeeder::class,
+            LibTbAnatomicalSiteSeeder::class,
+            LibTbEptbSiteSeeder::class
         ]);
     }
 }

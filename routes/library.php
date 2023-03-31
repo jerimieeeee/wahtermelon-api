@@ -317,4 +317,13 @@ Route::prefix('v1/libraries')->group(function () {
     //TB Enrollment Type
     Route::get('tb-enroll-as', [\App\Http\Controllers\API\V1\Libraries\LibTbEnrollAsController::class, 'index'])->name('tb-enroll-as.index');
 
+    //TB Bacteriological Status
+    Route::get('tb-bact-status', [\App\Http\Controllers\API\V1\Libraries\LibTbBacteriologicalStatusController::class, 'index'])->name('tb-bact-status.index');
+
+    //TB Anatomical Site
+    Route::get('tb-anatomical-site', [\App\Http\Controllers\API\V1\Libraries\LibTbAnatomicalSiteController::class, 'index'])->name('tb-anatomical-site.index');
+
+    //TB EPTB Site
+    Route::get('tb-eptb-site', [\App\Http\Controllers\API\V1\Libraries\LibTbEptbSiteController::class, 'index'])->name('tb-eptb-site.index');
+
 });

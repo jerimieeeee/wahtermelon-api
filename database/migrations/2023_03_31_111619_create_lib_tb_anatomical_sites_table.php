@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lib_tb_pe_answers', function (Blueprint $table) {
+        Schema::create('lib_tb_anatomical_sites', function (Blueprint $table) {
             $table->char('code')->primary();
-            $table->string('desc', 10);
+            $table->string('desc', 50);
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lib_tb_pe_answers');
+        Schema::dropIfExists('lib_tb_anatomical_sites');
     }
 };
