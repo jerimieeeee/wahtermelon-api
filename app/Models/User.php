@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\V1\Libraries\LibDesignation;
 use App\Models\V1\Libraries\LibEmployer;
+use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\HasSearchFilter;
@@ -109,5 +110,21 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')
             ->whereProgramCode('kp');
+    }
+
+    public function patient()
+    {
+        return $this->hasMany(Patient::class);
+    }
+
+    public function getUserAbilities()
+    {
+        $abilities = $this->getAbilities()->merge($this->getForbiddenAbilities());
+
+        $abilities->each(function ($ability) {
+            $ability->forbidden = $this->getForbiddenAbilities()->contains($ability);
+        });
+
+        return $abilities;
     }
 }

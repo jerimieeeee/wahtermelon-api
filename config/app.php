@@ -60,6 +60,8 @@ return [
 
     'frontend_url' => env('APP_FRONTEND_URL', 'http://localhost:4200'),
 
+    'konsulta_url' => env('APP_KONSULTA_URL', 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
