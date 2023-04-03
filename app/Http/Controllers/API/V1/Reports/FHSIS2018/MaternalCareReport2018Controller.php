@@ -407,16 +407,16 @@ class MaternalCareReport2018Controller extends Controller
         //NO. OF PREGNANCY OUTCOME FETAL DEATH AGE 20-49 YEAR
         $no_of_pregnancy_outcome_fetal_death_20_49 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'FETAL-DEATH', '20', '49')->get();
 
-        /*        /////////////////////
-                //NO. OF DELIVERIES TYPE OF DELIVERY ABORTION
-                //NO. OF PREGNANCY OUTCOME ABORTION AGE 10-14 YEARS
-                $no_of_pregnancy_outcome_abortion_10_14 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'ABORTION', '10', '14')->get();
+        /////////////////////
+        //NO. OF DELIVERIES TYPE OF DELIVERY ABORTION
+        //NO. OF PREGNANCY OUTCOME ABORTION AGE 10-14 YEARS
+        $no_of_pregnancy_outcome_abortion_10_14 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'ABORTION', '10', '14')->get();
 
-                //NO. OF PREGNANCY OUTCOME ABORTION AGE 15-19 YEAR
-                $no_of_pregnancy_outcome_abortion_15_19 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'ABORTION', '15', '19')->get();
+        //NO. OF PREGNANCY OUTCOME ABORTION AGE 15-19 YEAR
+        $no_of_pregnancy_outcome_abortion_15_19 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'ABORTION', '15', '19')->get();
 
-                //NO. OF PREGNANCY OUTCOME ABORTION AGE 20-49 YEAR
-                $no_of_pregnancy_outcome_abortion_20_49 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'ABORTION', '20', '49')->get();*/
+        //NO. OF PREGNANCY OUTCOME ABORTION AGE 20-49 YEAR
+        $no_of_pregnancy_outcome_abortion_20_49 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'ABORTION', '20', '49')->get();
 
         return [
 
@@ -762,7 +762,7 @@ class MaternalCareReport2018Controller extends Controller
             //NO. OF PREGNANCY OUTCOME FETAL DEATH AGE 20-49 YEAR
             'no_of_pregnancy_outcome_fetal_death_20_49' => $no_of_pregnancy_outcome_fetal_death_20_49,
 
-            /*            /////////////////////
+            /////////////////////
             //NO. OF DELIVERIES TYPE OF DELIVERY ABORTION
             //NO. OF PREGNANCY OUTCOME ABORTION AGE 10-14 YEARS
             'no_of_pregnancy_outcome_abortion_10_14' => $no_of_pregnancy_outcome_abortion_10_14,
@@ -771,7 +771,7 @@ class MaternalCareReport2018Controller extends Controller
             'no_of_pregnancy_outcome_abortion_15_19' => $no_of_pregnancy_outcome_abortion_15_19,
 
             //NO. OF PREGNANCY OUTCOME ABORTION AGE 20-49 YEAR
-            'no_of_pregnancy_outcome_abortion_20_49' => $no_of_pregnancy_outcome_abortion_20_49,*/
+            'no_of_pregnancy_outcome_abortion_20_49' => $no_of_pregnancy_outcome_abortion_20_49,
 
         ];
     }
