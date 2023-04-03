@@ -32,7 +32,8 @@ class SoapService
 
         $opts['http']['header'] = "Token: $token";
 
-        $wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
+        //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
+        $wsdlUrl = config('app.konsulta_url');
 
         $context = stream_context_create($opts);
         $soapClientOptions = [
