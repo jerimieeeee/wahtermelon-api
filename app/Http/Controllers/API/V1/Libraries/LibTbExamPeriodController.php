@@ -8,6 +8,15 @@ use App\Models\V1\Libraries\LibTbExamPeriod;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup Exam Period.
+ *
+ * @subgroupDescription List of Exam Periods.
+ */
 class LibTbExamPeriodController extends Controller
 {
     /**

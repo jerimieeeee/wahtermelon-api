@@ -8,6 +8,16 @@ use App\Models\V1\Libraries\LibTbRiskFactor;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup TB Risk Factors.
+ *
+ * @subgroupDescription List of TB RIsk Factors.
+ */
+
 class LibTbRiskFactorController extends Controller
 {
     /**

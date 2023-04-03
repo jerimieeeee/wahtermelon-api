@@ -602,5 +602,14 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('tb-libraries-caseholding', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbHistoryController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb-history', 'index');
+                Route::post('patient-tb-history', 'store');
+                Route::get('patient-tb-history/{patientTbHistory}', 'show');
+                Route::put('patient-tb-history/{patientTbHistory}', 'update');
+                Route::delete('patient-tb-history/{patientTbHistory}', 'destroy');
+            });
     });
 });

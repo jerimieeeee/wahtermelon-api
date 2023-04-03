@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup Treatment Outcomes.
+ *
+ * @subgroupDescription List of Treatment Outcomes.
+ */
+
 class LibTbTreatmentOutcomeController extends Controller
 {
     /**

@@ -9,13 +9,22 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for Generic Answers
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup List of yn answer.
+ *
+ * @subgroupDescription List of yn answers.
+ */
 class LibAnswerYnController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibAnswerYnResource
-     * @apiResourceMode App\Models\V1\Libraries\LibAnswerYn
+     * @apiResourceModel App\Models\V1\Libraries\LibAnswerYn
      */
     public function index(): ResourceCollection
     {

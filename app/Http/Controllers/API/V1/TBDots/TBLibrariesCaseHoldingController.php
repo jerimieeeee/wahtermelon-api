@@ -6,6 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @group Patient TB
+ *
+ * APIs for managing tb patient
+ *
+ * @subgroup Libraries for tb case holding.
+ *
+ * @subgroupDescription List of Libraries for tb case holding.
+ */
 class TBLibrariesCaseHoldingController extends Controller
 {
     /**

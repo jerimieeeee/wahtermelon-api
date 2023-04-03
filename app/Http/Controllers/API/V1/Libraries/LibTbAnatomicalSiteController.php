@@ -8,6 +8,15 @@ use App\Models\V1\Libraries\LibTbAnatomicalSite;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup Anatomical Sites.
+ *
+ * @subgroupDescription List of Anatomical Sites.
+ */
 class LibTbAnatomicalSiteController extends Controller
 {
     /**

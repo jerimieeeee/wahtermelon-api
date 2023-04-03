@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup TB PE.
+ *
+ * @subgroupDescription List of TB PEs.
+ */
+
 class LibTbPeController extends Controller
 {
     /**

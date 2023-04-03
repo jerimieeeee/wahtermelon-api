@@ -8,6 +8,15 @@ use App\Models\V1\Libraries\LibTbBacteriologicalStatus;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup Bateriological Status.
+ *
+ * @subgroupDescription List of Bacteriological Status.
+ */
 class LibTbBacteriologicalStatusController extends Controller
 {
     /**

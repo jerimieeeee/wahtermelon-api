@@ -9,13 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup TB Symptoms.
+ *
+ * @subgroupDescription List of TB Symptoms.
+ */
+
 class LibTbSymptomsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibTbSymptomsResource
-     * @apiResourceceModel App\Models\V1\Libraries\LibTbSymptoms
+     * @apiResourceModel App\Models\V1\Libraries\LibTbSymptoms
      */
     public function index(): ResourceCollection
     {

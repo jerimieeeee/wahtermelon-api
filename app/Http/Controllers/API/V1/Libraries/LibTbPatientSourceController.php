@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup Patient Sources.
+ *
+ * @subgroupDescription List of Patient Sources.
+ */
+
 class LibTbPatientSourceController extends Controller
 {
     /**

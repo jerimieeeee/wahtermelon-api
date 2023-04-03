@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for TB
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup Enrollment Type.
+ *
+ * @subgroupDescription List of Enrollment Types.
+ */
 class LibTbEnrollAsController extends Controller
 {
     /**
