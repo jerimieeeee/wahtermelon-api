@@ -25,16 +25,19 @@ class RoleController extends Controller
 //        ]);
 //
 //        Bouncer::allow($admin)->to($ban);
-        //$user = User::whereIs('admin')->get();
+        return $user = User::whereIs('admin')->get();
+        //return Patient::query()->get();
 
-        return auth()->user()->getAbilities();
+        return auth()->user()->isAn('admin');
+        Bouncer::allow(auth()->user())->toOwn(Patient::class)->to('update');
 
-        return Bouncer::is(auth()->user())->an('admin');
+        return auth()->user()->getUserAbilities();
+        //return Bouncer::is(auth()->user())->an('admin');
         Bouncer::allow('admin')->to('ban-users');
         Bouncer::assign('admin')->to(auth()->id());
         Bouncer::allow(auth()->id())->to('ban-users');
         Bouncer::allow(auth()->id())->to('edit', Patient::class);
-        Bouncer::allow(auth()->id())->toOwn(Patient::class);
+        Bouncer::allow(auth()->user())->toOwn(Patient::class);
 
         return 'OK';
     }
