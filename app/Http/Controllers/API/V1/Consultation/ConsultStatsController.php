@@ -23,7 +23,7 @@ class ConsultStatsController extends Controller
     /**
      * Display Stats of Consultation today.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function index()
     {
@@ -40,8 +40,8 @@ class ConsultStatsController extends Controller
                          ->get();
 
         $patient_count = DB::table('consults')
-        ->whereDate('created_at', '=', $date_today)
-        ->count();
+                        ->whereDate('created_at', '=', $date_today)
+                        ->count();
 
         return ['consult_count' => $today_count,
             'program_count' => $pt_count,

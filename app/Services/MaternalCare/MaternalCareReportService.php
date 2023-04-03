@@ -105,9 +105,9 @@ class MaternalCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
             ->whereNotNull('patient_weight')
-            ->where('patient_weight', '!=', 0)
+            ->where('patient_weight', '!=', null)
             ->whereNotNull('patient_height')
-            ->where('patient_height', '!=', 0)
+            ->where('patient_height', '!=', null)
             ->whereTrimester('1')
             ->whereYear('prenatal_date', $request->year)
             ->whereMonth('prenatal_date', $request->month)
@@ -160,6 +160,8 @@ class MaternalCareReportService
                         municipality_code,
                         barangay_code
             ")
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
             ->groupBy('name', 'bmi', 'birthdate', 'trimester', 'municipality_code', 'barangay_code')
             ->when(isset($request->municipality_code), function ($q) use ($request) {
                 $q->whereIn('municipality_code', explode(',', $request->municipality_code));
@@ -281,7 +283,7 @@ class MaternalCareReportService
             ->groupBy('patient_id', 'patient_mc_id', 'age', 'service_id', 'municipality_code', 'barangay_code');
     }
 
-    public function pregnant_test($class, $class2, $request, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_test($is_positive, $service, $request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table('consult_mc_services')
             ->selectRaw("
@@ -304,11 +306,11 @@ class MaternalCareReportService
             ->when(isset($request->barangay_code), function ($q) use ($request) {
                 $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
-            ->when($class == $class, fn ($query) => $query->whereServiceId($class2)
+            ->when($is_positive == 'N', fn ($query) => $query->whereServiceId($service)
                 ->whereVisitStatus('Prenatal')
                 ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
-            ->when($class == $class, fn ($query) => $query->whereServiceId($class2)
+            ->when($is_positive == 'Y', fn ($query) => $query->whereServiceId($service)
                 ->wherePositiveResult('1')
                 ->whereVisitStatus('Prenatal')
                 ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
