@@ -207,26 +207,28 @@ class MaternalCareReportService
                     $q->whereIn('barangay_code', explode(',', $request->barangay_code));
                 })
                 ->whereVaccineId('TD')
-                ->groupBy('consult_mc_prenatals.patient_id', 'vaccine_id', 'vaccine_date', 'status_id', 'municipality_code', 'barangay_code');
+                ->groupBy('consult_mc_prenatals.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
         })
             ->selectRaw('
                         name,
+                        vaccine_id,
                         birthdate,
                         date_of_service,
-                        vaccine_id,
                         status_id,
                         vaccine_seq,
                         TIMESTAMPDIFF(YEAR, birthdate, date_of_service) AS age_year,
                         municipality_code,
                         barangay_code
             ')
-            ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code', 'birthdate', 'vaccine_id', 'status_id')
-            ->when($vaccine == 'TD2', function ($query) use ($request, $age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw('(vaccine_seq = 2 AND status_id = 1) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ? AND (age_year BETWEEN ? AND ?)', [$request->year, $request->month, $age_year_bracket1, $age_year_bracket2]);
+            ->when($vaccine == 'TD2', function ($query) {
+                $query->whereVaccineSeq('2');
             })
-            ->when($vaccine == 'TD3', function ($query) use ($request, $age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw('(vaccine_seq >= 3 AND status_id = 1) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ? AND (age_year BETWEEN ? AND ?)', [$request->year, $request->month, $age_year_bracket1, $age_year_bracket2]);
+            ->when($vaccine == 'TD3', function ($query) {
+                $query->whereVaccineSeq('3');
             })
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
+            ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, date_of_service) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
 
@@ -421,9 +423,11 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
                         birthdate AS date_of_service,
-                        birth_weight
+                        patient_ccdevs.birth_weight AS birth_weight
                     ")
             ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+            ->join('patient_mc', 'patient_ccdevs.patient_id', '=', 'patient_mc.patient_id')
+            ->join('patient_mc_post_registrations', 'patient_mc.id', '=', 'patient_mc_post_registrations.patient_mc_id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
             })
@@ -433,13 +437,13 @@ class MaternalCareReportService
             ->when(isset($request->barangay_code), function ($q) use ($request) {
                 $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
-            ->when($weight == 'NORMAL', fn ($query) => $query->whereBirthWeight('>= 0.25')
+            ->when($weight == 'NORMAL', fn ($query) => $query->where('patient_ccdevs.birth_weight', '>=', 2.5)
                     ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->when($weight == 'LOW', fn ($query) => $query->whereBirthWeight('<= 0.25')
+            ->when($weight == 'LOW', fn ($query) => $query->where('patient_ccdevs.birth_weight', '<', 2.5)
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->when($weight == 'UNKNOWN', fn ($query) => $query->whereBirthWeight(0)
+            ->when($weight == 'UNKNOWN', fn ($query) => $query->where('patient_ccdevs.birth_weight', 0)
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->orderBy('name', 'ASC');
