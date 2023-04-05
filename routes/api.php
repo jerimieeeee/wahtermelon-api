@@ -611,5 +611,29 @@ Route::prefix('v1')->group(function () {
                 Route::put('patient-tb-history/{patientTbHistory}', 'update');
                 Route::delete('patient-tb-history/{patientTbHistory}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbCaseFindingController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb-casefinding', 'index');
+                Route::post('patient-tb-casefinding', 'store');
+                Route::get('patient-tb-casefinding/{patientTbCaseFinding}', 'show');
+                Route::put('patient-tb-casefinding/{patientTbCaseFinding}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbSymptomController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb-symptom', 'index');
+                Route::post('patient-tb-symptom', 'store');
+                Route::get('patient-tb-symptom/{patientTbSymptom}', 'show');
+                Route::put('patient-tb-symptom/{patientTbSymptom}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbPeController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb-pe', 'index');
+                Route::post('patient-tb-pe', 'store');
+                Route::get('patient-tb-pe/{patientTbPe}', 'show');
+                Route::put('patient-tb-pe/{patientTbPe}', 'update');
+            });
     });
 });

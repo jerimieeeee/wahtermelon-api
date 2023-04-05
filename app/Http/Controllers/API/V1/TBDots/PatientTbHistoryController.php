@@ -86,7 +86,7 @@ class PatientTbHistoryController extends Controller
             ->with('outcome')
             ->first();
 
-        return new PatientTbHistoryResource(($patientTbHistory));
+        return new PatientTbHistoryResource($patientTbHistory);
     }
 
     /**

@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Resources\API\V1\TBDots;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class PatientTbCaseFindingResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'patient_id' => $this->patient_id,
+            'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
+            'source_code' => $this->source_code,
+            'reg_group_code' => $this->reg_group_code,
+            'previous_tb_treatment_code' => $this->previous_tb_treatment_code,
+            'exposetb_flag' => $this->exposetb_flag,
+            'drtb_flag' => $this->drtb_flag,
+            'risk_factor1' => $this->risk_factor1,
+            'risk_factor2' => $this->risk_factor2,
+            'risk_factor3' => $this->risk_factor3,
+            'consult_date' => $this->consult_date
+        ];
+    }
+}
