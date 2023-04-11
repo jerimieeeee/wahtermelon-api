@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('patient_tb_symptoms', function (Blueprint $table) {
             $table->ulid('id')->index()->primary();
+            $table->foreignUlid('patient_tb_case_findings_id')->index()->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();

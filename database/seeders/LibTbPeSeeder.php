@@ -14,7 +14,7 @@ class LibTbPeSeeder extends Seeder
     public function run(): void
     {
         LibTbPe::upsert([
-            ['code' => 'abodomen',      'desc' => 'Abdomen',                    'sequence' => 8],
+            ['code' => 'abdomen',      'desc' => 'Abdomen',                    'sequence' => 8],
             ['code' => 'bcg',           'desc' => 'BCG Scar',                   'sequence' => 3],
             ['code' => 'cardiovascular','desc' => 'Cardiovascular',             'sequence' => 5],
             ['code' => 'extremities',   'desc' => 'Extremities',                'sequence' => 10],

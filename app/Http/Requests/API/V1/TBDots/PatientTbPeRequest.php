@@ -24,6 +24,7 @@ class PatientTbPeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'patient_tb_case_findings_id' => 'required|exists:patient_tb_case_findings,id',
             'patient_id' => 'required|exists:patients,id',
             'abdomen' => 'required|exists:lib_tb_pe_answers,code',
             'amuscles' => 'required|exists:lib_tb_pe_answers,code',

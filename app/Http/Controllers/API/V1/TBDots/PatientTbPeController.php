@@ -63,7 +63,7 @@ class PatientTbPeController extends Controller
      */
     public function store(PatientTbPeRequest $request):JsonResponse
     {
-        $data = PatientTbPe::create($request->validated());
+        $data = PatientTbPe::updateOrCreate(['patient_tb_case_findings_id' => $request['patient_tb_case_findings_id']], $request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }

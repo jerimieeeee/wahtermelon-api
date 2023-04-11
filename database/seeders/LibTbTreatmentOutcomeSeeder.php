@@ -21,7 +21,8 @@ class LibTbTreatmentOutcomeSeeder extends Seeder
             ['code' => 'NE',    'desc' => 'Not Enrolled',           'sequence' => 5],
             ['code' => 'NET',   'desc' => 'Not Evaluated',          'sequence' => 6],
             ['code' => 'OT',    'desc' => 'On Treatment',           'sequence' => 7],
-            ['code' => 'TR',    'desc' => 'Treatment Completed',    'sequence' => 8]
+            ['code' => 'TR',    'desc' => 'Treatment Completed',    'sequence' => 8],
+            ['code' => 'D',     'desc' => 'Died',                   'sequence' => 9]
         ], ['code']);
     }
 }

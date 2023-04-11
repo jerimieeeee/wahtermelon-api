@@ -63,7 +63,7 @@ class PatientTbSymptomController extends Controller
      */
     public function store(PatientTbSymptomRequest $request):JsonResponse
     {
-        $data = PatientTbSymptom::create($request->validated());
+        $data = PatientTbSymptom::updateOrCreate(['patient_tb_case_findings_id' => $request['patient_tb_case_findings_id']], $request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }

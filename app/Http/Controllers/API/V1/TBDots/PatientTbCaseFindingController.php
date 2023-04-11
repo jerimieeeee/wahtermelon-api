@@ -45,7 +45,7 @@ class PatientTbCaseFindingController extends Controller
         ->when(isset($request->patient_id), function ($q) use ($request) {
             $q->where('patient_id', $request->patient_id);
         })
-        ->with('source', 'reg_group', 'previous_tb_treatment')
+        ->with('source', 'reg_group', 'previous_tb_treatment', 'symptom', 'physical_exam')
         ->defaultSort('consult_date')
         ->allowedSorts('-consult_date');
 

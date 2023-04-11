@@ -326,4 +326,6 @@ Route::prefix('v1/libraries')->group(function () {
     //TB EPTB Site
     Route::get('tb-eptb-site', [\App\Http\Controllers\API\V1\Libraries\LibTbEptbSiteController::class, 'index'])->name('tb-eptb-site.index');
 
+    //TB EPTB Site
+    Route::get('tb-outcome-reason', [\App\Http\Controllers\API\V1\Libraries\LibTbOutcomeReasonController::class, 'index'])->name('tb-outcome-reason.index');
 });
