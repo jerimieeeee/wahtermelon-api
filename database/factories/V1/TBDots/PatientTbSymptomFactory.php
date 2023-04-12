@@ -5,6 +5,7 @@ namespace Database\Factories\V1\TBDots;
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use App\Models\V1\TBDots\PatientTb;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class PatientTbSymptomFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'patient_tb_id' => fake()->randomElement(PatientTb::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'bcpain' => fake()->boolean(),
             'cough' => fake()->boolean(),

@@ -4,6 +4,7 @@ namespace App\Models\V1\TBDots;
 
 use App\Models\V1\Libraries\LibTbTreatmentOutcome;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;

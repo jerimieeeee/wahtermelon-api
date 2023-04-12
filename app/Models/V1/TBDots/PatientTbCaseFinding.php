@@ -46,14 +46,4 @@ class PatientTbCaseFinding extends Model
     {
         return $this->belongsTo(LibTbPreviousTbTreatment::class, 'previous_tb_treatment_code', 'code');
     }
-
-    public function symptom()
-    {
-        return $this->hasOne(PatientTbSymptom::class, 'patient_tb_case_findings_id', 'id');
-    }
-
-    public function physical_exam()
-    {
-        return $this->hasOne(PatientTbPe::class, 'patient_tb_case_findings_id', 'id');
-    }
 }

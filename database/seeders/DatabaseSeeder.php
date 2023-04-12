@@ -4,10 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\V1\Libraries\LibAnswerYn;
-use App\Models\V1\Libraries\LibTbEnrollAs;
-use App\Models\V1\Libraries\LibTbSymptoms;
-use App\Models\V1\Libraries\LibTbTreatmentOutcome;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -123,7 +119,10 @@ class DatabaseSeeder extends Seeder
             LibTbEnrollAsSeeder::class,
             LibTbBacteriologicalStatusSeeder::class,
             LibTbAnatomicalSiteSeeder::class,
-            LibTbEptbSiteSeeder::class
+            LibTbEptbSiteSeeder::class,
+            LibTbOutcomeReasonSeeder::class,
+            LibTbIptTypeSeeder::class,
+            LibTbTreatmentRegimenSeeder::class
         ]);
     }
 }

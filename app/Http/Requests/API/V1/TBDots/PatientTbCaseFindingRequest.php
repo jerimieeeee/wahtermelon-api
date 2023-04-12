@@ -27,6 +27,7 @@ class PatientTbCaseFindingRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
+            'patient_tb_id' => 'exists:patient_tbs,id',
             'source_code' => 'required|exists:lib_tb_patient_sources,code',
             'reg_group_code' => 'required|exists:lib_tb_reg_groups,code',
             'previous_tb_treatment_code' => 'required|exists:lib_tb_previous_tb_treatments,code',

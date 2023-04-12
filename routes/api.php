@@ -635,5 +635,13 @@ Route::prefix('v1')->group(function () {
                 Route::get('patient-tb-pe/{patientTbPe}', 'show');
                 Route::put('patient-tb-pe/{patientTbPe}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb', 'index');
+                Route::post('patient-tb', 'store');
+                Route::get('patient-tb/{patientTb}', 'show');
+                Route::put('patient-tb/{patientTb}', 'update');
+            });
     });
 });

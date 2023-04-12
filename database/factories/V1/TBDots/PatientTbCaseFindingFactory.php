@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibTbPreviousTbTreatment;
 use App\Models\V1\Libraries\LibTbRegGroup;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use App\Models\V1\TBDots\PatientTb;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,7 @@ class PatientTbCaseFindingFactory extends Factory
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
+            'patient_tb_id' => fake()->randomElement(PatientTb::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'source_code' => fake()->randomElement(LibTbPatientSource::pluck('code')->toArray()),
             'reg_group_code' => fake()->randomElement(LibTbRegGroup::pluck('code')->toArray()),

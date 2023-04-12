@@ -25,6 +25,6 @@ class LibTbOutcomeReasonSeeder extends Seeder
             ['id' => 9,     'desc' => 'Relocation'],
             ['id' => 10,    'desc' => 'TB-related'],
             ['id' => 11,    'desc' => 'Non-TB related']
-        ], ['id'])
+        ], ['id']);
     }
 }

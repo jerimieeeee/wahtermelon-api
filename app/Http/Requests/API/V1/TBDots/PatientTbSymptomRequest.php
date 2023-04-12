@@ -23,8 +23,8 @@ class PatientTbSymptomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_tb_case_findings_id' => 'required|exists:patient_tb_case_findings,id',
             'patient_id' => 'required|exists:patients,id',
+            'patient_tb_id' => 'required|exists:patient_tbs,id',
             'bcpain' => 'boolean',
             'cough' => 'boolean',
             'drest' => 'boolean',
