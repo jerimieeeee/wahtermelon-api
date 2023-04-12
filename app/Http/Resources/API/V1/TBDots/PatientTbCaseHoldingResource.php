@@ -24,10 +24,10 @@ class PatientTbCaseHoldingResource extends JsonResource
             'enroll_as' => $this->whenLoaded('enrollAs'),
             'treatment_regimen_code' => $this->when(!$this->relationLoaded('treatmentRegimen'), $this->treatment_regimen_code),
             'treatment_regimen' => $this->whenLoaded('treatmentRegimen'),
-            'registration_date' => $this->registration_date->format('Y-m-d'),
-            'treatment_start' => $this->treatment_start->format('Y-m-d'),
-            'continuation_start' => $this->continuation_start->format('Y-m-d'),
-            'treatment_end' => $this->treatment_end->format('Y-m-d'),
+            'registration_date' => $this->registration_date,
+            'treatment_start' => $this->treatment_start,
+            'continuation_start' => $this->continuation_start,
+            'treatment_end' => $this->treatment_end,
             'bacteriological_status_code' => $this->when(!$this->relationLoaded('bacteriologicalStatus'), $this->bacteriological_status_code),
             'bacteriological_status' => $this->whenLoaded('bacteriologicalStatus'),
             'anatomical_site_code' => $this->when(!$this->relationLoaded('anatomicalSite'), $this->anatomical_site_code),
@@ -39,7 +39,7 @@ class PatientTbCaseHoldingResource extends JsonResource
             'ipt_type_code' => $this->when(!$this->relationLoaded('iptType'), $this->ipt_type_code),
             'ipt_type' => $this->whenLoaded('iptType'),
             'transfer_flag' => $this->transfer_flag,
-            'pict_date' => $this->pict_date->format('Y-m-d')
+            'pict_date' => $this->pict_date
         ];
     }
 }
