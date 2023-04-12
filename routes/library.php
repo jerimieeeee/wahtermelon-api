@@ -326,6 +326,12 @@ Route::prefix('v1/libraries')->group(function () {
     //TB EPTB Site
     Route::get('tb-eptb-site', [\App\Http\Controllers\API\V1\Libraries\LibTbEptbSiteController::class, 'index'])->name('tb-eptb-site.index');
 
-    //TB EPTB Site
+    //TB Outcome Reasons
     Route::get('tb-outcome-reason', [\App\Http\Controllers\API\V1\Libraries\LibTbOutcomeReasonController::class, 'index'])->name('tb-outcome-reason.index');
+
+    //TB IPT Type
+    Route::get('tb-ipt-type', [\App\Http\Controllers\API\V1\Libraries\LibTbIptTypeController::class, 'index'])->name('tb-ipt-type.index');
+
+    //TB Treatment Regimen
+    Route::get('tb-treatment-regimen', [\App\Http\Controllers\API\V1\Libraries\LibTbTreatmentRegimenController::class, 'index'])->name('tb-treatment-regimen.index');
 });
