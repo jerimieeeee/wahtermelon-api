@@ -25,8 +25,8 @@ class PatientTbCaseFindingFactory extends Factory
     {
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
-            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'patient_tb_id' => fake()->randomElement(PatientTb::pluck('id')->toArray()),
+            'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'source_code' => fake()->randomElement(LibTbPatientSource::pluck('code')->toArray()),
             'reg_group_code' => fake()->randomElement(LibTbRegGroup::pluck('code')->toArray()),
