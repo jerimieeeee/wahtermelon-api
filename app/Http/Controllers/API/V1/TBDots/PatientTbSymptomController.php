@@ -55,7 +55,7 @@ class PatientTbSymptomController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @apiResouceAddition status=Success
+     * @apiResouceAdditional status=Success
      *
      * @apiResource 201 App\Http\Resources\API\V1\TBDots\PatientTbSymptomResource
      *
