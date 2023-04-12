@@ -18,9 +18,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  *
  * APIs for managing tb case findings
  *
- * @subgroup Patient TB Casefindings.
+ * @subgroup Patient TB Case findings.
  *
- * @subgroupDescription List of Patient TB Casefindings.
+ * @subgroupDescription List of Patient TB Case findings.
  */
 
 class PatientTbCaseFindingController extends Controller
@@ -45,7 +45,7 @@ class PatientTbCaseFindingController extends Controller
         ->when(isset($request->patient_id), function ($q) use ($request) {
             $q->where('patient_id', $request->patient_id);
         })
-        ->with('source', 'reg_group', 'previous_tb_treatment', 'symptom', 'physical_exam')
+        ->with('source', 'reg_group', 'previous_tb_treatment')
         ->defaultSort('consult_date')
         ->allowedSorts('-consult_date');
 

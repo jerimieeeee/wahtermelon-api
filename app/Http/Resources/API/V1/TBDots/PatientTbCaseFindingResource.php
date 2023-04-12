@@ -16,6 +16,7 @@ class PatientTbCaseFindingResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'patient_tb_id' => $this->patient_tb_id,
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
             'facility_code' => $this->facility_code,
@@ -27,7 +28,7 @@ class PatientTbCaseFindingResource extends JsonResource
             'risk_factor1' => $this->risk_factor1,
             'risk_factor2' => $this->risk_factor2,
             'risk_factor3' => $this->risk_factor3,
-            'consult_date' => $this->consult_date,
+            'consult_date' => $this->consult_date->format('Y-m-d'),
             'symptom' => $this->when($this->relationLoaded('symptom'), new PatientTbSymptomResource($this->symptom)),
             'physical_exam'  => $this->when($this->relationLoaded('physical_exam'), new PatientTbPeResource($this->physical_exam))
         ];
