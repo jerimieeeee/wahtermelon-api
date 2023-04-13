@@ -230,7 +230,7 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function pregnant_td_vaccine($request, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_td3_vaccine($request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table(function ($query) use ($request) {
             $query->selectRaw("
