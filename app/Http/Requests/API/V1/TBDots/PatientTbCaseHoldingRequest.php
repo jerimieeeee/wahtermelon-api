@@ -30,6 +30,7 @@ class PatientTbCaseHoldingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'case_number' => 'required|alpha_num',
             'patient_id' => 'required|exists:patients,id',
             'patient_tb_id' => 'required|exists:patient_tbs,id',
             'enroll_as_code' => 'required|exists:lib_tb_enroll_as,code',

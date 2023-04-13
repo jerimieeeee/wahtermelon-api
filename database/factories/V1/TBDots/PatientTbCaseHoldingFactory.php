@@ -31,6 +31,7 @@ class PatientTbCaseHoldingFactory extends Factory
             'patient_tb_id' => fake()->randomElement(PatientTb::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            'case_number' => fake()->regexify('[A-Za-z0-9]{20}'),
             'enroll_as_code' => fake()->randomElement(LibTbEnrollAs::pluck('code')->toArray()),
             'treatment_regimen_code' => fake()->randomElement(LibTbTreatmentRegimen::pluck('code')->toArray()),
             'registration_date' => fake()->date($format =  'Y-m-d', $max = 'now'),

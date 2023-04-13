@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
+            $table->string('case_number', 50);
             $table->string('enroll_as_code', 4);
             $table->string('treatment_regimen_code', 5);
             $table->date('registration_date');

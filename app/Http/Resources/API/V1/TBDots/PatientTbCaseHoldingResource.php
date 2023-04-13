@@ -20,6 +20,7 @@ class PatientTbCaseHoldingResource extends JsonResource
             'patient_id' => $this->patient_id,
             'user_id' => $this->user_id,
             'facility_code' => $this->facility_code,
+            'case_number' => $this->case_number,
             'enroll_as' => $this->when(!$this->relationLoaded('enrollAs'), $this->enrollAs),
             'treatment_regimen' => $this->when(!$this->relationLoaded('treatmentRegimen'), $this->treatmentRegimen),
             'registration_date' => $this->registration_date,
