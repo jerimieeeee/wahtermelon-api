@@ -182,7 +182,7 @@ class MaternalCareReportService
             });
     }
 
-    public function pregnant_td_vaccine($request, $vaccine, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_td2_vaccine($request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table(function ($query) use ($request) {
             $query->selectRaw("
@@ -198,6 +198,7 @@ class MaternalCareReportService
                 ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('consult_mc_prenatals', 'patient_vaccines.patient_id', '=', 'consult_mc_prenatals.patient_id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
@@ -221,12 +222,55 @@ class MaternalCareReportService
                         municipality_code,
                         barangay_code
             ')
-            ->when($vaccine == 'TD2', function ($query) {
-                $query->whereVaccineSeq('2');
-            })
-            ->when($vaccine == 'TD3', function ($query) {
-                $query->where('vaccine_seq', '>=', 3);
-            })
+            ->whereVaccineSeq(2)
+            ->whereStatusId(1)
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
+            ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, date_of_service) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
+            ->orderBy('name', 'ASC');
+    }
+
+    public function pregnant_td_vaccine($request, $age_year_bracket1, $age_year_bracket2)
+    {
+        return DB::table(function ($query) use ($request) {
+            $query->selectRaw("
+                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                            birthdate,
+                            vaccine_date AS date_of_service,
+                            vaccine_id,
+                            status_id,
+                            ROW_NUMBER() OVER (PARTITION BY patients.id,
+                                vaccine_id ORDER BY vaccine_id) AS vaccine_seq,
+                            municipality_code,
+                            barangay_code
+                ")
+                ->from('patient_vaccines')
+                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('consult_mc_prenatals', 'patient_vaccines.patient_id', '=', 'consult_mc_prenatals.patient_id')
+                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
+                })
+                ->when(isset($request->municipality_code), function ($q) use ($request) {
+                    $q->whereIn('municipality_code', explode(',', $request->municipality_code));
+                })
+                ->when(isset($request->barangay_code), function ($q) use ($request) {
+                    $q->whereIn('barangay_code', explode(',', $request->barangay_code));
+                })
+                ->whereVaccineId('TD')
+                ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
+        })
+            ->selectRaw('
+                        name,
+                        vaccine_id,
+                        birthdate,
+                        date_of_service,
+                        status_id,
+                        vaccine_seq,
+                        TIMESTAMPDIFF(YEAR, birthdate, date_of_service) AS age_year,
+                        municipality_code,
+                        barangay_code
+            ')
+            ->whereIn('vaccine_seq', [3, 4, 5])
             ->whereYear('date_of_service', $request->year)
             ->whereMonth('date_of_service', $request->month)
             ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, date_of_service) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
