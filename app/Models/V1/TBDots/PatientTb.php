@@ -57,7 +57,7 @@ class PatientTb extends Model
         return $this->hasOne(PatientTbPe::class, 'patient_tb_id', 'id');
     }
 
-    /* public function tbCaseHolding(){
-        return $this->hasOne
-    } */
+    public function tbCaseHolding(){
+        return $this->hasOne(PatientTbCaseHolding::class, 'patient_tb_id', 'id');
+    }
 }
