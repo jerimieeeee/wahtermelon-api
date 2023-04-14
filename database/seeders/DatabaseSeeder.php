@@ -106,6 +106,7 @@ class DatabaseSeeder extends Seeder
             LibGeneralSurveySeeder::class,
             LibManagementSeeder::class,
             LibMedicineRouteSeeder::class,
+            LibAppointmentSeeder::class,
         ]);
     }
 }
