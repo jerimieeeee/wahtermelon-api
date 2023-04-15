@@ -122,7 +122,8 @@ class DatabaseSeeder extends Seeder
             LibTbEptbSiteSeeder::class,
             LibTbOutcomeReasonSeeder::class,
             LibTbIptTypeSeeder::class,
-            LibTbTreatmentRegimenSeeder::class
+            LibTbTreatmentRegimenSeeder::class,
+            LibAppointmentSeeder::class,
         ]);
     }
 }
