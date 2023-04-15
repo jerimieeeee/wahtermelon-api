@@ -29,7 +29,7 @@ class PatientTbCaseHoldingResource extends JsonResource
             'treatment_end' => $this->treatment_end,
             'bacteriological_status' => $this->when(!$this->relationLoaded('bacteriologicalStatus'), $this->bacteriologicalStatus),
             'anatomical_site' => $this->when(!$this->relationLoaded('anatomicalSite'), $this->anatomicalSite),
-            'eptb_site' => $this->whenLoaded('eptbSite'),
+            'eptb_site' => $this->when(!$this->relationLoaded('eptbSite'), $this->eptbSite),
             'specific_site' => $this->specific_site,
             'drug_resistant_flag' => $this->drug_resistant_flag,
             'ipt_type' => $this->when(!$this->relationLoaded('iptType'), $this->iptType),

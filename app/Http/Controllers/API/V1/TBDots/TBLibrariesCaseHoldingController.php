@@ -27,13 +27,16 @@ class TBLibrariesCaseHoldingController extends Controller
         $tb_anatomical_sites = DB::table('lib_tb_anatomical_sites')->get();
         $tb_eptb_sites = DB::table('lib_tb_eptb_sites')->get();
         $tb_answers_yn = DB::table('lib_answer_yn')->get();
-
+        $tb_ipt_types = DB::table('lib_tb_ipt_types')->get();
+        $tb_treatment_regimens = DB::table('lib_tb_treatment_regimens')->get();
         return [
             'tb_enroll_as'                  => $tb_enroll_as,
             'tb_bacteriological_statuses'   => $tb_bacteriological_statuses,
             'tb_anatomical_sites'           => $tb_anatomical_sites,
             'tb_eptb_sites'                 => $tb_eptb_sites,
-            'tb_answers_yn'                 => $tb_answers_yn
+            'tb_answers_yn'                 => $tb_answers_yn,
+            'tb_ipt_types'                  => $tb_ipt_types,
+            'tb_treatment_regimens'         => $tb_treatment_regimens
         ];
     }
 

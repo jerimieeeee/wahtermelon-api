@@ -46,8 +46,8 @@ class PatientTbController extends Controller
             $q->where('patient_id', $request->patient_id);
         })
         ->with('tbCaseFinding', 'tbCaseHolding', 'treatmentOutcome', 'outcomeReason', 'tbSymptom', 'tbPhysicalExam')
-        ->defaultSort('outcome_date')
-        ->allowedSorts('-outcome_date');
+        ->defaultSort('-created_at')
+        ->allowedSorts('created_at');
 
         if($perPage === 'all') {
             return PatientTbResource::collection($query->get());

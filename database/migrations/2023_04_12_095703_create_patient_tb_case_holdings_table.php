@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('facility_code')->index();
             $table->string('case_number', 50);
             $table->string('enroll_as_code', 4);
-            $table->string('treatment_regimen_code', 5);
+            $table->string('treatment_regimen_code', 5)->nullable();
             $table->date('registration_date');
             $table->date('treatment_start');
             $table->date('continuation_start');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->boolean('drug_resistant_flag')->default(0);
             $table->char('ipt_type_code', 1)->nullable();
             $table->boolean('transfer_flag')->default(0);
-            $table->date('pict_date');
+            $table->date('pict_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

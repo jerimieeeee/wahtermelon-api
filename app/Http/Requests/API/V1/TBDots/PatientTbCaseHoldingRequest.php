@@ -34,11 +34,11 @@ class PatientTbCaseHoldingRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'patient_tb_id' => 'required|exists:patient_tbs,id',
             'enroll_as_code' => 'required|exists:lib_tb_enroll_as,code',
-            'treatment_regimen_code' => 'required|exists:lib_tb_treatment_regimens,code',
+            'treatment_regimen_code' => 'exists:lib_tb_treatment_regimens,code',
             'registration_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'treatment_start' => 'required|date|date_format:Y-m-d|before:tomorrow',
-            'continuation_start' => 'required|date|date_format:Y-m-d|before:tomorrow',
-            'treatment_end' => 'required|date|date_format:Y-m-d|before:tomorrow',
+            'continuation_start' => 'required|date|date_format:Y-m-d',
+            'treatment_end' => 'required|date|date_format:Y-m-d',
             'bacteriological_status_code' => 'nullable|exists:lib_tb_bacteriological_statuses,code',
             'anatomical_site_code' => 'nullable|exists:lib_tb_anatomical_sites,code',
             'eptb_site_id' => 'nullable|exists:lib_tb_eptb_sites,id',
@@ -46,18 +46,14 @@ class PatientTbCaseHoldingRequest extends FormRequest
             'drug_resistant_flag' => 'boolean',
             'ipt_type_code' => 'nullable|exists:lib_tb_ipt_types,code',
             'transfer_flag' => 'boolean',
-            'pict_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow'
+            'pict_date' => 'nullable|date|date_format:Y-m-d'
         ];
     }
 
     public function messages()
     {
         return [
-            'registration_date.before' => 'The registration date must not be future date.',
-            'treatment_start.before' => 'The treatment start date must not be future date.',
-            'continuation_start.before' => 'The continuation start date must not be future date.',
-            'treatment_end.before' => 'The treatment end date must not be future date.',
-            'pict_date.before' => 'The pict date must not be future date.',
+            'registration_date.before' => 'The registration date must not be future date.'
         ];
     }
 

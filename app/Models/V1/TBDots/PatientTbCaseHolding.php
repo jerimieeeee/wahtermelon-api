@@ -42,12 +42,12 @@ class PatientTbCaseHolding extends Model
 
     public function treatmentRegimen()
     {
-        return $this->belongsTo(LibTbTreatmentRegimen::class, 'treatment_regiment_code', 'code');
+        return $this->belongsTo(LibTbTreatmentRegimen::class, 'treatment_regimen_code', 'code');
     }
 
     public function bacteriologicalStatus()
     {
-        return $this->belongsTo(LibTbBacteriologicalStatus::class, 'bateriological_status_code', 'code');
+        return $this->belongsTo(LibTbBacteriologicalStatus::class, 'bacteriological_status_code', 'code');
     }
 
     public function anatomicalSite()
