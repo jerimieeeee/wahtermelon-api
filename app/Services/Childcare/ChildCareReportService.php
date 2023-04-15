@@ -737,7 +737,7 @@ class ChildCareReportService
                 ['bfed_month3', '=', '1'],
                 ['bfed_month4', '=', '1'],
             ])
-                        ->whereNotNull('comp_fed_date')
+            ->whereNotNull('comp_fed_date')
             )
             ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             ->whereGender($patient_gender)
@@ -796,7 +796,7 @@ class ChildCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
             ->when($class == 'Stunted', fn ($query) => $query->whereIn('patient_height_for_age', ['Stunted'])
-                          ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                     ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($class == 'Wasted', fn ($query) => $query->wherePatientHeightForAge($class)
                      ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])

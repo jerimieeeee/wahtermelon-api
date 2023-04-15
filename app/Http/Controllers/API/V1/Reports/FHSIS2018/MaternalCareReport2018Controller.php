@@ -78,23 +78,23 @@ class MaternalCareReport2018Controller extends Controller
 
         /////////////////////
         //PREGNANT WITH 2 TD VACCINE AGE 10-14 YEARS
-        $pregnant_2_td_vaccine_10_14 = $maternalCareReportService->pregnant_td_vaccine($request, 'TD2', '10', '14')->get();
+        $pregnant_2_td_vaccine_10_14 = $maternalCareReportService->pregnant_td2_vaccine($request, '10', '14')->get();
 
         //PREGNANT WITH 2 TD VACCINE AGE 15-19 YEARS
-        $pregnant_2_td_vaccine_15_19 = $maternalCareReportService->pregnant_td_vaccine($request, 'TD2', '15', '19')->get();
+        $pregnant_2_td_vaccine_15_19 = $maternalCareReportService->pregnant_td2_vaccine($request, '15', '19')->get();
 
         //PREGNANT WITH 2 TD VACCINE AGE 20-49 YEARS
-        $pregnant_2_td_vaccine_20_49 = $maternalCareReportService->pregnant_td_vaccine($request, 'TD2', '20', '49')->get();
+        $pregnant_2_td_vaccine_20_49 = $maternalCareReportService->pregnant_td2_vaccine($request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT WITH 3 TD VACCINE AGE 10-14 YEARS
-        $pregnant_3_td_vaccine_10_14 = $maternalCareReportService->pregnant_td_vaccine($request, 'TD3', '10', '14')->get();
+        $pregnant_3_td_vaccine_10_14 = $maternalCareReportService->pregnant_td3_vaccine($request, '10', '14')->get();
 
         //PREGNANT WITH 3 TD VACCINE AGE 15-19 YEARS
-        $pregnant_3_td_vaccine_15_19 = $maternalCareReportService->pregnant_td_vaccine($request, 'TD3', '15', '19')->get();
+        $pregnant_3_td_vaccine_15_19 = $maternalCareReportService->pregnant_td3_vaccine($request, '15', '19')->get();
 
         //PREGNANT WITH 3 TD VACCINE AGE 20-49 YEARS
-        $pregnant_3_td_vaccine_20_49 = $maternalCareReportService->pregnant_td_vaccine($request, 'TD3', '20', '49')->get();
+        $pregnant_3_td_vaccine_20_49 = $maternalCareReportService->pregnant_td3_vaccine($request, '20', '49')->get();
 
         /////////////////////
         //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
