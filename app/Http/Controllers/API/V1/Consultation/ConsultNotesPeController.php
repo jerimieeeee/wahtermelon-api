@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
-use App\Models\V1\Consultation\ConsultNotesPe;
-use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Consultation\ConsultNotesPeRequest;
+use App\Models\V1\Consultation\ConsultNotesPe;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Physical Exam information
+ *
  * @subgroup Patient Consultation Physical Exam
+ *
  * @subgroupDescription Patient Consultation Physical Exam.
  */
 class ConsultNotesPeController extends Controller
@@ -32,15 +36,33 @@ class ConsultNotesPeController extends Controller
      * Store a newly created Consultation Physical Exam resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesPeResource
+     *
      * @apiResourceModel App\Models\V1\Consultation\ConsultNotesPe
-     * @param ConsultNotesPeRequest $request
-     * @return JsonResponse
      */
-    public function store(ConsultNotesPe $request) : JsonResponse
+    public function store(ConsultNotesPeRequest $request): JsonResponse
     {
-        $data = ConsultNotesPe::create($request->all());
-        return $data;
+        try {
+            $pe_id = $request->physical_exam;
+            foreach ($pe_id as $value) {
+                ConsultNotesPe::firstOrCreate(['notes_id' => $request->safe()->notes_id, 'pe_id' => $value]);
+            }
+
+            ConsultNotesPe::whereNotIn('pe_id', $pe_id)
+                ->where('notes_id', $request->safe()->notes_id)
+                ->delete();
+
+            return response()->json([
+                'message' => 'Physical Exam Successfully Saved',
+            ], 201);
+        } catch (Exception $error) {
+            return response()->json([
+                'Error' => $error,
+                'status_code' => 500,
+                'message' => 'Physical Exam  Saving Error',
+            ]);
+        }
     }
 
     /**
@@ -51,21 +73,23 @@ class ConsultNotesPeController extends Controller
      */
     public function show($id)
     {
-        $data = ConsultNotesPe::findOrFail($id);
-        return $data;
+        return ConsultNotesPe::where('notes_id', '=', $id)
+        ->orderBy('id', 'asc')
+        ->orderBy('notes_id', 'asc')
+        ->orderBy('pe_id', 'asc')
+        ->get();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        ConsultNotesPe::findorfail($id)->update($request->all());
-        return response()->json('Consult Notes PE Successfully Updated');
+        // ConsultNotesPe::findorfail($id)->update($request->all());
+        // return response()->json('Consult Notes PE Successfully Updated');
     }
 
     /**

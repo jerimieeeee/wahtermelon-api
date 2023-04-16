@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->uuid('user_id')->index()->constrained();
-            $table->timestamps();
             $table->dateTime('consult_date');
             $table->foreignUuid('physician_id')->nullable();
             $table->boolean('is_pregnant')->nullable();
             $table->boolean('consult_done')->nullable();
             $table->char('pt_group', 4);
+            $table->timestamps();
 
             $table->foreign('physician_id')->references('id')->on('users');
         });

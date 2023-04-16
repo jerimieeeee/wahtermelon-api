@@ -26,11 +26,11 @@ class ConsultMcServiceRequest extends FormRequest
      */
     public function validatedWithCasts(): array
     {
-        $visitStatus = "Prenatal";
+        $visitStatus = 'Prenatal';
         $data = PatientMc::whereId(request()->patient_mc_id)->whereHas('postpartum')->first();
 
-        if($data) {
-            $visitStatus = "Postpartum";
+        if ($data) {
+            $visitStatus = 'Postpartum';
         }
 
         return array_merge($this->validated(), [
@@ -56,13 +56,14 @@ class ConsultMcServiceRequest extends FormRequest
             'service_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'service_qty' => 'numeric',
             'positive_result' => 'boolean',
-            'intake_penicillin' => 'boolean'
+            'intake_penicillin' => 'boolean',
         ];
     }
 
     public function bodyParameters()
     {
         $mcId = PatientMc::whereHas('preRegister')->orWhereHas('postRegister')->inRandomOrder()->limit(1)->first();
+
         return [
             'patient_mc_id' => [
                 'description' => 'ID of maternal care record',
@@ -73,19 +74,19 @@ class ConsultMcServiceRequest extends FormRequest
                 'example' => $mcId->patient_id,
             ],
             'service_id' => [
-                'example' => fake()->randomElement(LibMcService::pluck('id')->toArray())
+                'example' => fake()->randomElement(LibMcService::pluck('id')->toArray()),
             ],
             'visit_type_code' => [
-                'example' => fake()->randomElement(LibMcVisitType::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMcVisitType::pluck('code')->toArray()),
             ],
             'visit_status' => [
-                'example' => fake()->randomElement(['Prenatal', 'Postpartum'])
+                'example' => fake()->randomElement(['Prenatal', 'Postpartum']),
             ],
             'service_date' => [
-                'example' => fake()->date('Y-m-d')
+                'example' => fake()->date('Y-m-d'),
             ],
             'service_qty' => [
-                'example' => fake()->numberBetween(1, 100)
+                'example' => fake()->numberBetween(1, 100),
             ],
         ];
     }

@@ -12,24 +12,21 @@ class ConsultNotesInitialDx extends Model
 {
     use HasFactory, FilterByUser;
 
-    protected $table='consult_notes_initial_dxes';
+    protected $table = 'consult_notes_initial_dxes';
+
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-      'notes_id',
-      'user_id',
-      'facility_code',
-      'class_id',
-      'idx_remark',
+    protected $guarded = [
+        'id',
     ];
 
-    public function Diagnosis(): BelongsTo
+    public function diagnosis(): BelongsTo
     {
-        return $this->belongsTo(LibDiagnosis::class, 'class_id', 'code');
+        return $this->belongsTo(LibDiagnosis::class, 'class_id', 'class_id');
     }
 
-    public function Consult_notes(): BelongsTo
+    public function consultNotes()
     {
-        return $this->belongsTo(ConsultNotes::class, 'notes_id', 'code');
+        return $this->hasMany(ConsultNotes::class);
     }
 }

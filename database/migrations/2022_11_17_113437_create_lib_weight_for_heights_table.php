@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('age_min');
             $table->unsignedInteger('age_max');
-            $table->decimal('height_cm',5,2);
-            $table->decimal('weight_min',5,2);
-            $table->decimal('weight_max',5,2);
+            $table->decimal('height_cm', 5, 2);
+            $table->decimal('weight_min', 5, 2);
+            $table->decimal('weight_max', 5, 2);
             $table->enum('gender', ['M', 'F']);
-            $table->string('wt_class',25);
-
+            $table->string('wt_class', 25);
         });
     }
 

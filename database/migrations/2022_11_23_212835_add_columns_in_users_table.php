@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('facility_code')->nullable()->index()->after('id');
-            $table->char('designation_code',20)->nullable()->index()->after('accreditation_number');
-            $table->char('employer_code',10)->nullable()->index()->after('designation_code');
+            $table->char('designation_code', 20)->nullable()->index()->after('accreditation_number');
+            $table->char('employer_code', 10)->nullable()->index()->after('designation_code');
             $table->boolean('is_active')->default(0)->change();
 
             $table->foreign('facility_code')->references('code')->on('facilities')->constrained();
@@ -43,7 +43,6 @@ return new class extends Migration
             $table->dropColumn('employer_code');
 
             $table->boolean('is_active')->default(1)->change();
-
         });
         Schema::enableForeignKeyConstraints();
     }

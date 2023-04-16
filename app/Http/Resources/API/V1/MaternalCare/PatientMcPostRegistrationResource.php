@@ -17,11 +17,11 @@ class PatientMcPostRegistrationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient_mc_id' => $this->when(!$this->relationLoaded('patientMc'),$this->patient_mc_id),
+            'patient_mc_id' => $this->when(! $this->relationLoaded('patientMc'), $this->patient_mc_id),
             'patient_mc' => new PatientMcResource($this->whenLoaded('patientMc')),
-            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'post_registration_date' => $this->post_registration_date->format('Y-m-d'),
             'admission_date' => $this->admission_date->format('Y-m-d H:i:s'),

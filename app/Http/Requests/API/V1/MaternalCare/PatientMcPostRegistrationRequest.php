@@ -30,7 +30,8 @@ class PatientMcPostRegistrationRequest extends FormRequest
     public function validatedWithCasts(): array
     {
         $patient = Patient::find(request()->patient_id);
-        $age = $patient->birthdate->diff(request()->post_registration_date)->y;
+        $age = Carbon::parse($patient->birthdate)->diff(request()->post_registration_date)->y;
+
         return array_merge($this->validated(), [
             'patient_age' => $age,
         ]);
@@ -66,7 +67,7 @@ class PatientMcPostRegistrationRequest extends FormRequest
             'breastfeeding' => 'required|boolean',
             'breastfed_date' => 'required_if:breastfeeding,true|date|date_format:Y-m-d|before:tomorrow',
             'end_pregnancy' => 'boolean',
-            'postpartum_remarks' => 'string|nullable'
+            'postpartum_remarks' => 'string|nullable',
         ];
     }
 
@@ -74,62 +75,62 @@ class PatientMcPostRegistrationRequest extends FormRequest
     {
         return [
             'post_registration_date' => [
-                'example' => today()->format('Y-m-d')
+                'example' => today()->format('Y-m-d'),
             ],
             'admission_date' => [
-                'example' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d H:i:s')
+                'example' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
             ],
             'discharge_date' => [
-                'example' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d H:i:s')
+                'example' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
             ],
             'delivery_date' => [
-                'example' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d H:i:s')
+                'example' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
             ],
             'delivery_location_code' => [
-                'example' => fake()->randomElement(LibMcDeliveryLocation::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMcDeliveryLocation::pluck('code')->toArray()),
             ],
             'barangay_code' => [
-                'example' => fake()->randomElement(Barangay::pluck('code')->toArray())
+                'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
             ],
             'gravidity' => [
-                'example' => 1
+                'example' => 1,
             ],
             'parity' => [
-                'example' => 1
+                'example' => 1,
             ],
             'full_term' => [
-                'example' => 1
+                'example' => 1,
             ],
             'preterm' => [
-                'example' => 0
+                'example' => 0,
             ],
             'abortion' => [
-                'example' => 0
+                'example' => 0,
             ],
             'livebirths' => [
-                'example' => 0
+                'example' => 0,
             ],
             'outcome_code' => [
-                'example' => fake()->randomElement(LibMcOutcome::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMcOutcome::pluck('code')->toArray()),
             ],
             'healthy_baby' => [
-                'example' => fake()->boolean()
+                'example' => fake()->boolean(),
             ],
             'birth_weight' => [
-                'example' => 2
+                'example' => 2,
             ],
             'attendant_code' => [
-                'example' => fake()->randomElement(LibMcAttendant::pluck('code')->toArray())
+                'example' => fake()->randomElement(LibMcAttendant::pluck('code')->toArray()),
             ],
             'breastfeeding' => [
-                'example' => 0
+                'example' => 0,
             ],
             'end_pregnancy' => [
-                'example' => fake()->boolean()
+                'example' => fake()->boolean(),
             ],
             'postpartum_remarks' => [
-                'example' => fake()->sentence()
-            ]
+                'example' => fake()->sentence(),
+            ],
         ];
     }
 }

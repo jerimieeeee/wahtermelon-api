@@ -27,10 +27,11 @@ class PatientMcPreRegistrationRequest extends FormRequest
     {
         $lmp = new Carbon(request()->lmp_date);
         $patient = Patient::find(request()->patient_id);
-        $age = $patient->birthdate->diff(request()->pre_registration_date)->y;
+        $age = Carbon::parse($patient->birthdate)->diff(request()->pre_registration_date)->y;
+
         return array_merge($this->validated(), [
             'patient_age' => $age,
-            'edc_date' =>  $lmp->clone()->addDays(280)->format('Y-m-d'),
+            'edc_date' => $lmp->clone()->addDays(280)->format('Y-m-d'),
             'trimester1_date' => $lmp->clone()->addDays(84)->format('Y-m-d'),
             'trimester2_date' => $lmp->clone()->addDays(189)->format('Y-m-d'),
             'trimester3_date' => $lmp->clone()->addDays(280)->format('Y-m-d'),

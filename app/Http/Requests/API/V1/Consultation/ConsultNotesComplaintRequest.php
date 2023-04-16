@@ -67,8 +67,5 @@ class ConsultNotesComplaintRequest extends FormRequest
             //     'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
             // ],
         ];
-
     }
-
-
 }

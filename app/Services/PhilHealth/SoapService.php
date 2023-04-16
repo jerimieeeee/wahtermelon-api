@@ -1,0 +1,244 @@
+<?php
+
+namespace App\Services\PhilHealth;
+
+use App\Classes\LocalSoapClient;
+use App\Classes\PhilHealthEClaimsEncryptor;
+use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
+use App\Models\V1\Konsulta\KonsultaRegistrationList;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
+use Illuminate\Support\Facades\Http;
+use Spatie\ArrayToXml\ArrayToXml;
+use Str;
+
+class SoapService
+{
+    private function _client()
+    {
+        $opts = [
+            'http' => [
+                'user_agent' => 'PHPSoapClient',
+            ],
+            'ssl' => [
+                // set some SSL/TLS specific options
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ],
+        ];
+
+        //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
+        $token = auth()->user()->konsultaCredential->token;
+
+        $opts['http']['header'] = "Token: $token";
+
+        //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
+        $wsdlUrl = config('app.konsulta_url');
+
+        $context = stream_context_create($opts);
+        $soapClientOptions = [
+            'location' => $wsdlUrl,
+            'stream_context' => $context,
+            'cache_wsdl' => WSDL_CACHE_NONE,
+            'exceptions' => true,
+            'keep_alive' => false,
+        ];
+
+        try {
+            return new LocalSoapClient($wsdlUrl, $soapClientOptions);
+        } catch(\Exception $e) {
+            $desc = $e->getMessage();
+
+            return $desc;
+        }
+    }
+
+    private function decryptResponse($encryptedOutput)
+    {
+        if (! isJson($encryptedOutput->return)) {
+            if (Str::contains($encryptedOutput->return, ['Please enter Valid', 'Koken', 'token'])) {
+                $credentials = auth()->user()->konsultaCredential;
+                $credentialsResource = GetTokenResource::make($credentials)->resolve();
+                $result = $this->soapMethod('getToken', $credentialsResource);
+                if (isset($result->success)) {
+                    $result = (array) $result;
+                    $credentials->update(['token' => $result['result']]);
+
+                    return response()->json([
+                        'message' => 'Successfully added the token in the database! You may now use konsulta webservice.',
+                    ], 201);
+                }
+            }
+
+            return $encryptedOutput;
+        }
+
+        $jsonOutput = json_decode($encryptedOutput->return);
+        $decryptor = new PhilHealthEClaimsEncryptor();
+        //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+
+        if (! isset($jsonOutput->hash)) {
+            if (isset($jsonOutput->encryptedxmlerrors)) {
+                $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
+
+                return json_decode($decryptedData);
+            }
+            if (isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors)) {
+                return json_decode($jsonOutput->uploadxmlresult->errors);
+            }
+
+            return $jsonOutput;
+        }
+
+        $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
+
+        return XML2JSON($decryptedData);
+    }
+
+    public function encryptData($data)
+    {
+        $encryptor = new PhilHealthEClaimsEncryptor();
+        //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
+        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+
+        return $encryptor->encryptXmlPayloadData($data, $cipher_key);
+    }
+
+    public function soapMethod($method, $params)
+    {
+        //return $this->getToken();
+        $this->client = $this->_client($params);
+        try {
+            $result = $this->client->$method($params);
+
+            return $this->decryptResponse($result);
+        } catch (\Exception $e) {
+            return $e;       // just re-throw it
+        }
+    }
+
+    public function saveRegistrationList(array $data)
+    {
+        $newArray = [];
+        foreach ($data as $key => $value) {
+            $newArray[$key]['facility_code'] = auth()->user()->facility_code;
+            $newArray[$key]['user_id'] = auth()->id();
+            $newArray[$key]['custom_id'] = auth()->user()->facility_code.$value->pAssignedPin.$value->pEffYear;
+            $newArray[$key]['philhealth_id'] = $value->pAssignedPin;
+            $newArray[$key]['last_name'] = $value->pAssignedLastName;
+            $newArray[$key]['first_name'] = $value->pAssignedFirstName;
+            $newArray[$key]['middle_name'] = $value->pAssignedMiddleName;
+            $newArray[$key]['suffix_name'] = $value->pAssignedExtName;
+            $newArray[$key]['birthdate'] = $value->pAssignedDateOfBirth;
+            $newArray[$key]['gender'] = $value->pAssignedSex;
+            $newArray[$key]['membership_type_id'] = $value->pAssignedType;
+            $newArray[$key]['member_pin'] = $value->pPrimaryPIN;
+            $newArray[$key]['member_last_name'] = $value->pPrimaryLastName;
+            $newArray[$key]['member_first_name'] = $value->pPrimaryFirstName;
+            $newArray[$key]['member_middle_name'] = $value->pPrimaryMiddleName;
+            $newArray[$key]['member_suffix_name'] = $value->pPrimaryExtName;
+            $newArray[$key]['member_birthdate'] = $value->pPrimaryDateOfBirth;
+            $newArray[$key]['member_gender'] = $value->pPrimarySex;
+            $newArray[$key]['mobile_number'] = $value->pMobileNumber;
+            $newArray[$key]['landline_number'] = $value->pLandlineNumber;
+            $newArray[$key]['member_category'] = $value->pMemberNewCat;
+            $newArray[$key]['member_category_desc'] = $value->pMemberNewCatDesc;
+            $newArray[$key]['package_type_id'] = $value->pPackageType;
+            $newArray[$key]['assigned_date'] = $value->pAssignedDate;
+            $newArray[$key]['assigned_status_id'] = $value->pAssignedStatus;
+            $newArray[$key]['effectivity_year'] = $value->pEffYear;
+            /*$data[$key] = array_change_key_case($value, CASE_LOWER,
+                [
+                    "pAssignedPin" => "philhealth_id",
+                    "pAssignedLastName" => "last_name",
+                    "pAssignedFirstName" => "first_name",
+                    "pAssignedMiddleName" => "middle_name",
+                    "pAssignedExtName" => "suffix_name",
+                    "pAssignedDateOfBirth" => "birthdate",
+                    "pAssignedSex" => "gender",
+                    "pAssignedType" => "membership_type_id",
+                    "pPrimaryPIN" => "member_pin",
+                    "pPrimaryLastName" => "member_last_name",
+                    "pPrimaryFirstName" => "member_first_name",
+                    "pPrimaryMiddleName" => "member_middle_name",
+                    "pPrimaryExtName" => "member_suffix_name",
+                    "pPrimaryDateOfBirth" => "member_birthdate",
+                    "pPrimarySex" => "member_gender",
+                    "pMobileNumber" => "mobile_number",
+                    "pLandlineNumber" => "landline_number",
+                    "pMemberNewCat" => "member_category",
+                    "pMemberNewCatDesc" => "member_category_desc",
+                    "pPackageType" => "package_type_id",
+                    "pAssignedDate" => "assigned_date",
+                    "pAssignedStatus" => "assigned_status_id",
+                    "pEffYear" => "effectivity_year"
+                ]);*/
+        }
+        KonsultaRegistrationList::upsert($newArray, ['custom_id']);
+    }
+
+    public function httpClient()
+    {
+        //return $response = Http::post('https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl');
+        $wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
+        $array = [
+            'Body' => [
+                'getToken' => [
+                    '_attributes' => [
+                        'xmlns' => 'http://philhealth.gov.ph/',
+                    ],
+                    'pUserName' => '',
+                    'pUserPassword' => '',
+                    'pSoftwareCertificationId' => [
+                        '_attributes' => [
+                            'xmlns' => '',
+                        ],
+                        '_value' => 'KON-DUMMYSCERTZ09634',
+                    ],
+                    'pHospitalCode' => [
+                        '_attributes' => [
+                            'xmlns' => '',
+                        ],
+                        '_value' => 'P01033020',
+                    ],
+                ],
+            ],
+        ];
+        $result = ArrayToXml::convert($array, [
+            'rootElementName' => 'Envelope',
+            '_attributes' => [
+                'xmlns' => 'http://schemas.xmlsoap.org/soap/envelope/',
+            ],
+        ], true, 'UTF-8');
+
+        $postArray = [
+            'pUserName' => '',
+            'pUserPassword' => '',
+            'pSoftwareCertificationId' => 'KON-DUMMYSCERTZ09634',
+            'pHospitalCode' => 'P01033020',
+        ];
+        //return Http::post($wsdlUrl,$postArray);
+
+        $http = Http::withHeaders([
+            'Content-Type' => 'text/xml; charset=utf-8',
+            'SOAPAction' => 'getToken',
+        ])->post($wsdlUrl, $postArray);
+
+        return $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'SOAPAction' => 'getToken',
+        ])->post(
+            $wsdlUrl,
+            $postArray
+        );
+
+        return $http->getBody();
+
+        return response($http->body())
+            ->withHeaders([
+                'Content-Type' => 'text/xml',
+            ]);
+    }
+}

@@ -22,6 +22,7 @@ class UserFactory extends Factory
     public function definition()
     {
         $gender = fake()->randomElement(['male', 'female']);
+
         return [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'last_name' => fake()->lastName(),

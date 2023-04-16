@@ -3,28 +3,29 @@
 namespace App\Models\V1\Patient;
 
 use App\Models\User;
-use App\Models\V1\Childcare\ConsultCcdev;
 use App\Models\V1\Childcare\ConsultCcdevService;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
+use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\MaternalCare\PatientMc;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
-use App\Traits\HasUuid;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuid, HasSearchFilter, FilterByUser;
+    use HasFactory, HasUuids, HasSearchFilter, FilterByUser;
 
     protected $guarded = [
         'id',
@@ -36,7 +37,7 @@ class Patient extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'birthdate' => 'date:Y-m-d',
+        //'birthdate' => 'date:Y-m-d',
         'indegenous_flag' => 'boolean',
         'consent_flag' => 'boolean',
     ];
@@ -48,22 +49,22 @@ class Patient extends Model
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes["last_name"] = ucwords(strtolower($value));
+        $this->attributes['last_name'] = ucwords(strtolower($value));
     }
 
     public function setFirstNameAttribute($value)
     {
-        $this->attributes["first_name"] = ucwords(strtolower($value));
+        $this->attributes['first_name'] = ucwords(strtolower($value));
     }
 
     public function setMiddleNameAttribute($value)
     {
-        $this->attributes["middle_name"] = ucwords(strtolower($value));
+        $this->attributes['middle_name'] = ucwords(strtolower($value));
     }
 
     public function setMothersNameAttribute($value)
     {
-        $this->attributes["mothers_name"] = ucwords(strtolower($value));
+        $this->attributes['mothers_name'] = ucwords(strtolower($value));
     }
 
     public function suffixName(): BelongsTo
@@ -121,4 +122,84 @@ class Patient extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function consult()
+    {
+        return $this->hasMany(Consult::class, 'patient_id', 'id');
+    }
+
+    public function philhealthLatest()
+    {
+        return $this->hasOne(PatientPhilhealth::class)
+            ->latest('effectivity_year');
+    }
+
+    public function patientHistory()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(1);
+    }
+
+    public function patientHistorySpecifics()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(1)->whereNotNull('remarks');
+    }
+
+    public function familyHistory()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(2);
+    }
+
+    public function familyHistorySpecifics()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
+            ->whereCategory(2)->whereNotNull('remarks');
+    }
+
+    public function surgicalHistory()
+    {
+        return $this->hasMany(PatientSurgicalHistory::class, 'patient_id', 'id');
+    }
+
+    public function socialHistory()
+    {
+        return $this->hasOne(PatientSocialHistory::class, 'patient_id', 'id');
+    }
+
+    public function menstrualHistory()
+    {
+        return $this->hasOne(PatientMenstrualHistory::class, 'patient_id', 'id');
+    }
+
+    public function pregnancyHistory()
+    {
+        return $this->hasOne(PatientPregnancyHistory::class, 'patient_id', 'id');
+    }
+
+    public function ncdRiskAssessmentLatest()
+    {
+        return $this->hasOne(ConsultNcdRiskAssessment::class, 'patient_id', 'id')
+            ->latest('assessment_date');
+    }
+
+    public function consultLaboratory()
+    {
+        return $this->hasMany(ConsultLaboratory::class, 'patient_id', 'id');
+    }
+
+    public function philhealth()
+    {
+        return $this->hasMany(PatientPhilhealth::class);
+    }
+
+    public function pastPatientHistory()
+    {
+        return $this->hasMany(PatientHistory::class, 'patient_id', 'id');
+    }
+
+    public function patientVitals()
+    {
+        return $this->hasMany(PatientVitals::class, 'patient_id', 'id');
+    }
 }

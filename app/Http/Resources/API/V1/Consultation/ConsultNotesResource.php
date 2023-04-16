@@ -22,7 +22,11 @@ class ConsultNotesResource extends JsonResource
             'complaint' => $this->complaint,
             'history' => $this->history,
             'physical_exam' => $this->physical_exam,
+            'idx_mark' => $this->idx_remark,
+            'fdx_mark' => $this->fdx_mark,
             'plan' => $this->plan,
+            'general_survey_code' => $this->when(! $this->relationLoaded('libGeneralSurvey'), $this->general_survey_code),
+            'general_survey_remarks' => $this->general_survey_remarks,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

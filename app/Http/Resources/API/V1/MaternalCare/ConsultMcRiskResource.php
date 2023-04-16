@@ -16,13 +16,13 @@ class ConsultMcRiskResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient_mc_id' => $this->when(!$this->relationLoaded('patientMc'),$this->patient_mc_id),
+            'patient_mc_id' => $this->when(! $this->relationLoaded('patientMc'), $this->patient_mc_id),
             'patient_mc' => new PatientMcResource($this->whenLoaded('patientMc')),
-            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
+            'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
             'patient' => $this->whenLoaded('patient'),
-            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             //'risk_id' => $this->when(!$this->relationLoaded('riskFactor'),$this->risk_id),
             'risk' => $this->riskFactor,

@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Philhealth Information
  *
  * APIs for managing libraries
+ *
  * @subgroup Philhealth Membership Categories
+ *
  * @subgroupDescription List of philhealth membership categories.
  */
 class LibPhilhealthMembershipCategoryController extends Controller
@@ -22,19 +24,19 @@ class LibPhilhealthMembershipCategoryController extends Controller
      * Display a listing of the resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibPhilhealthMembershipCategoryResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibPhilhealthMembershipCategory
-     * @return ResourceCollection
      */
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibPhilhealthMembershipCategory::class);
+
         return LibPhilhealthMembershipCategoryResource::collection($query->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,22 +48,21 @@ class LibPhilhealthMembershipCategoryController extends Controller
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibPhilhealthMembershipCategoryResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibPhilhealthMembershipCategory
-     * @param LibPhilhealthMembershipCategory $membershipCategory
-     * @return LibPhilhealthMembershipCategoryResource
      */
     public function show(LibPhilhealthMembershipCategory $membershipCategory): LibPhilhealthMembershipCategoryResource
     {
         $query = LibPhilhealthMembershipCategory::where('id', $membershipCategory->id);
         $membershipCategory = QueryBuilder::for($query)
             ->first();
+
         return new LibPhilhealthMembershipCategoryResource($membershipCategory);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

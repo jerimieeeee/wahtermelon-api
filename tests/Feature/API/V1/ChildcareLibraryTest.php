@@ -3,9 +3,6 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\V1\Libraries\LibEbfReason;
-use App\Models\V1\Libraries\LibVaccine;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ChildcareLibraryTest extends TestCase
@@ -29,5 +26,4 @@ class ChildcareLibraryTest extends TestCase
         $response = $this->get('api/v1/libraries/reason/'.$code);
         $response->assertStatus(200);
     }
-
 }

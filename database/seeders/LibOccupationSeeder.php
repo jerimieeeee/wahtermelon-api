@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibOccupation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibOccupationSeeder extends Seeder
@@ -114,7 +113,7 @@ class LibOccupationSeeder extends Seeder
             ['code' => 'UNSP003', 'category_code' => 'UNSP', 'occupation_desc' => 'Retired'],
             ['code' => 'UNSP004', 'category_code' => 'UNSP', 'occupation_desc' => 'Student'],
             ['code' => 'UNSP005', 'category_code' => 'UNSP', 'occupation_desc' => 'Photograper'],
-            ['code' => 'UNSP006', 'category_code' => 'UNSP', 'occupation_desc' => 'None']
+            ['code' => 'UNSP006', 'category_code' => 'UNSP', 'occupation_desc' => 'None'],
         ], ['occupation_desc']);
     }
 }

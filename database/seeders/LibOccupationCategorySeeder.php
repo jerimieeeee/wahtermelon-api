@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibOccupationCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibOccupationCategorySeeder extends Seeder
@@ -27,7 +26,7 @@ class LibOccupationCategorySeeder extends Seeder
             ['code' => 'SVC', 'category_desc' => 'Service'],
             ['code' => 'TOUR', 'category_desc' => 'Tourism'],
             ['code' => 'TRANS', 'category_desc' => 'Transport'],
-            ['code' => 'UNSP', 'category_desc' => 'Unspecified']
+            ['code' => 'UNSP', 'category_desc' => 'Unspecified'],
         ], ['category_desc']);
     }
 }

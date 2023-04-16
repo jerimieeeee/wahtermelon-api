@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesRequest;
 use App\Models\V1\Consultation\ConsultNotes;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Notes information
+ *
  * @subgroup Patient Consultation Notes
+ *
  * @subgroupDescription Patient Consultation Notes management.
  */
 class ConsultNotesController extends Controller
@@ -33,9 +36,10 @@ class ConsultNotesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConsultNotes $request) : JsonResponse
+    public function store(ConsultNotesRequest $request): JsonResponse
     {
         $data = ConsultNotes::create($request->all());
+
         return response()->json(['data' => $data], 201);
     }
 
@@ -48,6 +52,7 @@ class ConsultNotesController extends Controller
     public function show($id)
     {
         $data = ConsultNotes::findOrFail($id);
+
         return $data;
     }
 
@@ -58,9 +63,10 @@ class ConsultNotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConsultNotesRequest $request, $id): JsonResponse
     {
-        ConsultNotes::findorfail($id)->update($request->all());
+        ConsultNotes::findorfail($id)->update($request->validated());
+
         return response()->json('Consult Notes Successfully Updated');
     }
 

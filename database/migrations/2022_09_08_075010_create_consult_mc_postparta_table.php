@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('postpartum_date')->index();
             $table->unsignedInteger('postpartum_week');
             $table->unsignedInteger('visit_sequence');
-            $table->char('visit_type',10);
+            $table->char('visit_type', 10);
             $table->boolean('breastfeeding')->default('0');
             $table->boolean('family_planning')->default('0');
             $table->boolean('fever')->default('0');

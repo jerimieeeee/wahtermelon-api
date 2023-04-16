@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use Exception;
-use Illuminate\Http\Request;
-use App\Http\Requests\API\V1\Consultation\ConsultNotesInitialDxRequest;
-use App\Http\Resources\API\V1\Consultation\ConsultNotesInitialDxResource;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @authenticated
+ *
  * @group Consultation Information Management
  *
  * APIs for managing Patient Consultation Final Dx information
+ *
  * @subgroup Patient Consultation Final Dx
+ *
  * @subgroupDescription Patient Consultation Final Dx management.
  */
 class ConsultNotesInitialDxController extends Controller
@@ -35,31 +36,35 @@ class ConsultNotesInitialDxController extends Controller
      * Store a newly created Consultation Initial Dx resource in storage.
      *
      * @apiResourceAdditional status=Success
+     *
      * @apiResource 201 App\Http\Resources\API\V1\Consultation\ConsultNotesInitialDxResource
+     *
      * @apiResourceModel App\Models\V1\Consultation\ConsultNotesInitialDx
-     * @param ConsultNotesInitialDxRequest $request
-     * @return JsonResponse
      */
-    public function store(ConsultNotesInitialDxRequest $request) : JsonResponse
+    public function store(ConsultNotesInitialDxRequest $request): JsonResponse
     {
-            $idx = $request->input('idx');
-            foreach($idx as $value){
-                ConsultNotesInitialDx::updateOrCreate(['notes_id' => $request->notes_id, 'class_id' => $value['class_id'], 'idx_remark' => $value['idx_remark']],
-                ['notes_id' => $request->input('notes_id'),'user_id' => $request->input('user_id')] + $value);
+        try {
+            $initialdx = $request->initial_diagnosis;
+            foreach ($initialdx as $value) {
+                ConsultNotesInitialDx::firstOrCreate(['notes_id' => $request->safe()->notes_id, 'class_id' => $value]);
             }
 
-            $patientidx = ConsultNotesInitialDx::where('notes_id', '=', $request->notes_id)
-            ->orderBy('notes_id', 'ASC')
-            ->orderBy('id', 'ASC')
-            ->orderBy('class_id', 'ASC')
-            ->get();
+            ConsultNotesInitialDx::query()
+                ->whereNotin('class_id', $initialdx)
+                ->where('notes_id', $request->safe()->notes_id)
+                ->delete();
 
             return response()->json([
                 'message' => 'Initial Dx Successfully Saved',
-                'data' => $patientidx
             ], 201);
-
-}
+        } catch (Exception $error) {
+            return response()->json([
+                'Error' => $error,
+                'status_code' => 500,
+                'message' => 'Initial Dx Saving Error',
+            ]);
+        }
+    }
 
     /**
      * Display the specified resource.
@@ -79,7 +84,6 @@ class ConsultNotesInitialDxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -98,6 +102,7 @@ class ConsultNotesInitialDxController extends Controller
     public function destroy($id)
     {
         ConsultNotesInitialDx::findorfail($id)->delete();
+
         return response()->json('Initial Dx successfully deleted');
     }
 }

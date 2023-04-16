@@ -26,6 +26,7 @@ class ConsultCcdevServiceFactory extends Factory
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'service_id' => fake()->randomElement(LibCcdevService::pluck('service_id')->toArray()),
             'service_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'quantity' => fake()->randomNumber(3, true),
             'status_id' => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),
         ];
     }

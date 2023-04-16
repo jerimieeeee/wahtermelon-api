@@ -7,15 +7,16 @@ use App\Http\Requests\API\V1\MaternalCare\ConsultMcPostpartumRequest;
 use App\Http\Resources\API\V1\MaternalCare\ConsultMcPostpartumResource;
 use App\Models\V1\MaternalCare\ConsultMcPostpartum;
 use App\Services\MaternalCare\MaternalCareRecordService;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 /**
  * @authenticated
+ *
  * @group Maternal Care Management
  *
  * APIs for managing maternal care information
+ *
  * @subgroup Postpartum Visit
+ *
  * @subgroupDescription Postpartum visit management.
  */
 class ConsultMcPostpartumController extends Controller
@@ -40,14 +41,12 @@ class ConsultMcPostpartumController extends Controller
     {
         ConsultMcPostpartum::updateOrCreate(['patient_mc_id' => $request->patient_mc_id, 'postpartum_date' => $request->postpartum_date], $request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
+
         return ConsultMcPostpartumResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPostpartum', 'postpartum_date'));
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param ConsultMcPostpartum $mcPostpartum
-     * @return ConsultMcPostpartumResource
      */
     public function show(ConsultMcPostpartum $mcPostpartum): ConsultMcPostpartumResource
     {
@@ -57,14 +56,13 @@ class ConsultMcPostpartumController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  ConsultMcPostpartumRequest $request
-     * @param  ConsultMcPostpartum $mcPostpartum
      * @return \Illuminate\Http\Response
      */
     public function update(ConsultMcPostpartumRequest $request, ConsultMcPostpartum $mcPostpartum)
     {
         $mcPostpartum->update($request->validatedWithCasts());
         $mc = new MaternalCareRecordService();
+
         return ConsultMcPostpartumResource::collection($mc->updateVisitSequence($request->patient_mc_id, 'ConsultMcPostpartum', 'postpartum_date'));
     }
 

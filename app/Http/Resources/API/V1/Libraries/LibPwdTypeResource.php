@@ -16,7 +16,7 @@ class LibPwdTypeResource extends JsonResource
     {
         return [
             'code' => $this->code,
-            'type_desc' => $this->type_desc
+            'type_desc' => $this->type_desc,
         ];
     }
 }

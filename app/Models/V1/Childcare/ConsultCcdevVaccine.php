@@ -11,6 +11,7 @@ class ConsultCcdevVaccine extends Model
     use HasFactory, FilterByUser;
 
     protected $primaryKey = 'id';
+
     protected $guarded = [
         'id',
     ];
@@ -18,5 +19,4 @@ class ConsultCcdevVaccine extends Model
     protected $casts = [
         'vaccine_date' => 'date:Y-m-d',
     ];
-
 }

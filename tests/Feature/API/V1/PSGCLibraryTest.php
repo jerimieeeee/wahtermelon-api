@@ -13,8 +13,6 @@ class PSGCLibraryTest extends TestCase
 {
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
     public function test_can_view_all_regions(): void
     {

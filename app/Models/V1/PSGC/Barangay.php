@@ -37,8 +37,6 @@ class Barangay extends Model
 
     /**
      * City, Municipality, or SubMunicipality that this barangay belongs to.
-     *
-     * @return MorphTo
      */
     public function geographic(): MorphTo
     {

@@ -17,11 +17,11 @@ class PatientVitalsResource extends JsonResource
     {
         return [
             'id' => $this->vitals_id ?? $this->id,
-            'facility_code' => $this->when(!$this->relationLoaded('facility'),$this->facility_code),
+            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_id' => $this->when(!$this->relationLoaded('patient'),$this->patient_id),
+            'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
             'patient' => $this->whenLoaded('patient'),
-            'user_id' => $this->when(!$this->relationLoaded('user'),$this->user_id),
+            'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'vitals_date' => Carbon::parse($this->vitals_date)->format('Y-m-d H:i:s'),
             'patient_age_years' => $this->patient_age_years,
@@ -48,6 +48,8 @@ class PatientVitalsResource extends JsonResource
             'patient_hip' => $this->patient_hip,
             'patient_limbs' => $this->patient_limbs,
             'patient_muac' => $this->patient_muac,
+            'patient_left_vision_acuity' => $this->patient_left_vision_acuity,
+            'patient_right_vision_acuity' => $this->patient_right_vision_acuity,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

@@ -13,7 +13,9 @@ use Spatie\QueryBuilder\QueryBuilder;
  * @group Libraries for Philhealth Information
  *
  * APIs for managing libraries
+ *
  * @subgroup Philhealth Member Relationships
+ *
  * @subgroupDescription List of philhealth member relationships.
  */
 class LibMemberRelationshipController extends Controller
@@ -22,19 +24,19 @@ class LibMemberRelationshipController extends Controller
      * Display a listing of the resource.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibMemberRelationshipResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibMemberRelationship
-     * @return ResourceCollection
      */
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibMemberRelationship::class);
+
         return LibMemberRelationshipResource::collection($query->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,8 +48,9 @@ class LibMemberRelationshipController extends Controller
      * Display the specified resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibMemberRelationshipResource
+     *
      * @apiResourceModel App\Models\V1\Libraries\LibMemberRelationship
-     * @param LibMemberRelationship $memberRelationship
+     *
      * @return LibMemberRelationshipResource
      */
     public function show(LibMemberRelationship $memberRelationship)
@@ -55,13 +58,13 @@ class LibMemberRelationshipController extends Controller
         $query = LibMemberRelationship::where('id', $memberRelationship->id);
         $memberRelationship = QueryBuilder::for($query)
             ->first();
+
         return new LibMemberRelationshipResource($memberRelationship);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

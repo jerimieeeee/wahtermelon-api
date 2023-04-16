@@ -11,13 +11,15 @@ class LibOccupationCategory extends Model
     use HasFactory;
 
     public $primaryKey = 'code';
+
     public $incrementing = false;
+
     public $keyType = 'string';
+
     public $timestamps = false;
 
     public function occupation(): HasMany
     {
         return $this->hasMany(LibOccupation::class, 'category_code', 'code');
     }
-
 }

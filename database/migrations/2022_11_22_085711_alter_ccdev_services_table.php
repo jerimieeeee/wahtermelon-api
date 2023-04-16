@@ -13,21 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-            Schema::table('consult_ccdev_services', function (Blueprint $table) {
-                $table->unsignedBigInteger('status_id')->nullable()->index()->constrained()->after('service_date');
+        Schema::table('consult_ccdev_services', function (Blueprint $table) {
+            $table->unsignedBigInteger('status_id')->nullable()->index()->constrained()->after('service_date');
 
-                $table->foreign('status_id')->references('status_id')->on('lib_vaccine_statuses');
-                $table->foreign('service_id')->references('service_id')->on('lib_ccdev_services');
-            });
+            $table->foreign('status_id')->references('status_id')->on('lib_vaccine_statuses');
+            $table->foreign('service_id')->references('service_id')->on('lib_ccdev_services');
+        });
 
-            Schema::table('consult_ccdev_services', function (Blueprint $table) {
-                $table->date('service_date')->nullable()->change();
-            });
+        Schema::table('consult_ccdev_services', function (Blueprint $table) {
+            $table->date('service_date')->nullable()->change();
+        });
 
-            Schema::table('consult_ccdev_services', function (Blueprint $table) {
-                $table->dropForeign(['patient_ccdevs_id']);
-                $table->dropColumn('patient_ccdevs_id');
-            });
+        Schema::table('consult_ccdev_services', function (Blueprint $table) {
+            $table->dropForeign(['patient_ccdevs_id']);
+            $table->dropColumn('patient_ccdevs_id');
+        });
     }
 
     /**

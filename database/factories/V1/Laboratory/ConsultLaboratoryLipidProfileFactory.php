@@ -1,0 +1,43 @@
+<?php
+
+namespace Database\Factories\V1\Laboratory;
+
+use App\Models\User;
+use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Libraries\LibLaboratoryStatus;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravel\Passport\Passport;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\Laboratory\ConsultLaboratoryLipidProfile>
+ */
+class ConsultLaboratoryLipidProfileFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        Passport::actingAs(
+            User::factory()->create()
+        );
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'LPFL']);
+
+        return [
+            'facility_code' => $consult->facility_code,
+            'consult_id' => $consult->consult_id,
+            'patient_id' => $consult->patient_id,
+            'user_id' => $consult->user_id,
+            'request_id' => $consult->id,
+            'laboratory_date' => fake()->dateTimeBetween('-1 week', 'now')->format('Y-m-d'),
+            'ldl' => fake()->numberBetween(1, 10),
+            'hdl' => fake()->numberBetween(1, 10),
+            'cholesterol' => fake()->numberBetween(1, 10),
+            'triglycerides' => fake()->numberBetween(1, 10),
+            'remarks' => fake()->sentence(),
+            'lab_status_code' => fake()->randomElement(LibLaboratoryStatus::pluck('code')->toArray()),
+        ];
+    }
+}

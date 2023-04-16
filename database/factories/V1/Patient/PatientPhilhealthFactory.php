@@ -28,12 +28,13 @@ class PatientPhilhealthFactory extends Factory
     {
         $gender = fake()->randomElement(['male', 'female']);
         $membershipType = fake()->randomElement(LibPhilhealthMembershipType::pluck('id')->toArray());
+
         return [
             'philhealth_id' => fake()->numerify('############'),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            'enlistment_date' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d'),
+            'enlistment_date' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d'),
             'effectivity_year' => fake()->year('now'),
             'enlistment_status_id' => fake()->randomElement(LibPhilhealthEnlistmentStatus::pluck('id')->toArray()),
             'package_type_id' => fake()->randomElement(LibPhilhealthPackageType::pluck('id')->toArray()),
@@ -43,8 +44,8 @@ class PatientPhilhealthFactory extends Factory
             'member_last_name' => $membershipType == 'DD' ? fake()->lastName() : null,
             'member_first_name' => $membershipType == 'DD' ? fake()->firstName($gender) : null,
             'member_middle_name' => $membershipType == 'DD' ? fake()->optional()->lastName() : null,
-            'member_suffix_name' => $membershipType == 'DD' && $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : null,
-            'member_birthdate' => $membershipType == 'DD' ? fake()->date('Y-m-d', 'now') : null,
+            'member_suffix_name' => $membershipType == 'DD' && $gender == 'male' ? fake()->randomElement(LibSuffixName::pluck('code')->toArray()) : ($membershipType == 'DD' && $gender == 'female' ? 'NA' : null),
+            'member_birthdate' => $membershipType == 'DD' ? fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d') : null,
             'member_gender' => $membershipType == 'DD' ? substr(Str::ucfirst($gender), 0, 1) : null,
             'member_relation_id' => $membershipType == 'DD' ? fake()->randomElement(LibMemberRelationship::pluck('id')->toArray()) : null,
             'employer_pin' => fake()->numerify('############'),

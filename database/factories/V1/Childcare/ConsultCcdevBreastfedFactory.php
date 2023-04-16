@@ -3,7 +3,6 @@
 namespace Database\Factories\V1\Childcare;
 
 use App\Models\User;
-use App\Models\V1\Childcare\Ccdev;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibEbfReason;
 use App\Models\V1\Patient\Patient;

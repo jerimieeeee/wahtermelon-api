@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('suffix_name');
             $table->date('birthdate');
             $table->enum('gender', ['M', 'F']);
-            $table->string('contact_number',13);
+            $table->string('contact_number', 13);
             $table->boolean('is_active')->default(1);
             $table->string('photo_url')->nullable();
             $table->char('tin_number', 9)->nullable();

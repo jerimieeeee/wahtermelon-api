@@ -10,6 +10,6 @@ class LibEducation extends Model
     use HasFactory;
 
     public $primaryKey = 'code';
-    public $timestamps = false;
 
+    public $timestamps = false;
 }

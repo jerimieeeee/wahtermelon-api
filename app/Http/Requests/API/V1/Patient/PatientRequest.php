@@ -57,13 +57,14 @@ class PatientRequest extends FormRequest
     public function messages()
     {
         return [
-            'birthdate.before' => 'The birthdate must not be future date.'
+            'birthdate.before' => 'The birthdate must not be future date.',
         ];
     }
 
     public function bodyParameters()
     {
         $gender = fake()->randomElement(['male', 'female']);
+
         return [
             /*'facility_code' => [
                 'description' => 'ID of facility library',
@@ -95,7 +96,7 @@ class PatientRequest extends FormRequest
             ],
             'mothers_name' => [
                 'description' => 'Mother\'s name of the patient',
-                'example' => fake()->firstName('female') . ' ' . $middle,
+                'example' => fake()->firstName('female').' '.$middle,
             ],
             'gender' => [
                 'description' => 'Gender of the patient.',
@@ -131,5 +132,4 @@ class PatientRequest extends FormRequest
             ],
         ];
     }
-
 }

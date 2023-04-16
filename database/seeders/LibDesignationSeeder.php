@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibDesignation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibDesignationSeeder extends Seeder
@@ -34,7 +33,7 @@ class LibDesignationSeeder extends Seeder
             ['code' => 'NA', 'desc' => 'Nursing Attendant'],
             ['code' => 'RADTECH', 'desc' => 'Radiologist'],
             ['code' => 'NUT', 'desc' => 'Nutritionists/Dietitians'],
-            ['code' => 'RSE', 'desc' => 'Sanitary Engineers']
+            ['code' => 'RSE', 'desc' => 'Sanitary Engineers'],
         ], ['code']);
     }
 }

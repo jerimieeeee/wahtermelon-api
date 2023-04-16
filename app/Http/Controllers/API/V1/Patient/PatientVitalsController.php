@@ -13,27 +13,34 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
+ *
  * @group Patient Vitals Management
  *
  * APIs for managing patient vital signs
+ *
  * @subgroup Patient Vital Signs
+ *
  * @subgroupDescription Patient vital signs management.
  */
 class PatientVitalsController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      * @queryParam sort string Sort vitals_date. Add hyphen (-) to descend the list: e.g. vitals_date. Example: -vitals_date
      * @queryParam patient_id string Patient to view.
+     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
+     * @queryParam page int Page to view. Example: 1
+     *
      * @apiResourceCollection App\Http\Resources\API\V1\Patient\PatientVitalsResource
+     *
      * @apiResourceModel App\Models\V1\Patient\PatientVitals paginate=15
-     * @return ResourceCollection
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = PatientVitals::query()
-                ->when(isset($request->patient_id), function($query) use($request){
+                ->when(isset($request->patient_id), function ($query) use ($request) {
                     return $query->wherePatientId($request->patient_id);
                 });
         $vitals = QueryBuilder::for($query)
@@ -49,13 +56,11 @@ class PatientVitalsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param PatientVitalsRequest $request
-     * @return JsonResponse
      */
     public function store(PatientVitalsRequest $request): JsonResponse
     {
         $data = PatientVitals::updateOrCreate(['patient_id' => $request->patient_id, 'vitals_date' => $request->vitals_date], $request->validatedWithCasts());
+
         return response()->json(['data' => new PatientVitalsResource($data), 'status' => 'Success'], 201);
     }
 
@@ -73,13 +78,12 @@ class PatientVitalsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PatientVitalsRequest $request
-     * @param PatientVitals $vitals
      * @return \Illuminate\Http\Response
      */
     public function update(PatientVitalsRequest $request, PatientVitals $vitals)
     {
         $vitals->update($request->validatedWithCasts());
+
         return response()->json(['status' => 'Update successful!'], 200);
     }
 

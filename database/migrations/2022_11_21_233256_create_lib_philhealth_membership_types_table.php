@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_philhealth_membership_types', function (Blueprint $table) {
-            $table->char('id',2)->primary();
+            $table->char('id', 2)->primary();
             $table->string('desc');
         });
     }

@@ -10,7 +10,10 @@ class LibEbfReason extends Model
     use HasFactory;
 
     protected $primaryKey = 'reason_id';
+
     public $incrementing = 'false';
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

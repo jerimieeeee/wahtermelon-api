@@ -11,11 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ConsultCcdevService extends Model
 {
     use HasFactory, FilterByUser;
+
     protected $guarded = [
         'id',
     ];
-
-    protected $fillable = ['patient_id', 'user_id', 'facility_code', 'service_id', 'service_date', 'status_id'];
 
     protected $casts = [
         'service_date' => 'date:Y-m-d',
@@ -26,15 +25,14 @@ class ConsultCcdevService extends Model
         return 'patient_id';
     }
 
-    public function patientccdev(){
-
+    public function patientccdev()
+    {
         return $this->belongsTo(PatientCcdev::class);
-
     }
 
-    public function patient(){
-
-        return $this->belongsTo(Patient::class, 'patient_id') ;
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 
     public function services(): BelongsTo

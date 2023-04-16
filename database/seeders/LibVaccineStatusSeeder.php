@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibVaccineStatus;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -24,6 +23,6 @@ class LibVaccineStatusSeeder extends Seeder
             ['desc' => 'Done'],
             ['desc' => 'Done Outside - Private'],
             ['desc' => 'Done Outside - Public'],
-          ], ['status_id']);
-      }
+        ], ['status_id']);
     }
+}

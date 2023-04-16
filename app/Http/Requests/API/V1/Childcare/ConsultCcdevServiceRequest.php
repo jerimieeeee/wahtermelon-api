@@ -5,7 +5,6 @@ namespace App\Http\Requests\API\V1\Childcare;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Libraries\LibCcdevService;
 use App\Models\V1\Libraries\LibVaccineStatus;
-use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -33,7 +32,8 @@ class ConsultCcdevServiceRequest extends FormRequest
             // 'user_id' => 'required|exists:users,id',
             // 'facility_code' => 'nullable|exists:facilities,code',
             'services.*.service_id' => 'required|exists:lib_ccdev_services,service_id',
-            'services.*.services_date' => 'nullable',
+            'services.*.service_date' => 'nullable',
+            'services.*.quantity' => 'nullable',
             'services.*.status_id' => 'required|exists:lib_vaccine_statuses,status_id',
         ];
     }
@@ -60,6 +60,10 @@ class ConsultCcdevServiceRequest extends FormRequest
             'service_date' => [
                 'description' => 'Date of Service',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            ],
+            'quantity' => [
+                'description' => 'Quantity of MNP',
+                'example' => fake()->randomNumber(3, true),
             ],
             'status_id' => [
                 'description' => 'Status of Service',

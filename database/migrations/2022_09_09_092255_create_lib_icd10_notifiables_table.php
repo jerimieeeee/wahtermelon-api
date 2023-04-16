@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lib_icd10_notifiables', function (Blueprint $table) {
-
-            $table->integer('notifiable_cat' ,false,true)->length(1);
-            $table->string('notifiable_name' ,100);
-            $table->boolean('is_morbidity' ,1);
+            $table->integer('notifiable_cat', false, true)->length(1);
+            $table->string('notifiable_name', 100);
+            $table->boolean('is_morbidity', 1);
         });
     }
 

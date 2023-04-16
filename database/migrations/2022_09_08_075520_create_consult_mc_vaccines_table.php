@@ -19,7 +19,7 @@ return new class extends Migration
             // $table->foreignId('consult_id')->constrained();
             $table->foreignUuid('patients_id')->constrained();
             $table->foreignUuid('user_id')->constrained();
-            $table->char('vaccine_id',3);
+            $table->char('vaccine_id', 3);
             $table->date('vaccine_date');
             $table->softDeletes();
             $table->timestamps();

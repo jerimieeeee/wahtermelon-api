@@ -28,9 +28,11 @@ class ConsultNotesFactory extends Factory
             'complaint' => fake()->sentence(),
             'history' => fake()->sentence(),
             'physical_exam' => fake()->sentence(),
+            'idx_remarks' => fake()->sentence(),
+            'fdx_remarks' => fake()->sentence(),
+            'plan' => fake()->sentence(),
             'complaint_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
-            // 'pt_group' => null,
         ];
     }
 }

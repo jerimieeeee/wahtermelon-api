@@ -11,7 +11,10 @@ class LibDiagnosis extends Model
     use HasFactory, HasSearchFilter;
 
     protected $primaryKey = 'class_id';
+
     public $incrementing = 'false';
+
     public $keyType = 'string';
+
     public $timestamps = false;
 }

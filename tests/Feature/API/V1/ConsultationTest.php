@@ -4,8 +4,6 @@ namespace Tests\Feature\API\V1;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Libraries\LibPtGroup;
-use App\Models\V1\Patient\Patient;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -22,7 +20,7 @@ class ConsultationTest extends TestCase
             User::factory()->create()
         );
         $consult = Consult::factory()->make()->toArray();
-        $response = $this->post('api/v1/consultation/cn-records', $consult);
+        $response = $this->post('api/v1/consultation/records', $consult);
         $response->assertCreated();
     }
 
@@ -32,7 +30,7 @@ class ConsultationTest extends TestCase
             User::factory()->create()
         );
         $id = fake()->randomElement(Consult::pluck('patient_id')->toArray());
-        $response = $this->get("api/v1/consultation/cn-records?patient_id=$id");
+        $response = $this->get("api/v1/consultation/records?patient_id=$id");
         $response->assertOk();
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API\V1\Patient;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibPatientVaccineStatus;
 use App\Models\V1\Libraries\LibVaccine;
 use App\Models\V1\Libraries\LibVaccineStatus;
 use App\Models\V1\Patient\Patient;

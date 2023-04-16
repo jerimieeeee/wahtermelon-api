@@ -22,7 +22,6 @@ return new class extends Migration
 
             $table->primary('vaccine_id');
         });
-
     }
 
     /**

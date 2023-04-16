@@ -18,7 +18,7 @@ class ConsultMcRisk extends Model
     use HasFactory, SoftDeletes, HasUuid, FilterByUser;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;

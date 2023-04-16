@@ -11,15 +11,14 @@ class PatientVitalsService
 {
     public function get_patient_bmi()
     {
-        $weight = "";
-        $height = "";
-        $bmi = "";
-        $bmiClass = "";
-        if(isset(request()->patient_height) && isset(request()->patient_weight)) {
+        $weight = '';
+        $height = '';
+        $bmi = '';
+        $bmiClass = '';
+        if (isset(request()->patient_height) && isset(request()->patient_weight)) {
             $height = request()->patient_height;
             $weight = request()->patient_weight;
-
-        } else if(isset(request()->patient_height) && !isset(request()->patient_weight)) {
+        } elseif (isset(request()->patient_height) && ! isset(request()->patient_weight)) {
             $data = PatientVitals::select('patient_weight')
                 ->wherePatientId(request()->patient_id)
                 ->whereNotNull('patient_weight')
@@ -27,8 +26,7 @@ class PatientVitalsService
                 ->first();
             $height = request()->patient_height;
             $weight = $data ? $data->patient_weight : null;
-
-        } else if(!isset(request()->patient_height) && isset(request()->patient_weight)) {
+        } elseif (! isset(request()->patient_height) && isset(request()->patient_weight)) {
             $data = PatientVitals::select('patient_height')
                 ->wherePatientId(request()->patient_id)
                 ->whereNotNull('patient_height')
@@ -36,7 +34,6 @@ class PatientVitalsService
                 ->first();
             $height = $data ? $data->patient_height : null;
             $weight = request()->patient_weight;
-
         } else {
             /*$data = PatientVitals::select('patient_height', 'patient_weight')->addSelect([
                 'patient_height' => PatientVitals::select('patient_height')
@@ -64,14 +61,13 @@ class PatientVitalsService
                 ->first();
             $height = $patientHeight ? $patientHeight->patient_height : null;
             $weight = $patientWeight ? $patientWeight->patient_weight : null;
-
         }
 
-        if($weight != null && $height != null) {
-            list($bmi, $bmiClass) = compute_bmi($weight, $height);
+        if ($weight != null && $height != null) {
+            [$bmi, $bmiClass] = compute_bmi($weight, $height);
         }
 
-        return array($weight, $height, $bmi, $bmiClass);
+        return [$weight, $height, $bmi, $bmiClass];
     }
 
     public function get_weight_for_age($ageMonth, $gender, $weight)
@@ -90,6 +86,7 @@ class PatientVitalsService
             ", [$weight, $weight, $weight])
             ->toBase()
             ->first();
+
         return $weightForAge;
     }
 
@@ -109,15 +106,16 @@ class PatientVitalsService
             ", [$height, $height, $height])
             ->toBase()
             ->first();
+
         return $heightForAge;
     }
 
     public function get_weight_for_height($ageMonth, $gender, $weight, $height)
     {
         $weightForHeight = LibWeightForHeight::query()
-            ->whereRaw("? BETWEEN age_min AND age_max", $ageMonth)
+            ->whereRaw('? BETWEEN age_min AND age_max', $ageMonth)
             ->whereGender($gender)
-            ->whereRaw("height_cm = (CEILING(? / 0.5) * 0.5)", $height)
+            ->whereRaw('height_cm = (CEILING(? / 0.5) * 0.5)', $height)
             ->whereRaw("
                 (CASE
                     WHEN weight_min = weight_max AND wt_class = 'Severely Wasted'
@@ -129,7 +127,7 @@ class PatientVitalsService
             ", [$weight, $weight, $weight])
             ->toBase()
             ->first();
+
         return $weightForHeight;
     }
-
 }

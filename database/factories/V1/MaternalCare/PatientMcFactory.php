@@ -24,7 +24,7 @@ class PatientMcFactory extends Factory
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'pre_registration_date' => today()->format('Y-m-d'),
-            'lmp_date' => fake()->dateTimeInInterval('-'. fake()->numberBetween(1,7) .' week')->format('Y-m-d'),
+            'lmp_date' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d'),
         ];
     }
 }

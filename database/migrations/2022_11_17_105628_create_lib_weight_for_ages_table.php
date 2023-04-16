@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('lib_weight_for_ages', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('age_month');
-            $table->decimal('weight_min',5,2);
-            $table->decimal('weight_max',5,2);
+            $table->decimal('weight_min', 5, 2);
+            $table->decimal('weight_max', 5, 2);
             $table->enum('gender', ['M', 'F']);
-            $table->string('wt_class',25);
+            $table->string('wt_class', 25);
         });
     }
 
