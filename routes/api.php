@@ -590,4 +590,14 @@ Route::prefix('v1')->group(function () {
                 });
         });
     });
+
+    //Appointment
+    Route::prefix('appointment')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Appointment\AppointmentController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('schedule', 'index');
+                Route::post('schedule', 'store');
+            });
+    });
 });
