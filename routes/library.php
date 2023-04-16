@@ -334,4 +334,8 @@ Route::prefix('v1/libraries')->group(function () {
 
     //TB Treatment Regimen
     Route::get('tb-treatment-regimen', [\App\Http\Controllers\API\V1\Libraries\LibTbTreatmentRegimenController::class, 'index'])->name('tb-treatment-regimen.index');
+    //Patient Appointment
+    Route::get('appointment', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('appointment/{appointment}', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'show'])->name('appointment.show');
 });
+
