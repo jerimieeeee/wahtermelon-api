@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
- * @group Libraries for Appointment
+ * @group Libraries for Appointments
  *
  * APIs for managing libraries
  *
