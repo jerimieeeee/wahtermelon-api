@@ -60,6 +60,10 @@ class PatientTbCaseHoldingRequest extends FormRequest
     public function bodyParameters()
     {
         return [
+            'case_number' => [
+                'description' => 'Case number of patient',
+                'example' => fake()->regexify('[A-Za-z0-9]{20}')
+            ],
             'patient_id' => [
                 'description' => 'ID of patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray())

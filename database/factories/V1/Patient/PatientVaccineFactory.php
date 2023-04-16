@@ -26,6 +26,9 @@ class PatientVaccineFactory extends Factory
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'vaccine_id' => fake()->randomElement(LibVaccine::pluck('vaccine_id')->toArray()),
             'vaccine_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'lot_no' => fake()->regexify('[A-Za-z0-9]{20}'),
+            'batch_no' => fake()->regexify('[A-Za-z0-9]{20}'),
+            'facility_name' => fake()->sentence(),
             // 'pt_group' => fake()->randomElement(['cc','mc', 'ncd']),
         ];
     }

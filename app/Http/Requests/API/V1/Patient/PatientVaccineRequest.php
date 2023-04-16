@@ -34,6 +34,9 @@ class PatientVaccineRequest extends FormRequest
             'vaccines.*.vaccine_id' => 'required|exists:lib_vaccines,vaccine_id',
             'vaccines.*.vaccine_date' => 'nullable',
             'vaccines.*.status_id' => 'required|exists:lib_vaccine_statuses,status_id',
+            'vaccines.*.lot_no' => 'nullable',
+            'vaccines.*.batch_no' => 'nullable',
+            'vaccines.*.facility_name' => 'nullable',
         ];
     }
 
@@ -63,6 +66,18 @@ class PatientVaccineRequest extends FormRequest
             'status_id' => [
                 'description' => 'Status of Vaccine',
                 'example' => fake()->randomElement(LibVaccineStatus::pluck('status_id')->toArray()),
+            ],
+            'lot_no' => [
+                'description' => 'lot no for covid vaccine',
+                'example' => fake()->regexify('[A-Za-z0-9]{20}'),
+            ],
+            'batch_no' => [
+                'description' => 'batch no for covid vaccine',
+                'example' => fake()->regexify('[A-Za-z0-9]{20}'),
+            ],
+            'facility name' => [
+                'description' => 'facility name for covid vaccine',
+                'example' => fake()->sentence(),
             ],
         ];
     }
