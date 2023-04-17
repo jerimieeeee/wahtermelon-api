@@ -283,4 +283,9 @@ Route::prefix('v1/libraries')->group(function () {
     //Medicine Route
     Route::get('medicine-route', [\App\Http\Controllers\API\V1\Libraries\LibMedicineRouteController::class, 'index'])->name('medicine-route.index');
     Route::get('medicine-route/{medicineRoute}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineRouteController::class, 'show'])->name('medicine-route.show');
+
+    //Patient Appointment
+    Route::get('appointment', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('appointment/{appointment}', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'show'])->name('appointment.show');
 });
+
