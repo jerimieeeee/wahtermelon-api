@@ -40,35 +40,7 @@ class AppointmentController extends Controller
      */
     public function index(Request $request)
     {
-//        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-//        $query = Appointment::query()
-//            ->when(isset($request->patient_id), function ($query) use ($request) {
-//                return $query->wherePatientId($request->patient_id);
-//            })
-//            ->when(isset($request->year), function ($query) use ($request) {
-//                return $query->whereYear('appointment_date', $request->year);
-//            })
-//            ->when(isset($request->month), function ($query) use ($request) {
-//                return $query->whereMonth('appointment_date', $request->month);
-//            });
-//
-//        $appointment = QueryBuilder::for($query)
-//            ->with(['appointment'])
-//            ->defaultSort('appointment_date')
-//            ->allowedSorts([
-//                'patient_id',
-//                'appointment_date' => function ($query, $direction) {
-//                    $query->orderBy('appointment_date', $direction)->orderBy('appointment_date', 'ASC');
-//                },
-//            ]);
-//
-//        if ($perPage == 'all') {
-//            return AppointmentResource::collection($appointment->get());
-//        }
-//
-//        $appointment = $query->get()->groupBy('appointment_date');
-//
-//        return AppointmentResource::collection($appointment->paginate($perPage)->withQueryString());
+        $today = now();
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = Appointment::query()
@@ -80,15 +52,55 @@ class AppointmentController extends Controller
             })
             ->when(isset($request->month), function ($query) use ($request) {
                 return $query->whereMonth('appointment_date', $request->month);
+            })
+            ->when(isset($request->date), function ($query) use ($request) {
+                return $query->whereDate('appointment_date', $request->date);
+            })
+            ->when(! isset($request->year) && ! isset($request->month) && ! isset($request->patient_id) && ! isset($request->date), function ($query) use ($today) {
+                return $query->whereDate('appointment_date', $today->toDateString());
             });
 
-        $appointments = $query->get()->groupBy('appointment_date');
+        $appointment = QueryBuilder::for($query)
+            ->with(['appointment'])
+            ->defaultSort('appointment_date')
+            ->allowedSorts([
+                'patient_id',
+                'appointment_date' => function ($query, $direction) {
+                    $query->orderBy('appointment_date', $direction)->orderBy('appointment_date', 'ASC');
+                },
+            ]);
 
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $items = $appointments->forPage($currentPage, $perPage);
-        $paginator = new LengthAwarePaginator($items, $appointments->count(), $perPage, $currentPage);
+        if ($perPage == 'all') {
+            return AppointmentResource::collection($appointment->get());
+        }
 
-        return AppointmentResource::collection($paginator->withQueryString());
+        $appointments = $appointment->paginate($perPage)->withQueryString();
+
+        return AppointmentResource::collection($appointments);
+
+//        $today = now();
+//        $month = $request->month ?? $today->month;
+//        $year = $request->year ?? $today->year;
+//
+//        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+//        $query = Appointment::query()
+//            ->when(isset($request->patient_id), function ($query) use ($request) {
+//                return $query->wherePatientId($request->patient_id);
+//            })
+//            ->when($year, function ($query) use ($year) {
+//                return $query->whereYear('appointment_date', $year);
+//            })
+//            ->when($month, function ($query) use ($month) {
+//                return $query->whereMonth('appointment_date', $month);
+//            });
+//
+//        $appointments = $query->get()->groupBy('appointment_date');
+//
+//        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+//        $items = $appointments->forPage($currentPage, $perPage);
+//        $paginator = new LengthAwarePaginator($items, $appointments->count(), $perPage, $currentPage);
+//
+//        return AppointmentResource::collection($paginator->withQueryString());
     }
 
     /**

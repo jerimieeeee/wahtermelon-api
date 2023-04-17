@@ -288,4 +288,3 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('appointment', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'index'])->name('appointment.index');
     Route::get('appointment/{appointment}', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'show'])->name('appointment.show');
 });
-
