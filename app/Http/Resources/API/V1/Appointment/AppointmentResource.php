@@ -16,7 +16,7 @@ class AppointmentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->vitals_id ?? $this->id,
+            'id' => $this->id ?? $this->id,
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
             'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
@@ -30,5 +30,32 @@ class AppointmentResource extends JsonResource
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
+
+//        $appointments = [];
+//
+//        foreach ($this->collection as $appointment) {
+//            $appointments[] = [
+//                'id' => $appointment->id,
+//                'patient_id' => $appointment->patient_id,
+//                'appointment_code' => $appointment->appointment_code,
+//                'appointment_date' => $appointment->appointment_date,
+//                'created_at' => $appointment->created_at,
+//                'updated_at' => $appointment->updated_at,
+//            ];
+//        }
+//
+//        return [
+//            'data' => $appointments,
+//            'links' => [
+//                'self' => $this->url($request->input('page', 1)),
+//            ],
+//            'meta' => [
+//                'total' => $this->total(),
+//                'per_page' => $this->perPage(),
+//                'current_page' => $this->currentPage(),
+//                'last_page' => $this->lastPage(),
+//                'path' => $this->path(),
+//            ],
+//        ];
     }
 }

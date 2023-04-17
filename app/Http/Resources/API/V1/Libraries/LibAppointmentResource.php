@@ -17,7 +17,7 @@ class LibAppointmentResource extends JsonResource
         return [
             'code' => $this->code,
             'desc' => $this->desc,
-            'module' => $this->module
+            'module' => $this->module,
         ];
     }
 }

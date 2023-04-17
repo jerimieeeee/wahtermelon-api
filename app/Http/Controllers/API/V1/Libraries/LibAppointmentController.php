@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibAppointmentResource;
 use App\Models\V1\Libraries\LibAppointment;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -18,7 +17,6 @@ use Spatie\QueryBuilder\QueryBuilder;
  *
  * @subgroupDescription List of Appointment types.
  */
-
 class LibAppointmentController extends Controller
 {
     /**
@@ -30,7 +28,6 @@ class LibAppointmentController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibAppointment
      */
-
     public function index()
     {
         $query = QueryBuilder::for(LibAppointment::class)
@@ -55,8 +52,7 @@ class LibAppointmentController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibAppointment
      */
-
-    public function show(string $id)
+    public function show(LibAppointmentResource $appointment)
     {
         $query = LibAppointment::where('code', $appointment->code);
         $appointment = QueryBuilder::for($query)
