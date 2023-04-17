@@ -9,40 +9,35 @@ class PatientVaccineService
     public function get_immunization_status($patient_id)
     {
         return DB::table(function ($query) use ($patient_id) {
-            $query->selectRaw('
-                SUM(CASE
-                    WHEN vaccine_id = "BCG"
-                    THEN 1
-                    ELSE 0
-                END) AS "BCG",
-                SUM(CASE
-                    WHEN vaccine_id = "PENTA"
-                    THEN 1
-                    ELSE 0
-                END) AS "PENTA",
-                SUM(CASE
-                    WHEN vaccine_id = "OPV"
-                    THEN 1
-                    ELSE 0
-                END) AS "OPV",
-                SUM(CASE
-                    WHEN vaccine_id = "MCV"
-                    THEN 1
-                    ELSE 0
-                END) AS "MCV",
-                SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(CASE
-                    WHEN vaccine_id = "MCV"
-                    THEN vaccine_date
-                    ELSE NULL
-                END ORDER BY vaccine_date ASC),",", 2),",", -1) AS vaccine_date,
-                TIMESTAMPDIFF(MONTH, GROUP_CONCAT(DISTINCT birthdate), SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(CASE
-                    WHEN vaccine_id = "MCV"
-                    THEN vaccine_date
-                    ELSE NULL
-                END ORDER BY vaccine_date ASC),",", 2),",", -1)) AS age_month,
+            $query->selectRaw("
+                SUM(
+                    CASE WHEN vaccine_id = 'BCG' THEN
+                        1
+                    ELSE
+                        0
+                    END) AS 'BCG',
+                SUM(
+                    CASE WHEN vaccine_id = 'PENTA' THEN
+                        1
+                    ELSE
+                        0
+                    END) AS 'PENTA',
+                SUM(
+                    CASE WHEN vaccine_id = 'OPV' THEN
+                        1
+                    ELSE
+                        0
+                    END) AS 'OPV',
+                SUM(
+                    CASE WHEN vaccine_id = 'MCV' THEN
+                        1
+                    ELSE
+                        0
+                    END) AS 'MCV',
+                SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY status_id DESC), ',', 1), ',', - 1) AS status_id,
+                TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month,
                 patient_id
-
-            ')
+            ")
             ->from('patient_vaccines')
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
             ->where('patient_id', $patient_id)
@@ -55,8 +50,7 @@ class PatientVaccineService
                     THEN "CIC"
                     WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24
                     THEN "COMPLETED"
-	            END AS immunization_status,
-                vaccine_date
+	            END AS immunization_status
         ');
     }
 }

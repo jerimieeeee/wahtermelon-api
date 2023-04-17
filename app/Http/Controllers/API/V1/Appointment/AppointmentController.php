@@ -4,11 +4,9 @@ namespace App\Http\Controllers\API\V1\Appointment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Appointment\AppointmentRequest;
-use App\Http\Resources\API\V1\Appointment\AppointmentResource;
 use App\Models\V1\Appointment\Appointment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @authenticated
@@ -27,11 +25,11 @@ class AppointmentController extends Controller
      * Display a listing of the resource.
      *
      * @queryParam sort string Sort appointment_date. Add hyphen (-) to descend the list: e.g. appointment_date. Example: -appointment_date
-     * @queryParam patient_id string Patient to view.
      * @queryParam year date Year to view.
      * @queryParam month date Month to view.
-     * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
-     * @queryParam page int Page to view. Example: 1
+     * @queryParam patient_id string Patient to view.
+     * @queryParam date date Date to view.
+     * @queryParam facility_code string Facility Code to view.
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Appointment\AppointmentResource
      *
@@ -41,10 +39,20 @@ class AppointmentController extends Controller
     {
         $today = now();
 
-        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = Appointment::query()
-            ->when(isset($request->patient_id), function ($query) use ($request) {
-                return $query->wherePatientId($request->patient_id);
+        $data = Appointment::selectRaw("
+                                appointments.patient_id,
+                                CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                                appointments.facility_code,
+                                lib_appointments.desc AS appointment_desc,
+                                lib_appointments.module AS modules,
+                                appointment_date
+            ")
+            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->join('facilities', 'appointments.facility_code', '=', 'facilities.code')
+            ->join('lib_appointments', 'appointments.appointment_code', '=', 'lib_appointments.code')
+            ->when(isset($request->patient_id), function ($query) use ($request, $today) {
+                return $query->wherePatientId($request->patient_id)
+                    ->whereDate('appointment_date', '>=', $today->toDateString());
             })
             ->when(isset($request->year), function ($query) use ($request) {
                 return $query->whereYear('appointment_date', $request->year);
@@ -55,51 +63,19 @@ class AppointmentController extends Controller
             ->when(isset($request->date), function ($query) use ($request) {
                 return $query->whereDate('appointment_date', $request->date);
             })
-            ->when(! isset($request->year) && ! isset($request->month) && ! isset($request->patient_id) && ! isset($request->date), function ($query) use ($today) {
+            ->when(isset($request->facility_code), function ($query) use ($request) {
+                return $query->where('appointments.facility_code', $request->facility_code);
+            })
+            ->when(! isset($request->year) && ! isset($request->month) && ! isset($request->patient_id) && ! isset($request->date) && ! isset($request->facility_code), function ($query) use ($today) {
                 return $query->whereDate('appointment_date', $today->toDateString());
-            });
+            })
+            ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules')
+            ->get()
+            ->groupBy([function ($item) {
+                return $item->appointment_date->format('Y-m-d');
+            }]);
 
-        $appointment = QueryBuilder::for($query)
-            ->with(['appointment'])
-            ->defaultSort('appointment_date')
-            ->allowedSorts([
-                'patient_id',
-                'appointment_date' => function ($query, $direction) {
-                    $query->orderBy('appointment_date', $direction)->orderBy('appointment_date', 'ASC');
-                },
-            ]);
-
-        if ($perPage == 'all') {
-            return AppointmentResource::collection($appointment->get());
-        }
-
-        $appointments = $appointment->paginate($perPage)->withQueryString();
-
-        return AppointmentResource::collection($appointments);
-
-//        $today = now();
-//        $month = $request->month ?? $today->month;
-//        $year = $request->year ?? $today->year;
-//
-//        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-//        $query = Appointment::query()
-//            ->when(isset($request->patient_id), function ($query) use ($request) {
-//                return $query->wherePatientId($request->patient_id);
-//            })
-//            ->when($year, function ($query) use ($year) {
-//                return $query->whereYear('appointment_date', $year);
-//            })
-//            ->when($month, function ($query) use ($month) {
-//                return $query->whereMonth('appointment_date', $month);
-//            });
-//
-//        $appointments = $query->get()->groupBy('appointment_date');
-//
-//        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-//        $items = $appointments->forPage($currentPage, $perPage);
-//        $paginator = new LengthAwarePaginator($items, $appointments->count(), $perPage, $currentPage);
-//
-//        return AppointmentResource::collection($paginator->withQueryString());
+        return response()->json([$data]);
     }
 
     /**
