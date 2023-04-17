@@ -63,8 +63,9 @@ class AppointmentController extends Controller
             ->when(isset($request->date), function ($query) use ($request) {
                 return $query->whereDate('appointment_date', $request->date);
             })
-            ->when(isset($request->facility_code), function ($query) use ($request) {
-                return $query->where('appointments.facility_code', $request->facility_code);
+            ->when(isset($request->facility_code), function ($query) use ($today, $request) {
+                return $query->where('appointments.facility_code', $request->facility_code)
+                             ->whereDate('appointment_date', $today->toDateString());
             })
             ->when(! isset($request->year) && ! isset($request->month) && ! isset($request->patient_id) && ! isset($request->date) && ! isset($request->facility_code), function ($query) use ($today) {
                 return $query->whereDate('appointment_date', $today->toDateString());
