@@ -65,16 +65,23 @@ class AppointmentController extends Controller
             })
             ->when(isset($request->facility_code), function ($query) use ($today, $request) {
                 return $query->where('appointments.facility_code', $request->facility_code)
-                             ->whereDate('appointment_date', $today->toDateString());
+                             ->whereDate('appointment_date', $today->toDateString())
+                             ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules')
+                             ->get()
+                             ->groupBy([function ($item) {
+                                 return $item->name;
+                             }, 'appointment_desc']);
+            })
+            ->when(! isset($request->facility_code), function ($query) {
+                return $query->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules')
+                    ->get()
+                    ->groupBy([function ($item) {
+                        return $item->appointment_date->format('Y-m-d');
+                    }, 'appointment_desc']);
             })
             ->when(! isset($request->year) && ! isset($request->month) && ! isset($request->patient_id) && ! isset($request->date) && ! isset($request->facility_code), function ($query) use ($today) {
                 return $query->whereDate('appointment_date', $today->toDateString());
-            })
-            ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules')
-            ->get()
-            ->groupBy([function ($item) {
-                return $item->appointment_date->format('Y-m-d');
-            }, 'appointment_desc']);
+            });
 
         return response()->json([$data]);
     }
