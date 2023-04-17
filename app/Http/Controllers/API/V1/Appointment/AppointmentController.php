@@ -8,6 +8,7 @@ use App\Http\Resources\API\V1\Appointment\AppointmentResource;
 use App\Models\V1\Appointment\Appointment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -39,6 +40,36 @@ class AppointmentController extends Controller
      */
     public function index(Request $request)
     {
+//        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+//        $query = Appointment::query()
+//            ->when(isset($request->patient_id), function ($query) use ($request) {
+//                return $query->wherePatientId($request->patient_id);
+//            })
+//            ->when(isset($request->year), function ($query) use ($request) {
+//                return $query->whereYear('appointment_date', $request->year);
+//            })
+//            ->when(isset($request->month), function ($query) use ($request) {
+//                return $query->whereMonth('appointment_date', $request->month);
+//            });
+//
+//        $appointment = QueryBuilder::for($query)
+//            ->with(['appointment'])
+//            ->defaultSort('appointment_date')
+//            ->allowedSorts([
+//                'patient_id',
+//                'appointment_date' => function ($query, $direction) {
+//                    $query->orderBy('appointment_date', $direction)->orderBy('appointment_date', 'ASC');
+//                },
+//            ]);
+//
+//        if ($perPage == 'all') {
+//            return AppointmentResource::collection($appointment->get());
+//        }
+//
+//        $appointment = $query->get()->groupBy('appointment_date');
+//
+//        return AppointmentResource::collection($appointment->paginate($perPage)->withQueryString());
+
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = Appointment::query()
             ->when(isset($request->patient_id), function ($query) use ($request) {
@@ -50,21 +81,14 @@ class AppointmentController extends Controller
             ->when(isset($request->month), function ($query) use ($request) {
                 return $query->whereMonth('appointment_date', $request->month);
             });
-        $appointment = QueryBuilder::for($query)
-            ->with(['appointment'])
-            ->defaultSort('appointment_date')
-            ->allowedSorts([
-                'patient_id',
-                'appointment_date' => function ($query, $direction) {
-                    $query->orderBy('appointment_date', $direction)->orderBy('appointment_date', 'ASC');
-                },
-            ]);
 
-        if ($perPage == 'all') {
-            return AppointmentResource::collection($appointment->get());
-        }
+        $appointments = $query->get()->groupBy('appointment_date');
 
-        return AppointmentResource::collection($appointment->paginate($perPage)->withQueryString());
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $items = $appointments->forPage($currentPage, $perPage);
+        $paginator = new LengthAwarePaginator($items, $appointments->count(), $perPage, $currentPage);
+
+        return AppointmentResource::collection($paginator->withQueryString());
     }
 
     /**
