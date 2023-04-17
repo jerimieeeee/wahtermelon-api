@@ -45,6 +45,12 @@ Route::prefix('v1')->group(function () {
         Route::put('patient/{patient}', 'update')->name('patient.update');
     });
 
+    Route::controller(\App\Http\Controllers\API\V1\Patient\PatientImageController::class)
+        ->middleware('auth:api')
+        ->group(function () {
+            Route::post('images', 'store')->name('images.store');
+        });
+
     //Roles and Permissions
     Route::prefix('authorization')->group(function () {
         Route::controller(\App\Http\Controllers\API\Authorization\RoleController::class)

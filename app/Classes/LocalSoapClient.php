@@ -13,7 +13,7 @@ class LocalSoapClient extends \SoapClient
         while (! $result && $retry_count < $max_retries) {
             try {
                 $result = parent::__call($function_name, $arguments);
-            } catch(SoapFault $fault) {
+            } catch(\SoapFault $fault) {
                 if ($fault->faultstring != 'Could not connect to host') {
                     throw $fault;
                 }
@@ -22,7 +22,7 @@ class LocalSoapClient extends \SoapClient
             $retry_count++;
         }
         if ($retry_count == $max_retries) {
-            throw new SoapFault('Could not connect to host after 5 attempts');
+            throw new \SoapFault('Could not connect to host after 5 attempts');
         }
 
         return $result;
