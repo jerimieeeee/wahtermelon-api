@@ -73,7 +73,7 @@ class AppointmentController extends Controller
             ->get()
             ->groupBy([function ($item) {
                 return $item->appointment_date->format('Y-m-d');
-            }]);
+            }, 'appointment_desc']);
 
         return response()->json([$data]);
     }
