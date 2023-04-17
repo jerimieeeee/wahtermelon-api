@@ -18,6 +18,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  *
  * @subgroupDescription List of Appointment types.
  */
+
 class LibAppointmentController extends Controller
 {
     /**
@@ -29,7 +30,8 @@ class LibAppointmentController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibAppointment
      */
-    public function index(): ResourceCollection
+
+    public function index()
     {
         $query = QueryBuilder::for(LibAppointment::class)
             ->defaultSort('order_seq')
@@ -40,8 +42,6 @@ class LibAppointmentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -55,7 +55,8 @@ class LibAppointmentController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibAppointment
      */
-    public function show(LibAppointment $appointment): LibAppointmentResource
+
+    public function show(string $id)
     {
         $query = LibAppointment::where('code', $appointment->code);
         $appointment = QueryBuilder::for($query)
@@ -66,22 +67,16 @@ class LibAppointmentController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         //
     }
