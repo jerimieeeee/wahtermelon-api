@@ -8,7 +8,6 @@ use App\Http\Resources\API\V1\Appointment\AppointmentResource;
 use App\Models\V1\Appointment\Appointment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
