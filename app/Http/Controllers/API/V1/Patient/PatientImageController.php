@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,7 @@ class PatientImageController extends Controller
         // Generate a unique filename
         $filename = $request->id.'.'.$request->file('image')->getClientOriginalExtension();
         $path = $request->file('image')->storeAs('Patient/Images/'.auth()->user()->facility_code, $filename, 'spaces');
-
+        Patient::find($request->id)->update(['image_url' => $path]);
         $file = Storage::disk('spaces')->get($path);
         $type = Storage::disk('spaces')->mimeType($path);
 
@@ -43,7 +44,11 @@ class PatientImageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $path = Patient::find($id);
+        $file = Storage::disk('spaces')->get($path->image_url);
+        $type = Storage::disk('spaces')->mimeType($path->image_url);
+
+        return (new Response($file, 200))->header('Content-Type', $type);
     }
 
     /**
