@@ -3,8 +3,7 @@
 namespace App\Services\NCD;
 
 use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
-use App\Models\V1\NCD\ConsultNcdRiskAssessment;
-use App\Models\V1\NCD\ConsultNcdRiskScreeningBloodLipid;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class NcdRiskStratificationChartService
 {
@@ -13,58 +12,68 @@ class NcdRiskStratificationChartService
      */
     public function getRiskStratificationChart(array $request)
     {
-        // dump($request);
-        $riskAssessment = ConsultNcdRiskAssessment::where('patient_id', $request['patient_id'])->first();
-        $riskAssessment2 = ConsultNcdRiskScreeningBloodLipid::where('patient_id', $request['patient_id'])->first();
-
-        $data = LibNcdRiskStratificationChart::join('lib_ncd_risk_stratifications', 'risk_color', '=', 'color');
-        $data = $riskAssessment->where('gender', '=', $riskAssessment->gender);
-        $data = $riskAssessment->where('sbp', '=', $riskAssessment->avg_systolic);
-        $data = $riskAssessment->where('type', '=', $riskAssessment->location);
-
-        if ($riskAssessment->location == '2') {
-            $totalCholesterol = round($riskAssessment2->total_cholesterol);
-            if ($totalCholesterol > 8) {
-                $totalCholesterol = 8;
-            } elseif ($totalCholesterol > 0 && $totalCholesterol <= 4) {
-                $totalCholesterol = 4;
-            }
-            $data = $data->where('cholesterol', '=', $totalCholesterol);
-        }
-
-        if ($riskAssessment->smoking = 1) {
-            $smoking = 0;
-            if ($riskAssessment->smoking = 2) {
-                $smoking = 0;
-            } elseif ($riskAssessment->smoking = 3 && $riskAssessment->smoking = 4) {
-                $smoking = 1;
-            }
-            $data = $data->where('smoking_status', '=', $smoking);
-        }
-
-        if ($riskAssessment->presence_diabetes = 'N') {
-            $presence_diabetes = 0;
-            if ($riskAssessment->presence_diabetes = 'Y') {
-                $presence_diabetes = 1;
-            } elseif ($riskAssessment->smoking = 'X') {
-                $presence_diabetes = 0;
-            }
-            $data = $data->where('diabetes_present', '=', $presence_diabetes);
-        }
-
-        if ($riskAssessment->age >= 20 && $riskAssessment->age <= 49) {
+        if (! empty($this->id)) {
+            $totalCholesterol = 0;
             $age = 40;
-            if ($riskAssessment->age >= 50 && $riskAssessment->age <= 59) {
-                $age = 50;
-            } elseif ($riskAssessment->age >= 60 && $riskAssessment->age <= 69) {
-                $age = 60;
-            } elseif ($riskAssessment->age >= 70) {
-                $age = 70;
+            if ($this->location == 2) {
+                $totalCholesterol = round($this->riskScreeningLipid->total_cholesterol ?? 0);
+                if ($totalCholesterol > 8) {
+                    $totalCholesterol = 8;
+                } elseif ($totalCholesterol > 0 && $totalCholesterol <= 4) {
+                    $totalCholesterol = 4;
+                }
             }
-            $data = $data->where('age', '=', $age);
-            $data = $data->first();
-
-            return $data;
+            if ($this->smoking = 1) {
+                $smoking = 0;
+                if ($this->smoking = 2) {
+                    $smoking = 0;
+                } elseif ($this->smoking = 3 && $this->smoking = 4) {
+                    $smoking = 1;
+                }
+            }
+            if ($this->presence_diabetes = 'N') {
+                $presence_diabetes = 0;
+                if ($this->presence_diabetes = 'Y') {
+                    $presence_diabetes = 1;
+                } elseif ($this->smoking = 'X') {
+                    $presence_diabetes = 0;
+                }
+            }
+            if ($this->age >= 20 && $this->age <= 49) {
+                $age = 40;
+                if ($this->age >= 50 && $this->age <= 59) {
+                    $age = 50;
+                } elseif ($this->age >= 60 && $this->age <= 69) {
+                    $age = 60;
+                } elseif ($this->age >= 70) {
+                    $age = 70;
+                }
+            }
+            if ($this->avg_systolic <= 139) {
+                $sbp = 120;
+            } elseif ($this->avg_systolic >= 140 && $this->avg_systolic <= 159) {
+                $sbp = 140;
+            } elseif ($this->avg_systolic >= 160 && $this->avg_systolic <= 179) {
+                $sbp = 160;
+            } elseif ($this->avg_systolic >= 180) {
+                $sbp = 180;
+            } else {
+                $sbp = 'N/A';
+            }
+            if ($this->location == 2) {
+                $location = 'facility';
+            } else {
+                $location = 'community';
+            }
+            $riskStrat = LibNcdRiskStratificationChart::query()
+                ->join('lib_ncd_risk_stratifications', 'lib_ncd_risk_stratifications.risk_color', '=', 'lib_ncd_risk_stratification_charts.color')
+                ->where('type', '=', $location)
+                ->where('diabetes_present', $presence_diabetes)
+                ->where('sbp', '=', $sbp)
+                ->where('age', '=', $age)
+                ->where('smoking_status', '=', $smoking)
+                ->where('gender', '=', $this->gender)
+                ->where('cholesterol', '=', $totalCholesterol)
+                ->first();
         }
     }
-}
