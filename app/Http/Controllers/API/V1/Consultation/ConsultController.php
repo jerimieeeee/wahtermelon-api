@@ -61,7 +61,7 @@ class ConsultController extends Controller
        ->when(isset($request->physician_id), function ($q) use ($request) {
            $q->where('physician_id', '=', $request->physician_id);
        })
-        ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement')
+        ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement')
 
         ->defaultSort('consult_date')
         ->allowedSorts('consult_date');

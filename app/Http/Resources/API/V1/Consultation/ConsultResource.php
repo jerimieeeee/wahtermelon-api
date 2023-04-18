@@ -31,6 +31,7 @@ class ConsultResource extends JsonResource
             'vitals' => $this->when($this->relationLoaded('vitals'), PatientVitalsResource::collection($this->vitals)),
             'consult_notes' => $this->whenLoaded('consultNotes'),
             'complaints' => $this->whenLoaded('consultNotes.complaints.libcomplaints'),
+            'prescriptions' => $this->whenLoaded('prescription'),
             'management' => $this->whenLoaded('management'),
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
