@@ -49,6 +49,7 @@ Route::prefix('v1')->group(function () {
         ->middleware('auth:api')
         ->group(function () {
             Route::post('images', 'store')->name('images.store');
+            Route::get('images/{id}', 'show')->name('images.show');
         });
 
     //Roles and Permissions
