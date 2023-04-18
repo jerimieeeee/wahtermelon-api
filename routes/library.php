@@ -283,4 +283,58 @@ Route::prefix('v1/libraries')->group(function () {
     //Medicine Route
     Route::get('medicine-route', [\App\Http\Controllers\API\V1\Libraries\LibMedicineRouteController::class, 'index'])->name('medicine-route.index');
     Route::get('medicine-route/{medicineRoute}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineRouteController::class, 'show'])->name('medicine-route.show');
+
+    //TB Patient Source
+    Route::get('tb-patient-source', [\App\Http\Controllers\API\V1\Libraries\LibTbPatientSourceController::class, 'index'])->name('tb-patient-source.index');
+
+    //TB Registration Group
+    Route::get('tb-reg-group', [\App\Http\Controllers\API\V1\Libraries\LibTbRegGroupController::class, 'index'])->name('tb-reg-group.index');
+
+    //TB Registration Group
+    Route::get('tb-previous-treatment', [\App\Http\Controllers\API\V1\Libraries\LibTbPreviousTbTreatmentController::class, 'index'])->name('tb-previous-treatment.index');
+
+    //Yes or No answer
+    Route::get('answer-yn', [\App\Http\Controllers\API\V1\Libraries\LibAnswerYnController::class, 'index'])->name('answer-yn.index');
+
+    //TB Symptoms
+    Route::get('tb-symptoms', [\App\Http\Controllers\API\V1\Libraries\LibTbSymptomsController::class, 'index'])->name('tb-symptoms.index');
+
+    //TB Treatment Outcome
+    Route::get('tb-treatment-outcome', [\App\Http\Controllers\API\V1\Libraries\LibTbTreatmentOutcomeController::class, 'index'])->name('tb-treatment-outcome.index');
+
+    //TB PE
+    Route::get('tb-pe', [\App\Http\Controllers\API\V1\Libraries\LibTbPeController::class, 'index'])->name('tb-pe.index');
+
+    //TB Risk Factor
+    Route::get('tb-risk-factor', [\App\Http\Controllers\API\V1\Libraries\LibTbRiskFactorController::class, 'index'])->name('tb-risk-factor.index');
+
+    //TB Exam Period
+    Route::get('tb-exam-period', [\App\Http\Controllers\API\V1\Libraries\LibTbExamPeriodController::class, 'index'])->name('tb-exam-period.index');
+
+    //TB PE Answers
+    Route::get('tb-pe-answer', [\App\Http\Controllers\API\V1\Libraries\LibTbPeAnswerController::class, 'index'])->name('tb-pe-answer.index');
+
+    //TB Enrollment Type
+    Route::get('tb-enroll-as', [\App\Http\Controllers\API\V1\Libraries\LibTbEnrollAsController::class, 'index'])->name('tb-enroll-as.index');
+
+    //TB Bacteriological Status
+    Route::get('tb-bact-status', [\App\Http\Controllers\API\V1\Libraries\LibTbBacteriologicalStatusController::class, 'index'])->name('tb-bact-status.index');
+
+    //TB Anatomical Site
+    Route::get('tb-anatomical-site', [\App\Http\Controllers\API\V1\Libraries\LibTbAnatomicalSiteController::class, 'index'])->name('tb-anatomical-site.index');
+
+    //TB EPTB Site
+    Route::get('tb-eptb-site', [\App\Http\Controllers\API\V1\Libraries\LibTbEptbSiteController::class, 'index'])->name('tb-eptb-site.index');
+
+    //TB Outcome Reasons
+    Route::get('tb-outcome-reason', [\App\Http\Controllers\API\V1\Libraries\LibTbOutcomeReasonController::class, 'index'])->name('tb-outcome-reason.index');
+
+    //TB IPT Type
+    Route::get('tb-ipt-type', [\App\Http\Controllers\API\V1\Libraries\LibTbIptTypeController::class, 'index'])->name('tb-ipt-type.index');
+
+    //TB Treatment Regimen
+    Route::get('tb-treatment-regimen', [\App\Http\Controllers\API\V1\Libraries\LibTbTreatmentRegimenController::class, 'index'])->name('tb-treatment-regimen.index');
+    //Patient Appointment
+    Route::get('appointment', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('appointment/{appointment}', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'show'])->name('appointment.show');
 });

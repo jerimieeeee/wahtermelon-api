@@ -53,6 +53,14 @@ class LibVaccineSeeder extends Seeder
             ['vaccine_id' => 'TT',     'vaccine_name' => 'TT Vaccine',                                          'vaccine_interval' => '0',   'vaccine_module' => 'gen',          'vaccine_desc' => 'Tetanus Toxoid',            'order_seq' => '27'],
             ['vaccine_id' => 'PCECV2',  'vaccine_name' => 'Inactivated Rabies Virus Vaccine',                   'vaccine_interval' => '0', 'vaccine_module' => 'animalbite',     'vaccine_desc' => 'Rabipur',                   'order_seq' => '28'],
 
+            ['vaccine_id' => 'ASTRA',  'vaccine_name' => 'AstraZeneca',         'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'AstraZeneca',        'order_seq' => '29'],
+            ['vaccine_id' => 'JANDJ',  'vaccine_name' => 'Johnson & Johnson',   'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Johnson & Johnson',  'order_seq' => '30'],
+            ['vaccine_id' => 'MODER',  'vaccine_name' => 'Moderna',             'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Moderna',            'order_seq' => '31'],
+            ['vaccine_id' => 'NOVAV',  'vaccine_name' => 'Novavavx',            'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Novavavx',           'order_seq' => '32'],
+            ['vaccine_id' => 'PFIZE',  'vaccine_name' => 'Pfizer',              'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Pfizer',             'order_seq' => '33'],
+            ['vaccine_id' => 'SINOP',  'vaccine_name' => 'Sinopharm',           'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Sinopharm',          'order_seq' => '34'],
+            ['vaccine_id' => 'SPUTN',  'vaccine_name' => 'Sputnik V/Gamaleya',  'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Sputnik V/Gamaleya', 'order_seq' => '35'],
+
             //   ['vaccine_id' => 'DPT1',    'vaccine_name' => 'DPT1',                           'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'DPT Vaccine 1st Dose'],
             //   ['vaccine_id' => 'DPT2',    'vaccine_name' => 'DPT2',                           'vaccine_interval' => '70', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'DPT Vaccine 2nd Dose'],
             //   ['vaccine_id' => 'DPT3',    'vaccine_name' => 'DPT3',                           'vaccine_interval' => '98', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'DPT Vaccine 3rd Dose'],
