@@ -33,21 +33,10 @@ class UserStatsController extends Controller
         //Patient registered per user
         $user_registered = $userStatsService->get_count_users_registered_patients($request)->get();
 
-        //Patient Birthday Celebrant
-        $patient_birthdate = $statsService->get_patient_birthday_celebrants()->get();
-
-        //User Birthday Celebrant
-        $user_birthdate = $statsService->get_users_birthday_celebrants()->get();
-
         return [
             //Patient registered per user
             'user_registered' => $user_registered,
 
-            //Patient Birthday Celebrant
-            'patient_birthdate' => $patient_birthdate,
-
-            //User Birthday Celebrant
-            'user_birthdate' => $user_birthdate,
         ];
     }
 
