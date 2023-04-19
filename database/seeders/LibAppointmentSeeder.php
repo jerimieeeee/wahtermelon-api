@@ -28,6 +28,7 @@ class LibAppointmentSeeder extends Seeder
             ['code' => 'SPT',       'desc' => 'Sputum Exam',                    'module' => '',     'order_seq' => 13],
             ['code' => 'UAFF',      'desc' => 'Urinalysis Follow-up',           'module' => '',     'order_seq' => 14],
             ['code' => 'VACC',      'desc' => 'Vaccination',                    'module' => '',     'order_seq' => 15],
+            ['code' => 'REF',       'desc' => 'Referral',                       'module' => '',     'order_seq' => 16],
         ], ['code']);
     }
 }

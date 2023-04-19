@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\V1\Consultation;
 
 use App\Http\Controllers\Controller;
+use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Patient\Patient;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,19 +31,19 @@ class ConsultStatsController extends Controller
     {
         $date_today = Carbon::today()->toDateString();
 
-        $today_count = DB::table('consults')
-                         ->whereDate('consult_date', '=', $date_today)
-                         ->count();
+        $today_count = Consult::query()
+            ->whereDate('consult_date', '=', $date_today)
+            ->count();
 
-        $pt_count = DB::table('consults')
-                         ->select('pt_group as Patient Group', DB::raw('count(*) as count'))
-                         ->whereDate('consult_date', '=', $date_today)
-                         ->groupBy('pt_group')
-                         ->get();
+        $pt_count = Consult::query()
+            ->select('pt_group as Patient Group', DB::raw('count(*) as count'))
+            ->whereDate('consult_date', '=', $date_today)
+            ->groupBy('pt_group')
+            ->get();
 
-        $patient_count = DB::table('consults')
-                        ->whereDate('created_at', '=', $date_today)
-                        ->count();
+        $patient_count = Patient::query()
+            ->whereDate('created_at', '=', $date_today)
+            ->count();
 
         return ['consult_count' => $today_count,
             'program_count' => $pt_count,

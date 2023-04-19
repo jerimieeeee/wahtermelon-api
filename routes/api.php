@@ -659,6 +659,7 @@ Route::prefix('v1')->group(function () {
                 Route::put('patient-tb-caseholding/{patientTb}', 'update');
             });
     });
+
     //Appointment
     Route::prefix('appointment')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Appointment\AppointmentController::class)

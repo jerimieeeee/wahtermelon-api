@@ -20,6 +20,6 @@ class UserStatsService
             ->groupBy('name', 'Designation', 'facility_code')
             ->whereYear('patients.created_at', $request->year)
             ->whereMonth('patients.created_at', $request->month)
-            ->orderBy('name', 'ASC');
+            ->orderBy('Count', 'DESC');
     }
 }
