@@ -114,7 +114,7 @@ class AppointmentController extends Controller
             })->forceDelete();
 
         foreach ($appointment as $value) {
-            Appointment::create(['patient_id' => $request->patient_id, 'appointment_code' => $value['appointment_code'], 'appointment_date' => $request->appointment_date],
+            Appointment::create(['patient_id' => $request->patient_id, 'appointment_code' => $value['appointment_code'], 'appointment_date' => $request->appointment_date, 'referral_facility_code' => $request->referral_facility_code],
                 $value);
         }
 
