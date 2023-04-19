@@ -147,10 +147,10 @@ class MaternalCareReport2018Controller extends Controller
         $pregnant_with_1_deworming_10_14 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 15-19 YEARS
-        $pregnant_with_1_deworming_15_19 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
+        $pregnant_with_1_deworming_15_19 = get_completed_services($request, $pregnant_with_1_deworming, '1', '15', '19');
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-        $pregnant_with_1_deworming_20_49 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
+        $pregnant_with_1_deworming_20_49 = get_completed_services($request, $pregnant_with_1_deworming, '1', '20', '49');
 
         /////////////////////
         //PREGNANT SCREENED SYPHILIS AGE 10-14 YEARS
