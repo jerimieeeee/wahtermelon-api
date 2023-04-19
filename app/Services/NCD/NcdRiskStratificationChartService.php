@@ -3,14 +3,13 @@
 namespace App\Services\NCD;
 
 use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class NcdRiskStratificationChartService
 {
     /**
      * @return mixed
      */
-    public function getRiskStratificationChart(array $request)
+    public function getRiskStratificationChart($request)
     {
         if (! empty($this->id)) {
             $totalCholesterol = 0;
@@ -65,6 +64,7 @@ class NcdRiskStratificationChartService
             } else {
                 $location = 'community';
             }
+
             $riskStrat = LibNcdRiskStratificationChart::query()
                 ->join('lib_ncd_risk_stratifications', 'lib_ncd_risk_stratifications.risk_color', '=', 'lib_ncd_risk_stratification_charts.color')
                 ->where('type', '=', $location)
@@ -77,3 +77,4 @@ class NcdRiskStratificationChartService
                 ->first();
         }
     }
+}

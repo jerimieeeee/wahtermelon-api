@@ -420,7 +420,7 @@ class MaternalCareReport2018Controller extends Controller
 
         return [
 
-            /*            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
+            //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
             'Prenatal_give_birth_10_14' => $prenatal_give_birth_10_14,
 
             //4 PRENATAL GIVE BIRTH AGE 15-19 YEARS
@@ -477,7 +477,7 @@ class MaternalCareReport2018Controller extends Controller
             'pregnant_2_TD_vaccine_15_19' => $pregnant_2_td_vaccine_15_19,
 
             //PREGNANT WITH 2 TD VACCINE AGE 20-49 YEARS
-            'pregnant_2_TD_vaccine_20_49' => $pregnant_2_td_vaccine_20_49,*/
+            'pregnant_2_TD_vaccine_20_49' => $pregnant_2_td_vaccine_20_49,
 
             ///////////////////////
             //PREGNANT WITH 3 TD VACCINE AGE 10-14 YEARS
@@ -489,7 +489,7 @@ class MaternalCareReport2018Controller extends Controller
             //PREGNANT WITH 3 TD VACCINE AGE 20-49 YEARS
             'pregnant_3_TD_vaccine_20_49' => $pregnant_3_td_vaccine_20_49,
 
-            /*            ///////////////////////
+            ///////////////////////
             //PREGNANT WITH 180 IRON FOLIC ACID AGE 10-14 YEARS
             'pregnant_with_180_iron_folic_10_14' => $pregnant_with_180_iron_folic_10_14,
 
@@ -771,7 +771,7 @@ class MaternalCareReport2018Controller extends Controller
             'no_of_pregnancy_outcome_abortion_15_19' => $no_of_pregnancy_outcome_abortion_15_19,
 
             //NO. OF PREGNANCY OUTCOME ABORTION AGE 20-49 YEAR
-            'no_of_pregnancy_outcome_abortion_20_49' => $no_of_pregnancy_outcome_abortion_20_49,*/
+            'no_of_pregnancy_outcome_abortion_20_49' => $no_of_pregnancy_outcome_abortion_20_49,
 
         ];
     }
