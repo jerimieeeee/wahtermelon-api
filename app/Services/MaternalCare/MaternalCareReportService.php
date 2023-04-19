@@ -345,6 +345,7 @@ class MaternalCareReportService
         return DB::table('consult_mc_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
                         service_date AS date_of_service,
                         service_id,
                         positive_result,
