@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API\V1\TBDots;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\TBDots\PatientTbRequest;
+use App\Http\Requests\API\V1\TBDots\PatientTbUpdateRequest;
 use App\Http\Resources\API\V1\TBDots\PatientTbResource;
 use App\Models\V1\TBDots\PatientTb;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -66,8 +68,10 @@ class PatientTbController extends Controller
      */
     public function store(PatientTbRequest $request): JsonResponse
     {
-        $data = PatientTb::create($request->validated());
-        $data->tbCaseFinding()->create($request->validated());
+        $data = DB::transaction(function () use ($request) {
+            $data = PatientTb::create($request->validated());
+            return $data->tbCaseFinding()->create($request->validated());
+        });
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
@@ -92,7 +96,7 @@ class PatientTbController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientTbRequest $request, PatientTb $patientTb)
+    public function update(PatientTbUpdateRequest $request, PatientTb $patientTb)
     {
         $patientTb->update($request->validated());
 
