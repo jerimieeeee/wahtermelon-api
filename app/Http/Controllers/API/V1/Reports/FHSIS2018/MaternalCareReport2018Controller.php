@@ -38,43 +38,43 @@ class MaternalCareReport2018Controller extends Controller
 
         //////////////////////
         //PRENATAL ASSESSED NUTRITION AGE 10-14 YEARS
-        $prenatal_assessed_10_14 = $maternalCareReportService->pregnant_assessed_nutrition($request, '10', '14')->get();
+        $prenatal_assessed_10_14 = $maternalCareReportService->pregnant_assessed_bmi($request, '10', '14')->get();
 
         //PRENATAL ASSESSED NUTRITION AGE 15-19 YEARS
-        $prenatal_assessed_15_19 = $maternalCareReportService->pregnant_assessed_nutrition($request, '15', '19')->get();
+        $prenatal_assessed_15_19 = $maternalCareReportService->pregnant_assessed_bmi($request, '15', '19')->get();
 
         //PRENATAL ASSESSED NUTRITION AGE 20-49 YEARS
-        $prenatal_assessed_20_49 = $maternalCareReportService->pregnant_assessed_nutrition($request, '20', '49')->get();
+        $prenatal_assessed_20_49 = $maternalCareReportService->pregnant_assessed_bmi($request, '20', '49')->get();
 
         ///////////////////////
         //PRENATAL NORMAL BMI AGE 10-14 YEARS
-        $prenatal_normal_bmi_10_14 = $maternalCareReportService->pregnant_assessed_bmi($request, 'NORMAL', '10', '14')->get();
+        $prenatal_normal_bmi_10_14 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'NORMAL', '10', '14')->get();
 
         //PRENATAL NORMAL BMI AGE 15-19 YEARS
-        $prenatal_normal_bmi_15_19 = $maternalCareReportService->pregnant_assessed_bmi($request, 'NORMAL', '15', '19')->get();
+        $prenatal_normal_bmi_15_19 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'NORMAL', '15', '19')->get();
 
         //PRENATAL NORMAL BMI AGE 20-49 YEARS
-        $prenatal_normal_bmi__20_49 = $maternalCareReportService->pregnant_assessed_bmi($request, 'NORMAL', '20', '49')->get();
+        $prenatal_normal_bmi__20_49 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'NORMAL', '20', '49')->get();
 
         //////////////////////
         //PRENATAL LOW BMI AGE 10-14 YEARS
-        $prenatal_low_bmi_10_14 = $maternalCareReportService->pregnant_assessed_bmi($request, 'LOW', '10', '14')->get();
+        $prenatal_low_bmi_10_14 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'LOW', '10', '14')->get();
 
         //PRENATAL LOW BMI AGE 15-19 YEARS
-        $prenatal_low_bmi_15_19 = $maternalCareReportService->pregnant_assessed_bmi($request, 'LOW', '15', '19')->get();
+        $prenatal_low_bmi_15_19 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'LOW', '15', '19')->get();
 
         //PRENATAL LOW BMI AGE 20-49 YEARS
-        $prenatal_low_bmi_20_49 = $maternalCareReportService->pregnant_assessed_bmi($request, 'LOW', '20', '49')->get();
+        $prenatal_low_bmi_20_49 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'LOW', '20', '49')->get();
 
         //////////////////////
         //PRENATAL HIGH BMI AGE 10-14 YEARS
-        $prenatal_high_bmi_10_14 = $maternalCareReportService->pregnant_assessed_bmi($request, 'HIGH', '10', '14')->get();
+        $prenatal_high_bmi_10_14 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'HIGH', '10', '14')->get();
 
         //PRENATAL HIGH BMI AGE 15-19 YEARS
-        $prenatal_high_bmi_15_19 = $maternalCareReportService->pregnant_assessed_bmi($request, 'HIGH', '15', '19')->get();
+        $prenatal_high_bmi_15_19 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'HIGH', '15', '19')->get();
 
         //PRENATAL HIGH BMI AGE 20-49 YEARS
-        $prenatal_high_bmi_20_49 = $maternalCareReportService->pregnant_assessed_bmi($request, 'HIGH', '20', '49')->get();
+        $prenatal_high_bmi_20_49 = $maternalCareReportService->pregnant_assessed_nutrition($request, 'HIGH', '20', '49')->get();
 
         /////////////////////
         //PREGNANT WITH 2 TD VACCINE AGE 10-14 YEARS
@@ -147,10 +147,10 @@ class MaternalCareReport2018Controller extends Controller
         $pregnant_with_1_deworming_10_14 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 15-19 YEARS
-        $pregnant_with_1_deworming_15_19 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
+        $pregnant_with_1_deworming_15_19 = get_completed_services($request, $pregnant_with_1_deworming, '1', '15', '19');
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 20-49 YEARS
-        $pregnant_with_1_deworming_20_49 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
+        $pregnant_with_1_deworming_20_49 = get_completed_services($request, $pregnant_with_1_deworming, '1', '20', '49');
 
         /////////////////////
         //PREGNANT SCREENED SYPHILIS AGE 10-14 YEARS

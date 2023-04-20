@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\API\V1\Reports\UserStats;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\V1\Patient\Patient;
+use App\Services\User\StatsService;
 use App\Services\User\UserStatsService;
 use Illuminate\Http\Request;
 
@@ -25,7 +28,7 @@ class UserStatsController extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, UserStatsService $userStatsService)
+    public function index(Request $request, UserStatsService $userStatsService, StatsService $statsService)
     {
         //Patient registered per user
         $user_registered = $userStatsService->get_count_users_registered_patients($request)->get();
@@ -33,6 +36,7 @@ class UserStatsController extends Controller
         return [
             //Patient registered per user
             'user_registered' => $user_registered,
+
         ];
     }
 

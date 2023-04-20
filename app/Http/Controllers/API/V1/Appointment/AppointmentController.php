@@ -39,14 +39,16 @@ class AppointmentController extends Controller
     {
         $today = now();
 
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
         $data = Appointment::selectRaw("
-                                appointments.patient_id,
-                                CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                                appointments.facility_code,
-                                lib_appointments.desc AS appointment_desc,
-                                lib_appointments.module AS modules,
-                                appointment_date
-            ")
+                appointments.patient_id,
+                CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                appointments.facility_code,
+                lib_appointments.desc AS appointment_desc,
+                lib_appointments.module AS modules,
+                appointment_date
+    ")
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
             ->join('facilities', 'appointments.facility_code', '=', 'facilities.code')
             ->join('lib_appointments', 'appointments.appointment_code', '=', 'lib_appointments.code')
@@ -65,25 +67,31 @@ class AppointmentController extends Controller
             })
             ->when(isset($request->facility_code), function ($query) use ($today, $request) {
                 return $query->where('appointments.facility_code', $request->facility_code)
-                             ->whereDate('appointment_date', $today->toDateString())
-                             ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules')
-                             ->get()
-                             ->groupBy([function ($item) {
-                                 return $item->name;
-                             }, 'appointment_desc']);
+                    ->whereDate('appointment_date', $today->toDateString())
+                    ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules');
             })
             ->when(! isset($request->facility_code), function ($query) {
-                return $query->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules')
-                    ->get()
-                    ->groupBy([function ($item) {
-                        return $item->appointment_date->format('Y-m-d');
-                    }, 'appointment_desc']);
+                return $query->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules');
             })
             ->when(! isset($request->year) && ! isset($request->month) && ! isset($request->patient_id) && ! isset($request->date) && ! isset($request->facility_code), function ($query) use ($today) {
                 return $query->whereDate('appointment_date', $today->toDateString());
             });
 
-        return response()->json([$data]);
+        if (isset($request->facility_code)) {
+            $data = $data->get()->groupBy(function ($item) {
+                return $item->name;
+            });
+        } else {
+            $data = $data->get()->groupBy(function ($item) {
+                return $item->appointment_date->format('Y-m-d');
+            });
+        }
+
+        if ($perPage === 'all') {
+            return response()->json([$data->all()]);
+        }
+
+        return response()->json([$data->paginate($perPage)]);
     }
 
     /**
@@ -106,7 +114,7 @@ class AppointmentController extends Controller
             })->forceDelete();
 
         foreach ($appointment as $value) {
-            Appointment::create(['patient_id' => $request->patient_id, 'appointment_code' => $value['appointment_code'], 'appointment_date' => $request->appointment_date],
+            Appointment::create(['patient_id' => $request->patient_id, 'appointment_code' => $value['appointment_code'], 'appointment_date' => $request->appointment_date, 'referral_facility_code' => $request->referral_facility_code],
                 $value);
         }
 

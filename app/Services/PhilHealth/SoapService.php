@@ -46,7 +46,7 @@ class SoapService
 
         try {
             return new LocalSoapClient($wsdlUrl, $soapClientOptions);
-        } catch(\SoapFault|\Exception $e) {
+        } catch (\SoapFault|\Exception $e) {
             $desc = $e->getMessage();
 
             return $desc;
