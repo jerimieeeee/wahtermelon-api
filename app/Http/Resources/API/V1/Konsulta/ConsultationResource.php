@@ -108,7 +108,7 @@ class ConsultationResource extends JsonResource
                 'ICD' => [DiagnosisResource::collection(! empty($this->finalDiagnosis) ? $this->finalDiagnosis : [[]])->resolve()],
             ],
             'DIAGNOSTICS' => [
-                'DIAGNOSTIC' => [DiagnosticResource::collection(! empty($this->consultLaboratory) ? $this->consultLaboratory : [[]])->resolve()],
+                'DIAGNOSTIC' => [DiagnosticResource::collection(! empty($this->consultLaboratory) && count($this->consultLaboratory) > 0 ? $this->consultLaboratory : [[]])->resolve()],
             ],
             'MANAGEMENTS' => [
                 'MANAGEMENT' => [ManagementResource::collection(! empty($this->management) ? $this->management : [[]])->resolve()],
