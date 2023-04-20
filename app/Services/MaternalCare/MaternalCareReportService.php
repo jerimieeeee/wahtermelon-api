@@ -84,41 +84,71 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function pregnant_assessed_nutrition($request, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_assessed_nutrition($request, $bmi_status, $age_year_bracket1, $age_year_bracket2)
     {
-        return DB::table('consult_mc_prenatals')
+        return DB::table(function ($query) use ($request) {
+            $query->selectRaw("
+                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                            ROUND(patient_weight / POWER((patient_height / 100), 2), 1) AS bmi,
+                            prenatal_date AS date_of_service,
+                            trimester,
+                            birthdate,
+                            municipality_code,
+                            barangay_code
+                ")
+                ->from('consult_mc_prenatals')
+                ->join('patients', 'consult_mc_prenatals.patient_id', '=', 'patients.id')
+                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                    $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_prenatals.patient_id');
+                })
+                ->when(isset($request->municipality_code), function ($q) use ($request) {
+                    $q->whereIn('municipality_code', explode(',', $request->municipality_code));
+                })
+                ->when(isset($request->barangay_code), function ($q) use ($request) {
+                    $q->whereIn('barangay_code', explode(',', $request->barangay_code));
+                })
+                ->groupBy('consult_mc_prenatals.patient_id', 'prenatal_date', 'patient_weight', 'patient_height', 'trimester', 'municipality_code', 'barangay_code');
+        })
             ->selectRaw("
-	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
-	                    birthdate,
-	                    prenatal_date AS date_of_service,
-	                    trimester,
-	                    TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(prenatal_date)) AS age_year,
-	                    municipality_code,
-	                    barangay_code
-                    ")
-            ->join('patients', 'consult_mc_prenatals.patient_id', '=', 'patients.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_mc_prenatals.patient_id');
-            })
+                        name,
+                        bmi,
+                        CASE WHEN bmi BETWEEN 18.5 AND 22.9 THEN
+                            'NORMAL'
+                        WHEN bmi >= 23 THEN
+                            'HIGH'
+                        WHEN bmi < 18.5 THEN
+                            'LOW'
+                        ELSE
+                            NULL
+                        END AS bmi_status,
+                        birthdate,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(date_of_service ORDER BY date_of_service DESC), ',', 1), ',', - 1) AS date_of_service,
+                        trimester,
+                        TIMESTAMPDIFF(YEAR, birthdate,  SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(date_of_service ORDER BY date_of_service DESC), ',', 1), ',', - 1)) AS age_year,
+                        municipality_code,
+                        barangay_code
+            ")
+            ->whereYear('date_of_service', $request->year)
+            ->whereMonth('date_of_service', $request->month)
+            ->groupBy('name', 'bmi', 'birthdate', 'trimester', 'municipality_code', 'barangay_code')
             ->when(isset($request->municipality_code), function ($q) use ($request) {
                 $q->whereIn('municipality_code', explode(',', $request->municipality_code));
             })
             ->when(isset($request->barangay_code), function ($q) use ($request) {
                 $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
-            ->whereNotNull('patient_weight')
-            ->where('patient_weight', '!=', null)
-            ->whereNotNull('patient_height')
-            ->where('patient_height', '!=', null)
-            ->whereTrimester('1')
-            ->whereYear('prenatal_date', $request->year)
-            ->whereMonth('prenatal_date', $request->month)
-            ->groupBy('name', 'prenatal_date', 'trimester', 'birthdate', 'municipality_code', 'barangay_code')
-            ->havingRaw('trimester = 1 AND (age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
-            ->orderBy('name', 'ASC');
+            ->when($bmi_status == 'NORMAL', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
+                $query->havingRaw("(bmi_status = 'NORMAL' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
+            })
+            ->when($bmi_status == 'HIGH', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
+                $query->havingRaw("(bmi_status = 'HIGH' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
+            })
+            ->when($bmi_status == 'LOW', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
+                $query->havingRaw("(bmi_status = 'LOW' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
+            });
     }
 
-    public function pregnant_assessed_bmi($request, $bmi_status, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_assessed_bmi($request, $age_year_bracket1, $age_year_bracket2)
     {
         return DB::table(function ($query) use ($request) {
             $query->selectRaw("
@@ -171,15 +201,9 @@ class MaternalCareReportService
             ->when(isset($request->barangay_code), function ($q) use ($request) {
                 $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
-            ->when($bmi_status == 'NORMAL', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw("(bmi_status = 'NORMAL' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
-            })
-            ->when($bmi_status == 'HIGH', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw("(bmi_status = 'HIGH' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
-            })
-            ->when($bmi_status == 'LOW', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw("(bmi_status = 'LOW' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
-            });
+//            ->havingRaw("bmi_status IN ('HIGH', 'NORMAL', 'LOW')")
+            ->havingRaw("(bmi_status IN ('HIGH', 'NORMAL', 'LOW') AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2])
+            ->orderBy('name', 'ASC');
     }
 
     public function pregnant_td2_vaccine($request, $age_year_bracket1, $age_year_bracket2)
