@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class Consult extends Model
 {
-    use HasFactory, FilterByUser, FilterByFacility;
+    use HasFactory, FilterByUser;
 
     /**
      * The attributes that are mass assignable.
