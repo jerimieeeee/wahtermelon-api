@@ -24,6 +24,7 @@ class AppointmentResource extends JsonResource
             'appointment_desc' => $this->appointment_desc,
             'modules' => $this->modules,
             'appointment_date' => $this->appointment_date?->format('Y-m-d'),
+            'referral_reason' => $this->referral_reason,
         ];
     }
 }

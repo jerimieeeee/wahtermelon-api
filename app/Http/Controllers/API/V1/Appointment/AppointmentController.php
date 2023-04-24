@@ -21,6 +21,11 @@ use Illuminate\Http\Request;
  */
 class AppointmentController extends Controller
 {
+    public function join_referral()
+    {
+        return Appointment::selectRaw('facilities.code, facilities.facility_name')
+                ->leftJoin('facilities', 'appointments.referral_facility_code', '=', 'facilities.code');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -48,11 +53,16 @@ class AppointmentController extends Controller
                 lib_appointments.desc AS appointment_desc,
                 lib_appointments.module AS modules,
                 appointment_date,
-                facilities.facility_name as referral_facility
-    ")
+                facilities.facility_name as facility_name,
+                referral_facility.facility_name as referral_facility_name,
+                referral_reason
+            ")
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->leftJoin('facilities', 'appointments.referral_facility_code', '=', 'facilities.code')
+            ->join('facilities', 'appointments.facility_code', '=', 'facilities.code')
             ->join('lib_appointments', 'appointments.appointment_code', '=', 'lib_appointments.code')
+            ->leftJoinSub($this->join_referral(), 'referral_facility', function ($join) {
+                $join->on('appointments.referral_facility_code', '=', 'referral_facility.code');
+            })
             ->when(isset($request->patient_id), function ($query) use ($request, $today) {
                 return $query->wherePatientId($request->patient_id)
                     ->whereDate('appointment_date', '>=', $today->toDateString());
@@ -124,7 +134,7 @@ class AppointmentController extends Controller
             })->forceDelete();
 
         foreach ($appointment as $value) {
-            Appointment::create(['patient_id' => $request->patient_id, 'appointment_code' => $value['appointment_code'], 'appointment_date' => $request->appointment_date, 'referral_facility_code' => $request->referral_facility_code],
+            Appointment::create(['patient_id' => $request->patient_id, 'appointment_code' => $value['appointment_code'], 'appointment_date' => $request->appointment_date, 'referral_facility_code' => $request->referral_facility_code, 'referral_reason' => $request->referral_reason],
                 $value);
         }
 

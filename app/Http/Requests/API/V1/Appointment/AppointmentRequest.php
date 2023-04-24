@@ -37,6 +37,7 @@ class AppointmentRequest extends FormRequest
                 },
                 'exists:facilities,code',
             ],
+            'referral_reason' => 'nullable'
         ];
     }
 
@@ -59,6 +60,10 @@ class AppointmentRequest extends FormRequest
                 'description' => 'Date of Appointment',
                 'example' => fake()->date($format = 'Y-m-d', $max = 'now'),
             ],
+            'referral_reason' => [
+                'description' => 'Reason for referral',
+                'example' => fake()->sentence()
+            ]
         ];
     }
 }
