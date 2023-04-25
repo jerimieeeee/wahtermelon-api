@@ -7,7 +7,6 @@ use App\Http\Requests\API\V1\NCD\ConsultNcdRiskAssessmentRequest;
 use App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
-use App\Services\NCD\NcdRiskStratificationChartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -41,13 +40,10 @@ class ConsultNcdRiskAssessmentController extends Controller
      * @apiResourceCollection App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource
      *
      * @apiResourceModel App\Models\V1\NCD\ConsultNcdRiskAssessment paginate=15
-     *
-     * @param  NcdRiskStratificationChartService  $ncdRiskStratficationChartService
      */
-    public function index(Request $request, NcdRiskStratificationChartService $ncdRiskStratService): JsonResponse|ConsultNcdRiskAssessmentResource|ResourceCollection
+    public function index(Request $request): JsonResponse|ConsultNcdRiskAssessmentResource|ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        // return $ncd = $ncdRiskStratService->getRiskStratificationChart($request->all());
 
         $consultNcdRiskAssessment = QueryBuilder::for(ConsultNcdRiskAssessment::class)
         ->when(isset($request->patient_id), function ($q) use ($request) {
@@ -98,7 +94,6 @@ class ConsultNcdRiskAssessmentController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -108,16 +103,11 @@ class ConsultNcdRiskAssessmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function update(ConsultNcdRiskAssessmentRequest $request, ConsultNcdRiskAssessment $ncdRisk)
     {
-        // $data = DB::transaction(function () use($request, $ncdRisk) {
-
         $ncdRisk->update($request->validatedWithCasts());
-
-        // $ncdRisk->patientNcd()->update($request->validatedWithCasts('date_enrolled', 'patient_id') + ['patient_id' => $request->patient_id, 'date_enrolled' =>$request->assessment_date]);
-        // });
 
         return response()->json(['data' => $ncdRisk], 201);
     }

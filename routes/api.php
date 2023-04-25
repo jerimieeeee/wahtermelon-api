@@ -263,6 +263,7 @@ Route::prefix('v1')->group(function () {
             ->middleware('auth:api')
             ->group(function () {
                 Route::get('risk-assessment', 'index');
+                Route::get('risk-strat/{riskStrat}', 'show');
                 Route::post('risk-assessment', 'store');
                 Route::put('risk-assessment/{ncdRisk}', 'update');
             });
@@ -307,6 +308,11 @@ Route::prefix('v1')->group(function () {
                 Route::get('patient-record', 'index');
                 Route::post('patient-record', 'store');
                 // Route::put('risk-questionnaire/{id}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskStratificationContronller::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('risk-stratification', 'index');
             });
     });
     //Medicine

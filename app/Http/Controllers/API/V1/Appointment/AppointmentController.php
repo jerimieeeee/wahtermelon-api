@@ -26,6 +26,7 @@ class AppointmentController extends Controller
         return Appointment::selectRaw('facilities.code, facilities.facility_name')
                 ->leftJoin('facilities', 'appointments.referral_facility_code', '=', 'facilities.code');
     }
+
     /**
      * Display a listing of the resource.
      *

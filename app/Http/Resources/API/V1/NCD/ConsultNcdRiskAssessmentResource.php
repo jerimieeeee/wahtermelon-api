@@ -52,7 +52,6 @@ class ConsultNcdRiskAssessmentResource extends JsonResource
             'avg_diastolic' => $this->avg_diastolic,
             'systolic_1st' => $this->systolic_1st,
             'diastolic_1st' => $this->diastolic_1st,
-            'systolic_2nd' => $this->systolic_2nd,
             'diastolic_2nd' => $this->diastolic_2nd,
             'systolic_2nd' => $this->systolic_2nd,
             'gender' => $this->gender,
@@ -68,6 +67,7 @@ class ConsultNcdRiskAssessmentResource extends JsonResource
             'ncdRecordDiagnosis' => $this->whenLoaded('ncdRecordDiagnosis'),
             'ncdRecordTargetOrgan' => $this->whenLoaded('ncdRecordTargetOrgan'),
             'ncdRecordCounselling' => $this->whenLoaded('ncdRecordCounselling'),
+            'riskStrat' => $this->whenLoaded('riskStrat'),
         ];
     }
 }
