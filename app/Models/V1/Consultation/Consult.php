@@ -8,7 +8,7 @@ use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
-use App\Traits\FilterByFacility;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,6 +45,11 @@ class Consult extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function facility()
+    {
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
     public function consultNotes()
