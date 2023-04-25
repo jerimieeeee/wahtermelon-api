@@ -9,7 +9,7 @@ use App\Services\NCD\NcdRiskStratificationChartService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class ConsultNcdRiskStratificationContronller extends Controller
+class ConsultNcdRiskStratificationController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -309,7 +309,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-record', 'store');
                 // Route::put('risk-questionnaire/{id}', 'update');
             });
-        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskStratificationContronller::class)
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskStratificationController::class)
             ->middleware('auth:api')
             ->group(function () {
                 Route::get('risk-stratification', 'index');
