@@ -9,6 +9,17 @@ use App\Services\NCD\NcdRiskStratificationChartService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @authenticated
+ *
+ * @group Non-Communicable Disease Management
+ *
+ * APIs for managing Non-Communicable Disease information
+ *
+ * @subgroup Risk Stratification
+ *
+ * @subgroupDescription Risk Stratification.
+ */
 class ConsultNcdRiskStratificationController extends Controller
 {
     /**
