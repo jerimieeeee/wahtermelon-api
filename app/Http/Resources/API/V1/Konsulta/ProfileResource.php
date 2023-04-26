@@ -18,7 +18,17 @@ class ProfileResource extends JsonResource
      */
     public function toArray($request)
     {
-        $vitals = PatientVitals::wherePatientId($this->id ?? '')->whereRaw("DATE_FORMAT(vitals_date, '%Y-%m-%d') = ?", $this->philhealthLatest->enlistment_date ?? '')->first();
+        $vitals = PatientVitals::query()
+            ->wherePatientId($this->id ?? '')->whereRaw("DATE_FORMAT(vitals_date, '%Y-%m-%d') = ?", $this->philhealthLatest->enlistment_date ?? '')
+            ->whereNotNull('bp_systolic')
+            ->whereNotNull('bp_diastolic')
+            ->whereNotNull('patient_heart_rate')
+            ->whereNotNull('patient_respiratory_rate')
+            ->whereNotNull('patient_temp')
+            ->whereNotNull('patient_height')
+            ->whereNotNull('patient_weight')
+            ->whereNotNull('patient_bmi')
+            ->first();
         $physicalExam = Consult::query()
             ->selectRaw("
                 consults.patient_id, consult_notes.id, consult_date,
