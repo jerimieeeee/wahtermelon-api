@@ -37,7 +37,7 @@ class AppointmentRequest extends FormRequest
                 },
                 'exists:facilities,code',
             ],
-            'referral_reason' => 'nullable'
+            'referral_reason' => 'nullable',
         ];
     }
 
@@ -62,8 +62,8 @@ class AppointmentRequest extends FormRequest
             ],
             'referral_reason' => [
                 'description' => 'Reason for referral',
-                'example' => fake()->sentence()
-            ]
+                'example' => fake()->sentence(),
+            ],
         ];
     }
 }

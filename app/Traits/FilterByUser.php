@@ -1,6 +1,6 @@
 <?php
 
-namespace  App\Traits;
+namespace App\Traits;
 
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,9 +18,11 @@ trait FilterByUser
             }
             if (Schema::hasColumn($model->getTable(), 'transaction_number')) {
                 if (auth()->user()->konsultaCredential && ! isset($model->transaction_number)) {
-                    $prefix = auth()->user()->konsultaCredential->accreditation_number.date('Ym');
-                    $transactionNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
-                    $model->transaction_number = $transactionNumber;
+                    if ($model->getTable() != 'consults' || ($model->getTable() == 'consults' && request()->pt_group == 'cn')) {
+                        $prefix = auth()->user()->konsultaCredential->accreditation_number.date('Ym');
+                        $transactionNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+                        $model->transaction_number = $transactionNumber;
+                    }
                 }
             }
             if (Schema::hasColumn($model->getTable(), 'case_number')) {
