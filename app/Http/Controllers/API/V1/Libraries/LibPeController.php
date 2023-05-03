@@ -27,23 +27,13 @@ class LibPeController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibPe
      *
-     * @return ResourceCollection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(Request $request)
+    public function index()
     {
-        // return LibPeResource::collection(LibPe::orderBy('seq_id', 'ASC')->get());
-
-        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = QueryBuilder::for(LibPe::class)
-                ->whereKonsultaLibraryStatus(1);
+        $query = QueryBuilder::for(LibPe::class);
 
         return LibPeResource::collection($query->get());
-
-        if ($perPage === 'all') {
-            return LibPeResource::collection($query->get());
-        }
-
-        return LibPeResource::collection($query->paginate($perPage)->withQueryString()->orderBy('seq_id', 'ASC'));
     }
 
     /**
