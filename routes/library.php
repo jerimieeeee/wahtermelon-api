@@ -337,4 +337,56 @@ Route::prefix('v1/libraries')->group(function () {
     //Patient Appointment
     Route::get('appointment', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'index'])->name('appointment.index');
     Route::get('appointment/{appointment}', [\App\Http\Controllers\API\V1\Libraries\LibAppointmentController::class, 'show'])->name('appointment.show');
+
+    //GBV Primary Complaint
+    Route::get('gbv-primary-complaint', [\App\Http\Controllers\API\V1\Libraries\LibGbvPrimaryComplaintController::class, 'index'])->name('gbv-primary-complaint.index');
+
+    //GBV Outcome Reason
+    Route::get('gbv-outcome-reason', [\App\Http\Controllers\API\V1\Libraries\LibGbvOutcomeReasonController::class, 'index'])->name('gbv-outcome-reason.index');
+
+    //GBV Outcome Result
+    Route::get('gbv-outcome-result', [\App\Http\Controllers\API\V1\Libraries\LibGbvOutcomeResultController::class, 'index'])->name('gbv-outcome-result.index');
+
+    //GBV Neglects
+    Route::get('gbv-neglect', [\App\Http\Controllers\API\V1\Libraries\LibGbvNeglectController::class, 'index'])->name('gbv-neglect.index');
+
+    //GBV Neglects
+    Route::get('gbv-info-source', [\App\Http\Controllers\API\V1\Libraries\LibGbvInfoSourceController::class, 'index'])->name('gbv-info-source.index');
+
+    //GBV Behavioral
+    Route::get('gbv-behavioral', [\App\Http\Controllers\API\V1\Libraries\LibGbvBehavioralController::class, 'index'])->name('gbv-behavioral.index');
+
+    //GBV Services
+    Route::get('gbv-services', [\App\Http\Controllers\API\V1\Libraries\LibGbvServiceController::class, 'index'])->name('gbv-services.index');
+
+    //Child Relation
+    Route::get('child-relation', [\App\Http\Controllers\API\V1\Libraries\LibGbvChildRelationController::class, 'index'])->name('child-relation.index');
+
+    //GBV Sleeping Arrangement
+    Route::get('gbv-sleeping-arrangement', [\App\Http\Controllers\API\V1\Libraries\LibGbvSleepingArrangementController::class, 'index'])->name('gbv-sleeping-arrangement.index');
+
+    //GBV Living Arrangement
+    Route::get('gbv-living-arrangement', [\App\Http\Controllers\API\V1\Libraries\LibGbvLivingArrangementController::class, 'index'])->name('gbv-living-arrangement.index');
+
+    //GBV Economic Status
+    Route::get('gbv-economic-status', [\App\Http\Controllers\API\V1\Libraries\LibGbvEconomicStatusController::class, 'index'])->name('gbv-economic-status.index');
+
+    //GBV Outcome Verdict
+    Route::get('gbv-outcome-verdict', [\App\Http\Controllers\API\V1\Libraries\LibGbvOutcomeVerdictController::class, 'index'])->name('gbv-outcome-verdict.index');
+
+    //GBV legal filing location
+    Route::get('gbv-filing-location', [\App\Http\Controllers\API\V1\Libraries\LibGbvLegalFilingLocationController::class, 'index'])->name('gbv-filing-location.index');
+
+    //GBV conference invitee
+    Route::get('gbv-conference-invitee', [\App\Http\Controllers\API\V1\Libraries\LibGbvConferenceInviteeController::class, 'index'])->name('gbv-conference-invitee.index');
+
+    //GBV conference concern
+    Route::get('gbv-conference-concern', [\App\Http\Controllers\API\V1\Libraries\LibGbvConferenceConcernController::class, 'index'])->name('gbv-conference-concern.index');
+
+    //GBV conference mitigating factors
+    Route::get('gbv-conference-mitigating', [\App\Http\Controllers\API\V1\Libraries\LibGbvConferenceMitigatingFactorController::class, 'index'])->name('gbv-conference-mitigating.index');
+
+    //GBV conference recommendation
+    Route::get('gbv-conference-recommendation', [\App\Http\Controllers\API\V1\Libraries\LibGbvConferenceRecommendationController::class, 'index'])->name('gbv-conference-recommendation.index');
+
 });

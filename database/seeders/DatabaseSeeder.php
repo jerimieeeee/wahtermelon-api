@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\V1\Libraries\LibGbvInfoSource;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -124,6 +125,23 @@ class DatabaseSeeder extends Seeder
             LibTbIptTypeSeeder::class,
             LibTbTreatmentRegimenSeeder::class,
             LibAppointmentSeeder::class,
+            LibGbvPrimaryComplaintsSeeder::class,
+            LibGbvOutcomeReasonSeeder::class,
+            LibGbvOutcomeResultSeeder::class,
+            LibGbvNeglectsSeeder::class,
+            LibGbvInfoSourceSeeder::class,
+            LibGbvBehavioralSeeder::class,
+            LibGbvServiceSeeder::class,
+            LibGbvChildRelationSeeder::class,
+            LibGbvSleepingArrangementSeeder::class,
+            LibGbvLivingArrangmentSeeder::class,
+            LibGbvEconomicStatusSeeder::class,
+            LibGbvOutcomeVerdictSeeder::class,
+            LibGbvLegalFilingLocationSeeder::class,
+            LibGbvConferenceInviteeSeeder::class,
+            LibGbvConferenceConcernSeeder::class,
+            LibGbvConferenceMitigatingFactorSeeder::class,
+            LibGbvConferenceRecommendationSeeder::class,
         ]);
     }
 }
