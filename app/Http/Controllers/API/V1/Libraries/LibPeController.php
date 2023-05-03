@@ -34,8 +34,6 @@ class LibPeController extends Controller
         $query = QueryBuilder::for(LibPe::class);
 
         return LibPeResource::collection($query->get());
-
-        return LibPeResource::collection($query->paginate()->withQueryString()->orderBy('seq_id', 'ASC'));
     }
 
     /**
