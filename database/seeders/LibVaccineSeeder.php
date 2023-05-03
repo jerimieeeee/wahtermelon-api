@@ -60,6 +60,7 @@ class LibVaccineSeeder extends Seeder
             ['vaccine_id' => 'PFIZE',  'vaccine_name' => 'Pfizer',              'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Pfizer',             'order_seq' => '33'],
             ['vaccine_id' => 'SINOP',  'vaccine_name' => 'Sinopharm',           'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Sinopharm',          'order_seq' => '34'],
             ['vaccine_id' => 'SPUTN',  'vaccine_name' => 'Sputnik V/Gamaleya',  'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Sputnik V/Gamaleya', 'order_seq' => '35'],
+            ['vaccine_id' => 'SINOV',  'vaccine_name' => 'Sinovac',             'vaccine_interval' => '0', 'vaccine_module' => 'covid', 'vaccine_desc' => 'Sinovac',            'order_seq' => '36'],
 
             //   ['vaccine_id' => 'DPT1',    'vaccine_name' => 'DPT1',                           'vaccine_interval' => '42', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'DPT Vaccine 1st Dose'],
             //   ['vaccine_id' => 'DPT2',    'vaccine_name' => 'DPT2',                           'vaccine_interval' => '70', 'vaccine_module' => 'ccdev',  'vaccine_desc' => 'DPT Vaccine 2nd Dose'],
