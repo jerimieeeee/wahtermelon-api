@@ -46,28 +46,27 @@ class ConsultController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
-        ->when(isset($request->pt_group), function ($q) use ($request) {
-            $q->where('pt_group', $request->pt_group);
-        })
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', '=', $request->patient_id);
-        })
-        ->when(isset($request->consult_done), function ($q) use ($request) {
-            $q->where('consult_done', '=', $request->consult_done);
-        })
-        ->when(isset($request->id), function ($q) use ($request) {
-            $q->where('id', '=', $request->id);
-        })
-        ->when(isset($request->physician_id), function ($q) use ($request) {
-            $q->where('physician_id', '=', $request->physician_id);
-        })
-       ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
-           $q->where('facility_code', '=', auth()->user()->facility_code);
-       })
-        ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
-
-        ->defaultSort('consult_date')
-        ->allowedSorts('consult_date');
+            ->when(isset($request->pt_group), function ($q) use ($request) {
+                $q->where('pt_group', $request->pt_group);
+            })
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', '=', $request->patient_id);
+            })
+            ->when(isset($request->consult_done), function ($q) use ($request) {
+                $q->where('consult_done', '=', $request->consult_done);
+            })
+            ->when(isset($request->id), function ($q) use ($request) {
+                $q->where('id', '=', $request->id);
+            })
+            ->when(isset($request->physician_id), function ($q) use ($request) {
+                $q->where('physician_id', '=', $request->physician_id);
+            })
+            ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
+                $q->where('facility_code', '=', auth()->user()->facility_code);
+            })
+            ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
+            ->defaultSort('consult_date')
+            ->allowedSorts('consult_date');
 
         if ($perPage === 'all') {
             return ConsultResource::collection($consult->get());
