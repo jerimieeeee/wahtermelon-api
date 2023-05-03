@@ -14,9 +14,9 @@ class LibGbvInfoSourceSeeder extends Seeder
     public function run(): void
     {
         LibGbvInfoSource::upsert([
-            ['desc' => 'Child/Adolescent/Woman', 'sequence' => 1],
-            ['desc' => 'Historian', 'sequence' => 2],
-            ['desc' => 'Sworn statement', 'sequence' => 3],
+            ['id' => 1, 'desc' => 'Child/Adolescent/Woman', 'sequence' => 1],
+            ['id' => 2, 'desc' => 'Historian', 'sequence' => 2],
+            ['id' => 3, 'desc' => 'Sworn statement', 'sequence' => 3],
         ], ['id']);
     }
 }

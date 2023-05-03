@@ -389,4 +389,40 @@ Route::prefix('v1/libraries')->group(function () {
     //GBV conference recommendation
     Route::get('gbv-conference-recommendation', [\App\Http\Controllers\API\V1\Libraries\LibGbvConferenceRecommendationController::class, 'index'])->name('gbv-conference-recommendation.index');
 
+    //GBV emotional abuse
+    Route::get('gbv-emotional-abuse', [\App\Http\Controllers\API\V1\Libraries\LibGbvEmotionalAbuseController::class, 'index'])->name('gbv-emotional-abuse.index');
+
+    //GBV physical abuse
+    Route::get('gbv-physical-abuse', [\App\Http\Controllers\API\V1\Libraries\LibGbvPhysicalAbuseController::class, 'index'])->name('gbv-physical-abuse.index');
+
+    //GBV sexual abuse
+    Route::get('gbv-sexual-abuse', [\App\Http\Controllers\API\V1\Libraries\LibGbvSexualAbuseController::class, 'index'])->name('gbv-sexual-abuse.index');
+
+    //GBV Perpetrator location
+    Route::get('gbv-perpetrator-location', [\App\Http\Controllers\API\V1\Libraries\LibGbvPerpetratorLocationController::class, 'index'])->name('gbv-perpetrator-location.index');
+
+    //GBV Child behavior
+    Route::get('gbv-child-behavior', [\App\Http\Controllers\API\V1\Libraries\LibGbvChildBehaviorController::class, 'index'])->name('gbv-child-behavior.index');
+
+    //GBV Disclosed type
+    Route::get('gbv-disclosed-type', [\App\Http\Controllers\API\V1\Libraries\LibGbvDisclosedTypeController::class, 'index'])->name('gbv-disclosed-type.index');
+
+    //GBV Abused episode
+    Route::get('gbv-abused-episode', [\App\Http\Controllers\API\V1\Libraries\LibGbvAbusedEpisodeController::class, 'index'])->name('gbv-abused-episode.index');
+
+    //GBV Abused site
+    Route::get('gbv-abused-site', [\App\Http\Controllers\API\V1\Libraries\LibGbvAbusedSiteController::class, 'index'])->name('gbv-abused-site.index');
+
+    //GBV Placement location
+    Route::get('gbv-placement-location', [\App\Http\Controllers\API\V1\Libraries\LibGbvPlacementLocationController::class, 'index'])->name('gbv-placement-location.index');
+
+    //GBV Placement location
+    Route::get('gbv-placement-type', [\App\Http\Controllers\API\V1\Libraries\LibGbvPlacementTypeController::class, 'index'])->name('gbv-placement-type.index');
+
+    //GBV Psych session participant
+    Route::get('gbv-psych-participant', [\App\Http\Controllers\API\V1\Libraries\LibGbvPsychParticipantController::class, 'index'])->name('gbv-psych-participant.index');
+
+    //GBV Psych session participant
+    Route::get('gbv-developmental-screening', [\App\Http\Controllers\API\V1\Libraries\LibGbvDevelopmentalScreeningController::class, 'index'])->name('gbv-developmental-screening.index');
+
 });

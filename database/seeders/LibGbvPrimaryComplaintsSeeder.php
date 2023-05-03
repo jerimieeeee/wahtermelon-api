@@ -14,11 +14,11 @@ class LibGbvPrimaryComplaintsSeeder extends Seeder
     public function run(): void
     {
         LibGbvPrimaryComplaints::upsert([
-            ['desc' => 'Physical Abuse', 'sequence' => 1],
-            ['desc' => 'Sexual Abuse', 'sequence' => 2],
-            ['desc' => 'Neglect', 'sequence' => 3],
-            ['desc' => 'UTV', 'sequence' => 4],
-            ['desc' => 'Others', 'sequence' => 5],
+            ['id' => 1, 'desc' => 'Physical Abuse', 'sequence' => 1],
+            ['id' => 2, 'desc' => 'Sexual Abuse', 'sequence' => 2],
+            ['id' => 3, 'desc' => 'Neglect', 'sequence' => 3],
+            ['id' => 4, 'desc' => 'UTV', 'sequence' => 4],
+            ['id' => 5, 'desc' => 'Others', 'sequence' => 5],
         ], ['id']);
     }
 }
