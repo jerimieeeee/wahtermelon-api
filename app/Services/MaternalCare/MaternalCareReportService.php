@@ -301,16 +301,6 @@ class MaternalCareReportService
                         barangay_code
             ')
             ->whereIn('vaccine_seq', [3, 4, 5])
-            ->whereIn('vaccine_seq', function ($query) {
-                $query->selectRaw('COALESCE(MIN(seq), 5)')
-                    ->from(function ($subquery) {
-                        $subquery->selectRaw('vaccine_seq AS seq')
-                            ->from('patient_vaccines')
-                            ->whereVaccineId('TD')
-                            ->whereStatusId(1)
-                            ->groupBy('seq');
-                    });
-            })
             ->whereYear('date_of_service', $request->year)
             ->whereMonth('date_of_service', $request->month)
             ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, date_of_service) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
