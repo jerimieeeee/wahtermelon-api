@@ -511,7 +511,7 @@ class MaternalCareReportService
                 $q->whereIn('municipality_code', explode(',', $request->municipality_code));
             })
             ->when(isset($request->barangay_code), function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->barangay_code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->barangay_code));
             })
             ->when($weight == 'NORMAL', fn ($query) => $query->where('patient_ccdevs.birth_weight', '>=', 2.5)
                     ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
@@ -721,7 +721,7 @@ class MaternalCareReportService
                 $q->whereIn('municipality_code', explode(',', $request->municipality_code));
             })
             ->when(isset($request->barangay_code), function ($q) use ($request) {
-                $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->barangay_code));
+                $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
             ->when(isset($request->facility_code), function ($q) use ($request) {
                 $q->whereIn('users.facility_code', explode(',', $request->facility_code));
@@ -772,7 +772,7 @@ class MaternalCareReportService
                 $q->whereIn('municipality_code', explode(',', $request->municipality_code));
             })
             ->when(isset($request->barangay_code), function ($q) use ($request) {
-                $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->barangay_code));
+                $q->whereIn('barangay_code', explode(',', $request->barangay_code));
             })
             ->when(isset($request->facility_code), function ($q) use ($request) {
                 $q->whereIn('users.facility_code', explode(',', $request->facility_code));
