@@ -16,12 +16,14 @@ return new class extends Migration
             $table->string('facility_code')->index();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->year('year')->index();
-            $table->integer('population')->nullable();
-            $table->integer('household')->nullable();
+            $table->string('barangay_code')->index()->nullable();
+            $table->integer('population')->index()->nullable();
+            $table->integer('household')->index()->nullable();
             $table->boolean('zod')->nullable();
             $table->timestamps();
 
             $table->foreign('facility_code')->references('code')->on('facilities');
+            $table->foreign('barangay_code')->references('code')->on('barangays');
         });
     }
 
