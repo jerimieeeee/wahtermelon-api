@@ -36,7 +36,8 @@ class PatientGbvController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbv::query()->with(['patientGbv', 'relation', 'facility'])
+        $query = PatientGbv::query()
+        ->with(['relation', 'facility', 'livingArrangement', 'presentArrangement','outcomeVerdict','outcomeResult','outcomeReason'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
@@ -74,8 +75,6 @@ class PatientGbvController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
-     * @return JsonResponse
      */
     public function update(PatientGbvRequest $request, PatientGbv $patientGbv)
     {

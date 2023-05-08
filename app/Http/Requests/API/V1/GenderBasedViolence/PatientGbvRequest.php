@@ -42,6 +42,9 @@ class PatientGbvRequest extends FormRequest
             'neglect_remarks' => 'nullable',
             'behavioral_remarks' => 'nullable',
             'economic_status_id' => 'nullable|exists:lib_gbv_economic_statuses,id',
+            'number_of_children' => 'nullable',
+            'number_of_individual_members' => 'nullable',
+            'number_of_family' => 'nullable',
             'barangay_code' => 'nullable|exists:barangays,code',
             'address' => 'nullable',
             'direction_to_address' => 'nullable',
@@ -56,9 +59,9 @@ class PatientGbvRequest extends FormRequest
             'same_room_adult_male_flag' => 'nullable|boolean',
             'same_room_adult_female_flag' => 'nullable|boolean',
             'same_room_child_male_flag' => 'nullable|boolean',
-            'sleeping_arrangement_id' => 'required|exists:lib_gbv_sleeping_arrangements,id',
-            'abuse_living_arrangement_id' => 'required|exists:lib_gbv_living_arrangements,id',
-            'present_living_arrangement_id' => 'required|exists:lib_gbv_living_arrangements,id',
+            'sleeping_arrangement_id' => 'nullable|exists:lib_gbv_sleeping_arrangements,id',
+            'abuse_living_arrangement_id' => 'nullable|exists:lib_gbv_living_arrangements,id',
+            'present_living_arrangement_id' => 'nullable|exists:lib_gbv_living_arrangements,id',
         ];
     }
 

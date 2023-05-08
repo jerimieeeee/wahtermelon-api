@@ -64,17 +64,17 @@ class PatientGbv extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function outcome_reason(): BelongsTo
+    public function outcomeReason(): BelongsTo
     {
         return $this->belongsTo(LibGbvOutcomeReason::class, 'outcome_reason_id', 'id');
     }
 
-    public function outcome_result(): BelongsTo
+    public function outcomeResult(): BelongsTo
     {
         return $this->belongsTo(LibGbvOutcomeResult::class, 'outcome_result_id', 'id');
     }
 
-    public function outcome_verdict(): BelongsTo
+    public function outcomeVerdict(): BelongsTo
     {
         return $this->belongsTo(LibGbvOutcomeVerdict::class, 'outcome_verdict_id', 'id');
     }

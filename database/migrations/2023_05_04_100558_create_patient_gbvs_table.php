@@ -48,7 +48,9 @@ return new class extends Migration
             $table->boolean('same_room_child_male_flag')->index()->nullable();
             $table->foreignId('sleeping_arrangement_id')->index()->nullable()->constrained('lib_gbv_sleeping_arrangements');
             $table->foreignId('abuse_living_arrangement_id')->index()->nullable()->constrained('lib_gbv_living_arrangements');
+            $table->string('abuse_living_arrangement_remarks')->nullable();
             $table->foreignId('present_living_arrangement_id')->index()->nullable()->constrained('lib_gbv_living_arrangements');
+            $table->string('present_living_arrangement_remarks')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
