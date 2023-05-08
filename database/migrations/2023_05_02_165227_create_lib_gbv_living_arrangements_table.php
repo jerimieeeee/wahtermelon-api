@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lib_gbv_living_arrangments', function (Blueprint $table) {
+        Schema::create('lib_gbv_living_arrangements', function (Blueprint $table) {
             $table->id();
             $table->string('desc');
             $table->unsignedInteger('sequence');
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lib_gbv_living_arrangments');
+        Schema::dropIfExists('lib_gbv_living_arrangements');
     }
 };

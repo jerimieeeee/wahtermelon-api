@@ -28,22 +28,22 @@ Route::prefix('v1')->group(function () {
     Route::post('reset-password', [\App\Http\Controllers\API\Auth\ChangePasswordController::class, 'passwordResetProcess'])->middleware('guest');
 
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
-    ->middleware('auth:api')
-    ->group(function () {
-        Route::get('users', 'index');
-        Route::get('users/{user}', 'show');
-        Route::post('register', 'store')->withoutMiddleware('auth:api');
-        Route::put('users/{user}', 'update');
-    });
+        ->middleware('auth:api')
+        ->group(function () {
+            Route::get('users', 'index');
+            Route::get('users/{user}', 'show');
+            Route::post('register', 'store')->withoutMiddleware('auth:api');
+            Route::put('users/{user}', 'update');
+        });
 
     Route::controller(\App\Http\Controllers\API\V1\Patient\PatientController::class)
-    ->middleware('auth:api')
-    ->group(function () {
-        Route::get('patient', 'index')->name('patient.index');
-        Route::get('patient/{patient}', 'show')->name('patient.show');
-        Route::post('patient', 'store')->name('patient.store');
-        Route::put('patient/{patient}', 'update')->name('patient.update');
-    });
+        ->middleware('auth:api')
+        ->group(function () {
+            Route::get('patient', 'index')->name('patient.index');
+            Route::get('patient/{patient}', 'show')->name('patient.show');
+            Route::post('patient', 'store')->name('patient.store');
+            Route::put('patient/{patient}', 'update')->name('patient.update');
+        });
 
     Route::controller(\App\Http\Controllers\API\V1\Patient\PatientImageController::class)
         ->middleware('auth:api')
@@ -178,11 +178,11 @@ Route::prefix('v1')->group(function () {
                 Route::put('notes/{id}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesPeController::class)
-           ->middleware('auth:api')
-           ->group(function () {
-               Route::post('physical-exam', 'store');
-               Route::post('physical-exam/{id}', 'show');
-           });
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::post('physical-exam', 'store');
+                Route::post('physical-exam/{id}', 'show');
+            });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultPeRemarksController::class)
             ->middleware('auth:api')
             ->group(function () {
@@ -550,33 +550,33 @@ Route::prefix('v1')->group(function () {
     Route::prefix('patient-menstrual-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientMenstrualHistoryController::class)
             ->middleware('auth:api')
-             ->group(function () {
-                 Route::get('history', 'index');
-                 Route::get('history/{patientMenstrualHistory}', 'show');
-                 Route::post('history', 'store');
-             });
+            ->group(function () {
+                Route::get('history', 'index');
+                Route::get('history/{patientMenstrualHistory}', 'show');
+                Route::post('history', 'store');
+            });
     });
 
     //Patient Surgical History APIs
     Route::prefix('patient-surgical-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientSurgicalHistoryController::class)
             ->middleware('auth:api')
-             ->group(function () {
-                 Route::get('history', 'index');
-                 Route::post('history', 'store');
-                 Route::delete('history/{patientSurgicalHistory}', 'destroy');
-             });
+            ->group(function () {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::delete('history/{patientSurgicalHistory}', 'destroy');
+            });
     });
 
     //Patient Pregnancy History APIs
     Route::prefix('patient-pregnancy-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPregnancyHistoryController::class)
             ->middleware('auth:api')
-             ->group(function () {
-                 Route::get('history', 'index');
-                 Route::post('history', 'store');
-                 Route::get('history/{patientPregnancyHistory}', 'show');
-             });
+            ->group(function () {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::get('history/{patientPregnancyHistory}', 'show');
+            });
     });
 
     //Reports 2018
@@ -584,9 +584,9 @@ Route::prefix('v1')->group(function () {
         Route::prefix('child-care')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\ChildCareReport2018Controller::class)
                 ->middleware('auth:api')
-                 ->group(function () {
-                     Route::get('m1', 'index');
-                 });
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
         });
         Route::prefix('maternal-care')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MaternalCareReport2018Controller::class)
@@ -673,6 +673,24 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('schedule', 'index');
                 Route::post('schedule', 'store');
+            });
+    });
+
+    //Gender Based Violence
+    Route::prefix('gender-based-violence')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv', 'index');
+                Route::post('patient-gbv', 'store');
+                Route::put('patient-gbv/{patientGbv}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvFamilyCompositionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-family-composition', 'index');
+                Route::post('patient-gbv-family-composition', 'store');
+                Route::put('patient-gbv-family-composition/{patientGbvFamilyComposition}', 'update');
             });
     });
 });

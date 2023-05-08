@@ -9,6 +9,7 @@ use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 class Consult extends Model
 {
-    use HasFactory, FilterByUser;
+    use HasFactory, FilterByUser, FilterByFacility;
 
     /**
      * The attributes that are mass assignable.

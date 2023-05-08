@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibGbvLivingArrangment;
+use App\Models\V1\Libraries\LibGbvLivingArrangement;
 use Illuminate\Database\Seeder;
 
-class LibGbvLivingArrangmentSeeder extends Seeder
+class LibGbvLivingArrangementSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        LibGbvLivingArrangment::upsert([
+        LibGbvLivingArrangement::upsert([
             ['id' => 1, 'desc' => 'Street Child', 'sequence' => 1],
             ['id' => 2, 'desc' => 'Street Family', 'sequence' => 2],
             ['id' => 3, 'desc' => 'NGO Shelter', 'sequence' => 3],

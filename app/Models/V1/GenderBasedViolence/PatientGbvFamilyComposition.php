@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Models\V1\Appointment;
+namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibAppointment;
+use App\Models\V1\Libraries\LibGbvChildRelation;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
-use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Appointment extends Model
+class PatientGbvFamilyComposition extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUlids, FilterByUser;
+    use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
     protected $guarded = [
         'id',
@@ -27,7 +25,8 @@ class Appointment extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'appointment_date' => 'date:Y-m-d',
+        'case_date' => 'date:Y-m-d',
+        'outcome_date' => 'date:Y-m-d',
     ];
 
     public function getRouteKeyName()
@@ -40,9 +39,9 @@ class Appointment extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function facility()
+    public function patient()
     {
-        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+        return $this->belongsTo(Patient::class);
     }
 
     public function user()
@@ -50,13 +49,18 @@ class Appointment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function patient()
+    public function facility()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-    public function appointment(): BelongsTo
+    public function patientGbv()
     {
-        return $this->belongsTo(LibAppointment::class, 'appointment_code', 'code');
+        return $this->belongsTo(PatientGbv::class, 'patient_gbv_id', 'id');
+    }
+
+    public function relation()
+    {
+        return $this->belongsTo(LibGbvChildRelation::class, 'child_relation_id', 'id');
     }
 }
