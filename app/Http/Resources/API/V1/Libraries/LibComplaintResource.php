@@ -21,6 +21,7 @@ class LibComplaintResource extends JsonResource
             'complaint_active' => $this->complaint_active,
             'konsulta_complaint_id' => $this->konsulta_complaint_id,
             'konsulta_library_status' => $this->konsulta_library_status,
+            'gbv_library_status' => $this->gbv_library_status,
         ];
     }
 }
