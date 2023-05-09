@@ -121,21 +121,21 @@ class PatientGbv extends Model
 
     public function neglect()
     {
-        return $this->hasOne(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
     }
 
     public function complaints()
     {
-        return $this->hasOne(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
     }
 
     public function behavior()
     {
-        return $this->hasOne(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
     }
 
     public function referral()
     {
-        return $this->hasOne(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
     }
 }
