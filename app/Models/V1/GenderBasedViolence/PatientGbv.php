@@ -118,4 +118,24 @@ class PatientGbv extends Model
     {
         return $this->belongsTo(LibGbvLivingArrangement::class, 'present_living_arrangement_id', 'id');
     }
+
+    public function neglect()
+    {
+        return $this->hasOne(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
+    }
+
+    public function complaints()
+    {
+        return $this->hasOne(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
+    }
+
+    public function behavior()
+    {
+        return $this->hasOne(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
+    }
+
+    public function referral()
+    {
+        return $this->hasOne(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+    }
 }
