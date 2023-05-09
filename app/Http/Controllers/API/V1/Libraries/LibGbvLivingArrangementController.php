@@ -7,6 +7,7 @@ use App\Http\Resources\API\V1\Libraries\LibGbvLivingArrangementResource;
 use App\Models\V1\Libraries\LibGbvLivingArrangement;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
+
 /**
  * @group libraries for GBV
  *

@@ -41,7 +41,7 @@ class PatientGbv extends Model
 
     public function getRouteKeyName()
     {
-        return 'patient_id';
+        return 'id';
     }
 
     protected function serializeDate(\DateTimeInterface $date)
