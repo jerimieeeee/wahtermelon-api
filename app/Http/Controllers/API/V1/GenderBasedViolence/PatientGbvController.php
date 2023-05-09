@@ -49,7 +49,7 @@ class PatientGbvController extends Controller
     }
 
     /**
-     * Store a newly created Consult resource in storage.
+     * Store a newly created Patient GBV resource in storage.
      *
      * @apiResourceAdditional status=Success
      *
@@ -61,7 +61,7 @@ class PatientGbvController extends Controller
     {
         $data = PatientGbv::create($request->validated());
 
-        return response()->json(['data' => $data], 201);
+        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
 
     /**
