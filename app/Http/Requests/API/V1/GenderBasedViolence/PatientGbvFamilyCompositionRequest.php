@@ -42,7 +42,7 @@ class PatientGbvFamilyCompositionRequest extends FormRequest
             'weekly_income' => 'nullable|numeric',
             'school' => 'nullable',
             'company' => 'nullable',
-            'contact_information' => 'required|min:11|max:13',
+            'contact_information' => 'nullable|min:11|max:13',
         ];
     }
 
