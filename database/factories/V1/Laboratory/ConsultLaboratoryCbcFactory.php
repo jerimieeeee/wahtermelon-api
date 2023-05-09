@@ -5,6 +5,7 @@ namespace Database\Factories\V1\Laboratory;
 use App\Models\User;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
@@ -24,7 +25,8 @@ class ConsultLaboratoryCbcFactory extends Factory
             User::factory()->create()
         );
         //$consult = ConsultLaboratory::whereLabCode('CBC')->inRandomOrder()->limit(1)->first();
-        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CBC']);
+        Patient::factory()->create();
+        $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CBC', 'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray())]);
 
         return [
             'facility_code' => $consult->facility_code,
