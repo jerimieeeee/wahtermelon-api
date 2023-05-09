@@ -26,7 +26,7 @@ class PatientGbvNeglectResource extends JsonResource
             'patientGbv' => $this->whenLoaded('patientGbv'),
             'neglect_id' => $this->when(! $this->relationLoaded('neglect'), $this->neglect_id),
             'neglect' => $this->whenLoaded('neglect'),
-            'deleted_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

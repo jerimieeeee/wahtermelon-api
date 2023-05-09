@@ -3,11 +3,11 @@
 namespace App\Http\Requests\API\V1\GenderBasedViolence;
 
 use App\Models\V1\GenderBasedViolence\PatientGbv;
-use App\Models\V1\Libraries\LibGbvNeglects;
+use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatientGbvNeglectRequest extends FormRequest
+class PatientGbvComplaintRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,8 @@ class PatientGbvNeglectRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_id' => 'required|exists:patient_gbvs,id',
-            'neglect_id' => 'nullable|exists:lib_gbv_neglects,id',
+            'complaint_id' => 'nullable|exists:lib_complaints,complaint_id',
+            'complaint_specific' => 'nullable',
         ];
     }
 
@@ -42,9 +43,13 @@ class PatientGbvNeglectRequest extends FormRequest
                 'description' => 'ID of patient gbv',
                 'example' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
             ],
-            'neglect_id' => [
-                'description' => 'ID of lib neglect',
-                'example' => fake()->randomElement(LibGbvNeglects::pluck('id')->toArray()),
+            'complaint_id' => [
+                'description' => 'ID of lib complaint',
+                'example' => fake()->randomElement(LibComplaint::pluck('complaint_id')->toArray()),
+            ],
+            'complaint_specific' => [
+                'description' => 'Remarks of Patient GBV Complaint',
+                'example' => fake()->sentence(),
             ],
         ];
     }

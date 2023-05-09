@@ -3,11 +3,11 @@
 namespace App\Http\Requests\API\V1\GenderBasedViolence;
 
 use App\Models\V1\GenderBasedViolence\PatientGbv;
-use App\Models\V1\Libraries\LibGbvNeglects;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Facility;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatientGbvNeglectRequest extends FormRequest
+class PatientGbvReferralRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,10 @@ class PatientGbvNeglectRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_id' => 'required|exists:patient_gbvs,id',
-            'neglect_id' => 'nullable|exists:lib_gbv_neglects,id',
+            'referral_facility_code' => 'nullable|exists:facilities,code',
+            'referral_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'referral_reason' => 'nullable',
+            'service_remarks' => 'nullable',
         ];
     }
 
@@ -42,9 +45,17 @@ class PatientGbvNeglectRequest extends FormRequest
                 'description' => 'ID of patient gbv',
                 'example' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
             ],
-            'neglect_id' => [
-                'description' => 'ID of lib neglect',
-                'example' => fake()->randomElement(LibGbvNeglects::pluck('id')->toArray()),
+            'referral_facility_code' => [
+                'description' => 'ID of lib gbv behavioral',
+                'example' => fake()->randomElement(Facility::pluck('code')->toArray()),
+            ],
+            'referral_reason' => [
+                'description' => 'Referral remarks',
+                'example' => fake()->sentence(),
+            ],
+            'service_remarks' => [
+                'description' => 'Referral remarks',
+                'example' => fake()->sentence(),
             ],
         ];
     }

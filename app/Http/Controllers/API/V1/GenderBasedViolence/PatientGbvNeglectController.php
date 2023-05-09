@@ -24,7 +24,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class PatientGbvNeglectController extends Controller
 {
     /**
-     * Display a listing of the Patient GBV resource.
+     * Display a listing of the Patient GBV Neglect resource.
      *
      * @queryParam patient_id string Patient to view.
      *

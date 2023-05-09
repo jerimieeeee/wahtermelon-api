@@ -65,7 +65,7 @@ class PatientGbvResource extends JsonResource
             'livingArrangement' => $this->whenLoaded('livingArrangement'),
             'present_living_arrangement_id' => $this->when(! $this->relationLoaded('presentArrangement'), $this->present_living_arrangement_id),
             'presentArrangement' => $this->whenLoaded('presentArrangement'),
-            'deleted_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
