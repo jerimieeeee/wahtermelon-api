@@ -20,6 +20,7 @@ class MedicineDispensingFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
         $quantity = fake()->numberBetween(1, 50);
         $unitPrice = fake()->numberBetween(1, 500);
         $totalAmount = $quantity * $unitPrice;

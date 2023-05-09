@@ -3,7 +3,6 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
-use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Laravel\Passport\Passport;

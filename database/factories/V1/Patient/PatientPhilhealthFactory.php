@@ -26,6 +26,7 @@ class PatientPhilhealthFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
         $gender = fake()->randomElement(['male', 'female']);
         $membershipType = fake()->randomElement(LibPhilhealthMembershipType::pluck('id')->toArray());
 

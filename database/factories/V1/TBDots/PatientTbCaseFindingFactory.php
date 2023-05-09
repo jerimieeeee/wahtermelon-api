@@ -23,6 +23,8 @@ class PatientTbCaseFindingFactory extends Factory
      */
     public function definition(): array
     {
+        Patient::factory()->create();
+
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'patient_tb_id' => fake()->randomElement(PatientTb::pluck('id')->toArray()),

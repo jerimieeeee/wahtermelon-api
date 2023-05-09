@@ -27,6 +27,8 @@ class MedicinePrescriptionFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),

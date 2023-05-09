@@ -20,6 +20,8 @@ class PatientNcdRecordFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'patient_ncd_id' => fake()->randomElement(PatientNcd::pluck('id')->toArray()),
             'consult_ncd_risk_id' => fake()->randomElement(ConsultNcdRiskAssessment::pluck('id')->toArray()),

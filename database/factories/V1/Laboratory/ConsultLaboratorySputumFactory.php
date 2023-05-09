@@ -7,6 +7,7 @@ use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryFindings;
 use App\Models\V1\Libraries\LibLaboratorySputumCollection;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
@@ -25,6 +26,7 @@ class ConsultLaboratorySputumFactory extends Factory
         Passport::actingAs(
             User::factory()->create()
         );
+        Patient::factory()->create();
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'SPTM']);
 
         return [

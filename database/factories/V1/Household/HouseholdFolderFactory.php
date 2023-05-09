@@ -3,6 +3,7 @@
 namespace Database\Factories\V1\Household;
 
 use App\Models\User;
+use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,6 +20,8 @@ class HouseholdFolderFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),

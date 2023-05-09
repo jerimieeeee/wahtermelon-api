@@ -22,6 +22,8 @@ class PatientChildcareTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
+        Patient::factory()->create();
+
         $response = $this->post('api/v1/child-care/cc-records', [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),

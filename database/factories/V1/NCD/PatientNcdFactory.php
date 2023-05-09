@@ -17,6 +17,8 @@ class PatientNcdFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'date_enrolled' => fake()->date($format = 'Y-m-d H:i:s', $max = 'now'),
