@@ -48,7 +48,7 @@ class PatientGbvFamilyCompositionController extends Controller
     }
 
     /**
-     * Store a newly created Consult resource in storage.
+     * Store a newly created Patient GBV Family Composition resource in storage.
      *
      * @apiResourceAdditional status=Success
      *

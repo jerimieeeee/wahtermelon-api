@@ -3,7 +3,6 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\User;
-use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Laravel\Passport\Passport;
@@ -49,7 +48,7 @@ class PatientTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
-        $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('patient_id')->toArray());
+        $id = fake()->randomElement(Patient::pluck('id')->toArray());
         $response = $this->get("api/v1/patient/$id");
         $response->assertOk();
     }

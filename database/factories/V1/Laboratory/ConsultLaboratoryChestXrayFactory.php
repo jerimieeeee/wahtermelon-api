@@ -7,6 +7,7 @@ use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Libraries\LibLaboratoryChestxrayFindings;
 use App\Models\V1\Libraries\LibLaboratoryChestxrayObservation;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
@@ -26,6 +27,7 @@ class ConsultLaboratoryChestXrayFactory extends Factory
             User::factory()->create()
         );
         //$consult = ConsultLaboratory::whereLabCode('CBC')->inRandomOrder()->limit(1)->first();
+        Patient::factory()->create();
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'CXRAY']);
         $findings = fake()->randomElement(LibLaboratoryChestxrayFindings::pluck('code')->toArray());
         $observation = fake()->randomElement(LibLaboratoryChestxrayObservation::pluck('code')->toArray());

@@ -38,7 +38,7 @@ class PatientGbvFamilyCompositionResource extends JsonResource
             'school' => $this->school,
             'company' => $this->company,
             'contact_information' => $this->contact_information,
-            'deleted_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

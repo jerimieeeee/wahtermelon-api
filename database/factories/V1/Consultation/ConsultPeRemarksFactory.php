@@ -20,6 +20,8 @@ class ConsultPeRemarksFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'notes_id' => fake()->randomElement(ConsultNotes::pluck('id')->toArray()),
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),

@@ -19,6 +19,8 @@ class PatientSurgicalHistoryFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),

@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibLaboratoryBloodInStool;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Libraries\LibLaboratoryStoolColor;
 use App\Models\V1\Libraries\LibLaboratoryStoolConsistency;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Passport;
 
@@ -26,6 +27,7 @@ class ConsultLaboratoryFecalysisFactory extends Factory
         Passport::actingAs(
             User::factory()->create()
         );
+        Patient::factory()->create();
         $consult = ConsultLaboratory::factory()->create(['lab_code' => 'FCAL']);
 
         return [

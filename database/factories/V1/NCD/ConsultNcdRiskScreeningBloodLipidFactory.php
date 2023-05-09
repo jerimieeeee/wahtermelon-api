@@ -19,6 +19,8 @@ class ConsultNcdRiskScreeningBloodLipidFactory extends Factory
      */
     public function definition()
     {
+        Patient::factory()->create();
+
         return [
             'consult_ncd_risk_id' => fake()->randomElement(ConsultNcdRiskAssessment::pluck('id')->toArray()),
             'patient_ncd_id' => fake()->randomElement(PatientNcd::pluck('id')->toArray()),

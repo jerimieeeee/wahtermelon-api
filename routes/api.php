@@ -692,5 +692,33 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-family-composition', 'store');
                 Route::put('patient-gbv-family-composition/{patientGbvFamilyComposition}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvNeglectController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-neglect', 'index');
+                Route::post('patient-gbv-neglect', 'store');
+                Route::put('patient-gbv-neglect/{patientGbvNeglect}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvComplaintController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-complaint', 'index');
+                Route::post('patient-gbv-complaint', 'store');
+                Route::put('patient-gbv-complaint/{patientGbvComplaint}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvBehaviorController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-behavior', 'index');
+                Route::post('patient-gbv-behavior', 'store');
+                Route::put('patient-gbv-behavior/{$patientGbvBehavior}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvReferralController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-referral', 'index');
+                Route::post('patient-gbv-referral', 'store');
+                Route::put('patient-gbv-referral/{patientGbvReferral}', 'update');
+            });
     });
 });
