@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PatientGbvIntervieDevScreeningController extends Controller
+class PatientGbvInterviewDevScreeningController extends Controller
 {
     /**
      * Display a listing of the resource.

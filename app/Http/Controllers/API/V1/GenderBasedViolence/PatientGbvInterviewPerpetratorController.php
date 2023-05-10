@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvInterviewRequest;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvInterviewPerpetratorRequest;
 use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvInterviewPerpetratorResource;
 use App\Models\V1\GenderBasedViolence\PatientGbvInterviewPerpetrator;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class PatientGbvInterviewPerpetratorController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbvInterviewPerpetrator::query()->with(['patientGbv', 'relation', 'facility'])
+        $query = PatientGbvInterviewPerpetrator::query()->with(['patientGbv', 'facility'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
@@ -31,7 +31,7 @@ class PatientGbvInterviewPerpetratorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientGbvInterviewRequest $request)
+    public function store(PatientGbvInterviewPerpetratorRequest $request)
     {
         $data = PatientGbvInterviewPerpetrator::create($request->validated());
 
@@ -49,7 +49,7 @@ class PatientGbvInterviewPerpetratorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientGbvInterviewRequest $request, PatientGbvInterviewPerpetrator $patientGbvInterviewPerpetrator)
+    public function update(PatientGbvInterviewPerpetratorRequest $request, PatientGbvInterviewPerpetrator $patientGbvInterviewPerpetrator)
     {
         $patientGbvInterviewPerpetrator->update($request->validated());
 
