@@ -36,7 +36,7 @@ class PatientGbvFamilyCompositionController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbvFamilyComposition::query()->with(['patientGbv', 'relation', 'facility'])
+        $query = PatientGbvFamilyComposition::query()->with(['patientGbv', 'location'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });

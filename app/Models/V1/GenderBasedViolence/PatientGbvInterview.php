@@ -3,7 +3,11 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibGbvAbusedEpisode;
+use App\Models\V1\Libraries\LibGbvAbusedSite;
+use App\Models\V1\Libraries\LibGbvChildBehavior;
 use App\Models\V1\Libraries\LibGbvChildRelation;
+use App\Models\V1\Libraries\LibGbvDisclosedType;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -12,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientGbvFamilyComposition extends Model
+class PatientGbvInterview extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
@@ -25,8 +29,7 @@ class PatientGbvFamilyComposition extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'case_date' => 'date:Y-m-d',
-        'outcome_date' => 'date:Y-m-d',
+        'incident_first_datetime' => 'date:Y-m-d H:i:s',
     ];
 
     public function getRouteKeyName()
@@ -59,8 +62,28 @@ class PatientGbvFamilyComposition extends Model
         return $this->belongsTo(PatientGbv::class, 'patient_gbv_id', 'id');
     }
 
+    public function disclosed()
+    {
+        return $this->belongsTo(LibGbvDisclosedType::class, 'disclosed_type', 'id');
+    }
+
+    public function abusedEpisode()
+    {
+        return $this->belongsTo(LibGbvAbusedEpisode::class, 'abused_episode_id', 'id');
+    }
+
+    public function abusedSite()
+    {
+        return $this->belongsTo(LibGbvAbusedSite::class, 'abused_site_id', 'id');
+    }
+
     public function relation()
     {
-        return $this->belongsTo(LibGbvChildRelation::class, 'child_relation_id', 'id');
+        return $this->belongsTo(LibGbvChildRelation::class, 'relation_to_child', 'id');
+    }
+
+    public function behavior()
+    {
+        return $this->belongsTo(LibGbvChildBehavior::class, 'child_behavior_id', 'id');
     }
 }
