@@ -38,6 +38,14 @@ class PatientGbvRequest extends FormRequest
             'primary_complaint_id' => 'nullable|exists:lib_gbv_primary_complaints,id',
             'service_id' => 'nullable|exists:lib_gbv_services,id',
             'primary_complaint_remarks' => 'nullable',
+            'physical_abuse_flag' => 'nullable|boolean',
+            'sexual_abuse_flag' => 'nullable|boolean',
+            'neglect_abuse_flag' => 'nullable|boolean',
+            'emotional_abuse_flag' => 'nullable|boolean',
+            'economic_abuse_flag' => 'nullable|boolean',
+            'utv_abuse_flag' => 'nullable|boolean',
+            'others_abuse_flag' => 'nullable|boolean',
+            'others_abuse_remarks' => 'nullable',
             'service_remarks' => 'nullable',
             'neglect_remarks' => 'nullable',
             'behavioral_remarks' => 'nullable',
@@ -52,6 +60,7 @@ class PatientGbvRequest extends FormRequest
             'guardian_address' => 'nullable',
             'relation_to_child_id' => 'nullable|exists:lib_gbv_child_relations,id',
             'guardian_contact_info' => 'nullable',
+            'incest_case_flag' => 'nullable|boolean',
             'same_bed_adult_male_flag' => 'nullable|boolean',
             'same_bed_adult_female_flag' => 'nullable|boolean',
             'same_bed_child_male_flag' => 'nullable|boolean',
@@ -61,7 +70,9 @@ class PatientGbvRequest extends FormRequest
             'same_room_child_male_flag' => 'nullable|boolean',
             'sleeping_arrangement_id' => 'nullable|exists:lib_gbv_sleeping_arrangements,id',
             'abuse_living_arrangement_id' => 'nullable|exists:lib_gbv_living_arrangements,id',
+            'abuse_living_arrangement_remarks' => 'nullable',
             'present_living_arrangement_id' => 'nullable|exists:lib_gbv_living_arrangements,id',
+            'present_living_arrangement_remarks' => 'nullable',
         ];
     }
 
