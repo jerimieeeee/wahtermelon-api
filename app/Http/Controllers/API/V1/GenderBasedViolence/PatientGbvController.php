@@ -37,7 +37,7 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
-            ->with(['neglect', 'complaints', 'behavior', 'referral'])
+            ->with(['neglect', 'complaints', 'behavior', 'referral', 'relation'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
