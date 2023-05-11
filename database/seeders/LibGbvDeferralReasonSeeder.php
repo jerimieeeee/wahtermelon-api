@@ -14,7 +14,7 @@ class LibGbvDeferralReasonSeeder extends Seeder
     public function run(): void
     {
         LibGbvDeferralReason::upsert([
-            ['id' => 1, 'desc' => 'Child upset', 'sequence' => 1],
+            ['id' => 1, 'desc' => 'Victim survivor upset', 'sequence' => 1],
             ['id' => 2, 'desc' => 'Not disclosing', 'sequence' => 2],
             ['id' => 3, 'desc' => 'Previous statement was already taken', 'sequence' => 3]
         ], ['id']);
