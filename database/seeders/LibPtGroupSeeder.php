@@ -33,6 +33,7 @@ class LibPtGroupSeeder extends Seeder
             ['id' => 'ml',  'desc' => 'Malaria'],
             ['id' => 'fp',  'desc' => 'Family Planning'],
             ['id' => 'at',  'desc' => 'Adolescent'],
+            ['id' => 'gbv',  'desc' => 'Gender Based Violence'],
         ], ['id']);
     }
 }

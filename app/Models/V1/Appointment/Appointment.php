@@ -19,7 +19,7 @@ class Appointment extends Model
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUlids, FilterByUser;
 
     protected $guarded = [
-        'ulid',
+        'id',
     ];
 
     public $incrementing = false;

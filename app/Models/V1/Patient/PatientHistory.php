@@ -2,8 +2,10 @@
 
 namespace App\Models\V1\Patient;
 
+use App\Models\User;
 use App\Models\V1\Libraries\LibMedicalHistory;
 use App\Models\V1\Libraries\LibMedicalHistoryCategory;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

@@ -14,6 +14,7 @@ use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use App\Traits\HasSearchFilter;
 use DateTimeInterface;
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuids, HasSearchFilter, FilterByUser;
+    use HasFactory, HasUuids, HasSearchFilter, FilterByUser, FilterByFacility;
 
     protected $guarded = [
         'id',

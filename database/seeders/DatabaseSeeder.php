@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -124,6 +122,35 @@ class DatabaseSeeder extends Seeder
             LibTbIptTypeSeeder::class,
             LibTbTreatmentRegimenSeeder::class,
             LibAppointmentSeeder::class,
+            LibGbvPrimaryComplaintsSeeder::class,
+            LibGbvOutcomeReasonSeeder::class,
+            LibGbvOutcomeResultSeeder::class,
+            LibGbvNeglectsSeeder::class,
+            LibGbvInfoSourceSeeder::class,
+            LibGbvBehavioralSeeder::class,
+            LibGbvServiceSeeder::class,
+            LibGbvChildRelationSeeder::class,
+            LibGbvSleepingArrangementSeeder::class,
+            LibGbvLivingArrangementSeeder::class,
+            LibGbvEconomicStatusSeeder::class,
+            LibGbvOutcomeVerdictSeeder::class,
+            LibGbvLegalFilingLocationSeeder::class,
+            LibGbvConferenceInviteeSeeder::class,
+            LibGbvConferenceConcernSeeder::class,
+            LibGbvConferenceMitigatingFactorSeeder::class,
+            LibGbvConferenceRecommendationSeeder::class,
+            LibGbvEmotionalAbuseSeeder::class,
+            LibGbvPhysicalAbuseSeeder::class,
+            LibGbvSexualAbuseSeeder::class,
+            LibGbvPerpetratorLocationSeeder::class,
+            LibGbvChildBehaviorSeeder::class,
+            LibGbvDisclosedTypeSeeder::class,
+            LibGbvAbusedEpisodeSeeder::class,
+            LibGbvAbusedSiteSeeder::class,
+            LibGbvPlacementLocationSeeder::class,
+            LibGbvPlacementTypeSeeder::class,
+            LibGbvPsychParticipantSeeder::class,
+            LibGbvDevelopmentalScreeningSeeder::class,
         ]);
     }
 }

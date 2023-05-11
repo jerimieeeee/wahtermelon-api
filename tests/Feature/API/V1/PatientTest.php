@@ -49,7 +49,7 @@ class PatientTest extends TestCase
         Passport::actingAs(
             User::factory()->create()
         );
-        $id = fake()->randomElement(ConsultCcdevBreastfed::pluck('patient_id')->toArray());
+        $id = fake()->randomElement(Patient::pluck('id')->toArray());
         $response = $this->get("api/v1/patient/$id");
         $response->assertOk();
     }
