@@ -73,7 +73,7 @@ class PatientGbvComplaintController extends Controller
      */
     public function update(PatientGbvComplaintRequest $request, PatientGbvComplaint $patientGbvComplaint)
     {
-        $patientGbvComplaint->update($request->safe()->only('complaint_id', 'complaint_specific'));
+        $patientGbvComplaint->update($request->safe()->only('complaint_id', 'complaint_remarks'));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

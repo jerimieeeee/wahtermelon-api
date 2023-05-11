@@ -151,6 +151,7 @@ class DatabaseSeeder extends Seeder
             LibGbvPlacementTypeSeeder::class,
             LibGbvPsychParticipantSeeder::class,
             LibGbvDevelopmentalScreeningSeeder::class,
+            LibAnswerYnxSeeder::class,
         ]);
     }
 }

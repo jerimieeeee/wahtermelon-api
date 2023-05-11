@@ -121,21 +121,61 @@ class PatientGbv extends Model
 
     public function neglect()
     {
-        return $this->hasOne(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
     }
 
     public function complaints()
     {
-        return $this->hasOne(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
     }
 
     public function behavior()
     {
-        return $this->hasOne(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
     }
 
     public function referral()
     {
-        return $this->hasOne(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interview()
+    {
+        return $this->hasOne(PatientGbvInterview::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewPerpetrator()
+    {
+        return $this->hasMany(PatientGbvInterviewPerpetrator::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewSexualAbuses()
+    {
+        return $this->hasMany(PatientGbvInterviewSexualAbuse::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewPhysicalAbuses()
+    {
+        return $this->hasMany(PatientGbvInterviewPhysicalAbuse::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewNeglectAbuses()
+    {
+        return $this->hasMany(PatientGbvInterviewNeglectAbuse::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewEmotionalAbuses()
+    {
+        return $this->hasMany(PatientGbvInterviewEmotionalAbuse::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewSummaries()
+    {
+        return $this->hasMany(PatientGbvInterviewSummary::class, 'patient_gbv_id', 'id');
+    }
+
+    public function interviewDevScreening()
+    {
+        return $this->hasMany(PatientGbvInterviewDevScreening::class, 'patient_gbv_id', 'id');
     }
 }
