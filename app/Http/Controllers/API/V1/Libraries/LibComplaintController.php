@@ -37,19 +37,19 @@ class LibComplaintController extends Controller
         // $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = LibComplaint::query()
-            ->when(isset($request->query_type) && ($request->query_type === 'gbv_complaints'), function ($query) use ($request) {
+            ->when(isset($request->query_type) && ($request->query_type === 'gbv_complaints'), function ($query) {
                 return $query->where('gbv_library_status', '=', 1);
             });
         $complaint = QueryBuilder::for($query);
-                // ->whereKonsultaLibraryStatus(1);
+        // ->whereKonsultaLibraryStatus(1);
 
         return LibComplaintResource::collection($complaint->get());
 
-       /*  if ($perPage === 'all') {
-            return LibComplaintResource::collection($query->get());
-        }
+        /*  if ($perPage === 'all') {
+             return LibComplaintResource::collection($query->get());
+         }
 
-        return LibComplaintResource::collection($query->paginate($perPage)->withQueryString()); */
+         return LibComplaintResource::collection($query->paginate($perPage)->withQueryString()); */
     }
 
     /**
