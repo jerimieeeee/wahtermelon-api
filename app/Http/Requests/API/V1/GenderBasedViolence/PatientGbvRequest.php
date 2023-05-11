@@ -59,7 +59,7 @@ class PatientGbvRequest extends FormRequest
             'guardian_name' => 'nullable',
             'guardian_address' => 'nullable',
             'relation_to_child_id' => 'nullable|exists:lib_gbv_child_relations,id',
-            'guardian_contact_info' => 'nullable',
+            'guardian_contact_info' => 'nullable|min:11|max:13',
             'incest_case_flag' => 'nullable|boolean',
             'same_bed_adult_male_flag' => 'nullable|boolean',
             'same_bed_adult_female_flag' => 'nullable|boolean',

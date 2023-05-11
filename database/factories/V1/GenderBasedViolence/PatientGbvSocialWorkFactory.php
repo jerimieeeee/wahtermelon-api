@@ -9,9 +9,9 @@ use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\GenderBasedViolence\PatientGbvInterviewDevScreening>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\GenderBasedViolence\PatientGbvSocialWork>
  */
-class PatientGbvInterviewDevScreeningFactory extends Factory
+class PatientGbvSocialWorkFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -25,8 +25,8 @@ class PatientGbvInterviewDevScreeningFactory extends Factory
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'patient_gbv_id' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
-            'conference_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'notes' => fake()->sentence(),
+            'visit_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'social_worker' => fake()->name(),
         ];
     }
 }

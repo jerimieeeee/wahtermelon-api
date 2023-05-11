@@ -153,7 +153,7 @@ class DatabaseSeeder extends Seeder
             LibGbvDevelopmentalScreeningSeeder::class,
             LibAnswerYnxSeeder::class,
             LibGbvDeferralReasonSeeder::class,
-            LibGbvPreviousInterviewerSeeder::class
+            LibGbvPreviousInterviewerSeeder::class,
         ]);
     }
 }
