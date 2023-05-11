@@ -18,6 +18,8 @@ return new class extends Migration
             $table->year('year')->index();
             $table->string('barangay_code')->index()->nullable();
             $table->integer('population')->index()->nullable();
+            $table->integer('population_opt')->index()->nullable();
+            $table->integer('population_wra')->index()->nullable();
             $table->integer('household')->index()->nullable();
             $table->boolean('zod')->nullable();
             $table->timestamps();

@@ -25,6 +25,8 @@ class SettingsCatchmentBarangayFactory extends Factory
             'year' => fake()->year('now'),
             'barangay_code' => fake()->randomElement(Barangay::pluck('code')->toArray()),
             'population' => fake()->randomNumber(),
+            'population_opt' => fake()->randomNumber(),
+            'population_wra' => fake()->randomNumber(),
             'household' => fake()->randomNumber(),
             'zod' => fake()->boolean(),
         ];
