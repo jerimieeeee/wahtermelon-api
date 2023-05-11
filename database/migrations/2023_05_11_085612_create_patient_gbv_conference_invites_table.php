@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
             $table->foreignUlid('patient_gbv_conference_id')->index()->constrained('patient_gbv_conferences');
-            $table->foreignId('invite_code')->index()->nullable()->constrained('patient_gbv_conferences');
+            $table->foreignId('invite_code')->index()->nullable()->constrained('lib_gbv_conference_invitees');
             $table->text('invite_remarks')->nullable();
             $table->softDeletes();
             $table->timestamps();
