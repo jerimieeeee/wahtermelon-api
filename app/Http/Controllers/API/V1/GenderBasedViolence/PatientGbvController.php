@@ -40,7 +40,7 @@ class PatientGbvController extends Controller
             ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
                 'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
                 'interviewNeglectAbuses', 'interviewEmotionalAbuses',
-                'interviewSummaries', 'interviewDevScreening'])
+                'interviewSummaries', 'interviewDevScreening','relation'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
