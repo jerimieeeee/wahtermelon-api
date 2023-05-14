@@ -23,7 +23,7 @@ class PatientGbvInterviewSexualAbuseRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'intake_id' => 'required|exists:patient_gbv_intakes,id',
             'sexual_abused_id' => 'nullable|exists:lib_gbv_sexual_abuses,id',
             'sexual_abused_remarks' => 'nullable',
         ];

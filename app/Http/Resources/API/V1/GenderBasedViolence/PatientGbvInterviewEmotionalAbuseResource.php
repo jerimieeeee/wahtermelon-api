@@ -22,7 +22,7 @@ class PatientGbvInterviewEmotionalAbuseResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_gbv_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_id),
+            'intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->intake_id),
             'patientGbv' => $this->whenLoaded('patientGbv'),
             'emotional_id' => $this->when(! $this->relationLoaded('emotionalAbuse'), $this->emotional_id),
             'emotionalAbuse' => $this->whenLoaded('emotionalAbuse'),

@@ -23,7 +23,7 @@ class PatientGbvInterviewRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'info_source_code' => 'nullable|exists:lib_answer_yn,code',
             'incident_first_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
             'incident_first_remarks' => 'nullable',

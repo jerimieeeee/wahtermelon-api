@@ -23,7 +23,7 @@ class PatientGbvInterviewEmotionalAbuseRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'intake_id' => 'required|exists:patient_gbv_intakes,id',
             'emotional_id' => 'nullable|exists:lib_gbv_emotional_abuses,id',
             'emotional_abused_remarks' => 'nullable',
         ];

@@ -23,7 +23,7 @@ class PatientGbvInterviewPhysicalAbuseRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'intake_id' => 'required|exists:patient_gbv_intakes,id',
             'physical_abused_id' => 'nullable|exists:lib_gbv_physical_abuses,id',
             'physical_abused_remarks' => 'nullable',
         ];

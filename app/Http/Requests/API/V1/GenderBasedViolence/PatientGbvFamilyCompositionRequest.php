@@ -29,7 +29,7 @@ class PatientGbvFamilyCompositionRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'name' => 'nullable',
             'child_relation_id' => 'nullable|exists:lib_gbv_child_relations,id',
             'living_with_child_flag' => 'nullable|boolean',
@@ -55,7 +55,7 @@ class PatientGbvFamilyCompositionRequest extends FormRequest
                 'description' => 'ID of patient',
                 'example' => fake()->randomElement(Patient::pluck('id')->toArray()),
             ],
-            'patient_gbv_id' => [
+            'patient_gbv_intake_id' => [
                 'description' => 'ID of patient gbv',
                 'example' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
             ],

@@ -3,7 +3,7 @@
 namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\GenderBasedViolence\PatientGbv;
+use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use App\Models\V1\Libraries\LibAnswerYn;
 use App\Models\V1\Libraries\LibAnswerYnx;
 use App\Models\V1\Libraries\LibGbvAbusedEpisode;
@@ -31,7 +31,7 @@ class PatientGbvInterviewFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'patient_gbv_id' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
+            'patient_gbv_intake_id' => fake()->randomElement(PatientGbvIntake::pluck('id')->toArray()),
             'info_source_code' => fake()->randomElement(LibAnswerYn::pluck('id')->toArray()),
             'incident_first_datetime' => fake()->dateTime($format = 'Y-m-d H:i:s', $max = 'now'),
             'incident_first_remarks' => fake()->sentence(),

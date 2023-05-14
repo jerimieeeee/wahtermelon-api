@@ -52,7 +52,7 @@ class PatientGbvPlacement extends Model
 
     public function patientGbv()
     {
-        return $this->belongsTo(PatientGbv::class, 'patient_gbv_id', 'id');
+        return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
     }
 
     public function location()

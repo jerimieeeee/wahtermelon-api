@@ -23,7 +23,7 @@ class PatientGbvSocialWorkRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'visit_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'social_worker' => 'nullable',
         ];

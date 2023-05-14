@@ -3,26 +3,15 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvResource;
-use App\Models\V1\GenderBasedViolence\PatientGbv;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvIntakeRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvIntakeResource;
+use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-/**
- * @authenticated
- *
- * @group Patient GBV Management
- *
- * APIs for managing Patient GBV information
- *
- * @subgroup Patient GBV
- *
- * @subgroupDescription Patient GBV Management.
- */
-class PatientGbvController extends Controller
+class PatientGbvIntakeController extends Controller
 {
     /**
      * Display a listing of the Patient GBV resource.
@@ -36,11 +25,11 @@ class PatientGbvController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbv::query()
-            /* ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
+        $query = PatientGbvIntake::query()
+            ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
                 'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
                 'interviewNeglectAbuses', 'interviewEmotionalAbuses',
-                'interviewSummaries', 'interviewDevScreening', 'relation']) */
+                'interviewSummaries', 'interviewDevScreening', 'relation'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
@@ -48,7 +37,7 @@ class PatientGbvController extends Controller
             ->defaultSort('-case_date')
             ->allowedSorts('case_date');
 
-        return PatientGbvResource::collection($patientGbvFamilyComposition->get());
+        return PatientGbvIntakeResource::collection($patientGbvFamilyComposition->get());
     }
 
     /**
@@ -60,9 +49,9 @@ class PatientGbvController extends Controller
      *
      * @apiResourceModel App\Models\V1\GenderBasedViolence\PatientGbv
      */
-    public function store(PatientGbvRequest $request): JsonResponse
+    public function store(PatientGbvIntakeRequest $request): JsonResponse
     {
-        $data = PatientGbv::create($request->validated());
+        $data = PatientGbvIntake::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
@@ -78,7 +67,7 @@ class PatientGbvController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientGbvRequest $request, PatientGbv $patientGbv)
+    public function update(PatientGbvIntakeRequest $request, PatientGbvIntake $patientGbv)
     {
         $patientGbv->update($request->validated());
 

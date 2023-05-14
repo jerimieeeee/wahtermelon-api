@@ -23,7 +23,7 @@ class PatientGbvPlacementRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'location_id' => 'nullable|exists:lib_gbv_placement_locations,id',
             'home_by_cpu_flag' => 'nullable|boolean',
             'home_by_other_name' => 'nullable',

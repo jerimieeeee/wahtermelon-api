@@ -3,17 +3,10 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibGbvChildRelation;
-use App\Models\V1\Libraries\LibGbvEconomicStatus;
-use App\Models\V1\Libraries\LibGbvLivingArrangement;
 use App\Models\V1\Libraries\LibGbvOutcomeReason;
 use App\Models\V1\Libraries\LibGbvOutcomeResult;
 use App\Models\V1\Libraries\LibGbvOutcomeVerdict;
-use App\Models\V1\Libraries\LibGbvPrimaryComplaints;
-use App\Models\V1\Libraries\LibGbvService;
-use App\Models\V1\Libraries\LibGbvSleepingArrangement;
 use App\Models\V1\Patient\Patient;
-use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -79,103 +72,9 @@ class PatientGbv extends Model
         return $this->belongsTo(LibGbvOutcomeVerdict::class, 'outcome_verdict_id', 'id');
     }
 
-    public function complaint(): BelongsTo
-    {
-        return $this->belongsTo(LibGbvPrimaryComplaints::class, 'primary_complaint_id', 'id');
-    }
-
-    public function service(): BelongsTo
-    {
-        return $this->belongsTo(LibGbvService::class, 'service_id', 'id');
-    }
-
-    public function economic(): BelongsTo
-    {
-        return $this->belongsTo(LibGbvEconomicStatus::class, 'economic_status_id', 'id');
-    }
-
-    public function barangay()
-    {
-        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
-    }
-
-    public function relation()
-    {
-        return $this->belongsTo(LibGbvChildRelation::class, 'relation_to_child_id', 'id');
-    }
-
-    public function sleepingArrangement()
-    {
-        return $this->belongsTo(LibGbvSleepingArrangement::class, 'sleeping_arrangement_id', 'id');
-    }
-
-    public function livingArrangement()
-    {
-        return $this->belongsTo(LibGbvLivingArrangement::class, 'abuse_living_arrangement_id', 'id');
-    }
-
-    public function presentArrangement()
-    {
-        return $this->belongsTo(LibGbvLivingArrangement::class, 'present_living_arrangement_id', 'id');
-    }
-
-    public function neglect()
-    {
-        return $this->hasMany(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
-    }
-
-    public function complaints()
-    {
-        return $this->hasMany(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
-    }
-
-    public function behavior()
-    {
-        return $this->hasMany(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
-    }
-
     public function referral()
     {
         return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
     }
 
-    public function interview()
-    {
-        return $this->hasOne(PatientGbvInterview::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewPerpetrator()
-    {
-        return $this->hasMany(PatientGbvInterviewPerpetrator::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewSexualAbuses()
-    {
-        return $this->hasMany(PatientGbvInterviewSexualAbuse::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewPhysicalAbuses()
-    {
-        return $this->hasMany(PatientGbvInterviewPhysicalAbuse::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewNeglectAbuses()
-    {
-        return $this->hasMany(PatientGbvInterviewNeglectAbuse::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewEmotionalAbuses()
-    {
-        return $this->hasMany(PatientGbvInterviewEmotionalAbuse::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewSummaries()
-    {
-        return $this->hasMany(PatientGbvInterviewSummary::class, 'patient_gbv_id', 'id');
-    }
-
-    public function interviewDevScreening()
-    {
-        return $this->hasMany(PatientGbvInterviewDevScreening::class, 'patient_gbv_id', 'id');
-    }
 }

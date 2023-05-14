@@ -22,7 +22,7 @@ class PatientGbvSocialWorkResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_gbv_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_id),
+            'patient_gbv_intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_intake_id),
             'patientGbv' => $this->whenLoaded('patientGbv'),
             'visit_date' => $this->visit_date,
             'social_worker' => $this->social_worker,

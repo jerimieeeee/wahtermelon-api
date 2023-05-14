@@ -22,7 +22,7 @@ class PatientGbvInterviewResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_gbv_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_id),
+            'patient_gbv_intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_intake_id),
             'patientGbv' => $this->whenLoaded('patientGbv'),
             'info_source_code' => $this->info_source_code,
             'incident_first_datetime' => $this->incident_first_datetime,

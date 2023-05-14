@@ -22,9 +22,6 @@ return new class extends Migration
 
             $table->dropForeign('patient_gbvs_outcome_verdict_id_foreign');
             $table->dropColumn('outcome_verdict_id');
-
-            //add new column
-            // $table->foreignUlid('patient_gbv_id')->after('facility_code')->index()->constrained();
         });
     }
 

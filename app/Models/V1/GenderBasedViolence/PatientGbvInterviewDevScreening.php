@@ -51,7 +51,7 @@ class PatientGbvInterviewDevScreening extends Model
 
     public function patientGbv()
     {
-        return $this->belongsTo(PatientGbv::class, 'patient_gbv_id', 'id');
+        return $this->belongsTo(PatientGbvIntake::class, 'intake_id', 'id');
     }
 
     public function devScreening()

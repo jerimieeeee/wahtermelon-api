@@ -4,6 +4,7 @@ namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
 use App\Models\V1\GenderBasedViolence\PatientGbv;
+use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use App\Models\V1\Libraries\LibGbvPlacementLocation;
 use App\Models\V1\Libraries\LibGbvPlacementType;
 use App\Models\V1\Patient\Patient;
@@ -26,7 +27,7 @@ class PatientGbvPlacementFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'patient_gbv_id' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
+            'patient_gbv_intake_id' => fake()->randomElement(PatientGbvIntake::pluck('id')->toArray()),
             'location_id' => fake()->randomElement(LibGbvPlacementLocation::pluck('id')->toArray()),
             'home_by_cpu_flag' => fake()->boolean(),
             'home_by_other_name' => fake()->name(),

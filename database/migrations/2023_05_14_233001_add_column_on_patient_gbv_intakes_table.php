@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignUuid('patient_id')->after('id')->index()->constrained();
             $table->foreignUuid('user_id')->after('patient_id')->index()->constrained();
             $table->foreign('facility_code')->references('code')->on('facilities');
+            $table->foreignUlid('patient_gbv_id')->after('facility_code')->index()->constrained();
 
             $table->foreign('present_living_arrangement_id')->references('id')->on('lib_gbv_living_arrangements');
             $table->foreign('sleeping_arrangement_id')->references('id')->on('lib_gbv_sleeping_arrangements');
@@ -39,6 +40,7 @@ return new class extends Migration
             $table->dropColumn('user_id');
 
             $table->dropForeign('patient_gbv_intakes_facility_code_foreign');
+            $table->dropForeign('patient_gbv_intakes_patient_gbv_id_foreign');
 
             $table->dropForeign('patient_gbv_intakes_abuse_living_arrangement_id_foreign');
             $table->dropForeign('patient_gbv_intakes_economic_status_id_foreign');

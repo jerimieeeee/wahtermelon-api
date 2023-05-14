@@ -4,6 +4,7 @@ namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
 use App\Models\V1\GenderBasedViolence\PatientGbv;
+use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use App\Models\V1\Libraries\LibGbvChildRelation;
 use App\Models\V1\Libraries\LibGbvPerpetratorLocation;
 use App\Models\V1\Libraries\LibOccupation;
@@ -30,7 +31,7 @@ class PatientGbvInterviewPerpetratorFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'patient_gbv_id' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
+            'intake_id' => fake()->randomElement(PatientGbvIntake::pluck('id')->toArray()),
             'perpetrator_unknown_flag' => fake()->boolean(),
             'gender' => substr(Str::ucfirst($gender), 0, 1),
             'perpetrator_name' => fake()->name(),
