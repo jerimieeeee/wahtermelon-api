@@ -44,11 +44,11 @@ class PatientGbvController extends Controller
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
-        $patientGbvFamilyComposition = QueryBuilder::for($query)
+        $patientGbv = QueryBuilder::for($query)
             ->defaultSort('-case_date')
             ->allowedSorts('case_date');
 
-        return PatientGbvResource::collection($patientGbvFamilyComposition->get());
+        return PatientGbvResource::collection($patientGbv->get());
     }
 
     /**

@@ -832,5 +832,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-placement', 'store');
                 Route::put('patient-gbv-social-placement/{patientGbvPlacement}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvIntakeController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-intake', 'index');
+                Route::post('patient-gbv-intake', 'store');
+                Route::put('patient-gbv-intake/{patientGbvIntake}', 'update');
+            });
     });
 });

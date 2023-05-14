@@ -19,9 +19,9 @@ class PatientGbvIntakeController extends Controller
      * @queryParam sort string Sort case_date, of the patient gbv. Example: -case_date
      * @queryParam patient_id string Patient to view.
      *
-     * @apiResourceCollection App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvResource
+     * @apiResourceCollection App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvIntakeResource
      *
-     * @apiResourceModel App\Models\V1\GenderBasedViolence\PatientGbv
+     * @apiResourceModel App\Models\V1\GenderBasedViolence\PatientGbvIntake
      */
     public function index(Request $request): ResourceCollection
     {
@@ -33,11 +33,11 @@ class PatientGbvIntakeController extends Controller
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
-        $patientGbvFamilyComposition = QueryBuilder::for($query)
+        $patientGbvIntake = QueryBuilder::for($query)
             ->defaultSort('-case_date')
             ->allowedSorts('case_date');
 
-        return PatientGbvIntakeResource::collection($patientGbvFamilyComposition->get());
+        return PatientGbvIntakeResource::collection($patientGbvIntake->get());
     }
 
     /**
@@ -45,9 +45,9 @@ class PatientGbvIntakeController extends Controller
      *
      * @apiResourceAdditional status=Success
      *
-     * @apiResource 201 App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvResource
+     * @apiResource 201 App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvIntakeResource
      *
-     * @apiResourceModel App\Models\V1\GenderBasedViolence\PatientGbv
+     * @apiResourceModel App\Models\V1\GenderBasedViolence\PatientGbvIntake
      */
     public function store(PatientGbvIntakeRequest $request): JsonResponse
     {
@@ -67,9 +67,9 @@ class PatientGbvIntakeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientGbvIntakeRequest $request, PatientGbvIntake $patientGbv)
+    public function update(PatientGbvIntakeRequest $request, PatientGbvIntake $patientGbvIntake)
     {
-        $patientGbv->update($request->validated());
+        $patientGbvIntake->update($request->validated());
 
         return response()->json(['status' => 'Update successful!'], 201);
     }
