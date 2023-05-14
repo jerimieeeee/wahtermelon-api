@@ -26,7 +26,9 @@ return new class extends Migration
     {
         Schema::table('patient_gbv_interviews', function (Blueprint $table) {
             $table->dropColumn('deferred');
+            $table->dropForeign('patient_gbv_interviews_deferral_reason_id_foreign');
             $table->dropColumn('deferral_reason_id');
+            $table->dropForeign('patient_gbv_interviews_deferral_previous_interviewer_id_foreign');
             $table->dropColumn('deferral_previous_interviewer_id');
             $table->dropColumn('deferral_interviewer_remarks');
         });

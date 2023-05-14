@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('patient_gbvs', function (Blueprint $table) {
+        /* Schema::table('patient_gbvs', function (Blueprint $table) {
             $table->dropColumn('physical_abuse_flag');
             $table->dropColumn('sexual_abuse_flag');
             $table->dropColumn('neglect_abuse_flag');
@@ -39,6 +39,6 @@ return new class extends Migration
             $table->dropColumn('others_abuse_flag');
             $table->dropColumn('others_abuse_remarks');
             $table->dropColumn('incest_case_flag');
-        });
+        }); */
     }
 };
