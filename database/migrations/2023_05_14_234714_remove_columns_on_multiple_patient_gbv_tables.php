@@ -11,16 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        /* Schema::table('patient_gbv_behaviors', function (Blueprint $table) {
-            $table->dropForeign('patient_gbv_behaviors_patient_gbv_id_foreign');
-            $table->dropColumn('patient_gbv_id');
-        }); */
-
-        /* Schema::table('patient_gbv_complaints', function (Blueprint $table) {
-            $table->dropForeign('patient_gbv_complaints_patient_gbv_id_foreign');
-            $table->dropColumn('patient_gbv_id');
-        }); */
-
         Schema::table('patient_gbv_conferences', function (Blueprint $table) {
             $table->dropForeign('patient_gbv_conferences_patient_gbv_id_foreign');
             $table->dropColumn('patient_gbv_id');
@@ -71,11 +61,6 @@ return new class extends Migration
             $table->dropColumn('patient_gbv_id');
         });
 
-        /* Schema::table('patient_gbv_neglects', function (Blueprint $table) {
-            $table->dropForeign('patient_gbv_neglects_patient_gbv_id_foreign');
-            $table->dropColumn('patient_gbv_id');
-        }); */
-
         Schema::table('patient_gbv_placements', function (Blueprint $table) {
             $table->dropForeign('patient_gbv_placements_patient_gbv_id_foreign');
             $table->dropColumn('patient_gbv_id');
@@ -97,14 +82,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        /* Schema::table('patient_gbv_behaviors', function (Blueprint $table) {
-            $table->foreignUlid('patient_gbv_id')->index()->constrained();
-        }); */
-
-        /* Schema::table('patient_gbv_complaints', function (Blueprint $table) {
-            $table->foreignUlid('patient_gbv_id')->index()->constrained();
-        }); */
-
         Schema::table('patient_gbv_conferences', function (Blueprint $table) {
             $table->foreignUlid('patient_gbv_id')->index()->constrained();
         });
@@ -144,10 +121,6 @@ return new class extends Migration
         Schema::table('patient_gbv_interview_summaries', function (Blueprint $table) {
             $table->foreignUlid('patient_gbv_id')->index()->constrained();
         });
-
-        /* Schema::table('patient_gbv_neglects', function (Blueprint $table) {
-            $table->foreignUlid('patient_gbv_id')->index()->constrained();
-        }); */
 
         Schema::table('patient_gbv_placements', function (Blueprint $table) {
             $table->foreignUlid('patient_gbv_id')->index()->constrained();
