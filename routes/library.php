@@ -422,7 +422,7 @@ Route::prefix('v1/libraries')->group(function () {
     //GBV Psych session participant
     Route::get('gbv-psych-participant', [\App\Http\Controllers\API\V1\Libraries\LibGbvPsychParticipantController::class, 'index'])->name('gbv-psych-participant.index');
 
-    //GBV Psych session participant
+    //GBV developmental screening
     Route::get('gbv-developmental-screening', [\App\Http\Controllers\API\V1\Libraries\LibGbvDevelopmentalScreeningController::class, 'index'])->name('gbv-developmental-screening.index');
 
     //GBV mental age
