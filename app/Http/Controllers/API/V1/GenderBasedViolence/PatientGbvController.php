@@ -9,6 +9,7 @@ use App\Models\V1\GenderBasedViolence\PatientGbv;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -62,9 +63,19 @@ class PatientGbvController extends Controller
      */
     public function store(PatientGbvRequest $request): JsonResponse
     {
-        $data = PatientGbv::create($request->validated());
+        $data = DB::transaction(function () use ($request) {
+            $data = PatientGbv::create($request->validated());
 
-        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
+            //            $data->gbvComplaint()->create($request->safe()->only(['patient_id' => $request->patient_id, 'complaint_id']));
+
+            $data->gbvBehavior()->create($request->safe()->only('behavioral_id'));
+
+            $data->gbvNeglect()->create($request->safe()->only('neglect_id'));
+
+            $data->gbvReferral()->create($request->safe()->only('referral_facility_code', 'referral_date', 'referral_reason', 'service_remarks', 'referral_remarks'));
+        });
+
+        return response()->json(['data' => $data], 201);
     }
 
     /**

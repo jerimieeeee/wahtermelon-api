@@ -28,7 +28,7 @@ class PatientGbvComplaintRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_id' => 'required|exists:patient_gbvs,id',
             'complaint_id' => 'nullable|exists:lib_complaints,complaint_id',
-            'complaint_specific' => 'nullable',
+            'complaint_remarks' => 'nullable',
         ];
     }
 

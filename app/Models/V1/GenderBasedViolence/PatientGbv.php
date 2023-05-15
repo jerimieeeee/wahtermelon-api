@@ -28,7 +28,7 @@ class PatientGbv extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'case_date' => 'date:Y-m-d',
+        'gbv_date' => 'date:Y-m-d',
         'outcome_date' => 'date:Y-m-d',
     ];
 
@@ -72,8 +72,23 @@ class PatientGbv extends Model
         return $this->belongsTo(LibGbvOutcomeVerdict::class, 'outcome_verdict_id', 'id');
     }
 
-    public function referral()
+    public function gbvComplaint()
     {
-        return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+        return $this->hasOne(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
+    }
+
+    public function gbvBehavior()
+    {
+        return $this->hasOne(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
+    }
+
+    public function gbvNeglect()
+    {
+        return $this->hasOne(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
+    }
+
+    public function gbvReferral()
+    {
+        return $this->hasOne(PatientGbvReferral::class, 'patient_gbv_id', 'id');
     }
 }

@@ -28,10 +28,21 @@ class PatientGbvRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'outcome_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'gbv_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'gbv_complaint_remarks' => 'nullable',
+            'gbv_behavioral_remarks' => 'nullable',
+            'gbv_neglect_remarks' => 'nullable',
             'outcome_reason_id' => 'nullable|exists:lib_gbv_outcome_reasons,id',
             'outcome_result_id' => 'nullable|exists:lib_gbv_outcome_results,id',
             'outcome_verdict_id' => 'nullable|exists:lib_gbv_outcome_verdicts,id',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'patient_gbv_id' => $this->id,
+        ]);
     }
 
     public function bodyParameters()
