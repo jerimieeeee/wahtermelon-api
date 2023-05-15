@@ -3,7 +3,6 @@
 namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\GenderBasedViolence\PatientGbv;
 use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use App\Models\V1\Libraries\LibGbvPlacementLocation;
 use App\Models\V1\Libraries\LibGbvPlacementType;

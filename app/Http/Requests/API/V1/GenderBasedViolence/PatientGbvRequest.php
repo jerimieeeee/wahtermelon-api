@@ -5,8 +5,6 @@ namespace App\Http\Requests\API\V1\GenderBasedViolence;
 use App\Models\V1\Libraries\LibGbvOutcomeReason;
 use App\Models\V1\Libraries\LibGbvOutcomeResult;
 use App\Models\V1\Libraries\LibGbvOutcomeVerdict;
-use App\Models\V1\Libraries\LibGbvPrimaryComplaints;
-use App\Models\V1\Libraries\LibGbvService;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Foundation\Http\FormRequest;
 

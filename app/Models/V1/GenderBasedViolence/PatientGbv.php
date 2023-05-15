@@ -76,5 +76,4 @@ class PatientGbv extends Model
     {
         return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
     }
-
 }

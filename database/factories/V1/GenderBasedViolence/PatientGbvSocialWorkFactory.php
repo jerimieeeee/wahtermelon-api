@@ -3,7 +3,6 @@
 namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\GenderBasedViolence\PatientGbv;
 use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
