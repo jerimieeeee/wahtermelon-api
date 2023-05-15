@@ -424,4 +424,14 @@ Route::prefix('v1/libraries')->group(function () {
 
     //GBV Psych session participant
     Route::get('gbv-developmental-screening', [\App\Http\Controllers\API\V1\Libraries\LibGbvDevelopmentalScreeningController::class, 'index'])->name('gbv-developmental-screening.index');
+
+    //GBV mental age
+    Route::get('gbv-mental-age', [\App\Http\Controllers\API\V1\Libraries\LibGbvMentalAgeController::class, 'index'])->name('gbv-mental-age.index');
+
+    //GBV deferral reason
+    Route::get('gbv-deferral-reason', [\App\Http\Controllers\API\V1\Libraries\LibGbvDeferralReasonController::class, 'index'])->name('gbv-deferral-reason.index');
+
+    //GBV previous interviewer
+    Route::get('gbv-previous-interviewer', [\App\Http\Controllers\API\V1\Libraries\LibGbvPreviousInterviewerController::class, 'index'])->name('gbv-previous-interviewer.index');
+
 });
