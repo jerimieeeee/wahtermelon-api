@@ -4,6 +4,7 @@ namespace App\Models\V1\Barangay;
 
 use App\Models\User;
 use App\Models\V1\PSGC\Barangay;
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SettingsCatchmentBarangay extends Model
 {
-    use HasFactory, HasUlids, FilterByUser;
+    use HasFactory, HasUlids, FilterByUser, FilterByFacility;
 
     protected $guarded = [
         'id',
@@ -22,6 +23,10 @@ class SettingsCatchmentBarangay extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    protected $casts = [
+        'zod' => 'boolean',
+    ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
