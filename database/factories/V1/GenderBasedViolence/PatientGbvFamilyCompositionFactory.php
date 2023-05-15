@@ -31,7 +31,7 @@ class PatientGbvFamilyCompositionFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'patient_gbv_intake_id' => fake()->randomElement(PatientGbvIntake::pluck('id')->toArray()),
+            'patient_gbv_id' => fake()->randomElement(PatientGbv::pluck('id')->toArray()),
             'name' => fake()->name(),
             'child_relation_id' => fake()->randomElement(LibGbvChildRelation::pluck('id')->toArray()),
             'living_with_child_flag' => fake()->boolean(),

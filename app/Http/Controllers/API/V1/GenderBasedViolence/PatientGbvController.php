@@ -45,8 +45,8 @@ class PatientGbvController extends Controller
                 return $query->wherePatientId($request->patient_id);
             });
         $patientGbv = QueryBuilder::for($query)
-            ->defaultSort('-case_date')
-            ->allowedSorts('case_date');
+            ->defaultSort('-gbv_date')
+            ->allowedSorts('gbv_date');
 
         return PatientGbvResource::collection($patientGbv->get());
     }
