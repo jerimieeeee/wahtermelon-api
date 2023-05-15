@@ -34,6 +34,8 @@ class LibDesignationSeeder extends Seeder
             ['code' => 'RADTECH', 'desc' => 'Radiologist'],
             ['code' => 'NUT', 'desc' => 'Nutritionists/Dietitians'],
             ['code' => 'RSE', 'desc' => 'Sanitary Engineers'],
+            ['code' => 'WCPD', 'desc' => 'Women and Children\'s Protection Desk Officer'],
+            ['code' => 'MSWDO', 'desc' => 'Municipal Social Welfare and Development Officer'],
         ], ['code']);
     }
 }
