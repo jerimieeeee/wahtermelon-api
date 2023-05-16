@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvRequest;
 use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvResource;
 use App\Models\V1\GenderBasedViolence\PatientGbv;
+use App\Models\V1\GenderBasedViolence\PatientGbvBehavior;
+use App\Models\V1\GenderBasedViolence\PatientGbvComplaint;
+use App\Models\V1\GenderBasedViolence\PatientGbvNeglect;
+use App\Models\V1\GenderBasedViolence\PatientGbvReferral;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -63,23 +67,32 @@ class PatientGbvController extends Controller
      */
     public function store(PatientGbvRequest $request): JsonResponse
     {
-        $data = DB::transaction(function () use ($request) {
+        return DB::transaction(function () use ($request) {
+            $data = PatientGbv::updateOrCreate(['id' => $request->id], $request->validated());
+            $complaint = $request->safe()->complaint;
+            $behavior = $request->safe()->behavior;
+            $neglect = $request->safe()->neglect;
 
-            $data = PatientGbv::create($request->validated());
+            foreach ($complaint as $value) {
+                PatientGbvComplaint::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id, 'complaint_id' => $value['complaint_id']],
+                    $value);
+            }
 
-            $data->gbvComplaint()->create($request->validated());
-            //array
-            $data->gbvBehavior()->create($request->validated());
-            //array
-            $data->gbvNeglect()->create($request->validated());
-            //array
+            foreach ($behavior as $value) {
+                PatientGbvBehavior::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id, 'behavioral_id' => $value['behavioral_id']],
+                    $value);
+            }
 
+            foreach ($neglect as $value) {
+                PatientGbvNeglect::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id, 'neglect_id' => $value['neglect_id']],
+                    $value);
+            }
 
-            $data->gbvReferral()->create($request->validated());
+            PatientGbvReferral::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id], $request->validated());
 
+            return response()->json([
+                'message' => 'Successfully Saved!'], 201);
         });
-
-        return response()->json(['data' => $data], 201);
     }
 
     /**
