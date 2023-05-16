@@ -64,15 +64,17 @@ class PatientGbvController extends Controller
     public function store(PatientGbvRequest $request): JsonResponse
     {
         $data = DB::transaction(function () use ($request) {
+
             $data = PatientGbv::create($request->validated());
 
-            //            $data->gbvComplaint()->create($request->safe()->only(['patient_id' => $request->patient_id, 'complaint_id']));
+            $data->gbvComplaint()->create($request->validated());
 
-            $data->gbvBehavior()->create($request->safe()->only('behavioral_id'));
+            $data->gbvBehavior()->create($request->validated());
 
-            $data->gbvNeglect()->create($request->safe()->only('neglect_id'));
+            $data->gbvNeglect()->create($request->validated());
 
-            $data->gbvReferral()->create($request->safe()->only('referral_facility_code', 'referral_date', 'referral_reason', 'service_remarks', 'referral_remarks'));
+            $data->gbvReferral()->create($request->validated());
+
         });
 
         return response()->json(['data' => $data], 201);
