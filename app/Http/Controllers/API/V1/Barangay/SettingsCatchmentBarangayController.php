@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API\V1\Barangay;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Barangay\SettingsCatchmentBarangayRequest;
+use App\Http\Resources\API\V1\Barangay\SettingsCatchmentBarangayResource;
 use App\Models\V1\Barangay\SettingsCatchmentBarangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class SettingsCatchmentBarangayController extends Controller
 {
@@ -15,7 +17,10 @@ class SettingsCatchmentBarangayController extends Controller
      */
     public function index()
     {
-        //
+        $barangay = QueryBuilder::for(SettingsCatchmentBarangay::class)
+                    ->allowedFilters(['year']);
+
+        return SettingsCatchmentBarangayResource::collection($barangay->get());
     }
 
     /**
