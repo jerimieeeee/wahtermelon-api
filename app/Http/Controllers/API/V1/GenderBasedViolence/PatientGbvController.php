@@ -68,10 +68,12 @@ class PatientGbvController extends Controller
             $data = PatientGbv::create($request->validated());
 
             $data->gbvComplaint()->create($request->validated());
-
+            //array
             $data->gbvBehavior()->create($request->validated());
-
+            //array
             $data->gbvNeglect()->create($request->validated());
+            //array
+
 
             $data->gbvReferral()->create($request->validated());
 

@@ -4,6 +4,7 @@ namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
 use App\Models\V1\Libraries\LibGbvEmotionalAbuse;
+use App\Models\V1\Libraries\LibGbvInfoSource;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -57,5 +58,10 @@ class PatientGbvInterviewEmotionalAbuse extends Model
     public function emotionalAbuse()
     {
         return $this->belongsTo(LibGbvEmotionalAbuse::class, 'emotional_id', 'id');
+    }
+
+    public function infoSource()
+    {
+        return $this->belongsTo(LibGbvInfoSource::class, 'info_source_id', 'id');
     }
 }

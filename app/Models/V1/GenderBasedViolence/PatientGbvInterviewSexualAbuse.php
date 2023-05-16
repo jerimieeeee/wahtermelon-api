@@ -58,4 +58,9 @@ class PatientGbvInterviewSexualAbuse extends Model
     {
         return $this->belongsTo(LibGbvSexualAbuse::class, 'sexual_abused_id', 'id');
     }
+
+    public function infoSource()
+    {
+        return $this->belongsTo(LibGbvInfoSource::class, 'info_source_id', 'id');
+    }
 }
