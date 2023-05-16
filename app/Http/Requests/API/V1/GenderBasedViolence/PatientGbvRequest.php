@@ -26,6 +26,7 @@ class PatientGbvRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'nullable',
             'patient_id' => 'required|exists:patients,id',
             'outcome_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'gbv_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
@@ -35,9 +36,12 @@ class PatientGbvRequest extends FormRequest
             'outcome_reason_id' => 'nullable|exists:lib_gbv_outcome_reasons,id',
             'outcome_result_id' => 'nullable|exists:lib_gbv_outcome_results,id',
             'outcome_verdict_id' => 'nullable|exists:lib_gbv_outcome_verdicts,id',
-            'complaint_id' => 'nullable|exists:lib_complaints,complaint_id',
-            'behavioral_id' => 'nullable|exists:lib_gbv_behaviorals,id',
-            'neglect_id' => 'nullable|exists:lib_gbv_neglects,id',
+            'complaint' => 'nullable|array',
+            'complaint.*.complaint_id' => 'nullable|exists:lib_complaints,complaint_id',
+            'behavior' => 'nullable|array',
+            'behavior.*.behavioral_id' => 'nullable|exists:lib_gbv_behaviorals,id',
+            'neglect' => 'nullable|array',
+            'neglect.*.neglect_id' => 'nullable|exists:lib_gbv_neglects,id',
             'referral_facility_code' => 'nullable|exists:facilities,code',
             'referral_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'referral_reason' => 'nullable',
