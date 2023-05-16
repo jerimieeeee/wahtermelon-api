@@ -42,6 +42,7 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
+        ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral'])
             /* ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
                 'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
                 'interviewNeglectAbuses', 'interviewEmotionalAbuses',
