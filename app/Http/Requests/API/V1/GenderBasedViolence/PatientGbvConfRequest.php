@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\GenderBasedViolence;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class patientGbvConfMitigatingFactorRequest extends FormRequest
+class PatientGbvConfRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class patientGbvConfMitigatingFactorRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'conference_id' => 'required|exists:patient_gbv_conferences,id',
-            'factor_code' => 'nullable|exists:lib_gbv_conference_mitigating_factors,id',
-            'mitigating_factor_remarks' => 'nullable',
+            'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
+            'conference_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'notes' => 'nullable',
         ];
     }
 }

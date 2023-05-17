@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\GenderBasedViolence;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatientGbvConferenceConcernRequest extends FormRequest
+class PatientGbvConfMitigatingFactorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class PatientGbvConferenceConcernRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'conference_id' => 'required|exists:patient_gbv_conferences,id',
-            'concern_code' => 'nullable|exists:lib_gbv_conference_concerns,id',
-            'concern_remarks' => 'nullable',
+            'factor_code' => 'nullable|exists:lib_gbv_conference_mitigating_factors,id',
+            'mitigating_factor_remarks' => 'nullable',
         ];
     }
 }

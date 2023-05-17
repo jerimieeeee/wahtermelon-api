@@ -3,7 +3,6 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibGbvConferenceRecommendation;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -12,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class patientGbvConRecommendation extends Model
+class PatientGbvConf extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
@@ -30,7 +29,7 @@ class patientGbvConRecommendation extends Model
     }
 
     protected $casts = [
-        'recommendation_date' => 'date:Y-m-d',
+        'conference_date' => 'date:Y-m-d',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)
@@ -53,13 +52,8 @@ class patientGbvConRecommendation extends Model
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-    public function patientGbvConference()
+    public function patientGbv()
     {
-        return $this->belongsTo(PatientGbvConference::class, 'patient_gbv_conference_id', 'id');
-    }
-
-    public function recommendation()
-    {
-        return $this->belongsTo(LibGbvConferenceRecommendation::class, 'recommend_code', 'id');
+        return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
     }
 }

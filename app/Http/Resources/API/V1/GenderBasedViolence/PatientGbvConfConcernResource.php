@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\GenderBasedViolence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class patientGbvEmotionalAbuseResource extends JsonResource
+class PatientGbvConfConcernResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,13 +22,11 @@ class patientGbvEmotionalAbuseResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->intake_id),
-            'info_source_id' => $this->when(! $this->relationLoaded('infoSource'), $this->info_source_id),
-            'info_source' => $this->whenLoaded('infoSource'),
-            'patientGbv' => $this->whenLoaded('patientGbv'),
-            'emotional_id' => $this->when(! $this->relationLoaded('emotionalAbuse'), $this->emotional_id),
-            'emotionalAbuse' => $this->whenLoaded('emotionalAbuse'),
-            'emotional_abused_remarks' => $this->emotional_abused_remarks,
+            'conference_id' => $this->when(! $this->relationLoaded('patientGbvConf'), $this->conference_id),
+            'patientGbvConf' => $this->whenLoaded('patientGbvConf'),
+            'concern_code' => $this->when(! $this->relationLoaded('concern'), $this->concern_code),
+            'concern' => $this->whenLoaded('invite'),
+            'concern_remarks' => $this->concern_remarks,
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),

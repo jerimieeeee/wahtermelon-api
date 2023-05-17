@@ -3,6 +3,7 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibGbvConferenceInvitee;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientGbvConference extends Model
+class PatientGbvConfInvite extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
@@ -52,8 +53,13 @@ class PatientGbvConference extends Model
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-    public function patientGbv()
+    public function patientGbvConf()
     {
-        return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
+        return $this->belongsTo(PatientGbvConf::class, 'patient_gbv_conference_id', 'id');
+    }
+
+    public function invite()
+    {
+        return $this->belongsTo(LibGbvConferenceInvitee::class, 'invite_code', 'id');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibGbvConferenceConcern;
+use App\Models\V1\Libraries\LibGbvConferenceMitigatingFactor;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientGbvConferenceConcern extends Model
+class PatientGbvConfMitigatingFactor extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
@@ -28,10 +28,6 @@ class PatientGbvConferenceConcern extends Model
     {
         return 'id';
     }
-
-    protected $casts = [
-        'conference_date' => 'date:Y-m-d',
-    ];
 
     protected function serializeDate(\DateTimeInterface $date)
     {
@@ -53,13 +49,13 @@ class PatientGbvConferenceConcern extends Model
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-    public function patientGbvConference()
+    public function patientGbvConf()
     {
-        return $this->belongsTo(PatientGbvConference::class, 'patient_gbv_conference_id', 'id');
+        return $this->belongsTo(PatientGbvConf::class, 'patient_gbv_conference_id', 'id');
     }
 
-    public function concern()
+    public function mitigatingFactor()
     {
-        return $this->belongsTo(LibGbvConferenceConcern::class, 'invite_code', 'id');
+        return $this->belongsTo(LibGbvConferenceMitigatingFactor::class, 'factor_code', 'id');
     }
 }

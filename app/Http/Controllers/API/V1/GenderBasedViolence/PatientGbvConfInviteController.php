@@ -3,36 +3,36 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\patientGbvEmotionalAbuseRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvInterviewNeglectAbuseResource;
-use App\Models\V1\GenderBasedViolence\patientGbvEmotionalAbuse;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvConfInviteRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvConfInviteResource;
+use App\Models\V1\GenderBasedViolence\PatientGbvConfInvite;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class patientGbvEmotionalAbuseController extends Controller
+class PatientGbvConfInviteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = patientGbvEmotionalAbuse::query()
-            ->with(['patientGbv', 'neglectAbuse'])
+        $query = PatientGbvConfInvite::query()
+            ->with(['patientGbvConf', 'invite'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
-        $patientGbvEmotionalAbuse = QueryBuilder::for($query);
+        $patientGbvConfInvite = QueryBuilder::for($query);
 
-        return PatientGbvInterviewNeglectAbuseResource::collection($patientGbvEmotionalAbuse->get());
+        return PatientGbvConfInviteResource::collection($patientGbvConfInvite->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(patientGbvEmotionalAbuseRequest $request)
+    public function store(PatientGbvConfInviteRequest $request)
     {
-        $data = patientGbvEmotionalAbuse::create($request->validated());
+        $data = PatientGbvConfInvite::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
@@ -48,9 +48,9 @@ class patientGbvEmotionalAbuseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(patientGbvEmotionalAbuseRequest $request, patientGbvEmotionalAbuse $patientGbvEmotionalAbuse)
+    public function update(PatientGbvConfInviteRequest $request, PatientGbvConfInvite $patientGbvConfInvite)
     {
-        $patientGbvEmotionalAbuse->update($request->safe()->only(['emotional_id', 'emotional_abused_remarks']));
+        $patientGbvConfInvite->update($request->safe()->only(['invite_code', 'invite_remarks']));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\GenderBasedViolence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class patientGbvConfMitigatingFactorResource extends JsonResource
+class PatientGbvConfMitigatingFactorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,8 +22,8 @@ class patientGbvConfMitigatingFactorResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'conference_id' => $this->when(! $this->relationLoaded('patientGbvConference'), $this->conference_id),
-            'patientGbvConference' => $this->whenLoaded('patientGbvConference'),
+            'conference_id' => $this->when(! $this->relationLoaded('patientGbvConf'), $this->conference_id),
+            'patientGbvConf' => $this->whenLoaded('patientGbvConf'),
             'factor_code' => $this->when(! $this->relationLoaded('mitigatingFactor'), $this->factor_code),
             'mitigatingFactor' => $this->whenLoaded('mitigatingFactor'),
             'concern_remarks' => $this->concern_remarks,

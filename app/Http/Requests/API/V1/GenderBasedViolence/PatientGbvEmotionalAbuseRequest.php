@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\GenderBasedViolence;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class patientGbvEmotionalAbuseRequest extends FormRequest
+class PatientGbvEmotionalAbuseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

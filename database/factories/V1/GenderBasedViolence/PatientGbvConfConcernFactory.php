@@ -3,16 +3,16 @@
 namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
-use App\Models\V1\GenderBasedViolence\PatientGbvConference;
+use App\Models\V1\GenderBasedViolence\PatientGbvConf;
 use App\Models\V1\Libraries\LibGbvConferenceConcern;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\GenderBasedViolence\PatientGbvConferenceConcern>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\GenderBasedViolence\PatientGbvConfConcern>
  */
-class PatientGbvConferenceConcernFactory extends Factory
+class PatientGbvConfConcernFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -25,7 +25,7 @@ class PatientGbvConferenceConcernFactory extends Factory
             'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
-            'conference_id' => fake()->randomElement(PatientGbvConference::pluck('id')->toArray()),
+            'conference_id' => fake()->randomElement(PatientGbvConf::pluck('id')->toArray()),
             'concern_code' => fake()->randomElement(LibGbvConferenceConcern::pluck('id')->toArray()),
             'concern_remarks' => fake()->sentence(),
         ];

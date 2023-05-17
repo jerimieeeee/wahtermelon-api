@@ -3,36 +3,36 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvConferenceInviteRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvConferenceInviteResource;
-use App\Models\V1\GenderBasedViolence\PatientGbvConferenceInvite;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvConfRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvConfResource;
+use App\Models\V1\GenderBasedViolence\PatientGbvConf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PatientGbvConferenceInviteController extends Controller
+class PatientGbvConfController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbvConferenceInvite::query()
-            ->with(['patientGbvConference', 'invite'])
+        $query = PatientGbvConf::query()
+            ->with('patientGbv')
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
-        $patientGbvConferenceInvite = QueryBuilder::for($query);
+        $patientGbvConf = QueryBuilder::for($query);
 
-        return PatientGbvConferenceInviteResource::collection($patientGbvConferenceInvite->get());
+        return PatientGbvConfResource::collection($patientGbvConf->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientGbvConferenceInviteRequest $request)
+    public function store(PatientGbvConfRequest $request)
     {
-        $data = PatientGbvConferenceInvite::create($request->validated());
+        $data = PatientGbvConf::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
@@ -48,9 +48,9 @@ class PatientGbvConferenceInviteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientGbvConferenceInviteRequest $request, PatientGbvConferenceInvite $patientGbvConferenceInvite)
+    public function update(PatientGbvConfRequest $request, PatientGbvConf $patientGbvConf)
     {
-        $patientGbvConferenceInvite->update($request->safe()->only(['invite_code', 'invite_remarks']));
+        $patientGbvConf->update($request->safe()->only(['conference_date', 'notes']));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }
