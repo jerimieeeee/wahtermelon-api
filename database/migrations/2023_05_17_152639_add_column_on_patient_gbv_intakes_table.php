@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patient_gbv_intakes', function (Blueprint $table) {
+            $table->boolean('same_address_flag')->after('economic_status_id')->nullable();
             $table->boolean('vaw_physical_flag')->after('present_living_arrangement_remarks')->nullable();
             $table->boolean('vaw_sexual_flag')->after('vaw_physical_flag')->nullable();
             $table->boolean('vaw_psychological_flag')->after('vaw_sexual_flag')->nullable();
@@ -40,6 +41,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patient_gbv_intakes', function (Blueprint $table) {
+            $table->dropColumn('same_address_flag');
             $table->dropColumn('vaw_physical_flag');
             $table->dropColumn('vaw_sexual_flag');
             $table->dropColumn('vaw_psychological_flag');

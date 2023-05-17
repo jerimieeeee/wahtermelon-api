@@ -45,6 +45,7 @@ class PatientGbvIntakeResource extends JsonResource
             'number_of_individual_members' => $this->number_of_individual_members,
             'number_of_family' => $this->number_of_family,
             'economic' => $this->whenLoaded('economic'),
+            'same_address_flag' => $this->same_address_flag,
             'barangay_code' => $this->when(! $this->relationLoaded('barangay'), $this->barangay_code),
             'barangay' => $this->whenLoaded('barangay'),
             'address' => $this->address,
