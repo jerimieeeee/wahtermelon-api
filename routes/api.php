@@ -372,6 +372,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('philhealth-credentials', 'store');
                 //Route::put('dispensing/{dispensing}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Barangay\SettingsCatchmentBarangayController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('catchment-barangay', 'index');
+                Route::post('catchment-barangay', 'store');
+            });
     });
 
     //Patient Medical History APIs
@@ -840,4 +846,5 @@ Route::prefix('v1')->group(function () {
                 Route::put('patient-gbv-intake/{patientGbvIntake}', 'update');
             });
     });
+
 });

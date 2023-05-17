@@ -140,8 +140,8 @@ class SoapService
             $newArray[$key]['member_suffix_name'] = $value->pPrimaryExtName;
             $newArray[$key]['member_birthdate'] = $value->pPrimaryDateOfBirth;
             $newArray[$key]['member_gender'] = $value->pPrimarySex;
-            $newArray[$key]['mobile_number'] = $value->pMobileNumber;
-            $newArray[$key]['landline_number'] = $value->pLandlineNumber;
+            $newArray[$key]['mobile_number'] = Str::remove(' ', $value->pMobileNumber);
+            $newArray[$key]['landline_number'] = Str::remove(' ', $value->pLandlineNumber);
             $newArray[$key]['member_category'] = $value->pMemberNewCat;
             $newArray[$key]['member_category_desc'] = $value->pMemberNewCatDesc;
             $newArray[$key]['package_type_id'] = $value->pPackageType;
@@ -175,7 +175,21 @@ class SoapService
                     "pEffYear" => "effectivity_year"
                 ]);*/
         }
-        KonsultaRegistrationList::upsert($newArray, ['custom_id']);
+        $chunkSize = 200; // Define the desired chunk size
+        $chunks = collect($newArray)->chunk($chunkSize);
+        $model = new KonsultaRegistrationList(); // Replace "YourModel" with your actual model name
+
+        $chunks->each(function ($chunk) use ($model) {
+            $values = [];
+            //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
+
+            foreach ($chunk as $record) {
+                $values[] = $record;
+            }
+
+            $model->upsert($values, ['custom_id']);
+        });
+        //KonsultaRegistrationList::upsert($newArray, ['custom_id']);
     }
 
     public function httpClient()
