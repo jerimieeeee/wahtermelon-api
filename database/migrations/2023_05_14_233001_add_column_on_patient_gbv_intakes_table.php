@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('patient_gbv_intakes', function (Blueprint $table) {
             $table->foreignUuid('patient_id')->after('id')->index()->constrained();
             $table->foreignUuid('user_id')->after('patient_id')->index()->constrained();
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->foreign('primary_complaint_id')->references('id')->on('lib_gbv_primary_complaints');
             $table->foreign('service_id')->references('id')->on('lib_gbv_services');
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
