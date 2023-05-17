@@ -3,36 +3,36 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvConferenceMitigatingFactorRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvConferenceMitigatingFactorResource;
-use App\Models\V1\GenderBasedViolence\PatientGbvConferenceMitigatingFactor;
+use App\Http\Requests\API\V1\GenderBasedViolence\patientGbvConfMitigatingFactorRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\patientGbvConfMitigatingFactorResource;
+use App\Models\V1\GenderBasedViolence\patientGbvConfMitigatingFactor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PatientGbvConferenceMitigatingFactorController extends Controller
+class patientGbvConfMitigatingFactorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbvConferenceMitigatingFactor::query()
+        $query = patientGbvConfMitigatingFactor::query()
             ->with(['patientGbvConference', 'mitigatingFactor'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
-        $patientGbvConferenceMitigatingFactor = QueryBuilder::for($query);
+        $patientGbvConfMitigatingFactor = QueryBuilder::for($query);
 
-        return PatientGbvConferenceMitigatingFactorResource::collection($patientGbvConferenceMitigatingFactor->get());
+        return patientGbvConfMitigatingFactorResource::collection($patientGbvConfMitigatingFactor->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientGbvConferenceMitigatingFactorRequest $request)
+    public function store(patientGbvConfMitigatingFactorRequest $request)
     {
-        $data = PatientGbvConferenceMitigatingFactor::create($request->validated());
+        $data = patientGbvConfMitigatingFactor::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
@@ -48,9 +48,9 @@ class PatientGbvConferenceMitigatingFactorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientGbvConferenceMitigatingFactorRequest $request, PatientGbvConferenceMitigatingFactor $patientGbvConferenceMitigatingFactor)
+    public function update(patientGbvConfMitigatingFactorRequest $request, patientGbvConfMitigatingFactor $patientGbvConfMitigatingFactor)
     {
-        $patientGbvConferenceMitigatingFactor->update($request->safe()->only(['factor_code', 'mitigating_factor_remarks']));
+        $patientGbvConfMitigatingFactor->update($request->safe()->only(['factor_code', 'mitigating_factor_remarks']));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

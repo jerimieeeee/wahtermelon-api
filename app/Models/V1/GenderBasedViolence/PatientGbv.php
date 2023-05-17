@@ -91,4 +91,9 @@ class PatientGbv extends Model
     {
         return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
     }
+
+    public function gbvIntake()
+    {
+        return $this->hasOne(PatientGbvIntake::class, 'patient_gbv_id', 'id');
+    }
 }

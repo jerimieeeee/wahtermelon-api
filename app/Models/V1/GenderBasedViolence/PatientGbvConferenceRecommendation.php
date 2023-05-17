@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientGbvConferenceRecommendation extends Model
+class patientGbvConRecommendation extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 

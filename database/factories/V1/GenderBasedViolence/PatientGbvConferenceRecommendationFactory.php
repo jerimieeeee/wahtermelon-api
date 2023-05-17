@@ -10,9 +10,9 @@ use App\Models\V1\PSGC\Facility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\GenderBasedViolence\PatientGbvConferenceRecommendation>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\GenderBasedViolence\patientGbvConRecommendation>
  */
-class PatientGbvConferenceRecommendationFactory extends Factory
+class patientGbvConRecommendationFactory extends Factory
 {
     /**
      * Define the model's default state.

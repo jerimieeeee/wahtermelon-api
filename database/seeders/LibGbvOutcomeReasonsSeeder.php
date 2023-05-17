@@ -13,14 +13,15 @@ class LibGbvOutcomeReasonsSeeder extends Seeder
     public function run(): void
     {
         LibGbvOutcomeReason::upsert([
-            ['id' => 1, 'desc' => 'Client refuses services/requests closure', 'sequence' => 1],
-            ['id' => 2, 'desc' => 'Need for service not established', 'sequence' => 2],
-            ['id' => 3, 'desc' => 'Completion of service', 'sequence' => 3],
-            ['id' => 4, 'desc' => 'Unable to locate client', 'sequence' => 4],
-            ['id' => 5, 'desc' => 'Patient is dead', 'sequence' => 5],
-            ['id' => 6, 'desc' => 'Child endorsed to shelter', 'sequence' => 6],
-            ['id' => 7, 'desc' => 'Endorsed to DSWD or LGU', 'sequence' => 7],
-            ['id' => 8, 'desc' => 'Other', 'sequence' => 8],
+            ['id' => 1, 'desc' => 'Not a GBV Case', 'sequence' => 1],
+            ['id' => 2, 'desc' => 'Client refuses services/requests closure', 'sequence' => 2],
+            ['id' => 3, 'desc' => 'Need for service not established', 'sequence' => 3],
+            ['id' => 4, 'desc' => 'Completion of service', 'sequence' => 4],
+            ['id' => 5, 'desc' => 'Unable to locate client', 'sequence' => 5],
+            ['id' => 6, 'desc' => 'Patient is dead', 'sequence' => 6],
+            ['id' => 7, 'desc' => 'Child endorsed to shelter', 'sequence' => 7],
+            ['id' => 8, 'desc' => 'Endorsed to DSWD or LGU', 'sequence' => 8],
+            ['id' => 9, 'desc' => 'Other', 'sequence' => 9],
         ], ['id']);
     }
 }

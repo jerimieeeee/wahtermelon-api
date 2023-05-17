@@ -3,36 +3,36 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvConferenceRecommendationRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvConferenceRecommendationResource;
-use App\Models\V1\GenderBasedViolence\PatientGbvConferenceRecommendation;
+use App\Http\Requests\API\V1\GenderBasedViolence\patientGbvConRecommendationRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\patientGbvConRecommendationResource;
+use App\Models\V1\GenderBasedViolence\patientGbvConRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PatientGbvConferenceRecommendationController extends Controller
+class patientGbvConRecommendationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbvConferenceRecommendation::query()
+        $query = patientGbvConRecommendation::query()
             ->with(['patientGbvConference', 'recommendation'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
-        $patientGbvConferenceRecommendation = QueryBuilder::for($query);
+        $patientGbvConRecommendation = QueryBuilder::for($query);
 
-        return PatientGbvConferenceRecommendationResource::collection($patientGbvConferenceRecommendation->get());
+        return patientGbvConRecommendationResource::collection($patientGbvConRecommendation->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientGbvConferenceRecommendationRequest $request)
+    public function store(patientGbvConRecommendationRequest $request)
     {
-        $data = PatientGbvConferenceRecommendation::create($request->validated());
+        $data = patientGbvConRecommendation::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
@@ -48,9 +48,9 @@ class PatientGbvConferenceRecommendationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientGbvConferenceRecommendationRequest $request, PatientGbvConferenceRecommendation $patientGbvConferenceRecommendation)
+    public function update(patientGbvConRecommendationRequest $request, patientGbvConRecommendation $patientGbvConRecommendation)
     {
-        $patientGbvConferenceRecommendation->update($request->safe()->only(['recommend_code', 'recommendation_remarks', 'recommendation_date']));
+        $patientGbvConRecommendation->update($request->safe()->only(['recommend_code', 'recommendation_remarks', 'recommendation_date']));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

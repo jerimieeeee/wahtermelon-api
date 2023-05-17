@@ -755,12 +755,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-neglect-abuse', 'store');
                 Route::put('patient-gbv-neglect-abuse/{patientGbvInterviewNeglectAbuse}', 'update');
             });
-        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvInterviewEmotionalAbuseController::class)
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\patientGbvEmotionalAbuseController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-emotional-abuse', 'index');
                 Route::post('patient-gbv-emotional-abuse', 'store');
-                Route::put('patient-gbv-emotional-abuse/{patientGbvInterviewEmotionalAbuse}', 'update');
+                Route::put('patient-gbv-emotional-abuse/{patientGbvEmotionalAbuse}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvInterviewSummaryController::class)
             ->middleware(('auth:api'))
@@ -797,19 +797,19 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-conference-concern', 'store');
                 Route::put('patient-gbv-conference-concern/{patientGbvConferenceConcern}', 'update');
             });
-        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvConferenceMitigatingFactorController::class)
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\patientGbvConfMitigatingFactorController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-conference-mitigating-factor', 'index');
                 Route::post('patient-gbv-conference-mitigating-factor', 'store');
-                Route::put('patient-gbv-conference-mitigating-factor/{patientGbvConferenceMitigatingFactor}', 'update');
+                Route::put('patient-gbv-conference-mitigating-factor/{patientGbvConfMitigatingFactor}', 'update');
             });
-        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvConferenceRecommendationController::class)
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\patientGbvConRecommendationController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-conference-recommendation', 'index');
                 Route::post('patient-gbv-conference-recommendation', 'store');
-                Route::put('patient-gbv-conference-recommendation/{patientGbvConferenceRecommendation}', 'update');
+                Route::put('patient-gbv-conference-recommendation/{patientGbvConRecommendation}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvPsychController::class)
             ->middleware(('auth:api'))

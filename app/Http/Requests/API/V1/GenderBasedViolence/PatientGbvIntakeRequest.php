@@ -26,6 +26,7 @@ class PatientGbvIntakeRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
+            'patient_gbv_id' => 'required|exists:patient_gbvs,id',
             'case_number' => 'nullable|alpha_num',
             'case_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'primary_complaint_id' => 'nullable|exists:lib_gbv_primary_complaints,id',
@@ -66,6 +67,22 @@ class PatientGbvIntakeRequest extends FormRequest
             'abuse_living_arrangement_remarks' => 'nullable',
             'present_living_arrangement_id' => 'nullable|exists:lib_gbv_living_arrangements,id',
             'present_living_arrangement_remarks' => 'nullable',
+
+            'vaw_physical_flag' => 'nullable|boolean',
+            'vaw_sexual_flag' => 'nullable|boolean',
+            'vaw_psychological_flag' => 'nullable|boolean',
+            'vaw_economic_flag' => 'nullable|boolean',
+            'rape_sex_intercourse_flag' => 'nullable|boolean',
+            'rape_sex_assault_flag' => 'nullable|boolean',
+            'rape_incest_flag' => 'nullable|boolean',
+            'rape_statutory_flag' => 'nullable|boolean',
+            'rape_marital_flag' => 'nullable|boolean',
+            'harassment_verbal_flag' => 'nullable|boolean',
+            'harassment_physical_flag' => 'nullable|boolean',
+            'harassment_object_flag' => 'nullable|boolean',
+            'child_abuse_engaged_flag' => 'nullable|boolean',
+            'child_abuse_sexual_flag' => 'nullable|boolean',
+            'wcpd_others' => 'nullable'
         ];
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\GenderBasedViolence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PatientGbvConferenceRecommendationResource extends JsonResource
+class patientGbvConRecommendationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
