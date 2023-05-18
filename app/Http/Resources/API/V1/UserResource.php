@@ -19,8 +19,10 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            //            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
+            //            'facility' => $this->when($this->relationLoaded('facility'), new FacilityResource($this->facility)),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
-            'facility' => $this->when($this->relationLoaded('facility'), new FacilityResource($this->facility)),
+            'facility' => $this->whenLoaded('facility'),
             'last_name' => $this->last_name,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
@@ -32,10 +34,14 @@ class UserResource extends JsonResource
             'photo_url' => $this->photo_url,
             'email' => $this->email,
             'accreditation_number' => $this->accreditation_number,
+            //            'designation_code' => $this->when(! $this->relationLoaded('designation'), $this->designation_code),
+            //            'designation' => $this->when($this->relationLoaded('designation'), new LibDesignationResource($this->designation)),
             'designation_code' => $this->when(! $this->relationLoaded('designation'), $this->designation_code),
-            'designation' => $this->when($this->relationLoaded('designation'), new LibDesignationResource($this->designation)),
+            'designation' => $this->whenLoaded('designation'),
+            //            'employer_code' => $this->when(! $this->relationLoaded('employer'), $this->employer_code),
+            //            'employer' => $this->when($this->relationLoaded('employer'), new LibEmployerResource($this->employer)),
             'employer_code' => $this->when(! $this->relationLoaded('employer'), $this->employer_code),
-            'employer' => $this->when($this->relationLoaded('employer'), new LibEmployerResource($this->employer)),
+            'employer' => $this->whenLoaded('employer'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
