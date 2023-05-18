@@ -43,7 +43,7 @@ class PatientGbvController extends Controller
     {
         $query = PatientGbv::query()
         ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral',
-                'gbvIntake'])
+                'gbvIntake.interview'])
             /* ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
                 'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
                 'interviewNeglectAbuses', 'interviewEmotionalAbuses',

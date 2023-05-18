@@ -27,6 +27,7 @@ class PatientGbvResource extends JsonResource
             'gbvBehavior' => $this->whenLoaded('gbvBehavior'),
             'gbvReferral' => $this->whenLoaded('gbvReferral'),
             'gbvIntake' => $this->whenLoaded('gbvIntake'),
+            // 'gbvInterview' => $this->whenLoaded('gbvInterview'),
             'gbv_date' => $this->gbv_date,
             'gbv_complaint_remarks' => $this->gbv_complaint_remarks,
             'gbv_behavioral_remarks' => $this->gbv_behavioral_remarks,
