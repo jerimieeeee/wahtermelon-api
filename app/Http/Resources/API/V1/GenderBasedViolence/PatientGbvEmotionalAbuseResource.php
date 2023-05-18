@@ -17,7 +17,7 @@ class PatientGbvEmotionalAbuseResource extends JsonResource
         return [
             'id' => $this->id,
             'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
-            'patient' => $this->whenLoaded('patient'),
+            // 'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),

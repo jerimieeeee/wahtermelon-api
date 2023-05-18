@@ -32,9 +32,26 @@ class PatientGbvInterviewSexualAbuseController extends Controller
      */
     public function store(PatientGbvInterviewSexualAbuseRequest $request)
     {
-        $data = PatientGbvInterviewSexualAbuse::create($request->validated());
+        PatientGbvInterviewSexualAbuse::query()
+            ->where('patient_id', $request->safe()->patient_id)
+            ->where('intake_id', $request->safe()->intake_id)
+            ->delete();
 
-        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
+        $sexual_abused = $request->safe()->abused_array;
+
+        foreach ($sexual_abused as $value) {
+            PatientGbvInterviewSexualAbuse::updateOrCreate([
+                'patient_id' => $request->patient_id,
+                'intake_id' => $request->intake_id,
+                'info_source_id' => $value['info_source_id'],
+                'sexual_abused_id' => $value['abused_id']
+            ], $value);
+        };
+
+        return response()->json(['message' => 'Successfully Saved!'], 201);
+        /* $data = PatientGbvInterviewSexualAbuse::create($request->validated());
+
+        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201); */
     }
 
     /**

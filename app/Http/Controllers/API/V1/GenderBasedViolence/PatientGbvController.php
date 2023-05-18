@@ -42,15 +42,17 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
-        ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral',
-                'gbvIntake.interview'])
-            /* ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
-                'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
-                'interviewNeglectAbuses', 'interviewEmotionalAbuses',
-                'interviewSummaries', 'interviewDevScreening', 'relation']) */
-            ->when(isset($request->patient_id), function ($query) use ($request) {
-                return $query->wherePatientId($request->patient_id);
-            });
+        ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral', 'gbvIntake.interview',
+                'gbvIntake.interviewSexualAbuses.sexual',
+                'gbvIntake.interviewPhysicalAbuses.physical',
+                'gbvIntake.interviewNeglectAbuses.neglect',
+                'gbvIntake.interviewEmotionalAbuses.emotionalAbuse'])
+        ->when(isset($request->patient_id), function ($query) use ($request) {
+            return $query->wherePatientId($request->patient_id);
+        })
+        ->when(isset($request->id), function ($q) use ($request) {
+            $q->where('id', '=', $request->id);
+        });
         $patientGbv = QueryBuilder::for($query)
             ->defaultSort('-gbv_date')
             ->allowedSorts('gbv_date');

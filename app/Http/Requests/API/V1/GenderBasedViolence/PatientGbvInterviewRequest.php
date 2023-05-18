@@ -48,7 +48,11 @@ class PatientGbvInterviewRequest extends FormRequest
             'mental_age_id' => 'nullable',
             'child_caretaker_present_flag' => 'nullable|boolean',
             'dev_screening_id' => 'nullable',
-            'disclosed_relation_id' => 'nullable'
+            'disclosed_relation_id' => 'nullable',
+            'deferred' => 'nullable|boolean',
+            'deferral_reason_id' => 'nullable',
+            'deferral_previous_interviewer_id' => 'nullable',
+            'deferral_interviewer_remarks' => 'nullable'
         ];
     }
 }

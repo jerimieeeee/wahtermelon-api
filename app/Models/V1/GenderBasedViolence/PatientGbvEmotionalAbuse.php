@@ -17,6 +17,8 @@ class PatientGbvEmotionalAbuse extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
+    protected $table = 'patient_gbv_interview_emotional_abuses';
+
     protected $guarded = [
         'id',
     ];

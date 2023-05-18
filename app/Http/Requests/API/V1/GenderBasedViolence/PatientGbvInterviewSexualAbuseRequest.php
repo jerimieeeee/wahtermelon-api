@@ -24,9 +24,9 @@ class PatientGbvInterviewSexualAbuseRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'intake_id' => 'required|exists:patient_gbv_intakes,id',
-            'info_source_id' => 'required|exists:lib_gbv_info_sources,id',
-            'sexual_abused_id' => 'nullable|exists:lib_gbv_sexual_abuses,id',
-            'sexual_abused_remarks' => 'nullable',
+            'abused_array' => 'required|array',
+            'abused_array.*.info_source_id' => 'nullable|exists:lib_gbv_info_sources,id',
+            'abused_array.*.abused_id' => 'nullable|exists:lib_gbv_sexual_abuses,id',
         ];
     }
 }
