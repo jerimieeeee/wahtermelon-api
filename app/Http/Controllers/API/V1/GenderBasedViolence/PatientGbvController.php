@@ -90,7 +90,9 @@ class PatientGbvController extends Controller
                     $value);
             }
 
-            PatientGbvReferral::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id], $request->validated());
+            if(isset($request->safe()->referral_facility_code)){
+                PatientGbvReferral::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id], $request->validated());
+            }
 
             return response()->json([
                 'message' => 'Successfully Saved!'], 201);
