@@ -24,6 +24,7 @@ class PatientGbvInterviewNeglectAbuseRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'intake_id' => 'required|exists:patient_gbv_intakes,id',
+            'info_source_id' => 'required|exists:lib_gbv_info_sources,id',
             'neglect_abused_id' => 'nullable|exists:lib_gbv_neglects,id',
             'neglect_abused_remarks' => 'nullable',
         ];

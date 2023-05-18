@@ -23,6 +23,8 @@ class PatientGbvInterviewSexualAbuseResource extends JsonResource
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
             'intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->intake_id),
+            'info_source_id' => $this->when(! $this->relationLoaded('infoSource'), $this->info_source_id),
+            'info_source' => $this->whenLoaded('infoSource'),
             'patientGbv' => $this->whenLoaded('patientGbv'),
             'sexual_abused_id' => $this->when(! $this->relationLoaded('sexual'), $this->sexual_abused_id),
             'sexualAbused' => $this->whenLoaded('sexual'),

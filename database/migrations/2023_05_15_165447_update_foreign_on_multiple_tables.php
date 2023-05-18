@@ -38,12 +38,12 @@ return new class extends Migration
         });
 
         Schema::table('patient_gbv_neglects', function (Blueprint $table) {
-            $table->dropForeign('patient_gbv_behaviors_patient_gbv_id_foreign');
+            $table->dropForeign('patient_gbv_neglects_patient_gbv_id_foreign');
             $table->foreign('patient_gbv_id')->references('id')->on('patient_gbvs');
         });
 
         Schema::table('patient_gbv_complaints', function (Blueprint $table) {
-            $table->dropForeign('patient_gbv_behaviors_patient_gbv_id_foreign');
+            $table->dropForeign('patient_gbv_complaints_patient_gbv_id_foreign');
             $table->foreign('patient_gbv_id')->references('id')->on('patient_gbvs');
         });
     }

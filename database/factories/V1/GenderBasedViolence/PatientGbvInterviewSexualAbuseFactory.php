@@ -4,6 +4,7 @@ namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\User;
 use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
+use App\Models\V1\Libraries\LibGbvInfoSource;
 use App\Models\V1\Libraries\LibGbvSexualAbuse;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -26,6 +27,7 @@ class PatientGbvInterviewSexualAbuseFactory extends Factory
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'intake_id' => fake()->randomElement(PatientGbvIntake::pluck('id')->toArray()),
+            'info_source_id' => fake()->randomElement(LibGbvInfoSource::pluck('id')->toArray()),
             'sexual_abused_id' => fake()->randomElement(LibGbvSexualAbuse::pluck('id')->toArray()),
             'sexual_abused_remarks' => fake()->sentence(),
         ];

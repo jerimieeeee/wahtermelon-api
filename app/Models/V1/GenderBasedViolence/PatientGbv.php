@@ -74,21 +74,26 @@ class PatientGbv extends Model
 
     public function gbvComplaint()
     {
-        return $this->hasOne(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvComplaint::class, 'patient_gbv_id', 'id');
     }
 
     public function gbvBehavior()
     {
-        return $this->hasOne(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvBehavior::class, 'patient_gbv_id', 'id');
     }
 
     public function gbvNeglect()
     {
-        return $this->hasOne(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvNeglect::class, 'patient_gbv_id', 'id');
     }
 
     public function gbvReferral()
     {
-        return $this->hasOne(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+        return $this->hasMany(PatientGbvReferral::class, 'patient_gbv_id', 'id');
+    }
+
+    public function gbvIntake()
+    {
+        return $this->hasOne(PatientGbvIntake::class, 'patient_gbv_id', 'id');
     }
 }
