@@ -49,7 +49,7 @@ class PatientGbvEmotionalAbuseController extends Controller
         };
 
         return response()->json(['message' => 'Successfully Saved!'], 201);
-        /* $data = patientGbvEmotionalAbuse::create($request->validated());
+        /* $data = PatientGbvEmotionalAbuse::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201); */
     }
