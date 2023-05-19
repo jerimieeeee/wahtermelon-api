@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\GenderBasedViolence;
 
+use App\Models\V1\Libraries\LibGbvChildRelation;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

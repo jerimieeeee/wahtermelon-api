@@ -52,4 +52,9 @@ class PatientGbvInterviewSummary extends Model
     {
         return $this->belongsTo(PatientGbvIntake::class, 'intake_id', 'id');
     }
+
+    public function perpetrator()
+    {
+        return $this->belongsTo(PatientGbvInterviewPerpetrator::class, 'alleged_perpetrator', 'id');
+    }
 }

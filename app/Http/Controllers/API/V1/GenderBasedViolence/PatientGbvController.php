@@ -46,7 +46,12 @@ class PatientGbvController extends Controller
                 'gbvIntake.interviewSexualAbuses.sexual',
                 'gbvIntake.interviewPhysicalAbuses.physical',
                 'gbvIntake.interviewNeglectAbuses.neglect',
-                'gbvIntake.interviewEmotionalAbuses.emotionalAbuse'])
+                'gbvIntake.interviewEmotionalAbuses.emotionalAbuse',
+                'gbvIntake.interviewPerpetrator.location',
+                'gbvIntake.interviewPerpetrator.occupation',
+                'gbvIntake.interviewPerpetrator.relation',
+                'gbvIntake.interviewPerpetrator.barangay',
+                'gbvIntake.interviewSummaries.perpetrator'])
         ->when(isset($request->patient_id), function ($query) use ($request) {
             return $query->wherePatientId($request->patient_id);
         })

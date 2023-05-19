@@ -20,6 +20,9 @@ class PatientGbvInterviewPerpetratorController extends Controller
         $query = PatientGbvInterviewPerpetrator::query()->with(['patientGbv', 'facility'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
+            })
+            ->when(isset($request->intake_id), function ($query) use ($request) {
+                return $query->whereIntakeId($request->intake_id);
             });
         $patientGbvInterviewPerpetrator = QueryBuilder::for($query)
             ->defaultSort('-perpetrator_age')
@@ -33,6 +36,7 @@ class PatientGbvInterviewPerpetratorController extends Controller
      */
     public function store(PatientGbvInterviewPerpetratorRequest $request)
     {
+        // $data = PatientGbvInterviewPerpetrator::updateOrCreate(['patient_id' => $request->patient_id, 'intake_id' => $request->intake_id], $request->all());
         $data = PatientGbvInterviewPerpetrator::create($request->validated());
 
         return response()->json(['data' => $data], 201);

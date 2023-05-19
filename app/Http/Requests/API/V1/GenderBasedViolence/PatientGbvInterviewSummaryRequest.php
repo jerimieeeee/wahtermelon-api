@@ -11,7 +11,7 @@ class PatientGbvInterviewSummaryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,10 @@ class PatientGbvInterviewSummaryRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'intake_id' => 'required|exists:patient_gbv_intakes,id',
+            'summary_type' => 'nullable',
             'interview_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
             'interview_place' => 'nullable',
-            'alleged_perpetrator' => 'nullable',
+            'alleged_perpetrator' => 'nullable|exists:patient_gbv_interview_perpetrators,id',
             'interview_notes' => 'nullable',
         ];
     }
