@@ -134,7 +134,7 @@ class PatientGbvIntake extends Model
 
     public function interviewEmotionalAbuses()
     {
-        return $this->hasMany(patientGbvEmotionalAbuse::class, 'intake_id', 'id');
+        return $this->hasMany(PatientGbvEmotionalAbuse::class, 'intake_id', 'id');
     }
 
     public function interviewSummaries()
