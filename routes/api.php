@@ -761,7 +761,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-neglect-abuse', 'store');
                 Route::put('patient-gbv-neglect-abuse/{patientGbvInterviewNeglectAbuse}', 'update');
             });
-        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\patientGbvEmotionalAbuseController::class)
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvEmotionalAbuseController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-emotional-abuse', 'index');
