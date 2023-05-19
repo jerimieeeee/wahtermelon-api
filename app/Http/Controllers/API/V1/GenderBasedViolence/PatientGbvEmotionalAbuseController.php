@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\patientGbvEmotionalAbuseRequest;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvEmotionalAbuseRequest;
 use App\Models\V1\GenderBasedViolence\PatientGbvEmotionalAbuse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
