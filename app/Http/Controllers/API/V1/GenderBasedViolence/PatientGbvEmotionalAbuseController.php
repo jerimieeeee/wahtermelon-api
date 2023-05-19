@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvEmotionalAbuseRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvEmotionalAbuseResource;
 use App\Models\V1\GenderBasedViolence\PatientGbvEmotionalAbuse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -23,7 +24,7 @@ class PatientGbvEmotionalAbuseController extends Controller
             });
         $patientGbvEmotionalAbuse = QueryBuilder::for($query);
 
-        return PatientGbvEmotionalAbuse::collection($patientGbvEmotionalAbuse->get());
+        return PatientGbvEmotionalAbuseResource::collection($patientGbvEmotionalAbuse->get());
     }
 
     /**
