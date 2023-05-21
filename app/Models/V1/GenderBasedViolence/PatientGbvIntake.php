@@ -161,4 +161,9 @@ class PatientGbvIntake extends Model
     {
         return $this->hasMany(PatientGbvPsych::class, 'patient_gbv_intake_id', 'id');
     }
+
+    public function interventionLegal()
+    {
+        return $this->hasOne(PatientGbvLegalCase::class, 'patient_gbv_intake_id', 'id');
+    }
 }

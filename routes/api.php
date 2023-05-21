@@ -845,6 +845,13 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-intake', 'store');
                 Route::put('patient-gbv-intake/{patientGbvIntake}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvLegalCaseController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-legal', 'index');
+                Route::post('patient-gbv-legal', 'store');
+                Route::put('patient-gbv-legal/{patientGbvLegalCase}', 'update');
+            });
     });
 
 });

@@ -54,7 +54,10 @@ class PatientGbvController extends Controller
                 'gbvIntake.interviewSummaries.perpetrator',
                 'gbvIntake.interventionSocialWork',
                 'gbvIntake.interventionPlacement',
-                'gbvIntake.interventionPsych.participant'])
+                'gbvIntake.interventionPsych.participant',
+                'gbvIntake.interventionLegal.relation',
+                'gbvIntake.interventionLegal.filedLocation',
+                'gbvIntake.interventionLegal.verdict'])
         ->when(isset($request->patient_id), function ($query) use ($request) {
             return $query->wherePatientId($request->patient_id);
         })
