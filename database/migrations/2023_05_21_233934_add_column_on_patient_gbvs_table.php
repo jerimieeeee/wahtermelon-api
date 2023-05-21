@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patient_gbvs', function (Blueprint $table) {
-            $table->string('outcome_remarks')->after('outcome_verdict_id')->nullable();
+            $table->string('outcome_reason_remarks')->after('outcome_reason_id')->nullable();
+            $table->string('outcome_result_remarks')->after('outcome_result_id')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patient_gbvs', function (Blueprint $table) {
-            $table->dropColumn('outcome_remarks');
+            $table->dropColumn('outcome_reason_remarks');
+            $table->dropColumn('outcome_result_remarks');
         });
     }
 };
