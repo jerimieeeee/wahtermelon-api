@@ -29,6 +29,7 @@ class PatientGbvReferralResource extends JsonResource
             'referral_date' => $this->referral_date,
             'referral_reason' => $this->referral_reason,
             'service_remarks' => $this->service_remarks,
+            'referral_remarks' => $this->referral_remarks,
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),

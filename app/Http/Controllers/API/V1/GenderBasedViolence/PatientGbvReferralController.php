@@ -73,7 +73,7 @@ class PatientGbvReferralController extends Controller
      */
     public function update(PatientGbvReferralRequest $request, PatientGbvReferral $patientGbvReferral)
     {
-        $patientGbvReferral->update($request->safe()->only(['referral_facility_code', 'referral_date', 'referral_reason', 'service_remarks']));
+        $patientGbvReferral->update($request->safe()->only(['referral_facility_code', 'referral_date', 'referral_reason', 'service_remarks', 'referral_remarks']));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

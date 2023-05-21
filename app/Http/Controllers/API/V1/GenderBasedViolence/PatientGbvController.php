@@ -45,7 +45,7 @@ class PatientGbvController extends Controller
         ->with(['gbvNeglect',
                 'gbvComplaint',
                 'gbvBehavior',
-                'gbvReferral',
+                'gbvReferral.referral',
                 'outcomeReason',
                 'outcomeResult',
                 'outcomeVerdict',

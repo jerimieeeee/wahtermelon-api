@@ -55,6 +55,6 @@ class PatientGbvReferral extends Model
 
     public function referral()
     {
-        return $this->belongsTo(Facility::class, 'referral_facility_code', 'id');
+        return $this->belongsTo(Facility::class, 'referral_facility_code', 'code');
     }
 }
