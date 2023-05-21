@@ -146,4 +146,19 @@ class PatientGbvIntake extends Model
     {
         return $this->hasMany(PatientGbvInterviewDevScreening::class, 'intake_id', 'id');
     }
+
+    public function interventionSocialWork()
+    {
+        return $this->hasMany(PatientGbvSocialWork::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function interventionPlacement()
+    {
+        return $this->hasMany(PatientGbvPlacement::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function interventionPsych()
+    {
+        return $this->hasMany(PatientGbvPsych::class, 'patient_gbv_intake_id', 'id');
+    }
 }

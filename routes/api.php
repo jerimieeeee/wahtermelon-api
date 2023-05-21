@@ -836,7 +836,7 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('patient-gbv-placement', 'index');
                 Route::post('patient-gbv-placement', 'store');
-                Route::put('patient-gbv-social-placement/{patientGbvPlacement}', 'update');
+                Route::put('patient-gbv-placement/{patientGbvPlacement}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvIntakeController::class)
             ->middleware(('auth:api'))
