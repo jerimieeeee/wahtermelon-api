@@ -62,6 +62,6 @@ class PatientGbvConfConcern extends Model
 
     public function concern()
     {
-        return $this->belongsTo(LibGbvConferenceConcern::class, 'invite_code', 'id');
+        return $this->belongsTo(LibGbvConferenceConcern::class, 'concern_code', 'id');
     }
 }
