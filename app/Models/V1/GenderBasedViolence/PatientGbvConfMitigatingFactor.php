@@ -16,6 +16,8 @@ class PatientGbvConfMitigatingFactor extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
+    protected $table = 'patient_gbv_conference_mitigating_factors';
+
     protected $guarded = [
         'id',
     ];
