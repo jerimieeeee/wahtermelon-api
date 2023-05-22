@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\patientGbvEmotionalAbuseRequest;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvEmotionalAbuseRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvEmotionalAbuseResource;
 use App\Models\V1\GenderBasedViolence\PatientGbvEmotionalAbuse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -23,7 +24,7 @@ class PatientGbvEmotionalAbuseController extends Controller
             });
         $patientGbvEmotionalAbuse = QueryBuilder::for($query);
 
-        return PatientGbvEmotionalAbuse::collection($patientGbvEmotionalAbuse->get());
+        return PatientGbvEmotionalAbuseResource::collection($patientGbvEmotionalAbuse->get());
     }
 
     /**
@@ -48,7 +49,7 @@ class PatientGbvEmotionalAbuseController extends Controller
         };
 
         return response()->json(['message' => 'Successfully Saved!'], 201);
-        /* $data = patientGbvEmotionalAbuse::create($request->validated());
+        /* $data = PatientGbvEmotionalAbuse::create($request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201); */
     }

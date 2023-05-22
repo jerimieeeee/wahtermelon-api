@@ -6,8 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvConfRequest;
 use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvConfResource;
 use App\Models\V1\GenderBasedViolence\PatientGbvConf;
+use App\Models\V1\GenderBasedViolence\PatientGbvConfConcern;
+use App\Models\V1\GenderBasedViolence\PatientGbvConfInvite;
+use App\Models\V1\GenderBasedViolence\PatientGbvConfMitigatingFactor;
+use App\Models\V1\GenderBasedViolence\PatientGbvConfRecommendation;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientGbvConfController extends Controller
@@ -30,11 +36,42 @@ class PatientGbvConfController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientGbvConfRequest $request)
+    public function store(PatientGbvConfRequest $request): JsonResponse
     {
-        $data = PatientGbvConf::create($request->validated());
+        return DB::transaction(function () use ($request) {
+            $data = PatientGbvConf::updateOrCreate(['id' => $request->id], $request->validated());
+            $invites = $request->safe()->invites;
+            $concerns = $request->safe()->concerns;
+            $mitigations = $request->safe()->mitigations;
+            $recommendations = $request->safe()->recommendations;
 
-        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
+            foreach ($invites as $value) {
+                PatientGbvConfInvite::updateOrCreate(['patient_id' => $request->patient_id, 'conference_id' => $data->id, 'invite_code' => $value['invite_code']],
+                    $value);
+            }
+
+            foreach ($concerns as $value) {
+                PatientGbvConfConcern::updateOrCreate(['patient_id' => $request->patient_id, 'conference_id' => $data->id, 'concern_code' => $value['concern_code']],
+                    $value);
+            }
+
+            foreach ($mitigations as $value) {
+                PatientGbvConfMitigatingFactor::updateOrCreate(['patient_id' => $request->patient_id, 'conference_id' => $data->id, 'factor_code' => $value['factor_code']],
+                    $value);
+            }
+
+            foreach ($recommendations as $value) {
+                PatientGbvConfRecommendation::updateOrCreate(['patient_id' => $request->patient_id, 'conference_id' => $data->id, 'recommend_code' => $value['recommend_code']],
+                    $value);
+            }
+
+            return response()->json([
+                'message' => 'Successfully Saved!'
+            ], 201);
+        });
+        /* $data = PatientGbvConf::create($request->validated());
+
+        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201); */
     }
 
     /**
@@ -50,7 +87,7 @@ class PatientGbvConfController extends Controller
      */
     public function update(PatientGbvConfRequest $request, PatientGbvConf $patientGbvConf)
     {
-        $patientGbvConf->update($request->safe()->only(['conference_date', 'notes']));
+        $patientGbvConf->update($request->validated());
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

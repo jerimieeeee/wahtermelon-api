@@ -42,7 +42,14 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
-        ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral', 'gbvIntake.interview',
+        ->with(['gbvNeglect',
+                'gbvComplaint',
+                'gbvBehavior',
+                'gbvReferral.referral',
+                'outcomeReason',
+                'outcomeResult',
+                'outcomeVerdict',
+                'gbvIntake.interview',
                 'gbvIntake.interviewSexualAbuses.sexual',
                 'gbvIntake.interviewPhysicalAbuses.physical',
                 'gbvIntake.interviewNeglectAbuses.neglect',
@@ -51,7 +58,17 @@ class PatientGbvController extends Controller
                 'gbvIntake.interviewPerpetrator.occupation',
                 'gbvIntake.interviewPerpetrator.relation',
                 'gbvIntake.interviewPerpetrator.barangay',
-                'gbvIntake.interviewSummaries.perpetrator'])
+                'gbvIntake.interviewSummaries.perpetrator',
+                'gbvIntake.interventionSocialWork',
+                'gbvIntake.interventionPlacement',
+                'gbvIntake.interventionPsych.participant',
+                'gbvIntake.interventionLegal.relation',
+                'gbvIntake.interventionLegal.filedLocation',
+                'gbvIntake.interventionLegal.verdict',
+                'gbvIntake.caseConference.invite.invite',
+                'gbvIntake.caseConference.concern.concern',
+                'gbvIntake.caseConference.mitigatingFactor.mitigatingFactor',
+                'gbvIntake.caseConference.recommendation.recommendation'])
         ->when(isset($request->patient_id), function ($query) use ($request) {
             return $query->wherePatientId($request->patient_id);
         })

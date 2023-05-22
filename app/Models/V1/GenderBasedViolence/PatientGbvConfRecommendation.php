@@ -16,6 +16,8 @@ class PatientGbvConfRecommendation extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
+    protected $table = 'patient_gbv_conference_recommendations';
+
     protected $guarded = [
         'id',
     ];

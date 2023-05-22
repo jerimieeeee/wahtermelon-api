@@ -15,6 +15,8 @@ class PatientGbvConf extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
+    protected $table = 'patient_gbv_conferences';
+
     protected $guarded = [
         'id',
     ];
@@ -55,5 +57,25 @@ class PatientGbvConf extends Model
     public function patientGbv()
     {
         return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function invite()
+    {
+        return $this->hasMany(PatientGbvConfInvite::class, 'conference_id', 'id');
+    }
+
+    public function concern()
+    {
+        return $this->hasMany(PatientGbvConfConcern::class, 'conference_id', 'id');
+    }
+
+    public function mitigatingFactor()
+    {
+        return $this->hasMany(PatientGbvConfMitigatingFactor::class, 'conference_id', 'id');
+    }
+
+    public function recommendation()
+    {
+        return $this->hasMany(PatientGbvConfRecommendation::class, 'conference_id', 'id');
     }
 }
