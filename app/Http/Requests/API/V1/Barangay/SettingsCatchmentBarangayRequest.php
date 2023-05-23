@@ -40,25 +40,25 @@ class SettingsCatchmentBarangayRequest extends FormRequest
 
         return [
             'year' => [
-                'example' => fake()->year('now')
+                'example' => fake()->year('now'),
             ],
             'barangay_code' => [
-                'example' => fake()->randomElement(Barangay::pluck('code')->toArray())
+                'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
             ],
             'population' => [
-                'example' => fake()->randomNumber()
+                'example' => fake()->randomNumber(),
             ],
             'population_opt' => [
-                'example' => fake()->randomNumber()
+                'example' => fake()->randomNumber(),
             ],
             'population_wra' => [
-                'example' => fake()->randomNumber()
+                'example' => fake()->randomNumber(),
             ],
             'household' => [
-                'example' => fake()->randomNumber()
+                'example' => fake()->randomNumber(),
             ],
             'zod' => [
-                'example' => fake()->boolean()
+                'example' => fake()->boolean(),
             ],
         ];
     }

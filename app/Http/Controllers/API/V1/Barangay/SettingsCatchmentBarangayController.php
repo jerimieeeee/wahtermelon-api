@@ -18,7 +18,7 @@ class SettingsCatchmentBarangayController extends Controller
     public function index()
     {
         $barangay = QueryBuilder::for(SettingsCatchmentBarangay::class)
-                    ->allowedFilters(['year']);
+            ->allowedFilters(['year']);
 
         return SettingsCatchmentBarangayResource::collection($barangay->get());
     }
@@ -28,7 +28,7 @@ class SettingsCatchmentBarangayController extends Controller
      */
     public function store(SettingsCatchmentBarangayRequest $request)
     {
-        return DB::transaction(function () use ($request){
+        return DB::transaction(function () use ($request) {
             SettingsCatchmentBarangay::query()
                 ->where('year', $request->safe()->year)
                 ->delete();

@@ -83,7 +83,7 @@ class PatientGbvIntakeRequest extends FormRequest
             'harassment_object_flag' => 'nullable|boolean',
             'child_abuse_engaged_flag' => 'nullable|boolean',
             'child_abuse_sexual_flag' => 'nullable|boolean',
-            'wcpd_others' => 'nullable'
+            'wcpd_others' => 'nullable',
         ];
     }
 
