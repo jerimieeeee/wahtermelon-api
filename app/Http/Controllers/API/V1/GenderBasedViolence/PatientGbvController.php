@@ -61,6 +61,8 @@ class PatientGbvController extends Controller
                 'outcomeResult',
                 'outcomeVerdict',
                 'gbvIntake.interview',
+                'gbvIntake.consult',
+                'gbvIntake.consultVisit',
                 'gbvIntake.interviewSexualAbuses.sexual',
                 'gbvIntake.interviewPhysicalAbuses.physical',
                 'gbvIntake.interviewNeglectAbuses.neglect',
