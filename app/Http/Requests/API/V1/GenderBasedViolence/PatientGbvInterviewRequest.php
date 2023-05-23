@@ -52,7 +52,7 @@ class PatientGbvInterviewRequest extends FormRequest
             'deferred' => 'nullable|boolean',
             'deferral_reason_id' => 'nullable',
             'deferral_previous_interviewer_id' => 'nullable',
-            'deferral_interviewer_remarks' => 'nullable'
+            'deferral_interviewer_remarks' => 'nullable',
         ];
     }
 }

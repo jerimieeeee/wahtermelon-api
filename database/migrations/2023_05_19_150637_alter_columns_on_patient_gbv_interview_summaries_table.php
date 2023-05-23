@@ -15,7 +15,7 @@ return new class extends Migration
             $table->char('alleged_perpetrator', 26)->change();
             $table->foreign('alleged_perpetrator')->references('id')->on('patient_gbv_interview_perpetrators');
 
-            $table->char('summary_type',2)->after('intake_id')->nullable();
+            $table->char('summary_type', 2)->after('intake_id')->nullable();
         });
     }
 

@@ -31,7 +31,7 @@ class PatientGbvReferralRequest extends FormRequest
             'referral_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'referral_reason' => 'nullable',
             'service_remarks' => 'nullable',
-            'referral_remarks' => 'nullable'
+            'referral_remarks' => 'nullable',
         ];
     }
 

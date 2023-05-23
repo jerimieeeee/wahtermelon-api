@@ -434,4 +434,8 @@ Route::prefix('v1/libraries')->group(function () {
     //GBV previous interviewer
     Route::get('gbv-previous-interviewer', [\App\Http\Controllers\API\V1\Libraries\LibGbvPreviousInterviewerController::class, 'index'])->name('gbv-previous-interviewer.index');
 
+    //Washington Disability
+    Route::get('washington-disability-question', [\App\Http\Controllers\API\V1\Libraries\LibWashingtonDisabilityQuestionController::class, 'index'])->name('washington-disability-question.index');
+    Route::get('washington-disability-answer', [\App\Http\Controllers\API\V1\Libraries\LibWashingtonDisabilityAnswerController::class, 'index'])->name('washington-disability-answer.index');
+
 });
