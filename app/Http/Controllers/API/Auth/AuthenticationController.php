@@ -36,7 +36,7 @@ class AuthenticationController extends Controller
             'status_code' => 200,
             'access_token' => $tokenResult,
             'token_type' => 'Bearer',
-            'user' => Auth::user()->load('konsultaCredential') ?? Auth::user(),
+            'user' => Auth::user()->load(['konsultaCredential', 'facility']) ?? Auth::user(),
         ])->withCookie(Cookie::make('access_token', $tokenResult, 3600, '/', null, true, true, true, 'None'));
     }
 

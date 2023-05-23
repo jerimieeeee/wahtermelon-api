@@ -11,7 +11,7 @@ class PatientGbvEmotionalAbuseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,9 @@ class PatientGbvEmotionalAbuseRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'intake_id' => 'required|exists:patient_gbv_intakes,id',
-            'info_source_id' => 'required|exists:lib_gbv_info_sources,id',
-            'emotional_id' => 'nullable|exists:lib_gbv_emotional_abuses,id',
-            'emotional_abused_remarks' => 'nullable',
+            'abused_array' => 'required|array',
+            'abused_array.*.info_source_id' => 'nullable|exists:lib_gbv_info_sources,id',
+            'abused_array.*.abused_id' => 'nullable|exists:lib_gbv_emotional_abuses,id',
         ];
     }
 }

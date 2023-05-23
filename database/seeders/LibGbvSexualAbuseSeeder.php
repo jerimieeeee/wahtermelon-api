@@ -25,7 +25,7 @@ class LibGbvSexualAbuseSeeder extends Seeder
             ['id' => 10, 'desc' => 'Oral copulation of genitals of assailant by victim', 'sequence' => 10],
             ['id' => 11, 'desc' => 'Masturbation of assailant by self', 'sequence' => 11],
             ['id' => 12, 'desc' => 'Masturbation of assailant by victim', 'sequence' => 12],
-            ['id' => 13, 'desc' => 'Ejacuation', 'sequence' => 13],
+            ['id' => 13, 'desc' => 'Ejaculation', 'sequence' => 13],
             ['id' => 14, 'desc' => 'Licking or kissing', 'sequence' => 14],
             ['id' => 15, 'desc' => 'Fondling', 'sequence' => 15],
             ['id' => 16, 'desc' => 'Exhibitionism', 'sequence' => 16],

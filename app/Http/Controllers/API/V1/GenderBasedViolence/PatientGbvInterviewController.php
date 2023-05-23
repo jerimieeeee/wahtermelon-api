@@ -60,7 +60,8 @@ class PatientGbvInterviewController extends Controller
     {
         $patientGbvInterview->update($request->validated());
 
-        return response()->json(['status' => 'Update successful!'], 201);
+        return response()->json(['data' => $patientGbvInterview, 'status' => 'Successfully saved'], 201);
+        // return response()->json(['status' => 'Update successful!'], 201);
     }
 
     /**

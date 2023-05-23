@@ -42,6 +42,7 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
+<<<<<<< HEAD
             ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral',
                 'gbvIntake'])
             /* ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
@@ -51,6 +52,41 @@ class PatientGbvController extends Controller
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
+=======
+        ->with(['gbvNeglect',
+                'gbvComplaint',
+                'gbvBehavior',
+                'gbvReferral.referral',
+                'outcomeReason',
+                'outcomeResult',
+                'outcomeVerdict',
+                'gbvIntake.interview',
+                'gbvIntake.interviewSexualAbuses.sexual',
+                'gbvIntake.interviewPhysicalAbuses.physical',
+                'gbvIntake.interviewNeglectAbuses.neglect',
+                'gbvIntake.interviewEmotionalAbuses.emotionalAbuse',
+                'gbvIntake.interviewPerpetrator.location',
+                'gbvIntake.interviewPerpetrator.occupation',
+                'gbvIntake.interviewPerpetrator.relation',
+                'gbvIntake.interviewPerpetrator.barangay',
+                'gbvIntake.interviewSummaries.perpetrator',
+                'gbvIntake.interventionSocialWork',
+                'gbvIntake.interventionPlacement',
+                'gbvIntake.interventionPsych.participant',
+                'gbvIntake.interventionLegal.relation',
+                'gbvIntake.interventionLegal.filedLocation',
+                'gbvIntake.interventionLegal.verdict',
+                'gbvIntake.caseConference.invite.invite',
+                'gbvIntake.caseConference.concern.concern',
+                'gbvIntake.caseConference.mitigatingFactor.mitigatingFactor',
+                'gbvIntake.caseConference.recommendation.recommendation'])
+        ->when(isset($request->patient_id), function ($query) use ($request) {
+            return $query->wherePatientId($request->patient_id);
+        })
+        ->when(isset($request->id), function ($q) use ($request) {
+            $q->where('id', '=', $request->id);
+        });
+>>>>>>> 7093c0b7d1af4af16b8cd377510e272a5f8db3d2
         $patientGbv = QueryBuilder::for($query)
             ->defaultSort('-gbv_date')
             ->allowedSorts('gbv_date');
@@ -90,7 +126,9 @@ class PatientGbvController extends Controller
                     $value);
             }
 
-            PatientGbvReferral::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id], $request->validated());
+            if(isset($request->safe()->referral_facility_code)){
+                PatientGbvReferral::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id], $request->validated());
+            }
 
             return response()->json([
                 'message' => 'Successfully Saved!'], 201);

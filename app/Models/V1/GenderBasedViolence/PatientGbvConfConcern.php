@@ -16,6 +16,8 @@ class PatientGbvConfConcern extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
+    protected $table = 'patient_gbv_conference_concerns';
+
     protected $guarded = [
         'id',
     ];
@@ -60,6 +62,6 @@ class PatientGbvConfConcern extends Model
 
     public function concern()
     {
-        return $this->belongsTo(LibGbvConferenceConcern::class, 'invite_code', 'id');
+        return $this->belongsTo(LibGbvConferenceConcern::class, 'concern_code', 'id');
     }
 }

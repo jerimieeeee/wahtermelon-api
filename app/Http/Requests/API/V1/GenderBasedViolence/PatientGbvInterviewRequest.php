@@ -42,6 +42,17 @@ class PatientGbvInterviewRequest extends FormRequest
             'child_behavior_id' => 'nullable|exists:lib_gbv_child_behaviors,id',
             'child_behavior_remarks' => 'nullable',
             'dev_screening_remarks' => 'nullable',
+            'source_from_historian_flag' => 'nullable|boolean',
+            'source_from_sworn_statement_flag' => 'nullable|boolean',
+            'source_from_victim_flag' => 'nullable|boolean',
+            'mental_age_id' => 'nullable',
+            'child_caretaker_present_flag' => 'nullable|boolean',
+            'dev_screening_id' => 'nullable',
+            'disclosed_relation_id' => 'nullable',
+            'deferred' => 'nullable|boolean',
+            'deferral_reason_id' => 'nullable',
+            'deferral_previous_interviewer_id' => 'nullable',
+            'deferral_interviewer_remarks' => 'nullable'
         ];
     }
 }

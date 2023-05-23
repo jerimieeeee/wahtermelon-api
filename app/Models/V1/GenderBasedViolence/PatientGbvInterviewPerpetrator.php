@@ -7,6 +7,7 @@ use App\Models\V1\Libraries\LibGbvChildRelation;
 use App\Models\V1\Libraries\LibGbvPerpetratorLocation;
 use App\Models\V1\Libraries\LibOccupation;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -69,5 +70,10 @@ class PatientGbvInterviewPerpetrator extends Model
     public function occupation()
     {
         return $this->belongsTo(LibOccupation::class, 'occupation_code', 'code');
+    }
+
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
     }
 }

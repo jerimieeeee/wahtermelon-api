@@ -32,9 +32,26 @@ class PatientGbvInterviewNeglectAbuseController extends Controller
      */
     public function store(PatientGbvInterviewNeglectAbuseRequest $request)
     {
-        $data = PatientGbvInterviewNeglectAbuse::create($request->validated());
+        PatientGbvInterviewNeglectAbuse::query()
+            ->where('patient_id', $request->safe()->patient_id)
+            ->where('intake_id', $request->safe()->intake_id)
+            ->delete();
 
-        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
+        $emotional_abused = $request->safe()->abused_array;
+
+        foreach ($emotional_abused as $value) {
+            PatientGbvInterviewNeglectAbuse::updateOrCreate([
+                'patient_id' => $request->patient_id,
+                'intake_id' => $request->intake_id,
+                'info_source_id' => $value['info_source_id'],
+                'neglect_abused_id' => $value['abused_id']
+            ], $value);
+        };
+
+        return response()->json(['message' => 'Successfully Saved!'], 201);
+        /* $data = PatientGbvInterviewNeglectAbuse::create($request->validated());
+
+        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201); */
     }
 
     /**

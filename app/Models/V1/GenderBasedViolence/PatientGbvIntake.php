@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\GenderBasedViolence;
 
+use App\Models\V1\Libraries\LibGbvChildRelation;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -133,7 +134,7 @@ class PatientGbvIntake extends Model
 
     public function interviewEmotionalAbuses()
     {
-        return $this->hasMany(patientGbvEmotionalAbuse::class, 'intake_id', 'id');
+        return $this->hasMany(PatientGbvEmotionalAbuse::class, 'intake_id', 'id');
     }
 
     public function interviewSummaries()
@@ -144,5 +145,30 @@ class PatientGbvIntake extends Model
     public function interviewDevScreening()
     {
         return $this->hasMany(PatientGbvInterviewDevScreening::class, 'intake_id', 'id');
+    }
+
+    public function interventionSocialWork()
+    {
+        return $this->hasMany(PatientGbvSocialWork::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function interventionPlacement()
+    {
+        return $this->hasMany(PatientGbvPlacement::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function interventionPsych()
+    {
+        return $this->hasMany(PatientGbvPsych::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function interventionLegal()
+    {
+        return $this->hasOne(PatientGbvLegalCase::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function caseConference()
+    {
+        return $this->hasMany(PatientGbvConf::class, 'patient_gbv_intake_id', 'id');
     }
 }

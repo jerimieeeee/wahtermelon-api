@@ -123,7 +123,7 @@ class DatabaseSeeder extends Seeder
             LibTbTreatmentRegimenSeeder::class,
             LibAppointmentSeeder::class,
             LibGbvPrimaryComplaintsSeeder::class,
-            LibGbvOutcomeReasonSeeder::class,
+            LibGbvOutcomeReasonsSeeder::class,
             LibGbvOutcomeResultSeeder::class,
             LibGbvNeglectsSeeder::class,
             LibGbvInfoSourceSeeder::class,
