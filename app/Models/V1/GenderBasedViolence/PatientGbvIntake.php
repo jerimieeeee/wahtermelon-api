@@ -171,4 +171,14 @@ class PatientGbvIntake extends Model
     {
         return $this->hasMany(PatientGbvConf::class, 'patient_gbv_intake_id', 'id');
     }
+
+    public function consult()
+    {
+        return $this->hasOne(PatientGbvConsult::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function consultVisit()
+    {
+        return $this->hasMany(PatientGbvConsultVisit::class, 'patient_gbv_intake_id', 'id');
+    }
 }
