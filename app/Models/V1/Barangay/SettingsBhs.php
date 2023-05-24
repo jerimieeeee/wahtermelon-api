@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SettingsCatchmentBarangay extends Model
+class SettingsBhs extends Model
 {
     use HasFactory, HasUlids, FilterByUser, FilterByFacility;
 
@@ -24,10 +24,6 @@ class SettingsCatchmentBarangay extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
-
-    protected $casts = [
-        'zod' => 'boolean',
-    ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -47,5 +43,15 @@ class SettingsCatchmentBarangay extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id', 'id');
+    }
+
+    public function bhsBarangay()
+    {
+        return $this->belongsToMany(SettingsCatchmentBarangay::class, 'settings_barangay_bhs');
     }
 }

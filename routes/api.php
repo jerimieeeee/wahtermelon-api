@@ -378,6 +378,12 @@ Route::prefix('v1')->group(function () {
                 Route::get('catchment-barangay', 'index');
                 Route::post('catchment-barangay', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Barangay\SettingsBhsController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('bhs', 'index');
+                Route::post('bhs', 'store');
+            });
     });
 
     //Patient Medical History APIs
