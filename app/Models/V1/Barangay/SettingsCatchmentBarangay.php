@@ -48,4 +48,9 @@ class SettingsCatchmentBarangay extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function bhsBarangay()
+    {
+        return $this->belongsToMany(SettingsBhs::class, 'settings_barangay_bhs');
+    }
 }

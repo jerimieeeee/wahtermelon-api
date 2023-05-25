@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Barangay;
 
 use App\Http\Controllers\Controller;
 use App\Models\V1\Barangay\SettingsBhs;
+use App\Models\V1\Barangay\SettingsCatchmentBarangay;
 use Illuminate\Http\Request;
 
 class SettingsBhsController extends Controller
@@ -13,7 +14,7 @@ class SettingsBhsController extends Controller
      */
     public function index()
     {
-        return SettingsBhs::with('bhsBarangay')->get();
+        return $data = SettingsBhs::with('bhsBarangay')->get();
     }
 
     /**
