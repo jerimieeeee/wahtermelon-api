@@ -17,7 +17,7 @@ class LibGbvAbusedSiteSeeder extends Seeder
             ['id' => 2, 'desc' => 'Perpetrator\'s home', 'sequence' => 2],
             ['id' => 3, 'desc' => 'School', 'sequence' => 3],
             ['id' => 4, 'desc' => 'Public place', 'sequence' => 4],
-            ['id' => 6, 'desc' => 'Other, private home', 'sequence' => 5],
+            ['id' => 6, 'desc' => 'Others' => 5],
         ], ['id']);
     }
 }
