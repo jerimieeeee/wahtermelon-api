@@ -434,4 +434,10 @@ Route::prefix('v1/libraries')->group(function () {
     //GBV previous interviewer
     Route::get('gbv-previous-interviewer', [\App\Http\Controllers\API\V1\Libraries\LibGbvPreviousInterviewerController::class, 'index'])->name('gbv-previous-interviewer.index');
 
+    //GBV Filing type
+    Route::get('gbv-filing-type', [\App\Http\Controllers\API\V1\Libraries\LibGbvFilingTypeController::class, 'index'])->name('gbv-filing-type.index');
+
+    //GBV NPS Status
+    Route::get('gbv-nps-status', [\App\Http\Controllers\API\V1\Libraries\LibGbvNpsStatusController::class, 'index'])->name('gbv-nps-status.index');
+
 });

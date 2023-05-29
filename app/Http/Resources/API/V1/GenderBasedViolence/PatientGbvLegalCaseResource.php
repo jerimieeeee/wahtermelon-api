@@ -24,6 +24,9 @@ class PatientGbvLegalCaseResource extends JsonResource
             'facility' => $this->whenLoaded('facility'),
 
             'complaint_filed_flag' => $this->complaint_filed_flag,
+            'filing_type_id ' => $this->whenLoaded('filedType'),
+            'nps_docket_number' => $this->nps_docket_number,
+            'nps_status_id ' => $this->whenLoaded('npsStatus'),
             'filed_by_name' => $this->filed_by_name,
             'filed_by_relation_id' => $this->filed_by_relation_id,
             // 'filedRelation' => $this->whenLoaded('relation'),
@@ -34,6 +37,8 @@ class PatientGbvLegalCaseResource extends JsonResource
             'judge_name' => $this->judge_name,
             'court_name' => $this->court_name,
             'verdict_id' => $this->verdict_id,
+            'blotter_filed_flag' => $this->verdict_id,
+            'blotter_remarks' => $this->verdict_id,
             // 'verdict' => $this->whenLoaded('verdict'),
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

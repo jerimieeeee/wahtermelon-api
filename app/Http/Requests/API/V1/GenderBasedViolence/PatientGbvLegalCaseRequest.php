@@ -24,7 +24,12 @@ class PatientGbvLegalCaseRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
+            'blotter_filed_flag' => 'boolean|nullable',
+            'blotter_remarks' => 'nullable',
             'complaint_filed_flag' => 'nullable|boolean',
+            'filing_type_id ' => 'nullable|exists:lib_gbv_filing_types,id',
+            'nps_docket_number' => 'nullable',
+            'nps_status_id  ' => 'nullable|exists:lib_gbv_nps_statuses,id',
             'filed_by_name' => 'nullable',
             'filed_by_relation_id' => 'nullable|exists:lib_gbv_child_relations,id',
             'filed_location_id' => 'nullable|exists:lib_gbv_legal_filing_locations,id',
@@ -35,7 +40,7 @@ class PatientGbvLegalCaseRequest extends FormRequest
             'fiscal_name' => 'nullable',
             'criminal_case_number' => 'nullable',
             'cpumd_testimony_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'verdict_id' => 'nullable|exists:lib_gbv_outcome_verdicts,id',
+            'verdict_id' => 'nullable|exists:lib_gbv_outcome_verdicts,id'
         ];
     }
 
