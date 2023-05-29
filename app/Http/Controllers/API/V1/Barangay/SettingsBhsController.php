@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Barangay;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Barangay\SettingsBhsRequest;
 use App\Models\V1\Barangay\SettingsBhs;
 use App\Models\V1\Barangay\SettingsCatchmentBarangay;
 use Illuminate\Http\Request;
@@ -20,9 +21,9 @@ class SettingsBhsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SettingsBhsRequest $request)
     {
-        $data = SettingsBhs::updateOrCreate($request->except('barangay'));
+        $data = SettingsBhs::updateOrCreate($request->safe()->except('barangay'));
         return $data->bhsBarangay()->sync($request->barangay);
     }
 

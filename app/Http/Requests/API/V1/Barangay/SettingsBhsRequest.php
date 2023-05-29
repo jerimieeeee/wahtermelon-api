@@ -11,7 +11,7 @@ class SettingsBhsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class SettingsBhsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'bhs_name' => 'required',
+            'assigned_user_id' => 'required|exists:users,id',
+            'barangay_code' => 'required|exists:barangays,code',
+            'barangay' => 'required|array',
         ];
     }
 }
