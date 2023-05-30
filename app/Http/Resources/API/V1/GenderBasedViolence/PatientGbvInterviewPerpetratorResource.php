@@ -49,6 +49,7 @@ class PatientGbvInterviewPerpetratorResource extends JsonResource
             'criminal_barangay_flag' => $this->criminal_barangay_flag,
             'criminal_barangay_remarks' => $this->criminal_barangay_remarks,
             'occupation_code' => $this->occupation_code,
+            'perpetrator_unknown_flag' => $this->perpetrator_unknown_flag,
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),

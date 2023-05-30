@@ -378,6 +378,12 @@ Route::prefix('v1')->group(function () {
                 Route::get('catchment-barangay', 'index');
                 Route::post('catchment-barangay', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Barangay\SettingsBhsController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('bhs', 'index');
+                Route::post('bhs', 'store');
+            });
     });
 
     //Patient Medical History APIs
@@ -810,7 +816,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-conference-mitigating-factor', 'store');
                 Route::put('patient-gbv-conference-mitigating-factor/{patientGbvConfMitigatingFactor}', 'update');
             });
-        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\patientGbvConRecommendationController::class)
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvConRecommendationController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-conference-recommendation', 'index');
@@ -865,6 +871,11 @@ Route::prefix('v1')->group(function () {
                 Route::get('patient-gbv-consult-visit', 'index');
                 Route::post('patient-gbv-consult-visit', 'store');
                 // Route::put('patient-gbv-consult/{patientGbvLegalCase}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvUserController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-user', 'index');
             });
     });
 
