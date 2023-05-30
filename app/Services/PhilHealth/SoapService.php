@@ -105,7 +105,7 @@ class SoapService
         return $encryptor->encryptXmlPayloadData($data, $cipher_key);
     }
 
-    public function soapMethod($method, $params)
+    public function soapMethod( $method, $params)
     {
         //return $this->getToken();
         $this->client = $this->_client($params);
