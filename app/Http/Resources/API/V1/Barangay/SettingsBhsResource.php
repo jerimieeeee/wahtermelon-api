@@ -21,6 +21,7 @@ class SettingsBhsResource extends JsonResource
             'facility' => $this->whenLoaded('facility'),
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
+            'bhs_name' => $this->bhs_name,
             'barangay' => $this->when($this->barangay, new BarangayResource($this->barangay)),
             'bhs_barangay' => SettingsCatchmentBarangayResource::collection($this->whenLoaded('bhsBarangay')),
             'assigned_user_id' => $this->when(! $this->relationLoaded('assignedUser'), $this->assigned_user_id),

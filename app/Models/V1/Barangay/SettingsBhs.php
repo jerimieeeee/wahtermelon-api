@@ -30,6 +30,11 @@ class SettingsBhs extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function setBhsNameAttribute($value)
+    {
+        $this->attributes['bhs_name'] = ucwords(strtolower($value));
+    }
+
     public function barangay(): BelongsTo
     {
         return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
