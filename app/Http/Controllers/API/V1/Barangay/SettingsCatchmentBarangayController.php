@@ -18,9 +18,46 @@ class SettingsCatchmentBarangayController extends Controller
     public function index()
     {
         $barangay = QueryBuilder::for(SettingsCatchmentBarangay::class)
-                    ->allowedFilters(['year']);
+                    ->allowedFilters(['year'])->get();
+        $data = $barangay->groupBy([function($item) {
+            return $item->year;
+        }]);
 
-        return SettingsCatchmentBarangayResource::collection($barangay->get());
+        $result = [];
+
+        foreach ($data as $year => $records) {
+            $totalPopulation = 0;
+            $totalPopulationOpt = 0;
+            $totalPopulationWra = 0;
+            $totalHousehold = 0;
+
+            foreach ($records as $record) {
+                $population = $record['population'];
+                $populationOpt = $record['population_opt'];
+                $populationWra = $record['population_wra'];
+                $household = $record['household'];
+
+                if ($population !== null) {
+                    $totalPopulation += $population;
+                }
+                if ($populationOpt !== null) {
+                    $totalPopulationOpt += $populationOpt;
+                }
+                if ($populationWra !== null) {
+                    $totalPopulationWra += $populationWra;
+                }
+                if ($household !== null) {
+                    $totalHousehold += $household;
+                }
+            }
+
+            $result[$year]['total_population'] = $totalPopulation;
+            $result[$year]['total_population_opt'] = $totalPopulationOpt;
+            $result[$year]['total_population_wra'] = $totalPopulationWra;
+            $result[$year]['total_household'] = $totalHousehold;
+            $result[$year]['data'] = SettingsCatchmentBarangayResource::collection($records);
+        }
+        return $result;
     }
 
     /**
