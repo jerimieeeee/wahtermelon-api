@@ -384,6 +384,7 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('bhs', 'index');
                 Route::post('bhs', 'store');
+                Route::put('bhs/{bhs}', 'update');
             });
     });
 

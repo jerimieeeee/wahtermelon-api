@@ -40,9 +40,10 @@ class SettingsBhsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SettingsBhsRequest $request, SettingsBhs $bhs)
     {
-        //
+        $bhs->update($request->validated());
+        return response()->json(['status' => 'Update successful!'], 200);
     }
 
     /**
