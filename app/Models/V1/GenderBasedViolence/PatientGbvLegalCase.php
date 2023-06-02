@@ -3,7 +3,9 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\V1\Libraries\LibGbvChildRelation;
+use App\Models\V1\Libraries\LibGbvFilingType;
 use App\Models\V1\Libraries\LibGbvLegalFilingLocation;
+use App\Models\V1\Libraries\LibGbvNpsStatus;
 use App\Models\V1\Libraries\LibGbvOutcomeVerdict;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -60,5 +62,15 @@ class PatientGbvLegalCase extends Model
     public function verdict()
     {
         return $this->belongsTo(LibGbvOutcomeVerdict::class, 'verdict_id', 'id');
+    }
+
+    public function filedType()
+    {
+        return $this->belongsTo(LibGbvFilingType::class, 'filing_type_id', 'id');
+    }
+
+    public function npsStatus()
+    {
+        return $this->belongsTo(LibGbvNpsStatus::class, 'nps_status_id', 'id');
     }
 }

@@ -24,6 +24,10 @@ class PatientGbvInterviewRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
+            'interview_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
+            'recant_flag' => 'nullable|boolean',
+            'recant_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
+            'recant_remarks' => 'nullable',
             'info_source_code' => 'nullable|exists:lib_answer_yn,code',
             'incident_first_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
             'incident_first_remarks' => 'nullable',
@@ -50,6 +54,7 @@ class PatientGbvInterviewRequest extends FormRequest
             'dev_screening_id' => 'nullable',
             'disclosed_relation_id' => 'nullable',
             'deferred' => 'nullable|boolean',
+            'deferral_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
             'deferral_reason_id' => 'nullable',
             'deferral_previous_interviewer_id' => 'nullable',
             'deferral_interviewer_remarks' => 'nullable'

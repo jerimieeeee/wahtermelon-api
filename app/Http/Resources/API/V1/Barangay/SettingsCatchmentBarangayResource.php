@@ -23,6 +23,7 @@ class SettingsCatchmentBarangayResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'year' => $this->year,
             'barangay' => $this->when($this->barangay, new BarangayResource($this->barangay)),
+            'barangay_code' => $this->barangay_code,
             'population' => $this->population,
             'population_opt' => $this->population_opt,
             'population_wra' => $this->population_wra,
