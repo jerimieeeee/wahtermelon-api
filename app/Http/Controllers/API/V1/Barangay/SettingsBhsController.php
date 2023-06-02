@@ -43,6 +43,7 @@ class SettingsBhsController extends Controller
     public function update(SettingsBhsRequest $request, SettingsBhs $bhs)
     {
         $bhs->update($request->validated());
+        $bhs->bhsBarangay()->sync($request->barangay);
         return response()->json(['status' => 'Update successful!'], 200);
     }
 
