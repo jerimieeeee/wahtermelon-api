@@ -66,6 +66,18 @@ class SettingsCatchmentBarangayController extends Controller
     public function store(SettingsCatchmentBarangayRequest $request)
     {
         return DB::transaction(function () use ($request){
+//            SettingsCatchmentBarangay::query()
+//                ->where('year', $request->safe()->year)
+//                ->delete();
+            $relatedModels = SettingsCatchmentBarangay::query()
+                ->where('year', $request->safe()->year)
+                ->get(); // Retrieve related models
+
+            $relatedModels->map(function ($model) {
+                // Modify the data of each model
+                $model->bhsBarangay()->detach();
+                return $model;
+            });
             SettingsCatchmentBarangay::query()
                 ->where('year', $request->safe()->year)
                 ->delete();
