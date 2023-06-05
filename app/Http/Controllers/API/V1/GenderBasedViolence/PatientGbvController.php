@@ -42,6 +42,17 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
+<<<<<<< HEAD
+            ->with(['gbvNeglect', 'gbvComplaint', 'gbvBehavior', 'gbvReferral',
+                'gbvIntake'])
+            /* ->with(['neglect', 'complaints', 'behavior', 'referral', 'interview',
+                'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
+                'interviewNeglectAbuses', 'interviewEmotionalAbuses',
+                'interviewSummaries', 'interviewDevScreening', 'relation']) */
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
+=======
         ->with(['gbvNeglect',
                 'gbvComplaint',
                 'gbvBehavior',
@@ -77,6 +88,7 @@ class PatientGbvController extends Controller
         ->when(isset($request->id), function ($q) use ($request) {
             $q->where('id', '=', $request->id);
         });
+>>>>>>> 7093c0b7d1af4af16b8cd377510e272a5f8db3d2
         $patientGbv = QueryBuilder::for($query)
             ->defaultSort('-gbv_date')
             ->allowedSorts('gbv_date');

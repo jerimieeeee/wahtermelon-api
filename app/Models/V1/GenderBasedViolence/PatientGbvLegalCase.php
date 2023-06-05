@@ -18,7 +18,7 @@ class PatientGbvLegalCase extends Model
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public $incrementing = false;
@@ -26,7 +26,7 @@ class PatientGbvLegalCase extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'cpumd_testimony_date' => 'date:Y-m-d'
+        'cpumd_testimony_date' => 'date:Y-m-d',
     ];
 
     public function getRouteKeyName()

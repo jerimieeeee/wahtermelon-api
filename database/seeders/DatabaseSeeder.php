@@ -156,7 +156,9 @@ class DatabaseSeeder extends Seeder
             LibGbvPreviousInterviewerSeeder::class,
             LibGbvMentalAgeSeeder::class,
             LibGbvFilingTypeSeeder::class,
-            LibGbvNpsStatusSeeder::class
+            LibGbvNpsStatusSeeder::class,
+            LibWashingtonDisabilityQuestionSeeder::class,
+            LibWashingtonDisabilityAnswerSeeder::class,
         ]);
     }
 }

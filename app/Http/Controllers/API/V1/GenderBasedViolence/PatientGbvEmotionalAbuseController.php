@@ -44,9 +44,9 @@ class PatientGbvEmotionalAbuseController extends Controller
                 'patient_id' => $request->patient_id,
                 'intake_id' => $request->intake_id,
                 'info_source_id' => $value['info_source_id'],
-                'emotional_id' => $value['abused_id']
+                'emotional_id' => $value['abused_id'],
             ], $value);
-        };
+        }
 
         return response()->json(['message' => 'Successfully Saved!'], 201);
         /* $data = PatientGbvEmotionalAbuse::create($request->validated());

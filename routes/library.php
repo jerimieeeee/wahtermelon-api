@@ -439,5 +439,8 @@ Route::prefix('v1/libraries')->group(function () {
 
     //GBV NPS Status
     Route::get('gbv-nps-status', [\App\Http\Controllers\API\V1\Libraries\LibGbvNpsStatusController::class, 'index'])->name('gbv-nps-status.index');
+    //Washington Disability
+    Route::get('washington-disability-question', [\App\Http\Controllers\API\V1\Libraries\LibWashingtonDisabilityQuestionController::class, 'index'])->name('washington-disability-question.index');
+    Route::get('washington-disability-answer', [\App\Http\Controllers\API\V1\Libraries\LibWashingtonDisabilityAnswerController::class, 'index'])->name('washington-disability-answer.index');
 
 });

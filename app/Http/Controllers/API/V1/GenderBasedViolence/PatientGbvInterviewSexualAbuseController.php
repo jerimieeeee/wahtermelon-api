@@ -44,9 +44,9 @@ class PatientGbvInterviewSexualAbuseController extends Controller
                 'patient_id' => $request->patient_id,
                 'intake_id' => $request->intake_id,
                 'info_source_id' => $value['info_source_id'],
-                'sexual_abused_id' => $value['abused_id']
+                'sexual_abused_id' => $value['abused_id'],
             ], $value);
-        };
+        }
 
         return response()->json(['message' => 'Successfully Saved!'], 201);
         /* $data = PatientGbvInterviewSexualAbuse::create($request->validated());

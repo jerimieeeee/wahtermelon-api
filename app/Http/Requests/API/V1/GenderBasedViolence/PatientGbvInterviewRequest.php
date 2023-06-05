@@ -57,7 +57,7 @@ class PatientGbvInterviewRequest extends FormRequest
             'deferral_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
             'deferral_reason_id' => 'nullable',
             'deferral_previous_interviewer_id' => 'nullable',
-            'deferral_interviewer_remarks' => 'nullable'
+            'deferral_interviewer_remarks' => 'nullable',
         ];
     }
 }

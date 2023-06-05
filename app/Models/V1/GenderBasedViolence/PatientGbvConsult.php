@@ -44,6 +44,4 @@ class PatientGbvConsult extends Model
     {
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
-
-
 }

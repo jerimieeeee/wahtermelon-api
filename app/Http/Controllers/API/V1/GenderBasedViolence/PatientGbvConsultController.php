@@ -9,7 +9,6 @@ use App\Models\V1\GenderBasedViolence\PatientGbvConsult;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientGbvConsultController extends Controller

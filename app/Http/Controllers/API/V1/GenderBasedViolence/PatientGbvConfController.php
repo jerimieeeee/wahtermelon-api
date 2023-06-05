@@ -66,7 +66,7 @@ class PatientGbvConfController extends Controller
             }
 
             return response()->json([
-                'message' => 'Successfully Saved!'
+                'message' => 'Successfully Saved!',
             ], 201);
         });
         /* $data = PatientGbvConf::create($request->validated());
