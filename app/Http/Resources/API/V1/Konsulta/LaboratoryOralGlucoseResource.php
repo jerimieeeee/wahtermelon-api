@@ -25,7 +25,7 @@ class LaboratoryOralGlucoseResource extends JsonResource
                 'pExamOgttTwoHrMg' => strtoupper($this->oralGlucose->ogtt_two_hour_mg ?? ''),
                 'pExamOgttTwoHrMmol' => strtoupper($this->oralGlucose->ogtt_two_hour_mmol ?? ''),
                 'pDateAdded' => isset($this->oralGlucose->created_at) ? $this->oralGlucose->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->oralGlucose->lab_status_code ?? '',
+                'pStatus' => isset($this->oralGlucose->lab_status_code) ? ($this->oralGlucose->lab_status_code == 'O' ? 'D' : $this->oralGlucose->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

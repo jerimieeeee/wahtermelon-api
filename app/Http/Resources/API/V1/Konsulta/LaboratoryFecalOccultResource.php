@@ -20,7 +20,7 @@ class LaboratoryFecalOccultResource extends JsonResource
                 'pLabDate' => isset($this->fecalOccult->laboratory_date) ? $this->fecalOccult->laboratory_date->format('Y-m-d') : '',
                 'pFindings' => $this->fecalOccult->findings_code ?? '',
                 'pDateAdded' => isset($this->fecalOccult->created_at) ? $this->fecalOccult->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->fecalOccult->lab_status_code ?? '',
+                'pStatus' => isset($this->fecalOccult->lab_status_code) ? ($this->fecalOccult->lab_status_code == 'O' ? 'D' : $this->fecalOccult->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',
