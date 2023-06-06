@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::table('patient_gbv_legal_cases', function (Blueprint $table) {
-            $table->foreignId('filing_type_id')->after('complaint_filed_flag')->constrained('lib_gbv_filing_types');
+            $table->foreignId('filing_type_id')->after('complaint_filed_flag')->nullable()->constrained('lib_gbv_filing_types');
             $table->string('nps_docket_number')->after('filing_type_id')->nullable();
-            $table->foreignId('nps_status_id')->after('nps_docket_number')->constrained('lib_gbv_nps_statuses');
+            $table->foreignId('nps_status_id')->after('nps_docket_number')->nullable()->constrained('lib_gbv_nps_statuses');
         });
         Schema::enableForeignKeyConstraints();
     }

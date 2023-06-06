@@ -203,4 +203,9 @@ class Patient extends Model
     {
         return $this->hasMany(PatientVitals::class, 'patient_id', 'id');
     }
+
+    public function patientWashington()
+    {
+        return $this->hasOne(PatientWashingtonQuestion::class, 'patient_id', 'id');
+    }
 }

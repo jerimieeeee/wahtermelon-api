@@ -67,8 +67,8 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request): JsonResponse
     {
-        $data = Patient::create($request->validated());
-
+        $data = Patient::create($request->safe()->except('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
+        $data->patientWashington()->create($request->safe()->only('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 
@@ -83,7 +83,7 @@ class PatientController extends Controller
     {
         $query = Patient::where('id', $patient->id);
         $patient = QueryBuilder::for($query)
-            ->with('householdFolder.barangay', 'householdMember')
+            ->with('householdFolder.barangay', 'householdMember', 'patientWashington')
             ->first();
 
         return new PatientResource($patient);

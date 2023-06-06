@@ -51,6 +51,12 @@ class PatientRequest extends FormRequest
             'civil_status_code' => 'required|exists:lib_civil_statuses,code',
             'consent_flag' => 'boolean',
             'image_url' => 'nullable|url',
+            'difficulty_seeing' => 'nullable',
+            'difficulty_hearing' => 'nullable',
+            'difficulty_walking' => 'nullable',
+            'difficulty_remembering' => 'nullable',
+            'difficulty_self_care' => 'nullable',
+            'difficulty_speaking' => 'nullable',
         ];
     }
 
