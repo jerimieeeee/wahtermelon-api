@@ -23,7 +23,7 @@ class LaboratoryChestXrayResource extends JsonResource
                 'pObservation' => $this->chestXray->observation_code ?? '',
                 'pRemarksObservation' => strtoupper($this->chestXray->remarks_observation ?? ''),
                 'pDateAdded' => isset($this->chestXray->created_at) ? $this->chestXray->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->chestXray->lab_status_code ?? '',
+                'pStatus' => isset($this->chestXray->lab_status_code) ? ($this->chestXray->lab_status_code == 'O' ? 'D' : $this->chestXray->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

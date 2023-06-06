@@ -24,7 +24,7 @@ class LaboratoryLipidProfileResource extends JsonResource
                 'pCholesterol' => strtoupper($this->lipiProfile->cholesterol ?? ''),
                 'pTriglycerides' => strtoupper($this->lipiProfile->triglycerides ?? ''),
                 'pDateAdded' => isset($this->lipiProfile->created_at) ? $this->lipiProfile->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->lipiProfile->lab_status_code ?? '',
+                'pStatus' => isset($this->lipiProfile->lab_status_code) ? ($this->lipiProfile->lab_status_code == 'O' ? 'D' : $this->lipiProfile->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

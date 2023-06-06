@@ -20,7 +20,7 @@ class LaboratoryPpdResource extends JsonResource
                 'pLabDate' => isset($this->ppd->laboratory_date) ? $this->ppd->laboratory_date->format('Y-m-d') : '',
                 'pFindings' => strtoupper($this->ppd->findings_code ?? ''),
                 'pDateAdded' => isset($this->ppd->created_at) ? $this->ppd->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->ppd->lab_status_code ?? '',
+                'pStatus' => isset($this->ppd->lab_status_code) ? ($this->ppd->lab_status_code == 'O' ? 'D' : $this->ppd->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

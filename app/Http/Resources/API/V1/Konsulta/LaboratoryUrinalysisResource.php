@@ -42,7 +42,7 @@ class LaboratoryUrinalysisResource extends JsonResource
                 'pAlbumin' => strtoupper($this->urinalysis->albumin ?? ''),
                 'pPusCells' => strtoupper($this->urinalysis->pus_cells ?? ''),
                 'pDateAdded' => isset($this->urinalysis->created_at) ? $this->urinalysis->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->urinalysis->lab_status_code ?? '',
+                'pStatus' => isset($this->urinalysis->lab_status_code) ? ($this->urinalysis->lab_status_code == 'O' ? 'D' : $this->urinalysis->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

@@ -75,8 +75,8 @@ class ConsultationResource extends JsonResource
                 GROUP_CONCAT(konsulta_complaint_id SEPARATOR ';') AS konsulta_complaint_id
             ")
             ->join('consult_notes', fn ($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id', 'history'))
-            ->join('consult_notes_complaints', fn ($join) => $join->on('consult_notes.id', '=', 'consult_notes_complaints.notes_id')->select('notes_id', 'complaint_id'))
-            ->join('lib_complaints', fn ($join) => $join->on('lib_complaints.complaint_id', '=', 'consult_notes_complaints.complaint_id')->select('complaint_id', 'complaint_desc', 'konsulta_complaint_id')->whereNotNull('konsulta_complaint_id'))
+            ->leftJoin('consult_notes_complaints', fn ($join) => $join->on('consult_notes.id', '=', 'consult_notes_complaints.notes_id')->select('notes_id', 'complaint_id'))
+            ->leftJoin('lib_complaints', fn ($join) => $join->on('lib_complaints.complaint_id', '=', 'consult_notes_complaints.complaint_id')->select('complaint_id', 'complaint_desc', 'konsulta_complaint_id')->whereNotNull('konsulta_complaint_id'))
             ->whereRaw('consults.id = ?', $this->id ?? '')
             ->groupByRaw('consults.id')
             ->first();
