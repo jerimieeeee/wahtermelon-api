@@ -26,6 +26,7 @@ class PatientGbvSocialWorkRequest extends FormRequest
             'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'visit_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'social_worker' => 'nullable',
+            'social_worker_remarks' => 'nullable',
         ];
     }
 }
