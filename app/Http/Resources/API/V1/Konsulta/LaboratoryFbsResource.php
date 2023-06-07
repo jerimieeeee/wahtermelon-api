@@ -21,7 +21,7 @@ class LaboratoryFbsResource extends JsonResource
                 'pGlucoseMg' => $this->fbs->glucose ?? '',
                 'pGlucoseMmol' => '',
                 'pDateAdded' => isset($this->fbs->created_at) ? $this->fbs->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->fbs->lab_status_code ?? '',
+                'pStatus' => isset($this->fbs->lab_status_code) ? ($this->fbs->lab_status_code == 'O' ? 'D' : $this->fbs->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

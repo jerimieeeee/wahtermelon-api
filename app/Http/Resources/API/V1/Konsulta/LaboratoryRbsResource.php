@@ -21,7 +21,7 @@ class LaboratoryRbsResource extends JsonResource
                 'pGlucoseMg' => strtoupper($this->rbs->glucose ?? ''),
                 'pGlucoseMmol' => '',
                 'pDateAdded' => isset($this->rbs->created_at) ? $this->rbs->created_at->format('Y-m-d') : '',
-                'pStatus' => strtoupper($this->rbs->lab_status_code ?? ''),
+                'pStatus' => isset($this->rbs->lab_status_code) ? ($this->rbs->lab_status_code == 'O' ? 'D' : $this->rbs->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

@@ -27,7 +27,7 @@ class LaboratoryFecalysisResource extends JsonResource
                 'pBlood' => strtoupper($this->fecalysis->blood_code ?? ''),
                 'pPusCells' => strtoupper($this->fecalysis->pus_cells ?? ''),
                 'pDateAdded' => isset($this->fecalysis->created_at) ? $this->fecalysis->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->fecalysis->lab_status_code ?? '',
+                'pStatus' => isset($this->fecalysis->lab_status_code) ? ($this->fecalysis->lab_status_code == 'O' ? 'D' : $this->fecalysis->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

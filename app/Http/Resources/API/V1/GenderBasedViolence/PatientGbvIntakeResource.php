@@ -97,6 +97,9 @@ class PatientGbvIntakeResource extends JsonResource
             'harassment_object_flag' => $this->harassment_object_flag,
             'child_abuse_engaged_flag' => $this->child_abuse_engaged_flag,
             'child_abuse_sexual_flag' => $this->child_abuse_sexual_flag,
+            'child_abuse_physical_flag' => $this->child_abuse_physical_flag,
+            'child_abuse_emotional_flag' => $this->child_abuse_emotional_flag,
+            'child_abuse_economic_flag' => $this->child_abuse_economic_flag,
             'wcpd_others' => $this->wcpd_others,
 
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),

@@ -23,7 +23,7 @@ class LaboratorySputumResource extends JsonResource
                 'pRemarks' => strtoupper($this->sputum->remarks ?? ''),
                 'pNoPlusses' => strtoupper($this->sputum->reading ?? ''),
                 'pDateAdded' => isset($this->sputum->created_at) ? $this->sputum->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->sputum->lab_status_code ?? '',
+                'pStatus' => isset($this->sputum->lab_status_code) ? ($this->sputum->lab_status_code == 'O' ? 'D' : $this->sputum->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

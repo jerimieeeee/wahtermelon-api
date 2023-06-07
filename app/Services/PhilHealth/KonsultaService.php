@@ -601,7 +601,7 @@ class KonsultaService
         ! empty($diagnosticArray) ? $array['DIAGNOSTICEXAMRESULTS'] = [$diagnosticArray] : null;
         $array['MEDICINES'] = [$soaps[1]];
 
-        $result = new ArrayToXml($array, $root);
+        $result = new ArrayToXml($array, $root, true, 'UTF-8');
         $xml = $result->dropXmlDeclaration()->toXml();
 
         return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save);

@@ -4,6 +4,7 @@ namespace App\Models\V1\Barangay;
 
 use App\Models\User;
 use App\Models\V1\PSGC\Barangay;
+use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
@@ -38,8 +39,18 @@ class SettingsCatchmentBarangay extends Model
         return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
     }
 
-    public function users()
+    public function facility()
     {
-        return $this->hasMany(User::class, 'facility_code', 'code');
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function bhsBarangay()
+    {
+        return $this->belongsToMany(SettingsBhs::class, 'settings_barangay_bhs');
     }
 }

@@ -16,7 +16,7 @@ class LibGbvPerpetratorLocationSeeder extends Seeder
             ['id' => 1, 'desc' => 'Patient\'s household', 'sequence' => 1],
             ['id' => 2, 'desc' => 'In jail, police custody', 'sequence' => 2],
             ['id' => 3, 'desc' => 'Residence', 'sequence' => 3],
-            ['id' => 4, 'desc' => 'Other know location', 'sequence' => 4],
+            ['id' => 4, 'desc' => 'Other known location', 'sequence' => 4],
             ['id' => 5, 'desc' => 'Unknown', 'sequence' => 5],
         ], ['id']);
     }

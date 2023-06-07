@@ -21,7 +21,7 @@ class OtherDiagnosticExamResource extends JsonResource
                 'pOthDiagExam' => strtoupper($this->laboratory->desc ?? ''),
                 'pFindings' => strtoupper($this->getRelatedModel($this->lab)->remarks ?? ''),
                 'pDateAdded' => isset($this->getRelatedModel($this->lab)->created_at) ? $this->getRelatedModel($this->lab)->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->getRelatedModel($this->lab)->lab_status_code ?? '',
+                'pStatus' => isset($this->getRelatedModel($this->lab)->lab_status_code) ? ($this->getRelatedModel($this->lab)->lab_status_code == 'O' ? 'D' : $this->getRelatedModel($this->lab)->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',
