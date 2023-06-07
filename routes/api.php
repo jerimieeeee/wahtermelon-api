@@ -40,7 +40,7 @@ Route::prefix('v1')->group(function () {
         ->middleware('auth:api')
         ->group(function () {
             Route::get('patient', 'index')->name('patient.index');
-            Route::get('patient/{patient}', 'show')->name('patient.show');
+            Route::get('patient/{patient}', 'sgithow')->name('patient.show');
             Route::post('patient', 'store')->name('patient.store');
             Route::put('patient/{patient}', 'update')->name('patient.update');
         });
@@ -881,4 +881,21 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    //eClaims
+    Route::prefix('eclaims')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsSyncController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('check-ws', 'checkWS');
+                Route::post('case-rate', 'SearchCaseRate');
+                Route::post('get-member-pin', 'GetMemberPIN');
+                Route::post('search-hospital', 'SearchHospital');
+                Route::post('search-employer', 'SearchEmployer');
+                Route::post('get-doctor-pan', 'GetDoctorPAN');
+                Route::post('get-claim-status', 'GetClaimStatus');
+                Route::post('get-voucher-details', 'GetVoucherDetails');
+                Route::post('check-claim-eligibility', 'isClaimEligible');
+                Route::post('check-doctor-accredited', 'isDoctorAccredited');
+            });
+    });
 });
