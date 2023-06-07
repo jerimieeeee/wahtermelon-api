@@ -27,7 +27,7 @@ class ProfileResource extends JsonResource
             ->whereNotNull('patient_temp')
             ->whereNotNull('patient_height')
             ->whereNotNull('patient_weight')
-            ->whereNotNull('patient_bmi')
+            //->whereNotNull('patient_bmi')
             ->first();
         $physicalExam = Consult::query()
             ->selectRaw("
