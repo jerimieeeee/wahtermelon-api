@@ -7,7 +7,7 @@ use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
 use App\Http\Resources\API\V1\Childcare\PatientCcdevResource;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Consultation\Consult;
-use App\Services\Childcare\PatientChildcareService;
+use App\Services\Childcare\EclaimsSyncService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -40,7 +40,7 @@ class PatientCcdevController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, PatientChildcareService $ccdevStatus): ResourceCollection
+    public function index(Request $request, EclaimsSyncService $ccdevStatus): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
@@ -89,7 +89,7 @@ class PatientCcdevController extends Controller
      *
      * @return PatientCcdevResource
      */
-    public function show(PatientCcdev $patientccdev, PatientChildcareService $ccdevStatus)
+    public function show(PatientCcdev $patientccdev, EclaimsSyncService $ccdevStatus)
     {
         $query = PatientCcdev::where('id', $patientccdev->id)
                 ->leftJoinSub($ccdevStatus->get_cpab_status($patientccdev->mothers_id), 'patientccdev', function ($join) {

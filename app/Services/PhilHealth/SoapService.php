@@ -7,14 +7,23 @@ use App\Classes\PhilHealthEClaimsEncryptor;
 use App\Http\Resources\API\V1\PhilHealth\GetTokenResource;
 use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
+use App\Services\Eclaims\EclaimsSyncService;
 use Illuminate\Support\Facades\Http;
 use Spatie\ArrayToXml\ArrayToXml;
 use Str;
 
 class SoapService
 {
-    private function _client()
+    public function _client()
     {
+       $eclaimsSyncService = New EclaimsSyncService();
+
+        $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
+
+        $onlineUrls = $onlineUrls[0];
+
+//        dd($onlineUrls);
+
         $opts = [
             'http' => [
                 'user_agent' => 'PHPSoapClient',
@@ -27,13 +36,21 @@ class SoapService
             ],
         ];
 
-        //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
-        $token = auth()->user()->konsultaCredential->token;
+        if (request()->program_code == 'kp') {
+            //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
+            $token = auth()->user()->konsultaCredential->token;
 
-        $opts['http']['header'] = "Token: $token";
+            $opts['http']['header'] = "Token: $token";
 
-        //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
-        $wsdlUrl = config('app.konsulta_url');
+            //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
+            $wsdlUrl = config('app.konsulta_url');
+
+//            dd($token);
+        }
+        else {
+
+            $wsdlUrl = $onlineUrls;
+        }
 
         $context = stream_context_create($opts);
         $soapClientOptions = [
@@ -55,8 +72,8 @@ class SoapService
 
     private function decryptResponse($encryptedOutput)
     {
-        if (! isJson($encryptedOutput->return)) {
-            if (Str::contains($encryptedOutput->return, ['Please enter Valid', 'Koken', 'token'])) {
+        if (isset($encryptedOutput->return) && ! isJson($encryptedOutput->return)) {
+            if (Str::contains($encryptedOutput->return, ['Please enter Valid', 'Token', 'token'])) {
                 $credentials = auth()->user()->konsultaCredential;
                 $credentialsResource = GetTokenResource::make($credentials)->resolve();
                 $result = $this->soapMethod('getToken', $credentialsResource);
@@ -72,22 +89,30 @@ class SoapService
 
             return $encryptedOutput;
         }
+        if (isset($encryptedOutput->return)) {
+            $jsonOutput = json_decode($encryptedOutput->return);
+            $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+        } else {
+            $jsonOutput = json_decode($encryptedOutput);
+            $data = PhilhealthCredential::whereProgramCode(request()->program_code)->first();
 
-        $jsonOutput = json_decode($encryptedOutput->return);
+            $cipher_key = $data->cipher_key;
+        }
         $decryptor = new PhilHealthEClaimsEncryptor();
         //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
-        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
 
         if (! isset($jsonOutput->hash)) {
             if (isset($jsonOutput->encryptedxmlerrors)) {
                 $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
-
                 return json_decode($decryptedData);
             }
             if (isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors)) {
                 return json_decode($jsonOutput->uploadxmlresult->errors);
             }
-
+            if (isset($jsonOutput->iv)) {
+                $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput), $cipher_key);
+                return XML2JSON($decryptedData);
+            }
             return $jsonOutput;
         }
 
@@ -105,13 +130,12 @@ class SoapService
         return $encryptor->encryptXmlPayloadData($data, $cipher_key);
     }
 
-    public function soapMethod( $method, $params)
+    public function soapMethod($method, $params)
     {
         //return $this->getToken();
-        $this->client = $this->_client($params);
+        $this->client = $this->_client();
         try {
             $result = $this->client->$method($params);
-
             return $this->decryptResponse($result);
         } catch (\Exception $e) {
             return $e;       // just re-throw it
