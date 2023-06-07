@@ -21,7 +21,7 @@ class LaboratoryEcgResource extends JsonResource
                 'pFindings' => $this->ecg->findings_code ?? '',
                 'pRemarks' => strtoupper($this->ecg->remarks ?? ''),
                 'pDateAdded' => isset($this->ecg->created_at) ? $this->ecg->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->ecg->lab_status_code ?? '',
+                'pStatus' => isset($this->ecg->lab_status_code) ? ($this->ecg->lab_status_code == 'O' ? 'D' : $this->ecg->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

@@ -38,7 +38,7 @@ class LaboratoryCbcResource extends JsonResource
                 'pBasophils' => $this->cbc->basophils ?? '',
                 'pPlatelet' => $this->cbc->platelets ?? '',
                 'pDateAdded' => isset($this->cbc->created_at) ? $this->cbc->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->cbc->lab_status_code ?? '',
+                'pStatus' => isset($this->cbc->lab_status_code) ? ($this->cbc->lab_status_code == 'O' ? 'D' : $this->cbc->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

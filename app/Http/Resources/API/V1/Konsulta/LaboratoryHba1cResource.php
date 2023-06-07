@@ -20,7 +20,7 @@ class LaboratoryHba1cResource extends JsonResource
                 'pLabDate' => isset($this->hba1c->laboratory_date) ? $this->hba1c->laboratory_date->format('Y-m-d') : '',
                 'pFindings' => strtoupper($this->hba1c->findings_code ?? ''),
                 'pDateAdded' => isset($this->hba1c->created_at) ? $this->hba1c->created_at->format('Y-m-d') : '',
-                'pStatus' => $this->hba1c->lab_status_code ?? '',
+                'pStatus' => isset($this->hba1c->lab_status_code) ? ($this->hba1c->lab_status_code == 'O' ? 'D' : $this->hba1c->lab_status_code) : '',
                 'pDiagnosticLabFee' => '',
                 'pReportStatus' => 'U',
                 'pDeficiencyRemarks' => '',

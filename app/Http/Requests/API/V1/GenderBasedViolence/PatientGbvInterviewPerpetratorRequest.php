@@ -26,6 +26,7 @@ class PatientGbvInterviewPerpetratorRequest extends FormRequest
             'intake_id' => 'required|exists:patient_gbv_intakes,id',
             'perpetrator_unknown_flag' => 'nullable|boolean',
             'gender' => 'nullable',
+            'lgbtq_flag' => 'nullable|boolean',
             'perpetrator_name' => 'nullable',
             'perpetrator_nickname' => 'nullable',
             'perpetrator_age' => 'nullable|numeric',
@@ -33,6 +34,7 @@ class PatientGbvInterviewPerpetratorRequest extends FormRequest
             'relation_to_child_id' => 'nullable|exists:lib_gbv_child_relations,id',
             'location_id' => 'nullable|exists:lib_gbv_perpetrator_locations,id',
             'perpetrator_address' => 'nullable',
+            'perpetrator_current_address' => 'nullable',
             'abuse_alcohol_flag' => 'nullable|boolean',
             'abuse_drugs_flag' => 'nullable|boolean',
             'abuse_drugs_remarks' => 'nullable',
@@ -49,6 +51,7 @@ class PatientGbvInterviewPerpetratorRequest extends FormRequest
             'criminal_barangay_flag' => 'nullable|boolean',
             'criminal_barangay_remarks' => 'nullable',
             'occupation_code' => 'nullable|exists:lib_occupations,code',
+            'education_code' => 'nullable|exists:lib_education,code',
         ];
     }
 }

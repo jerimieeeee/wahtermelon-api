@@ -50,6 +50,7 @@ Route::prefix('v1')->group(function () {
         ->group(function () {
             Route::post('images', 'store')->name('images.store');
             Route::get('images/{id}', 'show')->name('images.show');
+            Route::put('images/{id}', 'update')->name('images.update');
         });
 
     //Roles and Permissions
@@ -383,6 +384,7 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('bhs', 'index');
                 Route::post('bhs', 'store');
+                Route::put('bhs/{bhs}', 'update');
             });
     });
 

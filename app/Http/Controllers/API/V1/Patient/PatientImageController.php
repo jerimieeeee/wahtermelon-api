@@ -36,7 +36,8 @@ class PatientImageController extends Controller
         $file = Storage::disk('spaces')->get($path);
         $type = Storage::disk('spaces')->mimeType($path);
 
-        return (new Response($file, 200))->header('Content-Type', $type);
+        return response()->json('Photo Successfully Updated');
+        // return (new Response($file, 200))->header('Content-Type', $type);
     }
 
     /**
@@ -56,7 +57,7 @@ class PatientImageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return $request->input('a');
+        // return $request->input('a');
         $this->validate($request, [
             'image' => 'required|image|max:2048',
         ]);
@@ -66,7 +67,7 @@ class PatientImageController extends Controller
         $fileName = 'Patient/Images/'.auth()->user()->facility_code.'/'.$filename;
         Storage::disk('spaces')->put($fileName, $request->file('image'));
 
-        return $imageUrl = Storage::disk('spaces')->get($fileName);
+        return response()->json('Photo Successfully Updated');
     }
 
     /**
