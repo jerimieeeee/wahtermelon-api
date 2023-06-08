@@ -35,7 +35,7 @@ class PatientGbvInterviewNeglectAbuseController extends Controller
         PatientGbvInterviewNeglectAbuse::query()
             ->where('patient_id', $request->safe()->patient_id)
             ->where('intake_id', $request->safe()->intake_id)
-            ->delete();
+            ->ForceDelete();
 
         $emotional_abused = $request->safe()->abused_array;
 
