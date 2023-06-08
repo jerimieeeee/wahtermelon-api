@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HouseholdFolder extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuid, FilterByUser, FilterByFacility;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuid, FilterByUser;//, FilterByFacility;
 
     protected $guarded = [
         'id',
