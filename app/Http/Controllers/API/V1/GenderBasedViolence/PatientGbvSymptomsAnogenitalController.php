@@ -36,6 +36,7 @@ class PatientGbvSymptomsAnogenitalController extends Controller
     {
         PatientGbvSymptomsAnogenital::query()
             ->where('patient_id', $request->safe()->patient_id)
+            ->where('patient_gbv_intake_id', $request->safe()->patient_gbv_intake_id)
             ->Forcedelete();
 
         $symptoms_anogenital = $request->safe()->anogenital_array;

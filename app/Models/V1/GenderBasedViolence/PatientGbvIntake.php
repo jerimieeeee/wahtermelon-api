@@ -181,4 +181,9 @@ class PatientGbvIntake extends Model
     {
         return $this->hasMany(PatientGbvConsultVisit::class, 'patient_gbv_intake_id', 'id');
     }
+
+    public function anogenital()
+    {
+        return $this->hasMany(PatientGbvSymptomsAnogenital::class, 'patient_gbv_intake_id', 'id');
+    }
 }
