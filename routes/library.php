@@ -440,4 +440,13 @@ Route::prefix('v1/libraries')->group(function () {
     //GBV NPS Status
     Route::get('gbv-nps-status', [\App\Http\Controllers\API\V1\Libraries\LibGbvNpsStatusController::class, 'index'])->name('gbv-nps-status.index');
 
+    //GBV Symptoms Anogenital
+    Route::get('gbv-symptoms-anogenital', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsAnogenitalController::class, 'index'])->name('gbv-symptoms-anogenital.index');
+
+    //GBV Symptoms Corporal
+    Route::get('gbv-symptoms-corporal', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsCorporalController::class, 'index'])->name('gbv-symptoms-corporal.index');
+
+    //GBV Symptoms Behavioral
+    Route::get('gbv-symptoms-behavioral', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsBehavioralController::class, 'index'])->name('gbv-symptoms-behavioral.index');
+
 });

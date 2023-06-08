@@ -156,7 +156,10 @@ class DatabaseSeeder extends Seeder
             LibGbvPreviousInterviewerSeeder::class,
             LibGbvMentalAgeSeeder::class,
             LibGbvFilingTypeSeeder::class,
-            LibGbvNpsStatusSeeder::class
+            LibGbvNpsStatusSeeder::class,
+            LibGbvSymptomsAnogenitalSeeder::class,
+            LibGbvSymptomsCorporalSeeder::class,
+            LibGbvSymptomsBehavioralSeeder::class,
         ]);
     }
 }
