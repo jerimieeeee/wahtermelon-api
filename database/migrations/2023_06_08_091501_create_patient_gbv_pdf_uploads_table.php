@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('patient_gbv_pdf_uploads', function (Blueprint $table) {
             $table->ulid('id')->index()->primary();
+            $table->foreignUlid('patient_gbv_id')->index()->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
 
             $table->string('file_title');
-            $table->string('file_description');
+            $table->string('file_desc');
             $table->string('file_url');
 
             $table->softDeletes();
