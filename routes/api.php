@@ -879,6 +879,13 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('patient-gbv-user', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvSymptomsAnogenitalController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-symptoms-anogenital', 'index');
+                Route::post('patient-gbv-symptoms-anogenital', 'store');
+                Route::put('patient-gbv-symptoms/{patientGbvSymptomsAnogenital}', 'update');
+            });
     });
 
     //eClaims
