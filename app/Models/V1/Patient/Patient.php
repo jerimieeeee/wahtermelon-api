@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuids, HasSearchFilter, FilterByUser, FilterByFacility;
+    use HasFactory, HasUuids, HasSearchFilter, FilterByUser;//, FilterByFacility;
 
     protected $guarded = [
         'id',
