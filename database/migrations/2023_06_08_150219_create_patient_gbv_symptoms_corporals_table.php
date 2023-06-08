@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patient_gbv_symptoms_anogenitals', function (Blueprint $table) {
+        Schema::create('patient_gbv_symptoms_corporals', function (Blueprint $table) {
             $table->ulid('id')->index()->primary();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
             $table->foreignUlid('patient_gbv_intake_id')->index()->constrained();
-            $table->boolean('historian_flag')->index()->nullable();
-            $table->boolean('child_flag')->index()->nullable();
-            $table->foreignId('anogenital_symptoms_id')->index()->nullable()->constrained('lib_gbv_symptoms_anogenitals')->nullable();
+            $table->boolean('historian_flag')->index();
+            $table->boolean('child_flag')->index();
+            $table->foreignId('corporal_symptoms_id')->index()->nullable()->constrained('lib_gbv_symptoms_corporals')->nullable();
             $table->text('remarks')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patient_gbv_symptoms_anogenitals');
+        Schema::dropIfExists('patient_gbv_symptoms_corporals');
     }
 };

@@ -26,10 +26,10 @@ class PatientGbvIntakeController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbvIntake::query()
-            ->with(['referral', 'interview',
+            ->with(['interview',
                 'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
                 'interviewNeglectAbuses', 'interviewEmotionalAbuses',
-                'interviewSummaries', 'interviewDevScreening', 'relation'])
+                'interviewSummaries', 'interviewDevScreening', 'relation', 'anogenital.symptomsAnogenital'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });

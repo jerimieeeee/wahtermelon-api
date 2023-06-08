@@ -77,7 +77,7 @@ class PatientGbvIntakeResource extends JsonResource
             'neglect' => $this->whenLoaded('neglect'),
             'complaints' => $this->whenLoaded('complaints'),
             'behavior' => $this->whenLoaded('behavior'),
-            'referral' => $this->whenLoaded('referral'),
+//            'referral' => $this->whenLoaded('referral'),
             'interview' => $this->whenLoaded('interview'),
             'interviewPerpetrator' => $this->whenLoaded('interviewPerpetrator'),
             'interviewSexualAbuses' => $this->whenLoaded('interviewSexualAbuses'),
@@ -86,6 +86,7 @@ class PatientGbvIntakeResource extends JsonResource
             'interviewEmotionalAbuses' => $this->whenLoaded('interviewEmotionalAbuses'),
             'interviewSummaries' => $this->whenLoaded('interviewSummaries'),
             'interviewDevScreening' => $this->whenLoaded('interviewDevScreening'),
+            'symptomsAnogenital' => $this->whenLoaded('anogenital'),
 
             'vaw_physical_flag' => $this->vaw_physical_flag,
             'vaw_sexual_flag' => $this->vaw_sexual_flag,
