@@ -25,8 +25,7 @@ class PatientGbvSymptomsAnogenitalRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'anogenital_array' => 'nullable|array',
-            'anogenital_array.*.historian_flag' => 'nullable|boolean',
-            'anogenital_array.*.child_flag' => 'nullable|boolean',
+            'anogenital_array.*.info_source_id' => 'nullable|exists:lib_gbv_info_sources,id',
             'anogenital_array.*.anogenital_symptoms_id' => 'nullable|exists:lib_gbv_symptoms_anogenitals,id',
             'anogenital_array.*.remarks' => 'nullable',
         ];

@@ -17,8 +17,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
             $table->foreignUlid('patient_gbv_intake_id')->index()->constrained();
-            $table->boolean('historian_flag')->index();
-            $table->boolean('child_flag')->index();
+            $table->foreignId('info_source_id')->index()->constrained('lib_gbv_info_sources')->nullable();
             $table->foreignId('corporal_symptoms_id')->index()->nullable()->constrained('lib_gbv_symptoms_corporals')->nullable();
             $table->text('remarks')->nullable();
             $table->softDeletes();
