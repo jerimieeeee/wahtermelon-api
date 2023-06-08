@@ -879,6 +879,11 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('patient-gbv-user', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvPdfUploadController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('patient-gbv-file-upload', 'store');
+            });
     });
 
     //eClaims
