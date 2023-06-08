@@ -97,7 +97,7 @@ class PatientController extends Controller
     public function update(PatientRequest $request, Patient $patient)
     {
         $patient->update($request->safe()->except('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
-        $patient->patientWashington()->update($request->safe()->only('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
+        $patient->patientWashington()->updateOrCreate($request->safe()->only('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
 
         return response()->json(['status' => 'Update successful!'], 200);
     }
