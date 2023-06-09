@@ -3,6 +3,7 @@
 namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\V1\Libraries\LibComplaint;
+use App\Models\V1\Libraries\LibGbvInfoSource;
 use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -57,5 +58,10 @@ class PatientGbvSymptomsAnogenital extends Model
     public function symptomsAnogenital()
     {
         return $this->belongsTo(LibGbvSymptomsAnogenital::class, 'anogenital_symptoms_id', 'id');
+    }
+
+    public function infoSource()
+    {
+        return $this->belongsTo(LibGbvInfoSource::class, 'info_source_id', 'id');
     }
 }

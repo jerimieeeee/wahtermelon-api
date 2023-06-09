@@ -83,6 +83,7 @@ class PatientGbvIntakeResource extends JsonResource
             'interviewSummaries' => $this->whenLoaded('interviewSummaries'),
             'interviewDevScreening' => $this->whenLoaded('interviewDevScreening'),
             'symptomsAnogenital' => $this->whenLoaded('anogenital'),
+            'symptomsCorporal' => $this->whenLoaded('corporal'),
 
             'vaw_physical_flag' => $this->vaw_physical_flag,
             'vaw_sexual_flag' => $this->vaw_sexual_flag,

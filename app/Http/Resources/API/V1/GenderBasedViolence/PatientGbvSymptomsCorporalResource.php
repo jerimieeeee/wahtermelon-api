@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\GenderBasedViolence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PatientGbvSymptomsAnogenitalResource extends JsonResource
+class PatientGbvSymptomsCorporalResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,15 @@ class PatientGbvSymptomsAnogenitalResource extends JsonResource
         return [
             'id' => $this->id,
             'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
-             'patient' => $this->whenLoaded('patient'),
+            'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
             'patient_gbv_intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_intake_id),
             'patientGbvIntake' => $this->whenLoaded('patientGbvIntake'),
-            'anogenital_symptoms_id' => $this->when(! $this->relationLoaded('symptomsAnogenital'), $this->anogenital_symptoms_id),
-            'symptomsAnogenital' => $this->whenLoaded('symptomsAnogenital'),
+            'corporal_symptoms_id' => $this->when(! $this->relationLoaded('symptomsCorporal'), $this->corporal_symptoms_id),
+            'symptomsCorporal' => $this->whenLoaded('symptomsCorporal'),
             'info_source_id' => $this->when(! $this->relationLoaded('infoSource'), $this->info_source_id),
             'infoSource' => $this->whenLoaded('infoSource'),
             'remarks' => $this->remarks,
