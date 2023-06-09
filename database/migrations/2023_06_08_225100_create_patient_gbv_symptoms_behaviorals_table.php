@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patient_gbv_pdf_uploads', function (Blueprint $table) {
+        Schema::create('patient_gbv_symptoms_behaviorals', function (Blueprint $table) {
             $table->ulid('id')->index()->primary();
-            $table->foreignUlid('patient_gbv_id')->index()->constrained();
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
-
-            $table->string('file_title');
-            $table->string('file_desc');
-            $table->string('file_url');
-
+            $table->foreignUlid('patient_gbv_intake_id')->index()->constrained();
+            $table->foreignId('info_source_id')->index()->constrained('lib_gbv_info_sources')->nullable();
+            $table->foreignId('behavioral_symptoms_id')->index()->nullable()->constrained('lib_gbv_symptoms_behaviorals')->nullable();
+            $table->text('remarks')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('facility_code')->references('code')->on('facilities');
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patient_gbv_pdf_uploads');
+        Schema::dropIfExists('patient_gbv_symptoms_behaviorals');
     }
 };

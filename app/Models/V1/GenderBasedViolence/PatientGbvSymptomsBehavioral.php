@@ -2,18 +2,14 @@
 
 namespace App\Models\V1\GenderBasedViolence;
 
-use App\Models\V1\Libraries\LibComplaint;
-use App\Models\V1\Libraries\LibGbvInfoSource;
-use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
-use App\Models\V1\Patient\Patient;
-use App\Models\V1\PSGC\Facility;
+use App\Models\V1\Libraries\LibGbvSymptomsBehavioral;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientGbvSymptomsAnogenital extends Model
+class PatientGbvSymptomsBehavioral extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
@@ -55,13 +51,8 @@ class PatientGbvSymptomsAnogenital extends Model
         return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
     }
 
-    public function anogenital()
+    public function behavior()
     {
-        return $this->belongsTo(LibGbvSymptomsAnogenital::class, 'anogenital_symptoms_id', 'id');
-    }
-
-    public function infoSource()
-    {
-        return $this->belongsTo(LibGbvInfoSource::class, 'info_source_id', 'id');
+        return $this->belongsTo(LibGbvSymptomsBehavioral::class, 'behavioral_symptoms_id', 'id');
     }
 }

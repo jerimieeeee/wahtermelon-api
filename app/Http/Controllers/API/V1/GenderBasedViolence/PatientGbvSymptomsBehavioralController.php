@@ -3,48 +3,49 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvSymptomsCorporalRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvSymptomsCorporalResource;
-use App\Models\V1\GenderBasedViolence\PatientGbvSymptomsCorporal;
+use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvSymptomsBehavioralRequest;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvSymptomsBehavioralResource;
+use App\Models\V1\GenderBasedViolence\PatientGbvSymptomsBehavioral;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PatientGbvSymptomsCorporalController extends Controller
+class PatientGbvSymptomsBehavioralController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbvSymptomsCorporal::query()
-                ->with(['patientGbvIntake', 'symptomsAnogenital'])
-                ->when(isset($request->patient_id), function ($query) use ($request) {
-                    return $query->wherePatientId($request->patient_id);
-                });
-        $patientGbvSymptomsCorporal = QueryBuilder::for($query);
+        $query = PatientGbvSymptomsBehavioral::query()
+            ->with(['patientGbvIntake', 'symptomsAnogenital'])
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
 
-        return PatientGbvSymptomsCorporalResource::collection($patientGbvSymptomsCorporal->get());
+        $patientGbvSymptomsBehavioral = QueryBuilder::for($query);
+
+        return PatientGbvSymptomsBehavioralResource::collection($patientGbvSymptomsBehavioral->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientGbvSymptomsCorporalRequest $request)
+    public function store(PatientGbvSymptomsBehavioralRequest $request)
     {
-        PatientGbvSymptomsCorporal::query()
+        PatientGbvSymptomsBehavioral::query()
             ->where('patient_id', $request->safe()->patient_id)
             ->where('patient_gbv_intake_id', $request->safe()->patient_gbv_intake_id)
             ->delete();
 
-        $corporal_arr = $request->safe()->corporal_array;
+        $behavior_arr = $request->safe()->behavior_array;
 
-        foreach ($corporal_arr as $value) {
-            PatientGbvSymptomsCorporal::updateOrCreate([
+        foreach ($behavior_arr as $value) {
+            PatientGbvSymptomsBehavioral::updateOrCreate([
                 'patient_id' => $request->patient_id,
                 'patient_gbv_intake_id' => $request->patient_gbv_intake_id,
                 'info_source_id' => $value['info_source_id'],
-                'corporal_symptoms_id' => $value['corporal_symptoms_id'],
+                'behavioral_symptoms_id' => $value['behavioral_symptoms_id'],
             ], $value);
         }
 

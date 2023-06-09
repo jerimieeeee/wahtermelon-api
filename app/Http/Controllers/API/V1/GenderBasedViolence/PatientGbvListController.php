@@ -16,14 +16,19 @@ class PatientGbvListController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = PatientGbv::query()
-        ->whereNull('outcome_date');
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        $patientGbv = QueryBuilder::for($query)
+        $patientGbv = QueryBuilder::for(PatientGbv::class)
+            ->whereNull('outcome_date')
+            ->with('patient')
             ->defaultSort('-gbv_date')
             ->allowedSorts('gbv_date');
 
-        return PatientGbvResource::collection($patientGbv->get());
+        if($perPage === 'all') {
+            return PatientGbvResource::collection($patientGbv->get());
+        }
+
+        return PatientGbvResource::collection($patientGbv->paginate($perPage)->withQueryString());
     }
 
     /**

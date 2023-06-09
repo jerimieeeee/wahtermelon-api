@@ -24,14 +24,10 @@ class PatientGbvSymptomsCorporalResource extends JsonResource
             'facility' => $this->whenLoaded('facility'),
             'patient_gbv_intake_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_intake_id),
             'patientGbvIntake' => $this->whenLoaded('patientGbvIntake'),
-            'corporal_symptoms_id' => $this->when(! $this->relationLoaded('symptomsCorporal'), $this->corporal_symptoms_id),
-            'symptomsCorporal' => $this->whenLoaded('symptomsCorporal'),
-            'info_source_id' => $this->when(! $this->relationLoaded('infoSource'), $this->info_source_id),
-            'infoSource' => $this->whenLoaded('infoSource'),
+            'info_source_id' => $this->info_source_id,
+            'corporal_symptoms_id' => $this->when(! $this->relationLoaded('corporal'), $this->corporal_symptoms_id),
+            'symptomsCorporal' => $this->whenLoaded('corporal'),
             'remarks' => $this->remarks,
-            'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }
