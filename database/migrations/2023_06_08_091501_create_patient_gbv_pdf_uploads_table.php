@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->string('file_title');
             $table->string('file_desc');
-            $table->string('file_url');
+            $table->string('file_url')->nullable();
 
             $table->softDeletes();
             $table->timestamps();
