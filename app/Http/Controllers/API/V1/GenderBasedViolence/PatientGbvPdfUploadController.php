@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvPdfUploadResource;
 use App\Models\V1\GenderBasedViolence\PatientGbvPdfUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientGbvPdfUploadController extends Controller
 {
@@ -14,7 +16,9 @@ class PatientGbvPdfUploadController extends Controller
      */
     public function index()
     {
-        //
+        $data = QueryBuilder::for(PatientGbvPdfUpload::class)
+            ->allowedFilters(['patient_gbv_id', 'patient_id']);
+        return PatientGbvPdfUploadResource::collection($data->get());
     }
 
     /**
@@ -41,9 +45,10 @@ class PatientGbvPdfUploadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(PatientGbvPdfUpload $gbvPdfUpload)
     {
-        //
+        $fileStorage = Storage::disk('spaces');
+        return $fileStorage->download($gbvPdfUpload->file_url);
     }
 
     /**
