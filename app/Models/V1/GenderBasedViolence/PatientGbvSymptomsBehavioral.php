@@ -2,14 +2,14 @@
 
 namespace App\Models\V1\GenderBasedViolence;
 
-use App\Models\V1\Libraries\LibGbvSymptomsCorporal;
+use App\Models\V1\Libraries\LibGbvSymptomsBehavioral;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientGbvSymptomsCorporal extends Model
+class PatientGbvSymptomsBehavioral extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids;
 
@@ -21,13 +21,14 @@ class PatientGbvSymptomsCorporal extends Model
 
     protected $keyType = 'string';
 
-    protected $casts = [
-        'incident_first_datetime' => 'date:Y-m-d H:i:s',
-    ];
-
     public function getRouteKeyName()
     {
         return 'id';
+    }
+
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function patient()
@@ -50,8 +51,8 @@ class PatientGbvSymptomsCorporal extends Model
         return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
     }
 
-    public function corporal()
+    public function behavior()
     {
-        return $this->belongsTo(LibGbvSymptomsCorporal::class, 'corporal_symptoms_id', 'id');
+        return $this->belongsTo(LibGbvSymptomsBehavioral::class, 'behavioral_symptoms_id', 'id');
     }
 }

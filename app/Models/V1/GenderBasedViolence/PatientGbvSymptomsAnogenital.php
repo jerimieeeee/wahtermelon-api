@@ -54,7 +54,7 @@ class PatientGbvSymptomsAnogenital extends Model
         return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
     }
 
-    public function symptomsAnogenital()
+    public function anogenital()
     {
         return $this->belongsTo(LibGbvSymptomsAnogenital::class, 'anogenital_symptoms_id', 'id');
     }
