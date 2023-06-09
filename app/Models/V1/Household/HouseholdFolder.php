@@ -3,6 +3,7 @@
 namespace App\Models\V1\Household;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibResidenceClassification;
 use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
@@ -58,5 +59,10 @@ class HouseholdFolder extends Model
     public function householdMember()
     {
         return $this->hasMany(HouseholdMember::class);
+    }
+
+    public function residenceClassification()
+    {
+        return $this->belongsTo(LibResidenceClassification::class, 'residence_classification_code', 'code');
     }
 }
