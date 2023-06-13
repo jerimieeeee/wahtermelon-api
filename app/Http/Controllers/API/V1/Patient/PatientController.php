@@ -44,7 +44,7 @@ class PatientController extends Controller
         $columns = ['last_name', 'first_name', 'middle_name'];
         $patients = QueryBuilder::for(Patient::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
-                $q->search($request->filter['search'], $columns);
+                $q->orSearch($columns, 'LIKE', $request->filter['search']);
             })
             ->allowedIncludes('suffixName', 'pwdType', 'religion', 'householdMember')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')
