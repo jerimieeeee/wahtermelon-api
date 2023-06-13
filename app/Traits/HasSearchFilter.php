@@ -66,7 +66,8 @@ trait HasSearchFilter
         $keyword = $this->escapeKeyword($keyword);
 
         $query = $this->filterPerKeyWord($query, $columns, $keyword);
-        $query = $this->addSoundexSearch($query, $columns, $keyword);
+        //$query = $this->addSoundexSearch($query, $columns, $keyword);
+
         return $query;
     }
 
