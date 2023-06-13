@@ -906,11 +906,17 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-file-upload', 'store');
                 Route::get('patient-gbv-file-upload/{gbvPdfUpload}', 'show');
             });
-
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvListController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-list', 'index');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvMedicalHistoryController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-medical-history', 'index');
+                Route::post('patient-gbv-medical-history', 'store');
+                Route::put('patient-gbv-medical-history/{patientGbvMedicalHistory}', 'update');
             });
     });
 

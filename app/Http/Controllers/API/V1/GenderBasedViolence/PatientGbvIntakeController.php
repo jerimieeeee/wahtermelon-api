@@ -29,7 +29,7 @@ class PatientGbvIntakeController extends Controller
             ->with(['interview',
                 'interviewPerpetrator', 'interviewSexualAbuses', 'interviewPhysicalAbuses',
                 'interviewNeglectAbuses', 'interviewEmotionalAbuses',
-                'interviewSummaries', 'interviewDevScreening', 'relation', 'anogenital.symptomsAnogenital', 'corporal.symptomsCorporal'])
+                'interviewSummaries', 'interviewDevScreening', 'relation', 'medicalHistory.gbvGeneralSurvey'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
