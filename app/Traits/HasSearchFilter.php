@@ -16,16 +16,13 @@ trait HasSearchFilter
             $query->where(function ($q) use ($column, $operator, $value, $boolean) {
                 foreach ($column as $col) {
                     if (!is_null($value)) {
-                        $q->orWhere(function ($q) use ($col, $operator, $value) {
-                            $q->where($col, $operator, '%' . $value . '%')
-                                ->orWhereRaw("SOUNDEX($col) = SOUNDEX('$value')");
-                        });
+                        $q->where($col, $operator, '%' . $value . '%', $boolean);
                     }
                 }
             });
 
             $this->filterPerWord($query, $column, $operator, $value, $boolean);
-        } else if (!is_null($value)) {
+        } elseif (!is_null($value)) {
             $query->where($column, $operator, $value, $boolean);
         }
     }
@@ -39,15 +36,12 @@ trait HasSearchFilter
     {
         $arrValue = explode(' ', $value);
         if (count($arrValue) > 1) {
-            foreach ($arrValue as $key => $value) {
+            foreach ($arrValue as $key => $val) {
                 $status = $key == 0 ? 'orWhere' : 'where';
-                $query->$status(function ($q) use ($column, $operator, $value, $boolean) {
+                $query->$status(function ($q) use ($column, $operator, $val, $boolean) {
                     foreach ($column as $col) {
-                        if (!is_null($value)) {
-                            $q->orWhere(function ($q) use ($col, $operator, $value) {
-                                $q->where($col, $operator, '%' . $value . '%')
-                                    ->orWhereRaw("SOUNDEX($col) = SOUNDEX('$value')");
-                            });
+                        if (!is_null($val)) {
+                            $q->where($col, $operator, '%' . $val . '%', $boolean);
                         }
                     }
                 });
@@ -59,7 +53,6 @@ trait HasSearchFilter
     {
         return str_replace(['\\', "\0", "\n", "\r", "'", '"', "\x1a"], ['\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'], $keyword);
     }
-
 
 
     /*public function scopeSearch($query, $keyword, array $columns = []): mixed
