@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\V1\Household;
 
 use App\Models\V1\Libraries\LibFamilyRole;
+use App\Models\V1\Libraries\LibResidenceClassification;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Barangay;
 use Illuminate\Foundation\Http\FormRequest;
@@ -31,6 +32,7 @@ class HouseholdFolderRequest extends FormRequest
             'family_role_code' => 'required|exists:lib_family_roles,code',
             'address' => 'required',
             'barangay_code' => 'required|exists:barangays,code',
+            'residence_classification_code' => 'nullable|exists:lib_residence_classifications,code',
             'cct_date' => 'date|date_format:Y-m-d|before:tomorrow|nullable',
             'cct_id' => 'nullable',
         ];
@@ -54,6 +56,10 @@ class HouseholdFolderRequest extends FormRequest
             'barangay_code' => [
                 'description' => 'Household barangay code',
                 'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+            ],
+            'residence_classification_code' => [
+                'description' => 'Residence classification code',
+                'example' => fake()->randomElement(LibResidenceClassification::pluck('code')->toArray()),
             ],
             'cct_date' => [
                 'description' => 'CCT Date of the household',

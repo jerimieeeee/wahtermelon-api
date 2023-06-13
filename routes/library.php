@@ -102,6 +102,9 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('family-roles', [\App\Http\Controllers\API\V1\Libraries\LibFamilyRoleController::class, 'index'])->name('family-roles.index');
     Route::get('family-roles/{familyRole}', [\App\Http\Controllers\API\V1\Libraries\LibFamilyRoleController::class, 'show'])->name('family-roles.show');
 
+    Route::get('residence-classifications', [\App\Http\Controllers\API\V1\Libraries\LibResidenceClassificationController::class, 'index'])->name('residence-classifications.index');
+    Route::get('residence-classifications/{residenceClassification}', [\App\Http\Controllers\API\V1\Libraries\LibResidenceClassificationController::class, 'show'])->name('residence-classifications.show');
+
     //Philhealth Libraries
     Route::get('membership-types', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthMembershipTypeController::class, 'index'])->name('membership-types.index');
     Route::get('membership-types/{membershipType}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthMembershipTypeController::class, 'show'])->name('membership-types.show');
