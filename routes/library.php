@@ -447,4 +447,13 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('washington-disability-question', [\App\Http\Controllers\API\V1\Libraries\LibWashingtonDisabilityQuestionController::class, 'index'])->name('washington-disability-question.index');
     Route::get('washington-disability-answer', [\App\Http\Controllers\API\V1\Libraries\LibWashingtonDisabilityAnswerController::class, 'index'])->name('washington-disability-answer.index');
 
+    //GBV Symptoms Anogenital
+    Route::get('gbv-symptoms-anogenital', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsAnogenitalController::class, 'index'])->name('gbv-symptoms-anogenital.index');
+
+    //GBV Symptoms Corporal
+    Route::get('gbv-symptoms-corporal', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsCorporalController::class, 'index'])->name('gbv-symptoms-corporal.index');
+
+    //GBV Symptoms Behavioral
+    Route::get('gbv-symptoms-behavioral', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsBehavioralController::class, 'index'])->name('gbv-symptoms-behavioral.index');
+
 });

@@ -27,6 +27,10 @@ class PatientGbvIntakeRequest extends FormRequest
         return [
             'patient_id' => 'required|exists:patients,id',
             'patient_gbv_id' => 'required|exists:patient_gbvs,id',
+            'consent_flag' => 'required|boolean',
+            'consent_relation_to_child_id' => 'nullable|exists:lib_gbv_child_relations,id',
+            'consent_guardian_name' => 'nullable',
+            'consent_date' => 'nullable',
             'case_number' => 'nullable|alpha_num',
             'case_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'primary_complaint_id' => 'nullable|exists:lib_gbv_primary_complaints,id',

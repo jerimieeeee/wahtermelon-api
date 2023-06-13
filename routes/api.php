@@ -879,12 +879,44 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('patient-gbv-user', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvSymptomsAnogenitalController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-symptoms-anogenital', 'index');
+                Route::post('patient-gbv-symptoms-anogenital', 'store');
+                Route::put('patient-gbv-symptoms/{patientGbvSymptomsAnogenital}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvSymptomsCorporalController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-symptoms-corporal', 'index');
+                Route::post('patient-gbv-symptoms-corporal', 'store');
+                // Route::put('patient-gbv-symptoms/{patientGbvSymptomsCorporal}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvSymptomsBehavioralController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-symptoms-behavioral', 'index');
+                Route::post('patient-gbv-symptoms-behavioral', 'store');
+            });
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvPdfUploadController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('patient-gbv-file-upload', 'index');
                 Route::post('patient-gbv-file-upload', 'store');
                 Route::get('patient-gbv-file-upload/{gbvPdfUpload}', 'show');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvListController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-list', 'index');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvMedicalHistoryController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-medical-history', 'index');
+                Route::post('patient-gbv-medical-history', 'store');
+                Route::put('patient-gbv-medical-history/{patientGbvMedicalHistory}', 'update');
             });
     });
 

@@ -159,7 +159,11 @@ class DatabaseSeeder extends Seeder
             LibGbvNpsStatusSeeder::class,
             LibWashingtonDisabilityQuestionSeeder::class,
             LibWashingtonDisabilityAnswerSeeder::class,
+            LibGbvSymptomsAnogenitalSeeder::class,
+            LibGbvSymptomsCorporalSeeder::class,
+            LibGbvSymptomsBehavioralSeeder::class,
             LibResidenceClassificationSeeder::class,
+            LibGbvGeneralSurveySeeder::class,
         ]);
     }
 }

@@ -7,7 +7,7 @@ use App\Http\Requests\API\V1\Childcare\PatientCcdevRequest;
 use App\Http\Resources\API\V1\Childcare\PatientCcdevResource;
 use App\Models\V1\Childcare\PatientCcdev;
 use App\Models\V1\Consultation\Consult;
-use App\Services\Childcare\EclaimsSyncService;
+use App\Services\Childcare\PatientChildcareService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -40,7 +40,7 @@ class PatientCcdevController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, EclaimsSyncService $ccdevStatus): ResourceCollection
+    public function index(Request $request, PatientChildcareService $ccdevStatus): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
