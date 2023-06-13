@@ -45,8 +45,8 @@ class PatientGbvSymptomsAnogenitalController extends Controller
                 PatientGbvSymptomsAnogenital::updateOrCreate([
                     'patient_id' => $request->patient_id,
                     'patient_gbv_intake_id' => $request->patient_gbv_intake_id,
-                    'anogenital_symptoms_id' => $value['anogenital_symptoms_id'],
-                    'remarks' => $request->remarks,
+                    'info_source_id' => $value['info_source_id'],
+                    'anogenital_symptoms_id' => $value['anogenital_symptoms_id']
                 ], $value);
         }
         return response()->json(['message' => 'Successfully Saved!'], 201);
