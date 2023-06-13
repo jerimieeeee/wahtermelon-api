@@ -162,6 +162,7 @@ class DatabaseSeeder extends Seeder
             LibGbvSymptomsAnogenitalSeeder::class,
             LibGbvSymptomsCorporalSeeder::class,
             LibGbvSymptomsBehavioralSeeder::class,
+            LibResidenceClassificationSeeder::class,
         ]);
     }
 }

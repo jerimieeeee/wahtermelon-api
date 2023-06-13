@@ -20,7 +20,7 @@ class PatientGbvSymptomsAnogenitalController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbvSymptomsAnogenital::query()
-            ->with(['patientGbvIntake', 'symptomsAnogenital', 'infoSource'])
+            ->with(['patientGbvIntake', 'symptomsAnogenital'])
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             });
@@ -45,9 +45,8 @@ class PatientGbvSymptomsAnogenitalController extends Controller
                 PatientGbvSymptomsAnogenital::updateOrCreate([
                     'patient_id' => $request->patient_id,
                     'patient_gbv_intake_id' => $request->patient_gbv_intake_id,
-                    'info_source_id' => $request->info_source_id,
-                    'anogenital_symptoms_id' => $value['anogenital_symptoms_id'],
-                    'remarks' => $request->remarks,
+                    'info_source_id' => $value['info_source_id'],
+                    'anogenital_symptoms_id' => $value['anogenital_symptoms_id']
                 ], $value);
         }
         return response()->json(['message' => 'Successfully Saved!'], 201);
@@ -66,7 +65,7 @@ class PatientGbvSymptomsAnogenitalController extends Controller
      */
     public function update(PatientGbvSymptomsAnogenitalRequest $request, PatientGbvSymptomsAnogenital $patientGbvSymptomsAnogenital)
     {
-        $patientGbvSymptomsAnogenital->update($request->safe()->only(['corporal_symptoms_id', 'info_source_id', 'remarks']));
+        $patientGbvSymptomsAnogenital->update($request->safe()->only(['anogenital_symptoms_id', 'remarks']));
 
         return response()->json(['status' => 'Update successful!'], 201);
     }

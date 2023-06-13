@@ -902,7 +902,9 @@ Route::prefix('v1')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvPdfUploadController::class)
             ->middleware(('auth:api'))
             ->group(function () {
+                Route::get('patient-gbv-file-upload', 'index');
                 Route::post('patient-gbv-file-upload', 'store');
+                Route::get('patient-gbv-file-upload/{gbvPdfUpload}', 'show');
             });
 
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvListController::class)
