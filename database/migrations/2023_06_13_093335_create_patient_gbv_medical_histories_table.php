@@ -35,8 +35,9 @@ return new class extends Migration
             $table->boolean('general_survey_respiratory')->nullable();
             $table->boolean('general_survey_others')->nullable();
             $table->text('gbv_general_survey_remarks')->nullable();
-            $table->string('menarche_flag')->nullable();
+            $table->boolean('menarche_flag')->nullable();
             $table->text('menarche_remarks')->nullable();
+            $table->integer('menarche_age')->nullable();
             $table->date('lmp_date')->nullable();
             $table->boolean('genital_discharge_uti_flag')->nullable();
             $table->boolean('past_hospitalizations_flag')->nullable();
@@ -47,8 +48,6 @@ return new class extends Migration
             $table->text('summary_non_abuse_findings')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('menarche_flag')->references('code')->on('lib_answer_ynx');
         });
     }
 
