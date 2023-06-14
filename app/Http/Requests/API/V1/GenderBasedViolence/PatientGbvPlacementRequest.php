@@ -27,15 +27,15 @@ class PatientGbvPlacementRequest extends FormRequest
             'location_id' => 'nullable|exists:lib_gbv_placement_locations,id',
             'home_by_cpu_flag' => 'nullable|boolean',
             'home_by_other_name' => 'nullable',
-            'scheduled_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'actual_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'scheduled_date' => 'nullable|date|date_format:Y-m-d',
+            'actual_date' => 'nullable|date|date_format:Y-m-d',
             'placement_name' => 'nullable',
             'placement_contact_info' => 'nullable|min:11|max:13',
             'type_id' => 'nullable|exists:lib_gbv_placement_types,id',
             'hospital_name' => 'nullable',
             'hospital_ward' => 'nullable',
-            'hospital_date_in' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'hospital_date_out' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'hospital_date_in' => 'nullable|date|date_format:Y-m-d',
+            'hospital_date_out' => 'nullable|date|date_format:Y-m-d',
         ];
     }
 }
