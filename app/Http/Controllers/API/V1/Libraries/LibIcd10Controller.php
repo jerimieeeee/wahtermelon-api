@@ -29,10 +29,9 @@ class LibIcd10Controller extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibIcd10
      *
-     * @param Request $request
      * @return ResourceCollection
      */
-    public function index(Request $request): ResourceCollection
+    public function index(Request $request)
     {
         $columns = ['icd10_desc'];
         $icd10 = QueryBuilder::for(LibIcd10::class)
