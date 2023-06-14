@@ -45,7 +45,7 @@ class PatientGbvMedicalHistoryRequest extends FormRequest
             'menarche_flag' => 'nullable|boolean',
             'menarche_age' => 'nullable',
             'menarche_remarks' => 'nullable',
-            'lmp_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'lmp_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'genital_discharge_uti_flag' => 'nullable|boolean',
             'past_hospitalizations_flag' => 'nullable|boolean',
             'past_hospital_remarks' => 'nullable',
