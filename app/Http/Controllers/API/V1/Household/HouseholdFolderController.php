@@ -46,7 +46,7 @@ class HouseholdFolderController extends Controller
         $household = QueryBuilder::for(HouseholdFolder::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
                 $q->whereHas('householdMember.patient', function ($q) use ($request, $columns) {
-                    $q->search($request->filter['search'], $columns);
+                    $q->orSearch($columns, 'LIKE', $request->filter['search']);
                 });
             })
             ->with('householdMember.patient')

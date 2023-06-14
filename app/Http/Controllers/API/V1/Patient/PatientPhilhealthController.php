@@ -49,7 +49,7 @@ class PatientPhilhealthController extends Controller
             ->when(isset($request->search), function ($q) use ($request, $columns) {
                 //$q->search($request->filter['search'], $columns);
                 $q->whereHas('patient', function ($q) use ($request, $columns) {
-                    $q->search($request->search, $columns);
+                    $q->orSearch($columns, 'LIKE', $request->search);
                 });
             })
             ->allowedFilters(['philhealth_id', 'patient_id', 'search'])

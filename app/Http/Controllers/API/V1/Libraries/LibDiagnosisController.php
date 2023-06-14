@@ -36,7 +36,7 @@ class LibDiagnosisController extends Controller
         $columns = ['class_name'];
         $diagnosis = QueryBuilder::for(LibDiagnosis::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
-                $q->search($request->filter['search'], $columns);
+                $q->orSearch($columns, 'LIKE', $request->filter['search']);
             });
 
         return LibDiagnosisResource::collection($diagnosis->get());
