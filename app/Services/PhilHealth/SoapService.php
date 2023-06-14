@@ -28,7 +28,7 @@ class SoapService
             ],
         ];
 
-        if (!isset(request()->program_code) || request()->program_code != 'kp') {
+        if (!isset(request()->program_code) && request()->program_code != 'kp') {
             //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
             $token = auth()->user()->konsultaCredential->token;
 
