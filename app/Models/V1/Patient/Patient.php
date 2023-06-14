@@ -13,6 +13,7 @@ use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -207,5 +208,10 @@ class Patient extends Model
     public function patientWashington()
     {
         return $this->hasOne(PatientWashingtonQuestion::class, 'patient_id', 'id');
+    }
+
+    public function philhealthKonsulta()
+    {
+        return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')->whereProgramCode('kp');
     }
 }
