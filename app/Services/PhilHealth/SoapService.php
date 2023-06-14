@@ -16,14 +16,6 @@ class SoapService
 {
     public function _client()
     {
-       $eclaimsSyncService = New EclaimsSyncService();
-
-        $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
-
-        $onlineUrls = $onlineUrls[0];
-
-//        dd($onlineUrls);
-
         $opts = [
             'http' => [
                 'user_agent' => 'PHPSoapClient',
@@ -36,7 +28,7 @@ class SoapService
             ],
         ];
 
-        if (request()->program_code == 'kp') {
+        if (!isset(request()->program_code) && request()->program_code != 'kp') {
             //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
             $token = auth()->user()->konsultaCredential->token;
 
@@ -48,8 +40,12 @@ class SoapService
 //            dd($token);
         }
         else {
+            $eclaimsSyncService = New EclaimsSyncService();
 
-            $wsdlUrl = $onlineUrls;
+            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
+
+            $wsdlUrl = $onlineUrls[0];
+            //$wsdlUrl = $onlineUrls;
         }
 
         $context = stream_context_create($opts);
