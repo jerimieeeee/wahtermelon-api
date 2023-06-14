@@ -6,6 +6,17 @@ use Illuminate\Support\Facades\DB;
 
 class ChildCareReportService
 {
+    public function get_catchment_barangay()
+    {
+        $results = DB::table('settings_catchment_barangays')
+            ->select('facility_code AS fac_code', 'barangay_code AS brgy_code')
+            ->groupBy('facility_code')
+            ->pluck('brgy_code', 'fac_code')
+            ->toArray();
+
+        dd($results);
+    }
+
     public function get_mother_vaccine()
     {
         return DB::table('patient_vaccines')
@@ -44,7 +55,8 @@ class ChildCareReportService
                         ROW_NUMBER() OVER (PARTITION BY patients.id,
                             vaccine_id ORDER BY vaccine_id) AS vaccine_seq,
                         municipality_code,
-                        barangay_code
+                        barangay_code,
+                        patient_vaccines.facility_code AS facility_code
                     ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
@@ -68,7 +80,8 @@ class ChildCareReportService
                         status_id,
                         vaccine_seq,
                         municipality_code,
-                        barangay_code
+                        barangay_code,
+                        facility_code
             ')
             ->whereYear('date_of_service', $request->year)
             ->whereMonth('date_of_service', $request->month)
