@@ -6,6 +6,28 @@ use Illuminate\Support\Facades\DB;
 
 class ChildCareReportService
 {
+    public function catchment_barangay()
+    {
+        return DB::table('settings_catchment_barangays')
+            ->selectRaw('
+                        facility_code,
+                        barangay_code
+                    ')
+            ->whereFacilityCode(auth()->user()->facility_code);
+    }
+
+    public function get_catchment_barangays()
+    {
+        $result = DB::table('settings_catchment_barangays')
+            ->selectRaw('
+                        facility_code,
+                        barangay_code
+                    ')
+            ->whereFacilityCode(auth()->user()->facility_code);
+
+        return $result->pluck('barangay_code');
+    }
+
     public function get_mother_vaccine()
     {
         return DB::table('patient_vaccines')
@@ -44,18 +66,25 @@ class ChildCareReportService
                         ROW_NUMBER() OVER (PARTITION BY patients.id,
                             vaccine_id ORDER BY vaccine_id) AS vaccine_seq,
                         municipality_code,
-                        barangay_code
+                        municipalities_brgy.barangay_code,
+                        patient_vaccines.facility_code AS facility_code
                     ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
+                ->when(isset($request->facility_code), function ($q) use ($request) {
+                    $q->joinSub($this->catchment_barangay(), 'catchment_barangay', function ($join) {
+                        $join->on('catchment_barangay.barangay_code', '=', 'municipalities_brgy.barangay_code');
+                    });
+                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+                })
                 ->when(isset($request->municipality_code), function ($q) use ($request) {
                     $q->whereIn('municipality_code', explode(',', $request->municipality_code));
                 })
                 ->when(isset($request->barangay_code), function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->barangay_code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->barangay_code));
                 })
                 ->whereVaccineId($vaccine_id)
                 ->whereGender($patient_gender);
@@ -68,7 +97,8 @@ class ChildCareReportService
                         status_id,
                         vaccine_seq,
                         municipality_code,
-                        barangay_code
+                        barangay_code,
+                        facility_code
             ')
             ->whereYear('date_of_service', $request->year)
             ->whereMonth('date_of_service', $request->month)
