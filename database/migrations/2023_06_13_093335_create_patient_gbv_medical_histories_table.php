@@ -23,7 +23,17 @@ return new class extends Migration
             $table->decimal('patient_height', 10, 2)->nullable()->index();
             $table->boolean('taking_medication_flag')->nullable()->index();
             $table->text('taking_medication_remarks')->nullable();
-            $table->foreignId('gbv_general_survey_id')->index()->nullable()->constrained('lib_gbv_general_surveys')->nullable();
+            $table->boolean('general_survey_normal')->nullable()->index();
+            $table->boolean('general_survey_abnormal')->nullable()->index();
+            $table->boolean('general_survey_stunting')->nullable()->index();
+            $table->boolean('general_survey_wasting')->nullable()->index();
+            $table->boolean('general_survey_dirty_unkempt')->nullable()->index();
+            $table->boolean('general_survey_stuporous')->nullable()->index();
+            $table->boolean('general_survey_pale')->nullable()->index();
+            $table->boolean('general_survey_non_ambulant')->nullable()->index();
+            $table->boolean('general_survey_drowsy')->nullable()->index();
+            $table->boolean('general_survey_respiratory')->nullable()->index();
+            $table->boolean('general_survey_others')->nullable()->index();
             $table->text('gbv_general_survey_remarks')->nullable();
             $table->string('menarche_flag')->nullable()->index();
             $table->text('menarche_remarks')->nullable();
