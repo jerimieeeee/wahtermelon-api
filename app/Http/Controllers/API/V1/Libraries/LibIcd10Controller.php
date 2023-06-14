@@ -29,14 +29,15 @@ class LibIcd10Controller extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibIcd10
      *
+     * @param Request $request
      * @return ResourceCollection
      */
-    public function index(Request $request)
+    public function index(Request $request): ResourceCollection
     {
         $columns = ['icd10_desc'];
         $icd10 = QueryBuilder::for(LibIcd10::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
-                $q->search($request->filter['search'], $columns);
+                $q->orSearch($columns, 'LIKE', $request->filter['search']);
             });
 
         return LibIcd10Resource::collection($icd10->get());
