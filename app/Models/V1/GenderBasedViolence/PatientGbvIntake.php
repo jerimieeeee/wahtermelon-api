@@ -196,4 +196,9 @@ class PatientGbvIntake extends Model
     {
         return $this->hasMany(PatientGbvSymptomsBehavioral::class, 'patient_gbv_intake_id', 'id');
     }
+
+    public function medicalHistory()
+    {
+        return $this->hasOne(PatientGbvMedicalHistory::class, 'patient_gbv_intake_id', 'id');
+    }
 }
