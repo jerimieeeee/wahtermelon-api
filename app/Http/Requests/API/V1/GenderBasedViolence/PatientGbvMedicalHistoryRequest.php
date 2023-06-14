@@ -49,7 +49,7 @@ class PatientGbvMedicalHistoryRequest extends FormRequest
             'past_hospitalizations_flag' => 'nullable|boolean',
             'past_hospital_remarks' => 'nullable',
             'scar_physical_abuse_flag' => 'nullable|boolean',
-            'pertinent_medical_history_flag' => 'nullable|boolean',
+            'pertinent_med_history_flag' => 'nullable|boolean',
             'medical_history_remarks' => 'nullable',
             'summary_non_abuse_findings' => 'nullable',
         ];

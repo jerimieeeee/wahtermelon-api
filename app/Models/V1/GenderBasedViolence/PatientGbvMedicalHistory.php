@@ -55,9 +55,4 @@ class PatientGbvMedicalHistory extends Model
     {
         return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
     }
-
-    public function gbvGeneralSurvey()
-    {
-        return $this->belongsTo(LibGbvGeneralSurvey::class, 'gbv_general_survey_id', 'id');
-    }
 }
