@@ -46,7 +46,7 @@ class UserController extends Controller
         $columns = ['last_name', 'first_name', 'middle_name'];
         $user = QueryBuilder::for(User::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
-                $q->search($request->filter['search'], $columns);
+                $q->orSearch($columns, 'LIKE', $request->filter['search']);
             })
             ->when(isset($request->designation_code), function ($q) use ($request) {
                 $q->whereDesignationCode($request->designation_code);
