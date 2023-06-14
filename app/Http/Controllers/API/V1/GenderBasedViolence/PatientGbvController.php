@@ -66,6 +66,8 @@ class PatientGbvController extends Controller
                 'gbvIntake.interviewSummaries.perpetrator',
                 'gbvIntake.interventionSocialWork',
                 'gbvIntake.interventionPlacement',
+                'gbvIntake.interventionPlacement.location',
+                'gbvIntake.interventionPlacement.placementType',
                 'gbvIntake.interventionPsych.participant',
                 'gbvIntake.interventionLegal.relation',
                 'gbvIntake.interventionLegal.filedLocation',
