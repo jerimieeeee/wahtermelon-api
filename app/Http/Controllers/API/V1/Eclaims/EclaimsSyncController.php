@@ -59,7 +59,7 @@ class EclaimsSyncController extends Controller
     {
         $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        return $service->_client()->GetMemberPIN(
+        $pin = $service->_client()->GetMemberPIN(
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
@@ -69,6 +69,8 @@ class EclaimsSyncController extends Controller
             $request->suffix_name,
             $request->birthdate,
         );
+
+        return response()->json(['data' => $pin], 200);
     }
 
     /**
