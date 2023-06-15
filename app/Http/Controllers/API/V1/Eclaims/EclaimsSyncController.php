@@ -8,6 +8,7 @@ use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\Eclaims\EclaimsSyncService;
 use App\Services\PhilHealth\SoapService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
  * @authenticated
@@ -69,8 +70,12 @@ class EclaimsSyncController extends Controller
             $request->suffix_name,
             $request->birthdate,
         );
-
-        return response()->json(['data' => $pin], 200);
+        if (Str::contains($pin, 'NO RECORDS FOUND')) {
+            $status = 404;
+        } else {
+            $status = 200;
+        }
+        return response()->json(['data' => $pin], $status);
     }
 
     /**

@@ -22,7 +22,6 @@ class ChildCareReportService
             ->groupBy('facility_code', 'barangay_code', 'year', 'population');
     }
 
-
     public function catchment_barangay()
     {
         return DB::table('settings_catchment_barangays')
