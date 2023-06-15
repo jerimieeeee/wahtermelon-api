@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibGbvOutcomeResult;
 use App\Models\V1\Libraries\LibGbvOutcomeVerdict;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientGbv extends Model
 {
-    use SoftDeletes, HasFactory, FilterByUser, HasUlids;
+    use SoftDeletes, HasFactory, FilterByUser, HasUlids, FilterByFacility;
 
     protected $guarded = [
         'id',
