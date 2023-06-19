@@ -4,6 +4,7 @@ namespace App\Models\V1\GenderBasedViolence;
 
 use App\Models\V1\Libraries\LibGbvGeneralSurvey;
 use App\Models\V1\Libraries\LibGbvInfoSource;
+use App\Models\V1\Libraries\LibGbvMedicalImpression;
 use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
 use App\Models\V1\Libraries\LibGeneralSurvey;
 use App\Models\V1\Patient\Patient;
@@ -54,5 +55,10 @@ class PatientGbvMedicalHistory extends Model
     public function patientGbvIntake()
     {
         return $this->belongsTo(PatientGbvIntake::class, 'patient_gbv_intake_id', 'id');
+    }
+
+    public function medicalImpression()
+    {
+        return $this->belongsTo(LibGbvMedicalImpression::class, 'medical_impression_id', 'id');
     }
 }
