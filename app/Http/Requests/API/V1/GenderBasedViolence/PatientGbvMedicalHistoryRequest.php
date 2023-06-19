@@ -54,6 +54,7 @@ class PatientGbvMedicalHistoryRequest extends FormRequest
             'pe_anus_remarks' => 'nullable',
             'pe_hymen_remarks' => 'nullable',
             'medical_impression_id' => 'nullable|exists:lib_gbv_medical_impressions,id',
+            'medical_impression_remarks' => 'nullable',
 
             'menarche_flag' => 'nullable|boolean',
             'menarche_age' => 'nullable',

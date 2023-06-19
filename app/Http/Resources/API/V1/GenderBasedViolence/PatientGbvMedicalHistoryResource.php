@@ -55,6 +55,7 @@ class PatientGbvMedicalHistoryResource extends JsonResource
             'pe_hymen_remarks' => $this->pe_hymen_remarks,
             'medical_impression_id' => $this->medical_impression_id,
             'medicalImpression' => $this->whenLoaded('medicalImpression'),
+            'medical_impression_remarks' => $this->medical_impression_remarks,
 
             'menarche_flag' => $this->menarche_flag,
             'menarche_remarks' => $this->menarche_remarks,
