@@ -225,7 +225,7 @@ class ChildCareReport2018Controller extends Controller
 
         return [
 
-            //CPAB
+            //GET CATCHMENT POPULATION
             'catchment_population' => $catchment_population,
 
             //CPAB
