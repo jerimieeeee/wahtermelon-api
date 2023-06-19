@@ -14,7 +14,7 @@ class LibResidenceClassificationSeeder extends Seeder
     public function run(): void
     {
         LibResidenceClassification::upsert([
-            ['code' => '01', 'desc' => 'Informal Settlers'],
+            ['code' => '01', 'desc' => 'Informal Settlement'],
             ['code' => '02', 'desc' => 'Resettlement'],
         ], ['code']);
     }
