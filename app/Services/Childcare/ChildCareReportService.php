@@ -277,7 +277,7 @@ class ChildCareReportService
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
             })
             ->when($request->facility_code, function ($q) use ($request) {
-                $q->whereIn('barangay_code', $this->get_catchment_barangays());
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when(isset($request->municipality_code), function ($q) use ($request) {
                 $q->whereIn('municipality_code', explode(',', $request->municipality_code));
