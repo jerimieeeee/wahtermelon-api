@@ -150,7 +150,7 @@ class SoapService
             $newArray[$key]['first_name'] = $value->pAssignedFirstName;
             $newArray[$key]['middle_name'] = $value->pAssignedMiddleName;
             $newArray[$key]['suffix_name'] = $value->pAssignedExtName;
-            $newArray[$key]['birthdate'] = $value->pAssignedDateOfBirth;
+            $newArray[$key]['birthdate'] = !empty($value->pAssignedDateOfBirth) ? $value->pAssignedDateOfBirth : null;
             $newArray[$key]['gender'] = $value->pAssignedSex;
             $newArray[$key]['membership_type_id'] = $value->pAssignedType;
             $newArray[$key]['member_pin'] = $value->pPrimaryPIN;
@@ -158,7 +158,7 @@ class SoapService
             $newArray[$key]['member_first_name'] = $value->pPrimaryFirstName;
             $newArray[$key]['member_middle_name'] = $value->pPrimaryMiddleName;
             $newArray[$key]['member_suffix_name'] = $value->pPrimaryExtName;
-            $newArray[$key]['member_birthdate'] = $value->pPrimaryDateOfBirth;
+            $newArray[$key]['member_birthdate'] = !empty($value->pPrimaryDateOfBirth) ? $value->pPrimaryDateOfBirth : null;
             $newArray[$key]['member_gender'] = $value->pPrimarySex;
             $newArray[$key]['mobile_number'] = Str::remove(' ', $value->pMobileNumber);
             $newArray[$key]['landline_number'] = Str::remove(' ', $value->pLandlineNumber);
