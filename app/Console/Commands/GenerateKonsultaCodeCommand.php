@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -37,5 +38,9 @@ class GenerateKonsultaCodeCommand extends Command
             $caseNumber = IdGenerator::generate(['table' => $tableName, 'field' => 'case_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             $patient->update(['case_number' => $caseNumber]);
         });
+
+        $consult = new Consult;
+        $consultTableName = $consult->getTable();
+        echo $consultData = $consult->whereNull('transaction_number')->wherePtGroup('cn')->whereHas('consultNotes.finaldx')->count();
     }
 }
