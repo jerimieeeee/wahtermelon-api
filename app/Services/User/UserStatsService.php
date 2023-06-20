@@ -12,12 +12,19 @@ class UserStatsService
             ->selectRaw("
                         CONCAT(users.first_name, ' ', users.middle_name, ' ', users.last_name) AS Name,
                         lib_designations.desc AS Designation,
-                        users.facility_code,
                         COUNT(patients.user_id) AS Count
                     ")
             ->join('patients', 'users.id', '=', 'patients.user_id')
             ->join('lib_designations', 'users.designation_code', '=', 'lib_designations.code')
-            ->groupBy('name', 'Designation', 'facility_code')
+            ->join('facilities', 'users.facility_code', 'facilities.code')
+            ->when(isset($request->municipality_code), function ($q) use ($request) {
+                $q->whereIn('municipality_code', explode(',', $request->municipality_code));
+            })
+            ->when(isset($request->barangay_code), function ($q) use ($request) {
+                $q->whereIn('barangay_code', explode(',', $request->barangay_code));
+            })
+            ->groupBy('name', 'Designation', 'users.facility_code')
+            ->where('users.facility_code', auth()->user()->facility_code)
             ->whereYear('patients.created_at', $request->year)
             ->whereMonth('patients.created_at', $request->month)
             ->orderBy('Count', 'DESC');

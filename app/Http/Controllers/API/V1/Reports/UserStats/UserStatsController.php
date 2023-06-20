@@ -28,7 +28,7 @@ class UserStatsController extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, UserStatsService $userStatsService, StatsService $statsService)
+    public function index(Request $request, UserStatsService $userStatsService)
     {
         //Patient registered per user
         $user_registered = $userStatsService->get_count_users_registered_patients($request)->get();

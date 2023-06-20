@@ -78,7 +78,8 @@ class PatientGbvController extends Controller
                 'gbvIntake.caseConference.concern.concern',
                 'gbvIntake.caseConference.mitigatingFactor.mitigatingFactor',
                 'gbvIntake.caseConference.recommendation.recommendation',
-                'gbvIntake.medicalHistory'])
+                'gbvIntake.medicalHistory',
+                'gbvIntake.medicalHistory.medicalImpression'])
         ->when(isset($request->patient_id), function ($query) use ($request) {
             return $query->wherePatientId($request->patient_id);
         })

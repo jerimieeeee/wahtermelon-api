@@ -8,6 +8,7 @@ use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\Eclaims\EclaimsSyncService;
 use App\Services\PhilHealth\SoapService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
  * @authenticated
@@ -59,7 +60,7 @@ class EclaimsSyncController extends Controller
     {
         $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        return $service->_client()->GetMemberPIN(
+        $pin = $service->_client()->GetMemberPIN(
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
@@ -69,6 +70,12 @@ class EclaimsSyncController extends Controller
             $request->suffix_name,
             $request->birthdate,
         );
+        if (Str::contains($pin, 'NO RECORDS FOUND')) {
+            $status = 404;
+        } else {
+            $status = 200;
+        }
+        return response()->json(['data' => $pin], $status);
     }
 
     /**

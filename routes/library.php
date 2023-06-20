@@ -456,4 +456,6 @@ Route::prefix('v1/libraries')->group(function () {
     //GBV Symptoms Behavioral
     Route::get('gbv-symptoms-behavioral', [\App\Http\Controllers\API\V1\Libraries\LibGbvSymptomsBehavioralController::class, 'index'])->name('gbv-symptoms-behavioral.index');
 
+    //GBV Symptoms Behavioral
+    Route::get('gbv-medical-impression', [\App\Http\Controllers\API\V1\Libraries\LibGbvMedicalImpressionController::class, 'index'])->name('gbv-medical-impression.index');
 });

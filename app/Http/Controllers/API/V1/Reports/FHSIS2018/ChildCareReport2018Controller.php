@@ -27,6 +27,9 @@ class ChildCareReport2018Controller extends Controller
      */
     public function index(Request $request, ChildCareReportService $childCareReportService)
     {
+        //Catchment Population
+        $catchment_population = $childCareReportService->get_projected_population()->get();
+
         //CPAB
         $cpab_m = $childCareReportService->get_cpab($request, 'M')->get();
         $cpab_f = $childCareReportService->get_cpab($request, 'F')->get();
@@ -221,6 +224,9 @@ class ChildCareReport2018Controller extends Controller
         $wasted_0_59_months_f = $childCareReportService->get_stunted_wasted($request, 'F', 'Wasted')->get();
 
         return [
+
+            //GET CATCHMENT POPULATION
+            'catchment_population' => $catchment_population,
 
             //CPAB
             'CPAB_Male' => $cpab_m,

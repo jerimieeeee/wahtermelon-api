@@ -18,10 +18,10 @@ class LibWashingtonDisabilityAnswerSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         LibWashingtonDisabilityAnswer::upsert([
-            ['desc' => 'No, no difficulity',             'sequence' => 1],
-            ['desc' => 'Yes, some difficulty',           'sequence' => 2],
-            ['desc' => 'Yes, a lot of difficulty',       'sequence' => 3],
-            ['desc' => 'Cannot do it at all',            'sequence' => 4],
+            ['id' => 1, 'desc' => 'No, no difficulty',              'sequence' => 1],
+            ['id' => 2, 'desc' => 'Yes, some difficulty',           'sequence' => 2],
+            ['id' => 3, 'desc' => 'Yes, a lot of difficulty',       'sequence' => 3],
+            ['id' => 4, 'desc' => 'Cannot do it at all',            'sequence' => 4],
         ], ['id']);
     }
 }

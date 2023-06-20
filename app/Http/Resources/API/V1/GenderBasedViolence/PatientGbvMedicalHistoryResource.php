@@ -30,7 +30,6 @@ class PatientGbvMedicalHistoryResource extends JsonResource
             'patient_height' => $this->patient_height,
             'taking_medication_flag' => $this->taking_medication_flag,
             'taking_medication_remarks' => $this->taking_medication_remarks,
-            'menarche_flag' => $this->menarche_flag,
             'general_survey_normal' => $this->general_survey_normal,
             'general_survey_abnormal' => $this->general_survey_abnormal,
             'general_survey_stunting' => $this->general_survey_stunting,
@@ -42,6 +41,23 @@ class PatientGbvMedicalHistoryResource extends JsonResource
             'general_survey_drowsy' => $this->general_survey_drowsy,
             'general_survey_respiratory' => $this->general_survey_respiratory,
             'general_survey_others' => $this->general_survey_others,
+            'gbv_general_survey_remarks' => $this->gbv_general_survey_remarks,
+
+            'pe_head_and_neck_remarks' => $this->pe_head_and_neck_remarks,
+            'pe_chest_and_lungs_remarks' => $this->pe_chest_and_lungs_remarks,
+            'pe_breast_remarks' => $this->pe_breast_remarks,
+            'pe_abdomen_remarks' => $this->pe_abdomen_remarks,
+            'pe_back_remarks' => $this->pe_back_remarks,
+            'pe_extremities_remarks' => $this->pe_extremities_remarks,
+            'pe_anogenital_remarks' => $this->pe_anogenital_remarks,
+            'pe_external_genitalia_remarks' => $this->pe_external_genitalia_remarks,
+            'pe_anus_remarks' => $this->pe_anus_remarks,
+            'pe_hymen_remarks' => $this->pe_hymen_remarks,
+            'medical_impression_id' => $this->medical_impression_id,
+            'medicalImpression' => $this->whenLoaded('medicalImpression'),
+            'medical_impression_remarks' => $this->medical_impression_remarks,
+
+            'menarche_flag' => $this->menarche_flag,
             'menarche_remarks' => $this->menarche_remarks,
             'lmp_date' => $this->lmp_date,
             'genital_discharge_uti_flag' => $this->genital_discharge_uti_flag,
@@ -55,5 +71,6 @@ class PatientGbvMedicalHistoryResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
+
     }
 }
