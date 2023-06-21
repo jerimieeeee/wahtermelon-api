@@ -39,8 +39,14 @@ class GenerateKonsultaCodeCommand extends Command
             $patient->update(['case_number' => $caseNumber]);
         });
 
-        $consult = new Consult;
-        $consultTableName = $consult->getTable();
-        echo $consultData = $consult->whereNull('transaction_number')->wherePtGroup('cn')->whereHas('consultNotes.finaldx')->count();
+        $consults = new Consult;
+        $consultTableName = $consults->getTable();
+        echo $consultData = $consults->whereNull('transaction_number')->wherePtGroup('cn')->whereHas('consultNotes.finaldx')->get();
+        $consultData->map(function($consult) use($consultTableName){
+            echo $credential = $consult->patient->philhealthKonsulta->pluck('accreditation_number')->first();
+//            $prefix = 'T'.$credential.$patient->created_at->format('Ym');
+//            $caseNumber = IdGenerator::generate(['table' => $tableName, 'field' => 'case_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+//            $patient->update(['case_number' => $caseNumber]);
+        });
     }
 }
