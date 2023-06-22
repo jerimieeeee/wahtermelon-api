@@ -89,7 +89,7 @@ class PatientCcdevController extends Controller
      *
      * @return PatientCcdevResource
      */
-    public function show(PatientCcdev $patientccdev, EclaimsSyncService $ccdevStatus)
+    public function show(PatientCcdev $patientccdev, PatientChildcareService $ccdevStatus)
     {
         $query = PatientCcdev::where('id', $patientccdev->id)
                 ->leftJoinSub($ccdevStatus->get_cpab_status($patientccdev->mothers_id), 'patientccdev', function ($join) {
