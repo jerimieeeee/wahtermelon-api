@@ -29,6 +29,7 @@ class PatientGbvReferralRequest extends FormRequest
             'patient_gbv_id' => 'required|exists:patient_gbvs,id',
             'referral_facility_code' => 'nullable|exists:facilities,code',
             'referral_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'medico_legal_flag' => 'nullable|boolean',
             'referral_reason' => 'nullable',
             'service_remarks' => 'nullable',
             'referral_remarks' => 'nullable',

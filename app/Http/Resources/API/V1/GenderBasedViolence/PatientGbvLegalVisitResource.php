@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\GenderBasedViolence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PatientGbvReferralResource extends JsonResource
+class PatientGbvLegalVisitResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,15 +22,11 @@ class PatientGbvReferralResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
             'facility' => $this->whenLoaded('facility'),
-            'patient_gbv_id' => $this->when(! $this->relationLoaded('patientGbv'), $this->patient_gbv_id),
-            'patientGbv' => $this->whenLoaded('patientGbv'),
-            'referral_facility_code' => $this->when(! $this->relationLoaded('facility'), $this->referral_facility_code),
-            'referral_facility' => $this->whenLoaded('facility'),
-            'referral_date' => $this->referral_date,
-            'medico_legal_flag' => $this->referramedico_legal_flagl_date,
-            'referral_reason' => $this->referral_reason,
-            'service_remarks' => $this->service_remarks,
-            'referral_remarks' => $this->referral_remarks,
+
+            'scheduled_date' => $this->scheduled_date,
+            'actual_date' => $this->actual_date,
+            'person_in_charge' => $this->person_in_charge,
+
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),

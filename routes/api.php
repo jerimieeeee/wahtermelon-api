@@ -860,6 +860,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-gbv-legal', 'store');
                 Route::put('patient-gbv-legal/{patientGbvLegalCase}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvLegalVisitController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-gbv-legal-visit', 'index');
+                Route::post('patient-gbv-legal-visit', 'store');
+            });
         Route::controller(\App\Http\Controllers\API\V1\GenderBasedViolence\PatientGbvConsultController::class)
             ->middleware(('auth:api'))
             ->group(function () {
