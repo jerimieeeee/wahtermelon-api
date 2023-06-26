@@ -44,7 +44,7 @@ class KonsultaRegistrationListController extends Controller
         $columns = ['last_name', 'first_name', 'middle_name'];
         $patients = QueryBuilder::for(KonsultaRegistrationList::class)
             ->when(isset($request->search), function ($q) use ($request, $columns) {
-                $q->orSearch($columns, 'LIKE', $request->filter['search']);
+                $q->orSearch($columns, 'LIKE', $request->search);
             })
             ->allowedFilters(['philhealth_id', 'effectivity_year'])
             ->allowedIncludes('assignedStatus', 'packageType', 'membershipType')
