@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Console\Command;
@@ -48,5 +49,19 @@ class GenerateKonsultaCodeCommand extends Command
             $transactionNumber = IdGenerator::generate(['table' => $consultTableName, 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             $consult->update(['transaction_number' => $transactionNumber]);
         });
+
+        $philhealth = new PatientPhilhealth;
+        $philhealthTableName = $philhealth->getTable();
+        $philhealth->whereIn('id', function ($query) use($philhealthTableName){
+            $query->select('id')
+                ->from(function ($subquery) use ($philhealthTableName) {
+                    $subquery->selectRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(id ORDER BY created_at DESC), ',', 1), ',', -1) AS id")
+                        ->from($philhealthTableName)
+                        ->groupBy('patient_id', 'effectivity_year')
+                        ->havingRaw('count(patient_id) > 1');
+                });
+        })->delete();
+        echo $philhealth->get();
+
     }
 }
