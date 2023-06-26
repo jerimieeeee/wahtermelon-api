@@ -167,6 +167,11 @@ class PatientGbvIntake extends Model
         return $this->hasOne(PatientGbvLegalCase::class, 'patient_gbv_intake_id', 'id');
     }
 
+    public function interventionLegalVisit()
+    {
+        return $this->hasMany(PatientGbvLegalVisit::class, 'patient_gbv_intake_id', 'id');
+    }
+
     public function caseConference()
     {
         return $this->hasMany(PatientGbvConf::class, 'patient_gbv_intake_id', 'id');
