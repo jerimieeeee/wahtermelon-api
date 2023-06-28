@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class MigrateMisuWahCommand extends Command
 {
@@ -49,6 +51,20 @@ class MigrateMisuWahCommand extends Command
 
 // Set the new connection instance for the specific connection name
             DB::connection($connectionName)->setPdo($connection->getPdo())->setReadPdo($connection->getReadPdo());
+            // Add column if it doesn't exist on the 'patient' table
+            // Add column if it doesn't exist on the 'patient' table
+            try {
+                // Add column if it doesn't exist on the 'patient' table
+                Schema::connection($connectionName)->table('patient', function (Blueprint $table) {
+                    $table->string('wahtermelon_patient_id')->nullable()->after('id');
+                    // Add more columns if needed
+                });
+            } catch (\Exception $e) {
+                // Handle the exception (column already exists)
+                // You can log the error or perform other actions if needed
+                // For now, we'll just skip this iteration
+                continue;
+            }
 
             //$results = DB::connection($connectionName)->table('your_table')->select('*')->get();
 
