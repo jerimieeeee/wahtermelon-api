@@ -57,7 +57,7 @@ class MigrateMisuWahCommand extends Command
             // ...
             DB::purge($connectionName);
             Patient::query()->get();
-            echo $results;
+            echo $results->count();
         }
     }
 }
