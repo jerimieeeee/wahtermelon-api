@@ -130,7 +130,7 @@ class Patient extends Model
 
     public function philhealthLatest()
     {
-        return $this->hasOne(PatientPhilhealth::class)
+        return $this->hasOne(PatientPhilhealth::class, 'patient_id', 'id')
             ->latest('effectivity_year');
     }
 
