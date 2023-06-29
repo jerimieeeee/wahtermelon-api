@@ -195,6 +195,8 @@ class EclaimsSyncController extends Controller
             $request->member_middle_name,
             $request->member_suffix_name,
             $request->member_birthdate,
+            '',
+            '',
             $request->patient_is,
             $request->admission_date,
             $request->discharge_date,

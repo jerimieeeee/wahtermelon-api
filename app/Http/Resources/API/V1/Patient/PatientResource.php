@@ -46,6 +46,7 @@ class PatientResource extends JsonResource
             'household_folder' => $this->when($this->relationLoaded('householdFolder'), new HouseholdFolderResource($this->householdFolder)),
             'household_member' => $this->when($this->relationLoaded('householdMember'), new HouseholdMemberResource($this->householdMember)),
             'patientWashington' => $this->whenLoaded('patientWashington'),
+            'philhealthLatest' => $this->whenLoaded('philhealthLatest'),
             'deleted_at' => $this->created_at->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
