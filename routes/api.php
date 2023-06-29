@@ -943,4 +943,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('check-doctor-accredited', 'isDoctorAccredited');
             });
     });
+
+    Route::prefix('gbv-report')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Reports\GenderBasedViolence\GenderBasedViolenceReportController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('catalyst-report', 'index');
+            });
+    });
 });
