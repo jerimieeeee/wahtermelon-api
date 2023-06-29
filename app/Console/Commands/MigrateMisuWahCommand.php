@@ -59,21 +59,27 @@ class MigrateMisuWahCommand extends Command
                     $table->string('wahtermelon_patient_id')->nullable()->after('id');
                     // Add more columns if needed
                 });
+                Schema::connection($connectionName)->table('user', function (Blueprint $table) {
+                    $table->string('wahtermelon_user_id')->nullable()->after('id');
+                    // Add more columns if needed
+                });
             } catch (\Exception $e) {
                 // Handle the exception (column already exists)
                 // You can log the error or perform other actions if needed
                 // For now, we'll just skip this iteration
-                continue;
+                //continue;
             }
 
             //$results = DB::connection($connectionName)->table('your_table')->select('*')->get();
 
-            $results = DB::connection($connectionName)->table('patient')->select('*')->get();
+            //$results = DB::connection($connectionName)->table('patient')->select('*')->whereNull('wahtermelon_patient_id')->get();
+            //$results = DB::connection($connectionName)->table('user')->select('*')->get();
+            $results = DB::table('user')->select('*')->get();
             // Perform your operations on each matching database here
             // ...
             DB::purge($connectionName);
-            Patient::query()->get();
-            echo $results->count();
+            //Patient::query()->get();
+            echo $results;
         }
     }
 }
