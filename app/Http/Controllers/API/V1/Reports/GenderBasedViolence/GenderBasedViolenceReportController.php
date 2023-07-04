@@ -13,38 +13,49 @@ class GenderBasedViolenceReportController extends Controller
      */
     public function index(Request $request, GenderBasedViolenceReportService $genderBasedViolenceReportService)
     {
-        $female_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_report($request, 'F', '0', '5')
-            ->selectRaw("IF(same_address_flag = 1, barangay_code, intake_barangay_code) AS barangay_code")
+        //SEXUAL ABUSE
+        $female_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_report_sexual_abuse($request, 'F', '0', '5')
+            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
-            ->pluck(null, 'barangay_name');
+            ->pluck('sexual_abuse_count', 'barangay_name');
 
-        $female_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_report($request, 'F', '6', '9')
-            ->selectRaw("IF(same_address_flag = 1, barangay_code, intake_barangay_code) AS barangay_code")
+        $female_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_report_sexual_abuse($request, 'F', '6', '9')
+            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
-            ->pluck(null, 'barangay_name');
+            ->pluck('sexual_abuse_count', 'barangay_name');
 
-        $female_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_report($request, 'F', '10', '17')
-            ->selectRaw("IF(same_address_flag = 1, barangay_code, intake_barangay_code) AS barangay_code")
+        $female_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_report_sexual_abuse($request, 'F', '10', '17')
+            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
-            ->pluck(null, 'barangay_name');
+            ->pluck('sexual_abuse_count', 'barangay_name');
 
-        $female_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_report($request, 'F', '18', '19')
-            ->selectRaw("IF(same_address_flag = 1, barangay_code, intake_barangay_code) AS barangay_code")
+        $female_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_report_sexual_abuse($request, 'F', '18', '19')
+            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
-            ->pluck(null, 'barangay_name');
+            ->pluck('sexual_abuse_count', 'barangay_name');
+
+        $female_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_report_sexual_abuse($request, 'F', '20', '59')
+            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
+            ->get()
+            ->pluck('sexual_abuse_count', 'barangay_name');
+
+        $female_age_60_and_above = $genderBasedViolenceReportService->get_gbv_report_sexual_abuse($request, 'F', '60', '200')
+            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
+            ->get()
+            ->pluck('sexual_abuse_count', 'barangay_name');
+
+
 
         return [
-            // FEMALE AGE 0 TO 5
-            'Female_age_0_to_5' => $female_age_0_to_5,
-
-            // FEMALE AGE 6 TO 9
-            'Female_age_6_to_9' => $female_age_6_to_9,
-
-            // FEMALE AGE 10 TO 17
-            'Female_age_10_to_17' => $female_age_10_to_17,
 
             // FEMALE AGE 18 TO 19
-            'Female_age_18_to_19' => $female_age_18_to_19,
+            'sexual_abuse' => ['female_age_0_to_5' => $female_age_0_to_5,
+                               'female_age_6_to_9' => $female_age_6_to_9,
+                               'female_age_10_to_17' => $female_age_10_to_17,
+                               'female_age_18_to_19' => $female_age_18_to_19,
+                               'female_age_20_to_59' => $female_age_20_to_59,
+                               'female_age_60_and_above' => $female_age_60_and_above
+                            ],
         ];
 
     }
