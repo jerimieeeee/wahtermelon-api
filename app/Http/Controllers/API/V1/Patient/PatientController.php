@@ -46,7 +46,7 @@ class PatientController extends Controller
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
                 $q->orSearch($columns, 'LIKE', $request->filter['search']);
             })
-            ->allowedIncludes('suffixName', 'pwdType', 'religion', 'householdMember')
+            ->allowedIncludes('suffixName', 'pwdType', 'religion', 'householdMember', 'philhealthLatest')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')
             ->allowedSorts(['last_name', 'first_name', 'middle_name', 'birthdate']);
         if ($perPage === 'all') {
@@ -83,7 +83,7 @@ class PatientController extends Controller
     {
         $query = Patient::where('id', $patient->id);
         $patient = QueryBuilder::for($query)
-            ->with('householdFolder.barangay', 'householdMember', 'patientWashington')
+            ->with('householdFolder.barangay', 'householdMember', 'patientWashington', 'philhealthLatest')
             ->first();
 
         return new PatientResource($patient);

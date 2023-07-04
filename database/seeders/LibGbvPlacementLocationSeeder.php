@@ -17,6 +17,7 @@ class LibGbvPlacementLocationSeeder extends Seeder
             ['id' => 2, 'desc' => 'Relative', 'sequence' => 2],
             ['id' => 3, 'desc' => 'Shelter', 'sequence' => 3],
             ['id' => 4, 'desc' => 'Hospital', 'sequence' => 4],
+            ['id' => 5, 'desc' => 'Others', 'sequence' => 5],
         ], ['id']);
     }
 }
