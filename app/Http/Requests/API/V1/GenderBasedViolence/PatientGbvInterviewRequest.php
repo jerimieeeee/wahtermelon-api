@@ -86,6 +86,7 @@ class PatientGbvInterviewRequest extends FormRequest
             'child_caretaker_present_flag' => 'nullable|boolean',
             'dev_screening_id' => 'nullable',
             'disclosed_relation_id' => 'nullable',
+            'other_abuse_acts' => 'nullable',
             'deferred' => 'nullable|boolean',
             'deferral_datetime' => 'nullable|date|date_format:Y-m-d H:i:s|before:tomorrow',
             'deferral_reason_id' => 'nullable',
