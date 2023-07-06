@@ -310,7 +310,7 @@ class GenderBasedViolenceReportController extends Controller
 
 
         /////////////////////////////////
-        //UNABLE TO VALIDATE ABUSE FEMALE
+        //UNABLE TO VALIDATE ABUSE MALE
         $utv_abuse_male_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '0', '5', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
             ->pluck('utv_abuse_count', 'barangay_name');
@@ -334,6 +334,114 @@ class GenderBasedViolenceReportController extends Controller
         $utv_abuse_male_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '60', '200', 'SUM(utv_abuse_flag) AS utv_abuse_count',  'utv_abuse_count')
             ->get()
             ->pluck('utv_abuse_count', 'barangay_name');
+
+
+        /////////////////////////////////
+        //MULTIPLE TO VALIDATE ABUSE FEMALE
+        $multiple_abuse_female_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '0', '5')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_female_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '6', '9')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_female_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '10', '17')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_female_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '18', '19')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_female_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '20', '59')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_female_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '60', '200')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+
+        /////////////////////////////////
+        //MULTIPLE ABUSE FEMALE
+        $multiple_abuse_male_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'M', '0', '5')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_male_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'M', '6', '9')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_male_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'M', '10', '17')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_male_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'M', '18', '19')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_male_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'M', '20', '59')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+        $multiple_abuse_male_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'M', '60', '200')
+            ->get()
+            ->pluck('count', 'barangay_name');
+
+
+        /////////////////////////////////
+        //OTHERS ABUSE FEMALE
+        $others_abuse_female_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '0', '5', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_female_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '6', '9', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_female_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '10', '17', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_female_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '18', '19', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_female_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '20', '59', 'SUM(others_abuse_flag) AS others_abuse_count',  'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_female_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '60', '200', 'SUM(others_abuse_flag) AS others_abuse_count',  'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+
+        /////////////////////////////////
+        //OTHERS ABUSE MALE
+        $others_abuse_male_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '0', '5', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_male_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '6', '9', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_male_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '10', '17', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_male_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '18', '19', 'SUM(others_abuse_flag) AS others_abuse_count', 'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_male_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '20', '59', 'SUM(others_abuse_flag) AS others_abuse_count',  'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
+
+        $others_abuse_male_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '60', '200', 'SUM(others_abuse_flag) AS others_abuse_count',  'others_abuse_count')
+            ->get()
+            ->pluck('others_abuse_count', 'barangay_name');
 
 
 
@@ -427,6 +535,36 @@ class GenderBasedViolenceReportController extends Controller
                             'male_age_20_to_59' => $utv_abuse_male_age_20_to_59,
                             'female_age_60_and_above' => $utv_abuse_female_age_60_and_above,
                             'male_age_60_and_above' => $utv_abuse_male_age_60_and_above
+            ],
+
+            //MULTIPLE ABUSE MALE & FEMALE
+            'multiple_abuse' => ['female_age_0_to_5' => $multiple_abuse_female_age_0_to_5,
+                                'male_age_0_to_5' => $multiple_abuse_male_age_0_to_5,
+                                'female_age_6_to_9' => $multiple_abuse_female_age_6_to_9,
+                                'male_age_6_to_9' => $multiple_abuse_male_age_6_to_9,
+                                'female_age_10_to_17' => $multiple_abuse_female_age_10_to_17,
+                                'male_age_10_to_17' => $multiple_abuse_male_age_10_to_17,
+                                'female_age_18_to_19' => $multiple_abuse_female_age_18_to_19,
+                                'male_age_18_to_19' => $multiple_abuse_male_age_18_to_19,
+                                'female_age_20_to_59' => $multiple_abuse_female_age_20_to_59,
+                                'male_age_20_to_59' => $multiple_abuse_male_age_20_to_59,
+                                'female_age_60_and_above' => $multiple_abuse_female_age_60_and_above,
+                                'male_age_60_and_above' => $multiple_abuse_male_age_60_and_above
+            ],
+
+            //OTHERS ABUSE MALE & FEMALE
+            'others_abuse' => ['female_age_0_to_5' => $others_abuse_female_age_0_to_5,
+                               'male_age_0_to_5' => $others_abuse_male_age_0_to_5,
+                               'female_age_6_to_9' => $others_abuse_female_age_6_to_9,
+                               'male_age_6_to_9' => $others_abuse_male_age_6_to_9,
+                               'female_age_10_to_17' => $others_abuse_female_age_10_to_17,
+                               'male_age_10_to_17' => $others_abuse_male_age_10_to_17,
+                               'female_age_18_to_19' => $others_abuse_female_age_18_to_19,
+                               'male_age_18_to_19' => $others_abuse_male_age_18_to_19,
+                               'female_age_20_to_59' => $others_abuse_female_age_20_to_59,
+                               'male_age_20_to_59' => $others_abuse_male_age_20_to_59,
+                               'female_age_60_and_above' => $others_abuse_female_age_60_and_above,
+                               'male_age_60_and_above' => $others_abuse_male_age_60_and_above
             ],
         ];
 
