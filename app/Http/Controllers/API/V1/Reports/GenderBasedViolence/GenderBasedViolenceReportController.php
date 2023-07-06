@@ -286,54 +286,54 @@ class GenderBasedViolenceReportController extends Controller
         //UNABLE TO VALIDATE ABUSE FEMALE
         $utv_abuse_female_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '0', '5', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_female_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '6', '9', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_female_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '10', '17', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_female_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '18', '19', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_female_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '20', '59', 'SUM(utv_abuse_flag) AS utv_abuse_count',  'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_female_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'F', '60', '200', 'SUM(utv_abuse_flag) AS utv_abuse_count',  'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
 
         /////////////////////////////////
         //UNABLE TO VALIDATE ABUSE FEMALE
         $utv_abuse_male_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '0', '5', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_male_age_6_to_9 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '6', '9', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_male_age_10_to_17 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '10', '17', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_male_age_18_to_19 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '18', '19', 'SUM(utv_abuse_flag) AS utv_abuse_count', 'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_male_age_20_to_59 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '20', '59', 'SUM(utv_abuse_flag) AS utv_abuse_count',  'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
         $utv_abuse_male_age_60_and_above = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses($request, 'M', '60', '200', 'SUM(utv_abuse_flag) AS utv_abuse_count',  'utv_abuse_count')
             ->get()
-            ->pluck('economic_abuse_count', 'barangay_name');
+            ->pluck('utv_abuse_count', 'barangay_name');
 
 
 
