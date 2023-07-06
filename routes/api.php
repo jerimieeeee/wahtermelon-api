@@ -942,5 +942,18 @@ Route::prefix('v1')->group(function () {
                 Route::post('check-claim-eligibility', 'isClaimEligible');
                 Route::post('check-doctor-accredited', 'isDoctorAccredited');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsCaserateListController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-caserate', 'index');
+                Route::post('eclaims-caserate', 'store');
+                Route::put('eclaims-caserate/{eclaimsCaserate}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsXmlController::class)
+            // ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-xml', 'createXml');
+                // Route::post('eclaims-xml', 'store');
+            });
     });
 });
