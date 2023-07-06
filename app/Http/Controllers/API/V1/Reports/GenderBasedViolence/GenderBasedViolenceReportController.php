@@ -15,32 +15,26 @@ class GenderBasedViolenceReportController extends Controller
     {
         //SEXUAL ABUSE
         $female_age_0_to_5 = $genderBasedViolenceReportService->get_all_barangay_municipality($request, 'F', '0', '5')
-//            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
             ->pluck('sexual_abuse_count', 'barangay_name');
 
         $female_age_6_to_9 = $genderBasedViolenceReportService->get_all_barangay_municipality($request, 'F', '6', '9')
-//            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
             ->pluck('sexual_abuse_count', 'barangay_name');
 
         $female_age_10_to_17 = $genderBasedViolenceReportService->get_all_barangay_municipality($request, 'F', '10', '17')
-//            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
             ->pluck('sexual_abuse_count', 'barangay_name');
 
         $female_age_18_to_19 = $genderBasedViolenceReportService->get_all_barangay_municipality($request, 'F', '18', '19')
-//            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
             ->pluck('sexual_abuse_count', 'barangay_name');
 
         $female_age_20_to_59 = $genderBasedViolenceReportService->get_all_barangay_municipality($request, 'F', '20', '59')
-//            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
             ->pluck('sexual_abuse_count', 'barangay_name');
 
         $female_age_60_and_above = $genderBasedViolenceReportService->get_all_barangay_municipality($request, 'F', '60', '200')
-//            ->selectRaw("IF(same_address_flag = 1, barangays.name, barangays.name) AS barangay_name")
             ->get()
             ->pluck('sexual_abuse_count', 'barangay_name');
 
