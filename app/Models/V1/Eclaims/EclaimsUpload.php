@@ -3,16 +3,14 @@
 namespace App\Models\V1\Eclaims;
 
 use App\Models\User;
-use App\Traits\FilterByFacility;
-use App\Traits\FilterByUser;
+use App\Models\V1\PSGC\Facility;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EclaimsCaserateList extends Model
+class EclaimsUpload extends Model
 {
-    use HasFactory, HasUlids, FilterByUser, FilterByFacility;
+    use HasFactory;
 
     protected $guarded = [
         'id',
@@ -37,8 +35,4 @@ class EclaimsCaserateList extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function caserateAttendant()
-    {
-        return $this->belongsTo(User::class, 'caserate_attendant', 'id');
-    }
 }

@@ -53,8 +53,11 @@ class EclaimsXmlController extends Controller
      * Create XML for CF2 Submission
      *
      */
-    public function createXml(Request $request, EclaimsXmlService $eclaimsXmlService)
+    public function createXml(EclaimsXmlRequest $request, EclaimsXmlService $eclaimsXmlService)
     {
-        return $eclaimsXmlService->createXml($request->patient_id, $request);
+        $xml = $eclaimsXmlService->createXml($request->transmittalNumber, $request->patient_id, $request);
+
+        $xml_json = XML2JSON($xml);
+        return json_encode($xml_json);
     }
 }

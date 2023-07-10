@@ -4,21 +4,29 @@ namespace App\Services\Eclaims;
 
 use App\Http\Resources\API\V1\Eclaims\EclaimsXmlCf1Resource;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class EclaimsXmlService
 {
-    public function createXml($patientId, $request)
+    public function createXml($transmittalNumber, $patientId, $request)
     {
-        $transmittalNumber = 'test';
+        $creds = PhilhealthCredential::whereFacilityCode($request->facility_code)->whereProgramCode($request->program_desc)->first();
+        if (empty($transmittalNumber)) {
+            $prefix = $creds->accreditation_number.date('Ym');
+            $transmittalNumber = IdGenerator::generate(['table' => 'eclaims_uploads', 'field' => 'pHospitalTransmittalNo', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+        }
+
+        // $transmittalNumber = 'test';
         $root = [
             'rootElementName' => 'eCLAIMS',
             '_attributes' => [
                 'pUserName' => '',
                 'pUserPassword' => '',
-                'pHospitalCode' => '',
+                'pHospitalCode' => $creds->accreditation_number,
                 'pHospitalEmail' => '',
                 'pServiceProvider' => 'WAH'
             ]
@@ -42,7 +50,7 @@ class EclaimsXmlService
 
         // return $array;
         $result = new ArrayToXml($array, $root, true, 'UTF-8');
-        $xml = $result->toXml();
+        $xml = $result->dropXmlDeclaration()->toXml();
 
         return $xml;
     }
@@ -98,10 +106,10 @@ class EclaimsXmlService
         $allcaserate = [
             'CASERATE' => [
                 '_attributes' => [
-                    'pCaseRateCode' => 'N',
-                    'pICDCode' => 'N',
-                    'pRVSCode' => 'N',
-                    'pCaseRateAmount' => 'N',
+                    'pCaseRateCode' => $request->caserate_code,
+                    'pICDCode' => '',
+                    'pRVSCode' => $request->code,
+                    'pCaseRateAmount' => $request->caserate_fee,
                 ]
             ]
         ];
@@ -115,10 +123,10 @@ class EclaimsXmlService
             '_attributes' => [
                 'pPatientReferred' => 'N',
                 'pReferredIHCPAccreCode' => '',
-                'pAdmissionDate' => '',
-                'pAdmissionTime' => '',
-                'pDischargeDate' => '',
-                'pDischargeTime' => '',
+                'pAdmissionDate' => $request->admission_date,
+                'pAdmissionTime' => $request->admission_time,
+                'pDischargeDate' => $request->discharge_date,
+                'pDischargeTime' => $request->discharge_time,
                 'pDisposition' => 'I',
                 'pExpiredDate' => '',
                 'pExpiredTime' => '',
@@ -131,18 +139,18 @@ class EclaimsXmlService
 
         $diagnosis = [
             '_attributes' => [
-                'pAdmissionDiagnosis' => ''
+                'pAdmissionDiagnosis' => $request->admit_dx
             ],
             'DISCHARGE' => [
                 '_attributes' => [
-                    'pDischargeDiagnosis' => ''
+                    'pDischargeDiagnosis' => $request->description
                 ],
                 'RVSCODES' => [
                     '_attributes' => [
-                        'pRelatedProcedure' => '',
-                        'pRVSCode' => '',
-                        'pProcedureDate' => '',
-                        'pLaterality' => '',
+                        'pRelatedProcedure' => $request->description,
+                        'pRVSCode' => $request->code,
+                        'pProcedureDate' => $request->attendant_sign_date,
+                        'pLaterality' => 'N',
                     ],
                 ]
             ]
@@ -153,23 +161,23 @@ class EclaimsXmlService
         $consumption = [
             'BENEFITS' => [
                 '_attributes' => [
-                    'pTotalHCIFees' => '',
-                    'pTotalProfFees' => '',
-                    'pGrandTotal' => ''
+                    'pTotalHCIFees' => $request->hci_fee,
+                    'pTotalProfFees' => $request->prof_fee,
+                    'pGrandTotal' => $request->caserate_fee
                 ],
             ]
         ];
 
         $professional = [
             '_attributes' => [
-                'pDoctorAccreCode' => '',
-                'pDoctorLastName' => '',
-                'pDoctorFirstName' => '',
-                'pDoctorMiddleName' => '',
-                'pDoctorSuffix' => '',
+                'pDoctorAccreCode' => $request->attendant_accreditation_code,
+                'pDoctorLastName' => $request->attendant_last_name,
+                'pDoctorFirstName' => $request->attendant_first_name,
+                'pDoctorMiddleName' => $request->attendant_middle_name,
+                'pDoctorSuffix' => $request->attendant_suffix_name,
                 'pWithCoPay' => 'N',
                 'pDoctorCoPay' => '',
-                'pDoctorSignDate' => ''
+                'pDoctorSignDate' => $request->attendant_sign_date
             ],
         ];
 
@@ -182,15 +190,15 @@ class EclaimsXmlService
         return $array;
     }
 
-    public function mcp()
+    public function mcp($request)
     {
         return [
             'MCP' => [
                 '_attributes' => [
-                    'pCheckUpDate1' => '',
-                    'pCheckUpDate2' => '',
-                    'pCheckUpDate3' => '',
-                    'pCheckUpDate4' => ''
+                    'pCheckUpDate1' => $request->pCheckUpDate1,
+                    'pCheckUpDate2' => $request->pCheckUpDate2,
+                    'pCheckUpDate3' => $request->pCheckUpDate3,
+                    'pCheckUpDate4' => $request->pCheckUpDate4
                 ]
             ]
         ];
@@ -201,10 +209,10 @@ class EclaimsXmlService
         return [
             'NCP' => [
                 '_attributes' => [
-                    'pEssentialNewbornCare' => '',
-                    'pNewbornHearingScreeningTest' => '',
-                    'pNewbornScreeningTest' => '',
-                    'pFilterCardNo' => ''
+                    'pEssentialNewbornCare' => $request->pEssentialNewbornCare,
+                    'pNewbornHearingScreeningTest' => $request->pNewbornHearingScreeningTest,
+                    'pNewbornScreeningTest' => $request->pNewbornScreeningTest,
+                    'pFilterCardNo' => $request->pFilterCardNo
                 ],
                 'ESSENTIAL' => [
                     '_attributes' => [
@@ -228,8 +236,8 @@ class EclaimsXmlService
         return [
             'TBDOTS' => [
                 '_attributes' => [
-                    'pTBType' => '',
-                    'pNTPCardNo' => ''
+                    'pTBType' => $request->pTBType,
+                    'pNTPCardNo' => $request->pNTPCardNo
                 ]
             ]
         ];
@@ -240,12 +248,12 @@ class EclaimsXmlService
         return [
             'ABP' => [
                 '_attributes' => [
-                    'pDay0ARV' => '',
-                    'pDay3ARV' => '',
-                    'pDay7ARV' => '',
-                    'pRIG' => '',
-                    'pABPOthers' => '',
-                    'pABPSpecify' => ''
+                    'pDay0ARV' => $request->pDay0ARV,
+                    'pDay3ARV' => $request->pDay3ARV,
+                    'pDay7ARV' => $request->pDay7ARV,
+                    'pRIG' => $request->pRIG,
+                    'pABPOthers' => $request->pABPOthers,
+                    'pABPSpecify' => $request->pABPSpecify
                 ]
             ]
         ];

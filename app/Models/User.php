@@ -112,6 +112,12 @@ class User extends Authenticatable implements MustVerifyEmail
             ->whereProgramCode('kp');
     }
 
+    public function eclaimsCredential($program_code)
+    {
+        return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')
+            ->whereProgramCode($program_code);
+    }
+
     public function patient()
     {
         return $this->hasMany(Patient::class);

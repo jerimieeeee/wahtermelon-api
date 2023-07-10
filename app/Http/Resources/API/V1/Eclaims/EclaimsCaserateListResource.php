@@ -31,7 +31,8 @@ class EclaimsCaserateListResource extends JsonResource
             'hci_fee' => $this->hci_fee,
             'prof_fee' => $this->prof_fee,
             'caserate_fee' => $this->caserate_fee,
-            'caserate_attendant' => $this->caserate_attendant
+            'caserate_attendant' => $this->when(! $this->relationLoaded('caserateAttendant'), $this->caserate_attendant),
+            'attendant' => $this->whenLoaded('caserateAttendant'),
         ];
     }
 }
