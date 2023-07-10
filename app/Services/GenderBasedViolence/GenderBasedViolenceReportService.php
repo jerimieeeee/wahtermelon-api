@@ -21,7 +21,7 @@ class GenderBasedViolenceReportService
                 $join->on('barangays.code', '=', 'abuse.barangay_code');
             })
             ->when($request->category == 'municipality',  function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
+                $q->where('municipalities.code', $request->code);
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
