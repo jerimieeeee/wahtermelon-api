@@ -86,9 +86,7 @@ class MigrateMisuWahCommand extends Command
         //$bar->setFormat("%message%\n %current%/%max% [%bar%] %percent:3s%%");
         $bar->setFormatDefinition('custom', '%countdown% [%bar%]');
         $bar->setFormat('custom');
-        $bar->setPlaceholderFormatter('countdown', function (ProgressBar $progressBar) {
-            return $progressBar->getMaxSteps() - $progressBar->getProgress();
-        });
+
         //$bar->setMessage("100? I won't count all that!");
         //$bar->setProgress(0);
         $bar->start();
@@ -108,6 +106,9 @@ class MigrateMisuWahCommand extends Command
 //                if(!$record['employer_code']){
 //                    Arr::pull($record, 'employer_code');
 //                }
+                if(!$record['mobile_number']){
+                    Arr::pull($record, 'mobile_number');
+                }
                 if(!$record['education_code']){
                     Arr::pull($record, 'education_code');
                 }
@@ -233,7 +234,13 @@ class MigrateMisuWahCommand extends Command
                 END suffix_name,
                 patient.birthdate,
                 patient.gender,
-                patient.mobile_number,
+                CASE
+                    WHEN (patient.mobile_number REGEXP "^(0[1-9][0-9]{8})|(9[0-9]{9})$")
+                    THEN patient.mobile_number
+                    WHEN (patient.mobile_number REGEXP "^0+$|^9+$|^0[0-9]{9}$|^9[0-9]{9}$")
+                    THEN NULL
+                    ELSE NULL
+                END mobile_number,
                 mothers_name,
                 CASE
                     WHEN pwd_flag = "Y"
