@@ -52,7 +52,7 @@ class EclaimsXmlService
         $result = new ArrayToXml($array, $root, true, 'UTF-8');
         $xml = $result->dropXmlDeclaration()->toXml();
 
-        return $xml;
+        return ['transmittalNumber' => $transmittalNumber, 'xml' => $xml];
     }
 
     public function etransmittal($transmittalNumber)
@@ -107,7 +107,7 @@ class EclaimsXmlService
             'CASERATE' => [
                 '_attributes' => [
                     'pCaseRateCode' => $request->caserate_code,
-                    'pICDCode' => '',
+                    'pICDCode' => $request->icd10_code,
                     'pRVSCode' => $request->code,
                     'pCaseRateAmount' => $request->caserate_fee,
                 ]
@@ -143,7 +143,7 @@ class EclaimsXmlService
             ],
             'DISCHARGE' => [
                 '_attributes' => [
-                    'pDischargeDiagnosis' => $request->description
+                    'pDischargeDiagnosis' => $request->discharge_dx
                 ],
                 'RVSCODES' => [
                     '_attributes' => [

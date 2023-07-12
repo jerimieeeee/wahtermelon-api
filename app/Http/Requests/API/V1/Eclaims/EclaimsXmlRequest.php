@@ -31,6 +31,8 @@ class EclaimsXmlRequest extends FormRequest
             'caserate_code' => 'required',
             'code' => 'required',
             'description' => 'required',
+            'discharge_dx' => 'required',
+            'icd10_code' => 'required|exists:lib_icd10s,icd10_code',
             'hci_fee' => 'required',
             'prof_fee' => 'required',
             'caserate_fee' => 'required',

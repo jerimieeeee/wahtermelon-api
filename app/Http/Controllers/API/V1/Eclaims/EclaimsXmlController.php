@@ -57,7 +57,8 @@ class EclaimsXmlController extends Controller
     {
         $xml = $eclaimsXmlService->createXml($request->transmittalNumber, $request->patient_id, $request);
 
-        $xml_json = XML2JSON($xml);
+        $xml_json = XML2JSON($xml['xml']);
+        return ['data' => $xml['transmittalNumber']];
         return json_encode($xml_json);
     }
 }
