@@ -5,9 +5,11 @@ namespace App\Services\Eclaims;
 use App\Http\Resources\API\V1\Eclaims\EclaimsXmlCf1Resource;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
+use App\Services\PhilHealth\SoapService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class EclaimsXmlService
@@ -55,7 +57,7 @@ class EclaimsXmlService
         $result = new ArrayToXml($array, $root, true, 'UTF-8');
         $xml = $result->dropXmlDeclaration()->toXml();
 
-        return ['transmittalNumber' => $transmittalNumber, 'xml' => $xml];
+        return ['transmittalNumber' => $transmittalNumber, 'xml' => $xml, 'cipher_key' => $creds->cipher_key];
     }
 
     public function etransmittal($transmittalNumber)

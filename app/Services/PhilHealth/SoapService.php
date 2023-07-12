@@ -117,11 +117,11 @@ class SoapService
         return XML2JSON($decryptedData);
     }
 
-    public function encryptData($data)
+    public function encryptData($data, $cipher_key = null)
     {
         $encryptor = new PhilHealthEClaimsEncryptor();
         //$cipher_key = PhilhealthCredential::select('cipher_key')->whereProgramCode('kp')->pluck('cipher_key')->first();
-        $cipher_key = auth()->user()->konsultaCredential->cipher_key;
+        $cipher_key = $cipher_key ?? auth()->user()->konsultaCredential->cipher_key;
 
         return $encryptor->encryptXmlPayloadData($data, $cipher_key);
     }
