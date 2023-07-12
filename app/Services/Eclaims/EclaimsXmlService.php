@@ -14,7 +14,10 @@ class EclaimsXmlService
 {
     public function createXml($transmittalNumber, $patientId, $request)
     {
-        $creds = PhilhealthCredential::whereFacilityCode($request->facility_code)->whereProgramCode($request->program_desc)->first();
+        $creds = PhilhealthCredential::where('facility_code',auth()->user()->facility_code)
+                ->where('program_code', $request->program_desc)
+                ->first();
+        // return $creds = auth()->user()->eclaimsCredential($request->program_desc);//PhilhealthCredential::whereFacilityCode($request->facility_code)->whereProgramCode($request->program_desc)->first();
         if (empty($transmittalNumber)) {
             $prefix = $creds->accreditation_number.date('Ym');
             $transmittalNumber = IdGenerator::generate(['table' => 'eclaims_uploads', 'field' => 'pHospitalTransmittalNo', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);

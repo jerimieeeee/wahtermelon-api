@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Eclaims;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Eclaims\EclaimsXmlRequest;
+use App\Models\V1\Eclaims\EclaimsUpload;
 use App\Services\Eclaims\EclaimsXmlService;
 use Illuminate\Http\Request;
 
@@ -55,10 +56,17 @@ class EclaimsXmlController extends Controller
      */
     public function createXml(EclaimsXmlRequest $request, EclaimsXmlService $eclaimsXmlService)
     {
-        $xml = $eclaimsXmlService->createXml($request->transmittalNumber, $request->patient_id, $request);
+        $eclaimsXml = $eclaimsXmlService->createXml($request->transmittalNumber, $request->patient_id, $request);
 
-        $xml_json = XML2JSON($xml['xml']);
-        return ['data' => $xml['transmittalNumber']];
+        // return $request->all();
+        $data = EclaimsUpload::updateOrCreate(['pHospitalTransmittalNo' => $eclaimsXml['transmittalNumber']],$request->validated());
+
+        if($data)
+        {
+            $xml_json = XML2JSON($eclaimsXml['xml']);
+
+        }
+        // return ['data' => $eclaimsXml['transmittalNumber']];
         return json_encode($xml_json);
     }
 }

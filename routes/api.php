@@ -950,10 +950,18 @@ Route::prefix('v1')->group(function () {
                 Route::put('eclaims-caserate/{eclaimsCaserate}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsXmlController::class)
-            // ->middleware(('auth:api'))
+            ->middleware(('auth:api'))
             ->group(function () {
                 Route::post('eclaims-xml', 'createXml');
                 // Route::post('eclaims-xml', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-upload', 'index');
+                Route::post('eclaims-upload', 'store');
+                // Route::post('eclaims-xml', 'store');
+            });
+
     });
 });

@@ -47,6 +47,7 @@ class EclaimsXmlRequest extends FormRequest
             'attendant_suffix_name' => 'nullable',
             'attendant_sign_date' => 'required',
             'pICDCode' => 'nullable',
+            'eclaims_caserate_list_id' => 'required',
             //TBDOTS
             'pTBType' => 'required_if:program_desc,tb',
             'pNTPCardNo' => 'required_if:program_desc,tb',
