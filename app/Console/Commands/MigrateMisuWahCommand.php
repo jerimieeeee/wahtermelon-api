@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientPhilhealth;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -141,6 +143,7 @@ class MigrateMisuWahCommand extends Command
         $this->newLine();
         $this->components->twoColumnDetail('Patient Migration', 'Done');
         $this->newLine();
+
     }
 
     public function migrationConnection($connectionName, $database)

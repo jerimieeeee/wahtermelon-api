@@ -11,6 +11,7 @@ use App\Http\Resources\API\V1\Konsulta\ProfileResource;
 use App\Http\Resources\API\V1\Konsulta\SoapDiagnosticExamResultResource;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Medicine\MedicinePrescription;
@@ -640,12 +641,17 @@ class KonsultaService
         $enlistments = [];
         $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
         $user = User::selectRaw('id AS userID, CONCAT(first_name, " ", last_name) AS created_by');
+        $konsulta = KonsultaRegistrationList::selectRaw('philhealth_id AS pin_id, effectivity_year, suffix_name AS patient_suffix_name, member_suffix_name AS konsulta_member_suffix_name');
         $data = PatientPhilhealth::query()
             ->joinSub($patient, 'patients', function ($join) {
                 $join->on('patient_philhealth.patient_id', '=', 'patients.patientID');
             })
             ->joinSub($user, 'users', function ($join) {
                 $join->on('patient_philhealth.user_id', '=', 'users.userID');
+            })
+            ->leftJoinSub($konsulta, 'konsulta_registration_lists', function ($join) {
+                $join->on('patient_philhealth.philhealth_id', '=', 'konsulta_registration_lists.pin_id')
+                    ->whereColumn('patient_philhealth.effectivity_year', '=', 'konsulta_registration_lists.effectivity_year');
             })
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(! empty($patientId), fn ($query) => $query->whereIn('patient_id', $patientId))
