@@ -44,10 +44,10 @@ class MigrateMisuWahCommand extends Command
         $this->migrationConnection($connectionName, $database);
         //echo $this->migrateUser()->collect()->chunk(200)->count();
         $users = $this->migrateUser();
-        $bar = $this->output->createProgressBar(count($users));
-
-        $bar->start();
-        $users->collect()->chunk(200)->each(function ($user) use($connectionName, $database, $bar){
+        $userBar = $this->output->createProgressBar(count($users));
+        $userBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%%');
+        $userBar->start();
+        $users->collect()->chunk(200)->each(function ($user) use($connectionName, $database, $userBar){
             $values = [];
             //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
             //DB::purge($connectionName);
@@ -71,33 +71,30 @@ class MigrateMisuWahCommand extends Command
                 DB::connection($connectionName)->table('user')->whereId($record['id'])->update(['wahtermelon_user_id' => $newUser->id]);
                 //$this->components->twoColumnDetail($record['id'], $newUser->id);
                 //echo DB::table('user')->get();
-                $bar->advance();
+                $userBar->advance();
             }
-            echo Str::password(8);
-
             //$model->upsert($values, ['custom_id']);
         });
-
-        $bar->finish();
+        $userBar->finish();
+        $this->newLine();
+        $this->components->twoColumnDetail('User Migration', 'Done');
+        $this->newLine();
 
         $patients = $this->migratePatient();
-        $this->info("Creating progress bar...\n");
-        $bar = $this->output->createProgressBar(count($patients));
-        //$bar->setFormat("%message%\n %current%/%max% [%bar%] %percent:3s%%");
-        $bar->setFormatDefinition('custom', '%countdown% [%bar%]');
-        $bar->setFormat('custom');
-
+        //$this->info("Creating progress bar...\n");
+        $patientBar = $this->output->createProgressBar(count($patients));
+        $patientBar->setFormat('Processing Patient Table: %current%/%max% [%bar%] %percent:3s%%');
         //$bar->setMessage("100? I won't count all that!");
         //$bar->setProgress(0);
-        $bar->start();
-        $patients->collect()->chunk(200)->each(function ($patient, $chunkNumber) use($connectionName, $database, $bar){
+        $patientBar->start();
+        $patients->collect()->chunk(200)->each(function ($patient, $chunkNumber) use($connectionName, $database, $patientBar){
             $values = [];
             //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
             //DB::purge($connectionName);
-            $startIndex = $chunkNumber * 200 + 1;
-            $endIndex = min($startIndex + $patient->count() - 1, $startIndex + 200 - 1);
-
-            $bar->setMessage("Processing chunk range: $startIndex - $endIndex");
+//            $startIndex = $chunkNumber * 200 + 1;
+//            $endIndex = min($startIndex + $patient->count() - 1, $startIndex + 200 - 1);
+//
+//            $bar->setMessage("Processing chunk range: $startIndex - $endIndex");
 
             foreach ($patient as $record) {
                 //echo $values[] = $record;
@@ -131,17 +128,19 @@ class MigrateMisuWahCommand extends Command
                     $record + ['facility_code' => $database]);
                 //$user->update(['wahtermelon_user_id' => $newUser->id]);
                 //Update the misuwah user database with wahtermelon_user_id from wahtermelon database
-                //DB::connection($connectionName)->table('user')->whereId($record['id'])->update(['wahtermelon_user_id' => $newUser->id]);
+                DB::connection($connectionName)->table('patient')->whereId($record['id'])->update(['wahtermelon_patient_id' => $newUser->id]);
                 //$this->components->twoColumnDetail($record['id'], $newUser->id);
                 //echo DB::table('user')->get();
-                $bar->advance();
+                $patientBar->advance();
             }
 
             //echo $key;
             //$model->upsert($values, ['custom_id']);
         });
-        $bar->setMessage("Migrated!");
-        $bar->finish();
+        $patientBar->finish();
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient Migration', 'Done');
+        $this->newLine();
     }
 
     public function migrationConnection($connectionName, $database)
@@ -278,10 +277,12 @@ class MigrateMisuWahCommand extends Command
             ->whereMonth('patient.birthdate', '!=', 0)
             ->whereYear('patient.birthdate', '!=', 0)
             ->whereNotNull('patient.gender')
-            ->where(function ($query) {
-                $query->where('patient.mobile_number', 'REGEXP', '^0[1-9][0-9]{8}$')
-                    ->orWhere('patient.mobile_number', 'REGEXP', '^9[0-9]{9}$');
-            })
+            ->where('patient.gender', '!=', '')
+//            ->where(function ($query) {
+//                $query->where('patient.mobile_number', 'REGEXP', '^0[1-9][0-9]{8}$')
+//                    ->orWhere('patient.mobile_number', 'REGEXP', '^9[0-9]{9}$');
+//            })
+            ->whereNull('wahtermelon_patient_id')
             ->get();
     }
 }
