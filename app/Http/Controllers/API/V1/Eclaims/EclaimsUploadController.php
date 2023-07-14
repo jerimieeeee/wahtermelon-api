@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\API\V1\Eclaims;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Eclaims\EclaimsUploadRequest;
 use App\Http\Resources\API\V1\Eclaims\EclaimsUploadResource;
 use App\Models\V1\Eclaims\EclaimsUpload;
+use App\Models\V1\Eclaims\EclaimsUploadDocument;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
+use App\Services\PhilHealth\SoapService;
+use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class EclaimsUploadController extends Controller
@@ -39,9 +45,52 @@ class EclaimsUploadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EclaimsUploadRequest $request)
     {
-        //
+        $message = '';
+
+        $documents = EclaimsUploadDocument::where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo)->get();
+
+        if($documents) {
+            $service = new SoapService();
+            $creds = PhilhealthCredential::where('facility_code',auth()->user()->facility_code)
+                ->where('program_code', $request->program_desc)
+                ->first();
+
+            $eClaimsXMLDocs = "";
+            foreach($documents as $key => $value) {
+                $eClaimsXMLDocs .= "
+                <DOCUMENT
+                    pDocumentType='".$value['doc_type_code']."'
+                    pDocumentURL='".$value['doc_url']."'/>";
+            }
+
+            $path = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->pHospitalTransmittalNo.'.xml';
+            $file = Storage::disk('spaces')->get($path);
+
+            $xml = new DOMDocument($file);
+            $xml->loadXML($file);
+            $fragment = $xml->createDocumentFragment();
+            $fragment->appendXML($eClaimsXMLDocs);
+
+            $xml->getElementsByTagName('DOCUMENTS')->item(0)->appendChild($fragment);
+            $result = "";
+            foreach($xml->childNodes as $node){
+              $result .= $xml->saveXML($node)."\n";
+            }
+
+            $encryptedXml = $service->encryptData($result, $creds->cipher_key);
+            Storage::disk('spaces')->put($path.'.enc', $encryptedXml, ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+
+            $message = 'File Uploaded Successfully!';
+        } else {
+            $message = 'No Document Found!';
+        }
+
+        return response()->json([
+            'message' => $message,
+            'xml' => $xml
+        ], 201);
     }
 
     /**

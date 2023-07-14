@@ -962,6 +962,13 @@ Route::prefix('v1')->group(function () {
                 Route::post('eclaims-upload', 'store');
                 // Route::post('eclaims-xml', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadDocumentController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-doc', 'index');
+                Route::post('eclaims-doc', 'store');
+                // Route::post('eclaims-xml', 'store');
+            });
 
     });
 });

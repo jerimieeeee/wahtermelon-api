@@ -42,6 +42,7 @@ class EclaimsXmlService
         $cf1 = $this->cf1($patientId);
         $cf2 = $this->cf2($request);
         $allcaserate = $this->allcaserate($request);
+        $documents = $this->documents();
 
         $array = [];
         $array['eTRANSMITTAL'] = $etransmittal;
@@ -49,6 +50,7 @@ class EclaimsXmlService
         $array['eTRANSMITTAL']['CLAIM'][0]['CF1'] = $cf1;
         $array['eTRANSMITTAL']['CLAIM'][0]['CF2'] = $cf2;
         $array['eTRANSMITTAL']['CLAIM'][0]['ALLCASERATE'] = $allcaserate;
+        $array['eTRANSMITTAL']['CLAIM'][0]['DOCUMENTS'] = $documents;
 
         // $request->case_info['patient_id']
         // $request->case_info['caserate_code']
@@ -58,6 +60,11 @@ class EclaimsXmlService
         $xml = $result->dropXmlDeclaration()->toXml();
 
         return ['transmittalNumber' => $transmittalNumber, 'xml' => $xml, 'cipher_key' => $creds->cipher_key];
+    }
+
+    public function documents()
+    {
+
     }
 
     public function etransmittal($transmittalNumber)

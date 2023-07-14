@@ -42,6 +42,9 @@ class EclaimsCaserateListController extends Controller
                 return $query->whereProgramId($request->program_id)
                             ->whereProgramDesc($request->program_desc);
             })
+            ->when(isset($request->eclaims_id_arr), function ($query) use ($request) {
+                return $query->whereNotIn('id', [$request->eclaims_id_arr]);
+            })
             ->with('caserateAttendant');
 
         $eclaimsCaserate = QueryBuilder::for($query);

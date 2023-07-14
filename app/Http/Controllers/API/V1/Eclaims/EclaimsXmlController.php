@@ -35,7 +35,6 @@ class EclaimsXmlController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -62,8 +61,10 @@ class EclaimsXmlController extends Controller
 
         $service = new SoapService();
         $fileName = '';
-        $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$eclaimsXml['transmittalNumber'].'.xml.enc';
-        Storage::disk('spaces')->put($fileName, $service->encryptData($eclaimsXml['xml'], $eclaimsXml['cipher_key']), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+        $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$eclaimsXml['transmittalNumber'].'/'.$eclaimsXml['transmittalNumber'].'.xml';
+        // Storage::disk('spaces')->put($fileName, $service->encryptData($eclaimsXml['xml'], $eclaimsXml['cipher_key']), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+        // return $eclaimsXml['xml'];
+        Storage::disk('spaces')->put($fileName, $eclaimsXml['xml'], ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
 
         $data = EclaimsUpload::updateOrCreate(['pHospitalTransmittalNo' => $eclaimsXml['transmittalNumber']],$request->validated());
 
