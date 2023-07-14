@@ -32,7 +32,7 @@ class EclaimsCaserateListController extends Controller
      *
      * @apiResourceModel App\Models\V1\Eclaims\EclaimsCaserateList
      */
-    public function index(Request $request): ResourceCollection
+    public function index(Request $request)//: ResourceCollection
     {
         $query = EclaimsCaserateList::query()
             ->when(isset($request->patient_id), function ($query) use ($request) {
@@ -43,7 +43,8 @@ class EclaimsCaserateListController extends Controller
                             ->whereProgramDesc($request->program_desc);
             })
             ->when(isset($request->eclaims_id_arr), function ($query) use ($request) {
-                return $query->whereNotIn('id', [$request->eclaims_id_arr]);
+                $arrayData = explode(',', $request->eclaims_id_arr);
+                return $query->whereNotIn('id', $arrayData);
             })
             ->with('caserateAttendant');
 
