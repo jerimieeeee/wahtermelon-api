@@ -164,7 +164,8 @@ class DatabaseSeeder extends Seeder
             LibGbvSymptomsBehavioralSeeder::class,
             LibResidenceClassificationSeeder::class,
             LibGbvGeneralSurveySeeder::class,
-            LibGbvMedicalImpressionSeeder::class
+            LibGbvMedicalImpressionSeeder::class,
+            LibEclaimsDocTypeSeeder::class
         ]);
     }
 }

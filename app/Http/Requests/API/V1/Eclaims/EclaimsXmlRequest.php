@@ -22,6 +22,7 @@ class EclaimsXmlRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'facility_code' => 'required|exists:facilities,code',
             'patient_id' => 'required|exists:patients,id',
             'program_desc' => 'required',
             'program_id' => 'required',
@@ -40,9 +41,30 @@ class EclaimsXmlRequest extends FormRequest
             'attendant_accreditation_code' => 'required',
             'attendant_last_name' => 'required',
             'attendant_first_name' => 'required',
-            'attendant_middle_name' => 'required',
-            'attendant_suffix_name' => 'required',
-            'attendant_sign_date' => 'required'
+            'attendant_middle_name' => 'nullable',
+            'attendant_suffix_name' => 'nullable',
+            'attendant_sign_date' => 'required',
+            'pICDCode' => 'nullable',
+            //TBDOTS
+            'pTBType' => 'required_if:program_desc,tb',
+            'pNTPCardNo' => 'required_if:program_desc,tb',
+            //ANIMAL BITE
+            'pDay0ARV' => 'required_if:program_desc,ab',
+            'pDay3ARV' => 'required_if:program_desc,ab',
+            'pDay7ARV' => 'required_if:program_desc,ab',
+            'pRIG' => 'required_if:program_desc,ab',
+            'pABPOthers' => 'required_if:program_desc,ab',
+            'pABPSpecify' => 'required_if:program_desc,ab',
+            //CHILD CARE
+            'pEssentialNewbornCare' => 'required_if:program_desc,cc',
+            'pNewbornHearingScreeningTest' => 'required_if:program_desc,cc',
+            'pNewbornScreeningTest' => 'required_if:program_desc,cc',
+            'pFilterCardNo' => 'required_if:program_desc,cc',
+            //MATERNAL CARE
+            'pCheckUpDate1' => 'required_if:program_desc,mc',
+            'pCheckUpDate2' => 'required_if:program_desc,mc',
+            'pCheckUpDate3' => 'required_if:program_desc,mc',
+            'pCheckUpDate4' => 'required_if:program_desc,mc',
         ];
     }
 }

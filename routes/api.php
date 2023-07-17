@@ -952,7 +952,7 @@ Route::prefix('v1')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsXmlController::class)
             // ->middleware(('auth:api'))
             ->group(function () {
-                Route::get('eclaims-xml', 'createXml');
+                Route::post('eclaims-xml', 'createXml');
                 // Route::post('eclaims-xml', 'store');
             });
     });
