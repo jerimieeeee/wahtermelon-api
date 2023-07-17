@@ -22,7 +22,8 @@ class EclaimsUploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pHospitalTransmittalNo' => 'required'
+            'pHospitalTransmittalNo' => 'required',
+            'program_desc' => 'required'
         ];
     }
 }
