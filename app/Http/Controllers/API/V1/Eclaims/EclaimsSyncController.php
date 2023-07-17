@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\Eclaims\EclaimsSyncService;
 use App\Services\PhilHealth\SoapService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -241,6 +242,26 @@ class EclaimsSyncController extends Controller
         return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
     }
 
+    public function eClaimsUpload(Request $request, SoapService $service)
+    {
+        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+
+        $encrypted = $service->_client()->isDoctorAccredited(
+            $data->username.':'.$data->software_certification_id,
+            $data->password,
+            $data->pmcc_number,
+            $request->encryptedXml
+        );
+
+        $decryptor = new PhilHealthEClaimsEncryptor();
+
+        try {
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+        } catch(Exception $e) {
+            $desc = $e->getMessage();
+            return $desc;
+        }
+    }
     /**
      * Display the specified resource.
      */
