@@ -9,14 +9,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EclaimsUploadDocument extends Model
 {
-    use HasFactory, FilterByUser, FilterByFacility, HasUlids;
+    use HasFactory, SoftDeletes, HasUlids, FilterByUser;
 
     protected $guarded = [
         'id',
     ];
+
+    public $incrementing = false;
 
     protected $keyType = 'string';
 

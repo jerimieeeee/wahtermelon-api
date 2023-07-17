@@ -961,13 +961,14 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('eclaims-upload', 'index');
                 Route::post('eclaims-upload', 'store');
-                // Route::post('eclaims-xml', 'store');
+                Route::post('create-enc-xml', 'createEncXml');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadDocumentController::class)
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('eclaims-doc', 'index');
                 Route::post('eclaims-doc', 'store');
+                Route::delete('eclaims-doc/{eclaimsDoc}', 'destroy');
                 // Route::post('eclaims-xml', 'store');
             });
 

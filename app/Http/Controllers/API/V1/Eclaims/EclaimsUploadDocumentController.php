@@ -9,6 +9,7 @@ use App\Http\Resources\API\V1\Eclaims\EclaimsUploadDocumentResource;
 use App\Models\V1\Eclaims\EclaimsUploadDocument;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Services\PhilHealth\SoapService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -91,9 +92,14 @@ class EclaimsUploadDocumentController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @throws Throwable
      */
-    public function destroy(string $id)
+    public function destroy(EclaimsUploadDocument $eclaimsDoc): JsonResponse
     {
-        //
+        return $eclaimsDoc->get();
+        $eclaimsDoc->deleteOrFail();
+
+        return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }
