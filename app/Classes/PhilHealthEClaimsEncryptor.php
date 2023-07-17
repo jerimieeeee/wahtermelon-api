@@ -66,9 +66,9 @@ class PhilHealthEClaimsEncryptor
         $this->log('Encryption processed finished.');
     }
 
-    public function encryptXmlPayloadData($xml, $passphrase)
+    public function encryptXmlPayloadData($xml, $passphrase, $mimeType)
     {
-        return $this->encrypt($xml, 'text/xml', $passphrase);
+        return $this->encrypt($xml, $mimeType ?? 'text/xml', $passphrase);
     }
 
     public function decryptPayloadDataToXml($encryptedDataAsJsonStr, $passphrase)
