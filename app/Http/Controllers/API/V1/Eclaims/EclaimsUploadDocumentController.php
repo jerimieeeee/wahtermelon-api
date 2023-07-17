@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Eclaims;
 
+use App\Classes\PhilHealthEClaimsEncryptor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Eclaims\EclaimsUploadDocumentRequest;
 use App\Http\Resources\API\V1\Eclaims\EclaimsUploadDocumentResource;
@@ -42,12 +43,31 @@ class EclaimsUploadDocumentController extends Controller
 
             $file = $request->file('doc');
 
+            $publicKeyFileName =  file_get_contents(storage_path('philhealth/pnpki_philhealth_eclaims_auth_cert.pem'));//Storage::get('public/pnpki_philhealth_eclaims_auth_cert.pem');
+            $encryptor = new PhilHealthEClaimsEncryptor();
+            $encryptor->setPublicKeyFileName($publicKeyFileName);
+            $encryptor->setLoggingEnabled(TRUE);
+            $encryptor->setPassword1UsingHexStr('');
+            $encryptor->setPassword2UsingHexStr('');
+            $encryptor->setIVUsingHexStr('');
+
             $fileName = '';
-            $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'.'.$file->getClientOriginalExtension().'.enc';
-            Storage::disk('spaces')->put($fileName, $service->encryptData($file, $creds->cipher_key), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+            if($request->doc_type_code === 'OTH') {
+                $origFileName =  $file->getClientOriginalName();
+                $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'_'.$origFileName.'.enc';
+            } else {
+                $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'.'.$file->getClientOriginalExtension().'.enc';
+            }
+
+            Storage::disk('spaces')->put($fileName, $service->encryptData($file, $creds->cipher_key, $file->getMimeType()), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
             $url = Storage::disk('spaces')->url($fileName);
 
-            $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_type_code' => $request->doc_type_code], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => 'N']);
+            if($request->doc_type_code === 'OTH') {
+                $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_url' => $url], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => 'N', 'doc_type_code' => $request->doc_type_code]);
+            } else {
+                $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_type_code' => $request->doc_type_code], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => 'N']);
+            }
+
             return json_encode(['data' => $data, 'mesage' => 'successfully uploaded'], 201);
             // return $url = Storage::disk('spaces')->url($fileName);
         }
