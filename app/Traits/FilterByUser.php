@@ -14,7 +14,9 @@ trait FilterByUser
 
         self::creating(function ($model) {
             if (Schema::hasColumn($model->getTable(), 'facility_code')) {
-                $model->facility_code = auth()->user()->facility_code;
+                if(isset(auth()->user()->facility_code)) {
+                    $model->facility_code = auth()->user()->facility_code;
+                }
             }
             if (Schema::hasColumn($model->getTable(), 'transaction_number')) {
                 if (auth()->user()->konsultaCredential && ! isset($model->transaction_number)) {
@@ -33,7 +35,7 @@ trait FilterByUser
                         $caseNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'case_number', 'length' => 16, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
                         $model->case_number = $caseNumber;
                     } else {
-                        if (auth()->user()->konsultaCredential) {
+                        if (isset(auth()->user()->konsultaCredential)) {
                             $prefix = 'T'.auth()->user()->konsultaCredential->accreditation_number.date('Ym');
                             $caseNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'case_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
                             $model->case_number = $caseNumber;
