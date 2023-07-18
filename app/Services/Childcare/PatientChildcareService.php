@@ -18,15 +18,15 @@ class PatientChildcareService
                 patient_id, vaccine_id,
                 COUNT(vaccine_id) AS count
             ')
-            ->from('patient_vaccines')
-            ->wherePatientId($motherId)
-            ->groupBy('patient_id', 'vaccine_id')
-            ->havingRaw('count(patient_id)  >= 2');
+                ->from('patient_vaccines')
+                ->wherePatientId($motherId)
+                ->groupBy('patient_id', 'vaccine_id')
+                ->havingRaw('count(patient_id)  >= 2');
         })
-        ->selectRaw('
+            ->selectRaw('
                 patient_id AS mothersId, "CPAB" AS status
         ')
-        ->where('vaccine_id', 'TD');
+            ->where('vaccine_id', 'TD');
     }
 
     public function get_cpab()

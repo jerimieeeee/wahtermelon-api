@@ -10,7 +10,6 @@ class EclaimsXmlCf1Resource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray(Request $request): array
@@ -24,7 +23,7 @@ class EclaimsXmlCf1Resource extends JsonResource
                 'pMemberMiddleName' => mb_strtoupper($this->membership_type_id === 'MM' ? ($this->middle_name ?? '') : ($this->member_middle_name ?? ''), 'UTF-8'),
                 'pMemberBirthDate' => $this->membership_type_id === 'MM' ? $this->birthdate->format('Y-m-d') : $this->member_birthdate->format('Y-m-d'),
                 'pMemberShipType' => $this->philhealth_cat_id,
-                'pMailingAddress' => mb_strtoupper(str_replace("'","&#39;", $this->address)." ".str_replace("'","&#39;", $this->barangay_name)." ".str_replace("'","&#39;", $this->municipality_name)." ".str_replace("'","&#39;", $this->province_name), 'UTF-8'),
+                'pMailingAddress' => mb_strtoupper(str_replace("'", '&#39;', $this->address).' '.str_replace("'", '&#39;', $this->barangay_name).' '.str_replace("'", '&#39;', $this->municipality_name).' '.str_replace("'", '&#39;', $this->province_name), 'UTF-8'),
                 'pZipCode' => '2418',
                 'pMemberSex' => $this->membership_type_id === 'MM' ? $this->gender : $this->member_gender,
                 'pLandlineNo' => '',
@@ -40,7 +39,7 @@ class EclaimsXmlCf1Resource extends JsonResource
                 'pPatientSex' => $this->gender ?? '',
                 'pPEN' => $this->employer_pin ?? '',
                 'pEmployerName' => $this->employer_name ?? '',
-            ]
+            ],
         ];
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lib_eclaims_doc_types', function (Blueprint $table) {
-            $table->char('code',3)->primary();
+            $table->char('code', 3)->primary();
             $table->string('desc', 100);
             $table->unsignedInteger('sequence');
         });

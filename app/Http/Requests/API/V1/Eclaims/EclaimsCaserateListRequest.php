@@ -34,7 +34,7 @@ class EclaimsCaserateListRequest extends FormRequest
             'hci_fee' => 'required',
             'prof_fee' => 'required',
             'caserate_fee' => 'required',
-            'caserate_attendant' => 'required|exists:users,id'
+            'caserate_attendant' => 'required|exists:users,id',
         ];
     }
 }

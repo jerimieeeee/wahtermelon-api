@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibGbvMedicalImpression;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibGbvMedicalImpressionSeeder extends Seeder
@@ -26,7 +25,7 @@ class LibGbvMedicalImpressionSeeder extends Seeder
             ['id' => 10, 'desc' => 'Medical evaluation is diagnostic of sexual contact or sexual abuse.', 'full_desc' => 'Medical evaluation is diagnostic of sexual contact or sexual abuse.', 'sequence' => 10],
             ['id' => 11, 'desc' => 'Infection Confirms Mucosal Contact, Likely Due to Sexual Contact/Abuse', 'full_desc' => 'The presence of (cite infection) confirms mucosal contact with infected and infective bodily secretions, most likely due to sexual contact or sexual abuse.', 'sequence' => 11],
             ['id' => 12, 'desc' => 'Anogenital Sexual Contact/Abuse', 'full_desc' => 'Anogenital findings may suggest sexual contact or sexual abuse.', 'sequence' => 12],
-            ['id' => 13, 'desc' => 'Other Suggestive Findings', 'full_desc' => 'Other Suggestive Findings', 'sequence' => 13]
+            ['id' => 13, 'desc' => 'Other Suggestive Findings', 'full_desc' => 'Other Suggestive Findings', 'sequence' => 13],
         ], ['id']);
     }
 }

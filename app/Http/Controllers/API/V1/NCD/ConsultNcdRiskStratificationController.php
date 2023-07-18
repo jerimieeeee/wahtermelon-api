@@ -58,7 +58,7 @@ class ConsultNcdRiskStratificationController extends Controller
 
     public function show()
     {
-            //
+        //
     }
 
     /**

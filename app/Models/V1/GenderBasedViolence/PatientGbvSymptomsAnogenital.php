@@ -2,7 +2,6 @@
 
 namespace App\Models\V1\GenderBasedViolence;
 
-use App\Models\V1\Libraries\LibComplaint;
 use App\Models\V1\Libraries\LibGbvInfoSource;
 use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
 use App\Models\V1\Patient\Patient;

@@ -42,7 +42,7 @@ class PatientGbvController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbv::query()
-        ->with(['gbvNeglect',
+            ->with(['gbvNeglect',
                 'gbvComplaint',
                 'gbvBehavior',
                 'gbvReferral.referral',
@@ -82,12 +82,12 @@ class PatientGbvController extends Controller
                 'gbvIntake.caseConference.recommendation.recommendation',
                 'gbvIntake.medicalHistory',
                 'gbvIntake.medicalHistory.medicalImpression'])
-        ->when(isset($request->patient_id), function ($query) use ($request) {
-            return $query->wherePatientId($request->patient_id);
-        })
-        ->when(isset($request->id), function ($q) use ($request) {
-            $q->where('id', '=', $request->id);
-        });
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            })
+            ->when(isset($request->id), function ($q) use ($request) {
+                $q->where('id', '=', $request->id);
+            });
         $patientGbv = QueryBuilder::for($query)
             ->defaultSort('-gbv_date')
             ->allowedSorts('gbv_date');
@@ -127,7 +127,7 @@ class PatientGbvController extends Controller
                     $value);
             }
 
-            if(isset($request->safe()->referral_facility_code)){
+            if (isset($request->safe()->referral_facility_code)) {
                 PatientGbvReferral::updateOrCreate(['patient_id' => $request->patient_id, 'patient_gbv_id' => $data->id], $request->validated());
             }
 

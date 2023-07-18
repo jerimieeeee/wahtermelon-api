@@ -63,7 +63,7 @@ class PatientRequest extends FormRequest
             'attendant_ab_flag' => 'boolean',
             'attendant_ml_flag' => 'boolean',
             'attendant_fp_flag' => 'boolean',
-            'attendant_cv_flag' => 'boolean'
+            'attendant_cv_flag' => 'boolean',
         ];
     }
 

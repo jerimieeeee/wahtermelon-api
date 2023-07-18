@@ -43,12 +43,12 @@ class PatientTbController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(PatientTb::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        })
-        ->with('tbCaseFinding', 'tbCaseHolding', 'treatmentOutcome', 'outcomeReason', 'tbSymptom', 'tbPhysicalExam')
-        ->defaultSort('-created_at')
-        ->allowedSorts('created_at');
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->with('tbCaseFinding', 'tbCaseHolding', 'treatmentOutcome', 'outcomeReason', 'tbSymptom', 'tbPhysicalExam')
+            ->defaultSort('-created_at')
+            ->allowedSorts('created_at');
 
         if ($perPage === 'all') {
             return PatientTbResource::collection($query->get());
@@ -88,8 +88,8 @@ class PatientTbController extends Controller
     {
         $query = PatientTb::where('id', $patientTb->id);
         $patientTb = QueryBuilder::for($query)
-        ->with('treatmentOutcome', 'outcomeReason', 'tbCaseFinding', 'tbSymptom', 'tbPhysicalExam')
-        ->first();
+            ->with('treatmentOutcome', 'outcomeReason', 'tbCaseFinding', 'tbSymptom', 'tbPhysicalExam')
+            ->first();
 
         return new PatientTb($patientTb);
     }

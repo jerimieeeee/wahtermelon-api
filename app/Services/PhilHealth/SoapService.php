@@ -28,7 +28,7 @@ class SoapService
             ],
         ];
 
-        if (!isset(request()->program_code) && request()->program_code != 'kp') {
+        if (! isset(request()->program_code) && request()->program_code != 'kp') {
             //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
             $token = auth()->user()->konsultaCredential->token;
 
@@ -37,10 +37,9 @@ class SoapService
             //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
             $wsdlUrl = config('app.konsulta_url');
 
-//            dd($token);
-        }
-        else {
-            $eclaimsSyncService = New EclaimsSyncService();
+            //            dd($token);
+        } else {
+            $eclaimsSyncService = new EclaimsSyncService();
 
             $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
 
@@ -100,6 +99,7 @@ class SoapService
         if (! isset($jsonOutput->hash)) {
             if (isset($jsonOutput->encryptedxmlerrors)) {
                 $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
+
                 return json_decode($decryptedData);
             }
             if (isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors)) {
@@ -107,8 +107,10 @@ class SoapService
             }
             if (isset($jsonOutput->iv)) {
                 $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput), $cipher_key);
+
                 return XML2JSON($decryptedData);
             }
+
             return $jsonOutput;
         }
 
@@ -132,6 +134,7 @@ class SoapService
         $this->client = $this->_client();
         try {
             $result = $this->client->$method($params);
+
             return $this->decryptResponse($result);
         } catch (\Exception $e) {
             return $e;       // just re-throw it
@@ -150,7 +153,7 @@ class SoapService
             $newArray[$key]['first_name'] = $value->pAssignedFirstName;
             $newArray[$key]['middle_name'] = $value->pAssignedMiddleName;
             $newArray[$key]['suffix_name'] = $value->pAssignedExtName;
-            $newArray[$key]['birthdate'] = !empty($value->pAssignedDateOfBirth) ? $value->pAssignedDateOfBirth : null;
+            $newArray[$key]['birthdate'] = ! empty($value->pAssignedDateOfBirth) ? $value->pAssignedDateOfBirth : null;
             $newArray[$key]['gender'] = $value->pAssignedSex;
             $newArray[$key]['membership_type_id'] = $value->pAssignedType;
             $newArray[$key]['member_pin'] = $value->pPrimaryPIN;
@@ -158,7 +161,7 @@ class SoapService
             $newArray[$key]['member_first_name'] = $value->pPrimaryFirstName;
             $newArray[$key]['member_middle_name'] = $value->pPrimaryMiddleName;
             $newArray[$key]['member_suffix_name'] = $value->pPrimaryExtName;
-            $newArray[$key]['member_birthdate'] = !empty($value->pPrimaryDateOfBirth) ? $value->pPrimaryDateOfBirth : null;
+            $newArray[$key]['member_birthdate'] = ! empty($value->pPrimaryDateOfBirth) ? $value->pPrimaryDateOfBirth : null;
             $newArray[$key]['member_gender'] = $value->pPrimarySex;
             $newArray[$key]['mobile_number'] = Str::remove(' ', $value->pMobileNumber);
             $newArray[$key]['landline_number'] = Str::remove(' ', $value->pLandlineNumber);

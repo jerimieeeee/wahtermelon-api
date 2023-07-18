@@ -32,8 +32,8 @@ class LibLaboratoryController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratory::class)
-                ->allowedIncludes('category')
-                ->whereLabActive(1);
+            ->allowedIncludes('category')
+            ->whereLabActive(1);
 
         return LibLaboratoryResource::collection($query->get());
     }

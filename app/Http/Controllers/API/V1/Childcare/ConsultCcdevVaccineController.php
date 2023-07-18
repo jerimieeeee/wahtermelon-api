@@ -58,14 +58,14 @@ class ConsultCcdevVaccineController extends Controller
                 array_push($vaccine_array, $value);
             }
             ConsultCcdevVaccine::whereNotIn('vaccine_id', $vaccine_array)
-            ->where('patient_ccdev_id', '=', $data->patient_ccdev_id)
-            ->delete();
+                ->where('patient_ccdev_id', '=', $data->patient_ccdev_id)
+                ->delete();
 
             return response()->json([
                 // 'status_code' => 200,
                 'message' => 'Vaccine Successfully Saved',
             ], 201);
-        } catch(Exception $error) {
+        } catch (Exception $error) {
             return response()->json([
                 'status_code' => 500,
                 'message' => 'Vaccine Saving Error',
@@ -83,7 +83,7 @@ class ConsultCcdevVaccineController extends Controller
     public function show($id)
     {
         return ConsultCcdevVaccine::where('patient_id', '=', $id)
-        ->get();
+            ->get();
     }
 
     /**

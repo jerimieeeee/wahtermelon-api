@@ -38,10 +38,10 @@ class PatientVaccineService
                 TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month,
                 patient_id
             ")
-            ->from('patient_vaccines')
-            ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-            ->where('patient_id', $patient_id)
-            ->groupBy('patient_id');
+                ->from('patient_vaccines')
+                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->where('patient_id', $patient_id)
+                ->groupBy('patient_id');
         })->selectRaw('
                 CASE
                     WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13

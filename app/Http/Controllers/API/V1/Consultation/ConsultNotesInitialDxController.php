@@ -75,10 +75,10 @@ class ConsultNotesInitialDxController extends Controller
     public function show($id)
     {
         return ConsultNotesInitialDx::where('notes_id', '=', $id)
-        ->orderBy('id', 'asc')
-        ->orderBy('notes_id', 'asc')
-        ->orderBy('class_id', 'asc')
-        ->get();
+            ->orderBy('id', 'asc')
+            ->orderBy('notes_id', 'asc')
+            ->orderBy('class_id', 'asc')
+            ->get();
     }
 
     /**

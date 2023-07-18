@@ -74,10 +74,10 @@ class ConsultNotesPeController extends Controller
     public function show($id)
     {
         return ConsultNotesPe::where('notes_id', '=', $id)
-        ->orderBy('id', 'asc')
-        ->orderBy('notes_id', 'asc')
-        ->orderBy('pe_id', 'asc')
-        ->get();
+            ->orderBy('id', 'asc')
+            ->orderBy('notes_id', 'asc')
+            ->orderBy('pe_id', 'asc')
+            ->get();
     }
 
     /**

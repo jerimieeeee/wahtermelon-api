@@ -34,12 +34,12 @@ class LibLaboratoryCategoryController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratoryCategory::class)
-                ->allowedFilters(['lab_code'])
-                ->allowedIncludes('laboratory')
-                ->defaultSort('lab_code', 'sequence_id')
-                ->allowedSorts(['lab_code', 'sequence_id'])
-                ->whereFieldActive(1)
-                ->whereRelation('laboratory', 'lab_active', true);
+            ->allowedFilters(['lab_code'])
+            ->allowedIncludes('laboratory')
+            ->defaultSort('lab_code', 'sequence_id')
+            ->allowedSorts(['lab_code', 'sequence_id'])
+            ->whereFieldActive(1)
+            ->whereRelation('laboratory', 'lab_active', true);
 
         return LibLaboratoryCategoryResource::collection($query->get());
     }
