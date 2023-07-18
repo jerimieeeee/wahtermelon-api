@@ -42,4 +42,9 @@ class PatientCcdev extends Model
     {
         return $this->hasOne(ConsultCcdevBreastfed::class);
     }
+
+    public function consultccdevservices()
+    {
+        return $this->hasMany(ConsultCcdevService::class, 'patient_id', 'patient_id');
+    }
 }
