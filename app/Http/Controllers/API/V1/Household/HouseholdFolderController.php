@@ -49,7 +49,7 @@ class HouseholdFolderController extends Controller
                     $q->orSearch($columns, 'LIKE', $request->filter['search']);
                 });
             })
-            ->whereFacilityCode(auth()->user()->facility_code)
+//            ->whereFacilityCode(auth()->user()->facility_code)
             ->with('householdMember.patient')
             ->allowedIncludes('barangay');
 
