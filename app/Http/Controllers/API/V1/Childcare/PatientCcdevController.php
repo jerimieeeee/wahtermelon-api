@@ -51,7 +51,7 @@ class PatientCcdevController extends Controller
             ->leftJoinSub($ccdevStatus->get_cpab(), 'patientccdev', function ($join) {
                 $join->on('patient_ccdevs.mothers_id', '=', 'patientccdev.mothersId');
             })
-
+            ->with('consultccdevbfed', 'consultccdevservices')
             ->defaultSort('admission_date')
             ->allowedSorts('admission_date');
 
