@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
@@ -144,8 +145,51 @@ class MigrateMisuWahCommand extends Command
         $this->components->twoColumnDetail('Patient Migration', 'Done');
         $this->newLine();
 
-        $household = $this->migrateHousehold();
-        echo $household;
+        echo $household = $this->migrateHousehold();
+        /*$householdBar = $this->output->createProgressBar(count($household));
+        $householdBar->setFormat('Processing Household Table: %current%/%max% [%bar%] %percent:3s%%');
+        //$bar->setMessage("100? I won't count all that!");
+        //$bar->setProgress(0);
+        $householdBar->start();
+        $householdBar->collect()->chunk(200)->each(function ($household, $chunkNumber) use($connectionName, $database, $householdBar){
+            $values = [];
+            //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
+            //DB::purge($connectionName);
+//            $startIndex = $chunkNumber * 200 + 1;
+//            $endIndex = min($startIndex + $patient->count() - 1, $startIndex + 200 - 1);
+//
+//            $bar->setMessage("Processing chunk range: $startIndex - $endIndex");
+
+            foreach ($household as $record) {
+                //echo $values[] = $record;
+                //dd((array) $record);
+                $record = (array) $record;
+//                if(!$record['employer_code']){
+//                    Arr::pull($record, 'employer_code');
+//                }
+
+                $newUser = HouseholdFolder::updateOrCreate([
+                    'last_name' => $record['last_name'],
+                    'first_name' => $record['first_name'],
+                    'middle_name' => $record['middle_name'],
+                    'suffix_name' => $record['suffix_name'],
+                    'birthdate' => $record['birthdate']
+                ],
+                    $record + ['facility_code' => $database]);
+                //Update the misuwah family database with wahtermelon_family_id from wahtermelon database
+                DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $newUser->id]);
+                //$this->components->twoColumnDetail($record['id'], $newUser->id);
+                //echo DB::table('user')->get();
+                $householdBar->advance();
+            }
+
+            //echo $key;
+            //$model->upsert($values, ['custom_id']);
+        });
+        $householdBar->finish();
+        $this->newLine();
+        $this->components->twoColumnDetail('Household Migration', 'Done');
+        $this->newLine();*/
 
     }
 
@@ -177,6 +221,10 @@ class MigrateMisuWahCommand extends Command
             });
             Schema::connection($connectionName)->table('user', function (Blueprint $table) {
                 $table->string('wahtermelon_user_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+            Schema::connection($connectionName)->table('family', function (Blueprint $table) {
+                $table->string('wahtermelon_family_id')->nullable()->after('id');
                 // Add more columns if needed
             });
         } catch (\Exception $e) {
@@ -294,12 +342,17 @@ class MigrateMisuWahCommand extends Command
 
     public function migrateHousehold()
     {
-        return DB::connection('mysql_migration')->table('family_members')
+        return DB::connection('mysql_migration')->table('family')
             //->join('patient', 'patient.id', '=', 'family_members.patient_id')
+            ->selectRaw('family.*, GROUP_CONCAT(family_members.role ORDER BY family_members.patient_id ASC) AS roles, GROUP_CONCAT(patient.wahtermelon_patient_id ORDER BY patient.id ASC) AS patients, GROUP_CONCAT(user.wahtermelon_user_id ORDER BY patient.id ASC) AS users')
+            ->join('family_members', 'family_members.family_id', '=', 'family.id')
             ->join('patient', function ($join) {
                 $join->on('patient.id', '=', 'family_members.patient_id')
                     ->whereNotNull('wahtermelon_patient_id');
             })
-            ->count();
+            ->join('user', 'user.id', '=', 'patient.user_id')
+            ->whereNull('wahtermelon_family_id')
+            ->groupBy('family.id')
+            ->get();
     }
 }
