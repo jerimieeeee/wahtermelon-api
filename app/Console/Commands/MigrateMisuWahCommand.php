@@ -144,6 +144,9 @@ class MigrateMisuWahCommand extends Command
         $this->components->twoColumnDetail('Patient Migration', 'Done');
         $this->newLine();
 
+        $household = $this->migrateHousehold();
+        echo $household;
+
     }
 
     public function migrationConnection($connectionName, $database)
@@ -287,5 +290,16 @@ class MigrateMisuWahCommand extends Command
 //            })
             ->whereNull('wahtermelon_patient_id')
             ->get();
+    }
+
+    public function migrateHousehold()
+    {
+        return DB::connection('mysql_migration')->table('family_members')
+            //->join('patient', 'patient.id', '=', 'family_members.patient_id')
+            ->join('patient', function ($join) {
+                $join->on('patient.id', '=', 'family_members.patient_id')
+                    ->whereNotNull('wahtermelon_patient_id');
+            })
+            ->count();
     }
 }
