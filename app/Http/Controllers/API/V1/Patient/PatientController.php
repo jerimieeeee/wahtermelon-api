@@ -69,6 +69,7 @@ class PatientController extends Controller
     {
         $data = Patient::create($request->safe()->except('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
         $data->patientWashington()->create($request->safe()->only('difficulty_seeing', 'difficulty_hearing', 'difficulty_walking', 'difficulty_remembering', 'difficulty_self_care', 'difficulty_speaking'));
+
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 

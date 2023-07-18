@@ -5,11 +5,8 @@ namespace App\Console\Commands;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
-use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Console\Command;
-use Illuminate\Database\Connectors\ConnectionFactory;
-use Illuminate\Support\Facades\DB;
 
 class GenerateKonsultaCodeCommand extends Command
 {
@@ -40,7 +37,7 @@ class GenerateKonsultaCodeCommand extends Command
         $patientBar = $this->output->createProgressBar(count($patients));
         $patientBar->setFormat('Processing Patient Table: %current%/%max% [%bar%] %percent:3s%%');
         $patientBar->start();
-        $patients->map(function($patient) use($tableName, $patientBar){
+        $patients->map(function ($patient) use ($tableName, $patientBar) {
             $credential = $patient->philhealthKonsulta->pluck('accreditation_number')->first();
             $prefix = 'T'.$credential.$patient->created_at->format('Ym');
             $caseNumber = IdGenerator::generate(['table' => $tableName, 'field' => 'case_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
@@ -53,7 +50,6 @@ class GenerateKonsultaCodeCommand extends Command
         $this->components->twoColumnDetail('Patient case number generation', 'Done');
         $this->newLine();
 
-
         //Update Transaction Number of Consult Table
         $consults = new Consult;
         $consultTableName = $consults->getTable();
@@ -62,7 +58,7 @@ class GenerateKonsultaCodeCommand extends Command
         $consultBar = $this->output->createProgressBar(count($consultData));
         $consultBar->setFormat('Processing Consult Table: %current%/%max% [%bar%] %percent:3s%%');
         $consultBar->start();
-        $consultData->map(function($consult) use($consultTableName, $consultBar){
+        $consultData->map(function ($consult) use ($consultTableName, $consultBar) {
             $credential = $consult->patient->philhealthKonsulta->pluck('accreditation_number')->first();
             $prefix = $credential.$consult->created_at->format('Ym');
             $transactionNumber = IdGenerator::generate(['table' => $consultTableName, 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
@@ -101,7 +97,7 @@ class GenerateKonsultaCodeCommand extends Command
         $philhealthBar = $this->output->createProgressBar(count($philhealthData));
         $philhealthBar->setFormat('Processing Philhealth Table: %current%/%max% [%bar%] %percent:3s%%');
         $philhealthBar->start();
-        $philhealthData->map(function($philhealth) use($philhealthTableName, $philhealthBar){
+        $philhealthData->map(function ($philhealth) use ($philhealthTableName, $philhealthBar) {
             $credential = $philhealth->patient->philhealthKonsulta->pluck('accreditation_number')->first();
             $prefix = $credential.$philhealth->created_at->format('Ym');
             $transactionNumber = IdGenerator::generate(['table' => $philhealthTableName, 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);

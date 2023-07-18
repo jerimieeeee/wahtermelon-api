@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\V1\Eclaims;
 use App\Classes\PhilHealthEClaimsEncryptor;
 use App\Http\Controllers\Controller;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
-use App\Services\Eclaims\EclaimsSyncService;
 use App\Services\PhilHealth\SoapService;
 use Exception;
 use Illuminate\Http\Request;
@@ -76,6 +75,7 @@ class EclaimsSyncController extends Controller
         } else {
             $status = 200;
         }
+
         return response()->json(['data' => $pin], $status);
     }
 
@@ -108,8 +108,8 @@ class EclaimsSyncController extends Controller
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
-            "",
-            '%'. $request->employer_name. '%'
+            '',
+            '%'.$request->employer_name.'%'
         );
 
         $decryptor = new PhilHealthEClaimsEncryptor();

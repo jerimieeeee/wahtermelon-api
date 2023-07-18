@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\Patient\Patient;
-use App\Models\V1\Patient\PatientPhilhealth;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,7 +11,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class MigrateMisuWahCommand extends Command
 {
@@ -49,7 +46,7 @@ class MigrateMisuWahCommand extends Command
         $userBar = $this->output->createProgressBar(count($users));
         $userBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%%');
         $userBar->start();
-        $users->collect()->chunk(200)->each(function ($user) use($connectionName, $database, $userBar){
+        $users->collect()->chunk(200)->each(function ($user) use ($connectionName, $database, $userBar) {
             $values = [];
             //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
             //DB::purge($connectionName);
@@ -57,7 +54,7 @@ class MigrateMisuWahCommand extends Command
                 //echo $values[] = $record;
                 //dd((array) $record);
                 $record = (array) $record;
-                if(!$record['employer_code']){
+                if (! $record['employer_code']) {
                     Arr::pull($record, 'employer_code');
                 }
                 $newUser = User::updateOrCreate([
@@ -65,7 +62,7 @@ class MigrateMisuWahCommand extends Command
                     'first_name' => $record['first_name'],
                     'middle_name' => $record['middle_name'],
                     'suffix_name' => $record['suffix_name'],
-                    'email' => $record['email']
+                    'email' => $record['email'],
                 ],
                     $record + ['password' => Str::password(8), 'facility_code' => $database]);
                 //$user->update(['wahtermelon_user_id' => $newUser->id]);
@@ -89,35 +86,35 @@ class MigrateMisuWahCommand extends Command
         //$bar->setMessage("100? I won't count all that!");
         //$bar->setProgress(0);
         $patientBar->start();
-        $patients->collect()->chunk(200)->each(function ($patient, $chunkNumber) use($connectionName, $database, $patientBar){
+        $patients->collect()->chunk(200)->each(function ($patient, $chunkNumber) use ($connectionName, $database, $patientBar) {
             $values = [];
             //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
             //DB::purge($connectionName);
-//            $startIndex = $chunkNumber * 200 + 1;
-//            $endIndex = min($startIndex + $patient->count() - 1, $startIndex + 200 - 1);
-//
-//            $bar->setMessage("Processing chunk range: $startIndex - $endIndex");
+            //            $startIndex = $chunkNumber * 200 + 1;
+            //            $endIndex = min($startIndex + $patient->count() - 1, $startIndex + 200 - 1);
+            //
+            //            $bar->setMessage("Processing chunk range: $startIndex - $endIndex");
 
             foreach ($patient as $record) {
                 //echo $values[] = $record;
                 //dd((array) $record);
                 $record = (array) $record;
-//                if(!$record['employer_code']){
-//                    Arr::pull($record, 'employer_code');
-//                }
-                if(!$record['mobile_number']){
+                //                if(!$record['employer_code']){
+                //                    Arr::pull($record, 'employer_code');
+                //                }
+                if (! $record['mobile_number']) {
                     Arr::pull($record, 'mobile_number');
                 }
-                if(!$record['education_code']){
+                if (! $record['education_code']) {
                     Arr::pull($record, 'education_code');
                 }
-                if(!$record['religion_code']){
+                if (! $record['religion_code']) {
                     Arr::pull($record, 'religion_code');
                 }
-                if(!$record['occupation_code']){
+                if (! $record['occupation_code']) {
                     Arr::pull($record, 'occupation_code');
                 }
-                if(!$record['civil_status_code']){
+                if (! $record['civil_status_code']) {
                     Arr::pull($record, 'civil_status_code');
                 }
                 $newUser = Patient::updateOrCreate([
@@ -125,7 +122,7 @@ class MigrateMisuWahCommand extends Command
                     'first_name' => $record['first_name'],
                     'middle_name' => $record['middle_name'],
                     'suffix_name' => $record['suffix_name'],
-                    'birthdate' => $record['birthdate']
+                    'birthdate' => $record['birthdate'],
                 ],
                     $record + ['facility_code' => $database]);
                 //$user->update(['wahtermelon_user_id' => $newUser->id]);
@@ -218,6 +215,7 @@ class MigrateMisuWahCommand extends Command
             ->whereNull('wahtermelon_user_id')
             ->get();
     }
+
     public function migratePatient()
     {
         return DB::connection('mysql_migration')->table('patient')

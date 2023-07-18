@@ -39,8 +39,8 @@ class FacilityController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $facilities = QueryBuilder::for(Facility::class)
-                        ->with('barangay', 'municipality', 'province', 'region')
-                        ->allowedFilters(['barangay_code', 'municipality_code', 'province_code', 'region_code', 'code', 'facility_name']);
+            ->with('barangay', 'municipality', 'province', 'region')
+            ->allowedFilters(['barangay_code', 'municipality_code', 'province_code', 'region_code', 'code', 'facility_name']);
 
         if ($perPage === 'all') {
             return FacilityResource::collection($facilities->get());

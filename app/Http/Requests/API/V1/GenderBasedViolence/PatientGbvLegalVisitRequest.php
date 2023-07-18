@@ -26,7 +26,7 @@ class PatientGbvLegalVisitRequest extends FormRequest
             'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'scheduled_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'actual_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'person_in_charge' => 'nullable'
+            'person_in_charge' => 'nullable',
         ];
     }
 }

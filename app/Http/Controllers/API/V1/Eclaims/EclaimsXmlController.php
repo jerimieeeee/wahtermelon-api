@@ -53,7 +53,6 @@ class EclaimsXmlController extends Controller
 
     /**
      * Create XML for CF2 Submission
-     *
      */
     public function createXml(EclaimsXmlRequest $request, EclaimsXmlService $eclaimsXmlService)
     {

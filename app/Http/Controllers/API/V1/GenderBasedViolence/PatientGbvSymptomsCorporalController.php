@@ -18,10 +18,10 @@ class PatientGbvSymptomsCorporalController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbvSymptomsCorporal::query()
-                ->with(['patientGbvIntake', 'symptomsAnogenital'])
-                ->when(isset($request->patient_id), function ($query) use ($request) {
-                    return $query->wherePatientId($request->patient_id);
-                });
+            ->with(['patientGbvIntake', 'symptomsAnogenital'])
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
         $patientGbvSymptomsCorporal = QueryBuilder::for($query);
 
         return PatientGbvSymptomsCorporalResource::collection($patientGbvSymptomsCorporal->get());

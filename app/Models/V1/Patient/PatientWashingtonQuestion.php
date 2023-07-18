@@ -40,32 +40,33 @@ class PatientWashingtonQuestion extends Model
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-    public function difficultySeeingAns() {
-        return $this->belongsTo(LibWashingtonDisabilityAnswer::class. 'difficulty_seeing', 'id');
+    public function difficultySeeingAns()
+    {
+        return $this->belongsTo(LibWashingtonDisabilityAnswer::class.'difficulty_seeing', 'id');
     }
 
-
-    public function difficultyHearingAns() {
-        return $this->belongsTo(LibWashingtonDisabilityAnswer::class. 'difficulty_hearing', 'id');
+    public function difficultyHearingAns()
+    {
+        return $this->belongsTo(LibWashingtonDisabilityAnswer::class.'difficulty_hearing', 'id');
     }
 
-
-    public function difficultyWalkingAns() {
-        return $this->belongsTo(LibWashingtonDisabilityAnswer::class. 'difficulty_walking', 'id');
+    public function difficultyWalkingAns()
+    {
+        return $this->belongsTo(LibWashingtonDisabilityAnswer::class.'difficulty_walking', 'id');
     }
 
-
-    public function difficultyRememberingAns() {
-        return $this->belongsTo(LibWashingtonDisabilityAnswer::class. 'difficulty_remembering', 'id');
+    public function difficultyRememberingAns()
+    {
+        return $this->belongsTo(LibWashingtonDisabilityAnswer::class.'difficulty_remembering', 'id');
     }
 
-
-    public function difficultySelfCareAns() {
-        return $this->belongsTo(LibWashingtonDisabilityAnswer::class. 'difficulty_self_care', 'id');
+    public function difficultySelfCareAns()
+    {
+        return $this->belongsTo(LibWashingtonDisabilityAnswer::class.'difficulty_self_care', 'id');
     }
 
-
-    public function difficultySpeakingAns() {
-        return $this->belongsTo(LibWashingtonDisabilityAnswer::class. 'difficulty_speaking', 'id');
+    public function difficultySpeakingAns()
+    {
+        return $this->belongsTo(LibWashingtonDisabilityAnswer::class.'difficulty_speaking', 'id');
     }
 }

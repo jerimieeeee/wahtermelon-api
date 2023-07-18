@@ -33,8 +33,8 @@ class EclaimsXmlService
                 'pUserPassword' => '',
                 'pHospitalCode' => $creds->accreditation_number,
                 'pHospitalEmail' => '',
-                'pServiceProvider' => 'WAH'
-            ]
+                'pServiceProvider' => 'WAH',
+            ],
         ];
 
         $etransmittal = $this->etransmittal($transmittalNumber);
@@ -72,8 +72,8 @@ class EclaimsXmlService
         return [
             '_attributes' => [
                 'pHospitalTransmittalNo' => $transmittalNumber,
-                'pTotalClaims' => '1'
-            ]
+                'pTotalClaims' => '1',
+            ],
         ];
     }
 
@@ -85,8 +85,8 @@ class EclaimsXmlService
                 'pTrackingNumber' => '',
                 'pPhilhealthClaimType' => 'ALL-CASE-RATE',
                 'pPatientType' => 'O',
-                'pIsEmergency' => 'N'
-            ]
+                'pIsEmergency' => 'N',
+            ],
         ];
     }
 
@@ -99,16 +99,16 @@ class EclaimsXmlService
                     mobile_number, member_gender, philhealth_id, address,
                     barangays.name AS barangay_name, municipalities.name AS muncipality_name, provinces.name AS province_name,
                     philhealth_cat_id')
-                    ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
-                    ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
-                    ->join('household_folders', 'household_members.household_folder_id' , '=', 'household_folders.id')
-                    ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-                    ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-                    ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-                    ->join('lib_philhealth_membership_categories', 'patient_philhealth.membership_category_id', '=', 'lib_philhealth_membership_categories.id')
-                ->where('patients.id', '=', $id)
-                ->orderBy('effectivity_year', 'DESC')
-                ->first();
+            ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
+            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
+            ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('lib_philhealth_membership_categories', 'patient_philhealth.membership_category_id', '=', 'lib_philhealth_membership_categories.id')
+            ->where('patients.id', '=', $id)
+            ->orderBy('effectivity_year', 'DESC')
+            ->first();
 
         return EclaimsXmlCf1Resource::make($data)->resolve(); //[$cf1];
     }
@@ -122,8 +122,8 @@ class EclaimsXmlService
                     'pICDCode' => $request->icd10_code,
                     'pRVSCode' => $request->code,
                     'pCaseRateAmount' => $request->caserate_fee,
-                ]
-            ]
+                ],
+            ],
         ];
 
         return $allcaserate;
@@ -146,12 +146,12 @@ class EclaimsXmlService
                 'pReferralReasons' => '',
                 'pAccommodationType' => 'N',
                 'pHasAttachedSOA' => 'N',
-            ]
+            ],
         ];
 
         $diagnosis = [
             '_attributes' => [
-                'pAdmissionDiagnosis' => $request->admit_dx
+                'pAdmissionDiagnosis' => $request->admit_dx,
             ],
             'DISCHARGE' => [
                 '_attributes' => [
@@ -164,8 +164,8 @@ class EclaimsXmlService
                         'pProcedureDate' => $request->attendant_sign_date,
                         'pLaterality' => 'N',
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         $special = $this->tbdots($request);
@@ -175,9 +175,9 @@ class EclaimsXmlService
                 '_attributes' => [
                     'pTotalHCIFees' => $request->hci_fee,
                     'pTotalProfFees' => $request->prof_fee,
-                    'pGrandTotal' => $request->caserate_fee
+                    'pGrandTotal' => $request->caserate_fee,
                 ],
-            ]
+            ],
         ];
 
         $professional = [
@@ -189,7 +189,7 @@ class EclaimsXmlService
                 'pDoctorSuffix' => $request->attendant_suffix_name,
                 'pWithCoPay' => 'N',
                 'pDoctorCoPay' => '',
-                'pDoctorSignDate' => $request->attendant_sign_date
+                'pDoctorSignDate' => $request->attendant_sign_date,
             ],
         ];
 
@@ -199,6 +199,7 @@ class EclaimsXmlService
         $array['SPECIAL'] = $special;
         $array['PROFESSIONALS'] = $professional;
         $array['CONSUMPTION'] = $consumption;
+
         return $array;
     }
 
@@ -210,9 +211,9 @@ class EclaimsXmlService
                     'pCheckUpDate1' => $request->pCheckUpDate1,
                     'pCheckUpDate2' => $request->pCheckUpDate2,
                     'pCheckUpDate3' => $request->pCheckUpDate3,
-                    'pCheckUpDate4' => $request->pCheckUpDate4
-                ]
-            ]
+                    'pCheckUpDate4' => $request->pCheckUpDate4,
+                ],
+            ],
         ];
     }
 
@@ -224,7 +225,7 @@ class EclaimsXmlService
                     'pEssentialNewbornCare' => $request->pEssentialNewbornCare,
                     'pNewbornHearingScreeningTest' => $request->pNewbornHearingScreeningTest,
                     'pNewbornScreeningTest' => $request->pNewbornScreeningTest,
-                    'pFilterCardNo' => $request->pFilterCardNo
+                    'pFilterCardNo' => $request->pFilterCardNo,
                 ],
                 'ESSENTIAL' => [
                     '_attributes' => [
@@ -236,10 +237,10 @@ class EclaimsXmlService
                         'pVitaminK' => 'Y',
                         'pBCG' => 'Y',
                         'pNonSeparation' => 'Y',
-                        'pHepatitisB' => 'Y'
+                        'pHepatitisB' => 'Y',
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -249,9 +250,9 @@ class EclaimsXmlService
             'TBDOTS' => [
                 '_attributes' => [
                     'pTBType' => $request->pTBType,
-                    'pNTPCardNo' => $request->pNTPCardNo
-                ]
-            ]
+                    'pNTPCardNo' => $request->pNTPCardNo,
+                ],
+            ],
         ];
     }
 
@@ -265,9 +266,9 @@ class EclaimsXmlService
                     'pDay7ARV' => $request->pDay7ARV,
                     'pRIG' => $request->pRIG,
                     'pABPOthers' => $request->pABPOthers,
-                    'pABPSpecify' => $request->pABPSpecify
-                ]
-            ]
+                    'pABPSpecify' => $request->pABPSpecify,
+                ],
+            ],
         ];
     }
 }

@@ -14,7 +14,7 @@ trait FilterByUser
 
         self::creating(function ($model) {
             if (Schema::hasColumn($model->getTable(), 'facility_code')) {
-                if(isset(auth()->user()->facility_code)) {
+                if (isset(auth()->user()->facility_code)) {
                     $model->facility_code = auth()->user()->facility_code;
                 }
             }

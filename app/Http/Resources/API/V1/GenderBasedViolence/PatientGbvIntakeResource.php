@@ -77,7 +77,7 @@ class PatientGbvIntakeResource extends JsonResource
             'neglect' => $this->whenLoaded('neglect'),
             'complaints' => $this->whenLoaded('complaints'),
             'behavior' => $this->whenLoaded('behavior'),
-//            'referral' => $this->whenLoaded('referral'),
+            //            'referral' => $this->whenLoaded('referral'),
             'interview' => $this->whenLoaded('interview'),
             'interviewPerpetrator' => $this->whenLoaded('interviewPerpetrator'),
             'interviewSexualAbuses' => $this->whenLoaded('interviewSexualAbuses'),

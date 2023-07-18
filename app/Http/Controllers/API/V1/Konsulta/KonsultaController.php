@@ -247,8 +247,8 @@ class KonsultaController extends Controller
         $konsulta = KonsultaTransmittal::query()
             ->when($request->transmittal_number, fn ($query) => $query->where('transmittal_number', $request->transmittal_number)
             )
-             ->when($request->transaction_number, fn ($query) => $query->where('konsulta_transaction_number', $request->konsulta_transaction_number)
-             )
+            ->when($request->transaction_number, fn ($query) => $query->where('konsulta_transaction_number', $request->konsulta_transaction_number)
+            )
             ->first();
 
         if (empty($konsulta)) {

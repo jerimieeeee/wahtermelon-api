@@ -25,7 +25,6 @@ class LibGbvFilingTypeController extends Controller
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibGbvFilingTypeResource
      *
      * @apiResourceModel App\Models\V1\Libraries\LibGbvFilingType
-     *
      */
     public function index()
     {

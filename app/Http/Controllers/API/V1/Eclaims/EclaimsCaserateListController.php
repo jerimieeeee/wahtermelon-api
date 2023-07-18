@@ -40,7 +40,7 @@ class EclaimsCaserateListController extends Controller
             })
             ->when(isset($request->program_id) && isset($request->program_desc), function ($query) use ($request) {
                 return $query->whereProgramId($request->program_id)
-                            ->whereProgramDesc($request->program_desc);
+                    ->whereProgramDesc($request->program_desc);
             })
             ->when(isset($request->eclaims_id_arr), function ($query) use ($request) {
                 $arrayData = explode(',', $request->eclaims_id_arr);

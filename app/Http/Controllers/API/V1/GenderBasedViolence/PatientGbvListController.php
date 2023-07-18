@@ -24,7 +24,7 @@ class PatientGbvListController extends Controller
             ->defaultSort('-gbv_date')
             ->allowedSorts('gbv_date');
 
-        if($perPage === 'all') {
+        if ($perPage === 'all') {
             return PatientGbvResource::collection($patientGbv->get());
         }
 

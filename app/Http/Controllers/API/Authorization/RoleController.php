@@ -14,17 +14,17 @@ class RoleController extends Controller
      */
     public function addRole()
     {
-//        $admin = Bouncer::role()->firstOrCreate([
-//            'name' => 'admin',
-//            'title' => 'Administrator',
-//        ]);
-//
-//        $ban = Bouncer::ability()->firstOrCreate([
-//            'name' => 'ban-users',
-//            'title' => 'Ban users',
-//        ]);
-//
-//        Bouncer::allow($admin)->to($ban);
+        //        $admin = Bouncer::role()->firstOrCreate([
+        //            'name' => 'admin',
+        //            'title' => 'Administrator',
+        //        ]);
+        //
+        //        $ban = Bouncer::ability()->firstOrCreate([
+        //            'name' => 'ban-users',
+        //            'title' => 'Ban users',
+        //        ]);
+        //
+        //        Bouncer::allow($admin)->to($ban);
         return $user = User::whereIs('admin')->get();
         //return Patient::query()->get();
 

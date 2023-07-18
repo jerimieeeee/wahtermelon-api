@@ -24,7 +24,7 @@ class AppointmentController extends Controller
     public function join_referral()
     {
         return Appointment::selectRaw('facilities.code, facilities.facility_name')
-                ->leftJoin('facilities', 'appointments.referral_facility_code', '=', 'facilities.code');
+            ->leftJoin('facilities', 'appointments.referral_facility_code', '=', 'facilities.code');
     }
 
     /**

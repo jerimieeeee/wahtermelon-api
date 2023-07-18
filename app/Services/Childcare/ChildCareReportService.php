@@ -91,7 +91,7 @@ class ChildCareReportService
                 ->whereVaccineId($vaccine_id)
                 ->whereGender($patient_gender);
         })
-           ->selectRaw('
+            ->selectRaw('
                         name,
                         birthdate,
                         date_of_service,
@@ -102,7 +102,7 @@ class ChildCareReportService
             ->whereMonth('date_of_service', $request->month)
             ->whereStatusId('1')
             ->whereVaccineSeq($vaccine_seq)
-           ->orderBy('name', 'ASC');
+            ->orderBy('name', 'ASC');
     }
 
     public function get_cpab($request, $patient_gender)
@@ -184,7 +184,7 @@ class ChildCareReportService
 
     public function get_fic_cic($request, $patient_gender, $immunization_status)
     {
-        return DB::table(function ($query) use ($request) {
+        return DB::table(function ($query) {
             $query->selectRaw("
                             patient_vaccines.patient_id,
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
@@ -203,7 +203,7 @@ class ChildCareReportService
                 })
                 ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
                 ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
-            })
+        })
             ->selectRaw("
                 name,
                 gender,
@@ -257,7 +257,7 @@ class ChildCareReportService
                     ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month BETWEEN 13 AND 23) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
             })
             ->when($immunization_status == 'COMPLETED', fn ($query) => $query->whereGender($patient_gender)
-                    ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             );
     }
 
@@ -546,9 +546,9 @@ class ChildCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->when($disease == 'DIARRHEA', fn ($query) => $query->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
-                                      ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
+                ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
-                                      ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
+                ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->whereGender($patient_gender)
             ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
@@ -581,9 +581,9 @@ class ChildCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->when($service == 'MNP', fn ($query) => $query->whereServiceId('MNP')
-                        ->havingRaw('(age_month BETWEEN 6 AND 11) AND (quantity >= 90) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
+                ->havingRaw('(age_month BETWEEN 6 AND 11) AND (quantity >= 90) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->when($service == 'MNP2', fn ($query) => $query->whereServiceId('MNP2')
-                        ->havingRaw('(age_month BETWEEN 12 AND 23) AND (quantity >= 180) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
+                ->havingRaw('(age_month BETWEEN 12 AND 23) AND (quantity >= 180) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->whereGender($patient_gender)
             ->whereStatusId('1')
             ->groupBy('consult_ccdev_services.patient_id', 'service_id', 'service_date', 'quantity', 'municipality_code', 'barangay_code')
@@ -621,7 +621,7 @@ class ChildCareReportService
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
             ->when($age_month == 6, fn ($query) => $query->whereKonsultaMedicineCode('RETA10000001103CAP310000000000')
-                         ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($age_month == 12, fn ($query) => $query->whereKonsultaMedicineCode('VITAA0000000294CAP310000000000')
                 ->havingRaw('(age_month BETWEEN 12 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
@@ -664,8 +664,8 @@ class ChildCareReportService
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($medicine == 'ORS WITH ZINC', fn ($query) => $query->whereIn('konsulta_medicine_code', ['ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01', 'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01', 'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'])
-                          ->whereIn('konsulta_medicine_code', ['ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL', 'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'])
-                          ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->whereIn('konsulta_medicine_code', ['ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL', 'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'])
+                ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->whereGender($patient_gender)
             ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
@@ -738,7 +738,7 @@ class ChildCareReportService
             })
             ->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
             ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('konsulta_medicine_code', ['AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000', 'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01', 'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'])
-                      ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->whereGender($patient_gender)
             ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
@@ -772,10 +772,10 @@ class ChildCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->when($class == 'Obese', fn ($query) => $query->whereIn('patient_weight_for_age', ['Obese', 'Overweight'])
-                    ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($class == 'Normal', fn ($query) => $query->whereIn('patient_weight_for_age', ['Normal'])
-                    ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->whereGender($patient_gender)
             ->groupBy('patient_vitals.patient_id', 'municipality_code', 'barangay_code')
@@ -812,7 +812,7 @@ class ChildCareReportService
                 ['bfed_month3', '=', '1'],
                 ['bfed_month4', '=', '1'],
             ])
-            ->whereNotNull('comp_fed_date')
+                ->whereNotNull('comp_fed_date')
             )
             ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             ->whereGender($patient_gender)
@@ -877,10 +877,10 @@ class ChildCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->when($class == 'Stunted', fn ($query) => $query->whereIn('patient_height_for_age', ['Stunted'])
-                     ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($class == 'Wasted', fn ($query) => $query->wherePatientHeightForAge($class)
-                     ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->whereGender($patient_gender)
             ->orderBy('name', 'ASC');
