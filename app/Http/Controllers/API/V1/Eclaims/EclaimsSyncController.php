@@ -257,11 +257,13 @@ class EclaimsSyncController extends Controller
 
         try {
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $desc = $e->getMessage();
+
             return $desc;
         }
     }
+
     /**
      * Display the specified resource.
      */

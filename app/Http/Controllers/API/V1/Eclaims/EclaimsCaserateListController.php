@@ -44,6 +44,7 @@ class EclaimsCaserateListController extends Controller
             })
             ->when(isset($request->eclaims_id_arr), function ($query) use ($request) {
                 $arrayData = explode(',', $request->eclaims_id_arr);
+
                 return $query->whereNotIn('id', $arrayData);
             })
             ->with('caserateAttendant');

@@ -2,11 +2,9 @@
 
 namespace App\Models\V1\Eclaims;
 
-use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

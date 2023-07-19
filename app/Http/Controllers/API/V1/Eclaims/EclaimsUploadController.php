@@ -25,17 +25,17 @@ class EclaimsUploadController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(EclaimsUpload::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        })
-        ->when(isset($request->program_desc), function ($q) use ($request) {
-          $q->where('program_desc', $request->program_desc);
-        })
-        ->with('caserate')
-        ->defaultSort('-created_at')
-        ->allowedSorts('created_at');
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->when(isset($request->program_desc), function ($q) use ($request) {
+                $q->where('program_desc', $request->program_desc);
+            })
+            ->with('caserate')
+            ->defaultSort('-created_at')
+            ->allowedSorts('created_at');
 
-        if($perPage === 'all') {
+        if ($perPage === 'all') {
             return EclaimsUploadResource::collection($query->get());
         }
 
@@ -48,17 +48,17 @@ class EclaimsUploadController extends Controller
     public function store(EclaimsUploadRequest $request)
     {
         $data = EclaimsUpload::updateOrCreate(
-                [
-                    'pHospitalTransmittalNo' => $request->pHospitalTransmittalNo
-                ],
-                [
-                    'pTransmissionControlNumber' => $request->pTransmissionControlNumber,
-                    'pReceiptTicketNumber' => $request->pReceiptTicketNumber,
-                    'pStatus' => $request->pStatus,
-                    'pTransmissionDate' => $request->pTransmissionDate,
-                    'pTransmissionTime' => $request->pTransmissionTime,
-                    'isSuccess' => $request->isSuccess
-                ]);
+            [
+                'pHospitalTransmittalNo' => $request->pHospitalTransmittalNo,
+            ],
+            [
+                'pTransmissionControlNumber' => $request->pTransmissionControlNumber,
+                'pReceiptTicketNumber' => $request->pReceiptTicketNumber,
+                'pStatus' => $request->pStatus,
+                'pTransmissionDate' => $request->pTransmissionDate,
+                'pTransmissionTime' => $request->pTransmissionTime,
+                'isSuccess' => $request->isSuccess,
+            ]);
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
 
@@ -94,14 +94,14 @@ class EclaimsUploadController extends Controller
 
         $documents = EclaimsUploadDocument::where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo)->get();
 
-        if($documents) {
+        if ($documents) {
             $service = new SoapService();
-            $creds = PhilhealthCredential::where('facility_code',auth()->user()->facility_code)
+            $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
                 ->where('program_code', $request->program_desc)
                 ->first();
 
-            $eClaimsXMLDocs = "";
-            foreach($documents as $key => $value) {
+            $eClaimsXMLDocs = '';
+            foreach ($documents as $key => $value) {
                 $eClaimsXMLDocs .= "
                 <DOCUMENT
                     pDocumentType='".$value['doc_type_code']."'
@@ -117,9 +117,9 @@ class EclaimsUploadController extends Controller
             $fragment->appendXML($eClaimsXMLDocs);
 
             $xml->getElementsByTagName('DOCUMENTS')->item(0)->appendChild($fragment);
-            $result = "";
-            foreach($xml->childNodes as $node){
-              $result .= $xml->saveXML($node)."\n";
+            $result = '';
+            foreach ($xml->childNodes as $node) {
+                $result .= $xml->saveXML($node)."\n";
             }
 
             $encryptedXml = $service->encryptData($result, $creds->cipher_key);
@@ -132,7 +132,7 @@ class EclaimsUploadController extends Controller
 
         return response()->json([
             'message' => $message,
-            'xml' => $encryptedXml
+            'xml' => $encryptedXml,
         ], 201);
     }
 }
