@@ -325,7 +325,7 @@ class GenderBasedViolenceReportController extends Controller
             ->pluck('utv_abuse_count', 'barangay_name');
 
         /////////////////////////////////
-        //MULTIPLE TO VALIDATE ABUSE FEMALE
+        //MULTIPLE ABUSE FEMALE
         $multiple_abuse_female_age_0_to_5 = $genderBasedViolenceReportService->get_gbv_catalyst_report_abuses2($request, 'F', '0', '5')
             ->get()
             ->pluck('count', 'barangay_name');
