@@ -46,7 +46,7 @@ class UserUpdateRequest extends FormRequest
             'attendant_ab_flag' => 'boolean|nullable',
             'attendant_ml_flag' => 'boolean|nullable',
             'attendant_fp_flag' => 'boolean|nullable',
-            'attendant_cv_flag' => 'boolean|nullable'
+            'attendant_cv_flag' => 'boolean|nullable',
         ];
     }
 }

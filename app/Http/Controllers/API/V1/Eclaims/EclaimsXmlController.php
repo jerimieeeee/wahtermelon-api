@@ -35,6 +35,7 @@ class EclaimsXmlController extends Controller
     {
         //
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -65,11 +66,11 @@ class EclaimsXmlController extends Controller
         // return $eclaimsXml['xml'];
         Storage::disk('spaces')->put($fileName, $eclaimsXml['xml'], ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
 
-        $data = EclaimsUpload::updateOrCreate(['pHospitalTransmittalNo' => $eclaimsXml['transmittalNumber']],$request->validated());
+        $data = EclaimsUpload::updateOrCreate(['pHospitalTransmittalNo' => $eclaimsXml['transmittalNumber']], $request->validated());
 
         return response()->json([
             'message' => 'XML Uploaded Successfully',
-            'data' => $data
+            'data' => $data,
         ], 201);
     }
 }

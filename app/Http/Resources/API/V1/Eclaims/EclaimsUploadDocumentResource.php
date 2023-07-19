@@ -19,7 +19,7 @@ class EclaimsUploadDocumentResource extends JsonResource
             'pHospitalTransmittalNo' => $this->pHospitalTransmittalNo,
             'doc_type_code' => $this->doc_type_code,
             'doc_url' => $this->doc_url,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
         ];
     }
 }

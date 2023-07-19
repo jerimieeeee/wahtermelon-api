@@ -23,7 +23,7 @@ class EclaimsUploadRequest extends FormRequest
     {
         return [
             'pHospitalTransmittalNo' => 'required',
-            'program_desc' => 'required'
+            'program_desc' => 'required',
         ];
     }
 }

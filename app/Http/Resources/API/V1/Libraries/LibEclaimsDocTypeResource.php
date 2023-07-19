@@ -16,7 +16,7 @@ class LibEclaimsDocTypeResource extends JsonResource
     {
         return [
             'code' => $this->code,
-            'desc' => $this->desc
+            'desc' => $this->desc,
         ];
     }
 }

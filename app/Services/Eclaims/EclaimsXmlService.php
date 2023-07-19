@@ -5,20 +5,16 @@ namespace App\Services\Eclaims;
 use App\Http\Resources\API\V1\Eclaims\EclaimsXmlCf1Resource;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
-use App\Services\PhilHealth\SoapService;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class EclaimsXmlService
 {
     public function createXml($transmittalNumber, $patientId, $request)
     {
-        $creds = PhilhealthCredential::where('facility_code',auth()->user()->facility_code)
-                ->where('program_code', $request->program_desc)
-                ->first();
+        $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
+            ->where('program_code', $request->program_desc)
+            ->first();
         // return $creds = auth()->user()->eclaimsCredential($request->program_desc);//PhilhealthCredential::whereFacilityCode($request->facility_code)->whereProgramCode($request->program_desc)->first();
         if (empty($transmittalNumber)) {
             $prefix = $creds->accreditation_number.date('Ym');
@@ -155,7 +151,7 @@ class EclaimsXmlService
             ],
             'DISCHARGE' => [
                 '_attributes' => [
-                    'pDischargeDiagnosis' => $request->discharge_dx
+                    'pDischargeDiagnosis' => $request->discharge_dx,
                 ],
                 'RVSCODES' => [
                     '_attributes' => [

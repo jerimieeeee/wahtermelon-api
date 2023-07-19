@@ -26,7 +26,7 @@ class EclaimsUploadDocumentRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'pHospitalTransmittalNo' => 'required|exists:eclaims_uploads,pHospitalTransmittalNo',
             'doc_type_code' => 'required|exists:lib_eclaims_doc_types,code',
-            'program_desc' => 'required'
+            'program_desc' => 'required',
         ];
     }
 }
