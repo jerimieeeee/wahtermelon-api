@@ -40,12 +40,12 @@ class PatientVitalsController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = PatientVitals::query()
-                ->when(isset($request->patient_id), function ($query) use ($request) {
-                    return $query->wherePatientId($request->patient_id);
-                });
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
         $vitals = QueryBuilder::for($query)
-                ->defaultSort('-vitals_date')
-                ->allowedSorts('vitals_date');
+            ->defaultSort('-vitals_date')
+            ->allowedSorts('vitals_date');
 
         if ($perPage == 'all') {
             return PatientVitalsResource::collection($vitals->get());

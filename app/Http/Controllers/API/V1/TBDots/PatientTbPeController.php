@@ -40,9 +40,9 @@ class PatientTbPeController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(PatientTbPe::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        });
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            });
 
         if ($perPage === 'all') {
             return PatientTbPeResource::collection($query->get());
@@ -78,7 +78,7 @@ class PatientTbPeController extends Controller
     {
         $query = PatientTbPe::where('id', $patientTbPe->id);
         $patientTbPe = QueryBuilder::for($query)
-        ->first();
+            ->first();
 
         return new PatientTbPe(($patientTbPe));
     }

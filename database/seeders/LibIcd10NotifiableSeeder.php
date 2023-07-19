@@ -15,13 +15,13 @@ class LibIcd10NotifiableSeeder extends Seeder
     public function run()
     {
         DB::table('lib_icd10s')
-        ->whereIn('icd10_code', ['P35.8', 'A80', 'A80.1', 'A80.2', 'A80.3', 'A80.4', 'A80.9', 'A22', 'A22.0',
-            'A22.1', 'A22.2', 'A22.7', 'A22.8', 'A22.9', 'A98.4', 'B08.8', 'J10.0', 'J10.1',
-            'J10.8', 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9',
-            'B06', 'B06.0', 'B06.8', 'B06.9', 'J17.1', 'A39', 'A39.0', 'A39.2', 'A39.3',
-            'A39.4', 'A39.5', 'A39.8', 'A39.9', 'B34.2', 'A33', 'P71.3', 'T61.0', 'T61.1',
-            'T61.1', 'T61.2', 'T61.8', 'A82', 'A82.0', 'A82.1', 'A82.9', 'U04.9', 'Q02', 'A92.8'])
-        ->update(['notifiable_cat' => 1]);
+            ->whereIn('icd10_code', ['P35.8', 'A80', 'A80.1', 'A80.2', 'A80.3', 'A80.4', 'A80.9', 'A22', 'A22.0',
+                'A22.1', 'A22.2', 'A22.7', 'A22.8', 'A22.9', 'A98.4', 'B08.8', 'J10.0', 'J10.1',
+                'J10.8', 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9',
+                'B06', 'B06.0', 'B06.8', 'B06.9', 'J17.1', 'A39', 'A39.0', 'A39.2', 'A39.3',
+                'A39.4', 'A39.5', 'A39.8', 'A39.9', 'B34.2', 'A33', 'P71.3', 'T61.0', 'T61.1',
+                'T61.1', 'T61.2', 'T61.8', 'A82', 'A82.0', 'A82.1', 'A82.9', 'U04.9', 'Q02', 'A92.8'])
+            ->update(['notifiable_cat' => 1]);
 
         DB::table('lib_icd10s')
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'A32.1', 'A83', 'A83.0', 'A83.8', 'A83.9', 'A86',
@@ -164,13 +164,13 @@ class LibIcd10NotifiableSeeder extends Seeder
             ->update(['notifiable_cat' => 2, 'is_morbidity' => 1]);
     }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-      //
-  }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+    }
 }

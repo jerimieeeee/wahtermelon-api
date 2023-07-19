@@ -4,7 +4,6 @@ namespace Database\Factories\V1\GenderBasedViolence;
 
 use App\Models\V1\GenderBasedViolence\PatientGbvIntake;
 use App\Models\V1\Libraries\LibGbvInfoSource;
-use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
 use App\Models\V1\Libraries\LibGbvSymptomsCorporal;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;

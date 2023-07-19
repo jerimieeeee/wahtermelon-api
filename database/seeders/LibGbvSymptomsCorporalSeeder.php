@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
 use App\Models\V1\Libraries\LibGbvSymptomsCorporal;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 

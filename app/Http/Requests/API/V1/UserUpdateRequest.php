@@ -40,6 +40,13 @@ class UserUpdateRequest extends FormRequest
             'accreditation_number' => 'sometimes|max:14',
             'designation_code' => 'required|exists:lib_designations,code',
             'employer_code' => 'required|exists:lib_employers,code',
+            'attendant_cc_flag' => 'boolean|nullable',
+            'attendant_mc_flag' => 'boolean|nullable',
+            'attendant_tb_flag' => 'boolean|nullable',
+            'attendant_ab_flag' => 'boolean|nullable',
+            'attendant_ml_flag' => 'boolean|nullable',
+            'attendant_fp_flag' => 'boolean|nullable',
+            'attendant_cv_flag' => 'boolean|nullable',
         ];
     }
 }

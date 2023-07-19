@@ -40,9 +40,9 @@ class PatientTbSymptomController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(PatientTbSymptom::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        });
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            });
 
         if ($perPage === 'all') {
             return PatientTbSymptomResource::collection($query->get());
@@ -78,7 +78,7 @@ class PatientTbSymptomController extends Controller
     {
         $query = PatientTbSymptom::where('id', $patientTbSymptom->id);
         $patientTbSymptom = QueryBuilder::for($query)
-        ->first();
+            ->first();
 
         return new PatientTbSymptom($patientTbSymptom);
     }

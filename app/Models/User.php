@@ -54,6 +54,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'birthdate' => 'date:Y-m-d',
         'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
+        'attendant_cc_flag' => 'boolean',
+        'attendant_mc_flag' => 'boolean',
+        'attendant_tb_flag' => 'boolean',
+        'attendant_ab_flag' => 'boolean',
+        'attendant_ml_flag' => 'boolean',
+        'attendant_fp_flag' => 'boolean',
+        'attendant_cv_flag' => 'boolean',
     ];
 
     public function setPasswordAttribute($value)

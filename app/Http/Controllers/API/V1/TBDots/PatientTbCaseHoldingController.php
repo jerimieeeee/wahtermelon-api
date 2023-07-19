@@ -41,12 +41,12 @@ class PatientTbCaseHoldingController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(PatientTbCaseHolding::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        })
-        ->with('enrollAs', 'treatmentRegimen', 'bacteriologicalStatus', 'anatomicalSite', 'iptType', 'eptbSite')
-        ->defaultSort('registration_date')
-        ->allowedSort('-registration_date');
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->with('enrollAs', 'treatmentRegimen', 'bacteriologicalStatus', 'anatomicalSite', 'iptType', 'eptbSite')
+            ->defaultSort('registration_date')
+            ->allowedSort('-registration_date');
 
         if ($perPage === 'all') {
             return PatientTbCaseHoldingResource::collection($query->get());
@@ -82,7 +82,7 @@ class PatientTbCaseHoldingController extends Controller
     {
         $query = PatientTbCaseHolding::where('id', $patientTbCaseHolding->id);
         $patientTbCaseHolding = QueryBuilder::for($query)
-        ->first();
+            ->first();
 
         return new PatientTbCaseHolding($patientTbCaseHolding);
     }

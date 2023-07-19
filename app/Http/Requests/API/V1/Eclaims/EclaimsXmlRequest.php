@@ -31,6 +31,8 @@ class EclaimsXmlRequest extends FormRequest
             'caserate_code' => 'required',
             'code' => 'required',
             'description' => 'required',
+            'discharge_dx' => 'required',
+            'icd10_code' => 'required|exists:lib_icd10s,icd10_code',
             'hci_fee' => 'required',
             'prof_fee' => 'required',
             'caserate_fee' => 'required',
@@ -45,6 +47,7 @@ class EclaimsXmlRequest extends FormRequest
             'attendant_suffix_name' => 'nullable',
             'attendant_sign_date' => 'required',
             'pICDCode' => 'nullable',
+            'eclaims_caserate_list_id' => 'required',
             //TBDOTS
             'pTBType' => 'required_if:program_desc,tb',
             'pNTPCardNo' => 'required_if:program_desc,tb',

@@ -458,4 +458,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     //GBV Symptoms Behavioral
     Route::get('gbv-medical-impression', [\App\Http\Controllers\API\V1\Libraries\LibGbvMedicalImpressionController::class, 'index'])->name('gbv-medical-impression.index');
+
+    //Eclaims Doc Type
+    Route::get('eclaims-doc-type', [\App\Http\Controllers\API\V1\Libraries\LibEclaimsDocTypeController::class, 'index'])->name('eclaims-doc-type.index');
 });

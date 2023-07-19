@@ -28,6 +28,8 @@ class EclaimsCaserateListResource extends JsonResource
             'caserate_code' => $this->caserate_code,
             'code' => $this->code,
             'description' => $this->description,
+            'discharge_dx' => $this->discharge_dx,
+            'icd10_code' => $this->icd10_code,
             'hci_fee' => $this->hci_fee,
             'prof_fee' => $this->prof_fee,
             'caserate_fee' => $this->caserate_fee,

@@ -32,6 +32,7 @@ class EclaimsSyncService
             } catch (RequestException $e) {
             }
         }
+
         return $onlineUrls;
     }
 }

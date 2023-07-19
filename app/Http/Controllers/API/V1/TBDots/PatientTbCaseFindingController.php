@@ -41,12 +41,12 @@ class PatientTbCaseFindingController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(PatientTbCaseFinding::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        })
-        ->with('source', 'reg_group', 'previous_tb_treatment')
-        ->defaultSort('consult_date')
-        ->allowedSorts('-consult_date');
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->with('source', 'reg_group', 'previous_tb_treatment')
+            ->defaultSort('consult_date')
+            ->allowedSorts('-consult_date');
 
         if ($perPage === 'all') {
             return PatientTbCaseFindingResource::collection($query->get());
@@ -82,8 +82,8 @@ class PatientTbCaseFindingController extends Controller
     {
         $query = PatientTbCaseFinding::where('id', $patientTbCaseFinding->id);
         $patientTbCaseFinding = QueryBuilder::for($query)
-        ->with('source', 'reg_group', 'previous_tb_treatment')
-        ->first();
+            ->with('source', 'reg_group', 'previous_tb_treatment')
+            ->first();
 
         return new PatientTbCaseFinding($patientTbCaseFinding);
     }

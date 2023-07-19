@@ -2,11 +2,7 @@
 
 namespace App\Models\V1\GenderBasedViolence;
 
-use App\Models\V1\Libraries\LibGbvGeneralSurvey;
-use App\Models\V1\Libraries\LibGbvInfoSource;
 use App\Models\V1\Libraries\LibGbvMedicalImpression;
-use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
-use App\Models\V1\Libraries\LibGeneralSurvey;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;

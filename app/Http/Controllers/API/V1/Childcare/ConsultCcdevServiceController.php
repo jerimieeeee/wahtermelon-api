@@ -38,12 +38,12 @@ class ConsultCcdevServiceController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = ConsultCcdevService::query()->with(['services:service_id,service_name,essential'])
-                ->when(isset($request->patient_id), function ($query) use ($request) {
-                    return $query->wherePatientId($request->patient_id);
-                });
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
         $services = QueryBuilder::for($query)
-                ->defaultSort('-service_date', '-service_id')
-                ->allowedSorts(['service_date', 'service_id']);
+            ->defaultSort('-service_date', '-service_id')
+            ->allowedSorts(['service_date', 'service_id']);
 
         return ConsultCcdevServiceResource::collection($services->get());
     }

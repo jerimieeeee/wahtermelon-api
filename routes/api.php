@@ -941,6 +941,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('get-voucher-details', 'GetVoucherDetails');
                 Route::post('check-claim-eligibility', 'isClaimEligible');
                 Route::post('check-doctor-accredited', 'isDoctorAccredited');
+                Route::post('upload-claim', 'eClaimsUpload');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsCaserateListController::class)
             ->middleware(('auth:api'))
@@ -950,11 +951,27 @@ Route::prefix('v1')->group(function () {
                 Route::put('eclaims-caserate/{eclaimsCaserate}', 'update');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsXmlController::class)
-            // ->middleware(('auth:api'))
+            ->middleware(('auth:api'))
             ->group(function () {
                 Route::post('eclaims-xml', 'createXml');
                 // Route::post('eclaims-xml', 'store');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-upload', 'index');
+                Route::post('eclaims-upload', 'store');
+                Route::post('create-enc-xml', 'createEncXml');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadDocumentController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-doc', 'index');
+                Route::post('eclaims-doc', 'store');
+                Route::delete('eclaims-doc/{eclaimsDoc}', 'destroy');
+                // Route::post('eclaims-xml', 'store');
+            });
+
     });
 
     Route::prefix('gbv-report')->group(function () {

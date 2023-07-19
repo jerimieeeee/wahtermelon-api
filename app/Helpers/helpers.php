@@ -82,9 +82,17 @@ if (! function_exists('XML2JSON')) {
     function XML2JSON($xml)
     {
         $result = null;
-        normalizeSimpleXML(simplexml_load_string($xml), $result);
+        libxml_use_internal_errors(true);
+        $data = simplexml_load_string($xml);
+        if ($data !== false) {
+            normalizeSimpleXML($data, $result);
 
-        return json_decode(json_encode($result));
+            return json_decode(json_encode($result));
+        } else {
+            // The data is not XML
+            return response()->json(['message' => 'The provided data does not conform to a valid XML format. This error may occur due to an incorrect Konsulta cipher key being used.'], 400);
+        }
+
     }
 }
 

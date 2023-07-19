@@ -75,10 +75,10 @@ class ConsultNotesFinalDxController extends Controller
     public function show($id)
     {
         return ConsultNotesFinalDx::where('notes_id', '=', $id)
-        ->orderBy('id', 'asc')
-        ->orderBy('notes_id', 'asc')
-        ->orderBy('icd10_code', 'asc')
-        ->get();
+            ->orderBy('id', 'asc')
+            ->orderBy('notes_id', 'asc')
+            ->orderBy('icd10_code', 'asc')
+            ->get();
     }
 
     /**

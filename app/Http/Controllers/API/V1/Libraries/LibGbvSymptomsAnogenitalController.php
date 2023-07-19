@@ -4,9 +4,7 @@ namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibGbvSymptomsAnogenitalResource;
-use App\Http\Resources\API\V1\Libraries\LibWashingtonDisabilityAnswerResource;
 use App\Models\V1\Libraries\LibGbvSymptomsAnogenital;
-use App\Models\V1\Libraries\LibWashingtonDisabilityAnswer;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 

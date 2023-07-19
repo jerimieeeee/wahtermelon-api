@@ -18,8 +18,8 @@ class SettingsCatchmentBarangayController extends Controller
     public function index()
     {
         $barangay = QueryBuilder::for(SettingsCatchmentBarangay::class)
-                    ->allowedFilters(['year'])->get();
-        $data = $barangay->groupBy([function($item) {
+            ->allowedFilters(['year'])->get();
+        $data = $barangay->groupBy([function ($item) {
             return $item->year;
         }]);
 
@@ -57,6 +57,7 @@ class SettingsCatchmentBarangayController extends Controller
             $result[$year]['total_household'] = $totalHousehold;
             $result[$year]['data'] = SettingsCatchmentBarangayResource::collection($records);
         }
+
         return $result;
     }
 
@@ -65,10 +66,10 @@ class SettingsCatchmentBarangayController extends Controller
      */
     public function store(SettingsCatchmentBarangayRequest $request)
     {
-        return DB::transaction(function () use ($request){
-//            SettingsCatchmentBarangay::query()
-//                ->where('year', $request->safe()->year)
-//                ->delete();
+        return DB::transaction(function () use ($request) {
+            //            SettingsCatchmentBarangay::query()
+            //                ->where('year', $request->safe()->year)
+            //                ->delete();
             $relatedModels = SettingsCatchmentBarangay::query()
                 ->where('year', $request->safe()->year)
                 ->get(); // Retrieve related models
@@ -76,6 +77,7 @@ class SettingsCatchmentBarangayController extends Controller
             $relatedModels->map(function ($model) {
                 // Modify the data of each model
                 $model->bhsBarangay()->detach();
+
                 return $model;
             });
             SettingsCatchmentBarangay::query()

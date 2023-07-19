@@ -47,7 +47,7 @@ class PatientMcController extends Controller
                 ->with('preRegister', 'postRegister', 'prenatal', 'postpartum', 'riskFactor')
                 ->first();
 
-            return  new PatientMcResource($patientMc);
+            return new PatientMcResource($patientMc);
         }
 
         if ($request->type == 'all') {

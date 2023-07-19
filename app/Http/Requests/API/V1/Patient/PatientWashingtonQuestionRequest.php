@@ -28,7 +28,7 @@ class PatientWashingtonQuestionRequest extends FormRequest
             'difficulty_walking' => 'nullable|exists:lib_washington_disability_questions,id',
             'difficulty_remembering' => 'nullable|exists:lib_washington_disability_questions,id',
             'difficulty_self_care' => 'nullable|exists:lib_washington_disability_questions,id',
-            'difficulty_speaking' => 'nullable|exists:lib_washington_disability_questions,id'
+            'difficulty_speaking' => 'nullable|exists:lib_washington_disability_questions,id',
         ];
     }
 }

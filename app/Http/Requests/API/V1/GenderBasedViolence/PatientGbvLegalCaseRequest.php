@@ -40,7 +40,7 @@ class PatientGbvLegalCaseRequest extends FormRequest
             'fiscal_name' => 'nullable',
             'criminal_case_number' => 'nullable',
             'cpumd_testimony_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'verdict_id' => 'nullable|exists:lib_gbv_outcome_verdicts,id'
+            'verdict_id' => 'nullable|exists:lib_gbv_outcome_verdicts,id',
         ];
     }
 
