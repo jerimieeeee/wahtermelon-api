@@ -132,7 +132,7 @@ class EclaimsUploadController extends Controller
 
         return response()->json([
             'message' => $message,
-            'xml' => $encryptedXml,
+            'xml' => $result,
         ], 201);
     }
 }
