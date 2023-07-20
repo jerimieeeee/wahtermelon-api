@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\V1\Eclaims;
 
-use App\Classes\PhilHealthEClaimsEncryptor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Eclaims\EclaimsUploadRequest;
 use App\Http\Resources\API\V1\Eclaims\EclaimsUploadResource;
@@ -126,12 +125,6 @@ class EclaimsUploadController extends Controller
             $encryptedXml = $service->encryptData($result, $creds->cipher_key);
             Storage::disk('spaces')->put($path.'.enc', $encryptedXml, ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
 
-            // $url = Storage::disk('spaces')->url($path.'.enc');
-            $xmlFile = Storage::disk('spaces')->get($path.'.enc');
-
-            $decryptor = new PhilHealthEClaimsEncryptor();
-            $decrypted_xml = $decryptor->decryptPayloadDataToXml($xmlFile, $creds->cipher_key);
-
             $message = 'File Uploaded Successfully!';
         } else {
             $message = 'No Document Found!';
@@ -139,7 +132,7 @@ class EclaimsUploadController extends Controller
 
         return response()->json([
             'message' => $message,
-            'xml' => $decrypted_xml,
+            'xml' => $encryptedXml,
         ], 201);
     }
 }
