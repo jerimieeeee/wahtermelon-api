@@ -14,7 +14,7 @@ class GenderBasedViolenceReportService
                         age,
                         municipalities.name AS municipality_name,
                         barangays.name AS barangay_name,
-                        IF({$type2} IS NULL, '-', {$type2}) AS {$type2}
+                        CASE WHEN {$type2} IS NULL OR {$type2} = 0 THEN '-' ELSE {$type2} END AS {$type2}
                     ")
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->leftJoinSub($this->get_gbv_report_abuses($request, $patient_gender, $age_year_bracket1, $age_year_bracket2, $type1), 'abuse', function ($join) {
@@ -67,7 +67,7 @@ class GenderBasedViolenceReportService
                         age,
                         municipalities.name AS municipality_name,
                         barangays.name AS barangay_name,
-                        IF(COUNT(gender) IS NULL, '-', COUNT(gender)) AS count
+                        CASE WHEN COUNT(gender) IS NULL OR COUNT(gender) = 0 THEN '-' ELSE COUNT(gender) END AS count
                     ")
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->leftJoinSub($this->get_gbv_report_abuses2($request, $patient_gender, $age_year_bracket1, $age_year_bracket2), 'abuse', function ($join) {
