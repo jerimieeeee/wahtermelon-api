@@ -91,8 +91,10 @@ class EclaimsXmlService
         $cf1 = [];
         // $patient = Patient::selectRaw('id AS patientID, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number');
         $data = Patient::selectRaw('last_name, first_name, middle_name, suffix_name, birthdate, gender, mobile_number,
-                    philhealth_id, membership_type_id, member_relation_id, employer_pin, employer_name,
-                    mobile_number, member_gender, philhealth_id, address, member_birthdate,
+                    philhealth_id, membership_type_id, employer_pin, employer_name,
+                    mobile_number, philhealth_id, address,
+                    member_birthdate, member_gender, member_relation_id, member_pin, member_last_name,
+                    member_first_name, member_middle_name, member_suffix_name,
                     barangays.name AS barangay_name, municipalities.name AS muncipality_name, provinces.name AS province_name,
                     philhealth_cat_id')
             ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
