@@ -126,8 +126,8 @@ class EclaimsUploadController extends Controller
             $encryptedXml = $service->encryptData($result, $creds->cipher_key);
             Storage::disk('spaces')->put($path.'.enc', $encryptedXml, ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
 
-            $url = Storage::disk('spaces')->url($path.'.enc');
-            $xmlFile = Storage::disk('spaces')->get($url);
+            // $url = Storage::disk('spaces')->url($path.'.enc');
+            $xmlFile = Storage::disk('spaces')->get($path.'.enc');
 
             $decryptor = new PhilHealthEClaimsEncryptor();
             $decrypted_xml = $decryptor->decryptPayloadDataToXml($xmlFile, $creds->cipher_key);
