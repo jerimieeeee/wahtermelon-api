@@ -71,6 +71,7 @@ class EclaimsXmlController extends Controller
         return response()->json([
             'message' => 'XML Uploaded Successfully',
             'data' => $data,
+            'xml' => $eclaimsXml['xml']
         ], 201);
     }
 }
