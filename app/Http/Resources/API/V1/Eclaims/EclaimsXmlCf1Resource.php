@@ -22,7 +22,7 @@ class EclaimsXmlCf1Resource extends JsonResource
                 'pMemberFirstName' => mb_strtoupper($this->membership_type_id === 'MM' ? $this->fist_name : $this->member_fist_name, 'UTF-8'),
                 'pMemberSuffix' => mb_strtoupper($this->membership_type_id === 'MM' ? ($this->suffix_name != 'NA' ? $this->suffix_name : '') : ($this->member_suffix_name != 'NA' ? $this->member_suffix_name : ''), 'UTF-8'),
                 'pMemberMiddleName' => mb_strtoupper($this->membership_type_id === 'MM' ? ($this->middle_name ?? '') : ($this->member_middle_name ?? ''), 'UTF-8'),
-                'pMemberBirthDate' => $this->membership_type_id === 'MM' ? $this->birthdate->format('Y-m-d') : Carbon::date($this->member_birthdate)->format('Y-m-d'),
+                'pMemberBirthDate' => $this->membership_type_id === 'MM' ? $this->birthdate->format('Y-m-d') : Carbon::parse($this->member_birthdate)->format('Y-m-d'),
                 'pMemberShipType' => $this->philhealth_cat_id,
                 'pMailingAddress' => mb_strtoupper(str_replace("'", '&#39;', $this->address).' '.str_replace("'", '&#39;', $this->barangay_name).' '.str_replace("'", '&#39;', $this->municipality_name).' '.str_replace("'", '&#39;', $this->province_name), 'UTF-8'),
                 'pZipCode' => '2418',
