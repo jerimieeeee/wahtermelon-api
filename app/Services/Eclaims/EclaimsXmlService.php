@@ -180,7 +180,7 @@ class EclaimsXmlService
 
         $professional = [
             '_attributes' => [
-                'pDoctorAccreCode' => $request->attendant_accreditation_code,
+                'pDoctorAccreCode' => substr_replace(substr_replace($request->attendant_accreditation_code, '-', 11, 0), '-', 4, 0),
                 'pDoctorLastName' => $request->attendant_last_name,
                 'pDoctorFirstName' => $request->attendant_first_name,
                 'pDoctorMiddleName' => $request->attendant_middle_name,
@@ -190,7 +190,7 @@ class EclaimsXmlService
                 'pDoctorSignDate' => $request->attendant_sign_date,
             ],
         ];
-
+//substr_replace($oldstr, $str_to_insert, $pos, 0);
         $array = [];
         $array = $cf2;
         $array['DIAGNOSIS'] = $diagnosis;
