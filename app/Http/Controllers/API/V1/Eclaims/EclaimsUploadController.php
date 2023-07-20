@@ -125,7 +125,7 @@ class EclaimsUploadController extends Controller
             $encryptedXml = $service->encryptData($result, $creds->cipher_key);
             Storage::disk('spaces')->put($path.'.enc', $encryptedXml, ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
 
-            $message = 'File Uploaded Successfully!';
+            $message = 'Created Successfully!';
         } else {
             $message = 'No Document Found!';
         }
