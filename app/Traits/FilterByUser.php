@@ -43,7 +43,9 @@ trait FilterByUser
                     }
                 }
             }
-            $model->user_id = auth()->id();
+            if(isset(auth()->user)){
+                $model->user_id = auth()->id();
+            }
         });
 
         /* self::creating(function ($model) {

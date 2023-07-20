@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use App\Models\V1\Household\HouseholdFolder;
+use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
@@ -145,13 +146,13 @@ class MigrateMisuWahCommand extends Command
         $this->components->twoColumnDetail('Patient Migration', 'Done');
         $this->newLine();
 
-        echo $household = $this->migrateHousehold();
-        /*$householdBar = $this->output->createProgressBar(count($household));
+        $household = $this->migrateHousehold();
+        $householdBar = $this->output->createProgressBar(count($household));
         $householdBar->setFormat('Processing Household Table: %current%/%max% [%bar%] %percent:3s%%');
         //$bar->setMessage("100? I won't count all that!");
         //$bar->setProgress(0);
         $householdBar->start();
-        $householdBar->collect()->chunk(200)->each(function ($household, $chunkNumber) use($connectionName, $database, $householdBar){
+        $household->collect()->chunk(200)->each(function ($household, $chunkNumber) use($connectionName, $database, $householdBar){
             $values = [];
             //$updateColumns = ['value']; // Define the columns to update if a conflict occurs
             //DB::purge($connectionName);
@@ -167,8 +168,15 @@ class MigrateMisuWahCommand extends Command
 //                if(!$record['employer_code']){
 //                    Arr::pull($record, 'employer_code');
 //                }
+                $roles = array_map('strtoupper', explode(',', $record['roles']));
+                $patients = explode(',', $record['patients']);
+                $users = explode(',', $record['users']);
 
-                $newUser = HouseholdFolder::updateOrCreate([
+                $resultArray = array_map(function ($family_role_code, $user_id, $patient_id) {
+                    return compact('family_role_code', 'user_id', 'patient_id');
+                }, $roles, $users, $patients);
+
+                /*$newUser = HouseholdFolder::updateOrCreate([
                     'last_name' => $record['last_name'],
                     'first_name' => $record['first_name'],
                     'middle_name' => $record['middle_name'],
@@ -177,9 +185,29 @@ class MigrateMisuWahCommand extends Command
                 ],
                     $record + ['facility_code' => $database]);
                 //Update the misuwah family database with wahtermelon_family_id from wahtermelon database
-                DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $newUser->id]);
+                DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $newUser->id]);*/
                 //$this->components->twoColumnDetail($record['id'], $newUser->id);
                 //echo DB::table('user')->get();
+                DB::transaction(function() use($connectionName, $database, $record, $resultArray) {
+                    //echo $users[0];
+                    //print_r($record);
+                    $data = [
+                        'user_id' => $resultArray[0]['user_id'],
+                        'facility_code' => $database,
+                        'address' => $record['address'],
+                        'barangay_code' => $record['brgy_code'],
+                        'cct_date' => $record['cct_membership'],
+                        'cct_id' => $record['cct_id']
+                    ];
+
+                    $newHousehold = HouseholdFolder::create($data);
+                    $resultArray = array_map(function ($item) use($newHousehold) {
+                        return array_merge($item, ['household_folder_id' => $newHousehold->id]);
+                    }, $resultArray);
+                    HouseholdMember::upsert($resultArray, ['patient_id']);
+                    DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $newHousehold->id]);
+                });
+
                 $householdBar->advance();
             }
 
@@ -189,7 +217,7 @@ class MigrateMisuWahCommand extends Command
         $householdBar->finish();
         $this->newLine();
         $this->components->twoColumnDetail('Household Migration', 'Done');
-        $this->newLine();*/
+        $this->newLine();
 
     }
 
@@ -342,6 +370,7 @@ class MigrateMisuWahCommand extends Command
 
     public function migrateHousehold()
     {
+        DB::connection('mysql_migration')->statement('SET group_concat_max_len = 10000');
         return DB::connection('mysql_migration')->table('family')
             //->join('patient', 'patient.id', '=', 'family_members.patient_id')
             ->selectRaw('family.*, GROUP_CONCAT(family_members.role ORDER BY family_members.patient_id ASC) AS roles, GROUP_CONCAT(patient.wahtermelon_patient_id ORDER BY patient.id ASC) AS patients, GROUP_CONCAT(user.wahtermelon_user_id ORDER BY patient.id ASC) AS users')
@@ -350,7 +379,11 @@ class MigrateMisuWahCommand extends Command
                 $join->on('patient.id', '=', 'family_members.patient_id')
                     ->whereNotNull('wahtermelon_patient_id');
             })
-            ->join('user', 'user.id', '=', 'patient.user_id')
+            //->join('user', 'user.id', '=', 'patient.user_id')
+            ->join('user', function ($join) {
+                $join->on('user.id', '=', 'patient.user_id')
+                    ->whereNotNull('wahtermelon_user_id');
+            })
             ->whereNull('wahtermelon_family_id')
             ->groupBy('family.id')
             ->get();
