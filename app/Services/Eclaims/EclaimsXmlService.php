@@ -185,7 +185,7 @@ class EclaimsXmlService
 
         $professional = [
             '_attributes' => [
-                'pDoctorAccreCode' => substr_replace(substr_replace($request->attendant_accreditation_code, '-', 10, 0), '-', 4, 0),
+                'pDoctorAccreCode' => substr_replace(substr_replace($request->attendant_accreditation_code, '-', 11, 0), '-', 4, 0),
                 'pDoctorLastName' => mb_strtoupper($request->attendant_last_name, 'UTF-8'),
                 'pDoctorFirstName' => mb_strtoupper($request->attendant_first_name, 'UTF-8'),
                 'pDoctorMiddleName' => mb_strtoupper($request->attendant_middle_name, 'UTF-8'),
