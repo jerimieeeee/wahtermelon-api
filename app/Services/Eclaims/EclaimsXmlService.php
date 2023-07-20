@@ -166,8 +166,13 @@ class EclaimsXmlService
             ],
         ];
 
-        $special = $this->tbdots($request);
+        if($request->program_desc === 'tb') {
+            $special = $this->tbdots($request);
+        }
 
+        if($request->program_desc === 'cc') {
+            $special = $this->ncp($request);
+        }
         $consumption = [
             'BENEFITS' => [
                 '_attributes' => [
