@@ -195,8 +195,7 @@ class EclaimsXmlService
                 'pDoctorSignDate' => $request->attendant_sign_date,
             ],
         ];
-//substr_replace($oldstr, $str_to_insert, $pos, 0);
-//substr_replace(substr_replace($request->attendant_accreditation_code, '-', 11, 0), '-', 4, 0),
+
         $array = [];
         $array = $cf2;
         $array['DIAGNOSIS'] = $diagnosis;
