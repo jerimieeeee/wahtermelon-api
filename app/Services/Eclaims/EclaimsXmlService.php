@@ -120,7 +120,7 @@ class EclaimsXmlService
                     'pCaseRateCode' => $request->caserate_code,
                     'pICDCode' => $request->icd10_code,
                     'pRVSCode' => $request->code,
-                    'pCaseRateAmount' => $request->caserate_fee,
+                    'pCaseRateAmount' => (int)$request->caserate_fee,
                 ],
             ],
         ];
@@ -180,9 +180,9 @@ class EclaimsXmlService
             ],
             'BENEFITS' => [
                 '_attributes' => [
-                    'pTotalHCIFees' => $request->hci_fee,
-                    'pTotalProfFees' => $request->prof_fee,
-                    'pGrandTotal' => $request->caserate_fee,
+                    'pTotalHCIFees' => (int)$request->hci_fee,
+                    'pTotalProfFees' => (int)$request->prof_fee,
+                    'pGrandTotal' => (int)$request->caserate_fee,
                 ],
             ],
         ];
