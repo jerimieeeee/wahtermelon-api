@@ -264,6 +264,22 @@ class EclaimsSyncController extends Controller
         }
     }
 
+    public function getUploadedClaimsMap(Request $request, SoapService $service)
+    {
+        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+
+        $encrypted = $service->_client()->GetUploadedClaimsMap(
+            $data->username.':'.$data->software_certification_id,
+            $data->password,
+            $data->pmcc_number,
+            $request->ticket_number
+        );
+
+        $decryptor = new PhilHealthEClaimsEncryptor();
+
+        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+    }
+
     /**
      * Display the specified resource.
      */

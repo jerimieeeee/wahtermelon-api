@@ -942,6 +942,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('check-claim-eligibility', 'isClaimEligible');
                 Route::post('check-doctor-accredited', 'isDoctorAccredited');
                 Route::post('upload-claim', 'eClaimsUpload');
+                Route::post('get-claims-map', 'getUploadedClaimsMap');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsCaserateListController::class)
             ->middleware(('auth:api'))
