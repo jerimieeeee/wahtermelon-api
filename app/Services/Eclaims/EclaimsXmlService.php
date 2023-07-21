@@ -174,6 +174,9 @@ class EclaimsXmlService
             $special = $this->ncp($request);
         }
         $consumption = [
+            '_attributes' => [
+                'pEnoughBenefits' => 'Y',
+            ],
             'BENEFITS' => [
                 '_attributes' => [
                     'pTotalHCIFees' => $request->hci_fee,
