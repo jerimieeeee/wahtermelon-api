@@ -97,7 +97,7 @@ class EclaimsUploadController extends Controller
         if ($documents) {
             $service = new SoapService();
             $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
-                ->where('program_code', $request->program_desc)
+                ->where('program_code', $request->program_desc != 'cc' ? $request->program_desc : 'mc')
                 ->first();
 
             $eClaimsXMLDocs = '';
@@ -125,7 +125,7 @@ class EclaimsUploadController extends Controller
             $encryptedXml = $service->encryptData($result, $creds->cipher_key);
             Storage::disk('spaces')->put($path.'.enc', $encryptedXml, ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
 
-            $message = 'File Uploaded Successfully!';
+            $message = 'Created Successfully!';
         } else {
             $message = 'No Document Found!';
         }
