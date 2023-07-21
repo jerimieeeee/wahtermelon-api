@@ -51,18 +51,17 @@ class EclaimsUploadController extends Controller
             [
                 'pHospitalTransmittalNo' => $request->pHospitalTransmittalNo,
             ],
-            [
-                $request->only([
-                    'pTransmissionControlNumber',
-                    'pReceiptTicketNumber',
-                    'pClaimSeriesLhio',
-                    'pStatus',
-                    'pTransmissionDate',
-                    'pTransmissionTime',
-                    'pCheckDate',
-                    'isSuccess'
+            $request->only([
+                'pTransmissionControlNumber',
+                'pReceiptTicketNumber',
+                'pClaimSeriesLhio',
+                'pStatus',
+                'pTransmissionDate',
+                'pTransmissionTime',
+                'pCheckDate',
+                'isSuccess'
                 ])
-            ]);
+            );
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
 
