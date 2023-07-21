@@ -5,6 +5,7 @@ namespace App\Services\Eclaims;
 use App\Http\Resources\API\V1\Eclaims\EclaimsXmlCf1Resource;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
+use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Spatie\ArrayToXml\ArrayToXml;
 
@@ -133,9 +134,9 @@ class EclaimsXmlService
             '_attributes' => [
                 'pPatientReferred' => 'N',
                 'pReferredIHCPAccreCode' => '',
-                'pAdmissionDate' => $request->admission_date,
+                'pAdmissionDate' => Carbon::parse($request->admission_date)->format('m-d-Y'),
                 'pAdmissionTime' => $request->admission_time,
-                'pDischargeDate' => $request->discharge_date,
+                'pDischargeDate' => Carbon::parse($request->discharge_date)->format('m-d-Y'),
                 'pDischargeTime' => $request->discharge_time,
                 'pDisposition' => 'I',
                 'pExpiredDate' => '',
@@ -159,7 +160,7 @@ class EclaimsXmlService
                     '_attributes' => [
                         'pRelatedProcedure' => $request->description,
                         'pRVSCode' => $request->code,
-                        'pProcedureDate' => $request->attendant_sign_date,
+                        'pProcedureDate' => Carbon::parse($request->attendant_sign_date)->format('m-d-Y'),
                         'pLaterality' => 'N',
                     ],
                 ],
@@ -195,7 +196,7 @@ class EclaimsXmlService
                 'pDoctorSuffix' => mb_strtoupper($request->attendant_suffix_name, 'UTF-8'),
                 'pWithCoPay' => 'N',
                 'pDoctorCoPay' => '',
-                'pDoctorSignDate' => $request->attendant_sign_date,
+                'pDoctorSignDate' => Carbon::parse($request->attendant_sign_date)->format('m-d-Y'),
             ],
         ];
 
@@ -214,10 +215,10 @@ class EclaimsXmlService
         return [
             'MCP' => [
                 '_attributes' => [
-                    'pCheckUpDate1' => $request->pCheckUpDate1,
-                    'pCheckUpDate2' => $request->pCheckUpDate2,
-                    'pCheckUpDate3' => $request->pCheckUpDate3,
-                    'pCheckUpDate4' => $request->pCheckUpDate4,
+                    'pCheckUpDate1' => Carbon::parse($request->pCheckUpDate1)->format('m-d-Y'),
+                    'pCheckUpDate2' => Carbon::parse($request->pCheckUpDate2)->format('m-d-Y'),
+                    'pCheckUpDate3' => Carbon::parse($request->pCheckUpDate3)->format('m-d-Y'),
+                    'pCheckUpDate4' => Carbon::parse($request->pCheckUpDate4)->format('m-d-Y'),
                 ],
             ],
         ];
