@@ -45,7 +45,7 @@ class EclaimsUploadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EclaimsUploadRequest $request)
+    public function store(Request $request)
     {
         $data = EclaimsUpload::updateOrCreate(
             [
