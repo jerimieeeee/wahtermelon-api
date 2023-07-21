@@ -189,7 +189,7 @@ class EclaimsXmlService
 
         $professional = [
             '_attributes' => [
-                'pDoctorAccreCode' => $request->attendant_accreditation_code,
+                'pDoctorAccreCode' => '',//$request->attendant_accreditation_code,
                 'pDoctorLastName' => $request->attendant_last_name,
                 'pDoctorFirstName' => $request->attendant_first_name,
                 'pDoctorMiddleName' => $request->attendant_middle_name,
