@@ -28,7 +28,7 @@ class EclaimsXmlService
             '_attributes' => [
                 'pUserName' => '',
                 'pUserPassword' => '',
-                'pHospitalCode' => $creds->accreditation_number,
+                'pHospitalCode' => $creds->pmcc_number,
                 'pHospitalEmail' => '',
                 'pServiceProvider' => 'WAH',
             ],
