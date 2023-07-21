@@ -246,7 +246,7 @@ class EclaimsSyncController extends Controller
     {
         $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->isDoctorAccredited(
+        $encrypted = $service->_client()->eClaimsUpload(
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
