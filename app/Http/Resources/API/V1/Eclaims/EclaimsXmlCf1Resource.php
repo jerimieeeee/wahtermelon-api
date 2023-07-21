@@ -19,7 +19,7 @@ class EclaimsXmlCf1Resource extends JsonResource
             '_attributes' => [
                 'pMemberPin' => $this->membership_type_id === 'MM' ? $this->philhealth_id : $this->member_pin,
                 'pMemberLastName' => mb_strtoupper($this->membership_type_id === 'MM' ? $this->last_name : $this->member_last_name, 'UTF-8'),
-                'pMemberFirstName' => mb_strtoupper($this->membership_type_id === 'MM' ? $this->fist_name : $this->member_fist_name, 'UTF-8'),
+                'pMemberFirstName' => mb_strtoupper($this->membership_type_id === 'MM' ? $this->fist_name : $this->member_first_name, 'UTF-8'),
                 'pMemberSuffix' => mb_strtoupper($this->membership_type_id === 'MM' ? ($this->suffix_name != 'NA' ? $this->suffix_name : '') : ($this->member_suffix_name != 'NA' ? $this->member_suffix_name : ''), 'UTF-8'),
                 'pMemberMiddleName' => mb_strtoupper($this->membership_type_id === 'MM' ? ($this->middle_name ?? '') : ($this->member_middle_name ?? ''), 'UTF-8'),
                 'pMemberBirthDate' => $this->membership_type_id === 'MM' ? $this->birthdate->format('Y-m-d') : Carbon::parse($this->member_birthdate)->format('Y-m-d'),
@@ -33,7 +33,7 @@ class EclaimsXmlCf1Resource extends JsonResource
                 'pPatientIs' => $this->membership_type_id === 'MM' ? 'M' : $this->member_relation_id,
                 'pPatientPIN' => $this->philhealth_id,
                 'pPatientLastName' => mb_strtoupper($this->last_name, 'UTF-8'),
-                'pPatientFirstName' => mb_strtoupper($this->fist_name, 'UTF-8'),
+                'pPatientFirstName' => mb_strtoupper($this->first_name, 'UTF-8'),
                 'pPatientSuffix' => mb_strtoupper($this->suffix_name != 'NA' ? $this->suffix_name : '', 'UTF-8'),
                 'pPatientMiddleName' => mb_strtoupper($this->middle_name ?? '', 'UTF-8'),
                 'pPatientBirthDate' => $this->birthdate->format('Y-m-d'),
