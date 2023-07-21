@@ -272,7 +272,7 @@ class EclaimsSyncController extends Controller
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
-            $request->ticket_number
+            $request->pReceiptTicketNumber
         );
 
         $decryptor = new PhilHealthEClaimsEncryptor();
