@@ -17,7 +17,7 @@ class EclaimsXmlCf1Resource extends JsonResource
     {
         return [
             '_attributes' => [
-                'pMemberPin' => $this->membership_type_id === 'MM' ? $this->philhealth_id : $this->member_pin,
+                'pMemberPIN' => $this->membership_type_id === 'MM' ? $this->philhealth_id : $this->member_pin,
                 'pMemberLastName' => $this->membership_type_id === 'MM' ? $this->last_name : $this->member_last_name,
                 'pMemberFirstName' => $this->membership_type_id === 'MM' ? $this->fist_name : $this->member_first_name,
                 'pMemberSuffix' => $this->membership_type_id === 'MM' ? ($this->suffix_name != 'NA' ? $this->suffix_name : '') : ($this->member_suffix_name != 'NA' ? $this->member_suffix_name : ''),
