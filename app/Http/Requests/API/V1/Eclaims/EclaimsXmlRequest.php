@@ -68,7 +68,7 @@ class EclaimsXmlRequest extends FormRequest
             'pCheckUpDate2' => 'required_if:program_desc,mc',
             'pCheckUpDate3' => 'required_if:program_desc,mc',
             'pCheckUpDate4' => 'required_if:program_desc,mc',
-            'transmittalNumber' => 'nullable'
+            'transmittalNumber' => 'nullable',
         ];
     }
 }
