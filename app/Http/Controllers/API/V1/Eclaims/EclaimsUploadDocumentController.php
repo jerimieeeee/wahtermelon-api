@@ -57,15 +57,15 @@ class EclaimsUploadDocumentController extends Controller
             $extension = $file->getClientOriginalExtension();
             if ($request->doc_type_code === 'OTH') {
                 $origFileName = $file->getClientOriginalName();
-                $name = $request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'_'.$origFileName.'.'.$extension.'.enc';
+                $name = $request->doc_type_code.'_'.$origFileName.'.'.$extension.'.enc';
             } else {
-                $name = $request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'.'.$extension.'.enc';
+                $name = $request->doc_type_code.'.'.$extension.'.enc';
             }
-            $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$name;
+            $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$name;
 
             $uxFileToEncrypt = $file;
             $uxMimeType = $file->getMimeType();
-            $uxSaveFileName = storage_path('philhealth/uploads').$name;
+            $uxSaveFileName = storage_path('philhealth/uploads/').$request->pHospitalTransmittalNo.'-'.$name;
 
             $encryptor->encryptImageFile($uxFileToEncrypt, $uxMimeType, $uxSaveFileName);
 
