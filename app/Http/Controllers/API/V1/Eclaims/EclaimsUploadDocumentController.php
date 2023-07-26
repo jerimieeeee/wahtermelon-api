@@ -57,7 +57,7 @@ class EclaimsUploadDocumentController extends Controller
             $extension = $file->getClientOriginalExtension();
             if ($request->doc_type_code === 'OTH') {
                 $origFileName = $file->getClientOriginalName();
-                $name = $request->doc_type_code.'_'.$origFileName.'.'.$extension.'.enc';
+                $name = $request->doc_type_code.'_'.$origFileName.'.enc';
             } else {
                 $name = $request->doc_type_code.'.'.$extension.'.enc';
             }
