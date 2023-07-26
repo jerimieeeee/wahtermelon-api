@@ -171,10 +171,19 @@ class MigrateMisuWahCommand extends Command
                 $roles = array_map('strtoupper', explode(',', $record['roles']));
                 $patients = explode(',', $record['patients']);
                 $users = explode(',', $record['users']);
+                $last_names = explode(',', $record['last_names']);
+                $first_names = explode(',', $record['first_names']);
+                $middle_names = explode(',', $record['middle_names']);
+                $suffix_names = explode(',', $record['suffix_names']);
+                $birthdates = explode(',', $record['birthdates']);
 
-                $resultArray = array_map(function ($family_role_code, $user_id, $patient_id) {
-                    return compact('family_role_code', 'user_id', 'patient_id');
-                }, $roles, $users, $patients);
+                $resultArray = array_map(function ($patient_id, $user_id, $family_role_code) {
+                    return compact('patient_id', 'user_id', 'family_role_code');
+                }, $patients, $users, $roles);
+
+                $patient_info = array_map(function ($last_name, $first_name, $middle_name, $suffix_name, $birthdate) {
+                    return compact('last_name', 'first_name', 'middle_name', 'suffix_name', 'birthdate');
+                }, $last_names, $first_names, $middle_names, $suffix_names, $birthdates);
 
                 /*$newUser = HouseholdFolder::updateOrCreate([
                     'last_name' => $record['last_name'],
@@ -188,7 +197,7 @@ class MigrateMisuWahCommand extends Command
                 DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $newUser->id]);*/
                 //$this->components->twoColumnDetail($record['id'], $newUser->id);
                 //echo DB::table('user')->get();
-                DB::transaction(function() use($connectionName, $database, $record, $resultArray) {
+                DB::transaction(function() use($connectionName, $database, $record, $resultArray, $patient_info) {
                     //echo $users[0];
                     //print_r($record);
                     $data = [
@@ -200,12 +209,28 @@ class MigrateMisuWahCommand extends Command
                         'cct_id' => $record['cct_id']
                     ];
 
-                    $newHousehold = HouseholdFolder::create($data);
-                    $resultArray = array_map(function ($item) use($newHousehold) {
-                        return array_merge($item, ['household_folder_id' => $newHousehold->id]);
+                    $householdId = '';
+                    foreach($patient_info as $value){
+                        $patient = Patient::query()
+                            ->where('last_name', $value['last_name'])->where('first_name', $value['first_name'])->where('middle_name', $value['middle_name'])->where('suffix_name', $value['suffix_name'])->where('birthdate', $value['birthdate'])
+                            ->first();
+                        if(!empty($patient) && !empty($patient->householdMember)){
+                            $householdId = $patient->householdMember->household_folder_id;
+                            break;
+                        }
+                    }
+
+                    if(empty($householdId)){
+                        $newHousehold = HouseholdFolder::create($data);
+                        $householdId = $newHousehold->id;
+                    }
+
+                    $resultArray = array_map(function ($item) use($householdId) {
+                        return array_merge($item, ['household_folder_id' => $householdId]);
                     }, $resultArray);
-                    HouseholdMember::upsert($resultArray, ['patient_id']);
-                    DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $newHousehold->id]);
+                    //dd(array_values($resultArray));
+                    HouseholdMember::upsert(array_values($resultArray), ['household_folder_id', 'patient_id', 'user_id', ]);
+                    DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $householdId]);
                 });
 
                 $householdBar->advance();
@@ -373,7 +398,23 @@ class MigrateMisuWahCommand extends Command
         DB::connection('mysql_migration')->statement('SET group_concat_max_len = 10000');
         return DB::connection('mysql_migration')->table('family')
             //->join('patient', 'patient.id', '=', 'family_members.patient_id')
-            ->selectRaw('family.*, GROUP_CONCAT(family_members.role ORDER BY family_members.patient_id ASC) AS roles, GROUP_CONCAT(patient.wahtermelon_patient_id ORDER BY patient.id ASC) AS patients, GROUP_CONCAT(user.wahtermelon_user_id ORDER BY patient.id ASC) AS users')
+            ->selectRaw('
+                family.*,
+                GROUP_CONCAT(family_members.role ORDER BY family_members.patient_id ASC) AS roles,
+                GROUP_CONCAT(patient.wahtermelon_patient_id ORDER BY patient.id ASC) AS patients,
+                GROUP_CONCAT(user.wahtermelon_user_id ORDER BY patient.id ASC) AS users,
+                GROUP_CONCAT(patient.last_name ORDER BY patient.id ASC) AS last_names,
+                GROUP_CONCAT(patient.first_name ORDER BY patient.id ASC) AS first_names,
+                GROUP_CONCAT(patient.middle_name ORDER BY patient.id ASC) AS middle_names,
+                GROUP_CONCAT(CASE
+                    WHEN patient.suffix_name = "NOTAP"
+                    THEN "NA"
+                    WHEN patient.suffix_name IS NULL OR patient.suffix_name = ""
+                    THEN "NA"
+                    ELSE patient.suffix_name
+                END ORDER BY patient.id ASC) AS suffix_names,
+                GROUP_CONCAT(patient.birthdate ORDER BY patient.id ASC) AS birthdates
+            ')
             ->join('family_members', 'family_members.family_id', '=', 'family.id')
             ->join('patient', function ($join) {
                 $join->on('patient.id', '=', 'family_members.patient_id')
@@ -384,7 +425,7 @@ class MigrateMisuWahCommand extends Command
                 $join->on('user.id', '=', 'patient.user_id')
                     ->whereNotNull('wahtermelon_user_id');
             })
-            ->whereNull('wahtermelon_family_id')
+            //->whereNull('wahtermelon_family_id')
             ->groupBy('family.id')
             ->get();
     }
