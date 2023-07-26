@@ -53,14 +53,23 @@ class EclaimsUploadDocumentController extends Controller
             $encryptor->setIVUsingHexStr('');
 
             $fileName = '';
+            $name = '';
+            $extension = $file->getClientOriginalExtension();
             if ($request->doc_type_code === 'OTH') {
                 $origFileName = $file->getClientOriginalName();
-                $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'_'.$origFileName.'.enc';
+                $name = $request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'_'.$origFileName.'.'.$extension.'.enc';
             } else {
-                $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'.'.$file->getClientOriginalExtension().'.enc';
+                $name = $request->pHospitalTransmittalNo.'/'.$request->doc_type_code.'.'.$extension.'.enc';
             }
+            $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$name;
 
-            Storage::disk('spaces')->put($fileName, $service->encryptData($file, $creds->cipher_key, $file->getMimeType()), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+            $uxFileToEncrypt = $file;
+            $uxMimeType = $file->getMimeType();
+            $uxSaveFileName = storage_path('philhealth/uploads').$name;
+
+            $encryptor->encryptImageFile($uxFileToEncrypt, $uxMimeType, $uxSaveFileName);
+
+            Storage::disk('spaces')->put($fileName, file_get_contents($uxSaveFileName), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
             $url = Storage::disk('spaces')->url($fileName);
 
             if ($request->doc_type_code === 'OTH') {
