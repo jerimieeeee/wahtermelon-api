@@ -229,7 +229,7 @@ class MigrateMisuWahCommand extends Command
                         return array_merge($item, ['household_folder_id' => $householdId]);
                     }, $resultArray);
                     //dd(array_values($resultArray));
-                    HouseholdMember::upsert(array_values($resultArray), ['household_folder_id', 'patient_id', 'user_id', ]);
+                    HouseholdMember::upsert($resultArray, ['patient_id']);
                     DB::connection($connectionName)->table('family')->whereId($record['id'])->update(['wahtermelon_family_id' => $householdId]);
                 });
 
@@ -425,7 +425,7 @@ class MigrateMisuWahCommand extends Command
                 $join->on('user.id', '=', 'patient.user_id')
                     ->whereNotNull('wahtermelon_user_id');
             })
-            //->whereNull('wahtermelon_family_id')
+            ->whereNull('wahtermelon_family_id')
             ->groupBy('family.id')
             ->get();
     }
