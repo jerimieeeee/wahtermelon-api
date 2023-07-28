@@ -5,7 +5,8 @@ namespace App\Http\Controllers\API\V1\Libraries;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibFpMethodResource;
 use App\Models\V1\Libraries\LibFpMethod;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @group Libraries for Family Planning
@@ -24,12 +25,14 @@ class LibFpMethodController extends Controller
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibFpMethodResource
      *
      * @apiResourceModel App\Models\V1\Libraries\LibFpMethod
-     *
-     * @return ResourceCollection
      */
-    public function index()
+    public function index(): ResourceCollection
     {
-        return LibFpMethodResource::collection(LibFpMethod::orderBy('report_order', 'ASC')->get());
+        $query = QueryBuilder::for(LibFpMethod::class)
+            ->defaultSort('sequence')
+            ->allowedSorts('sequence');
+
+        return LibFpMethodResource::collection($query->get());
     }
 
     /**
@@ -41,8 +44,12 @@ class LibFpMethodController extends Controller
      *
      * @return LibFpMethodResource
      */
-    public function show(LibFpMethod $method, string $id): JsonResource
+    public function show(LibFpMethod $method): ResourceCollection
     {
-        return new LibFpMethodResource($method->findOrFail($id));
+        $query = LibFpMethod::where('code', $method->code);
+        $method = QueryBuilder::for($query)
+            ->first();
+
+        return new LibFpMethodResource($method);
     }
 }

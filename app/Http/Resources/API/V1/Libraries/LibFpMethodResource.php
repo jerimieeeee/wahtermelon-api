@@ -19,7 +19,6 @@ class LibFpMethodResource extends JsonResource
             'method_desc' => $this->method_desc,
             'method_gender' => $this->method_gender,
             'fhsis_code' => $this->fhsis_code,
-            'report_order' => $this->report_order,
             'unit' => $this->unit,
         ];
     }

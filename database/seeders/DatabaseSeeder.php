@@ -166,6 +166,9 @@ class DatabaseSeeder extends Seeder
             LibGbvGeneralSurveySeeder::class,
             LibGbvMedicalImpressionSeeder::class,
             LibEclaimsDocTypeSeeder::class,
+            LibFpHistorySeeder::class,
+            LibFpPelvicExamSeeder::class,
+            LibFpClientTypeSeeder::class,
         ]);
     }
 }
