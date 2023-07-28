@@ -15,9 +15,9 @@ class LibFpMethodResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'method_desc' => $this->method_desc,
-            'method_gender' => $this->method_gender,
+            'code' => $this->code,
+            'desc' => $this->desc,
+            'gender' => $this->gender,
             'fhsis_code' => $this->fhsis_code,
             'unit' => $this->unit,
         ];

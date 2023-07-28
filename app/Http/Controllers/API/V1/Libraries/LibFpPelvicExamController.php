@@ -52,13 +52,13 @@ class LibFpPelvicExamController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibFpPelvicExam
      */
-    public function show(LibFpPelvicExam $fpPelvicExam)
+    public function show(LibFpPelvicExam $pelvicExam)
     {
-        $query = LibFpHistory::where('code', $fpPelvicExam->code);
-        $fpPelvicExam = QueryBuilder::for($query)
+        $query = LibFpHistory::where('code', $pelvicExam->code);
+        $pelvicExam = QueryBuilder::for($query)
             ->first();
 
-        return new LibFpPelvicExamResource($fpPelvicExam);
+        return new LibFpPelvicExamResource($pelvicExam);
     }
 
     /**

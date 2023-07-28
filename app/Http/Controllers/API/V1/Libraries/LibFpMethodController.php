@@ -29,8 +29,8 @@ class LibFpMethodController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibFpMethod::class)
-            ->defaultSort('sequence')
-            ->allowedSorts('sequence');
+            ->defaultSort('code')
+            ->allowedSorts('code');
 
         return LibFpMethodResource::collection($query->get());
     }

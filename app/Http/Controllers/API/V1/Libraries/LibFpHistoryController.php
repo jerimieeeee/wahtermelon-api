@@ -51,13 +51,13 @@ class LibFpHistoryController extends Controller
      *
      * @apiResourceModel App\Models\V1\Libraries\LibFpHistory
      */
-    public function show(LibFpHistory $fpHistory): LibFpHistoryResource
+    public function show(LibFpHistory $history): LibFpHistoryResource
     {
-        $query = LibFpHistory::where('code', $fpHistory->code);
-        $fpHistory = QueryBuilder::for($query)
+        $query = LibFpHistory::where('code', $history->code);
+        $history = QueryBuilder::for($query)
             ->first();
 
-        return new LibFpHistoryResource($fpHistory);
+        return new LibFpHistoryResource($history);
     }
 
     /**
