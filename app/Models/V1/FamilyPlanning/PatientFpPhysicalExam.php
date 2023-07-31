@@ -3,6 +3,8 @@
 namespace App\Models\V1\FamilyPlanning;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibFpHistory;
+use App\Models\V1\Libraries\LibPe;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
@@ -12,20 +14,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PatientFp extends Model
+class PatientFpPhysicalExam extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser, HasUlids, FilterByFacility;
-
-    protected $table = 'patient_fp';
 
     protected $guarded = [
         'id',
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'patient_id';
-    }
 
     public $incrementing = false;
 
@@ -51,18 +46,8 @@ class PatientFp extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function fpHistory()
+    public function physicalExam()
     {
-        return $this->hasMany(PatientFpHistory::class);
-    }
-
-    public function fpPhysicalExam()
-    {
-        return $this->hasMany(PatientFpPhysicalExam::class);
-    }
-
-    public function fpPelvicExam()
-    {
-        return $this->hasMany(PatientFpPelvicExam::class);
+        return $this->belongsTo(LibPe::class, 'pe_id', 'pe_id');
     }
 }
