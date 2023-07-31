@@ -82,17 +82,17 @@ class LibPeSeeder extends Seeder
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN02', 'pe_desc' => 'Globullar',                    'konsulta_pe_id' => '3',    'seq_id' => '7',   'konsulta_library_status' => '0', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN04', 'pe_desc' => 'Muscle Guarding',              'konsulta_pe_id' => '4',    'seq_id' => '9',   'konsulta_library_status' => '0', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN05', 'pe_desc' => 'Tenderness',                   'konsulta_pe_id' => '5',    'seq_id' => '16',   'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
-            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN06', 'pe_desc' => 'Palpable Mass',                'konsulta_pe_id' => '6',    'seq_id' => '10',  'konsulta_library_status' => '0', 'modules' => 'cn'],
+            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN06', 'pe_desc' => 'Palpable Mass',                'konsulta_pe_id' => '6',    'seq_id' => '10',  'konsulta_library_status' => '0', 'modules' => 'cn,fp'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN07', 'pe_desc' => 'Scars',                        'konsulta_pe_id' => null,   'seq_id' => '14',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN08', 'pe_desc' => 'Stretch Marks',                'konsulta_pe_id' => null,   'seq_id' => '15',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
-            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN09', 'pe_desc' => 'Presence of Mass',             'konsulta_pe_id' => null,   'seq_id' => '13',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
-            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN10', 'pe_desc' => 'Enlarged Liver',               'konsulta_pe_id' => null,   'seq_id' => '4',   'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
+            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN09', 'pe_desc' => 'Presence of Mass',             'konsulta_pe_id' => null,   'seq_id' => '13',    'konsulta_library_status' => '0', 'modules' => 'cn,ncd,fp'],
+            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN10', 'pe_desc' => 'Enlarged Liver',               'konsulta_pe_id' => null,   'seq_id' => '4',   'konsulta_library_status' => '0', 'modules' => 'cn,ncd,fp'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN11', 'pe_desc' => 'Presence of Fluid Wave',       'konsulta_pe_id' => null,   'seq_id' => '12',   'konsulta_library_status' => '0', 'modules' => 'cn,ncd'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN12', 'pe_desc' => 'Essentially normal',           'konsulta_pe_id' => '7',    'seq_id' => '1', 'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN13', 'pe_desc' => 'Abdominal rigidity',           'konsulta_pe_id' => '8',    'seq_id' => '2',  'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN14', 'pe_desc' => 'Abdominal tenderness',         'konsulta_pe_id' => '9',    'seq_id' => '3',  'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN15', 'pe_desc' => 'Hyperactive bowel sounds',     'konsulta_pe_id' => '10',   'seq_id' => '8',  'konsulta_library_status' => '1', 'modules' => 'cn'],
-            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN16', 'pe_desc' => 'Palpable mass(es)',            'konsulta_pe_id' => '11',   'seq_id' => '11',  'konsulta_library_status' => '1', 'modules' => 'cn'],
+            ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN16', 'pe_desc' => 'Palpable mass(es)',            'konsulta_pe_id' => '11',   'seq_id' => '11',  'konsulta_library_status' => '1', 'modules' => 'cn,fp'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN17', 'pe_desc' => 'Tympanitic/dull abdomen',      'konsulta_pe_id' => '12',   'seq_id' => '17', 'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN18', 'pe_desc' => 'Uterine contraction',          'konsulta_pe_id' => '13',   'seq_id' => '18', 'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'ABDOMEN', 'pe_id' => 'ABDOMEN19', 'pe_desc' => 'Others',                       'konsulta_pe_id' => '99',   'seq_id' => '19', 'konsulta_library_status' => '1', 'modules' => 'cn'],
@@ -101,12 +101,14 @@ class LibPeSeeder extends Seeder
             ['category_id' => 'EXTREMITIES', 'pe_id' => 'EXTREMITIES01', 'pe_desc' => 'Gross Deformity',       'konsulta_pe_id' => null,   'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'cn'],
             ['category_id' => 'EXTREMITIES', 'pe_id' => 'EXTREMITIES02', 'pe_desc' => 'Normal Gait',           'konsulta_pe_id' => null,   'seq_id' => '3', 'konsulta_library_status' => '0', 'modules' => 'cn'],
             ['category_id' => 'EXTREMITIES', 'pe_id' => 'EXTREMITIES03', 'pe_desc' => 'Full and Equal Pulses', 'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => '0', 'modules' => 'cn'],
+            ['category_id' => 'EXTREMITIES', 'pe_id' => 'EXTREMITIES04', 'pe_desc' => 'Edema',                 'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => '0', 'modules' => 'fp'],
+            ['category_id' => 'EXTREMITIES', 'pe_id' => 'EXTREMITIES05', 'pe_desc' => 'Varicosities',          'konsulta_pe_id' => null,   'seq_id' => '5', 'konsulta_library_status' => '0', 'modules' => 'fp'],
 
             //BREAST
-            ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => null,   'seq_id' => '3',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
-            ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
-            ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => null,   'seq_id' => '5', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
-            ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'BREAST',     'pe_id' => 'BREAST05', 'pe_desc' => 'Mass',                          'konsulta_pe_id' => null,   'seq_id' => '3',  'konsulta_library_status' => '0', 'modules' => 'ncd,fp'],
+            ['category_id' => 'BREAST',     'pe_id' => 'BREAST06', 'pe_desc' => 'Nipple Discharge',              'konsulta_pe_id' => null,   'seq_id' => '4', 'konsulta_library_status' => '0', 'modules' => 'ncd,fp'],
+            ['category_id' => 'BREAST',     'pe_id' => 'BREAST07', 'pe_desc' => 'Skin-orange peel or Dimpling',  'konsulta_pe_id' => null,   'seq_id' => '5', 'konsulta_library_status' => '0', 'modules' => 'ncd,fp'],
+            ['category_id' => 'BREAST',     'pe_id' => 'BREAST08', 'pe_desc' => 'Enlarged Axillary Lymph Nodes', 'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => '0', 'modules' => 'ncd,fp'],
             ['category_id' => 'BREAST',     'pe_id' => 'BREAST09', 'pe_desc' => 'Essentially Normal',            'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
 
             //PELVIC
@@ -151,6 +153,18 @@ class LibPeSeeder extends Seeder
             ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY03',  'pe_desc' => 'Cervical dilatation',               'konsulta_pe_id' => '3',  'seq_id' => '3',  'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY04',  'pe_desc' => 'Presence of abnormal discharge',    'konsulta_pe_id' => '4',  'seq_id' => '4',  'konsulta_library_status' => '1', 'modules' => 'cn'],
             ['category_id' => 'GENITOURINARY', 'pe_id' => 'GENITOURINARY05',  'pe_desc' => 'Others',                            'konsulta_pe_id' => '99', 'seq_id' => '5',  'konsulta_library_status' => '1', 'modules' => 'cn'],
+
+            //CONJUNCTIVA
+            ['category_id' => 'CONJUNCTIVA', 'pe_id' => 'CONJUNCTIVA01',  'pe_desc' => 'Pale',           'konsulta_pe_id' => null,  'seq_id' => '1',  'konsulta_library_status' => '0', 'modules' => 'fp'],
+            ['category_id' => 'CONJUNCTIVA', 'pe_id' => 'CONJUNCTIVA02',  'pe_desc' => 'Yellowish',      'konsulta_pe_id' => null,  'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'fp'],
+
+            //NECK
+            ['category_id' => 'NECK', 'pe_id' => 'NECK01',  'pe_desc' => 'Enlarged Thyroid',           'konsulta_pe_id' => null,  'seq_id' => '1',  'konsulta_library_status' => '0', 'modules' => 'fp'],
+            ['category_id' => 'NECK', 'pe_id' => 'NECK02',  'pe_desc' => 'Enlarged Lymph Nodes',       'konsulta_pe_id' => null,  'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'fp'],
+
+            //THORAX
+            ['category_id' => 'THORAX', 'pe_id' => 'THORAX01',  'pe_desc' => 'Abnormal Heart Sounds/Cardiac Rate',           'konsulta_pe_id' => null,  'seq_id' => '1',  'konsulta_library_status' => '0', 'modules' => 'fp'],
+            ['category_id' => 'THORAX', 'pe_id' => 'THORAX02',  'pe_desc' => 'Abnormal Breath Sounds/Respiratory Rate',       'konsulta_pe_id' => null,  'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'fp'],
 
         ], ['category_id']);
     }

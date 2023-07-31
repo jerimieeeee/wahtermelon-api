@@ -174,7 +174,10 @@ class DatabaseSeeder extends Seeder
             LibAbAnimalStatusSeeder::class,
             LibAbAnimalTypeSeeder::class,
             LibAbVaccineRouteSeeder::class,
-            LibAbExposureTypeSeeder::class
+            LibAbExposureTypeSeeder::class,
+            LibFpHistorySeeder::class,
+            LibFpPelvicExamSeeder::class,
+            LibFpClientTypeSeeder::class,
         ]);
     }
 }

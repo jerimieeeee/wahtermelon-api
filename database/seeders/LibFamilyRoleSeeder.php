@@ -15,7 +15,7 @@ class LibFamilyRoleSeeder extends Seeder
     public function run()
     {
         LibFamilyRole::upsert([
-            ['code' => 'MEMBER', 'desc' => 'Member of the Family'],
+            ['code' => 'MEMBER', 'desc' => 'Member'],
             ['code' => 'HEAD', 'desc' => 'Head of the Family'],
         ], ['code']);
     }

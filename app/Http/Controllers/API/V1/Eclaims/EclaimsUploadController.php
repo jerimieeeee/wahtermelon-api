@@ -59,9 +59,9 @@ class EclaimsUploadController extends Controller
                 'pTransmissionDate',
                 'pTransmissionTime',
                 'pCheckDate',
-                'isSuccess'
-                ])
-            );
+                'isSuccess',
+            ])
+        );
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
 

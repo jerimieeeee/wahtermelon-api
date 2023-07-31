@@ -5,7 +5,7 @@ namespace App\Models\V1\Libraries;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LibFpMethod extends Model
+class LibFpHistory extends Model
 {
     use HasFactory;
 

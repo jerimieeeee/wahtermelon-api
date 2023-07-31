@@ -982,4 +982,14 @@ Route::prefix('v1')->group(function () {
                 Route::get('catalyst-report', 'index');
             });
     });
+
+    Route::prefix('family-planning')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('fp-records', 'index');
+                Route::post('fp-records', 'store');
+                Route::put('fp-records/{patientFp}', 'update');
+            });
+    });
 });

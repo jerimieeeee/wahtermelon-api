@@ -13,9 +13,9 @@ class EclaimsXmlService
 {
     public function createXml($transmittalNumber, $patientId, $request)
     {
-        $creds = PhilhealthCredential::where('facility_code',auth()->user()->facility_code)
-                ->where('program_code', $request->program_desc != 'cc' ? $request->program_desc : 'mc')
-                ->first();
+        $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
+            ->where('program_code', $request->program_desc != 'cc' ? $request->program_desc : 'mc')
+            ->first();
         // return $creds = auth()->user()->eclaimsCredential($request->program_desc);//PhilhealthCredential::whereFacilityCode($request->facility_code)->whereProgramCode($request->program_desc)->first();
         if (empty($transmittalNumber)) {
             $prefix = $creds->accreditation_number.date('Ym');
@@ -120,7 +120,7 @@ class EclaimsXmlService
                     'pCaseRateCode' => $request->caserate_code,
                     'pICDCode' => $request->icd10_code,
                     'pRVSCode' => $request->code,
-                    'pCaseRateAmount' => (int)$request->caserate_fee,
+                    'pCaseRateAmount' => (int) $request->caserate_fee,
                 ],
             ],
         ];
@@ -167,11 +167,11 @@ class EclaimsXmlService
             ],
         ];
 
-        if($request->program_desc === 'tb') {
+        if ($request->program_desc === 'tb') {
             $special = $this->tbdots($request);
         }
 
-        if($request->program_desc === 'cc') {
+        if ($request->program_desc === 'cc') {
             $special = $this->ncp($request);
         }
 
@@ -184,9 +184,9 @@ class EclaimsXmlService
             ],
             'BENEFITS' => [
                 '_attributes' => [
-                    'pTotalHCIFees' => (int)$request->hci_fee,
-                    'pTotalProfFees' => (int)$request->prof_fee,
-                    'pGrandTotal' => (int)$request->caserate_fee,
+                    'pTotalHCIFees' => (int) $request->hci_fee,
+                    'pTotalProfFees' => (int) $request->prof_fee,
+                    'pGrandTotal' => (int) $request->caserate_fee,
                 ],
             ],
         ];
@@ -203,7 +203,7 @@ class EclaimsXmlService
                 'pDoctorSignDate' => Carbon::parse($request->attendant_sign_date)->format('m-d-Y'),
             ],
         ];
-//substr_replace(substr_replace($request->attendant_accreditation_code, '-', 11, 0), '-', 4, 0)
+        //substr_replace(substr_replace($request->attendant_accreditation_code, '-', 11, 0), '-', 4, 0)
         $array = [];
         $array = $cf2;
         $array['DIAGNOSIS'] = $diagnosis;

@@ -267,10 +267,6 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('laboratory-stool-consistency', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'index'])->name('laboratory-stool-consistency.index');
     Route::get('laboratory-stool-consistency/{stoolConsistency}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'show'])->name('laboratory-stool-consistency.show');
 
-    //Family Planning Method
-    Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
-    Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
-
     //Patient Pregnancy History
     Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
     Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
@@ -461,4 +457,20 @@ Route::prefix('v1/libraries')->group(function () {
 
     //Eclaims Doc Type
     Route::get('eclaims-doc-type', [\App\Http\Controllers\API\V1\Libraries\LibEclaimsDocTypeController::class, 'index'])->name('eclaims-doc-type.index');
+
+    //Family Planning Method
+    Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
+    Route::get('family-planning-method/{method}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
+
+    //Family Planning History
+    Route::get('family-planning-history', [\App\Http\Controllers\API\V1\Libraries\LibFpHistoryController::class, 'index'])->name('family-planning-history.index');
+    Route::get('family-planning-history/{history}', [\App\Http\Controllers\API\V1\Libraries\LibFpHistoryController::class, 'show'])->name('family-planning-history.show');
+
+    //Family Planning Client Type
+    Route::get('family-planning-client-type', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'index'])->name('family-planning-client-type.index');
+    Route::get('family-planning-client-type/{history}', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'show'])->name('family-planning-client-type.show');
+
+    //Family Planning Pelvic Exams
+    Route::get('family-planning-pelvic-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'index'])->name('family-planning-pelvic-exam.index');
+    Route::get('family-planning-pelvic-exam/{pelvicExam}', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'show'])->name('family-planning-pelvic-exam.show');
 });
