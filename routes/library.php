@@ -473,4 +473,25 @@ Route::prefix('v1/libraries')->group(function () {
     //Family Planning Pelvic Exams
     Route::get('family-planning-pelvic-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'index'])->name('family-planning-pelvic-exam.index');
     Route::get('family-planning-pelvic-exam/{pelvicExam}', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'show'])->name('family-planning-pelvic-exam.show');
+
+    //Animal Bite Anatomical Location
+    Route::get('ab-anatomical-location', [\App\Http\Controllers\API\V1\Libraries\LibAbAnatomicalLocationController::class, 'index'])->name('ab-anatomical-location.index');
+
+    //Animal Bite Animal Status
+    Route::get('ab-animal-status', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalStatusController::class, 'index'])->name('ab-animal-status.index');
+
+    //Animal Bite Animal Type
+    Route::get('ab-animal-type', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalTypeController::class, 'index'])->name('ab-animal-type.index');
+
+    //Animal Bite Exposure Type
+    Route::get('ab-exposure-type', [\App\Http\Controllers\API\V1\Libraries\LibAbExposureTypeController::class, 'index'])->name('ab-exposure-type.index');
+
+    //Animal Bite Indication Option
+    Route::get('ab-indication-option', [\App\Http\Controllers\API\V1\Libraries\LibAbIndicationOptionController::class, 'index'])->name('ab-indication-option.index');
+
+    //Animal Bite Rig Type
+    Route::get('ab-rig-type', [\App\Http\Controllers\API\V1\Libraries\LibAbRigTypeController::class, 'index'])->name('ab-rig-type.index');
+
+    //Animal Bite Vaccine Route
+    Route::get('ab-vaccine-route', [\App\Http\Controllers\API\V1\Libraries\LibAbVaccineRouteController::class, 'index'])->name('ab-vaccine-route.index');
 });
