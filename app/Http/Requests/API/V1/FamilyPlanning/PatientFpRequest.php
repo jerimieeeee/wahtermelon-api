@@ -27,7 +27,7 @@ class PatientFpRequest extends FormRequest
             'no_of_living_children_actual' => 'required|numeric',
             'birth_interval_desired' => 'required|numeric',
             'average_monthly_income' => 'required|numeric',
-            'pe_remarks' => 'nullable',
+//            'pe_remarks' => 'nullable',
         ];
     }
 }
