@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibAbAnimalStatus;
+use App\Models\V1\Libraries\LibAbVaccineRoute;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -166,6 +168,13 @@ class DatabaseSeeder extends Seeder
             LibGbvGeneralSurveySeeder::class,
             LibGbvMedicalImpressionSeeder::class,
             LibEclaimsDocTypeSeeder::class,
+            LibAbAnatomicalLocationSeeder::class,
+            LibAbIndicationOptionSeeder::class,
+            LibAbRigTypeSeeder::class,
+            LibAbAnimalStatusSeeder::class,
+            LibAbAnimalTypeSeeder::class,
+            LibAbVaccineRouteSeeder::class,
+            LibAbExposureTypeSeeder::class
         ]);
     }
 }
