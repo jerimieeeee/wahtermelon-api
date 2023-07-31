@@ -26,7 +26,7 @@ class PatientFpController extends Controller
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-//            ->with('tbCaseFinding', 'tbCaseHolding', 'treatmentOutcome', 'outcomeReason', 'tbSymptom', 'tbPhysicalExam')
+            ->with(['fpHistory.history', 'fpPhysicalExam.physicalExam'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
@@ -42,7 +42,7 @@ class PatientFpController extends Controller
      */
     public function store(PatientFpRequest $request): JsonResponse
     {
-        $data = PatientFp::create($request->validated());
+        $data = PatientFp::updateOrCreate(['patient_id' => $request->patient_id], $request->validated());
 
         return response()->json(['data' => new PatientFpResource($data), 'status' => 'Success'], 201);
     }
@@ -58,11 +58,9 @@ class PatientFpController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientFpRequest $request, PatientFp $patientFp): JsonResponse
+    public function update(Request $request, string $id)
     {
-        $patientFp->update($request->except('patient_id'));
-
-        return response()->json(['status' => 'Update successful!'], 200);
+        //
     }
 
     /**

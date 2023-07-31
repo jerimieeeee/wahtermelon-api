@@ -989,7 +989,17 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('fp-records', 'index');
                 Route::post('fp-records', 'store');
-                Route::put('fp-records/{patientFp}', 'update');
+                Route::get('fp-records/{patientFp}', 'show');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpHistoryController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-history', 'store');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpPhysicalExamController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-physical-exam', 'store');
             });
     });
 });
