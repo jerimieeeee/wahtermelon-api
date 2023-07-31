@@ -1001,5 +1001,10 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::post('fp-physical-exam', 'store');
             });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpPelvicExamController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-pelvic-exam', 'store');
+            });
     });
 });
