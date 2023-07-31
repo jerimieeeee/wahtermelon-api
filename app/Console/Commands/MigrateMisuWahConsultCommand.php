@@ -1,0 +1,91 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class MigrateMisuWahConsultCommand extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'misuwah:migrate-consult';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $databases = DB::select("SHOW DATABASES LIKE 'DOH%'");
+        $databaseNames = array_map('current', $databases);
+        $database = $this->choice(
+            'Select database to be migrated:',
+            $databaseNames
+        );
+        $connectionName = 'mysql_migration';
+        $this->migrationConnection($connectionName, $database);
+
+        echo $this->getConsult();
+    }
+
+    private function getConsult()
+    {
+        return DB::connection('mysql_migration')->table('consult')
+            ->join('consult_notes', function ($join) {
+                $join->on('consult.id', '=', 'consult_notes.consult_id')
+                    ->select('id', 'consult_id');
+            })
+            ->wherePtgroup('cn')
+            ->whereDate('consult_end', '>=', '0001-01-01')
+            ->whereDate('consult_end', '<=', '9999-12-31')
+            ->whereDate('consult_end', '<=', now())
+            ->get();
+    }
+
+    public function migrationConnection($connectionName, $database)
+    {
+        //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
+        $newDatabaseName = $database; // Replace with the new database name you want to use
+
+        DB::purge($connectionName); // Clear any previous configurations for the connection
+
+        // Retrieve the database connection configuration array
+        $config = config("database.connections.$connectionName");
+
+        // Update the 'database' parameter with the new database name
+        $config['database'] = $newDatabaseName;
+
+        // Set the updated configuration for the connection
+        $connection = app(ConnectionFactory::class)->make($config);
+
+        // Set the new connection instance for the specific connection name
+        DB::connection($connectionName)->setPdo($connection->getPdo())->setReadPdo($connection->getReadPdo());
+        // Add column if it doesn't exist on the 'patient' table
+        // Add column if it doesn't exist on the 'patient' table
+        try {
+            // Add column if it doesn't exist on the 'patient' table
+            Schema::connection($connectionName)->table('consult', function (Blueprint $table) {
+                $table->string('wahtermelon_consult_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+    }
+}

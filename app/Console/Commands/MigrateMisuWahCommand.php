@@ -62,12 +62,15 @@ class MigrateMisuWahCommand extends Command
                 if(!$record['employer_code']){
                     Arr::pull($record, 'employer_code');
                 }
+                if(!$record['designation_code']){
+                    Arr::pull($record, 'designation_code');
+                }
                 $newUser = User::updateOrCreate([
                     'last_name' => $record['last_name'],
                     'first_name' => $record['first_name'],
                     'middle_name' => $record['middle_name'],
                     'suffix_name' => $record['suffix_name'],
-                    'email' => $record['email']
+                    //'email' => $record['email']
                 ],
                     $record + ['password' => Str::password(8), 'facility_code' => $database]);
                 //$user->update(['wahtermelon_user_id' => $newUser->id]);
@@ -319,6 +322,7 @@ class MigrateMisuWahCommand extends Command
                     updated_at
                 ')
             ->where('email', '!=', '')
+            ->whereIsActive('Y')
             ->whereNull('wahtermelon_user_id')
             ->get();
     }
