@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\Consultation\Consult;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -44,6 +45,9 @@ class MigrateMisuWahConsultCommand extends Command
     private function getConsult()
     {
         return DB::connection('mysql_migration')->table('consult')
+            ->selectRaw('
+
+            ')
             ->join('consult_notes', function ($join) {
                 $join->on('consult.id', '=', 'consult_notes.consult_id')
                     ->select('id', 'consult_id');
@@ -53,6 +57,13 @@ class MigrateMisuWahConsultCommand extends Command
             ->whereDate('consult_end', '<=', '9999-12-31')
             ->whereDate('consult_end', '<=', now())
             ->get();
+    }
+
+    private  function saveConsult($consults)
+    {
+        foreach($consults as $consult) {
+            Consult::query()->updateOrCreate(['patient_id' => $consult['patient_id'], ]);
+        }
     }
 
     public function migrationConnection($connectionName, $database)
