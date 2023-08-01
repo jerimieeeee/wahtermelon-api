@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\V1\Libraries\LibAbAnimalStatus;
+use App\Models\V1\Libraries\LibAbDeathPlace;
 use App\Models\V1\Libraries\LibAbVaccineRoute;
 use Illuminate\Database\Seeder;
+
+use function PHPSTORM_META\map;
 
 class DatabaseSeeder extends Seeder
 {
@@ -178,6 +181,8 @@ class DatabaseSeeder extends Seeder
             LibFpHistorySeeder::class,
             LibFpPelvicExamSeeder::class,
             LibFpClientTypeSeeder::class,
+            LibAbOutcomeSeeder::class,
+            LibAbDeathPlaceSeeder::class
         ]);
     }
 }
