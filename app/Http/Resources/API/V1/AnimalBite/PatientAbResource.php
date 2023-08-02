@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Resources\API\V1\AnimalBite;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class PatientAbResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'patient_id' => $this->patient_id,
+            'user_id' => $this->user_id,
+            'facility_code' => $this->facility_code,
+
+            'consult_date' => $this->consult_date,
+            'exposure_date' => $this->exposure_date,
+            'ab_treatment_outcome_id' => $this->when(! $this->relationLoaded('treatmentOutcome'), $this->ab_treatment_outcome_id),
+            'ab_treatment_outcome' => $this->whenLoaded('treatmentOutcome'),
+            'ab_death_place_id' => $this->when(! $this->relationLoaded('deathPlace'), $this->ab_death_place_id),
+            'ab_death_place' => $this->whenLoaded('deathPlace'),
+            'manifestations' => $this->manifestations,
+            'date_died' => $this->date_died,
+            'remarks' => $this->remarks
+        ];
+    }
+}
