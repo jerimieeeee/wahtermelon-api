@@ -33,7 +33,7 @@ class PatientMenstrualHistoryRequest extends FormRequest
             'cycle' => 'numeric|nullable',
             'pads_per_day' => 'numeric|nullable',
             'onset_sexual_intercourse' => 'numeric|nullable',
-            'method' => 'nullable|exists:lib_fp_methods,id',
+            'method' => 'nullable|exists:lib_fp_methods,code',
             'menopause' => 'boolean',
             'menopause_age' => 'numeric|nullable',
         ];
