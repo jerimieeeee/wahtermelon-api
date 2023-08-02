@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('manifestations')->nullable();
             $table->date('date_onset')->nullable();
             $table->date('date_died')->nullable();
-            $table->text('remarks')->nullable();
+            $table->text('death_remarks')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

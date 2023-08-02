@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibAbAnimalOwnership;
 use App\Models\V1\Libraries\LibAbAnimalStatus;
 use App\Models\V1\Libraries\LibAbDeathPlace;
 use App\Models\V1\Libraries\LibAbVaccineRoute;
@@ -182,7 +183,9 @@ class DatabaseSeeder extends Seeder
             LibFpPelvicExamSeeder::class,
             LibFpClientTypeSeeder::class,
             LibAbOutcomeSeeder::class,
-            LibAbDeathPlaceSeeder::class
+            LibAbDeathPlaceSeeder::class,
+            LibAbAnimalOwnershipSeeder::class,
+            LibAbVaccineSeeder::class
         ]);
     }
 }

@@ -495,6 +495,9 @@ Route::prefix('v1/libraries')->group(function () {
     //Animal Bite Vaccine Route
     Route::get('ab-vaccine-route', [\App\Http\Controllers\API\V1\Libraries\LibAbVaccineRouteController::class, 'index'])->name('ab-vaccine-route.index');
 
+    //Animal Bite Animal Ownership
+    Route::get('ab-animal-ownership', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalOwnershipController::class, 'index'])->name('ab-animal-ownership.index');
+
     //Family Planning Physical Exam
     Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
 });
