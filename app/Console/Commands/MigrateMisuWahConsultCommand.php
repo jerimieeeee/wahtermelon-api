@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -38,32 +40,81 @@ class MigrateMisuWahConsultCommand extends Command
         );
         $connectionName = 'mysql_migration';
         $this->migrationConnection($connectionName, $database);
-
-        echo $this->getConsult();
+        $consults = $this->getConsult();
+        //echo Consult::get();
+        $this->saveConsult($consults, $database);
     }
 
     private function getConsult()
     {
         return DB::connection('mysql_migration')->table('consult')
             ->selectRaw('
-
+                consult.id AS id,
+                wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
+                physician.wahtermelon_user_id AS physician_id,
+                CASE
+                    WHEN is_pregnant = "Y"
+                    THEN 1
+                    WHEN is_pregnant = "N"
+                    THEN 0
+                    ELSE NULL
+                END is_pregnant,
+                CASE
+                    WHEN consult_done = "Y"
+                    THEN 1
+                    ELSE NULL
+                END consult_done,
+                ptgroup AS pt_group,
+                consult.created_at AS consult_date,
+                consult.created_at,
+                consult.updated_at
             ')
-            ->join('consult_notes', function ($join) {
-                $join->on('consult.id', '=', 'consult_notes.consult_id')
-                    ->select('id', 'consult_id');
+//            ->join('consult_notes', function ($join) {
+//                $join->on('consult.id', '=', 'consult_notes.consult_id')
+//                    ->select('id', 'consult_id');
+//            })
+            ->join('user', function ($join) {
+                $join->on('consult.user_id', '=', 'user.id')
+                ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->leftJoin('user as physician', function ($join) {
+                $join->on('consult.physician_id', '=', 'user.id')
+                    ->whereNotNull('physician.wahtermelon_user_id');
+            })
+            ->join('patient', function ($join) {
+                $join->on('consult.patient_id', '=', 'patient.id')
+                ->whereNotNull('wahtermelon_patient_id');
             })
             ->wherePtgroup('cn')
+            ->whereNotNull('consult_end')
             ->whereDate('consult_end', '>=', '0001-01-01')
             ->whereDate('consult_end', '<=', '9999-12-31')
             ->whereDate('consult_end', '<=', now())
+            ->whereDate('consult.created_at', '>=', '0001-01-01')
+            ->whereDate('consult.created_at', '<=', '9999-12-31')
+            ->whereDate('consult.created_at', '<=', now())
             ->get();
     }
 
-    private  function saveConsult($consults)
+    private  function saveConsult($consults, $database)
     {
+        $consultBar = $this->output->createProgressBar(count($consults));
+        $consultBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%%');
+        $consultBar->start();
         foreach($consults as $consult) {
-            Consult::query()->updateOrCreate(['patient_id' => $consult['patient_id'], ]);
+            $consult = (array) $consult;
+            //dd($consult);
+            //var_dump($consult);
+            $newConsult = Consult::query()->updateOrCreate(['patient_id' => $consult['patient_id'], 'consult_date' => $consult['consult_date'], 'pt_group' => $consult['pt_group']], $consult + ['facility_code' => $database]);
+            echo $consult['id'];
+            $this->newLine();
+            $consultBar->advance();
         }
+        $consultBar->finish();
+        $this->newLine();
+        $this->components->twoColumnDetail('Consult Migration', 'Done');
+        $this->newLine();
     }
 
     public function migrationConnection($connectionName, $database)
