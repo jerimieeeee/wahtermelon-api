@@ -2,10 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibAbAnimalOwnership;
-use App\Models\V1\Libraries\LibAbAnimalStatus;
-use App\Models\V1\Libraries\LibAbDeathPlace;
-use App\Models\V1\Libraries\LibAbVaccineRoute;
 use Illuminate\Database\Seeder;
 
 use function PHPSTORM_META\map;
@@ -185,7 +181,8 @@ class DatabaseSeeder extends Seeder
             LibAbOutcomeSeeder::class,
             LibAbDeathPlaceSeeder::class,
             LibAbAnimalOwnershipSeeder::class,
-            LibAbVaccineSeeder::class
+            LibAbVaccineSeeder::class,
+            LibFpSourceSupplySeeder::class,
         ]);
     }
 }

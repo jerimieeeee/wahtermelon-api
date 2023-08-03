@@ -26,7 +26,7 @@ class PatientFpController extends Controller
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-            ->with(['fpHistory.history', 'fpPhysicalExam.physicalExam', 'fpPelvicExam.pelvicExam'])
+            ->with(['fpHistory.history', 'fpPhysicalExam.physicalExam', 'fpPelvicExam.pelvicExam', 'fpMethod.client', 'fpChart.source'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
