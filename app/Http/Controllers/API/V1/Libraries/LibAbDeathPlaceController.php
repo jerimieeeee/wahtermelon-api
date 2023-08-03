@@ -3,8 +3,20 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Libraries\LibAbDeathPlaceResource;
+use App\Models\V1\Libraries\LibAbDeathPlace;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @group libraries for Animal Bite
+ *
+ * APIs for managing libraries
+ *
+ * @subgroup AB Death Place.
+ *
+ * @subgroupDescription List of AB Death Place.
+ */
 class LibAbDeathPlaceController extends Controller
 {
     /**
@@ -12,7 +24,9 @@ class LibAbDeathPlaceController extends Controller
      */
     public function index()
     {
-        //
+        $query = QueryBuilder::for(LibAbDeathPlace::class);
+
+        return LibAbDeathPlaceResource::collection($query->get());
     }
 
     /**
