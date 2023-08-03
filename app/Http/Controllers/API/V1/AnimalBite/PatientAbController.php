@@ -52,6 +52,12 @@ class PatientAbController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @apiResourceAddition status=Success
+     *
+     * @apiResource 201 App\Http\Resources\API\V1\AnimalBite\PatientAbResource
+     *
+     * @apiResourceModel App\Models\V1\AnimalBite\PatientAb
      */
     public function store(PatientAbRequest $request): JsonResponse
     {
@@ -66,6 +72,10 @@ class PatientAbController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @apiResource App\Http\Resources\API\V1\AnimalBite\PatientAbResource
+     *
+     * @apiResourceModel App\Models\V1\AnimalBite\PatientAb
      */
     public function show(PatientAb $patientAb)
     {

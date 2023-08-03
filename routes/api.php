@@ -1007,4 +1007,35 @@ Route::prefix('v1')->group(function () {
                 Route::post('fp-pelvic-exam', 'store');
             });
     });
+
+    Route::prefix('animal-bite')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab', 'index');
+                Route::post('patient-ab', 'store');
+                Route::get('patient-ab/{patientAb}', 'show');
+                Route::put('patient-ab/{patientAb}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbExposureController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab-exposure', 'index');
+                Route::put('patient-ab-exposure/{patientAbExposure}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbPreExposureController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab-pre-exposure', 'index');
+                Route::post('patient-ab-pre-exposure', 'store');
+                Route::put('patient-ab-pre-exposure/{patientAbPreExposure}', 'update');
+                Route::delete('patient-ab-pre-exposure/{patientAbPreExposure}', 'destroy');
+            });
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbPostExposureController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab-post-exposure', 'index');
+                Route::post('patient-ab-post-exposure', 'store');
+            });
+    });
 });

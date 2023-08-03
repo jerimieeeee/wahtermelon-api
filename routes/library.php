@@ -501,6 +501,12 @@ Route::prefix('v1/libraries')->group(function () {
     //Animal Bite Vaccine
     Route::get('ab-vaccine', [\App\Http\Controllers\API\V1\Libraries\LibAbVaccineController::class, 'index'])->name('ab-vaccine.index');
 
+    //Animal Bite Death Place
+    Route::get('ab-death-place', [\App\Http\Controllers\API\V1\Libraries\LibAbDeathPlaceController::class, 'index'])->name('ab-death-place.index');
+
+    //Animal Bite Outcome
+    Route::get('ab-outcome', [\App\Http\Controllers\API\V1\Libraries\LibAbOutcomeController::class, 'index'])->name('ab-outcome.index');
+
     //Family Planning Physical Exam
     Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
 });
