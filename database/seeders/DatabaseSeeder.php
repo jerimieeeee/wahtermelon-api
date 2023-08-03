@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibFpSourceSupply;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -169,6 +170,7 @@ class DatabaseSeeder extends Seeder
             LibFpHistorySeeder::class,
             LibFpPelvicExamSeeder::class,
             LibFpClientTypeSeeder::class,
+            LibFpSourceSupplySeeder::class,
         ]);
     }
 }

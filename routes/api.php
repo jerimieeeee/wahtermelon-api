@@ -1006,5 +1006,20 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::post('fp-pelvic-exam', 'store');
             });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpMethodController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-method', 'store');
+                Route::put('fp-method/{patientFpMethod}', 'update');
+                Route::get('fp-method', 'index');
+                Route::delete('fp-method/{patientFpMethod}', 'destroy');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpChartController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-chart', 'store');
+                Route::put('fp-chart/{patientFpChart}', 'update');
+                Route::delete('fp-chart/{patientFpChart}', 'destroy');
+            });
     });
 });
