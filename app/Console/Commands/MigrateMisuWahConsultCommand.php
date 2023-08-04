@@ -41,8 +41,9 @@ class MigrateMisuWahConsultCommand extends Command
         $connectionName = 'mysql_migration';
         $this->migrationConnection($connectionName, $database);
         $consults = $this->getConsult();
+        //echo $consults;
         //echo Consult::get();
-        $this->saveConsult($consults, $database);
+        $this->saveConsult($consults, $database, $connectionName);
     }
 
     private function getConsult()
@@ -74,17 +75,17 @@ class MigrateMisuWahConsultCommand extends Command
 //                $join->on('consult.id', '=', 'consult_notes.consult_id')
 //                    ->select('id', 'consult_id');
 //            })
-            ->join('user', function ($join) {
+            ->join('user AS user', function ($join) {
                 $join->on('consult.user_id', '=', 'user.id')
-                ->whereNotNull('user.wahtermelon_user_id');
+                    ->whereNotNull('user.wahtermelon_user_id');
             })
-            ->leftJoin('user as physician', function ($join) {
-                $join->on('consult.physician_id', '=', 'user.id')
+            ->leftJoin('user AS physician', function ($join) {
+                $join->on('consult.physician_id', '=', 'physician.id')
                     ->whereNotNull('physician.wahtermelon_user_id');
             })
             ->join('patient', function ($join) {
                 $join->on('consult.patient_id', '=', 'patient.id')
-                ->whereNotNull('wahtermelon_patient_id');
+                    ->whereNotNull('patient.wahtermelon_patient_id');
             })
             ->wherePtgroup('cn')
             ->whereNotNull('consult_end')
@@ -97,9 +98,9 @@ class MigrateMisuWahConsultCommand extends Command
             ->get();
     }
 
-    private  function saveConsult($consults, $database)
+    private  function saveConsult($consults, $database, $connectionName)
     {
-        $consultBar = $this->output->createProgressBar(count($consults));
+        /*$consultBar = $this->output->createProgressBar(count($consults));
         $consultBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%%');
         $consultBar->start();
         foreach($consults as $consult) {
@@ -107,14 +108,42 @@ class MigrateMisuWahConsultCommand extends Command
             //dd($consult);
             //var_dump($consult);
             $newConsult = Consult::query()->updateOrCreate(['patient_id' => $consult['patient_id'], 'consult_date' => $consult['consult_date'], 'pt_group' => $consult['pt_group']], $consult + ['facility_code' => $database]);
-            echo $consult['id'];
-            $this->newLine();
+            DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
             $consultBar->advance();
         }
         $consultBar->finish();
         $this->newLine();
         $this->components->twoColumnDetail('Consult Migration', 'Done');
+        $this->newLine();*/
+        $consultsCount = count($consults);
+        $consultBar = $this->output->createProgressBar($consultsCount);
+        $consultBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %estimated:-6s%');
+        $consultBar->start();
+        $startTime = time();
+
+        foreach ($consults as $consult) {
+            $consult = (array)$consult;
+            // Your existing code for processing $consult
+
+            $newConsult = Consult::query()->updateOrCreate([
+                'patient_id' => $consult['patient_id'],
+                'consult_date' => $consult['consult_date'],
+                'pt_group' => $consult['pt_group']
+            ], $consult + ['facility_code' => $database]);
+
+            DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
+            $consultBar->advance();
+        }
+
+        $consultBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
         $this->newLine();
+        $this->components->twoColumnDetail('Consult Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+
     }
 
     public function migrationConnection($connectionName, $database)
