@@ -104,16 +104,47 @@ class MorbidityReport2018Controller extends Controller
 
         $result = [];
 
+        // Loop through all age groups and initialize them in the result array
         foreach ($ageGroups as $ageGroupName => $ageGroupData) {
             foreach ($ageGroupData as $gender => $data) {
-                $groupedData = $data->groupBy('icd10_desc');
+                $genderKey = strtolower($gender);
+                $ageGroupKey = str_replace('age_', '', $ageGroupName);
+                $newKey = $genderKey . '_age_' . $ageGroupKey;
 
-                foreach ($groupedData as $icd10Desc => $group) {
+                foreach ($data as $group) {
+                    $icd10Desc = $group->icd10_desc; // Fetch the ICD-10 description from the object
+
+                    // Initialize empty data if there's no actual data available
+                    if (!isset($result[$icd10Desc])) {
+                        $result[$icd10Desc] = [];
+                    }
+
+                    // Initialize empty data for the current age group if there's no actual data available
+                    if (!isset($result[$icd10Desc][$newKey])) {
+                        $result[$icd10Desc][$newKey] = [];
+                    }
+
+                    // Add the actual data to the result array
+                    $result[$icd10Desc][$newKey][] = (array)$group; // Convert object to array
+                }
+            }
+        }
+
+        // Add empty data for missing age groups and genders
+        foreach ($result as $icd10Desc => $ageGroupData) {
+            foreach ($ageGroups as $ageGroupName => $ageGroupData) {
+                foreach ($ageGroupData as $gender => $data) {
                     $genderKey = strtolower($gender);
                     $ageGroupKey = str_replace('age_', '', $ageGroupName);
                     $newKey = $genderKey . '_age_' . $ageGroupKey;
 
-                    $result[$icd10Desc][$newKey] = $group->toArray();
+                    if (!isset($result[$icd10Desc][$newKey])) {
+                        $result[$icd10Desc][$newKey] = [
+                            [
+
+                            ]
+                        ];
+                    }
                 }
             }
         }

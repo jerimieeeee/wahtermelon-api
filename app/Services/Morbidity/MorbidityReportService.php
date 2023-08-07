@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\DB;
 
 class MorbidityReportService
 {
+    public function get_morbidity_icd10_desc()
+    {
+        return DB::table('lib_icd10s')
+            ->selectRaw('
+                        icd10_desc
+                    ');
+    }
+
     public function get_morbidity_report_age_days($request, $patient_gender, $age_bracket1, $age_bracket2)
     {
         return DB::table(function ($query) use ($request, $patient_gender) {
@@ -46,7 +54,6 @@ class MorbidityReportService
                         birthdate,
                         icd10_code,
                         icd10_desc,
-                        consult_date,
                         age_year,
                         age_month,
                         age_day
@@ -96,7 +103,6 @@ class MorbidityReportService
                         birthdate,
                         icd10_code,
                         icd10_desc,
-                        consult_date,
                         age_year,
                         age_month,
                         age_day
@@ -146,7 +152,6 @@ class MorbidityReportService
                         birthdate,
                         icd10_code,
                         icd10_desc,
-                        consult_date,
                         age_year,
                         age_month,
                         age_day
@@ -196,7 +201,6 @@ class MorbidityReportService
                         birthdate,
                         icd10_code,
                         icd10_desc,
-                        consult_date,
                         age_year,
                         age_month,
                         age_day
