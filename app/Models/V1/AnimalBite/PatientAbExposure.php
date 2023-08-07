@@ -36,7 +36,7 @@ class PatientAbExposure extends Model
         return $this->belongsTo(LibAbAnimalType::class, 'animal_type_id', 'id');
     }
 
-    public function animalOwndership()
+    public function animalOwnership()
     {
         return $this->belongsTo(LibAbAnimalOwnership::class, 'animal_ownership_id', 'id');
     }

@@ -39,7 +39,9 @@ class PatientAbPreExposureController extends Controller
             })
             ->with('indicationOption', 'day0Vaccine', 'day0VaccineRoute',
                     'day7Vaccine', 'day7VaccineRoute',
-                    'day21Vaccine', 'day21VaccineRoute');
+                    'day21Vaccine', 'day21VaccineRoute')
+            ->defaultSort('-day0_date')
+            ->allowedSorts('day0_date');
 
         return PatientAbPreExposureResource::collection($query->get());
     }

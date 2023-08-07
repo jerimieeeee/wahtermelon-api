@@ -34,10 +34,15 @@ class PatientAbRequest extends FormRequest
             'death_remarks' => 'nullable',
 
             'animal_type_id' => 'required|exists:lib_ab_animal_types,id',
+            'animal_ownership_id' => 'required|exists:lib_ab_animal_ownerships,id',
+            'exposure_type_code' => 'required|exists:lib_ab_exposure_types,code',
+            // 'patient_ab_id' => 'exists:patient_abs,id',
+            /*
+
             'animal_type_remarks' => 'nullable',
             'exposure_place' => 'nullable',
             'bite_flag' => 'nullable|boolean',
-            'animal_ownership_id' => 'required|exists:lib_ab_animal_ownerships,id',
+
             'feet_flag' => 'nullable|boolean',
             'leg_flag' => 'nullable|boolean',
             'arms_flag' => 'nullable|boolean',
@@ -47,9 +52,9 @@ class PatientAbRequest extends FormRequest
             'head_flag' => 'nullable|boolean',
             'others_flag' => 'nullable|boolean',
             'al_remarks' => 'nullable',
-            'exposure_type_code ' => 'required|exists:lib_ab_exposure_types,code',
+
             'wash_flag' => 'nullable|boolean',
-            'pep_flag' => 'nullable|boolean'
+            'pep_flag' => 'nullable|boolean' */
         ];
     }
 }

@@ -40,7 +40,10 @@ class PatientAbExposureRequest extends FormRequest
             'al_remarks' => 'nullable',
             'exposure_type_code' => 'required|exists:lib_ab_exposure_types,code',
             'wash_flag' => 'nullable|boolean',
-            'pep_flag' => 'nullable|boolean'
+            'pep_flag' => 'nullable|boolean',
+            'tandok_name' => 'nullable',
+            'tandok_addresss' => 'nullable',
+            'remarks' => 'nullable'
         ];
     }
 }
