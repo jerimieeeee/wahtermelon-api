@@ -609,6 +609,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('m1', 'index');
                 });
         });
+        Route::prefix('morbidity')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MorbidityReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
         Route::prefix('user')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\UserStats\UserStatsController::class)
                 ->middleware('auth:api')
