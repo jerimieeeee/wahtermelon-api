@@ -44,8 +44,14 @@ class PatientAbController extends Controller
         ->when(isset($request->patient_id), function ($q) use ($request) {
             $q->where('patient_id', $request->patient_id);
         })
+        ->with(['abExposure',
+                'abPostExposure',])
         ->defaultSort('-consult_date')
         ->allowedSorts('consult_date');
+
+        /* 'abExposure.animalType',
+        'abExposure.animalOwnership',
+        'abExposure.exposureType', */
 
         return PatientAbResource::collection($query->get());
     }

@@ -11,7 +11,7 @@ class PatientAbPreExposureRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class PatientAbPreExposureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|exists:patients,id',
+            'indication_option_code' => 'required|exists:lib_ab_indication_options,code',
+            'indication_option_remarks' => 'nullable',
+            'day0_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
+            'day0_vaccine_code' => 'required|exists:lib_ab_vaccines,code',
+            'day0_vaccine_route_code' => 'required|exists:lib_ab_vaccine_routes,code',
+            'day7_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'day7_vaccine_code' => 'nullable|exists:lib_ab_vaccines,code',
+            'day7_vaccine_route_code' => 'nullable|exists:lib_ab_vaccine_routes,code',
+            'day21_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'day21_vaccine_code' => 'nullable|exists:lib_ab_vaccines,code',
+            'day21_vaccine_route_code' => 'nullable|exists:lib_ab_vaccine_routes,code',
+            'remarks' => 'nullable',
         ];
     }
 }

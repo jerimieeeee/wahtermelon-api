@@ -22,13 +22,16 @@ class PatientAbResource extends JsonResource
 
             'consult_date' => $this->consult_date,
             'exposure_date' => $this->exposure_date,
-            'ab_treatment_outcome_id' => $this->when(! $this->relationLoaded('treatmentOutcome'), $this->ab_treatment_outcome_id),
+            'ab_treatment_outcome_id' => $this->ab_treatment_outcome_id,
             'ab_treatment_outcome' => $this->whenLoaded('treatmentOutcome'),
-            'ab_death_place_id' => $this->when(! $this->relationLoaded('deathPlace'), $this->ab_death_place_id),
+            'ab_death_place_id' => $this->ab_death_place_id,
             'ab_death_place' => $this->whenLoaded('deathPlace'),
             'manifestations' => $this->manifestations,
             'date_died' => $this->date_died,
-            'remarks' => $this->remarks
+            'remarks' => $this->remarks,
+
+            'abExposure' => $this->whenLoaded('abExposure'),
+            'abPostExposure' => $this->whenLoaded('abPostExposure'),
         ];
     }
 }
