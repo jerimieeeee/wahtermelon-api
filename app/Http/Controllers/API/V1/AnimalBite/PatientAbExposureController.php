@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\V1\AnimalBite;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\AnimalBite\PatientAbExposureRequest;
 use App\Http\Resources\API\V1\AnimalBite\PatientAbExposureResource;
+use App\Http\Resources\API\V1\AnimalBite\PatientAbResource;
+use App\Models\V1\AnimalBite\PatientAb;
 use App\Models\V1\AnimalBite\PatientAbExposure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -59,7 +61,13 @@ class PatientAbExposureController extends Controller
     {
         $patientAbExposure->update($request->validated());
 
-        return response()->json(['status' => 'Update successful!'], 201);
+        $query = QueryBuilder::for(PatientAb::class)
+            ->where('id', $request->patient_ab_id)
+            ->with(['abExposure', 'abPostExposure', 'treatmentOutcome'])
+            ->defaultSort('-consult_date')
+            ->allowedSorts('consult_date');
+
+        return response()->json(['data' => PatientAbResource::collection($query->get()), 'status' => 'Update successful!'], 201);
     }
 
     /**
