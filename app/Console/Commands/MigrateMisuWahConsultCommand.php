@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
+use App\Models\V1\Consultation\ConsultNotesComplaint;
+use App\Models\V1\Consultation\ConsultNotesFinalDx;
+use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
@@ -106,6 +109,7 @@ class MigrateMisuWahConsultCommand extends Command
                     ->havingRaw('COUNT(duplicate_notes.consult_id)>1');
             })
             ->wherePtgroup('cn')
+            //->whereNull('consult.wahtermelon_consult_id')
             ->whereNotNull('consult.consult_end')
             ->whereDate('consult_end', '>=', '0001-01-01')
             ->whereDate('consult_end', '<=', '9999-12-31')
@@ -148,6 +152,80 @@ class MigrateMisuWahConsultCommand extends Command
             ->first();
     }
 
+    private function getNotesComplaints($notesId, $consultId, $patientId)
+    {
+        return DB::connection('mysql_migration')->table('consult_notes_complaint')
+            ->selectRaw('
+                complaint_id,
+                consult_notes_complaint.created_at,
+                consult_notes_complaint.updated_at
+            ')
+            ->join('patient', function ($join) {
+                $join->on('consult_notes_complaint.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->whereNotesId($notesId)
+            ->whereConsultId($consultId)
+            ->where('patient.wahtermelon_patient_id', $patientId)
+            ->whereDate('consult_notes_complaint.created_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_complaint.created_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_complaint.created_at', '<=', now())
+            ->whereDate('consult_notes_complaint.updated_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_complaint.updated_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_complaint.updated_at', '<=', now())
+            ->get();
+    }
+
+    private  function getNotesInitialDiagnosis($notesId)
+    {
+        return DB::connection('mysql_migration')->table('consult_notes_initial_dx')
+            ->selectRaw('
+                consult_notes_initial_dx.class_id,
+                user.wahtermelon_user_id AS user_id,
+                consult_notes_initial_dx.created_at,
+                consult_notes_initial_dx.updated_at
+            ')
+            ->leftJoin('user', function ($join) {
+                $join->on('consult_notes_initial_dx.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->join('lib_diagnosis', 'lib_diagnosis.class_id', '=', 'consult_notes_initial_dx.class_id')
+            ->whereNotesId($notesId)
+            ->whereDate('consult_notes_initial_dx.created_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_initial_dx.created_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_initial_dx.created_at', '<=', now())
+            ->whereDate('consult_notes_initial_dx.updated_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_initial_dx.updated_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_initial_dx.updated_at', '<=', now())
+            ->get();
+    }
+
+    private  function getNotesFinalDiagnosis($notesId)
+    {
+        return DB::connection('mysql_migration')->table('consult_notes_final_dx')
+            ->selectRaw('
+                consult_notes_final_dx.icd10_code,
+                user.wahtermelon_user_id AS user_id,
+                consult_notes_final_dx.created_at,
+                consult_notes_final_dx.updated_at
+            ')
+            ->leftJoin('user', function ($join) {
+                $join->on('consult_notes_final_dx.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            //->join('lib_diagnosis', 'lib_diagnosis.class_id', '=', 'consult_notes_initial_dx.class_id')
+            ->whereNotesId($notesId)
+            ->whereNotNull('icd10_code')
+            ->where('icd10_code', '!=', '')
+            ->whereDate('consult_notes_final_dx.created_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_final_dx.created_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_final_dx.created_at', '<=', now())
+            ->whereDate('consult_notes_final_dx.updated_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_final_dx.updated_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_final_dx.updated_at', '<=', now())
+            ->get();
+    }
+
     private  function saveConsult($consults, $database, $connectionName)
     {
         /*$consultBar = $this->output->createProgressBar(count($consults));
@@ -166,30 +244,68 @@ class MigrateMisuWahConsultCommand extends Command
         $this->components->twoColumnDetail('Consult Migration', 'Done');
         $this->newLine();*/
         $consultsCount = count($consults);
+        if($consultsCount < 1){
+            $this->components->info('Nothing to migrate');
+            return;
+        }
         $consultBar = $this->output->createProgressBar($consultsCount);
         $consultBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %estimated:-6s%');
         $consultBar->start();
         $startTime = time();
 
-        foreach ($consults as $consult) {
-            $consult = (array)$consult;
-            // Your existing code for processing $consult
-            DB::transaction(function() use($consult, $database, $connectionName){
-                $newConsult = Consult::query()->updateOrCreate([
-                    'patient_id' => $consult['patient_id'],
-                    'consult_date' => $consult['consult_date'],
-                    'pt_group' => $consult['pt_group']
-                ], $consult + ['facility_code' => $database]);
+        $chunkSize = 200; // Set your desired chunk size
 
-                DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
-                $consultNotes = (array)$this->getConsultNotes($consult['id']);
+        $chunks = array_chunk($consults->toArray(), $chunkSize);
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $consult) {
+                $consult = (array)$consult;
+                // Your existing code for processing $consult
+                DB::transaction(function () use ($consult, $database, $connectionName) {
+                    $newConsult = Consult::query()->updateOrCreate([
+                        'patient_id' => $consult['patient_id'],
+                        'consult_date' => $consult['consult_date'],
+                        'pt_group' => $consult['pt_group']
+                    ], $consult + ['facility_code' => $database]);
+
+                    DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
+                    $consultNotes = (array)$this->getConsultNotes($consult['id']);
 //                echo $consult['id'];
 //                print_r($consultNotes);
-                $consultNotes['user_id'] = $consultNotes['user_id'] ?? $consult['user_id'];
-                $newConsultNotes = ConsultNotes::query()->updateOrCreate(['consult_id' => $newConsult->id], $consultNotes + ['facility_code' => $database]);
-            });
+                    $consultNotes['user_id'] = $consultNotes['user_id'] ?? $consult['user_id'];
+                    $newConsultNotes = ConsultNotes::query()->updateOrCreate(['consult_id' => $newConsult->id], $consultNotes + ['facility_code' => $database]);
 
-            $consultBar->advance();
+                    //Save Notes Complaints;
+                    $complaints = $this->getNotesComplaints($consultNotes['id'], $consult['id'], $consult['patient_id']);
+                    if (!empty($complaints)) {
+                        foreach ($complaints as $complaint) {
+                            $complaint = (array)$complaint;
+                            ConsultNotesComplaint::query()->updateOrCreate(['notes_id' => $newConsultNotes->id, 'consult_id' => $newConsult->id, 'patient_id' => $consult['patient_id'], 'complaint_id' => $complaint['complaint_id']], $complaint + ['user_id' => $consultNotes['user_id'], 'facility_code' => $database]);
+                        }
+                    }
+
+                    //Save Initial Diagnoses
+                    $initialDiagnoses = $this->getNotesInitialDiagnosis($consultNotes['id']);
+                    if (!empty($initialDiagnoses)) {
+                        foreach ($initialDiagnoses as $initialDiagnosis) {
+                            $initialDiagnosis = (array)$initialDiagnosis;
+                            $initialDiagnosis['user_id'] = $initialDiagnosis['user_id'] ?? $consult['user_id'];
+                            ConsultNotesInitialDx::query()->updateOrCreate(['notes_id' => $newConsultNotes->id, 'class_id' => $initialDiagnosis['class_id']], $initialDiagnosis + ['facility_code' => $database]);
+                        }
+                    }
+
+                    //Save Final Diagnoses
+                    $finalDiagnoses = $this->getNotesFinalDiagnosis($consultNotes['id']);
+                    if (!empty($finalDiagnoses)) {
+                        foreach ($finalDiagnoses as $finalDiagnosis) {
+                            $finalDiagnosis = (array)$finalDiagnosis;
+                            $finalDiagnosis['user_id'] = $finalDiagnosis['user_id'] ?? $consult['user_id'];
+                            ConsultNotesFinalDx::query()->updateOrCreate(['notes_id' => $newConsultNotes->id, 'icd10_code' => $finalDiagnosis['icd10_code']], $finalDiagnosis + ['facility_code' => $database]);
+                        }
+                    }
+                });
+
+                $consultBar->advance();
+            }
         }
 
         $consultBar->finish();
