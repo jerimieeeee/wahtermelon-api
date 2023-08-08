@@ -40,7 +40,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('eclaims_caserate_lists', function (Blueprint $table) {
-            $table->dropColumn('enough_benefit_flag');
+            // $table->dropColumn('enough_benefit_flag');
             $table->dropColumn('hmo_flag');
             $table->dropColumn('others_flag');
             $table->dropColumn('hci_pTotalActualCharges');
