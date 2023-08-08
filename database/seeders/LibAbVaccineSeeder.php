@@ -19,7 +19,8 @@ class LibAbVaccineSeeder extends Seeder
             ['code' => 'PVRV1',  'desc' => 'Speeda',    'sequence' => 3],
             ['code' => 'PVRV2',  'desc' => 'Abhayrab',  'sequence' => 4],
             ['code' => 'PVRV3',  'desc' => 'Verorab',   'sequence' => 5],
-            ['code' => 'PVRV4',  'desc' => 'Indirab',   'sequence' => 6]
+            ['code' => 'PVRV4',  'desc' => 'Indirab',   'sequence' => 6],
+            ['code' => 'PVRV5',  'desc' => 'ChiroRab',  'sequence' => 7],
         ], ['code']);
     }
 }
