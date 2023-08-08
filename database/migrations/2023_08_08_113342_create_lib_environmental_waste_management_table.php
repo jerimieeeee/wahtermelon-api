@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lib_environmental_toilet_facilities', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('lib_environmental_waste_management', function (Blueprint $table) {
+            $table->id('code');
+            $table->string('desc');
+            $table->unsignedInteger('sequence');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lib_environmental_toilet_facilities');
+        Schema::dropIfExists('lib_environmental_waste_management');
     }
 };

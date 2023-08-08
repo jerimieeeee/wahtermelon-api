@@ -14,8 +14,8 @@ class LibEnvironmentalResultSeeder extends Seeder
     public function run(): void
     {
         LibEnvironmentalResult::upsert([
-            ['code' => '1',           'desc' => 'Positive'],
-            ['code' => '2',           'desc' => 'Negative'],
+            ['code' => 'POSITIVE',           'desc' => 'Positive'],
+            ['code' => 'NEGATIVE',           'desc' => 'Negative'],
         ], ['code']);
     }
 }

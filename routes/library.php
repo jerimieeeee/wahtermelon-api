@@ -509,4 +509,9 @@ Route::prefix('v1/libraries')->group(function () {
 
     //Family Planning Physical Exam
     Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
+
+    //Environmental
+    Route::get('environmental-water-type', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalWaterTypeController::class, 'index'])->name('environmental-water-type.index');
+    Route::get('environmental-result', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalResultController::class, 'index'])->name('environmental-result.index');
+    Route::get('environmental-toilet-facility', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalToiletFacilityController::class, 'index'])->name('environmental-toilet-facility.index');
 });
