@@ -40,21 +40,21 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('eclaims_caserate_lists', function (Blueprint $table) {
-            // $table->dropColumn('enough_benefit_flag');
-            // $table->dropColumn('hmo_flag');
-            // $table->dropColumn('others_flag');
-            // $table->dropColumn('hci_pTotalActualCharges');
-            // $table->dropColumn('hci_pDiscount');
-            // $table->dropColumn('hci_pPhilhealthBenefit');
-            // $table->dropColumn('hci_pTotalAmount');
-            // $table->dropColumn('prof_pTotalActualCharges');
-            // $table->dropColumn('prof_pDiscount');
-            // $table->dropColumn('prof_pPhilhealthBenefit');
-            // $table->dropColumn('prof_pTotalAmount');
-            // $table->dropColumn('meds_flag');
-            // $table->dropColumn('meds_pDMSTotalAmount');
-            // $table->dropColumn('meds_pExaminations_flag');
-            // $table->dropColumn('meds_pExamTotalAmount');
+            $table->dropColumn('enough_benefit_flag');
+            $table->dropColumn('hmo_flag');
+            $table->dropColumn('others_flag');
+            $table->dropColumn('hci_pTotalActualCharges');
+            $table->dropColumn('hci_pDiscount');
+            $table->dropColumn('hci_pPhilhealthBenefit');
+            $table->dropColumn('hci_pTotalAmount');
+            $table->dropColumn('prof_pTotalActualCharges');
+            $table->dropColumn('prof_pDiscount');
+            $table->dropColumn('prof_pPhilhealthBenefit');
+            $table->dropColumn('prof_pTotalAmount');
+            $table->dropColumn('meds_flag');
+            $table->dropColumn('meds_pDMSTotalAmount');
+            $table->dropColumn('meds_pExaminations_flag');
+            $table->dropColumn('meds_pExamTotalAmount');
         });
     }
 };
