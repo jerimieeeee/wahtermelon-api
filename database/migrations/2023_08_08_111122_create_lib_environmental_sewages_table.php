@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lib_environmental_results', function (Blueprint $table) {
-            $table->string('code')->primary();
+        Schema::create('lib_environmental_sewages', function (Blueprint $table) {
+            $table->id('code');
             $table->string('desc');
+            $table->unsignedInteger('sequence');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lib_environmental_results');
+        Schema::dropIfExists('lib_environmental_sewages');
     }
 };

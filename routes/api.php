@@ -65,13 +65,21 @@ Route::prefix('v1')->group(function () {
     //Households APIs
     Route::prefix('households')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
-            ->middleware('auth:api')
-            ->group(function () {
-                Route::get('household-folders', 'index');
-                Route::get('household-folders/{householdFolder}', 'show');
-                Route::post('household-folders', 'store');
-                Route::put('household-folders/{householdFolder}', 'update');
-            });
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('household-folders', 'index');
+                    Route::get('household-folders/{householdFolder}', 'show');
+                    Route::post('household-folders', 'store');
+                    Route::put('household-folders/{householdFolder}', 'update');
+                });
+        Route::prefix('environmental')->group(function () {
+            Route::controller(App\Http\Controllers\API\V1\Household\HouseholdEnvironmentalController::class)
+                ->middleware(('auth:api'))
+                ->group(function () {
+                    Route::get('records', 'index');
+                    Route::post('records', 'store');
+                });
+        });
     });
 
     //Patient Philhealth APIs
