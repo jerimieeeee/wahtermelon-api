@@ -178,6 +178,11 @@ class EclaimsXmlService
         if($request->program_desc === 'mc') {
             $special = $this->mcp($request);
         }
+
+        if($request->program_desc === 'ab') {
+            $special = $this->abp($request);
+        }
+
         $consumption = [
             '_attributes' => [
                 'pEnoughBenefits' => 'Y',

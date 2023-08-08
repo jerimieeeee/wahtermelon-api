@@ -45,13 +45,10 @@ class PatientAbController extends Controller
             $q->where('patient_id', $request->patient_id);
         })
         ->with(['abExposure',
-                'abPostExposure',])
+                'abPostExposure',
+                'treatmentOutcome'])
         ->defaultSort('-consult_date')
         ->allowedSorts('consult_date');
-
-        /* 'abExposure.animalType',
-        'abExposure.animalOwnership',
-        'abExposure.exposureType', */
 
         return PatientAbResource::collection($query->get());
     }
@@ -73,7 +70,11 @@ class PatientAbController extends Controller
             return $data->abExposure()->create($request->validated());
         });
 
-        return response()->json(['data' => $data, 'status' => 'Success'], 201);
+        $query = QueryBuilder::for(PatientAb::class)
+            ->where('id', $data->patient_ab_id)
+            ->with(['abExposure', 'abPostExposure','treatmentOutcome']);
+
+        return response()->json(['data' => PatientAbResource::collection($query->get()), 'status' => 'Success'], 201);
     }
 
     /**

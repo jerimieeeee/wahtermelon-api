@@ -57,7 +57,7 @@ class EclaimsXmlRequest extends FormRequest
             'pDay7ARV' => 'required_if:program_desc,ab',
             'pRIG' => 'required_if:program_desc,ab',
             'pABPOthers' => 'required_if:program_desc,ab',
-            'pABPSpecify' => 'required_if:program_desc,ab',
+            'pABPSpecify' => 'nullable',
             //CHILD CARE
             'pEssentialNewbornCare' => 'required_if:program_desc,cc',
             'pNewbornHearingScreeningTest' => 'required_if:program_desc,cc',
