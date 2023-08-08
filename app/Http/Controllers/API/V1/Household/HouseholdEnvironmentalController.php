@@ -34,7 +34,7 @@ class HouseholdEnvironmentalController extends Controller
             return HouseholdEnvironmentalResource::collection($query->get());
         }
 
-        return HouseholdEnvironmentalResource::collection($query->paginate($perPage)->withQueryString());
+        return HouseholdEnvironmenstalResource::collection($query->paginate($perPage)->withQueryString());
     }
 
     /**
