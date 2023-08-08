@@ -37,7 +37,7 @@ class EclaimsXmlService
         $etransmittal = $this->etransmittal($transmittalNumber);
         $claim = $this->claim($transmittalNumber);
         $cf1 = $this->cf1($patientId);
-        $cf2 = $this->cf2($request);
+        $cf2 = $this->cf2($request, $patientId);
         $allcaserate = $this->allcaserate($request);
         $documents = $this->documents();
 
@@ -128,7 +128,7 @@ class EclaimsXmlService
         return $allcaserate;
     }
 
-    public function cf2($request)
+    public function cf2($request, $id)
     {
         $cf2 = [
             '_attributes' => [
@@ -183,18 +183,64 @@ class EclaimsXmlService
             $special = $this->abp($request);
         }
 
-        $consumption = [
-            '_attributes' => [
-                'pEnoughBenefits' => 'Y',
-            ],
-            'BENEFITS' => [
+
+        if($request->enough_benefit_flag){
+            $consumption = [
                 '_attributes' => [
-                    'pTotalHCIFees' => (int) $request->hci_fee,
-                    'pTotalProfFees' => (int) $request->prof_fee,
-                    'pGrandTotal' => (int) $request->caserate_fee,
+                    'pEnoughBenefits' => 'Y'
                 ],
-            ],
-        ];
+                'BENEFITS' => [
+                    '_attributes' => [
+                        'pTotalHCIFees' => (int) $request->hci_fee,
+                        'pTotalProfFees' => (int) $request->prof_fee,
+                        'pGrandTotal' => (int) $request->caserate_fee,
+                    ],
+                ],
+            ];
+        } else {
+            $philhealth = Patient::selectRaw('membership_type_id')
+                ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
+                ->where('patients.id', '=', $id)
+                ->orderBy('effectivity_year', 'DESC')
+                ->first();
+
+            $consumption = [
+                '_attributes' => [
+                    'pEnoughBenefits' => 'N'
+                ],
+                'HCIFEES' => [
+                    '_attributes' => [
+                        'pTotalActualCharges' => (int) $request->hci_pTotalActualCharges,
+                        'pDiscount' => (int) $request->hci_pDiscount,
+                        'pPhilhealthBenefit' => (int) $request->hci_pPhilhealthBenefit,
+                        'pTotalAmount' => (int) $request->hci_pTotalAmount,
+                        'pMemberPatient' => $philhealth->membership_type_id == 'MM' ? 'Y' : 'N',
+                        'pHMO' => $request->hmo_flag ? 'Y' : 'N',
+                        'pOthers' => $request->others_flag ? 'Y' : 'N',
+                    ],
+                ],
+                'PROFFEES' => [
+                    '_attributes' => [
+                        'pTotalActualCharges' => (int) $request->hci_pTotalActualCharges,
+                        'pDiscount' => (int) $request->hci_pDiscount,
+                        'pPhilhealthBenefit' => (int) $request->hci_pPhilhealthBenefit,
+                        'pTotalAmount' => (int) $request->hci_pTotalAmount,
+                        'pMemberPatient' => $philhealth->membership_type_id == 'MM' ? 'Y' : 'N',
+                        'pHMO' => $request->hmo_flag ? 'Y' : 'N',
+                        'pOthers' => $request->others_flag ? 'Y' : 'N',
+                    ],
+                ],
+                'PURCHASES' => [
+                    '_attributes' => [
+                        'pDrugsMedicinesSupplies' => $request->meds_flag ? 'Y' : 'N',
+                        'pDMSTotalAmount' => (int) $request->meds_pDMSTotalAmount,
+                        'pExaminations' => $request->meds_pExaminations_flag ? 'Y' : 'N',
+                        'pExamTotalAmount' => (int) $request->meds_pExamTotalAmount
+                    ],
+                ]
+            ];
+        }
+
 
         $professional = [
             '_attributes' => [
