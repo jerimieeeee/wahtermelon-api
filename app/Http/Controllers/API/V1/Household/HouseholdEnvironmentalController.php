@@ -42,9 +42,9 @@ class HouseholdEnvironmentalController extends Controller
      */
     public function store(HouseholdEnvironmentalRequest $request): JsonResponse
     {
-        $data = HouseholdEnvironmental::updateOrCreate(['household_folder_id' => $request->household_folder_id], $request->validated());
+        $data = HouseholdEnvironmental::updateOrCreate(['household_folder_id' => $request->safe()->household_folder_id, 'registration_date' => $request->safe()->registration_date], $request->validated());
 
-        return response()->json(['data' => new HouseholdEnvironmentalResource($data), 'status' => 'Success'], 201);
+        return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
 
     /**
