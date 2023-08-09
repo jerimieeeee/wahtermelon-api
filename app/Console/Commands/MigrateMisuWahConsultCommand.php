@@ -8,6 +8,7 @@ use App\Models\V1\Consultation\ConsultNotes;
 use App\Models\V1\Consultation\ConsultNotesComplaint;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
+use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
@@ -226,6 +227,35 @@ class MigrateMisuWahConsultCommand extends Command
             ->get();
     }
 
+    private function getNotesPe($notesId){
+        return DB::connection('mysql_migration')->table('consult_notes_pe')
+            ->selectRaw('
+                consult_notes_pe.*,
+                user.wahtermelon_user_id AS user_id
+            ')
+            ->leftJoin('user', function ($join) {
+                $join->on('consult_notes_pe.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where(function ($query) {
+                $query->where('breast_remarks', '!=', '')
+                    ->orWhere('skin_code', '!=', '')
+                    ->orWhere('skin_remarks', '!=', '')
+                    ->orWhere('heent_code', '!=', '')
+                    ->orWhere('heent_remarks', '!=', '')
+                    ->orWhere('chest_code', '!=', '')
+                    ->orWhere('chest_remarks', '!=', '')
+                    ->orWhere('heart_code', '!=', '')
+                    ->orWhere('heart_remarks', '!=', '')
+                    ->orWhere('abdomen_code', '!=', '')
+                    ->orWhere('abdomen_remarks', '!=', '')
+                    ->orWhere('extremities_code', '!=', '')
+                    ->orWhere('extremities_remarks', '!=', '');
+            })
+            ->whereNotesId($notesId)
+            ->first();
+    }
+
     private  function saveConsult($consults, $database, $connectionName)
     {
         /*$consultBar = $this->output->createProgressBar(count($consults));
@@ -302,6 +332,114 @@ class MigrateMisuWahConsultCommand extends Command
                             ConsultNotesFinalDx::query()->updateOrCreate(['notes_id' => $newConsultNotes->id, 'icd10_code' => $finalDiagnosis['icd10_code']], $finalDiagnosis + ['facility_code' => $database]);
                         }
                     }
+
+                    //Save Physical Examinations
+                    $notesPe = $this->getNotesPe($consultNotes['id']);
+                    /*$resultArray = [];
+                    if (!empty($notesPe)) {
+                        $notesPe->user_id = $notesPe->user_id ?? $consultNotes['user_id'];
+                        if(!empty($notesPe->skin_code)){
+                            $skinCode = array_map('strtoupper', explode(',', $notesPe->skin_code));
+                            $skinCode = array_map(function ($pe_id) {
+                                return compact('pe_id');
+                            }, $skinCode);
+                            $skinCode = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
+                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
+                            }, $skinCode);
+                            $resultArray = array_merge($resultArray, $skinCode);
+                        }
+                        if(!empty($notesPe->heent_code)){
+                            $heent_code = array_map('strtoupper', explode(',', $notesPe->heent_code));
+                            $heent_code = array_map(function ($pe_id) {
+                                return compact('pe_id');
+                            }, $heent_code);
+                            $heent_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
+                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
+                            }, $heent_code);
+                            $resultArray = array_merge($resultArray, $heent_code);
+                        }
+                        if(!empty($notesPe->chest_code)){
+                            $chest_code = array_map('strtoupper', explode(',', $notesPe->chest_code));
+                            $chest_code = array_map(function ($pe_id) {
+                                $pe_id = str_replace('/LUNGS', '', $pe_id);
+                                return compact('pe_id');
+                            }, $chest_code);
+                            $chest_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
+                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
+                            }, $chest_code);
+                            $resultArray = array_merge($resultArray, $chest_code);
+                        }
+                        if(!empty($notesPe->heart_code)){
+                            $heart_code = array_map('strtoupper', explode(',', $notesPe->heart_code));
+                            $heart_code = array_map(function ($pe_id) {
+                                return compact('pe_id');
+                            }, $heart_code);
+                            $heart_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
+                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
+                            }, $heart_code);
+                            $resultArray = array_merge($resultArray, $heart_code);
+                        }
+                        if(!empty($notesPe->abdomen_code)){
+                            $abdomen_code = array_map('strtoupper', explode(',', $notesPe->abdomen_code));
+                            $abdomen_code = array_map(function ($pe_id) {
+                                return compact('pe_id');
+                            }, $abdomen_code);
+                            $abdomen_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
+                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
+                            }, $abdomen_code);
+                            $resultArray = array_merge($resultArray, $abdomen_code);
+                        }
+                        if(!empty($notesPe->extremities_code)){
+                            $extremities_code = array_map('strtoupper', explode(',', $notesPe->extremities_code));
+                            $extremities_code = array_map(function ($pe_id) {
+                                return compact('pe_id');
+                            }, $extremities_code);
+                            $extremities_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
+                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
+                            }, $extremities_code);
+                            $resultArray = array_merge($resultArray, $extremities_code);
+                        }
+                        ConsultNotesPe::query()->upsert($resultArray, ['notes_id', 'pe_id']);
+                    }*/
+                    $resultArray = [];
+
+                    if (!empty($notesPe)) {
+                        $user_id = $notesPe->user_id ?? $consultNotes['user_id'];
+
+                        $sections = ['skin_code', 'heent_code', 'chest_code', 'heart_code', 'abdomen_code', 'extremities_code'];
+
+                        foreach ($sections as $section) {
+                            if (!empty($notesPe->$section)) {
+                                $sectionRecords = array_map('strtoupper', explode(',', $notesPe->$section));
+                                $sectionRecords = array_map(function ($pe_id) use ($section) {
+                                    if ($section === 'chest_code') {
+                                        $pe_id = str_replace('/LUNGS', '', $pe_id);
+                                    }
+                                    return compact('pe_id');
+                                }, $sectionRecords);
+                                $sectionRecords = array_map(function ($item) use ($newConsultNotes, $user_id, $database) {
+                                    return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $user_id, 'facility_code' => $database]);
+                                }, $sectionRecords);
+                                $resultArray = array_merge($resultArray, $sectionRecords);
+                            }
+                        }
+                    }
+
+                    // Continue with the rest of the code to avoid duplicates and perform upsert
+                    $existingRecords = ConsultNotesPe::whereIn('notes_id', array_column($resultArray, 'notes_id'))
+                        ->whereIn('pe_id', array_column($resultArray, 'pe_id'))
+                        ->get();
+
+                    $existingKeys = $existingRecords->map(function ($record) {
+                        return ['notes_id' => $record->notes_id, 'pe_id' => $record->pe_id];
+                    })->toArray();
+
+                    $uniqueRecords = collect($resultArray)->reject(function ($record) use ($existingKeys) {
+                        return in_array(['notes_id' => $record['notes_id'], 'pe_id' => $record['pe_id']], $existingKeys);
+                    });
+
+                    ConsultNotesPe::query()->upsert($uniqueRecords->toArray(), ['notes_id', 'pe_id']);
+
                 });
 
                 $consultBar->advance();
