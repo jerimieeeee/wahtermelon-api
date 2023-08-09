@@ -42,7 +42,7 @@ class HouseholdEnvironmentalController extends Controller
      */
     public function store(HouseholdEnvironmentalRequest $request): JsonResponse
     {
-        $data = HouseholdEnvironmental::updateOrCreate(['household_folder_id' => $request->safe()->household_folder_id, 'registration_date' => $request->safe()->registration_date], $request->validated());
+        $data = HouseholdEnvironmental::updateOrCreate(['household_folder_id' => $request->safe()->household_folder_id, 'effectivity_year' => $request->safe()->effectivity_year], $request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Success'], 201);
     }
@@ -66,8 +66,10 @@ class HouseholdEnvironmentalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(HouseholdEnvironmental $householdEnvironmental)
     {
-        //
+        $householdEnvironmental->deleteOrFail();
+
+        return response()->json(['status' => 'Successfully deleted!'], 200);
     }
 }

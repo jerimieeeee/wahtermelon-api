@@ -37,12 +37,8 @@ class HouseholdEnvironmental extends Model
     protected $casts = [
         'validation_date' => 'date:Y-m-d',
         'arsenic_date' => 'date:Y-m-d',
+        'effectivity_year' => 'date:Y',
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'household_folder_id';
-    }
 
     protected function serializeDate(\DateTimeInterface $date)
     {

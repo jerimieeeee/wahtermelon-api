@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
             $table->date('registration_date');
+            $table->year('effectivity_year')->index();
             $table->unsignedBigInteger('water_type_code')->constrained();
             $table->boolean('safety_managed_flag');
             $table->boolean('sanitation_managed_flag');
