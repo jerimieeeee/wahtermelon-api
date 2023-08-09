@@ -30,6 +30,7 @@ class HouseholdEnvironmentalFactory extends Factory
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'registration_date' => fake()->date($format = 'Y-m-d', $max = 'now'),
+            'effectivity_year' => fake()->year($format = 'Y', $max = 'now'),
             'water_type_code' => fake()->randomElement(LibEnvironmentalWaterType::pluck('code')->toArray()),
             'safety_managed_flag' => fake()->boolean(),
             'sanitation_managed_flag' => fake()->boolean(),
