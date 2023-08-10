@@ -68,7 +68,8 @@ class PatientFp extends Model
 
     public function fpMethod()
     {
-        return $this->hasOne(PatientFpMethod::class);
+        return $this->hasOne(PatientFpMethod::class)
+            ->where('dropout_flag', '=', '0');;
     }
 
     public function fpChart()
