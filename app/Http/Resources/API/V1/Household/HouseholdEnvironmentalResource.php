@@ -21,6 +21,7 @@ class HouseholdEnvironmentalResource extends JsonResource
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
+            'number_of_families' => $this->number_of_families,
             'registration_date' => $this->registration_date,
             'effectivity_year' => $this->effectivity_year,
             'water_type_code' => $this->when(! $this->relationLoaded('waterTypes'), $this->water_type_code),
