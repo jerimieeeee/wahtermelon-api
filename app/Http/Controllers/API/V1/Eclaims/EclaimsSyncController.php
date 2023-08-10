@@ -58,7 +58,7 @@ class EclaimsSyncController extends Controller
      */
     public function GetMemberPIN(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        $data = PhilhealthCredential::first();
 
         $pin = $service->_client()->GetMemberPIN(
             $data->username.':'.$data->software_certification_id,
