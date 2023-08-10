@@ -6,9 +6,12 @@ namespace Database\Seeders;
 use App\Models\V1\Libraries\LibFpSourceSupply;
 =======
 use App\Models\V1\Libraries\LibAbAnimalStatus;
+use App\Models\V1\Libraries\LibAbDeathPlace;
 use App\Models\V1\Libraries\LibAbVaccineRoute;
 >>>>>>> e046bdba (create animal bite libraries)
 use Illuminate\Database\Seeder;
+
+use function PHPSTORM_META\map;
 
 class DatabaseSeeder extends Seeder
 {
@@ -184,8 +187,17 @@ class DatabaseSeeder extends Seeder
             LibAbAnimalStatusSeeder::class,
             LibAbAnimalTypeSeeder::class,
             LibAbVaccineRouteSeeder::class,
+<<<<<<< HEAD
             LibAbExposureTypeSeeder::class
 >>>>>>> e046bdba (create animal bite libraries)
+=======
+            LibAbExposureTypeSeeder::class,
+            LibFpHistorySeeder::class,
+            LibFpPelvicExamSeeder::class,
+            LibFpClientTypeSeeder::class,
+            LibAbOutcomeSeeder::class,
+            LibAbDeathPlaceSeeder::class
+>>>>>>> 815e2748 (add additional library for abimal bite)
         ]);
     }
 }
