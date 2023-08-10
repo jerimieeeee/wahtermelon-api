@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
+<<<<<<< HEAD
 use App\Models\V1\Libraries\LibFpSourceSupply;
+=======
+use App\Models\V1\Libraries\LibAbAnimalStatus;
+use App\Models\V1\Libraries\LibAbVaccineRoute;
+>>>>>>> e046bdba (create animal bite libraries)
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -167,10 +172,20 @@ class DatabaseSeeder extends Seeder
             LibGbvGeneralSurveySeeder::class,
             LibGbvMedicalImpressionSeeder::class,
             LibEclaimsDocTypeSeeder::class,
+<<<<<<< HEAD
             LibFpHistorySeeder::class,
             LibFpPelvicExamSeeder::class,
             LibFpClientTypeSeeder::class,
             LibFpSourceSupplySeeder::class,
+=======
+            LibAbAnatomicalLocationSeeder::class,
+            LibAbIndicationOptionSeeder::class,
+            LibAbRigTypeSeeder::class,
+            LibAbAnimalStatusSeeder::class,
+            LibAbAnimalTypeSeeder::class,
+            LibAbVaccineRouteSeeder::class,
+            LibAbExposureTypeSeeder::class
+>>>>>>> e046bdba (create animal bite libraries)
         ]);
     }
 }
