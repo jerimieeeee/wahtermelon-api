@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\AnimalBite;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatientAbRequest extends FormRequest
+class PatientAbUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,25 +31,7 @@ class PatientAbRequest extends FormRequest
             'manifestations' => 'nullable',
             'date_onset' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'date_died' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'death_remarks' => 'nullable',
-
-            'animal_type_id' => 'required|exists:lib_ab_animal_types,id',
-            'animal_type_remarks' => 'nullable',
-            'exposure_place' => 'nullable',
-            'bite_flag' => 'nullable|boolean',
-            'animal_ownership_id' => 'required|exists:lib_ab_animal_ownerships,id',
-            'feet_flag' => 'nullable|boolean',
-            'leg_flag' => 'nullable|boolean',
-            'arms_flag' => 'nullable|boolean',
-            'hand_flag' => 'nullable|boolean',
-            'knee_flag' => 'nullable|boolean',
-            'neck_flag' => 'nullable|boolean',
-            'head_flag' => 'nullable|boolean',
-            'others_flag' => 'nullable|boolean',
-            'al_remarks' => 'nullable',
-            'exposure_type_code ' => 'required|exists:lib_ab_exposure_types,code',
-            'wash_flag' => 'nullable|boolean',
-            'pep_flag' => 'nullable|boolean'
+            'death_remarks' => 'nullable'
         ];
     }
 }
