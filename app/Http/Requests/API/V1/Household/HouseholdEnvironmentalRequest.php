@@ -23,6 +23,7 @@ class HouseholdEnvironmentalRequest extends FormRequest
     {
         return [
             'household_folder_id' => 'required|exists:household_folders,id',
+            'number_of_families' => 'required|numeric',
             'registration_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'effectivity_year' => 'required',
             'water_type_code' => 'required|exists:lib_environmental_water_types,code',

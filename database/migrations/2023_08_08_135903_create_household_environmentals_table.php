@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('household_folder_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
             $table->string('facility_code')->index();
+            $table->unsignedInteger('number_of_families');
             $table->date('registration_date');
             $table->year('effectivity_year')->index();
             $table->unsignedBigInteger('water_type_code')->constrained();
