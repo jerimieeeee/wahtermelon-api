@@ -381,7 +381,7 @@ class MigrateMisuWahCommand extends Command
             ')
             ->join('user', function ($join) {
                 $join->on('patient.user_id', '=', 'user.id')
-                    ->select('id', 'wahtermelon_user_id');
+                    ->whereNotNull('user.wahtermelon_user_id');
             })
             ->whereDate('patient.birthdate', '>', '0000-00-00')
             ->whereDay('patient.birthdate', '!=', 0)
