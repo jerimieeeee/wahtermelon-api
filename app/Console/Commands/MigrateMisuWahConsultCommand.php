@@ -9,6 +9,7 @@ use App\Models\V1\Consultation\ConsultNotesComplaint;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use App\Models\V1\Consultation\ConsultNotesPe;
+use App\Models\V1\Consultation\ConsultPeRemarks;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
@@ -110,7 +111,7 @@ class MigrateMisuWahConsultCommand extends Command
                     ->havingRaw('COUNT(duplicate_notes.consult_id)>1');
             })
             ->wherePtgroup('cn')
-            //->whereNull('consult.wahtermelon_consult_id')
+            ->whereNull('consult.wahtermelon_consult_id')
             ->whereNotNull('consult.consult_end')
             ->whereDate('consult_end', '>=', '0001-01-01')
             ->whereDate('consult_end', '<=', '9999-12-31')
@@ -256,6 +257,41 @@ class MigrateMisuWahConsultCommand extends Command
             ->first();
     }
 
+    private function getInitialDiagnosisRemarks($notesId)
+    {
+        return DB::connection('mysql_migration')->table('consult_notes_initial_dx')
+            ->selectRaw('
+                consult_notes_initial_dx.dx_remarks as idx_remarks
+            ')
+            ->join('lib_diagnosis', 'lib_diagnosis.class_id', '=', 'consult_notes_initial_dx.class_id')
+            ->whereNotesId($notesId)
+            ->whereDate('consult_notes_initial_dx.created_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_initial_dx.created_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_initial_dx.created_at', '<=', now())
+            ->whereDate('consult_notes_initial_dx.updated_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_initial_dx.updated_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_initial_dx.updated_at', '<=', now())
+            ->groupBy('notes_id')
+            ->first();
+    }
+
+    private function getFinalDiagnosisRemarks($notesId)
+    {
+        return DB::connection('mysql_migration')->table('consult_notes_final_dx')
+            ->selectRaw('
+                consult_notes_final_dx.dx_remarks as fdx_remarks
+            ')
+            ->whereNotesId($notesId)
+            ->whereDate('consult_notes_final_dx.created_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_final_dx.created_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_final_dx.created_at', '<=', now())
+            ->whereDate('consult_notes_final_dx.updated_at', '>=', '0001-01-01')
+            ->whereDate('consult_notes_final_dx.updated_at', '<=', '9999-12-31')
+            ->whereDate('consult_notes_final_dx.updated_at', '<=', now())
+            ->groupBy('notes_id')
+            ->first();
+    }
+
     private  function saveConsult($consults, $database, $connectionName)
     {
         /*$consultBar = $this->output->createProgressBar(count($consults));
@@ -298,9 +334,9 @@ class MigrateMisuWahConsultCommand extends Command
                     ], $consult + ['facility_code' => $database]);
 
                     DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
+
                     $consultNotes = (array)$this->getConsultNotes($consult['id']);
-//                echo $consult['id'];
-//                print_r($consultNotes);
+
                     $consultNotes['user_id'] = $consultNotes['user_id'] ?? $consult['user_id'];
                     $newConsultNotes = ConsultNotes::query()->updateOrCreate(['consult_id' => $newConsult->id], $consultNotes + ['facility_code' => $database]);
 
@@ -321,6 +357,10 @@ class MigrateMisuWahConsultCommand extends Command
                             $initialDiagnosis['user_id'] = $initialDiagnosis['user_id'] ?? $consult['user_id'];
                             ConsultNotesInitialDx::query()->updateOrCreate(['notes_id' => $newConsultNotes->id, 'class_id' => $initialDiagnosis['class_id']], $initialDiagnosis + ['facility_code' => $database]);
                         }
+                        $initialDiagnosisRemarks = (array)$this->getInitialDiagnosisRemarks($consultNotes['id']);
+                        if(!empty($initialDiagnosisRemarks)){
+                            $newConsultNotes->update($initialDiagnosisRemarks);
+                        }
                     }
 
                     //Save Final Diagnoses
@@ -331,76 +371,14 @@ class MigrateMisuWahConsultCommand extends Command
                             $finalDiagnosis['user_id'] = $finalDiagnosis['user_id'] ?? $consult['user_id'];
                             ConsultNotesFinalDx::query()->updateOrCreate(['notes_id' => $newConsultNotes->id, 'icd10_code' => $finalDiagnosis['icd10_code']], $finalDiagnosis + ['facility_code' => $database]);
                         }
+                        $finalDiagnosisRemarks = (array)$this->getFinalDiagnosisRemarks($consultNotes['id']);
+                        if(!empty($finalDiagnosisRemarks)){
+                            $newConsultNotes->update($finalDiagnosisRemarks);
+                        }
                     }
 
                     //Save Physical Examinations
                     $notesPe = $this->getNotesPe($consultNotes['id']);
-                    /*$resultArray = [];
-                    if (!empty($notesPe)) {
-                        $notesPe->user_id = $notesPe->user_id ?? $consultNotes['user_id'];
-                        if(!empty($notesPe->skin_code)){
-                            $skinCode = array_map('strtoupper', explode(',', $notesPe->skin_code));
-                            $skinCode = array_map(function ($pe_id) {
-                                return compact('pe_id');
-                            }, $skinCode);
-                            $skinCode = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
-                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
-                            }, $skinCode);
-                            $resultArray = array_merge($resultArray, $skinCode);
-                        }
-                        if(!empty($notesPe->heent_code)){
-                            $heent_code = array_map('strtoupper', explode(',', $notesPe->heent_code));
-                            $heent_code = array_map(function ($pe_id) {
-                                return compact('pe_id');
-                            }, $heent_code);
-                            $heent_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
-                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
-                            }, $heent_code);
-                            $resultArray = array_merge($resultArray, $heent_code);
-                        }
-                        if(!empty($notesPe->chest_code)){
-                            $chest_code = array_map('strtoupper', explode(',', $notesPe->chest_code));
-                            $chest_code = array_map(function ($pe_id) {
-                                $pe_id = str_replace('/LUNGS', '', $pe_id);
-                                return compact('pe_id');
-                            }, $chest_code);
-                            $chest_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
-                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
-                            }, $chest_code);
-                            $resultArray = array_merge($resultArray, $chest_code);
-                        }
-                        if(!empty($notesPe->heart_code)){
-                            $heart_code = array_map('strtoupper', explode(',', $notesPe->heart_code));
-                            $heart_code = array_map(function ($pe_id) {
-                                return compact('pe_id');
-                            }, $heart_code);
-                            $heart_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
-                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
-                            }, $heart_code);
-                            $resultArray = array_merge($resultArray, $heart_code);
-                        }
-                        if(!empty($notesPe->abdomen_code)){
-                            $abdomen_code = array_map('strtoupper', explode(',', $notesPe->abdomen_code));
-                            $abdomen_code = array_map(function ($pe_id) {
-                                return compact('pe_id');
-                            }, $abdomen_code);
-                            $abdomen_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
-                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
-                            }, $abdomen_code);
-                            $resultArray = array_merge($resultArray, $abdomen_code);
-                        }
-                        if(!empty($notesPe->extremities_code)){
-                            $extremities_code = array_map('strtoupper', explode(',', $notesPe->extremities_code));
-                            $extremities_code = array_map(function ($pe_id) {
-                                return compact('pe_id');
-                            }, $extremities_code);
-                            $extremities_code = array_map(function ($item) use($notesPe, $newConsultNotes, $database) {
-                                return array_merge($item, ['notes_id' => $newConsultNotes->id, 'user_id' => $notesPe->user_id, 'facility_code' => $database]);
-                            }, $extremities_code);
-                            $resultArray = array_merge($resultArray, $extremities_code);
-                        }
-                        ConsultNotesPe::query()->upsert($resultArray, ['notes_id', 'pe_id']);
-                    }*/
                     $resultArray = [];
 
                     if (!empty($notesPe)) {
@@ -422,6 +400,23 @@ class MigrateMisuWahConsultCommand extends Command
                                 }, $sectionRecords);
                                 $resultArray = array_merge($resultArray, $sectionRecords);
                             }
+                        }
+
+                        if(!empty($notesPe->breast_remarks) || !empty($notesPe->skin_remarks) || !empty($notesPe->heent_remarks) || !empty($notesPe->chest_remarks) ||!empty($notesPe->heart_remarks) || !empty($notesPe->abdomen_remarks) || !empty($notesPe->extremities_remarks)){
+                            ConsultPeRemarks::query()->updateOrCreate([
+                                'notes_id' => $newConsultNotes->id,
+                                'patient_id' =>$consult['patient_id']
+                            ], [
+                                'user_id' => $user_id,
+                                'facility_code' => $database,
+                                'breast_remarks' => $notesPe->breast_remarks,
+                                'skin_remarks' => $notesPe->skin_remarks,
+                                'heent_remarks'  => $notesPe->heent_remarks,
+                                'chest_remarks' => $notesPe->chest_remarks,
+                                'heart_remarks' => $notesPe->heart_remarks,
+                                'abdomen_remarks' => $notesPe->abdomen_remarks,
+                                'extremities_remarks' => $notesPe->extremities_remarks
+                            ]);
                         }
                     }
 
