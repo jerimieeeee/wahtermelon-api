@@ -473,7 +473,4 @@ Route::prefix('v1/libraries')->group(function () {
     //Family Planning Pelvic Exams
     Route::get('family-planning-pelvic-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'index'])->name('family-planning-pelvic-exam.index');
     Route::get('family-planning-pelvic-exam/{pelvicExam}', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'show'])->name('family-planning-pelvic-exam.show');
-
-    //Family Planning Physical Exam
-    Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
 });
