@@ -66,6 +66,7 @@ class HouseholdProfilingReportService
             })
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
+            ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -116,6 +117,7 @@ class HouseholdProfilingReportService
             })
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
+            ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -178,6 +180,7 @@ class HouseholdProfilingReportService
             })
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
+            ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
 
