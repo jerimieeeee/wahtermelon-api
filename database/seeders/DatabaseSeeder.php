@@ -183,7 +183,8 @@ class DatabaseSeeder extends Seeder
             LibAbAnimalOwnershipSeeder::class,
             LibAbVaccineSeeder::class,
             LibFpSourceSupplySeeder::class,
-            LibAbDeathPlaceSeeder::class
+            LibEnvironmentalWaterTypeSeeder::class,
+            LibEnvironmentalResultSeeder::class,
         ]);
     }
 }
