@@ -298,9 +298,6 @@ class HouseholdProfilingReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->joinSub($this->get_patient_philhealth(), 'patient_philhealth', function ($join) {
-                $join->on('patient_philhealth.philhealth_patient_id', '=', 'patients.id');
-            })
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
@@ -426,9 +423,6 @@ class HouseholdProfilingReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->joinSub($this->get_patient_philhealth(), 'patient_philhealth', function ($join) {
-                $join->on('patient_philhealth.philhealth_patient_id', '=', 'patients.id');
-            })
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
@@ -481,9 +475,6 @@ class HouseholdProfilingReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->joinSub($this->get_patient_philhealth(), 'patient_philhealth', function ($join) {
-                $join->on('patient_philhealth.philhealth_patient_id', '=', 'patients.id');
-            })
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
@@ -499,24 +490,113 @@ class HouseholdProfilingReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
-            ->when($type == 'single', function ($q) use ($request) {
-                $q->where('patients.civil_status_code', 'SNGL');
+            ->when($type == 'roman-catholic', function ($q) use ($request) {
+                $q->where('patients.religion_code', 'RMNCATHO');
             })
-            ->when($type == 'married', function ($q) use ($request, ) {
-                $q->where('patients.civil_status_code', 'MRRD');
+            ->when($type == 'christian', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'XTIAN');
             })
-            ->when($type == 'live-in', function ($q) use ($request) {
-                $q->where('patients.civil_status_code', 'LIVEIN');
+            ->when($type == 'inc', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'IGNIK');
             })
-            ->when($type == 'widow', function ($q) use ($request) {
-                $q->where('patients.civil_status_code', 'WDWD');
+            ->when($type == 'catholic', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'CATHO');
             })
-            ->when($type == 'separated', function ($q) use ($request) {
-                $q->where('patients.civil_status_code', 'SPRTD');
+            ->when($type == 'islam', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'MUSLI');
             })
-            ->when($type == 'cohabit', function ($q) use ($request) {
-                $q->where('patients.civil_status_code', 'CHBTN');
+            ->when($type == 'baptist', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'BAPTI');
             })
+            ->when($type == 'bornagain', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'BRNAG');
+            })
+            ->when($type == 'buddist', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'BUDDH');
+            })
+            ->when($type == 'churchofgod', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'CHOG');
+            })
+            ->when($type == 'jehovah', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'JEWIT');
+            })
+            ->when($type == 'protestant', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'PROTE');
+            })
+            ->when($type == 'seventhday', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'SVDAY');
+            })
+            ->when($type == 'mormons', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'MORMO');
+            })
+            ->when($type == 'evangelical', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'EVANG');
+            })
+            ->when($type == 'pentecostal', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'PENTE');
+            })
+            ->when($type == 'unknown', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'UNKNO');
+            })
+            ->when($type == 'others', function ($q) use ($request, ) {
+                $q->where('patients.religion_code', 'OTHERS');
+            })
+            ->whereYear('registration_date', $request->year)
+            ->whereMonth('registration_date', $request->month)
+            ->orderBy('registration_date', 'ASC');
+    }
+
+    public function get_household_profiling_medical_history($request, $type, $gender)
+    {
+        $others =
+            "1,2,3,4,
+             5,7,8,9,
+             10,12,13,
+             14,15,16,
+             17,18,19";
+
+        return DB::table('household_environmentals')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
+                    ")
+            ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+            ->join('patient_histories', 'patients.id', 'patient_histories.patient_id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+//            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
+//            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
+//            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
+            ->when($request->category == 'all', function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities.code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('barangays.code', explode(',', $request->code));
+            })
+            ->when($type == 'hypertension', function ($q) use ($request) {
+                $q->where('patient_histories.medical_history_id', 11);
+            })
+            ->when($type == 'diabetes', function ($q) use ($request, ) {
+                $q->where('patient_histories.medical_history_id', 6);
+            })
+            ->when($type == 'tb', function ($q) use ($request, ) {
+                $q->where('patient_histories.medical_history_id', 15);
+            })
+            ->when($type == 'others', function ($q) use ($request, $others) {
+                $q->whereIn('patient_histories.medical_history_id', explode(',', $others));
+            })
+            ->whereCategory(1)
+            ->whereGender($gender)
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
             ->orderBy('registration_date', 'ASC');

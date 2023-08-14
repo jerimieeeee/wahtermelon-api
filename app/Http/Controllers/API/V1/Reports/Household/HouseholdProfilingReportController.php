@@ -110,6 +110,36 @@ class HouseholdProfilingReportController extends Controller
         $separated = $householdProfilingReportService->get_household_profiling_civil_status($request, 'separated')->get();
         $cohabit = $householdProfilingReportService->get_household_profiling_civil_status($request, 'cohabit')->get();
 
+        //Religion
+        $roman_catholic = $householdProfilingReportService->get_household_profiling_religion($request, 'roman-catholic')->get();
+        $christian = $householdProfilingReportService->get_household_profiling_religion($request, 'christian')->get();
+        $iglesianicirsto = $householdProfilingReportService->get_household_profiling_religion($request, 'inc')->get();
+        $catholic = $householdProfilingReportService->get_household_profiling_religion($request, 'catholic')->get();
+        $islam = $householdProfilingReportService->get_household_profiling_religion($request, 'islam')->get();
+        $baptist = $householdProfilingReportService->get_household_profiling_religion($request, 'baptist')->get();
+        $bornagain = $householdProfilingReportService->get_household_profiling_religion($request, 'bornagain')->get();
+        $buddhist = $householdProfilingReportService->get_household_profiling_religion($request, 'buddist')->get();
+        $churchofgod = $householdProfilingReportService->get_household_profiling_religion($request, 'churchofgod')->get();
+        $jehovah = $householdProfilingReportService->get_household_profiling_religion($request, 'jehovah')->get();
+        $protestant = $householdProfilingReportService->get_household_profiling_religion($request, 'protestant')->get();
+        $seventhday = $householdProfilingReportService->get_household_profiling_religion($request, 'seventhday')->get();
+        $mormons = $householdProfilingReportService->get_household_profiling_religion($request, 'mormons')->get();
+        $evangelical = $householdProfilingReportService->get_household_profiling_religion($request, 'evangelical')->get();
+        $pentecostal = $householdProfilingReportService->get_household_profiling_religion($request, 'pentecostal')->get();
+        $unknown = $householdProfilingReportService->get_household_profiling_religion($request, 'unknown')->get();
+        $others = $householdProfilingReportService->get_household_profiling_religion($request, 'others')->get();
+
+        //Medical History Male
+        $hypertension_male = $householdProfilingReportService->get_household_profiling_medical_history($request, 'hypertension', 'M')->get();
+        $diabetes_male = $householdProfilingReportService->get_household_profiling_medical_history($request, 'diabetes', 'M')->get();
+        $tb_male = $householdProfilingReportService->get_household_profiling_medical_history($request, 'tb', 'M')->get();
+        $others_male = $householdProfilingReportService->get_household_profiling_medical_history($request, 'others', 'M')->get();
+
+        //Medical History Female
+        $hypertension_female = $householdProfilingReportService->get_household_profiling_medical_history($request, 'hypertension', 'F')->get();
+        $diabetes_female = $householdProfilingReportService->get_household_profiling_medical_history($request, 'diabetes', 'F')->get();
+        $tb_female = $householdProfilingReportService->get_household_profiling_medical_history($request, 'tb', 'F')->get();
+        $others_female = $householdProfilingReportService->get_household_profiling_medical_history($request, 'others', 'F')->get();
 
 
         return [
@@ -203,6 +233,37 @@ class HouseholdProfilingReportController extends Controller
             'widowed' => $widowed,
             'separated' => $separated,
             'cohabit' => $cohabit,
+
+            //Civil Status
+            'roman_catholic' => $roman_catholic,
+            'christian' => $christian,
+            'iglesianicirsto' => $iglesianicirsto,
+            'catholic' => $catholic,
+            'islam' => $islam,
+            'baptist' => $baptist,
+            'bornagain' => $bornagain,
+            'buddhist' => $buddhist,
+            'churchofgod' => $churchofgod,
+            'jehovah' => $jehovah,
+            'protestant' => $protestant,
+            'seventhday' => $seventhday,
+            'mormons' => $mormons,
+            'evangelical' => $evangelical,
+            'pentecostal' => $pentecostal,
+            'unknown' => $unknown,
+            'others' => $others,
+
+            //Male Medical History
+            '$hypertension_male' => $hypertension_male,
+            '$diabetes_male' => $diabetes_male,
+            '$tb_male' => $tb_male,
+            '$others_male' => $others_male,
+
+            //Female Medical History
+            '$hypertension_female' => $hypertension_female,
+            '$diabetes_female' => $diabetes_female,
+            '$tb_female' => $tb_female,
+            '$others_female' => $others_female,
 
         ];
     }
