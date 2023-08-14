@@ -474,6 +474,15 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('family-planning-pelvic-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'index'])->name('family-planning-pelvic-exam.index');
     Route::get('family-planning-pelvic-exam/{pelvicExam}', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'show'])->name('family-planning-pelvic-exam.show');
 
+    //Family Planning Physical Exam
+    Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
+
+    //Family Planning Dropout Reason
+    Route::get('family-planning-dropout-reason', [\App\Http\Controllers\API\V1\Libraries\LibFpDropoutReasonController::class, 'index'])->name('family-planning-dropout-reason.index');
+
+    //Family Planning Source Supply
+    Route::get('family-planning-source-supply', [\App\Http\Controllers\API\V1\Libraries\LibFpSourceSupplyController::class, 'index'])->name('family-planning-source-supply.index');
+
     //Animal Bite Anatomical Location
     Route::get('ab-anatomical-location', [\App\Http\Controllers\API\V1\Libraries\LibAbAnatomicalLocationController::class, 'index'])->name('ab-anatomical-location.index');
 
@@ -507,11 +516,9 @@ Route::prefix('v1/libraries')->group(function () {
     //Animal Bite Outcome
     Route::get('ab-outcome', [\App\Http\Controllers\API\V1\Libraries\LibAbOutcomeController::class, 'index'])->name('ab-outcome.index');
 
-    //Family Planning Physical Exam
-    Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
-
     //Environmental
     Route::get('environmental-water-type', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalWaterTypeController::class, 'index'])->name('environmental-water-type.index');
     Route::get('environmental-result', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalResultController::class, 'index'])->name('environmental-result.index');
     Route::get('environmental-toilet-facility', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalToiletFacilityController::class, 'index'])->name('environmental-toilet-facility.index');
+    Route::get('environmental-sewage', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalSewageController::class, 'index'])->name('environmental-sewage.index');
 });
