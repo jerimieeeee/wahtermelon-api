@@ -639,8 +639,11 @@ class KonsultaService
         return $report;
     }
 
-    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false)
+    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null)
     {
+        if ($effectivityYear === null) {
+            $effectivityYear = date('Y');
+        }
         $enlistments = [];
         $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
         $user = User::selectRaw('id AS userID, CONCAT(first_name, " ", last_name) AS created_by');
@@ -656,6 +659,7 @@ class KonsultaService
                 $join->on('patient_philhealth.philhealth_id', '=', 'konsulta_registration_lists.pin_id')
                     ->whereColumn('patient_philhealth.effectivity_year', '=', 'konsulta_registration_lists.effectivity_year');
             })
+            ->where('patient_philhealth.effectivity_year', $effectivityYear)
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(! empty($patientId), fn ($query) => $query->whereIn('patient_id', $patientId))
             ->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
