@@ -70,6 +70,48 @@ class HouseholdProfilingReportService
             ->orderBy('registration_date', 'ASC');
     }
 
+    public function get_household_profiling_summary_family($request, $type)
+    {
+        return DB::table('household_environmentals')
+            ->selectRaw("
+                        household_folders.id,
+                        number_of_families,
+                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
+                    ")
+            ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+//            ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
+//            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
+//            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
+//            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
+            ->when($request->category == 'all', function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities.code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('barangays.code', explode(',', $request->code));
+            })
+            ->when($type == '4ps', function ($q) use ($request) {
+                $q->whereNotNull('cct_id');
+            })
+            ->when($type == 'non-4ps', function ($q) use ($request) {
+                $q->whereNull('cct_id');
+            })
+            ->whereYear('registration_date', $request->year)
+            ->whereMonth('registration_date', $request->month)
+            ->groupBy('household_folders.id')
+            ->orderBy('registration_date', 'ASC');
+    }
+
     public function get_household_profiling_water_source($request, $type, $water_type)
     {
         return DB::table('household_environmentals')
@@ -602,6 +644,96 @@ class HouseholdProfilingReportService
             ->whereGender($gender)
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
+            ->orderBy('registration_date', 'ASC');
+    }
+
+    public function get_household_profiling_age_group($request, $type, $gender)
+    {
+        return DB::table('household_environmentals')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address,
+                        TIMESTAMPDIFF(YEAR, birthdate, registration_date) AS age_year,
+                        TIMESTAMPDIFF(MONTH, birthdate, registration_date) % 12 AS age_month,
+                        FLOOR(TIMESTAMPDIFF(DAY, birthdate, registration_date) % 28) AS age_day
+                    ")
+            ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+            ->join('patient_histories', 'patients.id', 'patient_histories.patient_id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+//            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
+//            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
+//            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
+            ->when($request->category == 'all', function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities.code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('barangays.code', explode(',', $request->code));
+            })
+            ->whereGender($gender)
+            ->whereYear('registration_date', $request->year)
+            ->whereMonth('registration_date', $request->month)
+            ->when($type == '1-28days', function ($q) use ($request) {
+                $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 1 AND 28)');
+            })
+            ->when($type == '29-11months', function ($q) use ($request) {
+                $q->havingRaw('(age_year = 0) AND (age_day >= 29 OR age_month BETWEEN 1 AND 1');
+            })
+            ->when($type == '1-4years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 1 AND 4');
+            })
+            ->when($type == '5-9years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 5 AND 9');
+            })
+            ->when($type == '10-14years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 10 AND 14');
+            })
+            ->when($type == '15-19years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 15 AND 19');
+            })
+            ->when($type == '20-24years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 20 AND 24');
+            })
+            ->when($type == '25-29years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 25 AND 29');
+            })
+            ->when($type == '30-34years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 30 AND 34');
+            })
+            ->when($type == '35-39years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 35 AND 39');
+            })
+            ->when($type == '40-44years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 40 AND 44');
+            })
+            ->when($type == '45-49years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 45 AND 49');
+            })
+            ->when($type == '50-54years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 50 AND 54');
+            })
+            ->when($type == '55-59years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 50 AND 54');
+            })
+            ->when($type == '60-64years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 50 AND 54');
+            })
+            ->when($type == '65-69years', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 50 AND 54');
+            })
+            ->when($type == '70years', function ($q) use ($request) {
+                $q->havingRaw('age_year >= 70');
+            })
             ->orderBy('registration_date', 'ASC');
     }
 }

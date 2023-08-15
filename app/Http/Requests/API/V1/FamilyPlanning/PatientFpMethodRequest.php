@@ -26,7 +26,7 @@ class PatientFpMethodRequest extends FormRequest
             'patient_fp_id' => 'required|exists:patient_fp,id',
             'method_code' => 'required|exists:lib_fp_methods,code',
             'enrollment_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
-            'client_code' => 'required|exists:lib_fp_methods,code',
+            'client_code' => 'required|exists:lib_fp_client_types,code',
             'treatment_partner' => 'required',
             'permananent_reason' => 'nullable',
             'dropout_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',

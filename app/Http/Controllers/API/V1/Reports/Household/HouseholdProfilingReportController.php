@@ -141,6 +141,14 @@ class HouseholdProfilingReportController extends Controller
         $tb_female = $householdProfilingReportService->get_household_profiling_medical_history($request, 'tb', 'F')->get();
         $others_female = $householdProfilingReportService->get_household_profiling_medical_history($request, 'others', 'F')->get();
 
+        //Age Group Male
+        $age_1_to_28_days_male = $householdProfilingReportService->get_household_profiling_age_group($request, '1-28days', 'M')->get();
+        $age_29_days_to_11_months_male = $householdProfilingReportService->get_household_profiling_age_group($request, '29-11months', 'M')->get();
+        $age_1_to_4_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '1-4years', 'M')->get();
+        $age_5_to_9_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '5-9years', 'M')->get();
+
+        //Age Group Female
+
 
         return [
             //Summary Household
