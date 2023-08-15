@@ -292,16 +292,54 @@ class HouseholdProfilingReportController extends Controller
             'others' => $others,
 
             //Male Medical History
-            '$hypertension_male' => $hypertension_male,
-            '$diabetes_male' => $diabetes_male,
-            '$tb_male' => $tb_male,
-            '$others_male' => $others_male,
+            'hypertension_male' => $hypertension_male,
+            'diabetes_male' => $diabetes_male,
+            'tb_male' => $tb_male,
+            'others_male' => $others_male,
 
             //Female Medical History
-            '$hypertension_female' => $hypertension_female,
-            '$diabetes_female' => $diabetes_female,
-            '$tb_female' => $tb_female,
-            '$others_female' => $others_female,
+            'hypertension_female' => $hypertension_female,
+            'diabetes_female' => $diabetes_female,
+            'tb_female' => $tb_female,
+            'others_female' => $others_female,
+
+            //Age Group Male
+            'age_1_to_28_days_male' => $age_1_to_28_days_male,
+            'age_29_days_to_11_months_male' => $age_29_days_to_11_months_male,
+            'age_1_to_4_years_male' => $age_1_to_4_years_male,
+            'age_5_to_9_years_male' => $age_5_to_9_years_male,
+            'age_10_to_14_years_male' => $age_10_to_14_years_male,
+            'age_15_to_19_years_male' => $age_15_to_19_years_male,
+            'age_20_to_24_years_male' => $age_20_to_24_years_male,
+            'age_25_to_29_years_male' => $age_25_to_29_years_male,
+            'age_30_to_34_years_male' => $age_30_to_34_years_male,
+            'age_35_to_39_years_male' => $age_35_to_39_years_male,
+            'age_40_to_44_years_male' => $age_40_to_44_years_male,
+            'age_45_to_49_years_male' => $age_45_to_49_years_male,
+            'age_50_to_54_years_male' => $age_50_to_54_years_male,
+            'age_55_to_59_years_male' => $age_55_to_59_years_male,
+            'age_60_to_64_years_male' => $age_60_to_64_years_male,
+            'age_65_to_69_years_male' => $age_65_to_69_years_male,
+            'age_70_years_up_male' => $age_70_years_up_male,
+
+            //Age Group Female
+            'age_1_to_28_days_female' => $age_1_to_28_days_female,
+            'age_29_days_to_11_months_female' => $age_29_days_to_11_months_female,
+            'age_1_to_4_years_female' => $age_1_to_4_years_female,
+            'age_5_to_9_years_female' => $age_5_to_9_years_female,
+            'age_10_to_14_years_female' => $age_10_to_14_years_female,
+            'age_15_to_19_years_female' => $age_15_to_19_years_female,
+            'age_20_to_24_years_female' => $age_20_to_24_years_female,
+            'age_25_to_29_years_female' => $age_25_to_29_years_female,
+            'age_30_to_34_years_female' => $age_30_to_34_years_female,
+            'age_35_to_39_years_female' => $age_35_to_39_years_female,
+            'age_40_to_44_years_female' => $age_40_to_44_years_female,
+            'age_45_to_49_years_female' => $age_45_to_49_years_female,
+            'age_50_to_54_years_female' => $age_50_to_54_years_female,
+            'age_55_to_59_years_female' => $age_55_to_59_years_female,
+            'age_60_to_64_years_female' => $age_60_to_64_years_female,
+            'age_65_to_69_years_female' => $age_65_to_69_years_female,
+            'age_70_years_up_female' => $age_70_years_up_female,
 
         ];
     }

@@ -733,7 +733,6 @@ class HouseholdProfilingReportService
             })
             ->when($type == '70years', function ($q) use ($request) {
                 $q->havingRaw('age_year >= 70');
-            })
-            ->orderBy('registration_date', 'ASC');
+            });
     }
 }

@@ -468,7 +468,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     //Family Planning Client Type
     Route::get('family-planning-client-type', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'index'])->name('family-planning-client-type.index');
-    Route::get('family-planning-client-type/{history}', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'show'])->name('family-planning-client-type.show');
+    Route::get('family-planning-client-type/{clientType}', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'show'])->name('family-planning-client-type.show');
 
     //Family Planning Pelvic Exams
     Route::get('family-planning-pelvic-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'index'])->name('family-planning-pelvic-exam.index');
