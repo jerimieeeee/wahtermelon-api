@@ -146,8 +146,38 @@ class HouseholdProfilingReportController extends Controller
         $age_29_days_to_11_months_male = $householdProfilingReportService->get_household_profiling_age_group($request, '29-11months', 'M')->get();
         $age_1_to_4_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '1-4years', 'M')->get();
         $age_5_to_9_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '5-9years', 'M')->get();
+        $age_10_to_14_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '10-14years', 'M')->get();
+        $age_15_to_19_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '15-19years', 'M')->get();
+        $age_20_to_24_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '20-24years', 'M')->get();
+        $age_25_to_29_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '25-29years', 'M')->get();
+        $age_30_to_34_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '30-34years', 'M')->get();
+        $age_35_to_39_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '35-39years', 'M')->get();
+        $age_40_to_44_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '40-44years', 'M')->get();
+        $age_45_to_49_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '45-49years', 'M')->get();
+        $age_50_to_54_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '50-54years', 'M')->get();
+        $age_55_to_59_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '55-59years', 'M')->get();
+        $age_60_to_64_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '60-64years', 'M')->get();
+        $age_65_to_69_years_male = $householdProfilingReportService->get_household_profiling_age_group($request, '65-69years', 'M')->get();
+        $age_70_years_up_male = $householdProfilingReportService->get_household_profiling_age_group($request, '70years', 'M')->get();
 
         //Age Group Female
+        $age_1_to_28_days_female = $householdProfilingReportService->get_household_profiling_age_group($request, '1-28days', 'F')->get();
+        $age_29_days_to_11_months_female = $householdProfilingReportService->get_household_profiling_age_group($request, '29-11months', 'F')->get();
+        $age_1_to_4_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '1-4years', 'F')->get();
+        $age_5_to_9_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '5-9years', 'F')->get();
+        $age_10_to_14_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '10-14years', 'F')->get();
+        $age_15_to_19_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '15-19years', 'F')->get();
+        $age_20_to_24_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '20-24years', 'F')->get();
+        $age_25_to_29_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '25-29years', 'F')->get();
+        $age_30_to_34_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '30-34years', 'F')->get();
+        $age_35_to_39_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '35-39years', 'F')->get();
+        $age_40_to_44_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '40-44years', 'F')->get();
+        $age_45_to_49_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '45-49years', 'F')->get();
+        $age_50_to_54_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '50-54years', 'F')->get();
+        $age_55_to_59_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '55-59years', 'F')->get();
+        $age_60_to_64_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '60-64years', 'F')->get();
+        $age_65_to_69_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '65-69years', 'F')->get();
+        $age_70_years_up_female = $householdProfilingReportService->get_household_profiling_age_group($request, '70years', 'F')->get();
 
 
         return [
