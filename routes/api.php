@@ -632,6 +632,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('patient-registered', 'index');
                 });
         });
+        Route::prefix('household-profiling')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\Household\HouseholdProfilingReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {

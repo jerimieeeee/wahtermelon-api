@@ -3,22 +3,22 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Libraries\LibEnvironmentalSewageResource;
-use App\Models\V1\Libraries\LibEnvironmentalSewage;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\API\V1\Libraries\LibFpDropoutReasonResource;
+use App\Models\V1\Libraries\LibFpDropoutReason;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
-class LibEnvironmentalSewageController extends Controller
+class LibFpDropoutReasonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): ResourceCollection
+    public function index():ResourceCollection
     {
-        $query = QueryBuilder::for(LibEnvironmentalSewage::class);
+        $query = QueryBuilder::for(LibFpDropoutReason::class);
 
-        return LibEnvironmentalSewageResource::collection(($query->get()));
+        return LibFpDropoutReasonResource::collection(($query->get()));
     }
 
     /**
