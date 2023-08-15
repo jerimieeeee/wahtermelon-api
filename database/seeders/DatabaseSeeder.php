@@ -172,6 +172,7 @@ class DatabaseSeeder extends Seeder
             LibFpPelvicExamSeeder::class,
             LibFpClientTypeSeeder::class,
             LibFpSourceSupplySeeder::class,
+            LibFpDropoutReasonSeeder::class,
             LibAbDeathPlaceSeeder::class,
             LibEnvironmentalResultSeeder::class,
             LibEnvironmentalSewageSeeder::class,
