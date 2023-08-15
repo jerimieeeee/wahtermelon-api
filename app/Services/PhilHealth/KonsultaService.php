@@ -536,77 +536,80 @@ class KonsultaService
         return $result->dropXmlDeclaration()->toXml();
     }
 
-    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1, $save = false, $revalidate = false)
+    public function createXml($transmittalNumber = '', $patientId = [], $tranche = 1, $save = false, $revalidate = false, $effectivityYear = null)
     {
-        if (empty($transmittalNumber)) {
-            $prefix = 'R'.auth()->user()->konsultaCredential->accreditation_number.date('Ym');
-            $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
-        }
-
-        $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate);
-        $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate);
-        $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate);
-        $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
-        $profileCount = count($profiling[0]['PROFILE'][0]);
-        $soapCount = count($soaps[0]['SOAP'][0]);
-
-        $root = [
-            'rootElementName' => 'PCB',
-            '_attributes' => [
-                'pUsername' => '',
-                'pPassword' => '',
-                'pHciAccreNo' => auth()->user()->konsultaCredential->accreditation_number ?? '',
-                'pPMCCNo' => auth()->user()->konsultaCredential->pmcc_number ?? '',
-                'pEnlistTotalCnt' => $enlistmentCount,
-                'pProfileTotalCnt' => $profileCount,
-                'pSoapTotalCnt' => $soapCount,
-                'pCertificationId' => auth()->user()->konsultaCredential->software_certification_id ?? '',
-                'pHciTransmittalNumber' => $transmittalNumber,
-            ],
-        ];
-
-        $diagnosticArray = [];
-        //$diagnosticArray = [$profiling[1]];
-        if (isset($profiling[1]) && Arr::hasAny($profiling[1]['DIAGNOSTICEXAMRESULT'][0][0], [
-            'FBSS',
-            'RBSS',
-        ])) {
-            $diagnosticArray = $profiling[1];
-        }
-        if (isset($soaps[2]) && Arr::hasAny($soaps[2]['DIAGNOSTICEXAMRESULT'][0][0], [
-            'CBCS',
-            'URINALYSISS',
-            'CHESTXRAYS',
-            'SPUTUMS',
-            'LIPIDPROFILES',
-            'FBSS',
-            'RBSS',
-            'ECGS',
-            'FECALYSISS',
-            'PAPSMEARS',
-            'OGTTS',
-            'FOBTS',
-            'CREATININES',
-            'PPDTests',
-            'HbA1cs',
-        ])) {
-            foreach ($soaps[2]['DIAGNOSTICEXAMRESULT'][0] as $value) {
-                $diagnosticArray['DIAGNOSTICEXAMRESULT'][] = $value;
+        return DB::transaction(function () use($transmittalNumber, $patientId, $save, $revalidate, $tranche, $effectivityYear){
+            if (empty($transmittalNumber)) {
+                $prefix = 'R'.auth()->user()->konsultaCredential->accreditation_number.date('Ym');
+                $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             }
-        }
 
-        $array = [];
-        $array['ENLISTMENTS'] = [$enlistments];
-        $array['PROFILING'] = [$profiling[0]];
-        $array['SOAPS'] = [$soaps[0]];
-        ! empty($diagnosticArray) ? $array['DIAGNOSTICEXAMRESULTS'] = [$diagnosticArray] : null;
-        $array['MEDICINES'] = [$soaps[1]];
+            $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate, $effectivityYear);
+            $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate);
+            $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate);
+            $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
+            $profileCount = count($profiling[0]['PROFILE'][0]);
+            $soapCount = count($soaps[0]['SOAP'][0]);
 
-        $result = new ArrayToXml($array, $root, true, 'UTF-8');
-        $xml = $result->dropXmlDeclaration()->toXml();
+            $root = [
+                'rootElementName' => 'PCB',
+                '_attributes' => [
+                    'pUsername' => '',
+                    'pPassword' => '',
+                    'pHciAccreNo' => auth()->user()->konsultaCredential->accreditation_number ?? '',
+                    'pPMCCNo' => auth()->user()->konsultaCredential->pmcc_number ?? '',
+                    'pEnlistTotalCnt' => $enlistmentCount,
+                    'pProfileTotalCnt' => $profileCount,
+                    'pSoapTotalCnt' => $soapCount,
+                    'pCertificationId' => auth()->user()->konsultaCredential->software_certification_id ?? '',
+                    'pHciTransmittalNumber' => $transmittalNumber,
+                ],
+            ];
 
-        return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save);
-        // return $xml;
+            $diagnosticArray = [];
+            //$diagnosticArray = [$profiling[1]];
+            if (isset($profiling[1]) && Arr::hasAny($profiling[1]['DIAGNOSTICEXAMRESULT'][0][0], [
+                    'FBSS',
+                    'RBSS',
+                ])) {
+                $diagnosticArray = $profiling[1];
+            }
+            if (isset($soaps[2]) && Arr::hasAny($soaps[2]['DIAGNOSTICEXAMRESULT'][0][0], [
+                    'CBCS',
+                    'URINALYSISS',
+                    'CHESTXRAYS',
+                    'SPUTUMS',
+                    'LIPIDPROFILES',
+                    'FBSS',
+                    'RBSS',
+                    'ECGS',
+                    'FECALYSISS',
+                    'PAPSMEARS',
+                    'OGTTS',
+                    'FOBTS',
+                    'CREATININES',
+                    'PPDTests',
+                    'HbA1cs',
+                ])) {
+                foreach ($soaps[2]['DIAGNOSTICEXAMRESULT'][0] as $value) {
+                    $diagnosticArray['DIAGNOSTICEXAMRESULT'][] = $value;
+                }
+            }
+
+            $array = [];
+            $array['ENLISTMENTS'] = [$enlistments];
+            $array['PROFILING'] = [$profiling[0]];
+            $array['SOAPS'] = [$soaps[0]];
+            ! empty($diagnosticArray) ? $array['DIAGNOSTICEXAMRESULTS'] = [$diagnosticArray] : null;
+            $array['MEDICINES'] = [$soaps[1]];
+
+            $result = new ArrayToXml($array, $root, true, 'UTF-8');
+            $xml = $result->dropXmlDeclaration()->toXml();
+
+            return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save);
+            // return $xml;
+        });
+
     }
 
     public function saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
@@ -636,8 +639,11 @@ class KonsultaService
         return $report;
     }
 
-    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false)
+    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null)
     {
+        if ($effectivityYear === null) {
+            $effectivityYear = date('Y');
+        }
         $enlistments = [];
         $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
         $user = User::selectRaw('id AS userID, CONCAT(first_name, " ", last_name) AS created_by');
@@ -653,6 +659,7 @@ class KonsultaService
                 $join->on('patient_philhealth.philhealth_id', '=', 'konsulta_registration_lists.pin_id')
                     ->whereColumn('patient_philhealth.effectivity_year', '=', 'konsulta_registration_lists.effectivity_year');
             })
+            ->where('patient_philhealth.effectivity_year', $effectivityYear)
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(! empty($patientId), fn ($query) => $query->whereIn('patient_id', $patientId))
             ->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
@@ -665,8 +672,11 @@ class KonsultaService
         return $enlistments;
     }
 
-    public function profilings($transmittalNumber = '', $patientId = [], $revalidate = false)
+    public function profilings($transmittalNumber = '', $patientId = [], $revalidate = false, $effectivityYear = null)
     {
+        if ($effectivityYear === null) {
+            $effectivityYear = date('Y');
+        }
         $profile = [];
         $data = Patient::query()
             ->with([
@@ -681,6 +691,7 @@ class KonsultaService
             ->withWhereHas('philhealthLatest', fn ($query) => [
                 $query->whereIn('membership_type_id', ['MM', 'DD']),
                 $query->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber)),
+                $query->where('patient_philhealth.effectivity_year', $effectivityYear)
             ])
             ->when(! empty($patientId), fn ($query) => $query->whereIn('id', $patientId))
             //->whereId('97a9157e-2705-4a10-b68d-211052b0c6ac')
