@@ -477,6 +477,9 @@ Route::prefix('v1/libraries')->group(function () {
     //Family Planning Physical Exam
     Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
 
+    //Family Planning Source Supplies
+    Route::get('family-planning-source-supply', [\App\Http\Controllers\API\V1\Libraries\LibFpSourceSupplyController::class, 'index'])->name('family-planning-source-supply.index');
+
     //Family Planning Dropout Reason
     Route::get('family-planning-dropout-reason', [\App\Http\Controllers\API\V1\Libraries\LibFpDropoutReasonController::class, 'index'])->name('family-planning-dropout-reason.index');
 

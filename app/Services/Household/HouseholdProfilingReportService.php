@@ -683,11 +683,25 @@ class HouseholdProfilingReportService
             ->whereGender($gender)
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
+            ->groupBy('patients.id')
+            ///Age/Health RiskGroup Query
+            ->when($type == 'newborn', function ($q) use ($request) {
+                $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 0 AND 28)');
+            })
+            ->when($type == 'infant', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 0 AND 1');
+            })
+            ->when($type == 'psac', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 1 AND 4');
+            })
+            ->when($type == 'infant', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 1 AND 4');
+            })
             ->when($type == '1-28days', function ($q) use ($request) {
                 $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 1 AND 28)');
             })
             ->when($type == '29-11months', function ($q) use ($request) {
-                $q->havingRaw('(age_year = 0) AND (age_day >= 29 OR age_month BETWEEN 1 AND 1');
+                $q->havingRaw('(age_year = 0) AND (age_day >= 29 OR age_month BETWEEN 1 AND 11)');
             })
             ->when($type == '1-4years', function ($q) use ($request) {
                 $q->havingRaw('age_year BETWEEN 1 AND 4');
