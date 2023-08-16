@@ -56,6 +56,7 @@ class EclaimsUploadController extends Controller
                 'pReceiptTicketNumber',
                 'pClaimSeriesLhio',
                 'pStatus',
+                'denied_reason',
                 'pTransmissionDate',
                 'pTransmissionTime',
                 'pCheckDate',
