@@ -55,11 +55,24 @@ class PatientFpMethodController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PatientFpMethod $patientFpMethod)
+    public function show(Request $request)
     {
-//        $query = PatientFpMethod::where('patient_id', $patientFpMethod->patient_id)->get();
-//
-//        return new PatientFpMethodResource($query);
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $query = QueryBuilder::for(PatientFpMethod::class)
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->where('dropout_flag', '=', 1)
+            ->with('method', 'client', 'dropout', 'chart')
+            ->defaultSort('enrollment_date')
+            ->allowedSorts('enrollment_date', 'dropout_date');
+
+        if ($perPage === 'all') {
+            return PatientFpMethodResource::collection($query->get());
+        }
+
+        return PatientFpMethodResource::collection($query->paginate($perPage)->withQueryString());
     }
 
     /**
