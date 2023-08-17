@@ -483,9 +483,6 @@ Route::prefix('v1/libraries')->group(function () {
     //Family Planning Dropout Reason
     Route::get('family-planning-dropout-reason', [\App\Http\Controllers\API\V1\Libraries\LibFpDropoutReasonController::class, 'index'])->name('family-planning-dropout-reason.index');
 
-    //Family Planning Source Supply
-    Route::get('family-planning-source-supply', [\App\Http\Controllers\API\V1\Libraries\LibFpSourceSupplyController::class, 'index'])->name('family-planning-source-supply.index');
-
     //Animal Bite Anatomical Location
     Route::get('ab-anatomical-location', [\App\Http\Controllers\API\V1\Libraries\LibAbAnatomicalLocationController::class, 'index'])->name('ab-anatomical-location.index');
 

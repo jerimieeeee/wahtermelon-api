@@ -69,11 +69,13 @@ class PatientFp extends Model
     public function fpMethod()
     {
         return $this->hasOne(PatientFpMethod::class)
-            ->where('dropout_flag', '=', '0');
+            ->where('dropout_flag', '=', '0')
+            ->orderBy('enrollment_date', 'DESC');
     }
 
     public function fpChart()
     {
-        return $this->hasOne(PatientFpChart::class);
+        return $this->hasMany(PatientFpChart::class)
+            ->orderBy('service_date', 'DESC');
     }
 }

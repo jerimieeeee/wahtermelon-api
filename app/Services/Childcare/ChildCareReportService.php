@@ -79,8 +79,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
-                ->when($request->category == 'facility', function ($q) {
+                ->when($request->category == 'all', function ($q) {
                     $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+                })
+                ->when($request->category == 'facility', function ($q) {
+                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
                     $q->whereIn('municipality_code', explode(',', $request->code));
