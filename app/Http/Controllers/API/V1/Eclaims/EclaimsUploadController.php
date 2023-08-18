@@ -31,7 +31,7 @@ class EclaimsUploadController extends Controller
             ->when(isset($request->program_desc), function ($q) use ($request) {
                 $q->where('program_desc', $request->program_desc);
             })
-            ->with('caserate')
+            ->with('caserate.caserateAttendant')
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
