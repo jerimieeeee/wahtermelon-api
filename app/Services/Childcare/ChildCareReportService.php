@@ -114,7 +114,7 @@ class ChildCareReportService
             $query->selectRaw("
                     CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                     birthdate,
-                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS vaccine_date,
+                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS date_of_service,
                     SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS vaccine_id,
                     municipality_code,
                     barangay_code
@@ -140,7 +140,7 @@ class ChildCareReportService
                 ->whereVaccineId($vaccine_id)
                 ->whereGender($patient_gender)
                 ->groupBy('patient_vaccines.patient_id')
-                ->havingRaw('COUNT(patient_vaccines.id) = ? AND YEAR(vaccine_date) = ? AND MONTH(vaccine_date) = ?', [$vaccine_seq, $request->year, $request->month]);
+                ->havingRaw('COUNT(patient_vaccines.id) = ? AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', [$vaccine_seq, $request->year, $request->month]);
         });
     }
 
