@@ -47,7 +47,7 @@ class EclaimsCaserateListController extends Controller
 
                 return $query->whereNotIn('id', $arrayData);
             })
-            ->with('caserateAttendant');
+            ->with('attendant');
 
         $eclaimsCaserate = QueryBuilder::for($query);
 
