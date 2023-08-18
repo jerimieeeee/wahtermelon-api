@@ -60,7 +60,7 @@ class ChildCareReportService
             ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
     }
 
-    public function get_vaccines($request, $vaccine_id, $vaccine_seq, $patient_gender)
+    public function get_vaccinesOld($request, $vaccine_id, $vaccine_seq, $patient_gender)
     {
         return DB::table(function ($query) use ($request, $vaccine_id, $patient_gender) {
             $query->selectRaw("
@@ -108,6 +108,42 @@ class ChildCareReportService
             ->orderBy('name', 'ASC');
     }
 
+    public function get_vaccines($request, $vaccine_id, $vaccine_seq, $patient_gender)
+    {
+        return DB::table(function ($query) use ($request, $vaccine_id, $patient_gender, $vaccine_seq) {
+            $query->selectRaw("
+                    CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                    birthdate,
+                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS vaccine_date,
+                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS vaccine_id,
+                    municipality_code,
+                    barangay_code
+                ")
+                ->from('patient_vaccines')
+                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
+                })
+                ->when($request->category == 'all', function ($q) {
+                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+                })
+                ->when($request->category == 'facility', function ($q) {
+                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+                })
+                ->when($request->category == 'municipality', function ($q) use ($request) {
+                    $q->whereIn('municipality_code', explode(',', $request->code));
+                })
+                ->when($request->category == 'barangay', function ($q) use ($request) {
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+                })
+                ->whereStatusId('1')
+                ->whereVaccineId($vaccine_id)
+                ->whereGender($patient_gender)
+                ->groupBy('patient_vaccines.patient_id')
+                ->havingRaw('COUNT(patient_vaccines.id) = ? AND YEAR(vaccine_date) = ? AND MONTH(vaccine_date) = ?', [$vaccine_seq, $request->year, $request->month]);
+        });
+    }
+
     public function get_cpab($request, $patient_gender)
     {
         return DB::table('patient_ccdevs')
@@ -125,8 +161,11 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'all', function ($q) {
                 $q->where('patient_ccdevs.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
                 $q->whereIn('municipality_code', explode(',', $request->code));
@@ -159,8 +198,11 @@ class ChildCareReportService
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
-                ->when($request->category == 'facility', function ($q) {
+                ->when($request->category == 'all', function ($q) {
                     $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+                })
+                ->when($request->category == 'facility', function ($q) {
+                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
                     $q->whereIn('municipality_code', explode(',', $request->code));
