@@ -41,10 +41,10 @@ class MorbidityReportService
                     $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities.code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('barangays.code', explode(',', $request->code));
                 })
                 ->whereGender($patient_gender);
         })
@@ -90,10 +90,10 @@ class MorbidityReportService
                     $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities.code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('barangays.code', explode(',', $request->code));
                 })
                 ->whereGender($patient_gender);
         })
@@ -139,10 +139,10 @@ class MorbidityReportService
                     $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities.code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('barangays.code', explode(',', $request->code));
                 })
                 ->whereGender($patient_gender);
         })
@@ -188,10 +188,10 @@ class MorbidityReportService
                     $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities.code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('barangays.code', explode(',', $request->code));
                 })
                 ->whereGender($patient_gender);
         })
