@@ -37,7 +37,7 @@ class EclaimsCaserateList extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function caserateAttendant()
+    public function attendant()
     {
         return $this->belongsTo(User::class, 'caserate_attendant', 'id');
     }
