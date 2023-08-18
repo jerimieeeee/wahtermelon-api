@@ -64,8 +64,7 @@ class HouseholdProfilingReportService
             ->when($type == 'non-4ps', function ($q) use ($request) {
                 $q->whereNull('cct_id');
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
@@ -106,8 +105,7 @@ class HouseholdProfilingReportService
             ->when($type == 'non-4ps', function ($q) use ($request) {
                 $q->whereNull('cct_id');
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
@@ -157,8 +155,7 @@ class HouseholdProfilingReportService
             ->when($water_type == 3, function ($q) use ($request, $water_type) {
                 $q->where('water_type_code', $water_type);
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
@@ -220,8 +217,7 @@ class HouseholdProfilingReportService
             ->when($toilet_code == 8, function ($q) use ($request, $toilet_code) {
                 $q->where('toilet_facility_code', $toilet_code);
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
@@ -279,8 +275,7 @@ class HouseholdProfilingReportService
             ->when($type == 'unknown', function ($q) use ($request) {
                 $q->whereNull('patient_philhealth.membership_category_id');
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -324,8 +319,7 @@ class HouseholdProfilingReportService
             ->when($gender == 'all', function ($q) use ($request, $all_gender) {
                 $q->whereIn('gender', $all_gender);
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -364,8 +358,7 @@ class HouseholdProfilingReportService
             ->when($ethnicity == 'non-indegenous', function ($q) use ($request) {
                 $q->where('patients.indegenous_flag', 0);
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -449,8 +442,7 @@ class HouseholdProfilingReportService
             ->when($type == 'non-4ps', function ($q) use ($request) {
                 $q->whereNull('cct_id');
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -501,8 +493,7 @@ class HouseholdProfilingReportService
             ->when($type == 'cohabit', function ($q) use ($request) {
                 $q->where('patients.civil_status_code', 'CHBTN');
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -586,8 +577,7 @@ class HouseholdProfilingReportService
             ->when($type == 'others', function ($q) use ($request, ) {
                 $q->where('patients.religion_code', 'OTHERS');
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -642,8 +632,7 @@ class HouseholdProfilingReportService
             })
             ->whereCategory(1)
             ->whereGender($gender)
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -681,8 +670,7 @@ class HouseholdProfilingReportService
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereGender($gender)
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('patients.id')
             ///Age/Health RiskGroup Query
             ->when($type == 'newborn', function ($q) use ($request) {
@@ -748,5 +736,91 @@ class HouseholdProfilingReportService
             ->when($type == '70years', function ($q) use ($request) {
                 $q->havingRaw('age_year >= 70');
             });
+    }
+
+    public function get_household_profiling_family_planning_method($request, $type, $method)
+    {
+        $others =
+            "NFPCM,
+             NFPSTM";
+
+        $iud =
+            "IUD,
+             IUDPP";
+
+        return DB::table('household_environmentals')
+            ->selectRaw("
+                        household_folders.id,
+                        number_of_families,
+                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
+                    ")
+            ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+            ->join('patient_fp_methods', 'patients.id', '=', 'patient_fp_methods.patient_id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+//            ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
+//            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
+//            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
+//            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
+            ->when($request->category == 'all', function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities.code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('barangays.code', explode(',', $request->code));
+            })
+            ->when($type == '4ps', function ($q) use ($request) {
+                $q->whereNotNull('cct_id');
+            })
+            ->when($type == 'non-4ps', function ($q) use ($request) {
+                $q->whereNull('cct_id');
+            })
+            ->when($method == 'coc', function ($q) use ($request, $method) {
+                $q->where('method_code', 'PILLS');
+            })
+            ->when($method == 'pop', function ($q) use ($request, $method) {
+                $q->where('method_code', 'PILLSPOP');
+            })
+            ->when($method == 'injectables', function ($q) use ($request, $method) {
+                $q->where('method_code', 'DMPA');
+            })
+            ->when($method == 'iud', function ($q) use ($request, $iud) {
+                $q->whereIn('method_code', explode(',', $iud));
+            })
+            ->when($method == 'condom', function ($q) use ($request, $method) {
+                $q->where('method_code', 'CONDOM');
+            })
+            ->when($method == 'lam', function ($q) use ($request, $method) {
+                $q->where('method_code', 'NFPLAM');
+            })
+            ->when($method == 'btl', function ($q) use ($request, $method) {
+                $q->where('method_code', 'FSTRBTL');
+            })
+            ->when($method == 'implant', function ($q) use ($request, $method) {
+                $q->where('method_code', 'IMPLANT');
+            })
+            ->when($method == 'sdm', function ($q) use ($request, $method) {
+                $q->where('method_code', 'NFPSDM');
+            })
+            ->when($method == 'vasectomy', function ($q) use ($request, $method) {
+                $q->where('method_code', 'MSV');
+            })
+            ->when($method == 'bbt', function ($q) use ($request, $method) {
+                $q->where('method_code', 'NFPBBT');
+            })
+            ->when($method == 'others', function ($q) use ($request, $others) {
+                $q->whereIn('method_code', explode(',', $others));
+            })
+            ->whereBetween('registration_date', [$request->start_date, $request->end_date])
+            ->groupBy('household_folders.id')
+            ->orderBy('registration_date', 'ASC');
     }
 }
