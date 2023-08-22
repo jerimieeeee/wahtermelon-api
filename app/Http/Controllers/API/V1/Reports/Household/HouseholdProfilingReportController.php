@@ -179,6 +179,34 @@ class HouseholdProfilingReportController extends Controller
         $age_65_to_69_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '65-69years', 'F')->get();
         $age_70_years_up_female = $householdProfilingReportService->get_household_profiling_age_group($request, '70years', 'F')->get();
 
+        //Family Planning Methods 4PS
+        $family_planning_method_coc_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'coc')->get();
+        $family_planning_method_pop_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'pop')->get();
+        $family_planning_method_injectables_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'injectables')->get();
+        $family_planning_method_iud_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'iud')->get();
+        $family_planning_method_condom_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'condom')->get();
+        $family_planning_method_lam_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'lam')->get();
+        $family_planning_method_btl_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'btl')->get();
+        $family_planning_method_implant_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'implant')->get();
+        $family_planning_method_sdm_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'sdm')->get();
+        $family_planning_method_vasectomy_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'vasectomy')->get();
+        $family_planning_method_bbt_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'bbt')->get();
+        $family_planning_method_others_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'others')->get();
+
+        //Family Planning Methods NON-4PS
+        $family_planning_method_coc_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'coc')->get();
+        $family_planning_method_pop_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'pop')->get();
+        $family_planning_method_injectables_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'injectables')->get();
+        $family_planning_method_iud_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'iud')->get();
+        $family_planning_method_condom_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'condom')->get();
+        $family_planning_method_lam_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'lam')->get();
+        $family_planning_method_btl_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'btl')->get();
+        $family_planning_method_implant_non_4ps= $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'implant')->get();
+        $family_planning_method_sdm_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'sdm')->get();
+        $family_planning_method_vasectomy_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'vasectomy')->get();
+        $family_planning_method_bbt_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'bbt')->get();
+        $family_planning_method_others_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'others')->get();
+
 
         return [
             //Summary Household
@@ -340,6 +368,34 @@ class HouseholdProfilingReportController extends Controller
             'age_60_to_64_years_female' => $age_60_to_64_years_female,
             'age_65_to_69_years_female' => $age_65_to_69_years_female,
             'age_70_years_up_female' => $age_70_years_up_female,
+
+            //Family Planning Method 4PS
+            'family_planning_method_coc_4ps' => $family_planning_method_coc_4ps,
+            'family_planning_method_pop_4ps' => $family_planning_method_pop_4ps,
+            'family_planning_method_injectables_4ps' => $family_planning_method_injectables_4ps,
+            'family_planning_method_iud_4ps' => $family_planning_method_iud_4ps,
+            'family_planning_method_condom_4ps' => $family_planning_method_condom_4ps,
+            'family_planning_method_lam_4ps' => $family_planning_method_lam_4ps,
+            'family_planning_method_btl_4ps' => $family_planning_method_btl_4ps,
+            'family_planning_method_implant_4ps' => $family_planning_method_implant_4ps,
+            'family_planning_method_sdm_4ps' => $family_planning_method_sdm_4ps,
+            'family_planning_method_vasectomy_4ps' => $family_planning_method_vasectomy_4ps,
+            'family_planning_method_bbt_4ps' => $family_planning_method_bbt_4ps,
+            'family_planning_method_others_4ps' => $family_planning_method_others_4ps,
+
+            //Family Planning Methods NON-4PS
+            'family_planning_method_coc_non_4ps' => $family_planning_method_coc_non_4ps,
+            'family_planning_method_pop_non_4ps' => $family_planning_method_pop_non_4ps,
+            'family_planning_method_injectables_non_4ps' => $family_planning_method_injectables_non_4ps,
+            'family_planning_method_iud_non_4ps' => $family_planning_method_iud_non_4ps,
+            'family_planning_method_condom_non_4ps' => $family_planning_method_condom_non_4ps,
+            'family_planning_method_lam_non_4ps' => $family_planning_method_lam_non_4ps,
+            'family_planning_method_btl_non_4ps' => $family_planning_method_btl_non_4ps,
+            'family_planning_method_implant_non_4ps' => $family_planning_method_implant_non_4ps,
+            'family_planning_method_sdm_non_4ps' => $family_planning_method_sdm_non_4ps,
+            'family_planning_method_vasectomy_non_4ps' => $family_planning_method_vasectomy_non_4ps,
+            'family_planning_method_bbt_non_4ps' => $family_planning_method_bbt_non_4ps,
+            'family_planning_method_others_non_4ps' => $family_planning_method_others_non_4ps,
 
         ];
     }
