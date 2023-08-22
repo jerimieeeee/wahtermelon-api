@@ -47,6 +47,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
+                ->whereNot('consult_notes_final_dxes.icd10_code', "000")
                 ->whereGender($patient_gender)
                 ->groupBy('patients.id');
         })
@@ -93,6 +94,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
+                ->whereNot('consult_notes_final_dxes.icd10_code', "000")
                 ->whereGender($patient_gender);
         })
             ->selectRaw('
@@ -142,6 +144,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
+                ->whereNot('consult_notes_final_dxes.icd10_code', "000")
                 ->whereGender($patient_gender);
         })
             ->selectRaw('
@@ -191,6 +194,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
+                ->whereNot('consult_notes_final_dxes.icd10_code', "000")
                 ->whereGender($patient_gender);
         })
             ->selectRaw('
@@ -238,6 +242,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
+                ->whereNot('consult_notes_final_dxes.icd10_code', "000")
                 ->whereGender($patient_gender);
         })
             ->selectRaw('
