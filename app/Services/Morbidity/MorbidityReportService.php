@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\DB;
 
 class MorbidityReportService
 {
-    public function get_morbidity_icd10_desc()
-    {
-        return DB::table('lib_icd10s')
-            ->selectRaw('
-                        icd10_desc
-                    ');
-    }
+//    public function get_morbidity_icd10_desc()
+//    {
+//        return DB::table('lib_icd10s')
+//            ->selectRaw('
+//                        icd10_desc
+//                    ');
+//    }
 
     public function get_morbidity_report_all_gender($request, $patient_gender)
     {
@@ -58,7 +58,7 @@ class MorbidityReportService
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc
             ')
             ->whereBetween('consult_date', [$request->start_date, $request->end_date])
-            ->orderBy('count', 'ASC');
+            ->orderBy('count');
     }
 
     public function get_morbidity_report_age_days($request, $patient_gender, $age_bracket1, $age_bracket2)
@@ -73,8 +73,7 @@ class MorbidityReportService
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
                             TIMESTAMPDIFF(MONTH, birthdate, consult_date) % 12 AS age_month,
-                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day,
-                            COUNT(patients.id) AS count
+                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day
                     ")
                 ->from('consult_notes_final_dxes')
                 ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
@@ -94,8 +93,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
-                ->whereGender($patient_gender)
-                ->groupBy('patients.id');
+                ->whereGender($patient_gender);
         })
             ->selectRaw('
                         name,
@@ -109,7 +107,7 @@ class MorbidityReportService
             ')
             ->whereBetween('consult_date', [$request->start_date, $request->end_date])
             ->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN ? AND ?)', [$age_bracket1, $age_bracket2])
-            ->orderBy('count', 'ASC');
+            ->orderBy('name', 'ASC');
     }
 
     public function get_morbidity_report_age_days_and_month($request, $patient_gender, $age_day, $age_bracket1, $age_bracket2)
@@ -124,8 +122,7 @@ class MorbidityReportService
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
                             TIMESTAMPDIFF(MONTH, birthdate, consult_date) % 12 AS age_month,
-                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day,
-                            COUNT(patients.id) AS count
+                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day
                     ")
                 ->from('consult_notes_final_dxes')
                 ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
@@ -145,8 +142,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
-                ->whereGender($patient_gender)
-                ->groupBy('patients.id');
+                ->whereGender($patient_gender);
         })
             ->selectRaw('
                         name,
@@ -160,7 +156,7 @@ class MorbidityReportService
             ')
             ->whereBetween('consult_date', [$request->start_date, $request->end_date])
             ->havingRaw('(age_year = 0) AND (age_day >= ? OR age_month BETWEEN ? AND ?)', [$age_day, $age_bracket1, $age_bracket2])
-            ->orderBy('count', 'ASC');
+            ->orderBy('name', 'ASC');
     }
 
     public function get_morbidity_report_year($request, $patient_gender, $age_bracket1, $age_bracket2)
@@ -175,8 +171,7 @@ class MorbidityReportService
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
                             TIMESTAMPDIFF(MONTH, birthdate, consult_date) % 12 AS age_month,
-                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day,
-                            COUNT(patients.id) AS count
+                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day
                     ")
                 ->from('consult_notes_final_dxes')
                 ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
@@ -196,8 +191,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
-                ->whereGender($patient_gender)
-                ->groupBy('patients.id');
+                ->whereGender($patient_gender);
         })
             ->selectRaw('
                         name,
@@ -209,7 +203,7 @@ class MorbidityReportService
             ')
             ->whereBetween('consult_date', [$request->start_date, $request->end_date])
             ->havingRaw('age_year BETWEEN ? AND ?', [$age_bracket1, $age_bracket2])
-            ->orderBy('count', 'ASC');
+            ->orderBy('name', 'ASC');
     }
 
     public function get_morbidity_report_70_years_above($request, $patient_gender)
@@ -224,8 +218,7 @@ class MorbidityReportService
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
                             TIMESTAMPDIFF(MONTH, birthdate, consult_date) % 12 AS age_month,
-                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day,
-                            COUNT(patients.id) AS count
+                            FLOOR(TIMESTAMPDIFF(DAY, birthdate, consult_date) % 29) AS age_day
                     ")
                 ->from('consult_notes_final_dxes')
                 ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
@@ -245,8 +238,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
-                ->whereGender($patient_gender)
-                ->groupBy('patients.id');
+                ->whereGender($patient_gender);
         })
             ->selectRaw('
                         name,
@@ -260,6 +252,6 @@ class MorbidityReportService
             ')
             ->whereBetween('consult_date', [$request->start_date, $request->end_date])
             ->havingRaw('age_year >= 70')
-            ->orderBy('count', 'ASC');
+            ->orderBy('name', 'ASC');
     }
 }

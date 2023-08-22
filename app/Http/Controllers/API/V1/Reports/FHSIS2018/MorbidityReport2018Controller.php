@@ -29,8 +29,8 @@ class MorbidityReport2018Controller extends Controller
     {
         $ageGroups = [
             'total' => [
-                'Male' => $morbidityReportService->get_morbidity_report_all_gender($request, 'M')->get(),
-                'Female' => $morbidityReportService->get_morbidity_report_all_gender($request, 'F')->get(),
+                'Male' => $morbidityReportService->get_morbidity_report_all_gender($request, 'M')->orderBy('count', 'desc')->get(),
+                'Female' => $morbidityReportService->get_morbidity_report_all_gender($request, 'F')->orderBy('count', 'desc')->get(),
             ],
 
             'age_0_to_6_days' => [
@@ -153,6 +153,26 @@ class MorbidityReport2018Controller extends Controller
                 }
             }
         }
+
+        // Sort the $result array based on the highest count of data entries inside each index
+        uasort($result, function ($data1, $data2) {
+            $count1 = 0;
+            $count2 = 0;
+
+            foreach ($data1 as $ageGroupData) {
+                foreach ($ageGroupData as $genderData) {
+                    $count1 += count($genderData);
+                }
+            }
+
+            foreach ($data2 as $ageGroupData) {
+                foreach ($ageGroupData as $genderData) {
+                    $count2 += count($genderData);
+                }
+            }
+
+            return $count2 - $count1;
+        });
 
         return $result;
     }
