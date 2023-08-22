@@ -28,6 +28,11 @@ class MorbidityReport2018Controller extends Controller
     public function index(Request $request, MorbidityReportService $morbidityReportService)
     {
         $ageGroups = [
+            'total' => [
+                'Male' => $morbidityReportService->get_morbidity_report_all_gender($request, 'M')->get(),
+                'Female' => $morbidityReportService->get_morbidity_report_all_gender($request, 'F')->get(),
+            ],
+
             'age_0_to_6_days' => [
                 'Male' => $morbidityReportService->get_morbidity_report_age_days($request, 'M', 0, 6)->get(),
                 'Female' => $morbidityReportService->get_morbidity_report_age_days($request, 'F', 0, 6)->get(),
