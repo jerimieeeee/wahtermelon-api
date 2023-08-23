@@ -61,15 +61,14 @@ class MorbidityReportService
                 })
                 ->whereNot('consult_notes_final_dxes.icd10_code', "000")
                 ->whereGender($patient_gender)
-                ->groupBy('patients.id');
+                ->groupBy('consult_notes_final_dxes.icd10_code');
         })
             ->selectRaw('
                         name,
                         address,
                         birthdate,
                         DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
-                        CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc,
-                        count
+                        CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc
             ')
             ->whereBetween('consult_date', [$request->start_date, $request->end_date]);
     }
