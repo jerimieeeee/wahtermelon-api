@@ -33,7 +33,7 @@ class MorbidityReportService
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                             CONCAT(household_folders.address, ',', ' ', barangays.name) AS address,
                             birthdate,
-                            consult_date,
+                            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
                             consult_notes_final_dxes.icd10_code AS icd10_code,
                             icd10_desc,
                             gender
@@ -59,17 +59,17 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
+                ->whereGender($patient_gender)
                 ->whereNot('consult_notes_final_dxes.icd10_code', "000");
         })
             ->selectRaw('
                         name,
                         address,
                         birthdate,
-                        DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
+                        date_of_service,
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc
             ')
-            ->whereBetween('consult_date', [$request->start_date, $request->end_date])
-            ->whereGender($patient_gender)
+            ->whereBetween('date_of_service', [$request->start_date, $request->end_date])
             ->orderBy('name', 'ASC');
     }
 
@@ -80,7 +80,7 @@ class MorbidityReportService
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                             CONCAT(household_folders.address, ',', ' ', barangays.name) AS address,
                             birthdate,
-                            consult_date,
+                            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
                             consult_notes_final_dxes.icd10_code AS icd10_code,
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
@@ -115,13 +115,13 @@ class MorbidityReportService
                         name,
                         address,
                         birthdate,
-                        DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
+                        date_of_service,
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc,
                         age_year,
                         age_month,
                         age_day
             ')
-            ->whereBetween('consult_date', [$request->start_date, $request->end_date])
+            ->whereBetween('date_of_service', [$request->start_date, $request->end_date])
             ->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN ? AND ?)', [$age_bracket1, $age_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -133,7 +133,7 @@ class MorbidityReportService
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                             CONCAT(household_folders.address, ',', ' ', barangays.name) AS address,
                             birthdate,
-                            consult_date,
+                            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
                             consult_notes_final_dxes.icd10_code AS icd10_code,
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
@@ -168,13 +168,13 @@ class MorbidityReportService
                         name,
                         address,
                         birthdate,
-                        DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
+                        date_of_service,
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc,
                         age_year,
                         age_month,
                         age_day
             ')
-            ->whereBetween('consult_date', [$request->start_date, $request->end_date])
+            ->whereBetween('date_of_service', [$request->start_date, $request->end_date])
             ->havingRaw('(age_year = 0) AND (age_day >= ? OR age_month BETWEEN ? AND ?)', [$age_day, $age_bracket1, $age_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -186,7 +186,7 @@ class MorbidityReportService
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                             CONCAT(household_folders.address, ',', ' ', barangays.name) AS address,
                             birthdate,
-                            consult_date,
+                            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
                             consult_notes_final_dxes.icd10_code AS icd10_code,
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
@@ -221,11 +221,11 @@ class MorbidityReportService
                         name,
                         address,
                         birthdate,
-                        DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
+                        date_of_service,
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc,
                         age_year
             ')
-            ->whereBetween('consult_date', [$request->start_date, $request->end_date])
+            ->whereBetween('date_of_service', [$request->start_date, $request->end_date])
             ->havingRaw('age_year BETWEEN ? AND ?', [$age_bracket1, $age_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -237,7 +237,7 @@ class MorbidityReportService
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                             CONCAT(household_folders.address, ',', ' ', barangays.name) AS address,
                             birthdate,
-                            consult_date,
+                            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
                             consult_notes_final_dxes.icd10_code AS icd10_code,
                             icd10_desc,
                             TIMESTAMPDIFF(YEAR, birthdate, consult_date) AS age_year,
@@ -272,13 +272,13 @@ class MorbidityReportService
                         name,
                         address,
                         birthdate,
-                        DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
+                        date_of_service,
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc,
                         age_year,
                         age_month,
                         age_day
             ')
-            ->whereBetween('consult_date', [$request->start_date, $request->end_date])
+            ->whereBetween('date_of_service', [$request->start_date, $request->end_date])
             ->havingRaw('age_year >= 70')
             ->orderBy('name', 'ASC');
     }
