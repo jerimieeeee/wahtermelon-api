@@ -29,8 +29,8 @@ class MorbidityReport2018Controller extends Controller
     {
         $ageGroups = [
             'total' => [
-                'Male' => $morbidityReportService->get_morbidity_report_all_gender($request, 'M')->orderBy('count', 'desc')->get(),
-                'Female' => $morbidityReportService->get_morbidity_report_all_gender($request, 'F')->orderBy('count', 'desc')->get(),
+                'Male' => $morbidityReportService->get_morbidity_report_all_gender($request, 'M')->get(),
+                'Female' => $morbidityReportService->get_morbidity_report_all_gender($request, 'F')->get(),
             ],
 
             'age_0_to_6_days' => [

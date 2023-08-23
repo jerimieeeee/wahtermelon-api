@@ -36,7 +36,7 @@ class MorbidityReportService
                             consult_date,
                             consult_notes_final_dxes.icd10_code AS icd10_code,
                             icd10_desc,
-                            COUNT(consult_notes_final_dxes.icd10_code) AS count
+                            gender
                     ")
                 ->from('consult_notes_final_dxes')
                 ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
@@ -59,9 +59,7 @@ class MorbidityReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('barangays.code', explode(',', $request->code));
                 })
-                ->whereNot('consult_notes_final_dxes.icd10_code', "000")
-                ->whereGender($patient_gender)
-                ->groupBy('consult_notes_final_dxes.icd10_code');
+                ->whereNot('consult_notes_final_dxes.icd10_code', "000");
         })
             ->selectRaw('
                         name,
@@ -70,7 +68,9 @@ class MorbidityReportService
                         DATE_FORMAT(consult_date, "%Y-%m-%d") AS date_of_service,
                         CONCAT(icd10_code, ";", " ", icd10_desc) AS icd10_desc
             ')
-            ->whereBetween('consult_date', [$request->start_date, $request->end_date]);
+            ->whereBetween('consult_date', [$request->start_date, $request->end_date])
+            ->whereGender($patient_gender)
+            ->orderBy('name', 'ASC');
     }
 
     public function get_morbidity_report_age_days($request, $patient_gender, $age_bracket1, $age_bracket2)
