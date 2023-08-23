@@ -682,8 +682,17 @@ class HouseholdProfilingReportService
             ->when($type == 'psac', function ($q) use ($request) {
                 $q->havingRaw('age_year BETWEEN 1 AND 4');
             })
-            ->when($type == 'infant', function ($q) use ($request) {
-                $q->havingRaw('age_year BETWEEN 1 AND 4');
+            ->when($type == 'sac', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 5 AND 9');
+            })
+            ->when($type == 'ad', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 10 AND 19');
+            })
+            ->when($type == 'adult', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 20 AND 59');
+            })
+            ->when($type == 'senior', function ($q) use ($request) {
+                $q->havingRaw('age_year >= 60');
             })
             ->when($type == '1-28days', function ($q) use ($request) {
                 $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 1 AND 28)');

@@ -207,6 +207,23 @@ class HouseholdProfilingReportController extends Controller
         $family_planning_method_bbt_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'bbt')->get();
         $family_planning_method_others_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'others')->get();
 
+        //Health Risk Group Male
+        $newborn_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'newborn', 'M')->get();
+        $infant_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'infant', 'M')->get();
+        $psac_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'psac', 'M')->get();
+        $sac_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'sac', 'M')->get();
+        $adolsecent_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'ad', 'M')->get();
+        $adult_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'adult', 'M')->get();
+        $senior_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'senior', 'M')->get();
+
+        //Health Risk Group Female
+        $newborn_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'newborn', 'F')->get();
+        $infant_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'infant', 'F')->get();
+        $psac_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'psac', 'F')->get();
+        $sac_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'sac', 'F')->get();
+        $adolsecent_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'ad', 'F')->get();
+        $adult_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'adult', 'F')->get();
+        $senior_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'senior', 'F')->get();
 
         return [
             //Summary Household
@@ -396,6 +413,24 @@ class HouseholdProfilingReportController extends Controller
             'family_planning_method_vasectomy_non_4ps' => $family_planning_method_vasectomy_non_4ps,
             'family_planning_method_bbt_non_4ps' => $family_planning_method_bbt_non_4ps,
             'family_planning_method_others_non_4ps' => $family_planning_method_others_non_4ps,
+
+            //Health Risk Group Male
+            'newborn_male' => $newborn_male,
+            'infant_male' => $infant_male,
+            'psac_male' => $psac_male,
+            'sac_male' => $sac_male,
+            'adolsecent_male' => $adolsecent_male,
+            'adult_male' => $adult_male,
+            'senior_male' => $senior_male,
+
+            //Health Risk Group Female
+            'newborn_female' => $newborn_female,
+            'infant_female' => $infant_female,
+            'psac_female' => $psac_female,
+            'sac_female' => $sac_female,
+            'adolsecent_female' => $adolsecent_female,
+            'adult_female' => $adult_female,
+            'senior_female' => $senior_female,
 
         ];
     }
