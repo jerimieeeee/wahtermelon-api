@@ -77,6 +77,6 @@ class PatientFpMethod extends Model
 
     public function chart()
     {
-        return $this->hasOne(PatientFpChart::class, 'patient_fp_method_id', 'id');
+        return $this->hasMany(PatientFpChart::class, 'patient_fp_method_id', 'id');
     }
 }

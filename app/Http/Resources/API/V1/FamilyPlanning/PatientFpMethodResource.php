@@ -35,6 +35,7 @@ class PatientFpMethodResource extends JsonResource
             'dropout' => $this->whenLoaded('dropout'),
             'dropout_remarks' => $this->dropout_remarks,
             'dropout_flag' => $this->dropout_flag,
+            'chart' => $this->whenLoaded('chart'),
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
