@@ -524,4 +524,5 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('environmental-result', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalResultController::class, 'index'])->name('environmental-result.index');
     Route::get('environmental-toilet-facility', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalToiletFacilityController::class, 'index'])->name('environmental-toilet-facility.index');
     Route::get('environmental-sewage', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalSewageController::class, 'index'])->name('environmental-sewage.index');
+    Route::get('environmental-waste-management', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalWasteManagementController::class, 'index'])->name('environmental-waste-management.index');
 });
