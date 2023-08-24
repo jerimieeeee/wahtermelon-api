@@ -1041,6 +1041,7 @@ Route::prefix('v1')->group(function () {
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::post('fp-chart', 'store');
+                Route::get('fp-chart', 'index');
                 Route::put('fp-chart/{patientFpChart}', 'update');
                 Route::delete('fp-chart/{patientFpChart}', 'destroy');
             });
