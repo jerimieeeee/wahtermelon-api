@@ -36,6 +36,13 @@ class UserResource extends JsonResource
             'designation' => $this->when($this->relationLoaded('designation'), new LibDesignationResource($this->designation)),
             'employer_code' => $this->when(! $this->relationLoaded('employer'), $this->employer_code),
             'employer' => $this->when($this->relationLoaded('employer'), new LibEmployerResource($this->employer)),
+            'attendant_cc_flag' => $this->attendant_cc_flag,
+            'attendant_mc_flag' => $this->attendant_mc_flag,
+            'attendant_tb_flag' => $this->attendant_tb_flag,
+            'attendant_ab_flag' => $this->attendant_ab_flag,
+            'attendant_ml_flag' => $this->attendant_ml_flag,
+            'attendant_fp_flag' => $this->attendant_fp_flag,
+            'attendant_cv_flag' => $this->attendant_cv_flag,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

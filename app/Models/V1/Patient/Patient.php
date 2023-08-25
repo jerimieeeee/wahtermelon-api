@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patient extends Model
 {
-    use HasFactory, HasUuids, HasSearchFilter, FilterByUser;//, FilterByFacility;
+    use HasFactory, HasUuids, HasSearchFilter, FilterByUser; //, FilterByFacility;
 
     protected $guarded = [
         'id',
@@ -39,7 +39,7 @@ class Patient extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        //'birthdate' => 'date:Y-m-d',
+        'birthdate' => 'date:Y-m-d',
         'indegenous_flag' => 'boolean',
         'consent_flag' => 'boolean',
     ];

@@ -17,16 +17,10 @@ class UserStatsService
             ->join('patients', 'users.id', '=', 'patients.user_id')
             ->join('lib_designations', 'users.designation_code', '=', 'lib_designations.code')
             ->join('facilities', 'users.facility_code', 'facilities.code')
-            ->when(isset($request->municipality_code), function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->municipality_code));
-            })
-            ->when(isset($request->barangay_code), function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->barangay_code));
-            })
-            ->groupBy('name', 'Designation', 'users.facility_code')
             ->where('users.facility_code', auth()->user()->facility_code)
             ->whereYear('patients.created_at', $request->year)
             ->whereMonth('patients.created_at', $request->month)
+            ->groupBy('name', 'Designation', 'users.facility_code')
             ->orderBy('Count', 'DESC');
     }
 }

@@ -46,20 +46,18 @@ class ConsultNcdRiskAssessmentController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consultNcdRiskAssessment = QueryBuilder::for(ConsultNcdRiskAssessment::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        })
-        ->when(isset($request->consult_id), function ($q) use ($request) {
-            $q->where('consult_id', '=', $request->consult_id);
-        })
-        ->when(isset($request->id), function ($q) use ($request) {
-            $q->where('id', '=', $request->id);
-        })
-
-        ->with('riskScreeningGlucose', 'riskScreeningLipid', 'riskScreeningKetones', 'riskScreeningProtein', 'riskQuestionnaire', 'patientNcdRecord', 'ncdRecordDiagnosis', 'ncdRecordTargetOrgan', 'ncdRecordCounselling')
-
-        ->defaultSort('assessment_date')
-        ->allowedSorts('assessment_date');
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->when(isset($request->consult_id), function ($q) use ($request) {
+                $q->where('consult_id', '=', $request->consult_id);
+            })
+            ->when(isset($request->id), function ($q) use ($request) {
+                $q->where('id', '=', $request->id);
+            })
+            ->with('riskScreeningGlucose', 'riskScreeningLipid', 'riskScreeningKetones', 'riskScreeningProtein', 'riskQuestionnaire', 'patientNcdRecord', 'ncdRecordDiagnosis', 'ncdRecordTargetOrgan', 'ncdRecordCounselling')
+            ->defaultSort('assessment_date')
+            ->allowedSorts('assessment_date');
 
         if ($perPage === 'all') {
             return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessment->get());

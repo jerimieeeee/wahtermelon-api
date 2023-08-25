@@ -91,6 +91,7 @@ class PatientGbvInterviewResource extends JsonResource
             'child_caretaker_present_flag' => $this->child_caretaker_present_flag,
             'dev_screening_id' => $this->dev_screening_id,
             'disclosed_relation_id' => $this->disclosed_relation_id,
+            'other_abuse_acts' => $this->other_abuse_acts,
             'deferred' => $this->deferred,
             'deferral_datetime' => $this->deferral_datetime,
             'deferral_reason_id' => $this->deferral_reason_id,

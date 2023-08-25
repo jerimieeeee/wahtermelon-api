@@ -57,6 +57,13 @@ class PatientRequest extends FormRequest
             'difficulty_remembering' => 'nullable',
             'difficulty_self_care' => 'nullable',
             'difficulty_speaking' => 'nullable',
+            'attendant_cc_flag' => 'boolean',
+            'attendant_mc_flag' => 'boolean',
+            'attendant_tb_flag' => 'boolean',
+            'attendant_ab_flag' => 'boolean',
+            'attendant_ml_flag' => 'boolean',
+            'attendant_fp_flag' => 'boolean',
+            'attendant_cv_flag' => 'boolean',
         ];
     }
 

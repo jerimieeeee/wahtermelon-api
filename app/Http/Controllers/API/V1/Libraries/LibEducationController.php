@@ -33,7 +33,8 @@ class LibEducationController extends Controller
     {
         $query = QueryBuilder::for(LibEducation::class)
             ->defaultSort('code')
-            ->allowedSorts('code');
+            ->allowedSorts('code')
+            ->orderBy('sequence', 'DESC');
 
         return LibEducationResource::collection($query->get());
     }

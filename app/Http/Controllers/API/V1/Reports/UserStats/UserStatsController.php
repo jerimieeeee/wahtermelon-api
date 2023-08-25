@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\V1\Reports\UserStats;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\V1\Patient\Patient;
-use App\Services\User\StatsService;
 use App\Services\User\UserStatsService;
 use Illuminate\Http\Request;
 

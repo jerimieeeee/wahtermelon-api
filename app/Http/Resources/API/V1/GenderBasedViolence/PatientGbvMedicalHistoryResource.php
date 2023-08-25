@@ -26,6 +26,7 @@ class PatientGbvMedicalHistoryResource extends JsonResource
             'patientGbvIntake' => $this->whenLoaded('patientGbvIntake'),
             'patient_temp' => $this->patient_temp,
             'patient_heart_rate' => $this->patient_heart_rate,
+            'patient_resp_rate' => $this->patient_resp_rate,
             'patient_weight' => $this->patient_weight,
             'patient_height' => $this->patient_height,
             'taking_medication_flag' => $this->taking_medication_flag,

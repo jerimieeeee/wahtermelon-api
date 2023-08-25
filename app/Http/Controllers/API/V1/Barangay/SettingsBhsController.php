@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Barangay\SettingsBhsRequest;
 use App\Http\Resources\API\V1\Barangay\SettingsBhsResource;
 use App\Models\V1\Barangay\SettingsBhs;
-use App\Models\V1\Barangay\SettingsCatchmentBarangay;
-use Illuminate\Http\Request;
 
 class SettingsBhsController extends Controller
 {
@@ -17,6 +15,7 @@ class SettingsBhsController extends Controller
     public function index()
     {
         $data = SettingsBhs::with('bhsBarangay', 'assignedUser')->get();
+
         return SettingsBhsResource::collection($data);
     }
 
@@ -26,6 +25,7 @@ class SettingsBhsController extends Controller
     public function store(SettingsBhsRequest $request)
     {
         $data = SettingsBhs::updateOrCreate($request->safe()->except('barangay'));
+
         return $data->bhsBarangay()->sync($request->barangay);
     }
 
@@ -44,6 +44,7 @@ class SettingsBhsController extends Controller
     {
         $bhs->update($request->validated());
         $bhs->bhsBarangay()->sync($request->barangay);
+
         return response()->json(['status' => 'Update successful!'], 200);
     }
 

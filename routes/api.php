@@ -65,13 +65,22 @@ Route::prefix('v1')->group(function () {
     //Households APIs
     Route::prefix('households')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Household\HouseholdFolderController::class)
-            ->middleware('auth:api')
-            ->group(function () {
-                Route::get('household-folders', 'index');
-                Route::get('household-folders/{householdFolder}', 'show');
-                Route::post('household-folders', 'store');
-                Route::put('household-folders/{householdFolder}', 'update');
-            });
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('household-folders', 'index');
+                    Route::get('household-folders/{householdFolder}', 'show');
+                    Route::post('household-folders', 'store');
+                    Route::put('household-folders/{householdFolder}', 'update');
+                });
+        Route::prefix('environmental')->group(function () {
+            Route::controller(App\Http\Controllers\API\V1\Household\HouseholdEnvironmentalController::class)
+                ->middleware(('auth:api'))
+                ->group(function () {
+                    Route::get('records', 'index');
+                    Route::post('records', 'store');
+                    Route::delete('records/{householdEnvironmental}', 'destroy');
+                });
+        });
     });
 
     //Patient Philhealth APIs
@@ -609,11 +618,25 @@ Route::prefix('v1')->group(function () {
                     Route::get('m1', 'index');
                 });
         });
+        Route::prefix('morbidity')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MorbidityReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
         Route::prefix('user')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\UserStats\UserStatsController::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('patient-registered', 'index');
+                });
+        });
+        Route::prefix('household-profiling')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\Household\HouseholdProfilingReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
                 });
         });
     });
@@ -941,6 +964,116 @@ Route::prefix('v1')->group(function () {
                 Route::post('get-voucher-details', 'GetVoucherDetails');
                 Route::post('check-claim-eligibility', 'isClaimEligible');
                 Route::post('check-doctor-accredited', 'isDoctorAccredited');
+                Route::post('upload-claim', 'eClaimsUpload');
+                Route::post('get-claims-map', 'getUploadedClaimsMap');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsCaserateListController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-caserate', 'index');
+                Route::post('eclaims-caserate', 'store');
+                Route::put('eclaims-caserate/{eclaimsCaserate}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsXmlController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('eclaims-xml', 'createXml');
+                // Route::post('eclaims-xml', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-upload', 'index');
+                Route::post('eclaims-upload', 'store');
+                Route::post('create-enc-xml', 'createEncXml');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadDocumentController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-doc', 'index');
+                Route::post('eclaims-doc', 'store');
+                Route::delete('eclaims-doc/{eclaimsDoc}', 'destroy');
+                // Route::post('eclaims-xml', 'store');
+            });
+
+    });
+
+    Route::prefix('gbv-report')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Reports\GenderBasedViolence\GenderBasedViolenceReportController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('catalyst-report', 'index');
+            });
+    });
+
+    Route::prefix('family-planning')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('fp-records', 'index');
+                Route::post('fp-records', 'store');
+                Route::get('fp-records/{patientFp}', 'show');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpHistoryController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-history', 'store');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpPhysicalExamController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-physical-exam', 'store');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpPelvicExamController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-pelvic-exam', 'store');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpMethodController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-method', 'store');
+                Route::put('fp-method/{patientFpMethod}', 'update');
+                Route::get('fp-method', 'index');
+                Route::delete('fp-method/{patientFpMethod}', 'destroy');
+            });
+        Route::controller(App\Http\Controllers\API\V1\FamilyPlanning\PatientFpChartController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::post('fp-chart', 'store');
+                Route::put('fp-chart/{patientFpChart}', 'update');
+                Route::delete('fp-chart/{patientFpChart}', 'destroy');
+            });
+    });
+
+    Route::prefix('animal-bite')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab', 'index');
+                Route::post('patient-ab', 'store');
+                Route::get('patient-ab/{patientAb}', 'show');
+                Route::put('patient-ab/{patientAb}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbExposureController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab-exposure', 'index');
+                Route::put('patient-ab-exposure/{patientAbExposure}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbPreExposureController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab-pre-exposure', 'index');
+                Route::post('patient-ab-pre-exposure', 'store');
+                Route::put('patient-ab-pre-exposure/{patientAbPreExposure}', 'update');
+                Route::delete('patient-ab-pre-exposure/{patientAbPreExposure}', 'destroy');
+            });
+        Route::controller(App\Http\Controllers\API\V1\AnimalBite\PatientAbPostExposureController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-ab-post-exposure', 'index');
+                Route::post('patient-ab-post-exposure', 'store');
             });
     });
 });

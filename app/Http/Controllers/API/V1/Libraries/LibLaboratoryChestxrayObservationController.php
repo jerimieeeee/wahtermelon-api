@@ -30,7 +30,7 @@ class LibLaboratoryChestxrayObservationController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratoryChestxrayObservation::class)
-                ->whereLibraryStatus(1);
+            ->whereLibraryStatus(1);
 
         return LibLaboratoryChestxrayObservationResource::collection($query->get());
     }

@@ -43,19 +43,19 @@ class PatientVaccineController extends Controller
         $patientvax = new PatientVaccineService();
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
-                ->when(isset($request->patient_id), function ($query) use ($request) {
-                    return $query->wherePatientId($request->patient_id);
-                });
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
 
         $vaccines = QueryBuilder::for($query)
-                ->defaultSort('-vaccine_date', '-vaccine_id')
-                ->allowedSorts(['vaccine_date', 'vaccine_id']);
+            ->defaultSort('-vaccine_date', '-vaccine_id')
+            ->allowedSorts(['vaccine_date', 'vaccine_id']);
 
         if (isset($request->patient_id)) {
             $data = $patientvax->get_immunization_status($request->patient_id)->first();
 
             return PatientVaccineResource::collection($vaccines->get())
-                    ->additional(['status' => $data]);
+                ->additional(['status' => $data]);
         }
 
         if ($perPage == 'all') {
@@ -102,8 +102,8 @@ class PatientVaccineController extends Controller
     public function show(PatientVaccine $patientvaccine)
     {
         $query = PatientVaccine::with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])->where('patient_id', $patientvaccine->patient_id)
-        ->orderBy('vaccine_date', 'desc')
-        ->get();
+            ->orderBy('vaccine_date', 'desc')
+            ->get();
 
         return PatientVaccineResource::collection($query);
     }

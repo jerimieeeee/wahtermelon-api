@@ -26,6 +26,7 @@ class PatientGbvMedicalHistoryRequest extends FormRequest
             'patient_gbv_intake_id' => 'required|exists:patient_gbv_intakes,id',
             'patient_temp' => 'nullable|numeric',
             'patient_heart_rate' => 'nullable|numeric',
+            'patient_resp_rate' => 'nullable|numeric',
             'patient_weight' => 'nullable|numeric',
             'patient_height' => 'nullable|numeric',
             'taking_medication_flag' => 'nullable|boolean',

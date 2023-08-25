@@ -18,9 +18,9 @@ class PatientGbvLegalVisitController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $query = PatientGbvLegalVisit::query()
-        ->when(isset($request->patient_id), function ($query) use ($request) {
-            return $query->wherePatientId($request->patient_id);
-        });
+            ->when(isset($request->patient_id), function ($query) use ($request) {
+                return $query->wherePatientId($request->patient_id);
+            });
         $patientGbvLegalVisit = QueryBuilder::for($query);
 
         return PatientGbvLegalVisitResource::collection($patientGbvLegalVisit->get());

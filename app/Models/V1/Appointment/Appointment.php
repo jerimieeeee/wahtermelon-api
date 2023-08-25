@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Libraries\LibAppointment;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUlids, FilterByUser;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUlids, FilterByUser, FilterByFacility;
 
     protected $guarded = [
         'id',

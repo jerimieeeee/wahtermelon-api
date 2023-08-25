@@ -31,7 +31,7 @@ class LibMedicalHistoryController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $query = QueryBuilder::for(LibMedicalHistory::class)
-                ->whereKonsultaLibraryStatus(1);
+            ->whereKonsultaLibraryStatus(1);
 
         return LibMedicalHistoryResource::collection($query->get());
 

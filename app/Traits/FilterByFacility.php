@@ -15,7 +15,7 @@ trait FilterByFacility
      */
     protected static function booted()
     {
-        if (auth()->check()) {
+        if (auth()->check() && ! request()->disable_filter) {
             static::addGlobalScope('facility', function (Builder $builder) {
                 // Disable the scope if querying through the hasOneThrough relationship
                 if ($builder->getQuery()->joins && count($builder->getQuery()->joins) === 1) {

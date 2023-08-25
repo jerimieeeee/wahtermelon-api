@@ -201,7 +201,7 @@ class KonsultaController extends Controller
         //return $service->httpClient();
         //return $service->soapMethod('checkUploadStatus', []);
         //$firstTranche = $konsultaService->generateXml();
-        return $firstTranche = $konsultaService->createXml($request->transmittal_number ?? '', $request->patient_id ?? [], $request->tranche, $request->save, $request->revalidate);
+        return $firstTranche = $konsultaService->createXml($request->transmittal_number ?? '', $request->patient_id ?? [], $request->tranche, $request->save, $request->revalidate, $request->effectivity_year);
         //$data = $service->encryptData($firstTranche);
         //return $service->soapMethod('submitReport', ['pTransmittalID' => 'RP9103406820221200001', 'pReport' => $data, 'pReportTagging' =>1]);
         //$contents = Storage::disk('spaces')->get('Konsulta/DOH000000000005173/1P91034068_20230109_RP9103406820230100001.xml.enc');
@@ -247,8 +247,8 @@ class KonsultaController extends Controller
         $konsulta = KonsultaTransmittal::query()
             ->when($request->transmittal_number, fn ($query) => $query->where('transmittal_number', $request->transmittal_number)
             )
-             ->when($request->transaction_number, fn ($query) => $query->where('konsulta_transaction_number', $request->konsulta_transaction_number)
-             )
+            ->when($request->transaction_number, fn ($query) => $query->where('konsulta_transaction_number', $request->konsulta_transaction_number)
+            )
             ->first();
 
         if (empty($konsulta)) {

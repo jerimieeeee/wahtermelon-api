@@ -57,7 +57,7 @@ class PhilHealthEClaimsEncryptor
 
         if (strlen($encryptedDataJson) > 0) {
             //saves the encrypted data to file
-            $this->log("Saving the JSON string of the encrypted e-claim doc as '".urlencode($encryptedFileName) + "'...");
+            $this->log("Saving the JSON string of the encrypted e-claim doc as '".urlencode($encryptedFileName) . "'..."); //change + openand to . - Mark Santos
             file_put_contents($encryptedFileName, $encryptedDataJson);
 
             $this->log('Deleting the original file...');
@@ -66,9 +66,9 @@ class PhilHealthEClaimsEncryptor
         $this->log('Encryption processed finished.');
     }
 
-    public function encryptXmlPayloadData($xml, $passphrase)
+    public function encryptXmlPayloadData($xml, $passphrase, $mimeType)
     {
-        return $this->encrypt($xml, 'text/xml', $passphrase);
+        return $this->encrypt($xml, $mimeType ?? 'text/xml', $passphrase);
     }
 
     public function decryptPayloadDataToXml($encryptedDataAsJsonStr, $passphrase)

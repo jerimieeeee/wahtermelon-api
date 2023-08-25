@@ -41,12 +41,12 @@ class PatientTbHistoryController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(PatientTbHistory::class)
-        ->when(isset($request->patient_id), function ($q) use ($request) {
-            $q->where('patient_id', $request->patient_id);
-        })
-        ->with('outcome')
-        ->defaultSort('-treatment_date')
-        ->allowedSorts('-treatment_date');
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->with('outcome')
+            ->defaultSort('-treatment_date')
+            ->allowedSorts('-treatment_date');
 
         if ($perPage === 'all') {
             return PatientTbHistoryResource::collection($query->get());

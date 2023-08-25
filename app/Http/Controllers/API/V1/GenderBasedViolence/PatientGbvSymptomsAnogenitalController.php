@@ -4,9 +4,7 @@ namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\GenderBasedViolence\PatientGbvSymptomsAnogenitalRequest;
-use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvInterviewNeglectAbuseResource;
 use App\Http\Resources\API\V1\GenderBasedViolence\PatientGbvSymptomsAnogenitalResource;
-use App\Models\V1\GenderBasedViolence\PatientGbvInterviewNeglectAbuse;
 use App\Models\V1\GenderBasedViolence\PatientGbvSymptomsAnogenital;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -42,13 +40,14 @@ class PatientGbvSymptomsAnogenitalController extends Controller
         $symptoms_anogenital = $request->safe()->anogenital_array;
 
         foreach ($symptoms_anogenital as $value) {
-                PatientGbvSymptomsAnogenital::updateOrCreate([
-                    'patient_id' => $request->patient_id,
-                    'patient_gbv_intake_id' => $request->patient_gbv_intake_id,
-                    'info_source_id' => $value['info_source_id'],
-                    'anogenital_symptoms_id' => $value['anogenital_symptoms_id']
-                ], $value);
+            PatientGbvSymptomsAnogenital::updateOrCreate([
+                'patient_id' => $request->patient_id,
+                'patient_gbv_intake_id' => $request->patient_gbv_intake_id,
+                'info_source_id' => $value['info_source_id'],
+                'anogenital_symptoms_id' => $value['anogenital_symptoms_id'],
+            ], $value);
         }
+
         return response()->json(['message' => 'Successfully Saved!'], 201);
     }
 

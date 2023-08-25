@@ -267,10 +267,6 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('laboratory-stool-consistency', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'index'])->name('laboratory-stool-consistency.index');
     Route::get('laboratory-stool-consistency/{stoolConsistency}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'show'])->name('laboratory-stool-consistency.show');
 
-    //Family Planning Method
-    Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
-    Route::get('family-planning-method/{id}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
-
     //Patient Pregnancy History
     Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
     Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
@@ -458,4 +454,74 @@ Route::prefix('v1/libraries')->group(function () {
 
     //GBV Symptoms Behavioral
     Route::get('gbv-medical-impression', [\App\Http\Controllers\API\V1\Libraries\LibGbvMedicalImpressionController::class, 'index'])->name('gbv-medical-impression.index');
+
+    //Eclaims Doc Type
+    Route::get('eclaims-doc-type', [\App\Http\Controllers\API\V1\Libraries\LibEclaimsDocTypeController::class, 'index'])->name('eclaims-doc-type.index');
+
+    //Family Planning Method
+    Route::get('family-planning-method', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'index'])->name('family-planning-method.index');
+    Route::get('family-planning-method/{method}', [\App\Http\Controllers\API\V1\Libraries\LibFpMethodController::class, 'show'])->name('family-planning-method.show');
+
+    //Family Planning History
+    Route::get('family-planning-history', [\App\Http\Controllers\API\V1\Libraries\LibFpHistoryController::class, 'index'])->name('family-planning-history.index');
+    Route::get('family-planning-history/{history}', [\App\Http\Controllers\API\V1\Libraries\LibFpHistoryController::class, 'show'])->name('family-planning-history.show');
+
+    //Family Planning Client Type
+    Route::get('family-planning-client-type', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'index'])->name('family-planning-client-type.index');
+    Route::get('family-planning-client-type/{clientType}', [\App\Http\Controllers\API\V1\Libraries\LibFpClientTypeController::class, 'show'])->name('family-planning-client-type.show');
+
+    //Family Planning Pelvic Exams
+    Route::get('family-planning-pelvic-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'index'])->name('family-planning-pelvic-exam.index');
+    Route::get('family-planning-pelvic-exam/{pelvicExam}', [\App\Http\Controllers\API\V1\Libraries\LibFpPelvicExamController::class, 'show'])->name('family-planning-pelvic-exam.show');
+
+    //Family Planning Physical Exam
+    Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
+
+    //Family Planning Source Supplies
+    Route::get('family-planning-source-supply', [\App\Http\Controllers\API\V1\Libraries\LibFpSourceSupplyController::class, 'index'])->name('family-planning-source-supply.index');
+
+    //Family Planning Dropout Reason
+    Route::get('family-planning-dropout-reason', [\App\Http\Controllers\API\V1\Libraries\LibFpDropoutReasonController::class, 'index'])->name('family-planning-dropout-reason.index');
+
+    //Animal Bite Anatomical Location
+    Route::get('ab-anatomical-location', [\App\Http\Controllers\API\V1\Libraries\LibAbAnatomicalLocationController::class, 'index'])->name('ab-anatomical-location.index');
+
+    //Animal Bite Animal Status
+    Route::get('ab-animal-status', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalStatusController::class, 'index'])->name('ab-animal-status.index');
+
+    //Animal Bite Animal Type
+    Route::get('ab-animal-type', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalTypeController::class, 'index'])->name('ab-animal-type.index');
+
+    //Animal Bite Exposure Type
+    Route::get('ab-exposure-type', [\App\Http\Controllers\API\V1\Libraries\LibAbExposureTypeController::class, 'index'])->name('ab-exposure-type.index');
+
+    //Animal Bite Indication Option
+    Route::get('ab-indication-option', [\App\Http\Controllers\API\V1\Libraries\LibAbIndicationOptionController::class, 'index'])->name('ab-indication-option.index');
+
+    //Animal Bite Rig Type
+    Route::get('ab-rig-type', [\App\Http\Controllers\API\V1\Libraries\LibAbRigTypeController::class, 'index'])->name('ab-rig-type.index');
+
+    //Animal Bite Vaccine Route
+    Route::get('ab-vaccine-route', [\App\Http\Controllers\API\V1\Libraries\LibAbVaccineRouteController::class, 'index'])->name('ab-vaccine-route.index');
+
+    //Animal Bite Animal Ownership
+    Route::get('ab-animal-ownership', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalOwnershipController::class, 'index'])->name('ab-animal-ownership.index');
+
+    //Animal Bite Vaccine
+    Route::get('ab-vaccine', [\App\Http\Controllers\API\V1\Libraries\LibAbVaccineController::class, 'index'])->name('ab-vaccine.index');
+
+    //Animal Bite Death Place
+    Route::get('ab-death-place', [\App\Http\Controllers\API\V1\Libraries\LibAbDeathPlaceController::class, 'index'])->name('ab-death-place.index');
+
+    //Animal Bite Outcome
+    Route::get('ab-outcome', [\App\Http\Controllers\API\V1\Libraries\LibAbOutcomeController::class, 'index'])->name('ab-outcome.index');
+
+    //Family Planning Physical Exam
+    Route::get('family-planning-physical-exam', [\App\Http\Controllers\API\V1\Libraries\LibFpPhysicalExamController::class, 'index'])->name('family-planning-physical-exam.index');
+
+    //Environmental
+    Route::get('environmental-water-type', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalWaterTypeController::class, 'index'])->name('environmental-water-type.index');
+    Route::get('environmental-result', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalResultController::class, 'index'])->name('environmental-result.index');
+    Route::get('environmental-toilet-facility', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalToiletFacilityController::class, 'index'])->name('environmental-toilet-facility.index');
+    Route::get('environmental-sewage', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalSewageController::class, 'index'])->name('environmental-sewage.index');
 });

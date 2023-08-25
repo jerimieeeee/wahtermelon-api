@@ -38,6 +38,8 @@ class LibReligionSeeder extends Seeder
             ['code' => 'UNKNO', 'religion_desc' => 'Unknown'],
             ['code' => 'WESLY', 'religion_desc' => 'Wesleyan'],
             ['code' => 'XTIAN', 'religion_desc' => 'Christian'],
+            ['code' => 'RMNCATHO', 'religion_desc' => 'Roman Catholic'],
+            ['code' => 'OTHERS', 'religion_desc' => 'Others'],
         ], ['code']);
     }
 }

@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\API\V1\GenderBasedViolence;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\UserRequest;
-use App\Http\Requests\API\V1\UserUpdateRequest;
 use App\Http\Resources\API\V1\UserResource;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientGbvUserController extends Controller

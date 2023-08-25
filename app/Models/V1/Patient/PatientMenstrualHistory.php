@@ -45,6 +45,6 @@ class PatientMenstrualHistory extends Model
 
     public function libFpMethod()
     {
-        return $this->belongsTo(LibFpMethod::class, 'method', 'id');
+        return $this->belongsTo(LibFpMethod::class, 'method', 'code');
     }
 }

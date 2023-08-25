@@ -19,6 +19,7 @@ class PatientGbvPdfUploadController extends Controller
     {
         $data = QueryBuilder::for(PatientGbvPdfUpload::class)
             ->allowedFilters(['patient_gbv_id', 'patient_id']);
+
         return PatientGbvPdfUploadResource::collection($data->get());
     }
 
@@ -32,21 +33,21 @@ class PatientGbvPdfUploadController extends Controller
             'patient_id' => 'required|exists:patients,id',
             'file' => 'required|mimes:pdf,png,jpg|max:2048',
             'file_title' => 'required',
-            'file_desc' => 'required'
+            'file_desc' => 'required',
         ]);
 
-        return DB::transaction(function () use ($request){
+        return DB::transaction(function () use ($request) {
             $data = PatientGbvPdfUpload::updateOrCreate($request->except('file'));
 
             $filename = $data->id.'.'.$request->file('file')->getClientOriginalExtension();
             $path = $request->file('file')->storeAs('GenderBasedViolence/Files/'.auth()->user()->facility_code, $filename, 'spaces');
             $data->update(['file_url' => $path]);
+
             return response()->json('Photo Successfully Updated');
         });
 
         //$file = Storage::disk('spaces')->get($path);
         //$type = Storage::disk('spaces')->mimeType($path);
-
 
     }
 
@@ -56,6 +57,7 @@ class PatientGbvPdfUploadController extends Controller
     public function show(PatientGbvPdfUpload $gbvPdfUpload)
     {
         $fileStorage = Storage::disk('spaces');
+
         return $fileStorage->download($gbvPdfUpload->file_url);
     }
 

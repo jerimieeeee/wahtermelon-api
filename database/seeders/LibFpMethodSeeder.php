@@ -15,21 +15,21 @@ class LibFpMethodSeeder extends Seeder
     public function run()
     {
         LibFpMethod::upsert([
-            ['id' => 'CONDOM',   'method_desc' => 'Condom',                                             'method_gender' => 'M', 'fhsis_code' => 'CON',          'report_order' => '11', 'unit' => 'pack'],
-            ['id' => 'DMPA',     'method_desc' => 'Injectables',                                        'method_gender' => 'F', 'fhsis_code' => 'DMPA',         'report_order' => '5',  'unit' => 'vial'],
-            ['id' => 'FSTRBTL',  'method_desc' => 'Female Sterilization /Bilateral Tubal Ligation',     'method_gender' => 'F', 'fhsis_code' => 'FSTR/BTL',     'report_order' => '1',  'unit' => null],
-            ['id' => 'IMPLANT',  'method_desc' => 'Implant',                                            'method_gender' => 'F', 'fhsis_code' => 'IMPLANT',      'report_order' => '12', 'unit' => 'set'],
-            ['id' => 'IUD',      'method_desc' => 'IUD-I',                                              'method_gender' => 'F', 'fhsis_code' => 'IUD',          'report_order' => '4',  'unit' => 'set'],
-            ['id' => 'IUDPP',    'method_desc' => 'IUD-PP',                                             'method_gender' => 'F', 'fhsis_code' => 'IUD-PP',       'report_order' => '14', 'unit' => null],
-            ['id' => 'MSV',      'method_desc' => 'Male Sterilization /Vasectomy',                      'method_gender' => 'M', 'fhsis_code' => 'MSTR/Vasec',   'report_order' => '2',  'unit' => null],
-            ['id' => 'NA',       'method_desc' => 'N/A',                                                'method_gender' => 'M', 'fhsis_code' => 'N/A',          'report_order' => '0',  'unit' => null],
-            ['id' => 'NFPBBT',   'method_desc' => 'NFP Basal Body Temperature',                         'method_gender' => 'F', 'fhsis_code' => 'NFP-BBT',      'report_order' => '7',  'unit' => null],
-            ['id' => 'NFPCM',    'method_desc' => 'NFP Cervical Mucus Method',                          'method_gender' => 'F', 'fhsis_code' => 'NFP-CM',       'report_order' => '6',  'unit' => null],
-            ['id' => 'NFPLAM',   'method_desc' => 'NFP Lactational amenorrhea',                         'method_gender' => 'F', 'fhsis_code' => 'NFP-LAM',      'report_order' => '8',  'unit' => null],
-            ['id' => 'NFPSDM',   'method_desc' => 'NFP Standard Days Method',                           'method_gender' => 'F', 'fhsis_code' => 'NFP-SDM',      'report_order' => '9',  'unit' => null],
-            ['id' => 'NFPSTM',   'method_desc' => 'NFP Sympothermal Method',                            'method_gender' => 'F', 'fhsis_code' => 'NFP-STM',      'report_order' => '10', 'unit' => null],
-            ['id' => 'PILLS',    'method_desc' => 'Pills-COC',                                          'method_gender' => 'F', 'fhsis_code' => 'PILLS',        'report_order' => '3',  'unit' => 'set'],
-            ['id' => 'PILLSPOP', 'method_desc' => 'Pills-POP',                                          'method_gender' => 'F', 'fhsis_code' => 'PILLS-COC',    'report_order' => '13', 'unit' => null],
-        ], ['id']);
+            ['code' => 'CONDOM',   'desc' => 'Condom',                                             'gender' => 'M', 'fhsis_code' => 'CON',          'sequence' => '11', 'unit' => 'pack'],
+            ['code' => 'DMPA',     'desc' => 'Injectables',                                        'gender' => 'F', 'fhsis_code' => 'DMPA',         'sequence' => '5',  'unit' => 'vial'],
+            ['code' => 'FSTRBTL',  'desc' => 'Female Sterilization /Bilateral Tubal Ligation',     'gender' => 'F', 'fhsis_code' => 'FSTR/BTL',     'sequence' => '1',  'unit' => null],
+            ['code' => 'IMPLANT',  'desc' => 'Implant',                                            'gender' => 'F', 'fhsis_code' => 'IMPLANT',      'sequence' => '12', 'unit' => 'set'],
+            ['code' => 'IUD',      'desc' => 'IUD-I',                                              'gender' => 'F', 'fhsis_code' => 'IUD',          'sequence' => '4',  'unit' => 'set'],
+            ['code' => 'IUDPP',    'desc' => 'IUD-PP',                                             'gender' => 'F', 'fhsis_code' => 'IUD-PP',       'sequence' => '14', 'unit' => null],
+            ['code' => 'MSV',      'desc' => 'Male Sterilization /Vasectomy',                      'gender' => 'M', 'fhsis_code' => 'MSTR/Vasec',   'sequence' => '2',  'unit' => null],
+            ['code' => 'NA',       'desc' => 'N/A',                                                'gender' => 'M', 'fhsis_code' => 'N/A',          'sequence' => '0',  'unit' => null],
+            ['code' => 'NFPBBT',   'desc' => 'NFP Basal Body Temperature',                         'gender' => 'F', 'fhsis_code' => 'NFP-BBT',      'sequence' => '7',  'unit' => null],
+            ['code' => 'NFPCM',    'desc' => 'NFP Cervical Mucus Method',                          'gender' => 'F', 'fhsis_code' => 'NFP-CM',       'sequence' => '6',  'unit' => null],
+            ['code' => 'NFPLAM',   'desc' => 'NFP Lactational amenorrhea',                         'gender' => 'F', 'fhsis_code' => 'NFP-LAM',      'sequence' => '8',  'unit' => null],
+            ['code' => 'NFPSDM',   'desc' => 'NFP Standard Days Method',                           'gender' => 'F', 'fhsis_code' => 'NFP-SDM',      'sequence' => '9',  'unit' => null],
+            ['code' => 'NFPSTM',   'desc' => 'NFP Sympothermal Method',                            'gender' => 'F', 'fhsis_code' => 'NFP-STM',      'sequence' => '10', 'unit' => null],
+            ['code' => 'PILLS',    'desc' => 'Pills-COC',                                          'gender' => 'F', 'fhsis_code' => 'PILLS',        'sequence' => '3',  'unit' => 'set'],
+            ['code' => 'PILLSPOP', 'desc' => 'Pills-POP',                                          'gender' => 'F', 'fhsis_code' => 'PILLS-COC',    'sequence' => '13', 'unit' => null],
+        ], ['code']);
     }
 }

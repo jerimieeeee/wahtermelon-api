@@ -166,6 +166,18 @@ class DatabaseSeeder extends Seeder
             LibGbvGeneralSurveySeeder::class,
             LibGbvMedicalImpressionSeeder::class,
             LibMedicineSeeder::class,
+            LibEclaimsDocTypeSeeder::class,
+            LibFpHistorySeeder::class,
+            LibFpPelvicExamSeeder::class,
+            LibFpClientTypeSeeder::class,
+            LibFpSourceSupplySeeder::class,
+            LibFpDropoutReasonSeeder::class,
+            LibAbDeathPlaceSeeder::class,
+            LibEnvironmentalResultSeeder::class,
+            LibEnvironmentalSewageSeeder::class,
+            LibEnvironmentalToiletFacilitySeeder::class,
+            LibEnvironmentalWasteManagementSeeder::class,
+            LibEnvironmentalWaterTypeSeeder::class,
         ]);
     }
 }
