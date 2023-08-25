@@ -59,7 +59,7 @@ class PatientFpChartController extends Controller
      */
     public function update(PatientFpChartUpdateRequest $request, PatientFpChart $patientFpChart)
     {
-        $patientFpChart->update($request->only(['service_date', 'source_supply_code', 'next_service_date', 'quantity', 'remarks']));
+        $patientFpChart->update($request->only(['service_date', 'source_supply_code', 'quantity', 'remarks']));
 
         return response()->json(['status' => 'Update successful!'], 200);
     }
