@@ -24,7 +24,7 @@ class PatientFpChartUpdateRequest extends FormRequest
         return [
             'service_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'source_supply_code' => 'required|exists:lib_fp_source_supplies,code',
-            'next_service_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'next_service_date' => 'nullable|date|date_format:Y-m-d|after:today',
             'quantity' => 'nullable|numeric',
             'remarks' => 'nullable'
         ];
