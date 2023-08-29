@@ -112,7 +112,7 @@ class LibPeSeeder extends Seeder
             ['category_id' => 'BREAST',     'pe_id' => 'BREAST09', 'pe_desc' => 'Essentially Normal',            'konsulta_pe_id' => null,   'seq_id' => '1', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
 
             //PELVIC
-            ['category_id' => 'PELVIC', 'pe_id' => 'PELVIC01', 'pe_desc' => 'Vulva: Redness (inflammation)',       'konsulta_pe_id' => null,   'seq_id' => '7',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'PELVIC', 'pe_id' => 'PELVIC01', 'pe_desc' => 'Vulva: Redness (Inflammation)',       'konsulta_pe_id' => null,   'seq_id' => '7',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
             ['category_id' => 'PELVIC', 'pe_id' => 'PELVIC02', 'pe_desc' => 'Tenderness',                          'konsulta_pe_id' => null,   'seq_id' => '5',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
             ['category_id' => 'PELVIC', 'pe_id' => 'PELVIC03', 'pe_desc' => 'Ulcers',                              'konsulta_pe_id' => null,   'seq_id' => '6', 'konsulta_library_status' => '0', 'modules' => 'ncd'],
             ['category_id' => 'PELVIC', 'pe_id' => 'PELVIC04', 'pe_desc' => 'Blisters',                            'konsulta_pe_id' => null,   'seq_id' => '2', 'konsulta_library_status' => '0', 'modules' => 'ncd'],

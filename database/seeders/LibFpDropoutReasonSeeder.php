@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibEbfReason;
 use App\Models\V1\Libraries\LibFpDropoutReason;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class LibFpDropoutReasonSeeder extends Seeder
 {
@@ -13,6 +15,10 @@ class LibFpDropoutReasonSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        LibFpDropoutReason::truncate();
+        Schema::enableForeignKeyConstraints();
+
         LibFpDropoutReason::upsert([
             ['desc' => 'Pregnant',                                      'fhsis_code' => 'A'],
             ['desc' => 'Desire to become pregnant',                     'fhsis_code' => 'B'],
