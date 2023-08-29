@@ -28,7 +28,7 @@ class PatientFpChartRequest extends FormRequest
             'service_date' => 'date|date_format:Y-m-d|required',
             'source_supply_code' => 'required|exists:lib_fp_source_supplies,code',
             'quantity' => 'nullable|numeric',
-            'next_service_date' => 'nullable|date|date_format:Y-m-d|before:today',
+            'next_service_date' => 'nullable|date|date_format:Y-m-d|after:today',
             'remarks' => 'nullable'
         ];
     }
