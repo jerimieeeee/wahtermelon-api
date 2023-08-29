@@ -672,6 +672,7 @@ class HouseholdProfilingReportService
             ->whereGender($gender)
             ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('patients.id')
+
             ///Age/Health RiskGroup Query
             ->when($type == 'newborn', function ($q) use ($request) {
                 $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 0 AND 28)');
@@ -694,6 +695,8 @@ class HouseholdProfilingReportService
             ->when($type == 'senior', function ($q) use ($request) {
                 $q->havingRaw('age_year >= 60');
             })
+
+            //Age Group
             ->when($type == '1-28days', function ($q) use ($request) {
                 $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 1 AND 28)');
             })
