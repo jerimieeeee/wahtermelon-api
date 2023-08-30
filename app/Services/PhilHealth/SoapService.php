@@ -28,6 +28,15 @@ class SoapService
             ],
         ];
 
+        if (isset(request()->program_code) && request()->program_code !== 'kp') {
+            $eclaimsSyncService = new EclaimsSyncService();
+            $wsdlUrl = $eclaimsSyncService->checkEclaimsUrl()[0];
+        } else {
+            $token = auth()->user()->konsultaCredential->token;
+            $opts['http']['header'] = "Token: $token";
+            $wsdlUrl = config('app.konsulta_url');
+        }
+
 //        if (! isset(request()->program_code) && request()->program_code !== 'kp') {
 //            $token = auth()->user()->konsultaCredential->token;
 //            $opts['http']['header'] = "Token: $token";
@@ -38,15 +47,15 @@ class SoapService
 //            $wsdlUrl = $onlineUrls[0];
 //        }
 
-        if (isset(request()->program_code) && request()->program_code !== 'kp') {
-            $eclaimsSyncService = new EclaimsSyncService();
-            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
-            $wsdlUrl = $onlineUrls[0];
-        } else {
-            $token = auth()->user()->konsultaCredential->token;
-            $opts['http']['header'] = "Token: $token";
-            $wsdlUrl = config('app.konsulta_url');
-        }
+//        if (isset(request()->program_code) && request()->program_code !== 'kp') {
+//            $eclaimsSyncService = new EclaimsSyncService();
+//            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
+//            $wsdlUrl = $onlineUrls[0];
+//        } else {
+//            $token = auth()->user()->konsultaCredential->token;
+//            $opts['http']['header'] = "Token: $token";
+//            $wsdlUrl = config('app.konsulta_url');
+//        }
 
 //        if (! isset(request()->program_code) && request()->program_code != 'kp') {
 //            //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
