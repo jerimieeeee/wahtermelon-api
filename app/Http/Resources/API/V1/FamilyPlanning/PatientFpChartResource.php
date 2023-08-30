@@ -30,6 +30,7 @@ class PatientFpChartResource extends JsonResource
             'quantity' => $this->quantity,
             'service_date' => $this->service_date,
             'next_service_date' => $this->next_service_date,
+            'remarks' => $this->remarks,
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
