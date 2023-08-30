@@ -38,7 +38,7 @@ class SoapService
 //            $wsdlUrl = $onlineUrls[0];
 //        }
 
-        if (! isset(request()->program_code) && request()->program_code !== 'kp') {
+        if (isset(request()->program_code) && request()->program_code !== 'kp') {
             $eclaimsSyncService = new EclaimsSyncService();
             $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
             $wsdlUrl = $onlineUrls[0];
