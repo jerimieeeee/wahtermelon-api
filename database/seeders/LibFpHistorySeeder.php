@@ -47,7 +47,7 @@ class LibFpHistorySeeder extends Seeder
             ['code' => 'HEADACHE',      'desc' => 'Severe headache/dizziness',                                                          'category' => 'HEENT',    'sequence' => '28'],
             ['code' => 'ETHY',          'desc' => 'Enlarged thyroid',                                                                   'category' => 'HEENT',    'sequence' => '29'],
             ['code' => 'EPILEPSY',      'desc' => 'Epilepsy/Convulsion/Seizure',                                                        'category' => 'HEENT',    'sequence' => '30'],
-            ['code' => 'VISION',        'desc' => 'Visual disturbance/blurring of visione',                                             'category' => 'HEENT',    'sequence' => '31'],
+            ['code' => 'VISION',        'desc' => 'Visual disturbance/blurring of vision',                                             'category' => 'HEENT',    'sequence' => '31'],
             ['code' => 'YCONJ',         'desc' => 'Yellowish conjunctive',                                                              'category' => 'HEENT',    'sequence' => '32'],
 
             ['code' => 'YELLOWSKIN',    'desc' => 'Yellowish skin',                                                                     'category' => 'SKIN',     'sequence' => '33'],
