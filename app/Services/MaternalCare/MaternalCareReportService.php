@@ -827,7 +827,7 @@ class MaternalCareReportService
                 $q->whereIn('municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
+                $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->whereIn('status', ['full_term', 'pre_term'])
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'SB', 'SBF'])
@@ -881,7 +881,7 @@ class MaternalCareReportService
                 $q->whereIn('municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
+                $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code')
             ->when($status == 'FULL-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', ['full_term', $age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
