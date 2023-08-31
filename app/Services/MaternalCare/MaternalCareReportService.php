@@ -489,10 +489,10 @@ class MaternalCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereVisitSequence(2)
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
