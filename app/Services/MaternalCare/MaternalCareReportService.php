@@ -261,23 +261,22 @@ class MaternalCareReportService
     {
         return DB::table(function ($query) use ($request) {
             $query->selectRaw("
-                    CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                    birthdate,
-                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS vaccine_id,
-                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS date_of_service,
-                    status_id,
-                    pre_registration_date,
-                    initial_gravidity,
-                    initial_parity,
-                    municipality_code,
-                    barangay_code
+                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                            birthdate,
+                            vaccine_date AS date_of_service,
+                            vaccine_id,
+                            status_id,
+                            ROW_NUMBER() OVER (PARTITION BY patients.id,
+                                vaccine_id ORDER BY vaccine_id) AS vaccine_seq,
+                            municipality_code,
+                            barangay_code
                 ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
                 ->join('patient_mc', 'patient_vaccines.patient_id', '=', 'patient_mc.patient_id')
                 ->join('patient_mc_pre_registrations', 'patient_mc.id', '=', 'patient_mc_pre_registrations.patient_mc_id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
+                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
                 ->when($request->category == 'all', function ($q) {
                     $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
@@ -289,29 +288,26 @@ class MaternalCareReportService
                     $q->whereIn('municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+                    $q->whereIn('barangay_code', explode(',', $request->code));
                 })
-                ->whereStatusId('1')
                 ->whereVaccineId('TD')
-                ->groupBy('patient_vaccines.patient_id');
+                ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
         })
             ->selectRaw('
                         name,
-                        birthdate,
                         vaccine_id,
+                        birthdate,
                         date_of_service,
                         status_id,
+                        vaccine_seq,
                         TIMESTAMPDIFF(YEAR, birthdate, date_of_service) AS age_year,
                         municipality_code,
                         barangay_code
             ')
-            ->whereStatusId('1')
-            ->whereInitialGravidity('1')
-            ->whereInitialParity('0')
+            ->where('vaccine_seq', 2)
             ->whereYear('date_of_service', $request->year)
             ->whereMonth('date_of_service', $request->month)
             ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, date_of_service) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
-            ->havingRaw('COUNT(patient_vaccines.id) IN (?,?,?) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', ['3','4','5', $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
