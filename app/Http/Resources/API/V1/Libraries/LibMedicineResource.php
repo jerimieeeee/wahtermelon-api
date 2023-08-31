@@ -14,6 +14,12 @@ class LibMedicineResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'hprodid' => $this->hprodid,
+            'drug_name' => $this->drug_name,
+            'gen_name' => $this->gen_name,
+            'form_desc' => $this->form_desc,
+            'stre_desc' => $this->stre_desc
+        ];
     }
 }

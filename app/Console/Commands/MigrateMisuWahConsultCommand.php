@@ -10,10 +10,12 @@ use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Consultation\ConsultPeRemarks;
+use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -50,6 +52,9 @@ class MigrateMisuWahConsultCommand extends Command
         //echo $consults;
         //echo Consult::get();
         $this->saveConsult($consults, $database, $connectionName);
+
+        $prescriptions =  $this->getMedicinePrescription();
+        $this->savePrescription($prescriptions, $database, $connectionName);
     }
 
     private function getConsult()
@@ -315,7 +320,7 @@ class MigrateMisuWahConsultCommand extends Command
             return;
         }
         $consultBar = $this->output->createProgressBar($consultsCount);
-        $consultBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %estimated:-6s%');
+        $consultBar->setFormat('Processing Consult Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:-6s% Estimated: %estimated:-6s%');
         $consultBar->start();
         $startTime = time();
 
@@ -452,6 +457,110 @@ class MigrateMisuWahConsultCommand extends Command
 
     }
 
+    public function getMedicinePrescription()
+    {
+        return DB::connection('mysql_migration')->table('drug_prescription')
+            ->selectRaw('
+                drug_prescription.id AS id,
+                consult.wahtermelon_consult_id AS consult_id,
+                patient.wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
+                hprodid AS medicine_code,
+                drug_added AS added_medicine,
+                prescription_date,
+                dosage_qty AS dosage_quantity,
+                CASE
+                    WHEN dosage_uom = "tbs" THEN "T, tbs"
+                    WHEN dosage_uom = "tsp" THEN "t, tsp"
+                    ELSE dosage_uom
+                END AS dosage_uom,
+                dose_regimen,
+                medicine_purpose,
+                purpose_other,
+                duration_intake,
+                duration_frequency,
+                quantity,
+                quantity_uom AS quantity_preparation,
+                prescription_remarks AS remarks,
+                drug_prescription.created_at AS created_at,
+                drug_prescription.updated_at AS updated_at
+            ')
+            ->join('user AS user', function ($join) {
+                $join->on('drug_prescription.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->join('patient', function ($join) {
+                $join->on('drug_prescription.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('consult', function ($join) {
+                $join->on('drug_prescription.consult_id', '=', 'consult.id')
+                    ->whereNotNull('consult.wahtermelon_consult_id');
+            })
+            ->whereNull('wahtermelon_prescription_id')
+            ->get();
+    }
+
+    private  function savePrescription($prescriptions, $database, $connectionName)
+    {
+        $prescriptionsCount = count($prescriptions);
+        if ($prescriptionsCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+
+        $prescriptionBar = $this->output->createProgressBar($prescriptionsCount);
+        $prescriptionBar->setFormat('Processing Prescription Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $prescriptionBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($prescriptions->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $prescriptionData) {
+                $prescription = (array) $prescriptionData;
+
+                DB::transaction(function () use ($prescription, $database, $connectionName) {
+                    $keysToRemoveIfEmpty = ['medicine_code', 'added_medicine', 'purpose_other', 'remarks'];
+
+                    foreach ($keysToRemoveIfEmpty as $key) {
+                        if (empty($prescription[$key])) {
+                            Arr::pull($prescription, $key);
+                        }
+                    }
+
+                    $data = [
+                        'patient_id' => $prescription['patient_id'],
+                        'consult_id' => $prescription['consult_id'],
+                    ];
+
+                    foreach (['medicine_code', 'added_medicine'] as $key) {
+                        if (!empty($prescription[$key])) {
+                            $data[$key] = $prescription[$key];
+                        }
+                    }
+
+                    $newPrescription = MedicinePrescription::query()
+                        ->updateOrCreate($data, $prescription + ['facility_code' => $database]);
+                });
+
+                $prescriptionBar->advance();
+            }
+        }
+
+        $prescriptionBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Prescription Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+
+
+    }
+
     public function migrationConnection($connectionName, $database)
     {
         //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
@@ -476,6 +585,19 @@ class MigrateMisuWahConsultCommand extends Command
             // Add column if it doesn't exist on the 'patient' table
             Schema::connection($connectionName)->table('consult', function (Blueprint $table) {
                 $table->string('wahtermelon_consult_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('drug_prescription', function (Blueprint $table) {
+                $table->string('wahtermelon_prescription_id')->nullable()->after('id');
                 // Add more columns if needed
             });
         } catch (\Exception $e) {

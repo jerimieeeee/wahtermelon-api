@@ -212,6 +212,9 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('konsulta-medicines', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineController::class, 'index'])->name('konsulta-medicines.index');
     Route::get('konsulta-medicines/{medicine}', [\App\Http\Controllers\API\V1\Libraries\LibKonsultaMedicineController::class, 'show'])->name('konsulta-medicines.show');
 
+    Route::get('medicines', [\App\Http\Controllers\API\V1\Libraries\LibMedicineController::class, 'index'])->name('medicines.index');
+    Route::get('medicines/{medicine}', [\App\Http\Controllers\API\V1\Libraries\LibMedicineController::class, 'show'])->name('medicines.show');
+
     //PhilHealth Programs
     Route::get('philhealth-programs', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthProgramController::class, 'index'])->name('philhealth-programs.index');
     Route::get('philhealth-programs/{program}', [\App\Http\Controllers\API\V1\Libraries\LibPhilhealthProgramController::class, 'show'])->name('philhealth-programs.show');
