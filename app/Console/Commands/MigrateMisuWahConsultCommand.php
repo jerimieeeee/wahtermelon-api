@@ -48,13 +48,14 @@ class MigrateMisuWahConsultCommand extends Command
         );
         $connectionName = 'mysql_migration';
         $this->migrationConnection($connectionName, $database);
-        $consults = $this->getConsult();
-        //echo $consults;
-        //echo Consult::get();
-        $this->saveConsult($consults, $database, $connectionName);
-
-        $prescriptions =  $this->getMedicinePrescription();
-        $this->savePrescription($prescriptions, $database, $connectionName);
+//        $consults = $this->getConsult();
+//        //echo $consults;
+//        //echo Consult::get();
+//        $this->saveConsult($consults, $database, $connectionName);
+//
+//        $prescriptions =  $this->getMedicinePrescription();
+//        $this->savePrescription($prescriptions, $database, $connectionName);
+        $this->deleteDuplicateDispensingRecords($connectionName);
     }
 
     private function getConsult()
@@ -543,6 +544,9 @@ class MigrateMisuWahConsultCommand extends Command
 
                     $newPrescription = MedicinePrescription::query()
                         ->updateOrCreate($data, $prescription + ['facility_code' => $database]);
+
+                    DB::connection($connectionName)->table('drug_prescription')->whereId($prescription['id'])->update(['wahtermelon_prescription_id' => $newPrescription->id]);
+
                 });
 
                 $prescriptionBar->advance();
@@ -559,6 +563,38 @@ class MigrateMisuWahConsultCommand extends Command
         $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
 
 
+    }
+
+    public function deleteDuplicateDispensingRecords($connectionName)
+    {
+        $duplicateRows = DB::connection($connectionName)->table('drug_dispensing')
+            ->select('prescription_id', DB::raw('COUNT(*) as count, DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") as created_at_formatted'))
+            ->groupBy('prescription_id', 'created_at_formatted')
+            ->having('count', '>', 1)
+            ->get();
+
+        // Step 2: Delete Duplicates Except One
+        foreach ($duplicateRows as $row) {
+            $idsToDelete = DB::connection($connectionName)
+                ->table('drug_dispensing AS d1')
+                ->select('d1.id')
+                ->where('d1.prescription_id', $row->prescription_id)
+                ->where('d1.created_at', $row->created_at_formatted)
+                ->whereExists(function ($query) use ($row) {
+                    $query->select(DB::raw(1))
+                        ->from('drug_dispensing AS d2')
+                        ->whereRaw('d1.prescription_id = d2.prescription_id')
+                        ->whereRaw('d1.created_at = d2.created_at')
+                        ->whereRaw('d1.id > d2.id');
+                })
+                ->get()
+                ->pluck('id');
+
+            DB::connection($connectionName)
+                ->table('drug_dispensing')
+                ->whereIn('id', $idsToDelete)
+                ->delete();
+        }
     }
 
     public function migrationConnection($connectionName, $database)
