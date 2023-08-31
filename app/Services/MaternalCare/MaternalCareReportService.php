@@ -257,9 +257,9 @@ class MaternalCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function pregnant_td2_vaccine($request, $patient_gender, $age_year_bracket1, $age_year_bracket2)
+    public function pregnant_td2_vaccine($request, $age_year_bracket1, $age_year_bracket2)
     {
-        return DB::table(function ($query) use ($request, $patient_gender) {
+        return DB::table(function ($query) use ($request) {
             $query->selectRaw("
                     CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                     birthdate,
@@ -293,7 +293,6 @@ class MaternalCareReportService
                 })
                 ->whereStatusId('1')
                 ->whereVaccineId('TD')
-                ->whereGender($patient_gender)
                 ->groupBy('patient_vaccines.patient_id');
         })
             ->selectRaw('
