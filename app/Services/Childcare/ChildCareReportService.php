@@ -238,7 +238,7 @@ class ChildCareReportService
         ")
             ->groupBy('birthdate', 'municipality_code', 'barangay_code', 'name', 'gender')
             ->when($request->category == 'all', function ($q) {
-                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+                $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
