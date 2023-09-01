@@ -236,6 +236,7 @@ class ChildCareReportService
                 municipality_code,
                 barangay_code
         ")
+            ->where('status_id', '=', '1')
             ->groupBy('birthdate', 'municipality_code', 'barangay_code', 'name', 'gender')
             ->when($request->category == 'all', function ($q) {
                 $q->where('facility_code', auth()->user()->facility_code);
