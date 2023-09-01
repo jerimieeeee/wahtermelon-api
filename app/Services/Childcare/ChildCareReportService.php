@@ -495,7 +495,7 @@ class ChildCareReportService
             ->whereIn('konsulta_medicine_code', ['ALBED0000000006SUS1400195BOTTL', 'ALBED0000000006SUS1400231BOTTL', 'ALBED0000000006SUS1400379BOTTL', 'ALBED0000000006SUS1400469BOTTL', 'ALBED0000000034TAB490000000000'])
             ->whereGender($patient_gender)
             ->groupBy('medicine_prescriptions.patient_id', 'prescription_date', 'municipality_code', 'barangay_code')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND (COUNT(medicine_prescriptions.patient_id) <= 2) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?) AND (COUNT(medicine_prescriptions.patient_id) >= 2) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 
