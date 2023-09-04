@@ -28,7 +28,7 @@ class SoapService
             ],
         ];
 
-        if (isset(request()->program_code) && request()->program_code !== 'kp') {
+        if (isset(request()->program_code)) {
             $eclaimsSyncService = new EclaimsSyncService();
             $wsdlUrl = $eclaimsSyncService->checkEclaimsUrl()[0];
         } else {
