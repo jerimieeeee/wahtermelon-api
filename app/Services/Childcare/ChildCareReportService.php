@@ -242,13 +242,13 @@ class ChildCareReportService
                 $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+                $q->whereIn('barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
                 $q->whereIn('municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+                $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->when($immunization_status == 'FIC', function ($query) use ($patient_gender, $request) {
                 $query->whereGender($patient_gender)
