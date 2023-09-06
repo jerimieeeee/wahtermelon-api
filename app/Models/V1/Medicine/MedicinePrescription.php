@@ -5,6 +5,7 @@ namespace App\Models\V1\Medicine;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibKonsultaMedicine;
+use App\Models\V1\Libraries\LibMedicine;
 use App\Models\V1\Libraries\LibMedicineDoseRegimen;
 use App\Models\V1\Libraries\LibMedicineDurationFrequency;
 use App\Models\V1\Libraries\LibMedicinePreparation;
@@ -80,6 +81,11 @@ class MedicinePrescription extends Model
     public function konsultaMedicine()
     {
         return $this->belongsTo(LibKonsultaMedicine::class, 'konsulta_medicine_code', 'code');
+    }
+
+    public function medicine()
+    {
+        return $this->belongsTo(LibMedicine::class, 'medicine_code', 'hprodid');
     }
 
     public function dosageUom()

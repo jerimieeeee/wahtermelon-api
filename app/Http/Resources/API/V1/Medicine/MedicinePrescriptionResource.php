@@ -29,6 +29,8 @@ class MedicinePrescriptionResource extends JsonResource
             'prescription_date' => $this->prescription_date->format('Y-m-d'),
             'konsulta_medicine_code' => $this->when(! $this->relationLoaded('konsultaMedicine'), $this->konsulta_medicine_code),
             'konsulta_medicine' => $this->whenLoaded('konsultaMedicine'),
+            'medicine_code' => $this->when(! $this->relationLoaded('medicine'), $this->medicine_code),
+            'medicine' => $this->whenLoaded('medicine'),
             'added_medicine' => $this->added_medicine,
             'instruction_quantity' => $this->instruction_quantity,
             'dosage_quantity' => $this->dosage_quantity,

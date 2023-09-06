@@ -24,6 +24,14 @@ class LibMedicinePreparationSeeder extends Seeder
             ['code' => 'SUSP', 'desc' => 'Suspension'],
             ['code' => 'TAB', 'desc' => 'Tablet'],
             ['code' => 'VIAL', 'desc' => 'Vial'],
+            ['code' => 'MDI', 'desc' => 'Metered Dose Inhaler'],
+            ['code' => 'CRE', 'desc' => 'Cream'],
+            ['code' => 'OINT', 'desc' => 'Ointment'],
+            ['code' => 'CARP', 'desc' => 'Carpule'],
+            ['code' => 'SOL', 'desc' => 'Solution'],
+            ['code' => 'SYR', 'desc' => 'Syrup'],
+            ['code' => 'LOT', 'desc' => 'Lotion'],
+            ['code' => 'TUBE', 'desc' => 'Tube']
         ], ['code']);
     }
 }
