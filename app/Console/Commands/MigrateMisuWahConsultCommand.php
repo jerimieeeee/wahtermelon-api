@@ -57,6 +57,8 @@ class MigrateMisuWahConsultCommand extends Command
         $prescriptions =  $this->getMedicinePrescription();
         $this->savePrescription($prescriptions, $database, $connectionName);
 
+        $treatmentNotes = $this->getTreatmentNotes();
+        $this->saveTreatmentNotes($treatmentNotes);
     }
 
     private function getConsult()
@@ -639,6 +641,63 @@ class MigrateMisuWahConsultCommand extends Command
         }
     }
 
+    public function getTreatmentNotes()
+    {
+        return DB::connection('mysql_migration')->table('notes_treatment')
+            ->selectRaw('
+                notes_treatment.id AS id,
+                wahtermelon_consult_id AS consult_id,
+                treatment_notes AS plan
+            ')
+            ->join('consult', function ($join) {
+                $join->on('notes_treatment.consult_id', '=', 'consult.id')
+                    ->whereNotNull('consult.wahtermelon_consult_id');
+            })
+            ->where('migrated', 0)
+            ->get();
+    }
+
+    public function saveTreatmentNotes($treatmentNotes)
+    {
+        $treatmentNotesCount = count($treatmentNotes);
+        if ($treatmentNotesCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+
+        $treatmentNotesBar = $this->output->createProgressBar($treatmentNotesCount);
+        $treatmentNotesBar->setFormat('Processing Treatment Notes Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $treatmentNotesBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($treatmentNotes->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $treatmentNotesData) {
+                $treatmentNotesData = (array) $treatmentNotesData;
+                DB::transaction(function () use ($treatmentNotesData) {
+                    $updateConsultNotes = ConsultNotes::query()
+                        ->updateOrCreate(['consult_id' => $treatmentNotesData['consult_id']], $treatmentNotesData);
+                    DB::connection('mysql_migration')->table('notes_treatment')->whereId($treatmentNotesData['id'])->where('migrated', 0)->update(['migrated' => 1]);
+
+                });
+
+                $treatmentNotesBar->advance();
+            }
+        }
+
+        $treatmentNotesBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Treatment Notes Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+
+    }
+
     public function migrationConnection($connectionName, $database)
     {
         //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
@@ -676,6 +735,18 @@ class MigrateMisuWahConsultCommand extends Command
         try {
             Schema::connection($connectionName)->table('drug_prescription', function (Blueprint $table) {
                 $table->string('wahtermelon_prescription_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('notes_treatment', function (Blueprint $table) {
+                $table->boolean('migrated')->nullable()->after('treatment_notes')->default(0);
                 // Add more columns if needed
             });
         } catch (\Exception $e) {
