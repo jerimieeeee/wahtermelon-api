@@ -10,6 +10,7 @@ use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Consultation\ConsultPeRemarks;
+use App\Models\V1\Medicine\MedicineDispensing;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
@@ -48,14 +49,14 @@ class MigrateMisuWahConsultCommand extends Command
         );
         $connectionName = 'mysql_migration';
         $this->migrationConnection($connectionName, $database);
-//        $consults = $this->getConsult();
-//        //echo $consults;
-//        //echo Consult::get();
-//        $this->saveConsult($consults, $database, $connectionName);
-//
-//        $prescriptions =  $this->getMedicinePrescription();
-//        $this->savePrescription($prescriptions, $database, $connectionName);
-        $this->deleteDuplicateDispensingRecords($connectionName);
+        $consults = $this->getConsult();
+        //echo $consults;
+        //echo Consult::get();
+        $this->saveConsult($consults, $database, $connectionName);
+
+        $prescriptions =  $this->getMedicinePrescription();
+        $this->savePrescription($prescriptions, $database, $connectionName);
+
     }
 
     private function getConsult()
@@ -509,6 +510,8 @@ class MigrateMisuWahConsultCommand extends Command
             $this->components->info('Nothing to migrate');
             return;
         }
+        //Delete duplicate dispensing records
+        $this->deleteDuplicateDispensingRecords($connectionName);
 
         $prescriptionBar = $this->output->createProgressBar($prescriptionsCount);
         $prescriptionBar->setFormat('Processing Prescription Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
@@ -541,11 +544,20 @@ class MigrateMisuWahConsultCommand extends Command
                             $data[$key] = $prescription[$key];
                         }
                     }
+                    $prescribedBy = DB::connection($connectionName)->table('user')->selectRaw('wahtermelon_user_id AS prescribed_by')->whereNotNull('wahtermelon_user_id')->whereDesignation('MD')->first();
+
+                    if ($prescribedBy) {
+                        $prescription['prescribed_by'] = $prescribedBy->prescribed_by;
+                    }
 
                     $newPrescription = MedicinePrescription::query()
                         ->updateOrCreate($data, $prescription + ['facility_code' => $database]);
 
                     DB::connection($connectionName)->table('drug_prescription')->whereId($prescription['id'])->update(['wahtermelon_prescription_id' => $newPrescription->id]);
+                    $dispensing = $this->getMedicineDispensing($prescription['id']);
+                    if (!empty($dispensing)) {
+                        $this->saveDispensing($dispensing, $newPrescription->id, $prescription['patient_id'], $database);
+                    }
 
                 });
 
@@ -563,6 +575,36 @@ class MigrateMisuWahConsultCommand extends Command
         $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
 
 
+    }
+
+    public function getMedicineDispensing($prescriptionId)
+    {
+        return DB::connection('mysql_migration')->table('drug_dispensing')
+            ->selectRaw('
+                drug_dispensing.id AS id,
+                user.wahtermelon_user_id AS user_id,
+                dispense_date AS dispensing_date,
+                dispense_quantity,
+                remarks,
+                drug_dispensing.created_at,
+                drug_dispensing.updated_at
+            ')
+            ->join('user AS user', function ($join) {
+                $join->on('drug_dispensing.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('prescription_id', $prescriptionId)
+            ->whereNull('drug_dispensing.deleted_at')
+            ->get();
+    }
+
+    public function saveDispensing($data, $prescriptionId, $patientId, $facilityCode)
+    {
+        foreach($data as $dispensing){
+            $dispensing = (array) $dispensing;
+            MedicineDispensing::query()
+                ->updateOrCreate(['dispensing_date' => $dispensing['dispensing_date'], 'patient_id' => $patientId, 'prescription_id' => $prescriptionId], $dispensing + ['facility_code' => $facilityCode]);
+        }
     }
 
     public function deleteDuplicateDispensingRecords($connectionName)
