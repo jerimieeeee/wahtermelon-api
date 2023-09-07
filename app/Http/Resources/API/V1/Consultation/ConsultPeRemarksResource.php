@@ -30,6 +30,7 @@ class ConsultPeRemarksResource extends JsonResource
             'neuro_remarks' => $this->neuro_remarks,
             'rectal_remarks' => $this->rectal_remarks,
             'genitourinary_remarks' => $this->genitourinary_remarks,
+            'remarks' => $this->remarks,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
