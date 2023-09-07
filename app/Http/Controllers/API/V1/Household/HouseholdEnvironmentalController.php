@@ -23,8 +23,11 @@ class HouseholdEnvironmentalController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(HouseholdEnvironmental::class)
-            ->when(isset($request->patient_id), function ($q) use ($request) {
+            ->when(isset($request->household_folder_id), function ($q) use ($request) {
                 $q->where('household_folder_id', $request->household_folder_id);
+            })
+            ->when(isset($request->effectivity_year), function ($q) use ($request) {
+                $q->where('effectivity_year', $request->effectivity_year);
             })
             ->with(['waterTypes', 'toiletFacility', 'sewage', 'wasteManagement'])
             ->defaultSort('-registration_date')
