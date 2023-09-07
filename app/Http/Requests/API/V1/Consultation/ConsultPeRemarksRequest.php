@@ -28,6 +28,7 @@ class ConsultPeRemarksRequest extends FormRequest
         return [
             'notes_id' => 'required|exists:consults,id',
             'patient_id' => 'required|exists:patients,id',
+            'remarks' => 'nullable',
             'skin_remarks' => 'nullable',
             'heent_remarks' => 'nullable',
             'chest_remarks' => 'nullable',
