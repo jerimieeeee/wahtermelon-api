@@ -698,6 +698,13 @@ class MigrateMisuWahConsultCommand extends Command
 
     }
 
+    public function getPatientPhilhealth()
+    {
+        return DB::connection('mysql_migration')->table('patient_philhealth')
+            ->where('migrated', 0)
+            ->get();
+    }
+
     public function migrationConnection($connectionName, $database)
     {
         //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
@@ -747,6 +754,18 @@ class MigrateMisuWahConsultCommand extends Command
         try {
             Schema::connection($connectionName)->table('notes_treatment', function (Blueprint $table) {
                 $table->boolean('migrated')->nullable()->after('treatment_notes')->default(0);
+                // Add more columns if needed
+            });
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('patient_philhealth', function (Blueprint $table) {
+                $table->boolean('migrated')->nullable()->after('philhealth_id')->default(0);
                 // Add more columns if needed
             });
         } catch (\Exception $e) {
