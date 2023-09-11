@@ -76,7 +76,7 @@ class MaternalCareReportService
                       DATE_FORMAT(GROUP_CONCAT(DISTINCT delivery_date), '%Y-%m-%d') AS date_of_service,
                       TIMESTAMPDIFF(YEAR, birthdate, GROUP_CONCAT(DISTINCT delivery_date)) AS age_year,
                       municipalities_brgy.municipality_code AS municipality_code,
-                      municipalities_brgy.barangay_code,
+                      municipalities_brgy.barangay_code AS barangay_code,
                       consult_mc_prenatals.facility_code AS facility_code
                 ")
                 ->from('consult_mc_prenatals')
@@ -285,10 +285,10 @@ class MaternalCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->whereVaccineId('TD')
                 ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
@@ -339,10 +339,10 @@ class MaternalCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->whereVaccineId('TD')
                 ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
