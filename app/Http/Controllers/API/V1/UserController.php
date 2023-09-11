@@ -57,6 +57,7 @@ class UserController extends Controller
             ->when(isset($request->attendant_flag), function ($q) use ($request) {
                 $q->where('attendant_'.$request->attendant_flag.'_flag', 1);
             })
+            ->where('facility_code',auth()->user()->facility_code)
             ->with(['facility', 'facility.province', 'facility.municipality', 'facility.barangay', 'designation', 'employer'])
             ->allowedIncludes('suffixName')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate')

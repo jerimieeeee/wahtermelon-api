@@ -7,7 +7,6 @@ use App\Models\V1\Libraries\LibEmployer;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PhilHealth\PhilhealthCredential;
 use App\Models\V1\PSGC\Facility;
-use App\Traits\FilterByFacility;
 use App\Traits\HasSearchFilter;
 use App\Traits\HasUuid;
 use DateTimeInterface;
@@ -21,7 +20,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasSearchFilter, HasRolesAndAbilities, FilterByFacility;
+    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasSearchFilter, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
