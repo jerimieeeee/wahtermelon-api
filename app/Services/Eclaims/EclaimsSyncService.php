@@ -23,16 +23,25 @@ class EclaimsSyncService
         $onlineUrls = [];
 
         foreach ($urls as $url) {
-            try {
-                $response = $client->get($url);
+            // Check if the URL can be resolved
+            $host = parse_url($url, PHP_URL_HOST);
+            $ip = gethostbyname($host);
 
-                if ($response->getStatusCode() === 200) {
-                    $onlineUrls[] = $url;
+            if ($ip !== $host) {
+                try {
+                    $response = $client->get($url);
+
+                    if ($response->getStatusCode() === 200) {
+                        $onlineUrls[] = $url;
+                        dd($onlineUrls);
+                    }
+                } catch (RequestException $e) {
+//                    return $onlineUrls;
                 }
-            } catch (RequestException $e) {
+            } else {
+//                return $onlineUrls;
             }
         }
-
         return $onlineUrls;
     }
 }
