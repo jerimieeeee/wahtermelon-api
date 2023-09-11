@@ -30,7 +30,7 @@ class SoapService
 
         if (isset(request()->program_code) && request()->program_code !== 'kp') {
             $eclaimsSyncService = new EclaimsSyncService();
-            $wsdlUrl = $eclaimsSyncService->checkEclaimsUrl();
+            return $eclaimsSyncService->checkEclaimsUrl();
         } else {
             $token = auth()->user()->konsultaCredential->token;
             $opts['http']['header'] = "Token: $token";

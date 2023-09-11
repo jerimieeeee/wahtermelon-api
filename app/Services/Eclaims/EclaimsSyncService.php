@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class EclaimsSyncService
 {
-    public function checkEclaimsUrl(): ?string
+    public function checkEclaimsUrl()
     {
         $opts = [
             'http' => [
@@ -32,7 +32,7 @@ class EclaimsSyncService
         ];
 
         $selectedUrl = null;
-
+        $workingClient = null;
         foreach ($onlineUrls as $url) {
             try {
                 $soapClientOptions = [
@@ -47,6 +47,10 @@ class EclaimsSyncService
 
                 // If the CheckWS method is called successfully, set the selected URL and break the loop.
                 $selectedUrl = $url;
+                if($client) {
+                    $workingClient = $client;
+                }
+
                 break;
             } catch (\SoapFault | \Exception $e) {
                 // Handle the exception if needed, or continue to the next URL.
@@ -54,7 +58,7 @@ class EclaimsSyncService
         }
 
         if ($selectedUrl !== null) {
-            return $selectedUrl;
+            return $workingClient;
         } else {
             throw new \Exception('All servers are not working');
         }
