@@ -33,6 +33,7 @@ class EclaimsSyncService
 
                     if ($response->getStatusCode() === 200) {
                         $onlineUrls[] = $url;
+//                        dd($onlineUrls);
                     }
                 } catch (RequestException $e) {
 //                    return $onlineUrls;
