@@ -34,23 +34,30 @@ class ConsultStatsController extends Controller
 
         $today_count = Consult::query()
             ->whereDate('consult_date', '=', $date_today)
+            ->where('facility_code',auth()->user()->facility_code)
             ->count();
 
         $pt_count = Consult::query()
             ->select('pt_group as Patient Group', DB::raw('count(*) as count'))
             ->whereDate('consult_date', '=', $date_today)
+            ->where('facility_code',auth()->user()->facility_code)
             ->groupBy('pt_group')
             ->get();
 
         $patient_count = Patient::query()
             ->whereDate('created_at', '=', $date_today)
+            ->where('facility_code',auth()->user()->facility_code)
             ->count();
 
         //Patient Birthday Celebrant
-        $patient_birthdate = $statsService->get_patient_birthday_celebrants()->get();
+        $patient_birthdate = $statsService->get_patient_birthday_celebrants()
+                            ->where('facility_code',auth()->user()->facility_code)
+                            ->get();
 
         //User Birthday Celebrant
-        $user_birthdate = $statsService->get_users_birthday_celebrants()->get();
+        $user_birthdate = $statsService->get_users_birthday_celebrants()
+                            ->where('facility_code',auth()->user()->facility_code)
+                            ->get();
 
         return ['consult_count' => $today_count,
             'program_count' => $pt_count,
