@@ -33,7 +33,6 @@ class HouseholdProfilingReportService
         return DB::table('household_environmentals')
             ->selectRaw("
                         household_folders.id,
-                        number_of_families,
                         CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
                     ")
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
@@ -73,9 +72,7 @@ class HouseholdProfilingReportService
     {
         return DB::table('household_environmentals')
             ->selectRaw("
-                        household_folders.id,
-                        number_of_families,
-                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
+	                    SUM(number_of_families) AS total_number_of_families
                     ")
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
@@ -106,7 +103,6 @@ class HouseholdProfilingReportService
                 $q->whereNull('cct_id');
             })
             ->whereBetween('registration_date', [$request->start_date, $request->end_date])
-            ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -650,7 +646,6 @@ class HouseholdProfilingReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('patient_histories', 'patients.id', 'patient_histories.patient_id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')

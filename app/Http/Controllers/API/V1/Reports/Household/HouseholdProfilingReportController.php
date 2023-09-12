@@ -19,6 +19,12 @@ class HouseholdProfilingReportController extends Controller
         //Summary household NON-4PS
         $summary_household_non_4ps = $householdProfilingReportService->get_household_profiling_summary($request, 'non-4ps')->get();
 
+        //Summary Family 4PS
+        $summary_household_family_4ps = $householdProfilingReportService->get_household_profiling_summary_family($request, '4ps')->get();
+
+        //Summary Family NON-4PS
+        $summary_household_family_non_4ps = $householdProfilingReportService->get_household_profiling_summary_family($request, 'non-4ps')->get();
+
         //Water Source 4PS
         $water_source_level1_4ps = $householdProfilingReportService->get_household_profiling_water_source($request, '4ps', 1)->get();
         $water_source_level2_4ps = $householdProfilingReportService->get_household_profiling_water_source($request, '4ps', 2)->get();
@@ -229,6 +235,10 @@ class HouseholdProfilingReportController extends Controller
             //Summary Household
             'summary_household_4ps' => $summary_household_4ps,
             'summary_household_non_4ps' => $summary_household_non_4ps,
+
+            //Summary Household Family
+            'summary_household_family_4ps' => $summary_household_family_4ps,
+            'summary_household_family_non_4ps' => $summary_household_family_non_4ps,
 
             //Water Source 4PS
             'water_source_level1_4ps' => $water_source_level1_4ps,
