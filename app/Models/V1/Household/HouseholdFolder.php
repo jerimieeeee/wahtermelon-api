@@ -68,7 +68,6 @@ class HouseholdFolder extends Model
 
     public function environmentalLatest()
     {
-        return $this->hasOne(HouseholdEnvironmental::class, 'household_folder_id', 'id')
-                ->latest('effectivity_year');
+        return $this->hasOne(HouseholdEnvironmental::class, 'household_folder_id', 'id');
     }
 }
