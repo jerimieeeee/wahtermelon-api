@@ -50,7 +50,7 @@ class HouseholdFolderController extends Controller
                 });
             })
             ->whereFacilityCode(auth()->user()->facility_code)
-            ->with('householdMember.patient')
+            ->with(['householdMember.patient', 'environmentalLatest'])
             ->allowedIncludes('barangay');
 
         if ($perPage === 'all') {
