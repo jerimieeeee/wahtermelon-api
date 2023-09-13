@@ -59,6 +59,8 @@ class MigrateMisuWahConsultCommand extends Command
 
         $treatmentNotes = $this->getTreatmentNotes();
         $this->saveTreatmentNotes($treatmentNotes);
+
+        echo $this->getPatientPhilhealth()->count();
     }
 
     private function getConsult()
@@ -701,7 +703,21 @@ class MigrateMisuWahConsultCommand extends Command
     public function getPatientPhilhealth()
     {
         return DB::connection('mysql_migration')->table('patient_philhealth')
+            ->selectRaw('
+                patient_philhealth.id AS id,
+                REPLACE(philhealth_id, "-", "") AS philhealth_id,
+                patient.wahtermelon_patient_id AS patient_id,
+                enlistment_date,
+                YEAR(expiry_date) AS effectivity_year,
+                
+            ')
+            ->join('patient', function ($join) {
+                $join->on('patient_philhealth.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->whereNotNull('philhealth_id')
             ->where('migrated', 0)
+            ->where('member_id', 'MM')
             ->get();
     }
 
