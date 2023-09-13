@@ -22,6 +22,7 @@ class LibMedicineDoseRegimenSeeder extends Seeder
             ['code' => 'QOD', 'sequence' => 5, 'desc' => 'Every other day'],
             ['code' => 'QHS', 'sequence' => 6, 'desc' => 'Every bedtime'],
             ['code' => 'OTH', 'sequence' => 7, 'desc' => 'Others'],
+            ['code' => 'PRN', 'sequence' => 7, 'desc' => 'As needed (Pro Re Nata)'],
         ], ['code']);
     }
 }

@@ -10,10 +10,13 @@ use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Consultation\ConsultPeRemarks;
+use App\Models\V1\Medicine\MedicineDispensing;
+use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -50,6 +53,14 @@ class MigrateMisuWahConsultCommand extends Command
         //echo $consults;
         //echo Consult::get();
         $this->saveConsult($consults, $database, $connectionName);
+
+        $prescriptions =  $this->getMedicinePrescription();
+        $this->savePrescription($prescriptions, $database, $connectionName);
+
+        $treatmentNotes = $this->getTreatmentNotes();
+        $this->saveTreatmentNotes($treatmentNotes);
+
+        echo $this->getPatientPhilhealth()->count();
     }
 
     private function getConsult()
@@ -315,7 +326,7 @@ class MigrateMisuWahConsultCommand extends Command
             return;
         }
         $consultBar = $this->output->createProgressBar($consultsCount);
-        $consultBar->setFormat('Processing User Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %estimated:-6s%');
+        $consultBar->setFormat('Processing Consult Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:-6s% Estimated: %estimated:-6s%');
         $consultBar->start();
         $startTime = time();
 
@@ -452,6 +463,264 @@ class MigrateMisuWahConsultCommand extends Command
 
     }
 
+    public function getMedicinePrescription()
+    {
+        return DB::connection('mysql_migration')->table('drug_prescription')
+            ->selectRaw('
+                drug_prescription.id AS id,
+                consult.wahtermelon_consult_id AS consult_id,
+                patient.wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
+                hprodid AS medicine_code,
+                drug_added AS added_medicine,
+                prescription_date,
+                dosage_qty AS dosage_quantity,
+                CASE
+                    WHEN dosage_uom = "tbs" THEN "T, tbs"
+                    WHEN dosage_uom = "tsp" THEN "t, tsp"
+                    ELSE dosage_uom
+                END AS dosage_uom,
+                dose_regimen,
+                medicine_purpose,
+                purpose_other,
+                duration_intake,
+                duration_frequency,
+                quantity,
+                quantity_uom AS quantity_preparation,
+                prescription_remarks AS remarks,
+                drug_prescription.created_at AS created_at,
+                drug_prescription.updated_at AS updated_at
+            ')
+            ->join('user AS user', function ($join) {
+                $join->on('drug_prescription.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->join('patient', function ($join) {
+                $join->on('drug_prescription.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('consult', function ($join) {
+                $join->on('drug_prescription.consult_id', '=', 'consult.id')
+                    ->whereNotNull('consult.wahtermelon_consult_id');
+            })
+            ->whereNull('wahtermelon_prescription_id')
+            ->get();
+    }
+
+    private  function savePrescription($prescriptions, $database, $connectionName)
+    {
+        $prescriptionsCount = count($prescriptions);
+        if ($prescriptionsCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+        //Delete duplicate dispensing records
+        $this->deleteDuplicateDispensingRecords($connectionName);
+
+        $prescriptionBar = $this->output->createProgressBar($prescriptionsCount);
+        $prescriptionBar->setFormat('Processing Prescription Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $prescriptionBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($prescriptions->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $prescriptionData) {
+                $prescription = (array) $prescriptionData;
+
+                DB::transaction(function () use ($prescription, $database, $connectionName) {
+                    $keysToRemoveIfEmpty = ['medicine_code', 'added_medicine', 'purpose_other', 'remarks'];
+
+                    foreach ($keysToRemoveIfEmpty as $key) {
+                        if (empty($prescription[$key])) {
+                            Arr::pull($prescription, $key);
+                        }
+                    }
+
+                    $data = [
+                        'patient_id' => $prescription['patient_id'],
+                        'consult_id' => $prescription['consult_id'],
+                    ];
+
+                    foreach (['medicine_code', 'added_medicine'] as $key) {
+                        if (!empty($prescription[$key])) {
+                            $data[$key] = $prescription[$key];
+                        }
+                    }
+                    $prescribedBy = DB::connection($connectionName)->table('user')->selectRaw('wahtermelon_user_id AS prescribed_by')->whereNotNull('wahtermelon_user_id')->whereDesignation('MD')->first();
+
+                    if ($prescribedBy) {
+                        $prescription['prescribed_by'] = $prescribedBy->prescribed_by;
+                    }
+
+                    $newPrescription = MedicinePrescription::query()
+                        ->updateOrCreate($data, $prescription + ['facility_code' => $database]);
+
+                    DB::connection($connectionName)->table('drug_prescription')->whereId($prescription['id'])->update(['wahtermelon_prescription_id' => $newPrescription->id]);
+                    $dispensing = $this->getMedicineDispensing($prescription['id']);
+                    if (!empty($dispensing)) {
+                        $this->saveDispensing($dispensing, $newPrescription->id, $prescription['patient_id'], $database);
+                    }
+
+                });
+
+                $prescriptionBar->advance();
+            }
+        }
+
+        $prescriptionBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Prescription Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+
+
+    }
+
+    public function getMedicineDispensing($prescriptionId)
+    {
+        return DB::connection('mysql_migration')->table('drug_dispensing')
+            ->selectRaw('
+                drug_dispensing.id AS id,
+                user.wahtermelon_user_id AS user_id,
+                dispense_date AS dispensing_date,
+                dispense_quantity,
+                remarks,
+                drug_dispensing.created_at,
+                drug_dispensing.updated_at
+            ')
+            ->join('user AS user', function ($join) {
+                $join->on('drug_dispensing.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('prescription_id', $prescriptionId)
+            ->whereNull('drug_dispensing.deleted_at')
+            ->get();
+    }
+
+    public function saveDispensing($data, $prescriptionId, $patientId, $facilityCode)
+    {
+        foreach($data as $dispensing){
+            $dispensing = (array) $dispensing;
+            MedicineDispensing::query()
+                ->updateOrCreate(['dispensing_date' => $dispensing['dispensing_date'], 'patient_id' => $patientId, 'prescription_id' => $prescriptionId], $dispensing + ['facility_code' => $facilityCode]);
+        }
+    }
+
+    public function deleteDuplicateDispensingRecords($connectionName)
+    {
+        $duplicateRows = DB::connection($connectionName)->table('drug_dispensing')
+            ->select('prescription_id', DB::raw('COUNT(*) as count, DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") as created_at_formatted'))
+            ->groupBy('prescription_id', 'created_at_formatted')
+            ->having('count', '>', 1)
+            ->get();
+
+        // Step 2: Delete Duplicates Except One
+        foreach ($duplicateRows as $row) {
+            $idsToDelete = DB::connection($connectionName)
+                ->table('drug_dispensing AS d1')
+                ->select('d1.id')
+                ->where('d1.prescription_id', $row->prescription_id)
+                ->where('d1.created_at', $row->created_at_formatted)
+                ->whereExists(function ($query) use ($row) {
+                    $query->select(DB::raw(1))
+                        ->from('drug_dispensing AS d2')
+                        ->whereRaw('d1.prescription_id = d2.prescription_id')
+                        ->whereRaw('d1.created_at = d2.created_at')
+                        ->whereRaw('d1.id > d2.id');
+                })
+                ->get()
+                ->pluck('id');
+
+            DB::connection($connectionName)
+                ->table('drug_dispensing')
+                ->whereIn('id', $idsToDelete)
+                ->delete();
+        }
+    }
+
+    public function getTreatmentNotes()
+    {
+        return DB::connection('mysql_migration')->table('notes_treatment')
+            ->selectRaw('
+                notes_treatment.id AS id,
+                wahtermelon_consult_id AS consult_id,
+                treatment_notes AS plan
+            ')
+            ->join('consult', function ($join) {
+                $join->on('notes_treatment.consult_id', '=', 'consult.id')
+                    ->whereNotNull('consult.wahtermelon_consult_id');
+            })
+            ->where('migrated', 0)
+            ->get();
+    }
+
+    public function saveTreatmentNotes($treatmentNotes)
+    {
+        $treatmentNotesCount = count($treatmentNotes);
+        if ($treatmentNotesCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+
+        $treatmentNotesBar = $this->output->createProgressBar($treatmentNotesCount);
+        $treatmentNotesBar->setFormat('Processing Treatment Notes Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $treatmentNotesBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($treatmentNotes->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $treatmentNotesData) {
+                $treatmentNotesData = (array) $treatmentNotesData;
+                DB::transaction(function () use ($treatmentNotesData) {
+                    $updateConsultNotes = ConsultNotes::query()
+                        ->updateOrCreate(['consult_id' => $treatmentNotesData['consult_id']], $treatmentNotesData);
+                    DB::connection('mysql_migration')->table('notes_treatment')->whereId($treatmentNotesData['id'])->where('migrated', 0)->update(['migrated' => 1]);
+
+                });
+
+                $treatmentNotesBar->advance();
+            }
+        }
+
+        $treatmentNotesBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Treatment Notes Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+
+    }
+
+    public function getPatientPhilhealth()
+    {
+        return DB::connection('mysql_migration')->table('patient_philhealth')
+            ->selectRaw('
+                patient_philhealth.id AS id,
+                REPLACE(philhealth_id, "-", "") AS philhealth_id,
+                patient.wahtermelon_patient_id AS patient_id,
+                enlistment_date,
+                YEAR(expiry_date) AS effectivity_year,
+                
+            ')
+            ->join('patient', function ($join) {
+                $join->on('patient_philhealth.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->whereNotNull('philhealth_id')
+            ->where('migrated', 0)
+            ->where('member_id', 'MM')
+            ->get();
+    }
+
     public function migrationConnection($connectionName, $database)
     {
         //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
@@ -476,6 +745,43 @@ class MigrateMisuWahConsultCommand extends Command
             // Add column if it doesn't exist on the 'patient' table
             Schema::connection($connectionName)->table('consult', function (Blueprint $table) {
                 $table->string('wahtermelon_consult_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('drug_prescription', function (Blueprint $table) {
+                $table->string('wahtermelon_prescription_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('notes_treatment', function (Blueprint $table) {
+                $table->boolean('migrated')->nullable()->after('treatment_notes')->default(0);
+                // Add more columns if needed
+            });
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('patient_philhealth', function (Blueprint $table) {
+                $table->boolean('migrated')->nullable()->after('philhealth_id')->default(0);
                 // Add more columns if needed
             });
         } catch (\Exception $e) {

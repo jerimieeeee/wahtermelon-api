@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Http\Resources\API\V1\Libraries\LibEnvironmentalWasteManagementResource;
-use App\Models\V1\Libraries\LibFpSourceSupply;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -167,6 +165,7 @@ class DatabaseSeeder extends Seeder
             LibResidenceClassificationSeeder::class,
             LibGbvGeneralSurveySeeder::class,
             LibGbvMedicalImpressionSeeder::class,
+            LibMedicineSeeder::class,
             LibEclaimsDocTypeSeeder::class,
             LibFpHistorySeeder::class,
             LibFpPelvicExamSeeder::class,
