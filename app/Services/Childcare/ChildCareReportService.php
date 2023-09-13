@@ -83,7 +83,7 @@ class ChildCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
@@ -120,10 +120,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereYear('birthdate', $request->year)
             ->whereMonth('birthdate', $request->month)
@@ -157,10 +157,10 @@ class ChildCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->whereVaccineId('IPV')
                 ->whereGender($patient_gender)
@@ -285,7 +285,7 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
@@ -328,10 +328,10 @@ class ChildCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->whereServiceId('IRON')
                 ->whereGender($patient_gender)
@@ -384,10 +384,10 @@ class ChildCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->whereServiceId('VITA')
                 ->whereGender($patient_gender)
@@ -439,10 +439,10 @@ class ChildCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipality_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->whereIn('service_id', ['VITA2', 'VITA3'])
                 ->whereGender($patient_gender)
@@ -488,10 +488,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereIn('konsulta_medicine_code', ['ALBED0000000006SUS1400195BOTTL', 'ALBED0000000006SUS1400231BOTTL', 'ALBED0000000006SUS1400379BOTTL', 'ALBED0000000006SUS1400469BOTTL', 'ALBED0000000034TAB490000000000'])
             ->whereGender($patient_gender)
@@ -525,10 +525,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
@@ -563,10 +563,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->when($disease == 'DIARRHEA', fn ($query) => $query->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
@@ -601,10 +601,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->when($service == 'MNP', fn ($query) => $query->whereServiceId('MNP')
                 ->havingRaw('(age_month BETWEEN 6 AND 11) AND (quantity >= 90) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
@@ -642,10 +642,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
@@ -687,10 +687,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->when($medicine == 'ORS', fn ($query) => $query->whereIn('konsulta_medicine_code', ['ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01', 'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01', 'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
@@ -726,10 +726,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->where(fn ($query) => $query->where([
                 ['bfed_month1', '=', '1'],
@@ -769,10 +769,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
             ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('konsulta_medicine_code', ['AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000', 'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01', 'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'])
@@ -807,10 +807,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->when($class == 'Obese', fn ($query) => $query->whereIn('patient_weight_for_age', ['Obese', 'Overweight'])
                 ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
@@ -845,10 +845,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->where(fn ($query) => $query->where([
                 ['bfed_month1', '=', '1'],
@@ -885,10 +885,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereNull('ebf_date')
             ->whereNotNull('comp_fed_date')
@@ -921,10 +921,10 @@ class ChildCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->when($class == 'Stunted', fn ($query) => $query->whereIn('patient_height_for_age', ['Stunted'])
                 ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
