@@ -3,6 +3,7 @@
 namespace App\Models\V1\Eclaims;
 
 use App\Models\User;
+use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -38,5 +39,10 @@ class EclaimsUpload extends Model
     public function caserate()
     {
         return $this->hasOne(EclaimsCaserateList::class, 'id', 'eclaims_caserate_list_id');
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
     }
 }

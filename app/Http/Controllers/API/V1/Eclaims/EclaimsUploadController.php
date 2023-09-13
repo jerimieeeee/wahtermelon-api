@@ -24,6 +24,7 @@ class EclaimsUploadController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
+        $columns = ['last_name', 'first_name', 'middle_name'];
         $query = QueryBuilder::for(EclaimsUpload::class)
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
@@ -31,7 +32,15 @@ class EclaimsUploadController extends Controller
             ->when(isset($request->program_desc), function ($q) use ($request) {
                 $q->where('program_desc', $request->program_desc);
             })
-            ->with('caserate.attendant')
+            ->when(isset($request->pStatus), function ($q) use ($request) {
+                $q->where('pStatus', $request->pStatus);
+            })
+            ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
+                $q->whereHas('patient', function ($q) use ($request, $columns) {
+                    $q->orSearch($columns, 'LIKE', $request->filter['search']);
+                });
+            })
+            ->with(['caserate.attendant', 'patient'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
