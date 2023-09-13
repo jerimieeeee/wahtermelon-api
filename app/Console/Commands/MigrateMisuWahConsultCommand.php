@@ -13,6 +13,7 @@ use App\Models\V1\Consultation\ConsultPeRemarks;
 use App\Models\V1\Medicine\MedicineDispensing;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientPhilhealth;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -60,7 +61,7 @@ class MigrateMisuWahConsultCommand extends Command
         $treatmentNotes = $this->getTreatmentNotes();
         $this->saveTreatmentNotes($treatmentNotes);
 
-        echo $this->getPatientPhilhealth()->count();
+        $this->savePatientPhilhealth($this->getPatientPhilhealth(), $database);
     }
 
     private function getConsult()
@@ -700,6 +701,47 @@ class MigrateMisuWahConsultCommand extends Command
 
     }
 
+    public function savePatientPhilhealth($philhealthData, $facilityCode)
+    {
+        $philhealthDataCount = count($philhealthData);
+        if ($philhealthDataCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+
+        $philhealthDataBar = $this->output->createProgressBar($philhealthDataCount);
+        $philhealthDataBar->setFormat('Processing Patient Philhealth Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $philhealthDataBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($philhealthData->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $philhealth) {
+                $philhealth = (array) $philhealth;
+                DB::transaction(function () use ($philhealth, $facilityCode) {
+                    $updatePatientPhilhealth = PatientPhilhealth::query()
+                        ->updateOrCreate(['philhealth_id' => $philhealth['philhealth_id'], 'patient_id' => $philhealth['patient_id'], 'effectivity_year' => $philhealth['effectivity_year']], $philhealth + ['facility_code' => $facilityCode]);
+                    DB::connection('mysql_migration')->table('patient_philhealth')->whereId($philhealth['id'])->where('migrated', 0)->update(['migrated' => 1]);
+
+                });
+
+                $philhealthDataBar->advance();
+            }
+        }
+
+        $philhealthDataBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient Philhealth Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+
+    }
+
     public function getPatientPhilhealth()
     {
         return DB::connection('mysql_migration')->table('patient_philhealth')
@@ -707,13 +749,21 @@ class MigrateMisuWahConsultCommand extends Command
                 patient_philhealth.id AS id,
                 REPLACE(philhealth_id, "-", "") AS philhealth_id,
                 patient.wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
                 enlistment_date,
                 YEAR(expiry_date) AS effectivity_year,
-                
+                1 AS enlistment_status_id,
+                "P" AS package_type_id,
+                member_id AS membership_type_id,
+                member_cat_id AS membership_category_id
             ')
             ->join('patient', function ($join) {
                 $join->on('patient_philhealth.patient_id', '=', 'patient.id')
                     ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
             })
             ->whereNotNull('philhealth_id')
             ->where('migrated', 0)
