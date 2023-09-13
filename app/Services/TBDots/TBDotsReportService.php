@@ -109,8 +109,8 @@ class TBDotsReportService
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
             ->whereGender($gender)
-            ->whereYear('birthdate', $request->year)
-            ->whereMonth('birthdate', $request->month)
+            ->whereYear('outcome_date', $request->year)
+            ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 }
