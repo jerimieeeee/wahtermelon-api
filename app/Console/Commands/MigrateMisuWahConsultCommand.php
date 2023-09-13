@@ -59,6 +59,8 @@ class MigrateMisuWahConsultCommand extends Command
 
         $treatmentNotes = $this->getTreatmentNotes();
         $this->saveTreatmentNotes($treatmentNotes);
+
+        echo $this->getPatientPhilhealth()->count();
     }
 
     private function getConsult()
@@ -698,6 +700,27 @@ class MigrateMisuWahConsultCommand extends Command
 
     }
 
+    public function getPatientPhilhealth()
+    {
+        return DB::connection('mysql_migration')->table('patient_philhealth')
+            ->selectRaw('
+                patient_philhealth.id AS id,
+                REPLACE(philhealth_id, "-", "") AS philhealth_id,
+                patient.wahtermelon_patient_id AS patient_id,
+                enlistment_date,
+                YEAR(expiry_date) AS effectivity_year,
+                
+            ')
+            ->join('patient', function ($join) {
+                $join->on('patient_philhealth.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->whereNotNull('philhealth_id')
+            ->where('migrated', 0)
+            ->where('member_id', 'MM')
+            ->get();
+    }
+
     public function migrationConnection($connectionName, $database)
     {
         //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
@@ -747,6 +770,18 @@ class MigrateMisuWahConsultCommand extends Command
         try {
             Schema::connection($connectionName)->table('notes_treatment', function (Blueprint $table) {
                 $table->boolean('migrated')->nullable()->after('treatment_notes')->default(0);
+                // Add more columns if needed
+            });
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            Schema::connection($connectionName)->table('patient_philhealth', function (Blueprint $table) {
+                $table->boolean('migrated')->nullable()->after('philhealth_id')->default(0);
                 // Add more columns if needed
             });
         } catch (\Exception $e) {

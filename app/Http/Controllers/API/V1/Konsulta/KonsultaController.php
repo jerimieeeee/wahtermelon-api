@@ -132,11 +132,17 @@ class KonsultaController extends Controller
     public function generateDataForValidation(Request $request)
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
+        $columns = ['last_name', 'first_name', 'middle_name'];
         $data = QueryBuilder::for(PatientPhilhealth::class)
             ->whereEffectivityYear($request->effectivity_year)
             ->withWhereHas('konsultaRegistration', fn ($query) => $query->whereEffectivityYear($request->effectivity_year))
             ->withWhereHas('patient.patientHistory')
+            ->when(isset($request->search), function ($q) use ($request, $columns) {
+                //$q->search($request->filter['search'], $columns);
+                $q->whereHas('patient', function ($q) use ($request, $columns) {
+                    $q->orSearch($columns, 'LIKE', $request->search);
+                });
+            })
             ->when($request->tranche == 1,
                 fn ($query) => $query->whereNull('transmittal_number')
             )
