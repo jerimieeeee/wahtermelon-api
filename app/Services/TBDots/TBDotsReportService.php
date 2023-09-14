@@ -49,7 +49,39 @@ class TBDotsReportService
             ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
     }
 
-    public function get_dtrb_confirmed($request, $gender)
+    public function get_notified_tb_cases_all_forms($request, $gender)
+    {
+        return DB::table('patient_tb_case_findings')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        consult_date AS date_of_service
+                    ")
+            ->join('patient_tbs', 'patient_tb_case_findings.patient_tb_id', '=', 'patient_tbs.id')
+            ->join('patients', 'patient_tb_case_findings.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_findings.patient_id');
+            })
+            ->when($request->category == 'all', function ($q) {
+                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->where('reg_group_code', ['N', 'O', 'PTLOU', 'R', 'TAF', 'TALF'])
+            ->whereGender($gender)
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month)
+            ->orderBy('name', 'ASC');
+    }
+
+    public function get_drtb_drug_resistant_confirmed($request, $gender)
     {
         return DB::table('patient_tb_case_holdings')
             ->selectRaw("
@@ -74,11 +106,11 @@ class TBDotsReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->whereBacteriologicalStatusCode(1)
+            ->whereBacteriologicalStatusCode('BC')
             ->whereDrugResistantFlag(1)
             ->whereGender($gender)
-            ->whereYear('treatment_end', $request->year)
-            ->whereMonth('treatment_end', $request->month)
+            ->whereYear('registration_date', $request->year)
+            ->whereMonth('registration_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 
@@ -90,6 +122,7 @@ class TBDotsReportService
                         birthdate,
                         outcome_date AS date_of_service
                     ")
+            ->join('patient_tb_case_holdings', 'patient_tbs.id', '=', 'patient_tb_case_holdings.patient_tb_id')
             ->join('patients', 'patient_tbs.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
@@ -106,6 +139,41 @@ class TBDotsReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
+            ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
+            ->whereTreatmentDone(1)
+            ->whereGender($gender)
+            ->whereYear('outcome_date', $request->year)
+            ->whereMonth('outcome_date', $request->month)
+            ->orderBy('name', 'ASC');
+    }
+
+    public function get_tb_drtb_outcome_cured_and_complete($request, $gender)
+    {
+        return DB::table('patient_tbs')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        outcome_date AS date_of_service
+                    ")
+            ->join('patient_tb_case_holdings', 'patient_tbs.id', '=', 'patient_tb_case_holdings.patient_tb_id')
+            ->join('patients', 'patient_tbs.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
+            })
+            ->when($request->category == 'all', function ($q) {
+                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->whereBacteriologicalStatusCode('BC')
+            ->whereDrugResistantFlag(1)
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
             ->whereGender($gender)
