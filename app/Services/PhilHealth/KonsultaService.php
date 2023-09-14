@@ -544,7 +544,7 @@ class KonsultaService
                 $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             }
 
-            $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate, $effectivityYear);
+            $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate, $effectivityYear, $tranche);
             $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate);
             $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate);
             $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
@@ -639,7 +639,7 @@ class KonsultaService
         return $report;
     }
 
-    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null)
+    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null, $tranche = null)
     {
         if ($effectivityYear === null) {
             $effectivityYear = date('Y');
@@ -665,7 +665,7 @@ class KonsultaService
             ->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
             //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
-        $data->when($save, fn ($query) => $query->map(fn ($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]))
+        $data->when($save && $tranche == 1, fn ($query) => $query->map(fn ($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]))
         );
         $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn () => [[]]))->resolve()];
 
