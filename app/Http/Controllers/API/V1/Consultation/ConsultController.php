@@ -61,6 +61,9 @@ class ConsultController extends Controller
             ->when(isset($request->physician_id), function ($q) use ($request) {
                 $q->where('physician_id', '=', $request->physician_id);
             })
+            ->when(isset($request->is_konsulta), function ($q) use ($request) {
+                $q->where('is_konsulta', $request->is_konsulta);
+            })
             ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
                 $q->where('facility_code', '=', auth()->user()->facility_code);
             })
@@ -122,8 +125,8 @@ class ConsultController extends Controller
      */
     public function update(ConsultRequest $request, $id)
     {
-        Consult::findorfail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant']));
-        $data = Consult::findorfail($id);
+        Consult::query()->findOrFail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant', 'is_konsulta']));
+        $data = Consult::query()->findOrFail($id);
 
         return response()->json(['data' => $data], 201);
     }

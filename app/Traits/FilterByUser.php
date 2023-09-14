@@ -21,7 +21,7 @@ trait FilterByUser
             if (Schema::hasColumn($model->getTable(), 'transaction_number')) {
                 if(auth()->user()) {
                     if (auth()->user()->konsultaCredential && !isset($model->transaction_number)) {
-                        if ($model->getTable() != 'consults' || ($model->getTable() == 'consults' && request()->pt_group == 'cn')) {
+                        if ($model->getTable() != 'consults' || ($model->getTable() == 'consults' && request()->pt_group == 'cn' && request()->is_konsulta == 1)) {
                             $prefix = auth()->user()->konsultaCredential->accreditation_number . date('Ym');
                             $transactionNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
                             $model->transaction_number = $transactionNumber;
@@ -47,6 +47,23 @@ trait FilterByUser
             }
             if(auth()->user()) {
                 $model->user_id = auth()->id();
+            }
+        });
+
+        self::updating(function ($model) {
+            if (Schema::hasColumn($model->getTable(), 'transaction_number')) {
+                if(auth()->user()) {
+                    if (auth()->user()->konsultaCredential && !isset($model->transaction_number)) {
+                        if ($model->getTable() != 'consults' || ($model->getTable() == 'consults' && request()->pt_group == 'cn' && request()->is_konsulta == 1)) {
+                            $prefix = auth()->user()->konsultaCredential->accreditation_number . date('Ym');
+                            $transactionNumber = IdGenerator::generate(['table' => $model->getTable(), 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
+                            $model->transaction_number = $transactionNumber;
+                        }
+                        if($model->getTable() == 'consults' && request()->pt_group == 'cn' && request()->is_konsulta == 0) {
+                            $model->transaction_number = null;
+                        }
+                    }
+                }
             }
         });
 
