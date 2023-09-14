@@ -478,7 +478,7 @@ class HouseholdProfilingReportService
                 $q->where('patients.civil_status_code', 'MRRD');
             })
             ->when($type == 'live-in', function ($q) use ($request) {
-                $q->where('patients.civil_status_code', 'LIVEIN');
+                $q->where('patients.civil_status_code', 'CHBTN');
             })
             ->when($type == 'widow', function ($q) use ($request) {
                 $q->where('patients.civil_status_code', 'WDWD');
