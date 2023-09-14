@@ -34,6 +34,7 @@ class Consult extends Model
     protected $casts = [
         'consult_date' => 'datetime:Y-m-d H:i:s',
         'is_pregnant' => 'boolean',
+        'is_konsulta' => 'boolean',
         'consult_done' => 'boolean',
         'walkedin_status' => 'boolean',
     ];

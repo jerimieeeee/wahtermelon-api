@@ -26,6 +26,7 @@ class ConsultResource extends JsonResource
             'transaction_number' => $this->transaction_number,
             'transmittal_number' => $this->transmittal_number,
             'consult_date' => $this->consult_date->format('Y-m-d H:i:s'),
+            'is_konsulta' => $this->is_konsulta,
             'physician_id' => $this->when(! $this->relationLoaded('physician'), $this->physician_id),
             'physician' => $this->whenLoaded('physician'),
             'vitals' => $this->when($this->relationLoaded('vitals'), PatientVitalsResource::collection($this->vitals)),

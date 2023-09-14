@@ -34,6 +34,7 @@ class ConsultRequest extends FormRequest
             'consult_date' => 'required|date',
             'physician_id' => 'nullable|exists:users,id',
             'is_pregnant' => 'nullable|boolean',
+            'is_konsulta' => 'nullable|boolean',
             'consult_done' => 'required|boolean',
             'pt_group' => 'required|exists:lib_pt_groups,id',
             'authorization_transaction_code' => 'nullable',
@@ -67,6 +68,10 @@ class ConsultRequest extends FormRequest
             'is_pregnant' => [
                 'description' => 'Is patient pregnant?',
                 'is_pregnant' => fake()->boolean,
+            ],
+            'is_konsulta' => [
+                'description' => 'Is consult for konsulta program?',
+                'is_konsulta' => fake()->boolean,
             ],
             'consult_done' => [
                 'description' => 'Is consult done?',
