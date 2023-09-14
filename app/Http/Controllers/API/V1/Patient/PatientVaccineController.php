@@ -52,7 +52,7 @@ class PatientVaccineController extends Controller
             ->allowedSorts(['vaccine_date', 'vaccine_id']);
 
         if (isset($request->patient_id)) {
-            $data = $patientvax->get_immunization_status($request->patient_id)->first();
+            $data = $patientvax->get_fic_cic($request->patient_id)->first();
 
             return PatientVaccineResource::collection($vaccines->get())
                 ->additional(['status' => $data]);
