@@ -36,8 +36,6 @@ class PatientAbRequest extends FormRequest
             'animal_type_id' => 'required|exists:lib_ab_animal_types,id',
             'animal_ownership_id' => 'required|exists:lib_ab_animal_ownerships,id',
             'exposure_type_code' => 'required|exists:lib_ab_exposure_types,code',
-            // 'patient_ab_id' => 'exists:patient_abs,id',
-            /*
 
             'animal_type_remarks' => 'nullable',
             'exposure_place' => 'nullable',
@@ -54,7 +52,7 @@ class PatientAbRequest extends FormRequest
             'al_remarks' => 'nullable',
 
             'wash_flag' => 'nullable|boolean',
-            'pep_flag' => 'nullable|boolean' */
+            'pep_flag' => 'nullable|boolean'
         ];
     }
 }
