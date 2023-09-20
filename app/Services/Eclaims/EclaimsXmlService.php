@@ -323,11 +323,11 @@ class EclaimsXmlService
         return [
             'ABP' => [
                 '_attributes' => [
-                    'pDay0ARV' => $request->pDay0ARV,
-                    'pDay3ARV' => $request->pDay3ARV,
-                    'pDay7ARV' => $request->pDay7ARV,
-                    'pRIG' => $request->pRIG,
-                    'pABPOthers' => $request->pABPOthers,
+                    'pDay0ARV' => Carbon::parse($request->pDay0ARV)->format('m-d-Y'),
+                    'pDay3ARV' => Carbon::parse($request->pDay3ARV)->format('m-d-Y'),
+                    'pDay7ARV' => Carbon::parse($request->pDay7ARV)->format('m-d-Y'),
+                    'pRIG' => Carbon::parse($request->pRIG)->format('m-d-Y'),
+                    'pABPOthers' => Carbon::parse($request->pABPOthers)->format('m-d-Y'),
                     'pABPSpecify' => $request->pABPSpecify,
                 ],
             ],

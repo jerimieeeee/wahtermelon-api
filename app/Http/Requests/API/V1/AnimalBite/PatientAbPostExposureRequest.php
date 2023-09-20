@@ -29,8 +29,14 @@ class PatientAbPostExposureRequest extends FormRequest
             'animal_status_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'rig_type_code' => 'required|exists:lib_ab_rig_types,code',
             'rig_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'booster_1_flag' => 'nullable|boolean',
-            'booster_2_flag' => 'nullable|boolean',
+
+            'booster1_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'booster1_vaccine_code' => 'nullable|exists:lib_ab_vaccines,code',
+            'booster1_vaccine_route_code' => 'nullable|exists:lib_ab_vaccine_routes,code',
+            'booster2_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'booster2_vaccine_code' => 'nullable|exists:lib_ab_vaccines,code',
+            'booster2_vaccine_route_code' => 'nullable|exists:lib_ab_vaccine_routes,code',
+
             'other_vacc_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'other_vacc_desc' => 'nullable',
             'other_vacc_route_code' => 'nullable|exists:lib_ab_vaccine_routes,code',
