@@ -544,8 +544,8 @@ class KonsultaService
                 $transmittalNumber = IdGenerator::generate(['table' => 'konsulta_transmittals', 'field' => 'transmittal_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             }
 
-            $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate, $effectivityYear);
-            $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate);
+            $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate, $effectivityYear, $tranche);
+            $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate, $effectivityYear, $tranche);
             $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate);
             $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
             $profileCount = count($profiling[0]['PROFILE'][0]);
@@ -639,10 +639,13 @@ class KonsultaService
         return $report;
     }
 
-    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null)
+    public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null, $tranche = 1)
     {
         if ($effectivityYear === null) {
             $effectivityYear = date('Y');
+        }
+        if ($revalidate && !empty($transmittalNumber) && $tranche == 2) {
+            $patientId = Consult::query()->whereTransmittalNumber($transmittalNumber)->get()->pluck('patient_id');
         }
         $enlistments = [];
         $patient = Patient::selectRaw('id AS patientID, case_number, first_name, middle_name, last_name, suffix_name, gender, birthdate, mobile_number, consent_flag');
@@ -662,7 +665,7 @@ class KonsultaService
             ->where('patient_philhealth.effectivity_year', $effectivityYear)
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->when(! empty($patientId), fn ($query) => $query->whereIn('patient_id', $patientId))
-            ->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
+            ->when($revalidate && $tranche == 1, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
             //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
         $data->when($save, fn ($query) => $query->map(fn ($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]))
@@ -672,10 +675,13 @@ class KonsultaService
         return $enlistments;
     }
 
-    public function profilings($transmittalNumber = '', $patientId = [], $revalidate = false, $effectivityYear = null)
+    public function profilings($transmittalNumber = '', $patientId = [], $revalidate = false, $effectivityYear = null, $tranche = 1)
     {
         if ($effectivityYear === null) {
             $effectivityYear = date('Y');
+        }
+        if ($revalidate && !empty($transmittalNumber) && $tranche == 2) {
+            $patientId = Consult::query()->whereTransmittalNumber($transmittalNumber)->get()->pluck('patient_id');
         }
         $profile = [];
         $data = Patient::query()
@@ -690,7 +696,7 @@ class KonsultaService
             ->withWhereHas('patientHistory:patient_id,medical_history_id')
             ->withWhereHas('philhealthLatest', fn ($query) => [
                 $query->whereIn('membership_type_id', ['MM', 'DD']),
-                $query->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber)),
+                $query->when($revalidate && $tranche == 1, fn ($query) => $query->where('transmittal_number', $transmittalNumber)),
                 $query->where('patient_philhealth.effectivity_year', $effectivityYear)
             ])
             ->when(! empty($patientId), fn ($query) => $query->whereIn('id', $patientId))
