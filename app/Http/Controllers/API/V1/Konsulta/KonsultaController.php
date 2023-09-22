@@ -148,7 +148,7 @@ class KonsultaController extends Controller
             )
             ->when($request->tranche == 2,
                 fn ($query) => [
-                    $query->whereNotNull('transmittal_number'),
+                    //$query->whereNotNull('transmittal_number'),
                     $query->withWhereHas('patient.consult', fn ($q) => $q->whereNull('transmittal_number')->where('is_konsulta', 1)->wherePtGroup('cn')->whereHas('patient.consult.finalDiagnosis'))
                 ]
             )
