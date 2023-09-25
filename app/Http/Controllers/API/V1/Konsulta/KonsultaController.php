@@ -147,10 +147,10 @@ class KonsultaController extends Controller
                 fn ($query) => $query->whereNull('transmittal_number')
             )
             ->when($request->tranche == 2,
-                fn ($query) => [
+                fn ($query) =>
                     //$query->whereNotNull('transmittal_number'),
                     $query->withWhereHas('patient.consult', fn ($q) => $q->whereNull('transmittal_number')->where('is_konsulta', 1)->wherePtGroup('cn')->whereHas('patient.consult.finalDiagnosis'))
-                ]
+
             )
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->allowedIncludes('facility', 'user')
