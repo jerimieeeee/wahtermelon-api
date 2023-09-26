@@ -67,6 +67,9 @@ class ConsultController extends Controller
             ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
                 $q->where('facility_code', '=', auth()->user()->facility_code);
             })
+            ->when(isset($request->not_consult_id), function ($q) use ($request) {
+                $q->where('id', '!=', $request->not_consult_id);
+            })
             ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
             ->defaultSort('consult_date')
             ->allowedSorts('consult_date');
