@@ -88,7 +88,7 @@ class ParsePSGCFileCommand extends Command
             'geo_level' => $properties['Geographic Level'],
             'city_class' => $properties['City Class'],
             'income_class' => $properties["Income\nClassification"],
-            'urban_rural' => $properties["Urban / Rural\n(based on 2015 Population)"],
+            'urban_rural' => $properties["Urban / Rural\n(based on 2015 Population)"]??$properties["Urban / Rural\n(based on 2020 CPH)"],
             'population' => preg_replace('/\D+/', '', $properties['2020 Population']),
         ];
 
