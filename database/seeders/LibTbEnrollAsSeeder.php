@@ -13,8 +13,9 @@ class LibTbEnrollAsSeeder extends Seeder
     public function run(): void
     {
         LibTbEnrollAs::upsert([
-            ['code' => 'IPT',   'desc' => 'IPT Case'],
+            ['code' => 'IPT',   'desc' => 'TPT Case'],
             ['code' => 'DSTB',  'desc' => 'DS-TB Case'],
+            ['code' => 'DRTB',  'desc' => 'DR-TB Case'],
         ], ['code']);
     }
 }

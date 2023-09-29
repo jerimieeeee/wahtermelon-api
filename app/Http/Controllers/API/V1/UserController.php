@@ -49,13 +49,15 @@ class UserController extends Controller
                 $q->orSearch($columns, 'LIKE', $request->filter['search']);
             })
             ->when(isset($request->designation_code), function ($q) use ($request) {
-                $q->whereDesignationCode($request->designation_code);
+                $q->whereDesignationCode($request->designation_code)
+                ->whereIsActive(1);
             })
             ->when(isset($request->facility_code), function ($q) use ($request) {
                 $q->whereFacilityCode($request->facility_code);
             })
             ->when(isset($request->attendant_flag), function ($q) use ($request) {
-                $q->where('attendant_'.$request->attendant_flag.'_flag', 1);
+                $q->where('attendant_'.$request->attendant_flag.'_flag', 1)
+                ->whereIsActive(1);
             })
             ->where('facility_code',auth()->user()->facility_code)
             ->with(['facility', 'facility.province', 'facility.municipality', 'facility.barangay', 'designation', 'employer'])

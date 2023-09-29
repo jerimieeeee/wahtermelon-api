@@ -47,6 +47,27 @@ class PatientAbPostExposure extends Model
         return $this->belongsTo(LibAbVaccineRoute::class, 'other_vacc_route_code', 'code');
     }
 
+    // booster1Vaccine
+    public function booster1Vaccine()
+    {
+        return $this->belongsTo(LibAbVaccine::class, 'booster1_vaccine_code', 'code');
+    }
+
+    public function booster1VaccineRoute()
+    {
+        return $this->belongsTo(LibAbVaccineRoute::class, 'booster1_vaccine_route_code', 'code');
+    }
+
+    public function booster2Vaccine()
+    {
+        return $this->belongsTo(LibAbVaccine::class, 'booster2_vaccine_code', 'code');
+    }
+
+    public function booster2VaccineRoute()
+    {
+        return $this->belongsTo(LibAbVaccineRoute::class, 'booster2_vaccine_route_code', 'code');
+    }
+
     public function day0Vaccine()
     {
         return $this->belongsTo(LibAbVaccine::class, 'day0_vaccine_code', 'code');

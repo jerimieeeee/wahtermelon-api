@@ -67,6 +67,9 @@ class ConsultController extends Controller
             ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
                 $q->where('facility_code', '=', auth()->user()->facility_code);
             })
+            ->when(isset($request->not_consult_id), function ($q) use ($request) {
+                $q->where('id', '!=', $request->not_consult_id);
+            })
             ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
             ->defaultSort('consult_date')
             ->allowedSorts('consult_date');
@@ -125,8 +128,8 @@ class ConsultController extends Controller
      */
     public function update(ConsultRequest $request, $id)
     {
-        Consult::findorfail($id)->update($request->only(['consult_date', 'physician_id', 'consult_done', 'is_pregnant', 'is_konsulta', 'walkedin_status', 'authorization_transaction_code']));
-        $data = Consult::findorfail($id);
+        Consult::query()->findOrFail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant', 'is_konsulta', 'walkedin_status', 'authorization_transaction_code', 'consult_date']));
+        $data = Consult::query()->findOrFail($id);
 
         return response()->json(['data' => $data], 201);
     }
