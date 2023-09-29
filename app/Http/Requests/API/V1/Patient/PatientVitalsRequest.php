@@ -101,7 +101,9 @@ class PatientVitalsRequest extends FormRequest
             'patient_hip' => 'nullable|numeric',
             'patient_limbs' => 'nullable|numeric',
             'patient_muac' => 'nullable|numeric',
+            'patient_left_vision_acuity_distance' => 'nullable|numeric',
             'patient_left_vision_acuity' => 'nullable|numeric',
+            'patient_right_vision_acuity_distance' => 'nullable|numeric',
             'patient_right_vision_acuity' => 'nullable|numeric',
         ];
     }

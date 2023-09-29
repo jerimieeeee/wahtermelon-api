@@ -36,8 +36,7 @@ class HouseholdEnvironmental extends Model
 
     protected $casts = [
         'validation_date' => 'date:Y-m-d',
-        'arsenic_date' => 'date:Y-m-d',
-        'effectivity_year' => 'date:Y',
+        'arsenic_date' => 'date:Y-m-d'
     ];
 
     protected function serializeDate(\DateTimeInterface $date)

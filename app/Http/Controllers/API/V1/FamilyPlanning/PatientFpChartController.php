@@ -5,21 +5,35 @@ namespace App\Http\Controllers\API\V1\FamilyPlanning;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\FamilyPlanning\PatientFpChartRequest;
 use App\Http\Requests\API\V1\FamilyPlanning\PatientFpChartUpdateRequest;
-use App\Http\Requests\API\V1\FamilyPlanning\PatientFpMethodRequest;
 use App\Http\Resources\API\V1\FamilyPlanning\PatientFpChartResource;
-use App\Http\Resources\API\V1\FamilyPlanning\PatientFpMethodResource;
 use App\Models\V1\FamilyPlanning\PatientFpChart;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientFpChartController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): ResourceCollection
     {
-        //
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $query = QueryBuilder::for(PatientFpChart::class)
+            ->when(isset($request->patient_id), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->with('fpMethod', 'fpMethod.dropout', 'fpMethod.method', 'source')
+            ->defaultSort('service_date')
+            ->allowedSorts('enrollment_date', 'next_service_date');
+
+        if ($perPage === 'all') {
+            return PatientFpChartResource::collection($query->get());
+        }
+
+        return PatientFpChartResource::collection($query->paginate($perPage)->withQueryString());
     }
 
     /**
@@ -45,7 +59,7 @@ class PatientFpChartController extends Controller
      */
     public function update(PatientFpChartUpdateRequest $request, PatientFpChart $patientFpChart)
     {
-        $patientFpChart->update($request->only(['service_date', 'source_supply_code', 'next_service_date', 'quantity', 'remarks']));
+        $patientFpChart->update($request->only(['service_date', 'source_supply_code', 'quantity', 'remarks']));
 
         return response()->json(['status' => 'Update successful!'], 200);
     }

@@ -25,10 +25,10 @@ class PatientFpChartRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'patient_fp_id' => 'required|exists:patient_fp,id',
             'patient_fp_method_id' => 'required|exists:patient_fp_methods,id',
-            'service_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
+            'service_date' => 'date|date_format:Y-m-d|required',
             'source_supply_code' => 'required|exists:lib_fp_source_supplies,code',
             'quantity' => 'nullable|numeric',
-            'next_service_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'next_service_date' => 'required|date|date_format:Y-m-d',
             'remarks' => 'nullable'
         ];
     }

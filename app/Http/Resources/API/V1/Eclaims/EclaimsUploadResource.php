@@ -35,6 +35,8 @@ class EclaimsUploadResource extends JsonResource
             'pCheckDate' => $this->pCheckDate,
             'isSuccess' => $this->isSuccess,
             'fail_error' => $this->fail_error,
+
+            'patient' => $this->whenLoaded('patient')
         ];
     }
 }

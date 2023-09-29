@@ -33,7 +33,7 @@ class LibIcd10Controller extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['icd10_desc'];
+        $columns = ['icd10_code', 'icd10_desc'];
         $icd10 = QueryBuilder::for(LibIcd10::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
                 $q->orSearch($columns, 'LIKE', $request->filter['search']);

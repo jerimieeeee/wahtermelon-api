@@ -65,4 +65,9 @@ class HouseholdFolder extends Model
     {
         return $this->belongsTo(LibResidenceClassification::class, 'residence_classification_code', 'code');
     }
+
+    public function environmentalLatest()
+    {
+        return $this->hasOne(HouseholdEnvironmental::class, 'household_folder_id', 'id');
+    }
 }

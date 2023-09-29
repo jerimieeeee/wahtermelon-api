@@ -33,7 +33,6 @@ class HouseholdProfilingReportService
         return DB::table('household_environmentals')
             ->selectRaw("
                         household_folders.id,
-                        number_of_families,
                         CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
                     ")
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
@@ -73,9 +72,7 @@ class HouseholdProfilingReportService
     {
         return DB::table('household_environmentals')
             ->selectRaw("
-                        household_folders.id,
-                        number_of_families,
-                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address
+	                    SUM(number_of_families) AS total_number_of_families
                     ")
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
@@ -106,7 +103,6 @@ class HouseholdProfilingReportService
                 $q->whereNull('cct_id');
             })
             ->whereBetween('registration_date', [$request->start_date, $request->end_date])
-            ->groupBy('household_folders.id')
             ->orderBy('registration_date', 'ASC');
     }
 
@@ -650,7 +646,6 @@ class HouseholdProfilingReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('patient_histories', 'patients.id', 'patient_histories.patient_id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
@@ -672,6 +667,7 @@ class HouseholdProfilingReportService
             ->whereGender($gender)
             ->whereBetween('registration_date', [$request->start_date, $request->end_date])
             ->groupBy('patients.id')
+
             ///Age/Health RiskGroup Query
             ->when($type == 'newborn', function ($q) use ($request) {
                 $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 0 AND 28)');
@@ -682,9 +678,20 @@ class HouseholdProfilingReportService
             ->when($type == 'psac', function ($q) use ($request) {
                 $q->havingRaw('age_year BETWEEN 1 AND 4');
             })
-            ->when($type == 'infant', function ($q) use ($request) {
-                $q->havingRaw('age_year BETWEEN 1 AND 4');
+            ->when($type == 'sac', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 5 AND 9');
             })
+            ->when($type == 'ad', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 10 AND 19');
+            })
+            ->when($type == 'adult', function ($q) use ($request) {
+                $q->havingRaw('age_year BETWEEN 20 AND 59');
+            })
+            ->when($type == 'senior', function ($q) use ($request) {
+                $q->havingRaw('age_year >= 60');
+            })
+
+            //Age Group
             ->when($type == '1-28days', function ($q) use ($request) {
                 $q->havingRaw('(age_year = 0) AND (age_month = 0) AND (age_day BETWEEN 1 AND 28)');
             })

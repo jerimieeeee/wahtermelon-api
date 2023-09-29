@@ -28,24 +28,52 @@ class SoapService
             ],
         ];
 
-        if (! isset(request()->program_code) && request()->program_code != 'kp') {
-            //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
-            $token = auth()->user()->konsultaCredential->token;
-
-            $opts['http']['header'] = "Token: $token";
-
-            //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
-            $wsdlUrl = config('app.konsulta_url');
-
-            //            dd($token);
-        } else {
+        if (isset(request()->program_code) && request()->program_code !== 'kp') {
             $eclaimsSyncService = new EclaimsSyncService();
-
-            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
-
-            $wsdlUrl = $onlineUrls[0];
-            //$wsdlUrl = $onlineUrls;
+            return $eclaimsSyncService->checkEclaimsUrl();
+        } else {
+            $token = auth()->user()->konsultaCredential->token;
+            $opts['http']['header'] = "Token: $token";
+            $wsdlUrl = config('app.konsulta_url');
         }
+
+//        if (! isset(request()->program_code) && request()->program_code !== 'kp') {
+//            $token = auth()->user()->konsultaCredential->token;
+//            $opts['http']['header'] = "Token: $token";
+//            $wsdlUrl = config('app.konsulta_url');
+//        } else {
+//            $eclaimsSyncService = new EclaimsSyncService();
+//            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
+//            $wsdlUrl = $onlineUrls[0];
+//        }
+
+//        if (isset(request()->program_code) && request()->program_code !== 'kp') {
+//            $eclaimsSyncService = new EclaimsSyncService();
+//            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
+//            $wsdlUrl = $onlineUrls[0];
+//        } else {
+//            $token = auth()->user()->konsultaCredential->token;
+//            $opts['http']['header'] = "Token: $token";
+//            $wsdlUrl = config('app.konsulta_url');
+//        }
+
+//        if (! isset(request()->program_code) && request()->program_code != 'kp') {
+//            //$token = PhilhealthCredential::select('token')->whereProgramCode('kp')->pluck('token')->first();
+//            $token = auth()->user()->konsultaCredential->token;
+//
+//            $opts['http']['header'] = "Token: $token";
+//
+//            //$wsdlUrl = 'https://ecstest.philhealth.gov.ph/KONSULTA/SOAP?wsdl';
+//            $wsdlUrl = config('app.konsulta_url');
+//
+//        } else {
+//            $eclaimsSyncService = new EclaimsSyncService();
+//
+//            $onlineUrls = $eclaimsSyncService->checkEclaimsUrl();
+//
+//            $wsdlUrl = $onlineUrls[0];
+//            //$wsdlUrl = $onlineUrls;
+//        }
 
         $context = stream_context_create($opts);
         $soapClientOptions = [

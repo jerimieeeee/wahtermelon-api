@@ -40,8 +40,16 @@ class HouseholdEnvironmentalRequest extends FormRequest
             'open_defecation_flag' => 'required|boolean',
             'toilet_facility_code' => 'required|exists:lib_environmental_toilet_facilities,code',
             'toilet_shared_flag' => 'required|boolean',
-            'sewage_code' => 'required|exists:lib_environmental_sewages,code',
-            'waste_management_code' => 'required|exists:lib_environmental_waste_management,code',
+
+            'sw_disposed_flag' => 'boolean',
+            'sw_collected_flag' => 'boolean',
+            'wm_waste_segration_flag' => 'boolean',
+            'wm_backyad_composting_flag' => 'boolean',
+            'wm_recycling_flag' => 'boolean',
+            'wm_collected_flag' => 'boolean',
+            'wm_others_flag' => 'boolean',
+            'wm_others_remarks' => 'nullable',
+
             'remarks' => 'nullable',
             'end_sanitation_flag' => 'required|boolean',
         ];

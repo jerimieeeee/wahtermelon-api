@@ -125,8 +125,8 @@ class ConsultController extends Controller
      */
     public function update(ConsultRequest $request, $id)
     {
-        Consult::query()->findOrFail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant', 'is_konsulta']));
-        $data = Consult::query()->findOrFail($id);
+        Consult::findorfail($id)->update($request->only(['consult_date', 'physician_id', 'consult_done', 'is_pregnant', 'is_konsulta', 'walkedin_status', 'authorization_transaction_code']));
+        $data = Consult::findorfail($id);
 
         return response()->json(['data' => $data], 201);
     }

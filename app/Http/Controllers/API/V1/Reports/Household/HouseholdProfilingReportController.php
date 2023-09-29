@@ -19,6 +19,12 @@ class HouseholdProfilingReportController extends Controller
         //Summary household NON-4PS
         $summary_household_non_4ps = $householdProfilingReportService->get_household_profiling_summary($request, 'non-4ps')->get();
 
+        //Summary Family 4PS
+        $summary_household_family_4ps = $householdProfilingReportService->get_household_profiling_summary_family($request, '4ps')->get();
+
+        //Summary Family NON-4PS
+        $summary_household_family_non_4ps = $householdProfilingReportService->get_household_profiling_summary_family($request, 'non-4ps')->get();
+
         //Water Source 4PS
         $water_source_level1_4ps = $householdProfilingReportService->get_household_profiling_water_source($request, '4ps', 1)->get();
         $water_source_level2_4ps = $householdProfilingReportService->get_household_profiling_water_source($request, '4ps', 2)->get();
@@ -179,11 +185,60 @@ class HouseholdProfilingReportController extends Controller
         $age_65_to_69_years_female = $householdProfilingReportService->get_household_profiling_age_group($request, '65-69years', 'F')->get();
         $age_70_years_up_female = $householdProfilingReportService->get_household_profiling_age_group($request, '70years', 'F')->get();
 
+        //Family Planning Methods 4PS
+        $family_planning_method_coc_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'coc')->get();
+        $family_planning_method_pop_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'pop')->get();
+        $family_planning_method_injectables_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'injectables')->get();
+        $family_planning_method_iud_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'iud')->get();
+        $family_planning_method_condom_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'condom')->get();
+        $family_planning_method_lam_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'lam')->get();
+        $family_planning_method_btl_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'btl')->get();
+        $family_planning_method_implant_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'implant')->get();
+        $family_planning_method_sdm_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'sdm')->get();
+        $family_planning_method_vasectomy_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'vasectomy')->get();
+        $family_planning_method_bbt_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'bbt')->get();
+        $family_planning_method_others_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, '4ps', 'others')->get();
+
+        //Family Planning Methods NON-4PS
+        $family_planning_method_coc_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'coc')->get();
+        $family_planning_method_pop_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'pop')->get();
+        $family_planning_method_injectables_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'injectables')->get();
+        $family_planning_method_iud_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'iud')->get();
+        $family_planning_method_condom_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'condom')->get();
+        $family_planning_method_lam_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'lam')->get();
+        $family_planning_method_btl_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'btl')->get();
+        $family_planning_method_implant_non_4ps= $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'implant')->get();
+        $family_planning_method_sdm_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'sdm')->get();
+        $family_planning_method_vasectomy_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'vasectomy')->get();
+        $family_planning_method_bbt_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'bbt')->get();
+        $family_planning_method_others_non_4ps = $householdProfilingReportService->get_household_profiling_family_planning_method($request, 'non-4ps', 'others')->get();
+
+        //Health Risk Group Male
+        $newborn_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'newborn', 'M')->get();
+        $infant_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'infant', 'M')->get();
+        $psac_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'psac', 'M')->get();
+        $sac_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'sac', 'M')->get();
+        $adolsecent_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'ad', 'M')->get();
+        $adult_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'adult', 'M')->get();
+        $senior_male = $householdProfilingReportService->get_household_profiling_age_group($request, 'senior', 'M')->get();
+
+        //Health Risk Group Female
+        $newborn_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'newborn', 'F')->get();
+        $infant_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'infant', 'F')->get();
+        $psac_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'psac', 'F')->get();
+        $sac_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'sac', 'F')->get();
+        $adolsecent_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'ad', 'F')->get();
+        $adult_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'adult', 'F')->get();
+        $senior_female = $householdProfilingReportService->get_household_profiling_age_group($request, 'senior', 'F')->get();
 
         return [
             //Summary Household
             'summary_household_4ps' => $summary_household_4ps,
             'summary_household_non_4ps' => $summary_household_non_4ps,
+
+            //Summary Household Family
+            'summary_household_family_4ps' => $summary_household_family_4ps,
+            'summary_household_family_non_4ps' => $summary_household_family_non_4ps,
 
             //Water Source 4PS
             'water_source_level1_4ps' => $water_source_level1_4ps,
@@ -340,6 +395,52 @@ class HouseholdProfilingReportController extends Controller
             'age_60_to_64_years_female' => $age_60_to_64_years_female,
             'age_65_to_69_years_female' => $age_65_to_69_years_female,
             'age_70_years_up_female' => $age_70_years_up_female,
+
+            //Family Planning Method 4PS
+            'family_planning_method_coc_4ps' => $family_planning_method_coc_4ps,
+            'family_planning_method_pop_4ps' => $family_planning_method_pop_4ps,
+            'family_planning_method_injectables_4ps' => $family_planning_method_injectables_4ps,
+            'family_planning_method_iud_4ps' => $family_planning_method_iud_4ps,
+            'family_planning_method_condom_4ps' => $family_planning_method_condom_4ps,
+            'family_planning_method_lam_4ps' => $family_planning_method_lam_4ps,
+            'family_planning_method_btl_4ps' => $family_planning_method_btl_4ps,
+            'family_planning_method_implant_4ps' => $family_planning_method_implant_4ps,
+            'family_planning_method_sdm_4ps' => $family_planning_method_sdm_4ps,
+            'family_planning_method_vasectomy_4ps' => $family_planning_method_vasectomy_4ps,
+            'family_planning_method_bbt_4ps' => $family_planning_method_bbt_4ps,
+            'family_planning_method_others_4ps' => $family_planning_method_others_4ps,
+
+            //Family Planning Methods NON-4PS
+            'family_planning_method_coc_non_4ps' => $family_planning_method_coc_non_4ps,
+            'family_planning_method_pop_non_4ps' => $family_planning_method_pop_non_4ps,
+            'family_planning_method_injectables_non_4ps' => $family_planning_method_injectables_non_4ps,
+            'family_planning_method_iud_non_4ps' => $family_planning_method_iud_non_4ps,
+            'family_planning_method_condom_non_4ps' => $family_planning_method_condom_non_4ps,
+            'family_planning_method_lam_non_4ps' => $family_planning_method_lam_non_4ps,
+            'family_planning_method_btl_non_4ps' => $family_planning_method_btl_non_4ps,
+            'family_planning_method_implant_non_4ps' => $family_planning_method_implant_non_4ps,
+            'family_planning_method_sdm_non_4ps' => $family_planning_method_sdm_non_4ps,
+            'family_planning_method_vasectomy_non_4ps' => $family_planning_method_vasectomy_non_4ps,
+            'family_planning_method_bbt_non_4ps' => $family_planning_method_bbt_non_4ps,
+            'family_planning_method_others_non_4ps' => $family_planning_method_others_non_4ps,
+
+            //Health Risk Group Male
+            'newborn_male' => $newborn_male,
+            'infant_male' => $infant_male,
+            'psac_male' => $psac_male,
+            'sac_male' => $sac_male,
+            'adolsecent_male' => $adolsecent_male,
+            'adult_male' => $adult_male,
+            'senior_male' => $senior_male,
+
+            //Health Risk Group Female
+            'newborn_female' => $newborn_female,
+            'infant_female' => $infant_female,
+            'psac_female' => $psac_female,
+            'sac_female' => $sac_female,
+            'adolsecent_female' => $adolsecent_female,
+            'adult_female' => $adult_female,
+            'senior_female' => $senior_female,
 
         ];
     }
