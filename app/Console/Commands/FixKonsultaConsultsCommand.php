@@ -26,7 +26,7 @@ class FixKonsultaConsultsCommand extends Command
      */
     public function handle()
     {
-        $consults = Consult::query()->whereIsKonsulta(0)->wherePtGroup('cn')->whereHas('patient.philhealth.konsultaRegistration')->whereHas('finalDiagnosis')->update(['is_konsulta' => 1]);
+        $consults = Consult::query()->whereIsKonsulta(0)->whereYear('consult_date', '2023')->wherePtGroup('cn')->whereHas('patient.philhealth.konsultaRegistration')->whereHas('finalDiagnosis')->update(['is_konsulta' => 1]);
         $this->info("$consults consults have been updated!");
     }
 }
