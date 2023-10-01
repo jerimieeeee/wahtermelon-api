@@ -75,7 +75,7 @@ class PhilHealthEClaimsEncryptor
     {
         $this->log("decryptXmlPayload:: passphrase: $passphrase ");
         if (empty($encryptedDataAsJsonStr)) {
-            $up = new Exception('No data to be decrypted');
+            $up = new \Exception('No data to be decrypted');
             throw $up;
         }
 
