@@ -399,7 +399,7 @@ class MigrateMisuWahCommand extends Command
 
     public function migrateHousehold()
     {
-        DB::connection('mysql_migration')->statement('SET group_concat_max_len = 10000');
+        DB::connection('mysql_migration')->statement('SET group_concat_max_len = 1000000');
         return DB::connection('mysql_migration')->table('family')
             //->join('patient', 'patient.id', '=', 'family_members.patient_id')
             ->selectRaw('
