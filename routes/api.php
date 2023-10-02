@@ -567,6 +567,24 @@ Route::prefix('v1')->group(function () {
                 Route::put('consult-laboratory-microscopy/{microscopy}', 'update');
                 Route::delete('consult-laboratory-microscopy/{microscopy}', 'destroy');
             });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryUltrasoundController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-ultrasound', 'index');
+                Route::post('consult-laboratory-ultrasound', 'store');
+                Route::put('consult-laboratory-ultrasound/{ultrasound}', 'update');
+                Route::delete('consult-laboratory-ultrasound/{ultrasound}', 'destroy');
+            });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryGeneXpertController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-geneXpert', 'index');
+                Route::post('consult-laboratory-geneXpert', 'store');
+                Route::put('consult-laboratory-geneXpert/{consultLaboratoryGeneXpert}', 'update');
+                Route::delete('consult-laboratory-geneXpert/{consultLaboratoryGeneXpert}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs

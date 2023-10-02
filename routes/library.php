@@ -270,6 +270,15 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('laboratory-stool-consistency', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'index'])->name('laboratory-stool-consistency.index');
     Route::get('laboratory-stool-consistency/{stoolConsistency}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryStoolConsistencyController::class, 'show'])->name('laboratory-stool-consistency.show');
 
+    Route::get('laboratory-ultrasound-type', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryUltrasoundTypeController::class, 'index'])->name('laboratory-ultrasound-type.index');
+    Route::get('laboratory-ultrasound-type/{libLaboratoryUltrasoundType}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryUltrasoundTypeController::class, 'show'])->name('laboratory-ultrasound-type.show');
+
+    Route::get('laboratory-mtb-result', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryMtbResultController::class, 'index'])->name('laboratory-mtb-result.index');
+    Route::get('laboratory-mtb-result/{libLaboratoryMtbResult}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryMtbResultController::class, 'show'])->name('laboratory-mtb-result.show');
+
+    Route::get('laboratory-rif-result', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRifResultController::class, 'index'])->name('laboratory-rif-result.index');
+    Route::get('laboratory-rif-result/{libLaboratoryRifResult}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRifResultController::class, 'show'])->name('laboratory-rif-result.show');
+
     //Patient Pregnancy History
     Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
     Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');

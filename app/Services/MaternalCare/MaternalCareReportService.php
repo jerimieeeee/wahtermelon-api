@@ -492,6 +492,7 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
+            ->groupBy('patient_id')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
@@ -533,6 +534,7 @@ class MaternalCareReportService
             ->when($gender == 'FEMALE', fn ($query) => $query->whereIn('outcome_code', ['LSCF', 'NSDF'])
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 
@@ -573,6 +575,7 @@ class MaternalCareReportService
             ->when($weight == 'UNKNOWN', fn ($query) => $query->where('patient_ccdevs.birth_weight', 0)
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
+            ->groupBy('patient_ccdevs.patient_id')
             ->orderBy('name', 'ASC');
     }
 
@@ -611,6 +614,7 @@ class MaternalCareReportService
             ->when($attendant == 'MIDWIFE', fn ($query) => $query->whereAttendantCode('MW')
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 
@@ -650,6 +654,7 @@ class MaternalCareReportService
             ->when($facility == 'NON-HF', fn ($query) => $query->whereIn('delivery_location_code', ['OTHERS', 'HOME'])
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 
@@ -680,6 +685,7 @@ class MaternalCareReportService
             ->when($delivery == 'ALL', fn ($query) => $query->whereIn('outcome_code', ['LSCSF', 'LSCSM', 'NSDF', 'NSDM'])
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 
@@ -714,6 +720,7 @@ class MaternalCareReportService
             ->when($delivery == 'CS', fn ($query) => $query->whereIn('outcome_code', ['LSCSF', 'LSCSM'])
                 ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 
@@ -731,6 +738,7 @@ class MaternalCareReportService
                         ELSE NULL
                     END AS status,
                     outcome_code,
+                    patient_mc_post_registrations.facility_code AS facility_code,
                     pregnancy_termination_date,
                     pregnancy_termination_code,
                     facilities.municipality_code AS municipality_code,
@@ -747,7 +755,7 @@ class MaternalCareReportService
                         *
             ')
             ->when($request->category == 'all', function ($q) {
-                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
+                $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', $this->get_catchment_barangays());
@@ -781,6 +789,7 @@ class MaternalCareReportService
                         ELSE NULL
                     END AS status,
                     outcome_code,
+                    patient_mc_post_registrations.facility_code AS facility_code,
                     pregnancy_termination_date,
                     pregnancy_termination_code,
                     facilities.municipality_code AS municipality_code,
@@ -797,7 +806,7 @@ class MaternalCareReportService
                         *
             ')
             ->when($request->category == 'all', function ($q) {
-                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
+                $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', $this->get_catchment_barangays());
