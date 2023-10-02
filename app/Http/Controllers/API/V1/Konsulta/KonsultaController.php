@@ -183,6 +183,7 @@ class KonsultaController extends Controller
 
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
+            ->when(isset($request->start_date) && isset($request->end_date), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('created_at')
