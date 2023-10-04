@@ -582,8 +582,8 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('consult-laboratory-geneXpert', 'index');
                 Route::post('consult-laboratory-geneXpert', 'store');
-                Route::put('consult-laboratory-geneXpert/{consultLaboratoryGeneXpert}', 'update');
-                Route::delete('consult-laboratory-geneXpert/{consultLaboratoryGeneXpert}', 'destroy');
+                Route::put('consult-laboratory-geneXpert/{geneXpert}', 'update');
+                Route::delete('consult-laboratory-geneXpert/{geneXpert}', 'destroy');
             });
 
         Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryDengueRdtController::class)
@@ -591,8 +591,17 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('consult-laboratory-dengueRdt', 'index');
                 Route::post('consult-laboratory-dengueRdt', 'store');
-                Route::put('consult-laboratory-dengueRdt/{consultLaboratoryGeneXpert}', 'update');
-                Route::delete('consult-laboratory-dengueRdt/{consultLaboratoryGeneXpert}', 'destroy');
+                Route::put('consult-laboratory-dengueRdt/{dengueRdt}', 'update');
+                Route::delete('consult-laboratory-dengueRdt/{dengueRdt}', 'destroy');
+            });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySerologyController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-serology', 'index');
+                Route::post('consult-laboratory-serology', 'store');
+                Route::put('consult-laboratory-serology/{serology}', 'update');
+                Route::delete('consult-laboratory-serology/{serology}', 'destroy');
             });
     });
 
