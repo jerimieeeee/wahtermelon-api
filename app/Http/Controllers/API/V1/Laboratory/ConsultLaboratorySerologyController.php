@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API\V1\Laboratory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryGeneXpertRequest;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryGeneXpertResource;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryUltrasoundResource;
-use App\Models\V1\Laboratory\ConsultLaboratoryGeneXpert;
+use App\Http\Requests\API\V1\Laboratory\ConsultLaboratorySerologyRequest;
+use App\Http\Resources\API\V1\Laboratory\ConsultLaboratorySerologyResource;
+use App\Models\V1\Laboratory\ConsultLaboratorySerology;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -19,11 +18,11 @@ use Spatie\QueryBuilder\QueryBuilder;
  *
  * APIs for managing laboratories
  *
- * @subgroup Gene Xpert
+ * @subgroup Serology
  *
- * @subgroupDescription Consult laboratory for Gene Xpert.
+ * @subgroupDescription Consult laboratory for Serology.
  */
-class ConsultLaboratoryGeneXpertController extends Controller
+class ConsultLaboratorySerologyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,14 +34,14 @@ class ConsultLaboratoryGeneXpertController extends Controller
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      *
-     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryGeneXpertResource
+     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratorySerologyResource
      *
-     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryGeneXpert paginate=15
+     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratorySerology paginate=15
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = ConsultLaboratoryGeneXpert::query()
+        $query = ConsultLaboratorySerology::query()
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             })
@@ -53,41 +52,41 @@ class ConsultLaboratoryGeneXpertController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['mtbResult', 'rifResult', 'user'])
+            ->with(['user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 
         if ($perPage == 'all') {
-            return ConsultLaboratoryGeneXpertResource::collection($laboratory->get());
+            return ConsultLaboratorySerologyResource::collection($laboratory->get());
         }
 
-        return ConsultLaboratoryGeneXpertResource::collection($laboratory->paginate($perPage)->withQueryString());
+        return ConsultLaboratorySerologyResource::collection($laboratory->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ConsultLaboratoryGeneXpertRequest $request): JsonResponse
+    public function store(ConsultLaboratorySerologyRequest $request): JsonResponse
     {
-        $data = ConsultLaboratoryGeneXpert::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+        $data = ConsultLaboratorySerology::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
 
-        return response()->json(['data' => new ConsultLaboratoryGeneXpertResource($data), 'status' => 'Success'], 201);
+        return response()->json(['data' => new ConsultLaboratorySerologyResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ConsultLaboratoryGeneXpert $geneXpert): ConsultLaboratoryGeneXpertResource
+    public function show(ConsultLaboratorySerology $serology): ConsultLaboratorySerologyResource
     {
-        return new ConsultLaboratoryGeneXpertResource($geneXpert);
+        return new ConsultLaboratorySerologyResource($serology);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ConsultLaboratoryGeneXpertRequest $request, ConsultLaboratoryGeneXpert $geneXpert): JsonResponse
+    public function update(ConsultLaboratorySerologyRequest $request, ConsultLaboratorySerology $serology): JsonResponse
     {
-        $geneXpert->update($request->validated());
+        $serology->update($request->validated());
 
         return response()->json(['status' => 'Update successful!'], 200);
     }
@@ -95,9 +94,9 @@ class ConsultLaboratoryGeneXpertController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ConsultLaboratoryGeneXpert $geneXpert)
+    public function destroy(ConsultLaboratorySerology $serology)
     {
-        $geneXpert->deleteOrFail();
+        $serology->deleteOrFail();
 
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }

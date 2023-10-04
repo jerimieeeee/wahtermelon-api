@@ -76,17 +76,17 @@ class ConsultLaboratoryDengueRdtController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ConsultLaboratoryDengueRdt $consultLaboratoryDengueRdt): ConsultLaboratoryDengueRdtResource
+    public function show(ConsultLaboratoryDengueRdt $dengueRdt): ConsultLaboratoryDengueRdtResource
     {
-        return new ConsultLaboratoryDengueRdtResource($consultLaboratoryDengueRdt);
+        return new ConsultLaboratoryDengueRdtResource($dengueRdt);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ConsultLaboratoryDengueRdtRequest $request, ConsultLaboratoryDengueRdt $consultLaboratoryDengueRdt): JsonResponse
+    public function update(ConsultLaboratoryDengueRdtRequest $request, ConsultLaboratoryDengueRdt $dengueRdt): JsonResponse
     {
-        $consultLaboratoryDengueRdt->update($request->validated());
+        $dengueRdt->update($request->validated());
 
         return response()->json(['status' => 'Update successful!'], 200);
     }
@@ -94,9 +94,9 @@ class ConsultLaboratoryDengueRdtController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ConsultLaboratoryDengueRdt $consultLaboratoryDengueRdt)
+    public function destroy(ConsultLaboratoryDengueRdt $dengueRdt)
     {
-        $consultLaboratoryDengueRdt->deleteOrFail();
+        $dengueRdt->deleteOrFail();
 
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }
