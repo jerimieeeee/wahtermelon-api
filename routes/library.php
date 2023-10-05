@@ -279,6 +279,9 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('laboratory-rif-result', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRifResultController::class, 'index'])->name('laboratory-rif-result.index');
     Route::get('laboratory-rif-result/{libLaboratoryRifResult}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryRifResultController::class, 'show'])->name('laboratory-rif-result.show');
 
+    Route::get('laboratory-biopsy-type', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryBiopsyTypeController::class, 'index'])->name('laboratory-biopsy-type.index');
+    Route::get('laboratory-biopsy-type/{$libLaboratoryRifResult}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryBiopsyTypeController::class, 'show'])->name('laboratory-biopsy-type.show');
+
     //Patient Pregnancy History
     Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
     Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');
