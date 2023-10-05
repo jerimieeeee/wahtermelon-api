@@ -192,6 +192,7 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryUltrasoundTypeSeeder::class,
             LibLaboratoryMtbResultSeeder::class,
             LibLaboratoryRifResultSeeder::class,
+            LibLaboratoryBiopsyTypeSeeder::class,
         ]);
     }
 }

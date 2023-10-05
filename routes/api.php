@@ -603,6 +603,15 @@ Route::prefix('v1')->group(function () {
                 Route::put('consult-laboratory-serology/{serology}', 'update');
                 Route::delete('consult-laboratory-serology/{serology}', 'destroy');
             });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryBiopsyController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-biopsy', 'index');
+                Route::post('consult-laboratory-biopsy', 'store');
+                Route::put('consult-laboratory-biopsy/{biopsy}', 'update');
+                Route::delete('consult-laboratory-biopsy/{biopsy}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs

@@ -45,6 +45,9 @@ class ConsultLaboratory extends Model
         'microscopy',
         'ultrasound',
         'geneXpert',
+        'dengueRdt',
+        'serology',
+        'biopsy',
     ];
 
     public $incrementing = false;
@@ -188,6 +191,21 @@ class ConsultLaboratory extends Model
     public function geneXpert()
     {
         return $this->hasOne(ConsultLaboratoryGeneXpert::class, 'request_id', 'id');
+    }
+
+    public function dengueRdt()
+    {
+        return $this->hasOne(ConsultLaboratoryDengueRdt::class, 'request_id', 'id');
+    }
+
+    public function serology()
+    {
+        return $this->hasOne(ConsultLaboratorySerology::class, 'request_id', 'id');
+    }
+
+    public function biopsy()
+    {
+        return $this->hasOne(ConsultLaboratoryBiopsy::class, 'request_id', 'id');
     }
 
     public function getRelatedModel($model)
