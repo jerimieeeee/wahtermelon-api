@@ -294,13 +294,16 @@ class EclaimsSyncController extends Controller
     public function eClaimsUpload(Request $request, SoapService $service)
     {
         $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
-
-        $encrypted = $service->_client()->eClaimsUpload(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->encryptedXml
-        );
+        try {
+            $encrypted = $service->_client()->eClaimsUpload(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->encryptedXml
+            );
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
 
         $decryptor = new PhilHealthEClaimsEncryptor();
 
