@@ -305,7 +305,8 @@ class EclaimsSyncController extends Controller
         $decryptor = new PhilHealthEClaimsEncryptor();
 
         try {
-            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return $decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key);
+            //return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
         } catch (Exception $e) {
             $desc = $e->getMessage();
 
