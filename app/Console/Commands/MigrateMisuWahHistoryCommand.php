@@ -91,4 +91,9 @@ class MigrateMisuWahHistoryCommand extends Command
             ->whereNull('wahtermelon_vitals_id')
             ->get();
     }
+
+    public function saveVitals()
+    {
+
+    }
 }
