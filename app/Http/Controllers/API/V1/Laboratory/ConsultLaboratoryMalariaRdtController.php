@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1\Laboratory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryDengueRdtRequest;
-use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryDengueRdtResource;
-use App\Models\V1\Laboratory\ConsultLaboratoryDengueRdt;
+use App\Http\Requests\API\V1\Laboratory\ConsultLaboratoryMalariaRdtRequest;
+use App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryMalariaRdtResource;
+use App\Models\V1\Laboratory\ConsultLaboratoryMalariaRdt;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -18,11 +18,11 @@ use Spatie\QueryBuilder\QueryBuilder;
  *
  * APIs for managing laboratories
  *
- * @subgroup Dengue RDT
+ * @subgroup Serology
  *
- * @subgroupDescription Consult laboratory for Dengue RDT.
+ * @subgroupDescription Consult laboratory for Malaria RDT.
  */
-class ConsultLaboratoryDengueRdtController extends Controller
+class ConsultLaboratoryMalariaRdtController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,14 +34,14 @@ class ConsultLaboratoryDengueRdtController extends Controller
      * @queryParam per_page string Size per page. Defaults to 15. To view all records: e.g. per_page=all. Example: 15
      * @queryParam page int Page to view. Example: 1
      *
-     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryDengueRdtResource
+     * @apiResourceCollection App\Http\Resources\API\V1\Laboratory\ConsultLaboratoryMalariaRdtResource
      *
-     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryDengue paginate=15
+     * @apiResourceModel App\Models\V1\Laboratory\ConsultLaboratoryMalariaRdt paginate=15
      */
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = ConsultLaboratoryDengueRdt::query()
+        $query = ConsultLaboratoryMalariaRdt::query()
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             })
@@ -52,41 +52,41 @@ class ConsultLaboratoryDengueRdtController extends Controller
                 return $query->whereRequestId($request->request_id);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with(['user'])
+            ->with(['parasiteType', 'user'])
             ->defaultSort('-laboratory_date')
             ->allowedSorts('laboratory_date');
 
         if ($perPage == 'all') {
-            return ConsultLaboratoryDengueRdtResource::collection($laboratory->get());
+            return ConsultLaboratoryMalariaRdtResource::collection($laboratory->get());
         }
 
-        return ConsultLaboratoryDengueRdtResource::collection($laboratory->paginate($perPage)->withQueryString());
+        return ConsultLaboratoryMalariaRdtResource::collection($laboratory->paginate($perPage)->withQueryString());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ConsultLaboratoryDengueRdtRequest $request): JsonResponse
+    public function store(ConsultLaboratoryMalariaRdtRequest $request): JsonResponse
     {
-        $data = ConsultLaboratoryDengueRdt::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
+        $data = ConsultLaboratoryMalariaRdt::updateOrCreate(['request_id' => $request->safe()->request_id], $request->validated());
 
-        return response()->json(['data' => new ConsultLaboratoryDengueRdtResource($data), 'status' => 'Success'], 201);
+        return response()->json(['data' => new ConsultLaboratoryMalariaRdtResource($data), 'status' => 'Success'], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ConsultLaboratoryDengueRdt $dengue): ConsultLaboratoryDengueRdtResource
+    public function show(ConsultLaboratoryMalariaRdt $malaria): ConsultLaboratoryMalariaRdtResource
     {
-        return new ConsultLaboratoryDengueRdtResource($dengue);
+        return new ConsultLaboratoryMalariaRdtResource($malaria);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ConsultLaboratoryDengueRdtRequest $request, ConsultLaboratoryDengueRdt $dengue): JsonResponse
+    public function update(ConsultLaboratoryMalariaRdtRequest $request, ConsultLaboratoryMalariaRdt $malaria)
     {
-        $dengue->update($request->validated());
+        $malaria->update($request->validated());
 
         return response()->json(['status' => 'Update successful!'], 200);
     }
@@ -94,9 +94,9 @@ class ConsultLaboratoryDengueRdtController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ConsultLaboratoryDengueRdt $dengue)
+    public function destroy(ConsultLaboratoryMalariaRdt $malaria)
     {
-        $dengue->deleteOrFail();
+        $malaria->deleteOrFail();
 
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }

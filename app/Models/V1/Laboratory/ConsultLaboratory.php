@@ -48,6 +48,7 @@ class ConsultLaboratory extends Model
         'dengueRdt',
         'serology',
         'biopsy',
+        'malariaRdt'
     ];
 
     public $incrementing = false;
@@ -206,6 +207,11 @@ class ConsultLaboratory extends Model
     public function biopsy()
     {
         return $this->hasOne(ConsultLaboratoryBiopsy::class, 'request_id', 'id');
+    }
+
+    public function malariaRdt()
+    {
+        return $this->hasOne(ConsultLaboratoryMalariaRdt::class, 'request_id', 'id');
     }
 
     public function getRelatedModel($model)

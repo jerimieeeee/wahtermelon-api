@@ -193,6 +193,7 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryMtbResultSeeder::class,
             LibLaboratoryRifResultSeeder::class,
             LibLaboratoryBiopsyTypeSeeder::class,
+            LibLaboratoryMalariaRdtParasiteTypeSeeder::class,
         ]);
     }
 }
