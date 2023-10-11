@@ -546,7 +546,7 @@ class KonsultaService
 
             $enlistments = $this->enlistments($transmittalNumber, $patientId, $save, $revalidate, $effectivityYear, $tranche);
             $profiling = $this->profilings($transmittalNumber, $patientId, $revalidate, $effectivityYear, $tranche);
-            $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate);
+            $soaps = $this->soaps($transmittalNumber, $patientId, $tranche, $save, $revalidate, $effectivityYear);
             $enlistmentCount = count($enlistments['ENLISTMENT'][0]);
             $profileCount = count($profiling[0]['PROFILE'][0]);
             $soapCount = count($soaps[0]['SOAP'][0]);
@@ -729,7 +729,7 @@ class KonsultaService
         return $profile;
     }
 
-    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $save = false, $revalidate = false)
+    public function soaps($transmittalNumber = '', $patientId = [], $tranche = 2, $save = false, $revalidate = false, $effectivityYear = null)
     {
         $soap = [];
         $data = [];
@@ -744,6 +744,8 @@ class KonsultaService
                 ->when($revalidate, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
                 ->when($revalidate == false, fn ($query) => $query->whereNull('transmittal_number'))
                 ->whereFacilityCode(auth()->user()->facility_code)
+                ->whereYear('consult_date', $effectivityYear)
+                ->where('is_konsulta', 1)
                 ->wherePtGroup('cn')
                 ->when(! empty($patientId), fn ($query) => $query->whereIn('patient_id', $patientId))
                 ->get();

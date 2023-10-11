@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibDentalSocialHistory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -190,7 +189,10 @@ class DatabaseSeeder extends Seeder
             LibEnvironmentalWasteManagementSeeder::class,
             LibEnvironmentalWaterTypeSeeder::class,
             LibDentalMedicalHistorySeeder::class,
-            LibDentalSocialHistorySeeder::class
+            LibDentalSocialHistorySeeder::class,
+            LibLaboratoryUltrasoundTypeSeeder::class,
+            LibLaboratoryMtbResultSeeder::class,
+            LibLaboratoryRifResultSeeder::class,
         ]);
     }
 }

@@ -43,6 +43,8 @@ class ConsultLaboratory extends Model
         'fecalOccult',
         'gramStain',
         'microscopy',
+        'ultrasound',
+        'geneXpert',
     ];
 
     public $incrementing = false;
@@ -176,6 +178,16 @@ class ConsultLaboratory extends Model
     public function microscopy()
     {
         return $this->hasOne(ConsultLaboratoryMicroscopy::class, 'request_id', 'id');
+    }
+
+    public function ultrasound()
+    {
+        return $this->hasOne(ConsultLaboratoryUltrasound::class, 'request_id', 'id');
+    }
+
+    public function geneXpert()
+    {
+        return $this->hasOne(ConsultLaboratoryGeneXpert::class, 'request_id', 'id');
     }
 
     public function getRelatedModel($model)

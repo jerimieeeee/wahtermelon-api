@@ -15,7 +15,13 @@ class KonsultaTransmittalResource extends JsonResource
     public function toArray($request)
     {
         $facilityCode = auth()->user()->facility_code ?? '';
-
+        $patient = [];
+        if ($this->tranche == 1) {
+            $patient = $this->patientPhilhealth;
+        }
+        if ($this->tranche == 2) {
+            $patient = $this->patientConsult;
+        }
         return [
             'id' => $this->id,
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
@@ -23,7 +29,7 @@ class KonsultaTransmittalResource extends JsonResource
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
             'transmittal_number' => $this->transmittal_number,
-            'patient' => $this->whenLoaded('patient'),
+            'patient' => $patient,
             'tranche' => $this->tranche,
             'total_enlistment' => $this->total_enlistment,
             'total_profile' => $this->total_profile,

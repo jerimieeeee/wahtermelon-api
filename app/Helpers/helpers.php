@@ -83,6 +83,7 @@ if (! function_exists('XML2JSON')) {
     {
         $result = null;
         libxml_use_internal_errors(true);
+        $xml = rtrim($xml, "\x00..\x1F\x7F");
         $data = simplexml_load_string($xml);
         if ($data !== false) {
             normalizeSimpleXML($data, $result);

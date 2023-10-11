@@ -177,13 +177,14 @@ class KonsultaController extends Controller
      *
      * @apiResourceModel App\Models\V1\Konsulta\KonsultaTransmittal paginate=15
      */
-    public function validatedXml(): ResourceCollection
+    public function validatedXml(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
-            ->allowedIncludes('facility', 'user', 'patient')
+            ->when(isset($request->start_date) && isset($request->end_date), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
+            ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('created_at')
             ->allowedSorts(['created_at']);

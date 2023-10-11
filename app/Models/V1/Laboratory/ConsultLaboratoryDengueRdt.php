@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Models\V1\Konsulta;
+namespace App\Models\V1\Laboratory;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
-use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PSGC\Facility;
-use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class KonsultaTransmittal extends Model
+class ConsultLaboratoryDengueRdt extends Model
 {
-    use HasFactory, HasUuids, FilterByUser, FilterByFacility;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
     protected $guarded = [
         'id',
@@ -27,7 +28,7 @@ class KonsultaTransmittal extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'xml_errors' => 'array',
+        'laboratory_date' => 'date:Y-m-d',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -45,14 +46,23 @@ class KonsultaTransmittal extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function patientPhilhealth()
+    public function patient()
     {
-        return $this->hasManyThrough(Patient::class, PatientPhilhealth::class, 'transmittal_number', 'id', 'transmittal_number', 'patient_id');
+        return $this->belongsTo(Patient::class);
     }
 
-    public function patientConsult()
+    public function consult()
     {
-        return $this->hasManyThrough(Patient::class, Consult::class, 'transmittal_number', 'id', 'transmittal_number', 'patient_id');
+        return $this->belongsTo(Consult::class);
     }
 
+    public function laboratoryRequest()
+    {
+        return $this->belongsTo(ConsultLaboratory::class, 'request_id', 'id');
+    }
+
+    public function laboratoryStatus()
+    {
+        return $this->belongsTo(LibLaboratoryStatus::class, 'lab_status_code', 'code');
+    }
 }
