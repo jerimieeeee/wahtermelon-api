@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -38,8 +39,8 @@ class MigrateMisuWahHistoryCommand extends Command
         $connectionName = 'mysql_migration';
         $this->migrationConnection($connectionName, $database);
 
-        echo $vitals = $this->getVitals();
-
+        $vitals = $this->getVitals();
+        $this->saveVitals($vitals);
     }
 
     public function migrationConnection($connectionName, $database)
@@ -92,8 +93,30 @@ class MigrateMisuWahHistoryCommand extends Command
             ->get();
     }
 
-    public function saveVitals()
+    public function saveVitals($vitals)
     {
+        $vitalsCount = count($vitals);
+        if ($vitalsCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+        //Delete duplicate dispensing records
 
+        $vitalsBar = $this->output->createProgressBar($vitalsCount);
+        $vitalsBar->setFormat('Processing Patient Vitals Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $vitalsBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($vitals->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $vitalsData) {
+                //dd($vitalsData->birthdate);
+                $years = Carbon::parse($vitalsData->birthdate)->diffInYears($vitalsData->vitals_date);
+                $months = Carbon::parse($vitalsData->birthdate)->diffInMonths($vitalsData->vitals_date);
+                dd($months);
+            }
+        }
     }
 }
