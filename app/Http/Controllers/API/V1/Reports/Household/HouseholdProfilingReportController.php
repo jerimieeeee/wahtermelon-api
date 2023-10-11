@@ -111,7 +111,7 @@ class HouseholdProfilingReportController extends Controller
         //Civil Status
         $single = $householdProfilingReportService->get_household_profiling_civil_status($request, 'single')->get();
         $married = $householdProfilingReportService->get_household_profiling_civil_status($request, 'married')->get();
-        $livein = $householdProfilingReportService->get_household_profiling_civil_status($request, 'live-in')->get();
+//        $livein = $householdProfilingReportService->get_household_profiling_civil_status($request, 'live-in')->get();
         $widowed = $householdProfilingReportService->get_household_profiling_civil_status($request, 'widow')->get();
         $separated = $householdProfilingReportService->get_household_profiling_civil_status($request, 'separated')->get();
         $cohabit = $householdProfilingReportService->get_household_profiling_civil_status($request, 'cohabit')->get();
@@ -322,7 +322,7 @@ class HouseholdProfilingReportController extends Controller
             //Civil Status
             'single' => $single,
             'maried' => $married,
-            'livein' => $livein,
+            'livein' => '-',
             'widowed' => $widowed,
             'separated' => $separated,
             'cohabit' => $cohabit,

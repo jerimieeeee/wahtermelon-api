@@ -28,8 +28,13 @@ class EclaimsSyncController extends Controller
      */
     public function checkWS(SoapService $service)
     {
+        try {
+            return $service->_client()->checkWS();
 
-        return $service->_client()->checkWS();
+        } catch (Exception $e) {
+            return $e->getMessage();
+
+        }
     }
 
     /**
@@ -37,20 +42,24 @@ class EclaimsSyncController extends Controller
      */
     public function SearchCaseRate(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->SearchCaseRate(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->icd10,
-            $request->rvs,
-            $request->description);
+            $encrypted = $service->_client()->SearchCaseRate(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->icd10,
+                $request->rvs,
+                $request->description);
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -58,25 +67,30 @@ class EclaimsSyncController extends Controller
      */
     public function GetMemberPIN(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereIn('program_code', ['ab', 'mc', 'cc', 'fp', 'tb', 'hf', 'cv', 'ml'])->first();
+        try {
+            $data = PhilhealthCredential::whereIn('program_code', ['ab', 'mc', 'cc', 'fp', 'tb', 'hf', 'cv', 'ml'])->first();
 
-        $pin = $service->_client()->GetMemberPIN(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->last_name,
-            $request->first_name,
-            $request->middle_name,
-            $request->suffix_name,
-            $request->birthdate,
-        );
-        if (Str::contains($pin, 'NO RECORDS FOUND')) {
-            $status = 404;
-        } else {
-            $status = 200;
+            $pin = $service->_client()->GetMemberPIN(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->last_name,
+                $request->first_name,
+                $request->middle_name,
+                $request->suffix_name,
+                $request->birthdate,
+            );
+            if (Str::contains($pin, 'NO RECORDS FOUND')) {
+                $status = 404;
+            } else {
+                $status = 200;
+            }
+
+            return response()->json(['data' => $pin], $status);
+
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
-
-        return response()->json(['data' => $pin], $status);
     }
 
     /**
@@ -84,17 +98,22 @@ class EclaimsSyncController extends Controller
      */
     public function SearchHospital(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->SearchHospital(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-        );
+            $encrypted = $service->_client()->SearchHospital(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -102,19 +121,24 @@ class EclaimsSyncController extends Controller
      */
     public function SearchEmployer(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->SearchEmployer(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            '',
-            '%'.$request->employer_name.'%'
-        );
+            $encrypted = $service->_client()->SearchEmployer(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                '',
+                '%'.$request->employer_name.'%'
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -122,23 +146,28 @@ class EclaimsSyncController extends Controller
      */
     public function GetDoctorPAN(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->GetDoctorPAN(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->tin_number,
-            $request->last_name,
-            $request->first_name,
-            $request->middle_name,
-            $request->suffix_name,
-            $request->birthdate,
-        );
+            $encrypted = $service->_client()->GetDoctorPAN(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->tin_number,
+                $request->last_name,
+                $request->first_name,
+                $request->middle_name,
+                $request->suffix_name,
+                $request->birthdate,
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -146,18 +175,23 @@ class EclaimsSyncController extends Controller
      */
     public function GetClaimStatus(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->GetClaimStatus(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->series_lhio,
-        );
+            $encrypted = $service->_client()->GetClaimStatus(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->series_lhio,
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -165,18 +199,23 @@ class EclaimsSyncController extends Controller
      */
     public function GetVoucherDetails(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->GetVoucherDetails(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->voucher_no,
-        );
+            $encrypted = $service->_client()->GetVoucherDetails(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->voucher_no,
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -184,41 +223,46 @@ class EclaimsSyncController extends Controller
      */
     public function isClaimEligible(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->isClaimEligible(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->member_pin,
-            $request->member_last_name,
-            $request->member_first_name,
-            $request->member_middle_name,
-            $request->member_suffix_name,
-            $request->member_birthdate,
-            '',
-            '',
-            $request->patient_is,
-            $request->admission_date,
-            $request->discharge_date,
-            $request->patient_last_name,
-            $request->patient_first_name,
-            $request->patient_middle_name,
-            $request->patient_suffix_name,
-            $request->patient_birthdate,
-            $request->patient_gender,
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '1',
-        );
+            $encrypted = $service->_client()->isClaimEligible(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->member_pin,
+                $request->member_last_name,
+                $request->member_first_name,
+                $request->member_middle_name,
+                $request->member_suffix_name,
+                $request->member_birthdate,
+                '',
+                '',
+                $request->patient_is,
+                $request->admission_date,
+                $request->discharge_date,
+                $request->patient_last_name,
+                $request->patient_first_name,
+                $request->patient_middle_name,
+                $request->patient_suffix_name,
+                $request->patient_birthdate,
+                $request->patient_gender,
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '1',
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -226,20 +270,25 @@ class EclaimsSyncController extends Controller
      */
     public function isDoctorAccredited(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->isDoctorAccredited(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->accreditation_code,
-            $request->admission_date,
-            $request->discharge_date,
-        );
+            $encrypted = $service->_client()->isDoctorAccredited(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->accreditation_code,
+                $request->admission_date,
+                $request->discharge_date,
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function eClaimsUpload(Request $request, SoapService $service)
@@ -266,18 +315,23 @@ class EclaimsSyncController extends Controller
 
     public function getUploadedClaimsMap(Request $request, SoapService $service)
     {
-        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+        try {
+            $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->GetUploadedClaimsMap(
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->pReceiptTicketNumber
-        );
+            $encrypted = $service->_client()->GetUploadedClaimsMap(
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->pReceiptTicketNumber
+            );
 
-        $decryptor = new PhilHealthEClaimsEncryptor();
+            $decryptor = new PhilHealthEClaimsEncryptor();
 
-        return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

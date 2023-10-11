@@ -74,7 +74,9 @@ class ConsultLaboratoryController extends Controller
                 'oralGlucose',
                 'fecalOccult',
                 'gramStain',
-                'microscopy')
+                'microscopy',
+                'ultrasound',
+                'geneXpert')
             ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')
             ->allowedSorts('request_date');
