@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibLaboratoryRifResult;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -189,6 +188,8 @@ class DatabaseSeeder extends Seeder
             LibEnvironmentalToiletFacilitySeeder::class,
             LibEnvironmentalWasteManagementSeeder::class,
             LibEnvironmentalWaterTypeSeeder::class,
+            LibDentalMedicalHistorySeeder::class,
+            LibDentalSocialHistorySeeder::class,
             LibLaboratoryUltrasoundTypeSeeder::class,
             LibLaboratoryMtbResultSeeder::class,
             LibLaboratoryRifResultSeeder::class,
