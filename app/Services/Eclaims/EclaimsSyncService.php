@@ -41,16 +41,14 @@ class EclaimsSyncService
                     'cache_wsdl' => WSDL_CACHE_NONE,
                     'exceptions' => true,
                     'keep_alive' => false,
+                    'connection_timeout' => 60,
                 ];
                 $client = new LocalSoapClient($url, $soapClientOptions);
                 $result = $client->CheckWS();
 
                 // If the CheckWS method is called successfully, set the selected URL and break the loop.
                 $selectedUrl = $url;
-                if($client) {
-                    $workingClient = $client;
-                }
-
+                $workingClient = $client;
                 break;
             } catch (\SoapFault | \Exception $e) {
                 // Handle the exception if needed, or continue to the next URL.
