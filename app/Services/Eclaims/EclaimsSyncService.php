@@ -41,7 +41,7 @@ class EclaimsSyncService
                     'cache_wsdl' => WSDL_CACHE_NONE,
                     'exceptions' => true,
                     'keep_alive' => false,
-                    'connection_timeout' => 60,
+                    'connection_timeout' => 120,
                 ];
                 $client = new LocalSoapClient($url, $soapClientOptions);
                 $result = $client->CheckWS();
