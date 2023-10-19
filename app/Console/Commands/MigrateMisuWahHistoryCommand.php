@@ -270,6 +270,8 @@ class MigrateMisuWahHistoryCommand extends Command
             foreach ($chunk as $medicalHistoryData) {
 
                 DB::transaction(function () use ($medicalHistoryData, $facilityCode) {
+                    $success = true; // Initialize a variable to track success
+
                     $data = [
                         'facility_code' => $facilityCode,
                         'patient_id' => $medicalHistoryData->patient_id,
@@ -278,23 +280,34 @@ class MigrateMisuWahHistoryCommand extends Command
                         'updated_at' => $medicalHistoryData->updated_at
                     ];
 
-                    if($medicalHistoryData->pasthistory_id){
+                    if ($medicalHistoryData->pasthistory_id) {
                         $pastMedical = explode(',', $medicalHistoryData->pasthistory_id);
-                        foreach($pastMedical as $value){
-                            PatientHistory::query()
-                                ->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id], $data + ['medical_history_id' => $value, 'category' => 1]);
+                        foreach ($pastMedical as $value) {
+                            // Check if the updateOrCreate is successful
+                            if (!PatientHistory::query()->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id, 'medical_history_id' => $value, 'category' => 1], $data)) {
+                                $success = false;
+                                break; // Stop processing if it's not successful
+                            }
                         }
                     }
-                    if($medicalHistoryData->familyhistory_id){
-                        $familyHistory = explode(',', $medicalHistoryData->familyhistory_id);
-                        foreach($familyHistory as $value){
-                            PatientHistory::query()
-                                ->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id], $data + ['medical_history_id' => $value, 'category' => 2]);
-                        }
-                    }
-                    //DB::connection('mysql_migration')->table('consult_vitals')->where('vitals_id', $vitalsData['id'])->update(['wahtermelon_vitals_id' => $vitals->id]);
 
+                    if ($success && $medicalHistoryData->familyhistory_id) {
+                        $familyHistory = explode(',', $medicalHistoryData->familyhistory_id);
+                        foreach ($familyHistory as $value) {
+                            // Check if the updateOrCreate is successful
+                            if (!PatientHistory::query()->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id,  'medical_history_id' => $value, 'category' => 2], $data)) {
+                                $success = false;
+                                break; // Stop processing if it's not successful
+                            }
+                        }
+                    }
+
+                    if ($success) {
+                        // If all preceding code is successful, commit the transaction
+                        DB::connection('mysql_migration')->table('patient_history')->where('id', $medicalHistoryData->id)->update(['migrated' => 1]);
+                    }
                 });
+
 
                 $medicalHistoryBar->advance();
             }
