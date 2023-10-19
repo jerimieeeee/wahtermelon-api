@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\Patient\PatientHistory;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -42,6 +43,9 @@ class MigrateMisuWahHistoryCommand extends Command
 
         $vitals = $this->getVitals();
         $this->saveVitals($vitals, $database);
+
+        $medicalHistory = $this->getMedicalHistory();
+        $this->saveMedicalHistory($medicalHistory, $database);
     }
 
     public function migrationConnection($connectionName, $database)
@@ -68,6 +72,20 @@ class MigrateMisuWahHistoryCommand extends Command
             // Add column if it doesn't exist on the 'patient' table
             Schema::connection($connectionName)->table('consult_vitals', function (Blueprint $table) {
                 $table->string('wahtermelon_vitals_id')->nullable()->after('vitals_id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            // Add column if it doesn't exist on the 'patient' table
+            Schema::connection($connectionName)->table('patient_history', function (Blueprint $table) {
+                $table->boolean('migrated')->nullable()->after('id')->default(0);
                 // Add more columns if needed
             });
 
@@ -199,6 +217,94 @@ class MigrateMisuWahHistoryCommand extends Command
 
         $this->newLine();
         $this->components->twoColumnDetail('Patient Vitals Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+    }
+
+    public function getMedicalHistory()
+    {
+        return DB::connection('mysql_migration')->table('patient_history')
+            ->selectRaw('
+                patient_history.id AS id,
+                patient.wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
+                pasthistory_id,
+                familyhistory_id,
+                smoking,
+                pack_peryear AS pack_per_year,
+                alcohol,
+                bottles_perday AS bottles_per_day,
+                ill_drugs AS illicit_drugs,
+                patient_history.created_at,
+                patient_history.updated_at
+            ')
+            ->join('patient', function ($join) {
+                $join->on('patient_history.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_history.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->get();
+    }
+
+    public function saveMedicalHistory($medicalHistory, $facilityCode)
+    {
+        $medicalHistoryCount = count($medicalHistory);
+        if ($medicalHistoryCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+        //Delete duplicate dispensing records
+
+        $medicalHistoryBar = $this->output->createProgressBar($medicalHistoryCount);
+        $medicalHistoryBar->setFormat('Processing Patient History Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $medicalHistoryBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($medicalHistory->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $medicalHistoryData) {
+
+                DB::transaction(function () use ($medicalHistoryData, $facilityCode) {
+                    $data = [
+                        'facility_code' => $facilityCode,
+                        'patient_id' => $medicalHistoryData->patient_id,
+                        'user_id' => $medicalHistoryData->user_id,
+                        'created_at' => $medicalHistoryData->created_at,
+                        'updated_at' => $medicalHistoryData->updated_at
+                    ];
+
+                    if($medicalHistoryData->pasthistory_id){
+                        $pastMedical = explode(',', $medicalHistoryData->pasthistory_id);
+                        foreach($pastMedical as $value){
+                            PatientHistory::query()
+                                ->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id], $data + ['medical_history_id' => $value, 'category' => 1]);
+                        }
+                    }
+                    if($medicalHistoryData->familyhistory_id){
+                        $familyHistory = explode(',', $medicalHistoryData->familyhistory_id);
+                        foreach($familyHistory as $value){
+                            PatientHistory::query()
+                                ->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id], $data + ['medical_history_id' => $value, 'category' => 2]);
+                        }
+                    }
+                    //DB::connection('mysql_migration')->table('consult_vitals')->where('vitals_id', $vitalsData['id'])->update(['wahtermelon_vitals_id' => $vitals->id]);
+
+                });
+
+                $medicalHistoryBar->advance();
+            }
+        }
+        $medicalHistoryBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient History Migration', 'Done');
         $this->newLine();
         $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
     }
