@@ -47,6 +47,8 @@ class MigrateMisuWahHistoryCommand extends Command
 
         $medicalHistory = $this->getMedicalHistory();
         $this->saveMedicalHistory($medicalHistory, $database);
+
+        //echo $menstrualHistory = $this->getMenstrualHistory();
     }
 
     public function migrationConnection($connectionName, $database)
@@ -96,6 +98,20 @@ class MigrateMisuWahHistoryCommand extends Command
             // For now, we'll just skip this iteration
             //continue;
         }
+
+//        try {
+//            // Add column if it doesn't exist on the 'patient' table
+//            Schema::connection($connectionName)->table('patient_history_menstrual', function (Blueprint $table) {
+//                $table->string('wahtermelon_menstrual_id')->nullable()->after('id');
+//                // Add more columns if needed
+//            });
+//
+//        } catch (\Exception $e) {
+//            // Handle the exception (column already exists)
+//            // You can log the error or perform other actions if needed
+//            // For now, we'll just skip this iteration
+//            //continue;
+//        }
     }
 
     public function getVitals()
@@ -401,5 +417,37 @@ class MigrateMisuWahHistoryCommand extends Command
             }
         }
         return $data;
+    }
+
+    public function getMenstrualHistory()
+    {
+        return DB::connection('mysql_migration')->table('patient_history_menstrual')
+            ->selectRaw('
+                patient_history_menstrual.id AS id,
+                patient.wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
+                lmp
+                menarche
+                period_duration
+                cycle
+                pads_perday AS pads_per_day
+                onset_sexinter AS onset_sexual_intercourse
+                method_id AS method
+                menopause
+                meno_age AS menopause_age
+                patient_history_menstrual.created_at
+                patient_history_menstrual.updated_at
+            ')
+            ->join('patient', function ($join) {
+                $join->on('patient_history_menstrual.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_history_menstrual.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereDate('lmp', '>=', '0001-01-01')
+            ->whereDate('lmp', '<=', '9999-12-31')
+            ->count();
     }
 }

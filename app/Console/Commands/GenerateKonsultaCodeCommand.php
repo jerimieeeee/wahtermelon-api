@@ -33,12 +33,11 @@ class GenerateKonsultaCodeCommand extends Command
         $data = new Patient;
         $tableName = $data->getTable();
         $patients = $data->whereNull('case_number')->withWhereHas('philhealthKonsulta')->get();
-
         $patientBar = $this->output->createProgressBar(count($patients));
         $patientBar->setFormat('Processing Patient Table: %current%/%max% [%bar%] %percent:3s%%');
         $patientBar->start();
         $patients->map(function ($patient) use ($tableName, $patientBar) {
-            $credential = $patient->philhealthKonsulta->pluck('accreditation_number')->first();
+            $credential = $patient->philhealthKonsulta->accreditation_number;
             $prefix = 'T'.$credential.$patient->created_at->format('Ym');
             $caseNumber = IdGenerator::generate(['table' => $tableName, 'field' => 'case_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             $patient->update(['case_number' => $caseNumber]);
@@ -59,7 +58,7 @@ class GenerateKonsultaCodeCommand extends Command
         $consultBar->setFormat('Processing Consult Table: %current%/%max% [%bar%] %percent:3s%%');
         $consultBar->start();
         $consultData->map(function ($consult) use ($consultTableName, $consultBar) {
-            $credential = $consult->patient->philhealthKonsulta->pluck('accreditation_number')->first();
+            $credential = $consult->patient->philhealthKonsulta->accreditation_number;
             $prefix = $credential.$consult->created_at->format('Ym');
             $transactionNumber = IdGenerator::generate(['table' => $consultTableName, 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             $consult->update(['transaction_number' => $transactionNumber]);
@@ -98,7 +97,7 @@ class GenerateKonsultaCodeCommand extends Command
         $philhealthBar->setFormat('Processing Philhealth Table: %current%/%max% [%bar%] %percent:3s%%');
         $philhealthBar->start();
         $philhealthData->map(function ($philhealth) use ($philhealthTableName, $philhealthBar) {
-            $credential = $philhealth->patient->philhealthKonsulta->pluck('accreditation_number')->first();
+            $credential = $philhealth->patient->philhealthKonsulta->accreditation_number;
             $prefix = $credential.$philhealth->created_at->format('Ym');
             $transactionNumber = IdGenerator::generate(['table' => $philhealthTableName, 'field' => 'transaction_number', 'length' => 21, 'prefix' => $prefix, 'reset_on_prefix_change' => true]);
             $philhealth->update(['transaction_number' => $transactionNumber]);
