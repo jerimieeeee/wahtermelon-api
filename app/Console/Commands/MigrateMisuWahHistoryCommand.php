@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\V1\Patient\PatientHistory;
+use App\Models\V1\Patient\PatientSocialHistory;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -226,15 +227,34 @@ class MigrateMisuWahHistoryCommand extends Command
         return DB::connection('mysql_migration')->table('patient_history')
             ->selectRaw('
                 patient_history.id AS id,
+                patient_history.patient_id AS patientId,
                 patient.wahtermelon_patient_id AS patient_id,
                 user.wahtermelon_user_id AS user_id,
                 pasthistory_id,
                 familyhistory_id,
-                smoking,
+                CASE
+                    WHEN smoking = "Q"
+                    THEN "X"
+                    WHEN smoking = ""
+                    THEN NULL
+                    ELSE smoking
+                END AS smoking,
                 pack_peryear AS pack_per_year,
-                alcohol,
+                CASE
+                    WHEN alcohol = "Q"
+                    THEN "X"
+                    WHEN alcohol = ""
+                    THEN NULL
+                    ELSE alcohol
+                END AS alcohol,
                 bottles_perday AS bottles_per_day,
-                ill_drugs AS illicit_drugs,
+                CASE
+                    WHEN ill_drugs = "Q"
+                    THEN "X"
+                    WHEN ill_drugs = ""
+                    THEN NULL
+                    ELSE ill_drugs
+                END AS illicit_drugs,
                 patient_history.created_at,
                 patient_history.updated_at
             ')
@@ -246,7 +266,23 @@ class MigrateMisuWahHistoryCommand extends Command
                 $join->on('patient_history.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
+            ->where('migrated', 0)
             ->get();
+    }
+
+    public function getMedicalRemarks($patientId, $category)
+    {
+        return DB::connection('mysql_migration')->table('patient_history_remarks')
+            ->where(function($query) {
+                $query->where('allergy_desc', '!=', '')
+                    ->orWhere('cancer_desc', '!=', '')
+                    ->orWhere('hepatitis_desc', '!=', '')
+                    ->orWhere('hypertension_desc', '!=', '')
+                    ->orWhere('tuberculosis_desc', '!=', '');
+            })
+            ->where('patient_id', $patientId)
+            ->where('history_category', $category)
+            ->first();
     }
 
     public function saveMedicalHistory($medicalHistory, $facilityCode)
@@ -283,6 +319,8 @@ class MigrateMisuWahHistoryCommand extends Command
                     if ($medicalHistoryData->pasthistory_id) {
                         $pastMedical = explode(',', $medicalHistoryData->pasthistory_id);
                         foreach ($pastMedical as $value) {
+                            $remarks = $this->getMedicalRemarks($medicalHistoryData->patientId, 'patient');
+                            $data = $this->getRemarks($remarks, $value, $data);
                             // Check if the updateOrCreate is successful
                             if (!PatientHistory::query()->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id, 'medical_history_id' => $value, 'category' => 1], $data)) {
                                 $success = false;
@@ -294,11 +332,24 @@ class MigrateMisuWahHistoryCommand extends Command
                     if ($success && $medicalHistoryData->familyhistory_id) {
                         $familyHistory = explode(',', $medicalHistoryData->familyhistory_id);
                         foreach ($familyHistory as $value) {
+                            $remarks = $this->getMedicalRemarks($medicalHistoryData->patientId, 'family');
+                            $data = $this->getRemarks($remarks, $value, $data);
                             // Check if the updateOrCreate is successful
                             if (!PatientHistory::query()->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id,  'medical_history_id' => $value, 'category' => 2], $data)) {
                                 $success = false;
                                 break; // Stop processing if it's not successful
                             }
+                        }
+                    }
+
+                    if ($success && $medicalHistoryData->smoking) {
+                        $data['smoking'] = $medicalHistoryData->smoking;
+                        $data['pack_per_year'] = $medicalHistoryData->pack_per_year != 0 ? $medicalHistoryData->pack_per_year : null;
+                        $data['alcohol'] = $medicalHistoryData->alcohol;
+                        $data['bottles_per_day'] = $medicalHistoryData->pack_per_year != 0 ? $medicalHistoryData->bottles_per_day : null;
+                        $data['illicit_drugs'] = $medicalHistoryData->illicit_drugs;
+                        if (!PatientSocialHistory::query()->updateOrCreate(['patient_id' => $medicalHistoryData->patient_id], $data)) {
+                            $success = false;
                         }
                     }
 
@@ -320,5 +371,35 @@ class MigrateMisuWahHistoryCommand extends Command
         $this->components->twoColumnDetail('Patient History Migration', 'Done');
         $this->newLine();
         $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+    }
+
+    /**
+     * @param object|null $remarks
+     * @param string $value
+     * @param array $data
+     * @return array
+     */
+    public function getRemarks(object|null $remarks, string $value, array $data): array
+    {
+        if ($remarks) {
+            switch ($value) {
+                case 1:
+                    $data['remarks'] = $remarks->allergy_desc;
+                    break;
+                case 3:
+                    $data['remarks'] = $remarks->cancer_desc;
+                    break;
+                case 9:
+                    $data['remarks'] = $remarks->hepatitis_desc;
+                    break;
+                case 11:
+                    $data['remarks'] = $remarks->hypertension_desc;
+                    break;
+                case 15:
+                    $data['remarks'] = $remarks->tuberculosis_desc;
+                    break;
+            }
+        }
+        return $data;
     }
 }
