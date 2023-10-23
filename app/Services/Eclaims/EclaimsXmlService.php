@@ -258,7 +258,11 @@ class EclaimsXmlService
         $array = [];
         $array = $cf2;
         $array['DIAGNOSIS'] = $diagnosis;
-        $array['SPECIAL'] = $special;
+
+        if(isset($special)) {
+            $array['SPECIAL'] = $special;
+        }
+
         $array['PROFESSIONALS'] = $professional;
         $array['CONSUMPTION'] = $consumption;
 
