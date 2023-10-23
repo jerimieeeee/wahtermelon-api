@@ -668,7 +668,7 @@ class KonsultaService
             ->when($revalidate && $tranche == 1, fn ($query) => $query->where('transmittal_number', $transmittalNumber))
             //->wherePatientId('97a9157e-2705-4a10-b68d-211052b0c6ac')
             ->get();
-        $data->when($save, fn ($query) => $query->map(fn ($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]))
+        $data->when($save && $tranche == 1, fn ($query) => $query->map(fn ($data, $key) => $data->update(['transmittal_number' => $transmittalNumber]))
         );
         $enlistments['ENLISTMENT'] = [EnlistmentResource::collection($data->whenEmpty(fn () => [[]]))->resolve()];
 
