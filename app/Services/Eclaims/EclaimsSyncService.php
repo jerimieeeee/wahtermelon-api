@@ -33,8 +33,10 @@ class EclaimsSyncService
 
         $selectedUrl = null;
         $workingClient = null;
+        $timeout = 5;
         foreach ($onlineUrls as $url) {
             try {
+                $opts['http']['timeout'] = $timeout;
                 $soapClientOptions = [
                     'location' => $url,
                     'stream_context' => stream_context_create($opts),
@@ -47,8 +49,11 @@ class EclaimsSyncService
                 $result = $client->CheckWS();
 
                 // If the CheckWS method is called successfully, set the selected URL and break the loop.
-                $selectedUrl = $url;
-                $workingClient = $client;
+                if ($result) {
+                    return $client;
+                }
+//                $selectedUrl = $url;
+//                $workingClient = $client;
                 break;
             } catch (\SoapFault | \Exception $e) {
                 // Handle the exception if needed, or continue to the next URL.
