@@ -189,6 +189,8 @@ class MigrateMisuWahHistoryCommand extends Command
                     ->whereNotNull('consult.wahtermelon_consult_id');
             })
             ->whereNull('wahtermelon_vitals_id')
+            ->whereDate('vitals_date', '>=', '0001-01-01')
+            ->whereDate('vitals_date', '<=', '9999-12-31')
             ->get();
     }
 
