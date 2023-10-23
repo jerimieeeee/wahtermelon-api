@@ -14,7 +14,7 @@ class EclaimsXmlService
     public function createXml($transmittalNumber, $patientId, $request)
     {
         $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
-            ->where('program_code', $request->program_desc != 'cc' ? $request->program_desc : 'mc')
+            ->where('program_code', $request->program_desc == 'cc' || $request->program_desc == 'fp' ? 'mc' : $request->program_desc)
             ->first();
         // return $creds = auth()->user()->eclaimsCredential($request->program_desc);//PhilhealthCredential::whereFacilityCode($request->facility_code)->whereProgramCode($request->program_desc)->first();
         if (empty($transmittalNumber)) {
