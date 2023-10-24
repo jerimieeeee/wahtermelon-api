@@ -33,7 +33,7 @@ class EclaimsSyncService
 
         $selectedUrl = null;
         $workingClient = null;
-        $timeout = 5;
+        $timeout = 20;
         foreach ($onlineUrls as $url) {
             try {
                 $opts['http']['timeout'] = $timeout;
