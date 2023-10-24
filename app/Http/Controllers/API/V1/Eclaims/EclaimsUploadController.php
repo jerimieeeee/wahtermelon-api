@@ -110,7 +110,7 @@ class EclaimsUploadController extends Controller
         if ($documents) {
             $service = new SoapService();
             $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
-                ->where('program_code', $request->program_desc != 'cc' ? $request->program_desc : 'mc')
+                ->where('program_code', ($request->program_desc == 'cc' || $request->program_desc == 'fp' ? 'mc' : $request->program_desc))
                 ->first();
 
             $eClaimsXMLDocs = '';
