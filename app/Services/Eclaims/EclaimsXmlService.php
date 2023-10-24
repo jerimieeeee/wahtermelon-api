@@ -262,7 +262,7 @@ class EclaimsXmlService
         if(isset($special)) {
             $array['SPECIAL'] = $special;
         } else {
-            $array['SPECIAL'] = ['' => ['_attributes' => []]];
+            $array['SPECIAL'] = [[]];
         }
 
         $array['PROFESSIONALS'] = $professional;
