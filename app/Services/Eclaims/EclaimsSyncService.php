@@ -33,16 +33,16 @@ class EclaimsSyncService
 
         $selectedUrl = null;
         $workingClient = null;
-        $timeout = 20;
+        $timeout = 10;
         foreach ($onlineUrls as $url) {
             try {
                 $opts['http']['timeout'] = $timeout;
                 $soapClientOptions = [
                     'location' => $url,
                     'stream_context' => stream_context_create($opts),
-                    'cache_wsdl' => WSDL_CACHE_NONE,
+                    'cache_wsdl' => WSDL_CACHE_DISK,
                     'exceptions' => true,
-                    'keep_alive' => false,
+                    'keep_alive' => true,
                     'connection_timeout' => 120,
                 ];
                 $client = new LocalSoapClient($url, $soapClientOptions);
@@ -60,8 +60,8 @@ class EclaimsSyncService
             }
         }
 
-        if ($selectedUrl !== null) {
-            return $workingClient;
+        if ($client !== null) {
+            return $client;
         } else {
             throw new \Exception('All servers are not working');
         }
