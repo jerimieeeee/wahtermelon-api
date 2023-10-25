@@ -14,7 +14,7 @@ use Str;
 
 class SoapService
 {
-    public function _client()
+    public function _client($methodName, $args)
     {
         $opts = [
             'http' => [
@@ -30,7 +30,7 @@ class SoapService
 
         if (isset(request()->program_code) && request()->program_code !== 'kp') {
             $eclaimsSyncService = new EclaimsSyncService();
-            return $eclaimsSyncService->checkEclaimsUrl();
+            return $eclaimsSyncService->checkEclaimsUrl($methodName, $args);
         } else {
             $token = auth()->user()->konsultaCredential->token;
             $opts['http']['header'] = "Token: $token";

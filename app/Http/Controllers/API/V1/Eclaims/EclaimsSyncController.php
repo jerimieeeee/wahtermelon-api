@@ -45,13 +45,14 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->SearchCaseRate(
+            $encrypted = $service->_client('SearchCaseRate', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
                 $request->icd10,
                 $request->rvs,
-                $request->description);
+                $request->description
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -70,7 +71,7 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereIn('program_code', ['ab', 'mc', 'cc', 'fp', 'tb', 'hf', 'cv', 'ml'])->first();
 
-            $pin = $service->_client()->GetMemberPIN(
+            $pin = $service->_client('GetMemberPIN', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
@@ -79,7 +80,8 @@ class EclaimsSyncController extends Controller
                 $request->middle_name,
                 $request->suffix_name,
                 $request->birthdate,
-            );
+            ]);
+
             if (Str::contains($pin, 'NO RECORDS FOUND')) {
                 $status = 404;
             } else {
@@ -101,11 +103,11 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->SearchHospital(
+            $encrypted = $service->_client('SearchHospital', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -124,13 +126,13 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->SearchEmployer(
+            $encrypted = $service->_client('SearchEmployer', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
                 '',
                 '%'.$request->employer_name.'%'
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -149,7 +151,7 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->GetDoctorPAN(
+            $encrypted = $service->_client('GetDoctorPAN', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
@@ -159,7 +161,7 @@ class EclaimsSyncController extends Controller
                 $request->middle_name,
                 $request->suffix_name,
                 $request->birthdate,
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -178,12 +180,12 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->GetClaimStatus(
+            $encrypted = $service->_client('GetClaimStatus', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
                 $request->series_lhio,
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -202,12 +204,12 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->GetVoucherDetails(
+            $encrypted = $service->_client('GetVoucherDetails', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
                 $request->voucher_no,
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -226,7 +228,7 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->isClaimEligible(
+            $encrypted = $service->_client('isClaimEligible', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
@@ -254,7 +256,7 @@ class EclaimsSyncController extends Controller
                 '',
                 '',
                 '1',
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -273,14 +275,14 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->isDoctorAccredited(
+            $encrypted = $service->_client('isDoctorAccredited', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
                 $request->accreditation_code,
                 $request->admission_date,
                 $request->discharge_date,
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -295,12 +297,12 @@ class EclaimsSyncController extends Controller
     {
         $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client()->eClaimsUpload(
+        $encrypted = $service->_client('eClaimsUpload', [
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
             $request->encryptedXml
-        );
+        ]);
 
         $decryptor = new PhilHealthEClaimsEncryptor();
 
@@ -318,12 +320,12 @@ class EclaimsSyncController extends Controller
         try {
             $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-            $encrypted = $service->_client()->GetUploadedClaimsMap(
+            $encrypted = $service->_client('GetUploadedClaimsMap', [
                 $data->username.':'.$data->software_certification_id,
                 $data->password,
                 $data->pmcc_number,
                 $request->pReceiptTicketNumber
-            );
+            ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
 

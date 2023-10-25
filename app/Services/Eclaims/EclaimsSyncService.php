@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class EclaimsSyncService
 {
-    public function checkEclaimsUrl()
+    public function checkEclaimsUrl($methodName, $args)
     {
         $opts = [
             'http' => [
@@ -31,8 +31,6 @@ class EclaimsSyncService
             'https://eclaimslive5.philhealth.gov.ph:8077/SOAP',
         ];
 
-        $selectedUrl = null;
-        $workingClient = null;
         $timeout = 10;
         foreach ($onlineUrls as $url) {
             try {
@@ -45,23 +43,22 @@ class EclaimsSyncService
                     'keep_alive' => true,
                     'connection_timeout' => 60,
                 ];
+
                 $client = new LocalSoapClient($url, $soapClientOptions);
-                $result = $client->CheckWS();
+                $result = $client->__soapCall($methodName, $args);
 
                 // If the CheckWS method is called successfully, set the selected URL and break the loop.
                 if ($result) {
-                    return $client;
+                    return $result;
                 }
-//                $selectedUrl = $url;
-//                $workingClient = $client;
                 break;
             } catch (\SoapFault | \Exception $e) {
                 // Handle the exception if needed, or continue to the next URL.
             }
         }
 
-        if ($client !== null) {
-            return $client;
+        if ($result !== null) {
+            return $result;
         } else {
             throw new \Exception('All servers are not working');
         }
