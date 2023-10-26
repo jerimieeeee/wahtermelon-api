@@ -14,7 +14,7 @@ use Str;
 
 class SoapService
 {
-    public function _client($methodName, $args)
+    public function _client($methodName = null, $args = null)
     {
         $opts = [
             'http' => [
