@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\V1\Patient\PatientHistory;
+use App\Models\V1\Patient\PatientMenstrualHistory;
 use App\Models\V1\Patient\PatientSocialHistory;
+use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientVitals;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -48,7 +50,11 @@ class MigrateMisuWahHistoryCommand extends Command
         $medicalHistory = $this->getMedicalHistory();
         $this->saveMedicalHistory($medicalHistory, $database);
 
-        //echo $menstrualHistory = $this->getMenstrualHistory();
+        $menstrualHistory = $this->getMenstrualHistory();
+        $this->saveMenstrualHistory($menstrualHistory, $database);
+
+        $surgicalHistory = $this->getSurgucalHistory();
+        $this->saveSurgicalHistory($surgicalHistory, $database);
     }
 
     public function migrationConnection($connectionName, $database)
@@ -99,19 +105,33 @@ class MigrateMisuWahHistoryCommand extends Command
             //continue;
         }
 
-//        try {
-//            // Add column if it doesn't exist on the 'patient' table
-//            Schema::connection($connectionName)->table('patient_history_menstrual', function (Blueprint $table) {
-//                $table->string('wahtermelon_menstrual_id')->nullable()->after('id');
-//                // Add more columns if needed
-//            });
-//
-//        } catch (\Exception $e) {
-//            // Handle the exception (column already exists)
-//            // You can log the error or perform other actions if needed
-//            // For now, we'll just skip this iteration
-//            //continue;
-//        }
+        try {
+            // Add column if it doesn't exist on the 'patient' table
+            Schema::connection($connectionName)->table('patient_history_menstrual', function (Blueprint $table) {
+                $table->string('wahtermelon_menstrual_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            // Add column if it doesn't exist on the 'patient' table
+            Schema::connection($connectionName)->table('patient_history_surgical', function (Blueprint $table) {
+                $table->string('wahtermelon_surgical_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
     }
 
     public function getVitals()
@@ -428,16 +448,27 @@ class MigrateMisuWahHistoryCommand extends Command
                 patient_history_menstrual.id AS id,
                 patient.wahtermelon_patient_id AS patient_id,
                 user.wahtermelon_user_id AS user_id,
-                lmp
-                menarche
-                period_duration
-                cycle
-                pads_perday AS pads_per_day
-                onset_sexinter AS onset_sexual_intercourse
-                method_id AS method
-                menopause
-                meno_age AS menopause_age
-                patient_history_menstrual.created_at
+                lmp,
+                menarche,
+                period_duration,
+                cycle,
+                pads_perday AS pads_per_day,
+                onset_sexinter AS onset_sexual_intercourse,
+                CASE
+                    WHEN method_id = ""
+                    THEN "NA"
+                    ELSE method_id
+                END method,
+                menopause,
+                CASE
+                    WHEN menopause = "Y"
+                    THEN 1
+                    WHEN menopause = "N"
+                    THEN 0
+                    ELSE NULL
+                END menopause,
+                meno_age AS menopause_age,
+                patient_history_menstrual.created_at,
                 patient_history_menstrual.updated_at
             ')
             ->join('patient', function ($join) {
@@ -450,6 +481,115 @@ class MigrateMisuWahHistoryCommand extends Command
             })
             ->whereDate('lmp', '>=', '0001-01-01')
             ->whereDate('lmp', '<=', '9999-12-31')
-            ->count();
+            ->whereNull('wahtermelon_menstrual_id')
+            ->get();
+    }
+
+    public function saveMenstrualHistory($menstrualHistory, $facilityCode)
+    {
+        $menstrualHistoryCount = count($menstrualHistory);
+        if ($menstrualHistoryCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+        //Delete duplicate dispensing records
+
+        $menstrualHistoryBar = $this->output->createProgressBar($menstrualHistoryCount);
+        $menstrualHistoryBar->setFormat('Processing Patient Menstrual History Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $menstrualHistoryBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($menstrualHistory->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $menstrualHistoryData) {
+
+                DB::transaction(function () use ($menstrualHistoryData, $facilityCode) {
+                    $menstrualHistoryData = (array) $menstrualHistoryData;
+                    $menstrual = PatientMenstrualHistory::query()->updateOrCreate(['patient_id' => $menstrualHistoryData['patient_id']], $menstrualHistoryData + ['facility_code' => $facilityCode]);
+                    if ($menstrual) {
+                        DB::connection('mysql_migration')->table('patient_history_menstrual')->where('id', $menstrualHistoryData['id'])->update(['wahtermelon_menstrual_id' => $menstrual->id]);
+                    }
+                });
+            }
+        }
+
+        $menstrualHistoryBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient Menstrual History Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+    }
+
+    public function getSurgucalHistory()
+    {
+        return DB::connection('mysql_migration')->table('patient_history_surgical')
+            ->selectRaw('
+                patient_history_surgical.id AS id,
+                patient.wahtermelon_patient_id AS patient_id,
+                user.wahtermelon_user_id AS user_id,
+                operation,
+                operation_date,
+                patient_history_surgical.created_at,
+                patient_history_surgical.updated_at
+            ')
+            ->join('patient', function ($join) {
+                $join->on('patient_history_surgical.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_history_surgical.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereDate('operation_date', '>=', '0001-01-01')
+            ->whereDate('operation_date', '<=', '9999-12-31')
+            ->whereRaw('STR_TO_DATE(operation_date, "%Y-%m-%d") IS NOT NULL')
+            ->whereDate('operation_date', '<=', now())
+            ->whereNull('wahtermelon_surgical_id')
+            ->get();
+    }
+
+    public function saveSurgicalHistory($surgicalHistory, $facilityCode)
+    {
+        $surgicalHistoryCount = count($surgicalHistory);
+        if ($surgicalHistoryCount < 1) {
+            $this->components->info('Nothing to migrate');
+            return;
+        }
+        //Delete duplicate dispensing records
+
+        $surgicalHistoryBar = $this->output->createProgressBar($surgicalHistoryCount);
+        $surgicalHistoryBar->setFormat('Processing Patient Surgical History Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $surgicalHistoryBar->start();
+        $startTime = time();
+
+        $chunkSize = 200; // Set your desired chunk size
+        $chunks = array_chunk($surgicalHistory->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $surgicalHistoryData) {
+
+                DB::transaction(function () use ($surgicalHistoryData, $facilityCode) {
+                    $surgicalHistoryData = (array) $surgicalHistoryData;
+                    $surgical = PatientSurgicalHistory::query()->updateOrCreate(['patient_id' => $surgicalHistoryData['patient_id']], $surgicalHistoryData + ['facility_code' => $facilityCode]);
+                    if ($surgical) {
+                        DB::connection('mysql_migration')->table('patient_history_surgical')->where('id', $surgicalHistoryData['id'])->update(['wahtermelon_surgical_id' => $surgical->id]);
+                    }
+                });
+            }
+        }
+
+        $surgicalHistoryBar->finish();
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient Surgical History Migration', 'Done');
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
     }
 }

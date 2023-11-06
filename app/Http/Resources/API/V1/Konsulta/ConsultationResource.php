@@ -55,12 +55,14 @@ class ConsultationResource extends JsonResource
             ->join('consult_notes_pes', fn ($join) => $join->on('consult_notes.id', '=', 'consult_notes_pes.notes_id')->select('notes_id', 'pe_id'))
             ->join('lib_pes', fn ($join) => $join->on('lib_pes.pe_id', '=', 'consult_notes_pes.pe_id')->select('pe_id', 'category_id', 'konsulta_pe_id'))
             ->whereRaw('!ISNULL(konsulta_pe_id) AND consults.id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id ?? '', ! empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : ''])
+            ->where('is_konsulta', 1)
             ->groupByRaw('consult_notes.id, consult_notes_pes.pe_id')
             ->get();
         $physicalExamSpecific = Consult::query()
             ->join('consult_notes', fn ($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id'))
             ->join('consult_pe_remarks', fn ($join) => $join->on('consult_notes.id', '=', 'consult_pe_remarks.notes_id'))
             ->whereRaw('consults.id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id ?? '', ! empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : ''])
+            ->where('is_konsulta', 1)
             ->first();
 
         $subjective = Consult::query()
@@ -78,6 +80,7 @@ class ConsultationResource extends JsonResource
             ->leftJoin('consult_notes_complaints', fn ($join) => $join->on('consult_notes.id', '=', 'consult_notes_complaints.notes_id')->select('notes_id', 'complaint_id'))
             ->leftJoin('lib_complaints', fn ($join) => $join->on('lib_complaints.complaint_id', '=', 'consult_notes_complaints.complaint_id')->select('complaint_id', 'complaint_desc', 'konsulta_complaint_id')->whereNotNull('konsulta_complaint_id'))
             ->whereRaw('consults.id = ?', $this->id ?? '')
+            ->where('is_konsulta', 1)
             ->groupByRaw('consults.id')
             ->first();
 
