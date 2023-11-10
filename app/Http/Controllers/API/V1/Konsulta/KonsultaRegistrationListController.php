@@ -46,6 +46,28 @@ class KonsultaRegistrationListController extends Controller
             ->when(isset($request->search), function ($q) use ($request, $columns) {
                 $q->orSearch($columns, 'LIKE', $request->search);
             })
+            ->with(['philhealth.konsultaTransmittal', 'philhealth.patient.householdFolder', 'philhealth.consult.konsultaTransmittal'])
+            ->when($request->tranche == '0', function ($q) use($request){
+                $q->whereDoesntHave('philhealth.konsultaTransmittal')
+                    ->whereDoesntHave('philhealth.consult.konsultaTransmittal');
+            })
+            ->when($request->tranche == '1', function ($q) use($request){
+                $q->whereHas('philhealth.konsultaTransmittal')
+                    ->whereDoesntHave('philhealth.consult.konsultaTransmittal');
+            })
+            ->when($request->tranche == '2', function ($q) use($request){
+                $q->whereHas('philhealth.consult.konsultaTransmittal')
+                    ->whereDoesntHave('philhealth.konsultaTransmittal');
+            })
+            ->when($request->tranche == '3', function ($q) use($request){
+                $q->whereHas('philhealth.konsultaTransmittal')
+                    ->whereHas('philhealth.consult.konsultaTransmittal');
+            })
+            ->when($request->barangay_code, function ($q) use($request){
+                $q->whereHas('philhealth.patient.householdFolder', function($q) use($request){
+                    $q->where('barangay_code', $request->barangay_code);
+                });
+            })
             ->allowedFilters(['philhealth_id', 'effectivity_year'])
             ->allowedIncludes('assignedStatus', 'packageType', 'membershipType')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate', '-effectivity_year')
