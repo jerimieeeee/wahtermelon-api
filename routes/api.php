@@ -360,6 +360,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('download-xml', 'downloadXml');
                 Route::post('upload-xml', 'uploadXml');
                 Route::post('generate-age', 'getAge');
+                Route::post('upload-registration', 'uploadRegistrationList');
             });
         Route::controller(\App\Http\Controllers\API\V1\Konsulta\KonsultaRegistrationListController::class)
             ->middleware('auth:api')
