@@ -50,48 +50,6 @@ class FamilyPlanningReportService
             ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
     }
 
-    public function current_user($request, $method, $client, $age_bracket1, $age_bracket2, $code)
-    {
-        $previous_month = $request->month - 1;
-
-        return DB::table(function ($query) use ($request, $method, $client, $age_bracket1, $age_bracket2, $previous_month, $code) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
-                            TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) AS age
-                ")
-                ->from('patient_fp_methods')
-                ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
-                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
-                })
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-                })
-                ->when($request->category == 'facility', function ($q) {
-                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-                })
-                ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-                })
-                ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-                })
-                ->whereMethodCode($method)
-                ->whereClientCode('CU')
-                ->when($code == 'CU-beginning-MONTH', fn ($query) =>
-                $query->whereYear('enrollment_date', $request->year)
-                    ->whereMonth('enrollment_date',  $request->month)
-                )
-                ->when($code == 'CU-end-MONTH', fn ($query)  =>
-                $query->whereYear('enrollment_date',  $request->year)
-                    ->whereMonth('enrollment_date', $previous_month)
-                )
-                ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
-    }
-
     public function new_acceptor($request, $method, $client, $age_bracket1, $age_bracket2, $code)
     {
         $previous_month = $request->month - 1;

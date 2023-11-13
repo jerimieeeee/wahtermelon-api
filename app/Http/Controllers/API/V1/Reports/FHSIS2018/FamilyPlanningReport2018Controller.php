@@ -61,6 +61,11 @@ class FamilyPlanningReport2018Controller extends Controller
         $newAcceptorData = [];
         $otherAcceptorData = [];
         $dropoutData = [];
+//
+//        $newAcceptorCount = 0;
+//        $otherAcceptorCount = 0;
+//        $dropoutCount = 0;
+
 
         foreach ($reportData as $methodName => $data) {
             if (strpos($methodName, 'new_acceptor_previous') !== false) {
@@ -79,9 +84,10 @@ class FamilyPlanningReport2018Controller extends Controller
 
         return [
             'report' => $reportData,
-            'newAcceptorPreviousData' => $newAcceptorData,
-            'otherAcceptorData' => $otherAcceptorData,
-            'dropoutData' => $dropoutData,
+            'current_user_beginning_month' => [
+                $newAcceptorData,
+                $otherAcceptorData,
+            ]
         ];
     }
 
