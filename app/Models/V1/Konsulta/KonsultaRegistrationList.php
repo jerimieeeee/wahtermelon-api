@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Libraries\LibPhilhealthEnlistmentStatus;
 use App\Models\V1\Libraries\LibPhilhealthMembershipType;
 use App\Models\V1\Libraries\LibPhilhealthPackageType;
+use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -60,5 +61,11 @@ class KonsultaRegistrationList extends Model
     public function membershipType()
     {
         return $this->belongsTo(LibPhilhealthMembershipType::class, 'membership_type_id', 'id');
+    }
+
+    public function philhealth()
+    {
+        return $this->hasMany(PatientPhilhealth::class, 'philhealth_id', 'philhealth_id');
+
     }
 }

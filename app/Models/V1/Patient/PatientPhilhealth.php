@@ -3,7 +3,9 @@
 namespace App\Models\V1\Patient;
 
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Konsulta\KonsultaRegistrationList;
+use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Libraries\LibMemberRelationship;
 use App\Models\V1\Libraries\LibPhilhealthEnlistmentStatus;
 use App\Models\V1\Libraries\LibPhilhealthMembershipCategory;
@@ -107,5 +109,15 @@ class PatientPhilhealth extends Model
     public function konsultaRegistration()
     {
         return $this->hasMany(KonsultaRegistrationList::class, 'philhealth_id', 'philhealth_id');
+    }
+
+    public function konsultaTransmittal()
+    {
+        return $this->hasMany(KonsultaTransmittal::class, 'transmittal_number', 'transmittal_number');
+    }
+
+    public function consult()
+    {
+        return $this->hasMany(Consult::class, 'patient_id', 'patient_id');
     }
 }

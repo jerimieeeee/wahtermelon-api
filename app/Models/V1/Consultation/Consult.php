@@ -3,6 +3,7 @@
 namespace App\Models\V1\Consultation;
 
 use App\Models\User;
+use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
@@ -215,5 +216,10 @@ class Consult extends Model
     public function management()
     {
         return $this->hasManyThrough(ConsultNotesManagement::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
+    }
+
+    public function konsultaTransmittal()
+    {
+        return $this->hasMany(KonsultaTransmittal::class, 'transmittal_number', 'transmittal_number');
     }
 }
