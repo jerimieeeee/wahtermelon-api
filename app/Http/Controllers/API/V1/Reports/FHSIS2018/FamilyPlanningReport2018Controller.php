@@ -91,48 +91,6 @@ class FamilyPlanningReport2018Controller extends Controller
         ];
     }
 
-
-//        //BTL NEW ACCEPTOR PRESENT MONTH
-//        $btl_new_acceptor_present_10_14 = $familyPlanningReportService->new_acceptor($request, 'FSTRBTL', 'NA', 10, 14, 'NA-PRESENT-MONTH')->get();
-//        $btl_new_acceptor_present_15_19 = $familyPlanningReportService->new_acceptor($request, 'FSTRBTL', 'NA', 15, 19, 'NA-PRESENT-MONTH')->get();
-//        $btl_new_acceptor_present_20_49 = $familyPlanningReportService->new_acceptor($request, 'FSTRBTL', 'NA', 20, 49, 'NA-PRESENT-MONTH')->get();
-//
-//        //BTL NEW ACCEPTOR PREVIOUS MONTH
-//        $btl_new_acceptor_previous_10_14 = $familyPlanningReportService->new_acceptor($request, 'FSTRBTL', 'NA', 10, 14, 'NA-PREVIOUS-MONTH')->get();
-//        $btl_new_acceptor_previous_15_19 = $familyPlanningReportService->new_acceptor($request, 'FSTRBTL', 'NA', 15, 19, 'NA-PREVIOUS-MONTH')->get();
-//        $btl_new_acceptor_previous_20_49 = $familyPlanningReportService->new_acceptor($request, 'FSTRBTL', 'NA', 20, 49, 'NA-PREVIOUS-MONTH')->get();
-//
-//
-//        //NSV NEW ACCEPTOR PRESENT MONTH
-//        $nsv_new_acceptor_present_10_14 = $familyPlanningReportService->new_acceptor($request, 'MSV', 'NA', 10, 14, 'NA-PRESENT-MONTH')->get();
-//        $nsv_new_acceptor_present_15_19 = $familyPlanningReportService->new_acceptor($request, 'MSV', 'NA', 15, 19, 'NA-PRESENT-MONTH')->get();
-//        $nsv_new_acceptor_present_20_49 = $familyPlanningReportService->new_acceptor($request, 'MSV', 'NA', 20, 49, 'NA-PRESENT-MONTH')->get();
-//
-//        //NSV NEW ACCEPTOR PREVIOUS MONTH
-//        $nsv_new_acceptor_previous_10_14 = $familyPlanningReportService->new_acceptor($request, 'MSV', 'NA', 10, 14, 'NA-PREVIOUS-MONTH')->get();
-//        $nsv_new_acceptor_previous_15_19 = $familyPlanningReportService->new_acceptor($request, 'MSV', 'NA', 15, 19, 'NA-PREVIOUS-MONTH')->get();
-//        $nsv_new_acceptor_previous_20_49 = $familyPlanningReportService->new_acceptor($request, 'MSV', 'NA', 20, 49, 'NA-PREVIOUS-MONTH')->get();
-//
-//        return [
-//            //BTL
-//            'btl_new_acceptor_present_10_14' => $btl_new_acceptor_present_10_14,
-//            'btl_new_acceptor_present_15_19' => $btl_new_acceptor_present_15_19,
-//            'btl_new_acceptor_present_20_49' => $btl_new_acceptor_present_20_49,
-//
-//            'btl_new_acceptor_previous_10_14' => $btl_new_acceptor_previous_10_14,
-//            'btl_new_acceptor_previous_15_19' => $btl_new_acceptor_previous_15_19,
-//            'btl_new_acceptor_previous_20_49' => $btl_new_acceptor_previous_20_49,
-//
-//            //NSV
-//            'nsv_new_acceptor_present_10_14' => $nsv_new_acceptor_present_10_14,
-//            'nsv_new_acceptor_present_15_19' => $nsv_new_acceptor_present_15_19,
-//            'nsv_new_acceptor_present_20_49' => $nsv_new_acceptor_present_20_49,
-//
-//            'nsv_new_acceptor_previous_10_14' => $nsv_new_acceptor_previous_10_14,
-//            'nsv_new_acceptor_previous_15_19' => $nsv_new_acceptor_previous_15_19,
-//            'nsv_new_acceptor_previous_20_49' => $nsv_new_acceptor_previous_20_49,
-//        ];
-
     /**
      * Store a newly created resource in storage.
      */
