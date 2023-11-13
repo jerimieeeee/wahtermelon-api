@@ -339,4 +339,47 @@ class KonsultaController extends Controller
 
         return response()->json(['data' => $age]);
     }
+
+    /**
+     * Upload Registration List
+     *
+     * @bodyParam xml file required The xml.
+     *
+     * @throws Throwable
+     */
+    public function uploadRegistrationList(Request $request, SoapService $service)
+    {
+        throw_if(!$request->hasFile('xml'), 'No File to be uploaded');
+
+        $file = $request->file('xml');
+        $arrValue = [];
+
+        if (!is_array($file)) {
+            $arrValue[] = $this->processFile($file, $service, $request->cipher_key);
+        } else {
+            foreach ($file as $value) {
+                $arrValue[] = $this->processFile($value, $service, $request->cipher_key);
+            }
+        }
+
+        return response()->json([
+            'status' => 'File successfully uploaded',
+        ], 201);
+    }
+
+    private function processFile($file, $service, $cipherKey)
+    {
+        $fileContent = file_get_contents($file);
+        $decryptor = new PhilHealthEClaimsEncryptor();
+        $data = $decryptor->decryptPayloadDataToXml($fileContent, $cipherKey);
+        $list = XML2JSON($data);
+
+        if (!isset($list->ASSIGNMENT)) {
+            throw new \Exception('ASSIGNMENT key not found in the XML data');
+        }
+
+        $service->saveRegistrationList(array_filter($list->ASSIGNMENT));
+
+        return $list;
+    }
 }
