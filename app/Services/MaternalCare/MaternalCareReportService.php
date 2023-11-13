@@ -514,7 +514,7 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
-            ->groupBy('patient_id')
+            ->groupBy('patient_id', 'delivery_date', 'outcome_code')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
@@ -556,7 +556,7 @@ class MaternalCareReportService
             ->when($gender == 'FEMALE', fn ($query) => $query->whereIn('outcome_code', ['LSCF', 'NSDF'])
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->groupBy('patient_id')
+            ->groupBy('patient_id', 'delivery_date', 'outcome_code')
             ->orderBy('name', 'ASC');
     }
 

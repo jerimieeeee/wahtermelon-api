@@ -58,7 +58,31 @@ class FamilyPlanningReport2018Controller extends Controller
             }
         }
 
-        return $reportData;
+        $newAcceptorData = [];
+        $otherAcceptorData = [];
+        $dropoutData = [];
+
+        foreach ($reportData as $methodName => $data) {
+            if (strpos($methodName, 'new_acceptor_previous') !== false) {
+                $newAcceptorData[$methodName] = $data;
+//                $newAcceptorCount += count($data);
+
+            } elseif (strpos($methodName, 'other_acceptor') !== false) {
+                $otherAcceptorData[$methodName] = $data;
+//                $otherAcceptorCount += count($data);
+
+            } elseif (strpos($methodName, 'dropout') !== false) {
+                $dropoutData[$methodName] = $data;
+//                $dropoutCount += count($data);
+            }
+        }
+
+        return [
+            'report' => $reportData,
+            'newAcceptorPreviousData' => $newAcceptorData,
+            'otherAcceptorData' => $otherAcceptorData,
+            'dropoutData' => $dropoutData,
+        ];
     }
 
 
