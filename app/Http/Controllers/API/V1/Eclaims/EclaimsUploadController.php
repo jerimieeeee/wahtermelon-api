@@ -13,6 +13,7 @@ use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Storage;
+use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class EclaimsUploadController extends Controller
@@ -101,11 +102,49 @@ class EclaimsUploadController extends Controller
         //
     }
 
+    public function createRequiredXml(EclaimsUploadRequest $request)
+    {
+        $message = '';
+
+        $documents = EclaimsUploadDocument::where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo)
+                    ->where('required', 'Y')
+                    ->get();
+
+        if ($documents) {
+            $service = new SoapService();
+            $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
+                ->where('program_code', ($request->program_desc == 'cc' || $request->program_desc == 'fp' ? 'mc' : $request->program_desc))
+                ->first();
+
+            $eClaimsXMLDocs = '<DOCUMENTS>';
+            foreach ($documents as $key => $value) {
+                $eClaimsXMLDocs .= "<DOCUMENT pDocumentType='".$value['doc_type_code']."' pDocumentURL='".$value['doc_url']."'/>";
+            }
+            $eClaimsXMLDocs .= '<DOCUMENTS>';
+
+            $encryptedXml = $service->encryptData($eClaimsXMLDocs, $creds->cipher_key);
+
+            $path = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$request->pHospitalTransmittalNo.'-required.xml';
+            Storage::disk('spaces')->put($path.'.enc', $encryptedXml, ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+
+            $message = 'Created Successfully!';
+        } else {
+            $message = 'No Document Found!';
+        }
+
+        return response()->json([
+            'message' => $message,
+            'xml' => $encryptedXml
+        ], 201);
+    }
+
     public function createEncXml(EclaimsUploadRequest $request)
     {
         $message = '';
 
-        $documents = EclaimsUploadDocument::where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo)->get();
+        $documents = EclaimsUploadDocument::where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo)
+                    ->where('required', 'N')
+                    ->get();
 
         if ($documents) {
             $service = new SoapService();
