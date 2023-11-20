@@ -63,6 +63,9 @@ class KonsultaRegistrationListController extends Controller
                 $q->whereHas('philhealth.konsultaTransmittal')
                     ->whereHas('philhealth.consult.konsultaTransmittal');
             })
+            ->when($request->tranche == '4', function ($q) use($request){
+                $q->whereDoesntHave('philhealth');
+            })
             ->when($request->barangay_code, function ($q) use($request){
                 $q->whereHas('philhealth.patient.householdFolder', function($q) use($request){
                     $q->where('barangay_code', $request->barangay_code);

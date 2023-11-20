@@ -106,7 +106,7 @@ class EclaimsUploadDocumentController extends Controller
      */
     public function destroy(EclaimsUploadDocument $eclaimsDoc): JsonResponse
     {
-        return $eclaimsDoc->get();
+        // return $eclaimsDoc->get();
         $eclaimsDoc->deleteOrFail();
 
         return response()->json(['status' => 'Successfully deleted!'], 200);
