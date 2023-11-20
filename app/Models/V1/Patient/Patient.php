@@ -5,6 +5,10 @@ namespace App\Models\V1\Patient;
 use App\Models\User;
 use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Consultation\ConsultNotes;
+use App\Models\V1\Consultation\ConsultNotesComplaint;
+use App\Models\V1\Consultation\ConsultNotesFinalDx;
+use App\Models\V1\Consultation\ConsultNotesInitialDx;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Laboratory\ConsultLaboratory;
@@ -213,5 +217,15 @@ class Patient extends Model
     public function philhealthKonsulta()
     {
         return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')->whereProgramCode('kp');
+    }
+
+    public function initial_dx()
+    {
+        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id');
+    }
+
+    public function final_dx()
+    {
+        return $this->hasManyThrough(ConsultNotesFinalDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id');
     }
 }
