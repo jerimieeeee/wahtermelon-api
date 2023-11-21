@@ -32,7 +32,7 @@ class EclaimsSyncController extends Controller
             return $service->_client()->checkWS();
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
 
         }
     }
@@ -59,7 +59,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -91,7 +91,7 @@ class EclaimsSyncController extends Controller
             return response()->json(['data' => $pin], $status);
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -114,7 +114,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -139,7 +139,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -168,7 +168,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -221,7 +221,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -268,7 +268,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -294,7 +294,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
@@ -360,7 +360,7 @@ class EclaimsSyncController extends Controller
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $this->showErrorMessage($e);
+            return $e->getMessage();
         }
     }
 
