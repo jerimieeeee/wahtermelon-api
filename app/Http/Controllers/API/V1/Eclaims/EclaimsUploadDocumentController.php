@@ -22,7 +22,8 @@ class EclaimsUploadDocumentController extends Controller
     public function index(Request $request)
     {
         $query = QueryBuilder::for(EclaimsUploadDocument::class)
-            ->where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo);
+            ->where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo)
+            ->where('required', $request->required);
         /* ->when(isset($request->pHospitalTransmittalNo), function ($q) use ($request) {
             $q->where('pHospitalTransmittalNo', $request->pHospitalTransmittalNo);
         }); */
@@ -57,9 +58,17 @@ class EclaimsUploadDocumentController extends Controller
             $extension = $file->getClientOriginalExtension();
             if ($request->doc_type_code === 'OTH') {
                 $origFileName = $file->getClientOriginalName();
-                $name = $request->doc_type_code.'_'.$origFileName.'.enc';
+                if($request->required == 'Y') {
+                    $name = $request->doc_type_code.'-required_'.$origFileName.'.enc';
+                } else {
+                    $name = $request->doc_type_code.'_'.$origFileName.'.enc';
+                }
             } else {
-                $name = $request->doc_type_code.'.'.$extension.'.enc';
+                if($request->required == 'Y') {
+                    $name = $request->doc_type_code.'-required.'.$extension.'.enc';
+                } else {
+                    $name = $request->doc_type_code.'.'.$extension.'.enc';
+                }
             }
             $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pHospitalTransmittalNo.'/'.$name;
 
@@ -73,9 +82,9 @@ class EclaimsUploadDocumentController extends Controller
             $url = Storage::disk('spaces')->url($fileName);
 
             if ($request->doc_type_code === 'OTH') {
-                $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_url' => $url], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => 'N', 'doc_type_code' => $request->doc_type_code]);
+                $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_url' => $url], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => $request->required, 'doc_type_code' => $request->doc_type_code]);
             } else {
-                $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_type_code' => $request->doc_type_code], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => 'N']);
+                $data = EclaimsUploadDocument::updateOrCreate(['pHospitalTransmittalNo' => $request->pHospitalTransmittalNo, 'doc_type_code' => $request->doc_type_code], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => $request->required]);
             }
 
             return json_encode(['data' => $data, 'mesage' => 'successfully uploaded'], 201);

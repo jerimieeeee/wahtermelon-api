@@ -1028,6 +1028,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('check-doctor-accredited', 'isDoctorAccredited');
                 Route::post('upload-claim', 'eClaimsUpload');
                 Route::post('get-claims-map', 'getUploadedClaimsMap');
+                Route::post('add-required-docs', 'addRequiredDocument');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsCaserateListController::class)
             ->middleware(('auth:api'))
@@ -1048,6 +1049,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('eclaims-upload', 'index');
                 Route::post('eclaims-upload', 'store');
                 Route::post('create-enc-xml', 'createEncXml');
+                Route::post('create-required-xml', 'createRequiredXml');
             });
         Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsUploadDocumentController::class)
             ->middleware(('auth:api'))
