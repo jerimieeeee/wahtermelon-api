@@ -27,6 +27,7 @@ class ConsultNotesFinalDx extends Model
 
     public function libIcd10(): BelongsTo
     {
-        return $this->belongsTo(LibIcd10::class, 'icd10_code', 'icd10_code');
+        return $this->belongsTo(LibIcd10::class, 'icd10_code', 'icd10_code')
+            ->select(['icd10_code', 'icd10_desc']);
     }
 }

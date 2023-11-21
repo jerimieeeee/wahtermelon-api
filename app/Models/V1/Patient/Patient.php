@@ -196,7 +196,7 @@ class Patient extends Model
 
     public function philhealth()
     {
-        return $this->hasMany(PatientPhilhealth::class);
+        return $this->hasMany(PatientPhilhealth::class, 'patient_id', 'id');
     }
 
     public function pastPatientHistory()
@@ -221,11 +221,52 @@ class Patient extends Model
 
     public function initial_dx()
     {
-        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id');
+        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id')
+            ->select(['class_id']);
     }
 
     public function final_dx()
     {
-        return $this->hasManyThrough(ConsultNotesFinalDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id');
+        return $this->hasManyThrough(ConsultNotesFinalDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id')
+            ->select(['icd10_code']);
+    }
+
+    public function philhealth_id()
+    {
+        return $this->hasMany(PatientPhilhealth::class, 'patient_id', 'id')
+            ->select(['patient_id', 'philhealth_id']);;
+    }
+
+    public function consult_notes()
+    {
+        return $this->hasMany(ConsultNotes::class, 'patient_id', 'id')
+            ->select(['patient_id', 'complaint', 'history', 'plan']);
+    }
+
+    public function vitals()
+    {
+        return $this->hasMany(PatientVitals::class, 'patient_id', 'id')
+            ->select('patient_id',
+                        'bp_systolic',
+                        'bp_diastolic',
+                        'patient_temp',
+                        'patient_weight',
+                        'patient_height',
+                        'patient_pulse_rate',
+                        'patient_heart_rate',
+                        'patient_respiratory_rate'
+            );
+    }
+
+    public function consults()
+    {
+        return $this->hasMany(Consult::class, 'patient_id', 'id')
+            ->select(['patient_id', 'consult_date']);
+    }
+
+    public function address()
+    {
+        return $this->hasManyThrough(HouseholdFolder::class, HouseholdMember::class, 'patient_id', 'id', 'id', 'household_folder_id')
+            ->select(['address', 'barangay_code']);
     }
 }

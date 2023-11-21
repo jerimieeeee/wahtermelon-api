@@ -9,26 +9,16 @@ class DailyServiceReportService
 {
     public function get_daily_service($request)
     {
-        return Patient::with(['patientVitals', 'initial_dx.diagnosis', 'final_dx.libIcd10'])
+        return Patient::with(['consults', 'address.barangays', 'philhealth_id', 'vitals', 'consult_notes', 'initial_dx.diagnosis', 'final_dx.libIcd10'])
             ->join('consults', 'patients.id', '=', 'consults.patient_id')
-            ->join('consult_notes', 'patients.id', '=', 'consult_notes.patient_id')
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->leftJoin('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
             ->selectRaw("CONCAT(patients.last_name, ', ', patients.first_name) AS patient_name")
             ->addSelect(['patients.id',
                          'gender',
                          'birthdate AS birthday',
-                         'consent_flag AS with_consent',
-                         'consult_date',
-                         'address',
-                         'barangays.name AS barangay',
-                         'philhealth_id',
-                         'household_folders.cct_id AS cct',
-                         'consult_notes.complaint AS complaints',
-                         'consult_notes.history AS history',
-                         'consult_notes.plan AS treatment_notes'
+                         'consent_flag AS with_consent'
                     ])
 //            ->addSelect('birthdate')
 //            ->addSelect('address')
