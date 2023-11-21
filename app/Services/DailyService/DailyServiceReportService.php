@@ -11,9 +11,6 @@ class DailyServiceReportService
     {
         return Patient::with(['consults', 'address.barangays', 'philhealth_id', 'vitals', 'consult_notes', 'initial_dx.diagnosis', 'final_dx.libIcd10'])
             ->join('consults', 'patients.id', '=', 'consults.patient_id')
-            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
-            ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->selectRaw("CONCAT(patients.last_name, ', ', patients.first_name) AS patient_name")
             ->addSelect(['patients.id',
                          'gender',
