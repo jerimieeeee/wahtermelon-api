@@ -31,7 +31,8 @@ class EclaimsSyncService
             'https://eclaimslive5.philhealth.gov.ph:8077/SOAP',
         ];
 
-        $timeout = 10;
+        $timeout = 15;
+        $result = null;
         foreach ($onlineUrls as $url) {
             try {
                 $opts['http']['timeout'] = $timeout;
@@ -41,7 +42,7 @@ class EclaimsSyncService
                     'cache_wsdl' => WSDL_CACHE_DISK,
                     'exceptions' => true,
                     'keep_alive' => true,
-                    'connection_timeout' => 60,
+                    'connection_timeout' => 120,
                 ];
 
                 $client = new LocalSoapClient($url, $soapClientOptions);
@@ -60,7 +61,7 @@ class EclaimsSyncService
         if ($result !== null) {
             return $result;
         } else {
-            throw new \Exception('All servers are not working');
+            throw new \Exception("All servers are not working");
         }
     }
 }
