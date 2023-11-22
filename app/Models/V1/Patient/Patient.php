@@ -286,8 +286,9 @@ class Patient extends Model
             ->join('lib_medicine_duration_frequencies', 'medicine_prescriptions.duration_frequency', '=', 'lib_medicine_duration_frequencies.code')
             ->join('lib_medicine_preparations', 'medicine_prescriptions.quantity_preparation', '=', 'lib_medicine_preparations.code')
             ->leftJoin('lib_medicine_routes', 'medicine_prescriptions.medicine_route_code', '=', 'lib_medicine_routes.code')
+//            ->leftJoin('medicine_dispensings', 'medicine_prescriptions.id', '=', 'medicine_dispensings.prescription_id')
             ->select([
-                'patient_id',
+                'medicine_prescriptions.patient_id',
                 DB::raw("CASE
                         WHEN medicine_prescriptions.konsulta_medicine_code IS NOT NULL THEN lib_konsulta_medicines.desc
                         WHEN medicine_prescriptions.medicine_code IS NOT NULL THEN lib_medicines.drug_name
@@ -296,7 +297,7 @@ class Patient extends Model
                 'lib_medicine_unit_of_measurements.desc AS measurement',
                 'lib_medicine_dose_regimens.desc AS dose_regimen',
                 DB::raw("CONCAT(medicine_prescriptions.duration_intake, ' ', lib_medicine_duration_frequencies.desc, '/', 's') as duration"),
-                DB::raw("CONCAT(medicine_prescriptions.quantity, ' ', lib_medicine_preparations.desc) as quantity_and_preparation"),
+                DB::raw("CONCAT(medicine_prescriptions.quantity, ' ', lib_medicine_preparations.desc, '/', 's') as quantity_and_preparation"),
                 'lib_medicine_purposes.desc AS purpose'
             ])
             ->groupBy('medicine');
