@@ -188,14 +188,19 @@ class EclaimsSyncController extends Controller
             ]);
 
             $decryptor = new PhilHealthEClaimsEncryptor();
-
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
 
         } catch (Exception $e) {
-            return $e->getMessage();
+            return $this->showErrorMessage($e);
         }
     }
 
+    private function showErrorMessage($e)
+    {
+        $status_code = $e->getMessage() == 'All servers are not working' ? 503 : 400;
+        $message = $status_code == 400 ? $e->getMessage() : 'Having problem connecting to philhealth server, please try again later';
+        return response()->json(['message' => $message, 'status' => 'Bad Request'], $status_code);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -301,6 +306,29 @@ class EclaimsSyncController extends Controller
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
+            $request->encryptedXml
+        ]);
+
+        $decryptor = new PhilHealthEClaimsEncryptor();
+
+        try {
+            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+        } catch (Exception $e) {
+            $desc = $e->getMessage();
+
+            return $desc;
+        }
+    }
+
+    public function addRequiredDocument(Request $request, SoapService $service)
+    {
+        $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
+
+        $encrypted = $service->_client('addRequiredDocument', [
+            $data->username.':'.$data->software_certification_id,
+            $data->password,
+            $data->pmcc_number,
+            $data->pClaimSeriesLhio,
             $request->encryptedXml
         ]);
 
