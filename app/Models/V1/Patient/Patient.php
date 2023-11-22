@@ -285,7 +285,7 @@ class Patient extends Model
             ->join('lib_medicine_purposes', 'medicine_prescriptions.medicine_purpose', '=', 'lib_medicine_purposes.code')
             ->join('lib_medicine_duration_frequencies', 'medicine_prescriptions.duration_frequency', '=', 'lib_medicine_duration_frequencies.code')
             ->join('lib_medicine_preparations', 'medicine_prescriptions.quantity_preparation', '=', 'lib_medicine_preparations.code')
-            ->join('lib_medicine_routes', 'medicine_prescriptions.medicine_route_code', '=', 'lib_medicine_routes.code')
+            ->leftJoin('lib_medicine_routes', 'medicine_prescriptions.medicine_route_code', '=', 'lib_medicine_routes.code')
             ->select([
                 'patient_id',
                 DB::raw("CASE
@@ -298,7 +298,8 @@ class Patient extends Model
                 DB::raw("CONCAT(medicine_prescriptions.duration_intake, ' ', lib_medicine_duration_frequencies.desc, '/', 's') as duration"),
                 DB::raw("CONCAT(medicine_prescriptions.quantity, ' ', lib_medicine_preparations.desc) as quantity_and_preparation"),
                 'lib_medicine_purposes.desc AS purpose'
-            ]);
+            ])
+            ->groupBy('medicine');
     }
 
 //    public function medicine()

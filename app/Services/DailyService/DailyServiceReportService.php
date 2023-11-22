@@ -29,6 +29,7 @@ class DailyServiceReportService
             ->whereHas('consult',function($q) use($request) {
                 $q->whereBetween('consult_date',  array($request->start_date, $request->end_date));
             })
+            ->groupBy('patient_id')
             ->get();
     }
 }
