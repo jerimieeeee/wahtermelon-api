@@ -328,7 +328,7 @@ class EclaimsSyncController extends Controller
             $data->username.':'.$data->software_certification_id,
             $data->password,
             $data->pmcc_number,
-            $data->pClaimSeriesLhio,
+            $request->pClaimSeriesLhio,
             $request->encryptedXml
         ]);
 
