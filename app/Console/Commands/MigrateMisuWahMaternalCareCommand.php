@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\V1\MaternalCare\PatientMc;
+use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -93,7 +94,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
                 $join->on('patient_mc.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            ->whereNull('wahtermelon_mc_id')
+            //->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -122,6 +123,21 @@ class MigrateMisuWahMaternalCareCommand extends Command
                     $patientMcData = (array) $patientMcData;
                     if (empty($patientMcData['pregnancy_termination_code'])) {
                         unset($patientMcData['pregnancy_termination_code']);
+                    }
+                    if(!empty($patientMcData['pre_registration_date'])) {
+                        $pre = PatientMc::query()
+                            ->where('patient_id', $patientMcData['patient_id'])
+                            ->where('pregnancy_termination_date', $patientMcData['pregnancy_termination_date'])
+                            ->where('created_at', $patientMcData['created_at'])
+                            ->whereHas('preRegister', function($query) use($patientMcData){
+                                $query->where('pre_registration_date', $patientMcData['pre_registration_date'])
+                                    ->where('lmp_date', $patientMcData['lmp_date']);
+                            })->first();
+                        if($pre) {
+                            $pre->preRegister->updateOrCreate();
+                        } else {
+
+                        }
                     }
                     $mc = PatientMc::query()->updateOrCreate(['patient_id' => $patientMcData['patient_id'], 'patient_age' => $patientMcData['patient_age'], 'created_at' => $patientMcData['created_at']], $patientMcData + ['facility_code' => $facilityCode]);
 //                    $surgical = PatientSurgicalHistory::query()->updateOrCreate(['patient_id' => $surgicalHistoryData['patient_id']], $surgicalHistoryData + ['facility_code' => $facilityCode]);
