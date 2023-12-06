@@ -513,7 +513,7 @@ class MaternalCareReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
-            ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
+            ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCSM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
             ->groupBy('patient_id', 'delivery_date', 'outcome_code')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
