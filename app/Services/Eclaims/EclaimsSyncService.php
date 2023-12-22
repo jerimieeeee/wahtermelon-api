@@ -33,7 +33,7 @@ class EclaimsSyncService
 
         $timeout = 60;
         $result = null;
-        foreach ($onlineUrls as $url) {
+        foreach (shuffle($onlineUrls) as $url) {
             try {
                 $opts['http']['timeout'] = $timeout;
                 $soapClientOptions = [
