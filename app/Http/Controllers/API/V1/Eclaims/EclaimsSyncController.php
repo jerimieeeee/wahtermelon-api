@@ -198,7 +198,7 @@ class EclaimsSyncController extends Controller
     private function showErrorMessage($e)
     {
         $status_code = $e->getMessage() == 'All servers are not working' ? 503 : 400;
-        $message = $status_code == 400 ? $e->getMessage() : 'Having problem connecting to philhealth server, please try again later';
+        $message = $status_code == 400 ? 'Having problem connecting to philhealth server, please try again later' : $e->getMessage();
         return response()->json(['message' => $message, 'status' => 'Bad Request'], $status_code);
     }
     /**
