@@ -56,11 +56,11 @@ class EclaimsSyncService
                 break;
             } catch (\SoapFault | \Exception $e) {
                 // Handle the exception if needed, or continue to the next URL.
-                if($e->getCode() === 0) {
+                // if($e->getCode() === 0) {
 
-                } else {
+                // } else {
                     throw $e;
-                }
+                // }
             }
         }
 
