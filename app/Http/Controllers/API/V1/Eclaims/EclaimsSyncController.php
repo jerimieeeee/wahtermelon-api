@@ -197,8 +197,9 @@ class EclaimsSyncController extends Controller
 
     private function showErrorMessage($e)
     {
-        $status_code = $e->getMessage() == 'All servers are not working' ? 503 : 400;
-        $message = $status_code == 400 ? $e->getMessage() : 'Having problem connecting to philhealth server, please try again later';
+        // $status_code = $e->getMessage() == 'Having problem connecting to philhealth server, please try again later' ? 503 : 400;
+        // $message = $status_code == 400 ? 'Having problem connecting to philhealth server, please try again later' : $e->getMessage();
+        $message = [$e->getMessage()];
         return response()->json(['message' => $message, 'status' => 'Bad Request'], $status_code);
     }
     /**
@@ -335,7 +336,7 @@ class EclaimsSyncController extends Controller
         $decryptor = new PhilHealthEClaimsEncryptor();
 
         try {
-            return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
+            return $encrypted;
         } catch (Exception $e) {
             $desc = $e->getMessage();
 
