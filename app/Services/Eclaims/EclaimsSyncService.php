@@ -31,7 +31,7 @@ class EclaimsSyncService
             'https://eclaimslive5.philhealth.gov.ph:8077/SOAP',
         ];
 
-        $timeout = 15;
+        $timeout = 60;
         $result = null;
         foreach ($onlineUrls as $url) {
             try {
