@@ -347,8 +347,8 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('list', 'index');
                 Route::post('list', 'store');
-                Route::put('list/{list}', 'update');
-                Route::delete('list/{list}', 'destroy');
+                Route::put('list/{medicineList}', 'update');
+                Route::delete('list/{medicineList}', 'destroy');
             });
     });
 
