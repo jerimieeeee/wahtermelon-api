@@ -342,6 +342,14 @@ Route::prefix('v1')->group(function () {
                 Route::post('dispensing', 'store');
                 Route::put('dispensing/{dispensing}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicineListController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('list', 'index');
+                Route::post('list', 'store');
+                Route::put('list/{list}', 'update');
+                Route::delete('list/{list}', 'destroy');
+            });
     });
 
     //Konsulta
