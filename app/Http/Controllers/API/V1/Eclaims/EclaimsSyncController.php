@@ -303,21 +303,22 @@ class EclaimsSyncController extends Controller
     {
         $data = PhilhealthCredential::whereProgramCode($request->program_code)->first();
 
-        $encrypted = $service->_client('eClaimsUpload', [
-            $data->username.':'.$data->software_certification_id,
-            $data->password,
-            $data->pmcc_number,
-            $request->encryptedXml
-        ]);
-
-        $decryptor = new PhilHealthEClaimsEncryptor();
-
         try {
+            $encrypted = $service->_client('eClaimsUpload', [
+                $data->username.':'.$data->software_certification_id,
+                $data->password,
+                $data->pmcc_number,
+                $request->encryptedXml
+            ]);
+
+            $decryptor = new PhilHealthEClaimsEncryptor();
+
             return XML2JSON($decryptor->decryptPayloadDataToXml($encrypted, $data->cipher_key));
         } catch (Exception $e) {
-            $desc = $e->getMessage();
+            // $desc = $e->getMessage();
 
-            return $desc;
+            // return $desc;
+            return response()->json(['message' => $e->getMessage(), 'success' => false], 403);
         }
     }
 
