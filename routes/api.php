@@ -723,6 +723,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('report', 'index');
                 });
         });
+        Route::prefix('notifiable')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\DOH\NotifiableWeeklyReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('weekly', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
