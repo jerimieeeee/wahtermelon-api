@@ -42,6 +42,7 @@ class MedicineListController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = QueryBuilder::for(MedicineList::class)
+            ->with(['medicine', 'konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'medicineRoute'])
             ->allowedFilters(['medicine_code', 'medicine.drug_name', 'added_medicine']);
 
         if ($perPage === 'all') {

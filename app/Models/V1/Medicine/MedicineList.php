@@ -95,11 +95,6 @@ class MedicineList extends Model
         return $this->belongsTo(LibMedicinePreparation::class, 'quantity_preparation');
     }
 
-    public function dispensing()
-    {
-        return $this->hasMany(MedicineDispensing::class, 'prescription_id', 'id');
-    }
-
     public function medicineRoute()
     {
         return $this->belongsTo(LibMedicineRoute::class, 'medicine_route', 'code');

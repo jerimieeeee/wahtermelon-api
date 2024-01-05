@@ -25,7 +25,7 @@ class PatientFpChartController extends Controller
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-            ->with('fpMethod', 'fpMethod.dropout', 'fpMethod.method', 'source')
+            ->with(['fpMethod', 'fpMethod.dropout', 'fpMethod.method', 'source'])
             ->defaultSort('service_date')
             ->allowedSorts('enrollment_date', 'next_service_date');
 
