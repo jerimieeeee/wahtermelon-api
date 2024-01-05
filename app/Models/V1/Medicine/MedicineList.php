@@ -102,6 +102,6 @@ class MedicineList extends Model
 
     public function medicineRoute()
     {
-        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route_code', 'code');
+        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route', 'code');
     }
 }

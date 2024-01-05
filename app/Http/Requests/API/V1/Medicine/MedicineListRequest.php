@@ -33,8 +33,9 @@ class MedicineListRequest extends FormRequest
             'purpose_other' => 'nullable',
             'duration_intake' => 'required:numeric',
             'duration_frequency' => 'required:exists:lib_medicine_duration_frequencies,code',
-            'quantity' => 'required:numeric',
+            'quantity' => 'numeric',
             'quantity_preparation' => 'required:exists:lib_medicine_preparations,code',
+            'medicine_route' => 'required:exists:lib_medicine_routes,code'
         ];
     }
 }
