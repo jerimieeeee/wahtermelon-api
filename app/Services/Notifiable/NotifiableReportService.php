@@ -20,27 +20,11 @@ class NotifiableReportService
         return $result->pluck('barangay_code');
     }
 
-    public function get_all_brgy_municipalities_patient()
-    {
-        return DB::table('municipalities')
-            ->selectRaw('
-                        patient_id,
-                        municipalities.code AS municipality_code,
-                        barangays.code AS barangay_code
-                    ')
-            ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.code', '=', 'household_folders.barangay_code')
-            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
-            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
-    }
-
     public function get_notifiable($request, $icd10)
     {
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
                         CONCAT(household_folders.address, ',', ' ', barangays.name) AS address,
                         birthdate
                     ")
@@ -138,6 +122,8 @@ class NotifiableReportService
             )
             ->when($icd10 == 'typhoid', fn ($q) =>
                 $q->whereIn('consult_notes_final_dxes.icd10_code', ['A01', 'A01.0', 'A01.1', 'A01.2', 'A01.3', 'A01.4'])
-            );
+            )
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month);
     }
 }
