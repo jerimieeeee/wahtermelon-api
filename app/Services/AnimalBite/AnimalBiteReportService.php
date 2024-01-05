@@ -25,6 +25,7 @@ class AnimalBiteReportService
         return DB::table('patient_abs')
             ->selectRaw("
                         barangays.name AS barangay_name,
+                        settings_catchment_barangays.population AS population,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
                         TIMESTAMPDIFF(YEAR, patients.birthdate, exposure_date) AS age
@@ -87,6 +88,18 @@ class AnimalBiteReportService
             // Type of Animal: Others
             ->when($age == 'others' && $gender == 'others', function ($q) {
                 $q->whereAnimalTypeId(5);
+            })
+            // Animal Bite Category: 1
+            ->when($age == 'cat1' && $gender == 'cat1', function ($q) {
+                $q->whereIn('exposure_type_code', ['CASUAL', 'EXPOSE', 'FEED', 'LICK']);
+            })
+            // Animal Bite Category: 2
+            ->when($age == 'cat2' && $gender == 'cat2', function ($q) {
+                $q->whereIn('exposure_type_code', ['MINOR', 'NIBB']);
+            })
+            // Animal Bite Category: 3
+            ->when($age == 'cat3' && $gender == 'cat3', function ($q) {
+                $q->whereIn('exposure_type_code', ['BATS', 'CONTAM', 'INGESTION', 'TRANS', 'UNPROC']);
             })
             ->whereYear('exposure_date', $request->year)
             ->whereMonth('exposure_date', $request->month);
