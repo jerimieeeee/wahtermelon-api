@@ -34,6 +34,9 @@ class HouseholdEnvironmentalReport2018 extends Controller
         //Safety Managed Sanitation Services
         $safety_managed_sanitation = $householdEnvironmentalService->get_household_environmental_safety_managed_sanitation($request)->get()->groupBy('family_id');
 
+        //Total Number of Barangays ZOD
+        $zod_barangays = $householdEnvironmentalService->get_zod_barangays($request)->get();
+
         return [
             // Water Supply
             'water_level_all' => $water_level_all,
@@ -52,6 +55,9 @@ class HouseholdEnvironmentalReport2018 extends Controller
 
             //Safety Managed Sanitation Services
             'safety_managed_sanitation' => $safety_managed_sanitation,
+
+            //Total Number of Barangays ZOD
+            'zod_barangays' => $zod_barangays,
          ];
     }
 

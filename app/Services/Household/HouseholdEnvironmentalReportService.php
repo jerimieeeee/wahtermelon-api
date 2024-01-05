@@ -196,7 +196,7 @@ class HouseholdEnvironmentalReportService
                     ")
             ->join('barangays', 'settings_catchment_barangays.barangay_code', '=', 'barangays.code')
             ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+                $q->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
@@ -208,7 +208,7 @@ class HouseholdEnvironmentalReportService
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereZod(1)
-            ->whereYear('updated_at', $request->year)
-            ->whereMonth('updated_at', $request->month);
+            ->whereYear('settings_catchment_barangays.updated_at', $request->year)
+            ->whereMonth('settings_catchment_barangays.updated_at', $request->month);
     }
 }
