@@ -4,9 +4,7 @@ namespace App\Http\Controllers\API\V1\Medicine;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Medicine\MedicineListRequest;
-use App\Http\Resources\API\V1\Libraries\LibMedicineResource;
 use App\Http\Resources\API\V1\Medicine\MedicineListResource;
-use App\Models\V1\Libraries\LibMedicine;
 use App\Models\V1\Medicine\MedicineList;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,19 +35,23 @@ class MedicineListController extends Controller
      *
      * @apiResourceModel App\Models\V1\Medicine\MedicinePrescription paginate=15
      */
-    public function index(): ResourceCollection
+    public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        $query = QueryBuilder::for(MedicineList::class)
+        $columns = ['brand_name', 'medicine.drug_name', 'added_medicine'];
+        $medicines = QueryBuilder::for(MedicineList::class)
+            ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
+                $q->orSearch($columns, 'LIKE', $request->filter['search']);
+            })
             ->with(['medicine', 'konsultaMedicine.generic', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'medicineRoute'])
-            ->allowedFilters(['medicine_code', 'medicine.drug_name', 'added_medicine']);
+            ->allowedFilters(['brand_name', 'medicine.drug_name', 'added_medicine']);
 
         if ($perPage === 'all') {
-            return MedicineListResource::collection($query->get());
+            return MedicineListResource::collection($medicines->get());
         }
 
-        return MedicineListResource::collection($query->paginate($perPage)->withQueryString());
+        return MedicineListResource::collection($medicines->paginate($perPage)->withQueryString());
     }
 
     /**
