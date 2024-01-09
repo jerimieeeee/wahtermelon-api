@@ -43,6 +43,7 @@ class MedicineListFactory extends Factory
             'duration_frequency' => fake()->randomElement(LibMedicineDurationFrequency::pluck('code')->toArray()),
             'quantity' => fake()->numberBetween(1, 50),
             'quantity_preparation' => fake()->randomElement(LibMedicinePreparation::pluck('code')->toArray()),
+            'medicine_route' => fake()->randomElement(LibMedicineRoute::pluck('code')->toArray()),
         ];
     }
 }
