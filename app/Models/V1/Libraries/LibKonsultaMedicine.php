@@ -2,13 +2,14 @@
 
 namespace App\Models\V1\Libraries;
 
+use App\Traits\HasSearchFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LibKonsultaMedicine extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSearchFilter;
 
     public $timestamps = false;
 
