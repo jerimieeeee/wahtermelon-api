@@ -39,15 +39,16 @@ class MedicineListController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        $columns = ['brand_name', 'desc', 'added_medicine'];
+        $columns = ['brand_name', 'added_medicine'];
         $medicines = QueryBuilder::for(MedicineList::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
-                $q->orWhereHas('konsultaMedicine', function ($subQuery) use ($request, $columns) {
-                    $subQuery->orWhere($columns[1], 'LIKE', '%' . $request->filter['search'] . '%');
-                })->orWhere($columns[0], 'LIKE', '%' . $request->filter['search'] . '%')
-                    ->orWhere($columns[2], 'LIKE', '%' . $request->filter['search'] . '%');
+                $q->orSearch($columns, 'LIKE', $request->filter['search'])
+                ->orWhereHas('konsultaMedicine', function ($q) use ($request) {
+                    $q->orSearch(['desc'], 'LIKE', $request->filter['search']);
+                });
             })
-            ->with(['medicine', 'konsultaMedicine.generic', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'medicineRoute']);
+            ->with(['medicine', 'konsultaMedicine', 'konsultaMedicine.generic', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'medicineRoute']);
+
 
         if ($perPage === 'all') {
             return MedicineListResource::collection($medicines->get());
