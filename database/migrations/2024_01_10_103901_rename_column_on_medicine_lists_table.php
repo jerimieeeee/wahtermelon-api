@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('medicine_lists', function (Blueprint $table) {
-            $table->bigInteger('medicine_route')->after('quantity_preparation')->unsigned();
-
-            $table->foreign('medicine_route')->references('code')->on('lib_medicine_routes');
+            $table->renameColumn('medicine_route', 'medicine_route_code');
         });
     }
 
@@ -23,10 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::disableForeignKeyConstraints();
         Schema::table('medicine_lists', function (Blueprint $table) {
-            $table->dropColumn('medicine_route');
+            $table->renameColumn('medicine_route_code', 'medicine_route');
         });
-        Schema::enableForeignKeyConstraints();
     }
 };

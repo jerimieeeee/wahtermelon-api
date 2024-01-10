@@ -35,7 +35,7 @@ class MedicineListRequest extends FormRequest
             'duration_frequency' => 'required:exists:lib_medicine_duration_frequencies,code',
             'quantity' => 'numeric',
             'quantity_preparation' => 'required:exists:lib_medicine_preparations,code',
-            'medicine_route' => 'required:exists:lib_medicine_routes,code',
+            'medicine_route_code' => 'required:exists:lib_medicine_routes,code',
             'instruction_quantity' => 'numeric',
         ];
     }

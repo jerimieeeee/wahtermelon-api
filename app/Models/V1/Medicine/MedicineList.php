@@ -36,7 +36,7 @@ class MedicineList extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'dosage_quantity' => 'integer',
+        'dosage_quantity' => 'double',
         'duration_intake' => 'integer',
         'quantity' => 'integer',
     ];
@@ -98,6 +98,6 @@ class MedicineList extends Model
 
     public function medicineRoute()
     {
-        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route', 'code');
+        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route_code', 'code');
     }
 }

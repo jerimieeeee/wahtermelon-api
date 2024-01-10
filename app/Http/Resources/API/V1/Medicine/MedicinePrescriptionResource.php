@@ -51,6 +51,7 @@ class MedicinePrescriptionResource extends JsonResource
             'medicine_route' => $this->whenLoaded('medicineRoute'),
             'dispensing' => $this->whenLoaded('dispensing'),
             'total_dispensed' => $this->when($this->dispensing_sum_dispense_quantity, $this->dispensing_sum_dispense_quantity),
+            'remarks' => $this->remarks,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

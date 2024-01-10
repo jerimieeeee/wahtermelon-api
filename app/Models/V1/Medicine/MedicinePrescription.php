@@ -38,7 +38,7 @@ class MedicinePrescription extends Model
 
     protected $casts = [
         'prescription_date' => 'date:Y-m-d',
-        'dosage_quantity' => 'integer',
+        'dosage_quantity' => 'double',
         'duration_intake' => 'integer',
         'quantity' => 'integer',
     ];
