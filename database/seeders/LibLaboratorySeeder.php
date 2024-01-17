@@ -35,7 +35,7 @@ class LibLaboratorySeeder extends Seeder
             ['code' => 'SRLG', 'desc' => 'Serology', 'lab_active' => 0, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'RDT', 'desc' => 'Dengue RDT', 'lab_active' => 0, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'GXPT', 'desc' => 'MTB/RIF Exam', 'lab_active' => 0, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
-            ['code' => 'PSMR', 'desc' => 'Pap Smear', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 13],
+            ['code' => 'PSMR', 'desc' => 'Pap Smear', 'lab_active' => 1, 'konsulta              ,,,,,._active' => 1, 'konsulta_lab_id' => 13],
             ['code' => 'OGTT', 'desc' => 'Oral Glucose Tolerance Test', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 14],
             ['code' => 'LPFL', 'desc' => 'Lipid Profile', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 6],
             ['code' => 'FBS', 'desc' => 'Fasting Blood Sugar', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 7],
