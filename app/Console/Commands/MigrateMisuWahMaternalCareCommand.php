@@ -195,6 +195,41 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->get();
     }
 
+    public function getMcPostpartum($mcId)
+    {
+        return DB::connection('mysql_migration')->table('consult_mc_postpartum')
+            ->selectRaw('
+                consult_mc_postpartum.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                DB::raw('
+                    CASE WHEN breastfeeding = "Y" THEN 1 ELSE 0 END AS breastfeeding,
+                    CASE WHEN family_planning = "Y" THEN 1 ELSE 0 END AS family_planning,
+                    CASE WHEN fever = "Y" THEN 1 ELSE 0 END AS fever,
+                    CASE WHEN vaginal_infection = "Y" THEN 1 ELSE 0 END AS vaginal_infection,
+                    CASE WHEN vaginal_bleeding = "Y" THEN 1 ELSE 0 END AS vaginal_bleeding,
+                    CASE WHEN pallor = "Y" THEN 1 ELSE 0 END AS pallor,
+                    CASE WHEN cord_ok = "Y" THEN 1 ELSE 0 END AS cord_ok
+                ')
+            )
+            ->join('patient', function ($join) {
+                $join->on('consult_mc_postpartum.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_mc_postpartum.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('mc_id', $mcId)
+            ->whereDate('postpartum_date', '>=', '0001-01-01')
+            ->whereDate('postpartum_date', '<=', '9999-12-31')
+            //->whereNull('wahtermelon_mc_id')
+            ->whereNull('deleted_at')
+            ->get();
+    }
+
     /*public function savePatientMc($patientMc, $facilityCode)
     {
         $patientMcCount = count($patientMc);
@@ -480,8 +515,24 @@ class MigrateMisuWahMaternalCareCommand extends Command
 
                         foreach($prenatals as $prenatal) {
                             //dd(array($risk));
-                            $mc->prenatal()->create(collect($prenatal)->toArray() + ['facility_code' => $facilityCode]);
+                            $prenatal = collect($prenatal);
+                            if($prenatal['presentation_code'] == '') {
+                                $prenatal->forget('presentation_code');
+                            }
+                            if($prenatal['location_code'] == '') {
+                                $prenatal->forget('location_code');
+                            }
+                            $mc->prenatal()->create($prenatal->toArray() + ['facility_code' => $facilityCode]);
                         }
+
+                    //Save Consult Mc Prenatal
+                    $postpartum = $this->getMcPostpartum($patientMcData['mc_id']);
+
+                    foreach($postpartum as $postparta) {
+                        //dd(array($risk));
+                        $postparta = collect($postparta);
+                        $mc->postpartum()->create($postparta->toArray() + ['facility_code' => $facilityCode]);
+                    }
 
 //                    }
 //
