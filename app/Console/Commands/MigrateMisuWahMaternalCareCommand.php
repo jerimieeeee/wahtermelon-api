@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\MaternalCare\ConsultMcRisk;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use Carbon\Carbon;
@@ -112,6 +113,13 @@ class MigrateMisuWahMaternalCareCommand extends Command
     public function getMcRisk($mcId)
     {
         return DB::connection('mysql_migration')->table('consult_mc_risk')
+            ->selectRaw('
+                consult_mc_risk.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+            )
             ->join('patient', function ($join) {
                 $join->on('consult_mc_risk.patient_id', '=', 'patient.id')
                     ->whereNotNull('patient.wahtermelon_patient_id');
@@ -122,6 +130,68 @@ class MigrateMisuWahMaternalCareCommand extends Command
             })
             ->where('mc_id', $mcId)
             //->whereNull('wahtermelon_mc_id')
+            ->get();
+    }
+
+    public function getMcService($mcId)
+    {
+        return DB::connection('mysql_migration')->table('consult_mc_services')
+            ->selectRaw('
+                consult_mc_services.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                DB::raw('
+                    CASE WHEN positive_result = "Y" THEN 1 ELSE 0 END AS positive_result,
+                    CASE WHEN intake_penicillin = "Y" THEN 1 ELSE 0 END AS intake_penicillin,
+                    CASE WHEN visit_type != "" THEN visit_type ELSE "CLINIC" END AS visit_type_code
+                ')
+            )
+            ->join('patient', function ($join) {
+                $join->on('consult_mc_services.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_mc_services.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('mc_id', $mcId)
+            ->whereDate('service_date', '>=', '0001-01-01')
+            ->whereDate('service_date', '<=', '9999-12-31')
+            //->whereNull('wahtermelon_mc_id')
+            ->whereNull('deleted_at')
+            ->get();
+    }
+
+    public function getMcPrenatal($mcId)
+    {
+        return DB::connection('mysql_migration')->table('consult_mc_prenatal')
+            ->selectRaw('
+                consult_mc_prenatal.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                'fetal_presentation_id AS presentation_code',
+                'fhr_location_id AS location_code',
+                DB::raw('
+                    CASE WHEN private = "Y" THEN 1 ELSE 0 END AS private
+                ')
+            )
+            ->join('patient', function ($join) {
+                $join->on('consult_mc_prenatal.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_mc_prenatal.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('mc_id', $mcId)
+            ->whereDate('prenatal_date', '>=', '0001-01-01')
+            ->whereDate('prenatal_date', '<=', '9999-12-31')
+            //->whereNull('wahtermelon_mc_id')
+            ->whereNull('deleted_at')
             ->get();
     }
 
@@ -308,7 +378,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
             $patientMcData = (array) $patientMcData;
             $success = false;
 
-            try {
+//            try {
                 if (empty($patientMcData['pregnancy_termination_code'])) {
                     unset($patientMcData['pregnancy_termination_code']);
                 }
@@ -389,7 +459,30 @@ class MigrateMisuWahMaternalCareCommand extends Command
                             $mc->postRegister()->create($patientMcData + ['facility_code' => $facilityCode]);
                         }
 
-                        dd($this->getMcRisk($patientMcData['mc_id']));
+                        //Save Consult Mc Risk Factor
+                        $riskFactor = $this->getMcRisk($patientMcData['mc_id']);
+
+                        foreach($riskFactor as $risk) {
+                            //dd(array($risk));
+                            $mc->riskFactor()->create(collect($risk)->toArray() + ['facility_code' => $facilityCode]);
+                        }
+
+                        //Save Consult Mc Services
+                        $services = $this->getMcService($patientMcData['mc_id']);
+
+                        foreach($services as $service) {
+                            //dd(array($risk));
+                            $mc->service()->create(collect($service)->toArray() + ['facility_code' => $facilityCode]);
+                        }
+
+                        //Save Consult Mc Prenatal
+                        $prenatals = $this->getMcPrenatal($patientMcData['mc_id']);
+
+                        foreach($prenatals as $prenatal) {
+                            //dd(array($risk));
+                            $mc->prenatal()->create(collect($prenatal)->toArray() + ['facility_code' => $facilityCode]);
+                        }
+
 //                    }
 //
 //                    if (!empty($patientMcData['post_registration_date']) && !empty($patientMcData['admission_date']) && !empty($patientMcData['barangay_code'])) {
@@ -398,9 +491,9 @@ class MigrateMisuWahMaternalCareCommand extends Command
 
                     $success = true;
                 }
-            } catch (\Exception $e) {
-
-            }
+//            } catch (\Exception $e) {
+//
+//            }
 
             if ($success) {
                 DB::connection('mysql_migration')->table('patient_mc')->where('mc_id', $patientMcData['mc_id'])->update(['wahtermelon_mc_id' => $mc->id]);
