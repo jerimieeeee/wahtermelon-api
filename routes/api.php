@@ -630,6 +630,33 @@ Route::prefix('v1')->group(function () {
                 Route::put('consult-laboratory-malaria/{malaria}', 'update');
                 Route::delete('consult-laboratory-malaria/{malaria}', 'destroy');
             });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySkinSlitSmearController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-skin-slit', 'index');
+                Route::post('consult-laboratory-skin-slit', 'store');
+                Route::put('consult-laboratory-skin-slit/{skinSleat}', 'update');
+                Route::delete('consult-laboratory-skin-slit/{skinSleat}', 'destroy');
+            });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySkinSlitSmearController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-wet-smear', 'index');
+                Route::post('consult-laboratory-wet-smear', 'store');
+                Route::put('consult-laboratory-wet-smear/{wetSmear}', 'update');
+                Route::delete('consult-laboratory-wet-smear/{wetSmear}', 'destroy');
+            });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryCervicalCancerController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-cervical-cancer', 'index');
+                Route::post('consult-laboratory-cervical-cancer', 'store');
+                Route::put('consult-laboratory-cervical-cancer/{cancerScreening}', 'update');
+                Route::delete('consult-laboratory-cervical-cancer/{cancerScreening}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs
