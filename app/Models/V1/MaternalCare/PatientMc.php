@@ -81,4 +81,9 @@ class PatientMc extends Model
     {
         return $this->hasMany(ConsultMcRisk::class);
     }
+
+    public function service()
+    {
+        return $this->hasMany(ConsultMcService::class);
+    }
 }
