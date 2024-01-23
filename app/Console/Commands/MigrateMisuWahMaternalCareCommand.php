@@ -159,7 +159,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('service_date', '>=', '0001-01-01')
             ->whereDate('service_date', '<=', '9999-12-31')
-            //->whereNull('wahtermelon_mc_id')
+            ->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
