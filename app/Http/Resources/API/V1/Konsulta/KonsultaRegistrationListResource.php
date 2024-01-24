@@ -25,7 +25,7 @@ class KonsultaRegistrationListResource extends JsonResource
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'suffix_name' => $this->suffix_name,
-            'birthdate' => $this->birthdate->format('Y-m-d'),
+            'birthdate' => $this->birthdate?->format('Y-m-d'),
             'gender' => $this->gender,
             'membership_type_id' => $this->when(! $this->relationLoaded('membershipType'), $this->membership_type_id),
             'membership_type' => $this->whenLoaded('membershipType'),
