@@ -54,6 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'birthdate' => 'date:Y-m-d',
         'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
+        'last_seen_at' => 'datetime',
         'attendant_cc_flag' => 'boolean',
         'attendant_mc_flag' => 'boolean',
         'attendant_tb_flag' => 'boolean',
