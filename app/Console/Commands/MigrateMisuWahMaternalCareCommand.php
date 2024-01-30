@@ -371,7 +371,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
         $patientMcBar->start();
         $startTime = time();
 
-        $this->chunkAndProcess($patientMc, $facilityCode);
+        $this->chunkAndProcess($patientMc, $facilityCode, $patientMcBar);
 
         $patientMcBar->finish();
         $this->displayElapsedTime($startTime);
@@ -384,7 +384,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
      * @param $facilityCode
      * @return void
      */
-    private function chunkAndProcess($patientMc, $facilityCode): void
+    private function chunkAndProcess($patientMc, $facilityCode, $patientMcBar): void
     {
         $chunkSize = 200;
         $chunks = array_chunk($patientMc->toArray(), $chunkSize);
@@ -392,6 +392,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
         foreach ($chunks as $chunk) {
             foreach ($chunk as $patientMcData) {
                 $this->processPatientMcData($patientMcData, $facilityCode);
+                $patientMcBar->advance();
             }
         }
     }
