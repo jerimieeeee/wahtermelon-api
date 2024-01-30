@@ -105,7 +105,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
                 $join->on('patient_mc.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            //->whereNull('wahtermelon_mc_id')
+            ->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -129,7 +129,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
                     ->whereNotNull('user.wahtermelon_user_id');
             })
             ->where('mc_id', $mcId)
-            //->whereNull('wahtermelon_mc_id')
             ->get();
     }
 
@@ -159,7 +158,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('service_date', '>=', '0001-01-01')
             ->whereDate('service_date', '<=', '9999-12-31')
-            ->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -190,7 +188,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('prenatal_date', '>=', '0001-01-01')
             ->whereDate('prenatal_date', '<=', '9999-12-31')
-            //->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -225,7 +222,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('postpartum_date', '>=', '0001-01-01')
             ->whereDate('postpartum_date', '<=', '9999-12-31')
-            //->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
