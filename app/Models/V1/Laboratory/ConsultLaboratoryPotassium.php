@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibLaboratoryStatus;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
+use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
