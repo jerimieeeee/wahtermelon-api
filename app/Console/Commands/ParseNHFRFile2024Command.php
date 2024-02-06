@@ -2,7 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Resources\API\V1\PSGC\BarangayResource;
+use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
+use App\Models\V1\PSGC\Municipality;
+use App\Models\V1\PSGC\Province;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -96,9 +100,30 @@ class ParseNHFRFile2024Command extends Command
 
     private function processData($data)
     {
-        if(isset($data['province_code']) && Str::of($data['province_code'])->is('13*')) {
+        /*if(isset($data['province_code']) && Str::of($data['province_code'])->is('13*')) {
             //$data['province_code'] = substr($data['province_code'], 0, -1);
             $data['province_code'] = Str::of($data['province_code'])->substrReplace('0', 2, 0);
+        }*/
+        if(isset($data['barangay_code'])) {
+//            $barangay_code = Barangay::query()
+//                ->addSelect(['municipality' => Municipality::select('municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code')
+//                    ->whereColumn('municipalities.id', 'barangays.geographic_id')
+//                    ->join('provinces', 'provinces.id', '=' , 'municipalities.geographic_id')
+//                    ->limit(1)
+//                ])
+//                ->where('psgc_10_digit_code',$data['barangay_code'])->first();
+            $barangay_code = Barangay::query()
+                ->select('psgc_10_digit_code', 'municipality_code', 'province_code') // Add other columns from the Barangay model
+                ->with(['municipality' => function ($query) {
+                    $query->select('municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code')
+                        ->join('provinces', 'provinces.id', '=', 'municipalities.geographic_id')
+                        ->limit(1);
+                }])
+                ->where('psgc_10_digit_code', $data['barangay_code'])
+                ->first();
+
+            $barangay = new BarangayResource($barangay_code);
+            dd($barangay_code);
         }
         Facility::create($data);
     }
