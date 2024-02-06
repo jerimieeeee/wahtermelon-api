@@ -8,6 +8,7 @@ use App\Models\V1\PSGC\Facility;
 use App\Models\V1\PSGC\Municipality;
 use App\Models\V1\PSGC\Province;
 use Illuminate\Console\Command;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -105,25 +106,96 @@ class ParseNHFRFile2024Command extends Command
             $data['province_code'] = Str::of($data['province_code'])->substrReplace('0', 2, 0);
         }*/
         if(isset($data['barangay_code'])) {
-//            $barangay_code = Barangay::query()
-//                ->addSelect(['municipality' => Municipality::select('municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code')
-//                    ->whereColumn('municipalities.id', 'barangays.geographic_id')
-//                    ->join('provinces', 'provinces.id', '=' , 'municipalities.geographic_id')
-//                    ->limit(1)
-//                ])
-//                ->where('psgc_10_digit_code',$data['barangay_code'])->first();
-            $barangay_code = Barangay::query()
-                ->select('psgc_10_digit_code', 'municipality_code', 'province_code') // Add other columns from the Barangay model
-                ->with(['municipality' => function ($query) {
-                    $query->select('municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code')
-                        ->join('provinces', 'provinces.id', '=', 'municipalities.geographic_id')
-                        ->limit(1);
-                }])
-                ->where('psgc_10_digit_code', $data['barangay_code'])
+            switch ($data['barangay_code']) {
+                case '1380300003':
+                    $data['barangay_code'] = '1381500029';
+                    break;
+                case '1380300004':
+                    $data['barangay_code'] = '1381500030';
+                    break;
+                case '1380300007':
+                    $data['barangay_code'] = '1381500031';
+                    break;
+                case '1380300016':
+                    $data['barangay_code'] = '1381500032';
+                    break;
+                case '1380300019':
+                    $data['barangay_code'] = '1381500033';
+                    break;
+                case '1380300028':
+                    $data['barangay_code'] = '1381500037';
+                    break;
+                case '1380300032':
+                    $data['barangay_code'] = '1381500038';
+                    break;
+                case '1380300033':
+                    $data['barangay_code'] = '1381500036';
+                    break;
+                case '0803738024':
+                case '0803738027':
+                    $data['barangay_code'] = '0803738116';
+                    break;
+                case '0803738031':
+                case '0803738033':
+                case '0803738035':
+                case '0803738039':
+                    $data['barangay_code'] = '0803738117';
+                    break;
+                case '0402103001':
+                case '0402103003':
+                    $data['barangay_code'] = '0402103089';
+                    break;
+                case '0402103002':
+                    $data['barangay_code'] = '0402103076';
+                    break;
+                case '0402103006':
+                    $data['barangay_code'] = '0402103078';
+                    break;
+                case '0402103010':
+                    $data['barangay_code'] = '0402103079';
+                    break;
+                case '0402103011':
+                    $data['barangay_code'] = '0402103080';
+                    break;
+                case '0402103015':
+                    $data['barangay_code'] = '0402103083';
+                    break;
+                case '0402103019':
+                    $data['barangay_code'] = '0402103087';
+                    break;
+            }
+            $municipality = Municipality::query()
+                ->select('municipalities.id', 'municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code', 'regions.psgc_10_digit_code AS region_code')
+                ->join('provinces', 'provinces.id', '=', 'municipalities.geographic_id')
+                ->join('regions', 'regions.id', '=', 'provinces.region_id');
+            $barangay = Barangay::query()
+                ->select('psgc_10_digit_code AS barangay_code', 'municipality_code', 'province_code', 'region_code')
+                ->joinSub($municipality, 'municipality', function (JoinClause $join) {
+                    $join->on('barangays.geographic_id', '=', 'municipality.id');
+                })
+                ->where('barangays.psgc_10_digit_code', $data['barangay_code'])
                 ->first();
 
-            $barangay = new BarangayResource($barangay_code);
-            dd($barangay_code);
+            if(!isset($barangay->region_code)) {
+                dd($data['barangay_code']);
+            }
+            $data['region_code'] = $barangay->region_code;
+            $data['province_code'] = $barangay->province_code;
+            $data['municipality_code'] = $barangay->municipality_code;
+            $data['barangay_code'] = $barangay->barangay_code;
+        } else {
+            $municipality = Municipality::query()
+                ->select('municipalities.id', 'municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code', 'regions.psgc_10_digit_code AS region_code')
+                ->join('provinces', 'provinces.id', '=', 'municipalities.geographic_id')
+                ->join('regions', 'regions.id', '=', 'provinces.region_id')
+                ->where('municipalities.psgc_10_digit_code', $data['municipality_code'])
+                ->first();
+            if(!isset($municipality->region_code)) {
+                dd($data['municipality_code']);
+            }
+            $data['region_code'] = $municipality->region_code;
+            $data['province_code'] = $municipality->province_code;
+            $data['municipality_code'] = $municipality->municipality_code;
         }
         Facility::create($data);
     }
