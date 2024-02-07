@@ -31,8 +31,9 @@ class EclaimsSyncService
             'https://eclaimslive5.philhealth.gov.ph:8077/SOAP',
         ];
 
-        $timeout = 15;
+        $timeout = 60;
         $result = null;
+        shuffle($onlineUrls);
         foreach ($onlineUrls as $url) {
             try {
                 $opts['http']['timeout'] = $timeout;
@@ -55,13 +56,18 @@ class EclaimsSyncService
                 break;
             } catch (\SoapFault | \Exception $e) {
                 // Handle the exception if needed, or continue to the next URL.
+                // if($e->getCode() === 0) {
+
+                // } else {
+                    throw $e;
+                // }
             }
         }
 
         if ($result !== null) {
             return $result;
         } else {
-            throw new \Exception("All servers are not working");
+            throw new \Exception("Having problem connecting to philhealth server, please try again later");
         }
     }
 }

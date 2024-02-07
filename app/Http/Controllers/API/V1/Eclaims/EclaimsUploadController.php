@@ -120,7 +120,7 @@ class EclaimsUploadController extends Controller
             foreach ($documents as $key => $value) {
                 $eClaimsXMLDocs .= "<DOCUMENT pDocumentType='".$value['doc_type_code']."' pDocumentURL='".$value['doc_url']."'/>";
             }
-            $eClaimsXMLDocs .= '<DOCUMENTS>';
+            $eClaimsXMLDocs .= '</DOCUMENTS>';
 
             $encryptedXml = $service->encryptData($eClaimsXMLDocs, $creds->cipher_key);
 
