@@ -143,25 +143,73 @@ class ParseNHFRFile2024Command extends Command
                     break;
                 case '0402103001':
                 case '0402103003':
+                case '0402103022':
                     $data['barangay_code'] = '0402103089';
                     break;
+                case '0402103030':
                 case '0402103002':
                     $data['barangay_code'] = '0402103076';
                     break;
                 case '0402103006':
                     $data['barangay_code'] = '0402103078';
                     break;
+                case '0402103035':
                 case '0402103010':
                     $data['barangay_code'] = '0402103079';
                     break;
+                case '0402103038':
+                case '0402103037':
                 case '0402103011':
                     $data['barangay_code'] = '0402103080';
                     break;
+                case '0402103052':
+                case '0402103051':
                 case '0402103015':
                     $data['barangay_code'] = '0402103083';
                     break;
+                case '0402103060':
                 case '0402103019':
                     $data['barangay_code'] = '0402103087';
+                    break;
+                case '0402103023':
+                    $data['barangay_code'] = '0402103086';
+                    break;
+                case '0402103072':
+                case '0402103025':
+                    $data['barangay_code'] = '0402103092';
+                    break;
+                case '0402103031':
+                case '0402103029':
+                    $data['barangay_code'] = '0402103077';
+                    break;
+                case '0402103040':
+                case '0402103039':
+                    $data['barangay_code'] = '0402103081';
+                    break;
+                case '0402103044':
+                    $data['barangay_code'] = '0402103082';
+                    break;
+                case '0402103054':
+                    $data['barangay_code'] = '0402103055';
+                    break;
+                case '0402103056':
+                    $data['barangay_code'] = '0402103058';
+                    break;
+                case '0402103057':
+                    $data['barangay_code'] = '0402103059';
+                    break;
+                case '0402103063':
+                case '0402103062':
+                case '0402103061':
+                    $data['barangay_code'] = '0402103088';
+                    break;
+                case '0402103070':
+                case '0402103068':
+                    $data['barangay_code'] = '0402103091';
+                    break;
+                case '0402103074':
+                case '0402103073':
+                    $data['barangay_code'] = '0402103093';
                     break;
             }
             $municipality = Municipality::query()
