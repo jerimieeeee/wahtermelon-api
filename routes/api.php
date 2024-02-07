@@ -744,7 +744,7 @@ Route::prefix('v1')->group(function () {
                 });
         });
         Route::prefix('daily-service')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Reports\DOH\DailyServiceReportController::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\General\DailyServiceReportController::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('report', 'index');

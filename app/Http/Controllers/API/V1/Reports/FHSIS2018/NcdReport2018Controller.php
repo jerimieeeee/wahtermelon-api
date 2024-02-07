@@ -13,6 +13,7 @@ class NcdReport2018Controller extends Controller
      */
     public function index(Request $request, NcdReportService $ncdReportService)
     {
+
         //Risk-Assessed PHILPEN
         $assessed_male = $ncdReportService->get_risk_assessed($request, 'M')->get();
         $assessed_female = $ncdReportService->get_risk_assessed($request, 'F')->get();
