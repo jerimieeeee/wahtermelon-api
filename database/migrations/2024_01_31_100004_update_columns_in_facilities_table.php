@@ -23,10 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('facilities', function (Blueprint $table) {
-            $table->string('region_code')->nullable(0)->change();
-            $table->string('province_code')->nullable(0)->change();
-            $table->string('municipality_code')->nullable(0)->change();
-        });
+
     }
 };
