@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
 use App\Services\DailyService\DailyServiceReportService;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class DailyServiceReportController extends Controller
     {
         $re = $dailyServiceReportService->get_daily_service_consultation($request);
 
-        return $re;
+        return DailyServiceConsultationReportResource::collection($re);
 
     }
 
