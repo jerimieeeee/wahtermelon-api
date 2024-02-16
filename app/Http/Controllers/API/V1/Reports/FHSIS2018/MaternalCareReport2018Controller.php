@@ -147,6 +147,7 @@ class MaternalCareReport2018Controller extends Controller
         $pregnant_with_1_deworming = $maternalCareReportService->get_service($request, 'DWRMG', 'Prenatal');
         $pregnant_with_1_deworming = $pregnant_with_1_deworming->get();
 
+        //PREGNANT WITH 1 DEWORMING TABLET AGE 1-10 YEARS
         $pregnant_with_1_deworming_10_14 = get_completed_services($request, $pregnant_with_1_deworming, '1', '10', '14');
 
         //PREGNANT WITH 1 DEWORMING TABLET AGE 15-19 YEARS
