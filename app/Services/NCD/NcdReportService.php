@@ -33,7 +33,7 @@ class NcdReportService
             ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
     }
 
-    public function get_risk_assessed($request, $patient_gender)
+    public function get_risk_assessed($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -56,16 +56,21 @@ class NcdReportService
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id')
-//            ->whereAge('age', '>=', '60')
             ->orderBy('name', 'ASC');
     }
 
-    public function get_risk_assessed_smoker($request, $patient_gender)
+    public function get_risk_assessed_smoker($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -88,17 +93,22 @@ class NcdReportService
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereSmoking(3)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
-//            ->whereAge('age', '>=', '60')
             ->orderBy('name', 'ASC');
     }
 
-    public function get_risk_assessed_alcohol($request, $patient_gender)
+    public function get_risk_assessed_alcohol($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -121,17 +131,22 @@ class NcdReportService
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereAlcoholIntake(1)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
-//            ->whereAge('age', '>=', '60')
             ->orderBy('name', 'ASC');
     }
 
-    public function get_risk_assessed_obese($request, $patient_gender)
+    public function get_risk_assessed_obese($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -154,17 +169,22 @@ class NcdReportService
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereObesity(1)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
-//            ->whereAge('age', '>=', '60')
             ->orderBy('name', 'ASC');
     }
 
-    public function hypertensive_adult($request, $patient_gender)
+    public function hypertensive_adult($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -188,16 +208,64 @@ class NcdReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60');
+            })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
-            ->whereRaisedBp(1)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
+            ->whereRaisedBp(1)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
-//            ->whereAge('age', '>=', '60')
             ->orderBy('name', 'ASC');
     }
 
-    public function diabetes_adult($request, $patient_gender)
+    public function hypertensive_adult_old_new_case($request, $patient_gender, $age, $case)
+    {
+        return DB::table('consult_ncd_risk_assessment')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        birthdate,
+                        assessment_date AS date_of_service
+                    ")
+            ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
+            })
+            ->when($request->category == 'all', function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            // OLD CASE
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59])
+                    ->whereYear('assessment_date', $request->year)
+                    ->whereMonth('assessment_date', $request->month);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60')
+                    ->whereYear('assessment_date', $request->year)
+                    ->whereMonth('assessment_date', $request->month);
+            })
+            ->where('consult_ncd_risk_assessment.gender', $patient_gender)
+            ->whereYear('assessment_date', $request->year)
+            ->whereMonth('assessment_date', $request->month)
+            ->whereRaisedBp(1)
+            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
+            ->orderBy('name', 'ASC');
+    }
+
+    public function diabetes_adult($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -222,12 +290,17 @@ class NcdReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->whereAge('age', '>=', '60');
+            })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereRaisedBloodGlucose(1)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
-//            ->whereAge('age', '>=', '60')
             ->orderBy('name', 'ASC');
     }
 

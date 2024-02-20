@@ -31,7 +31,9 @@ class LibPeController extends Controller
      */
     public function index()
     {
-        $query = QueryBuilder::for(LibPe::class);
+        $query = QueryBuilder::for(LibPe::class)
+        ->orderBy('konsulta_library_status', 'DESC')
+        ->orderByRaw("CASE WHEN pe_desc = 'Essentially normal' THEN 1 WHEN pe_desc = 'Others' THEN 3 ELSE 2 END, pe_desc ASC");
 
         return LibPeResource::collection($query->get());
     }

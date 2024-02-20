@@ -29,6 +29,11 @@ class EclaimsSyncService
             'https://eclaimslive3.philhealth.gov.ph:8077/SOAP',
             'https://eclaimslive4.philhealth.gov.ph:8077/SOAP',
             'https://eclaimslive5.philhealth.gov.ph:8077/SOAP',
+            'https://eclaimslive1b.philhealth.gov.ph:8077/SOAP',
+            'https://eclaimslive2b.philhealth.gov.ph:8077/SOAP',
+            'https://eclaimslive3b.philhealth.gov.ph:8077/SOAP',
+            'https://eclaimslive4b.philhealth.gov.ph:8077/SOAP',
+            'https://eclaimslive5b.philhealth.gov.ph:8077/SOAP',
         ];
 
         $timeout = 60;

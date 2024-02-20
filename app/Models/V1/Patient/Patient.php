@@ -257,7 +257,9 @@ class Patient extends Model
                         'patient_heart_rate',
                         'patient_respiratory_rate',
                         'vitals_date'
-            );
+            )
+            ->groupBy('vitals_date')
+            ->orderBy('vitals_date');
     }
 
     public function consults()
