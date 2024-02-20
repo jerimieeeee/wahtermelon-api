@@ -25,7 +25,7 @@ class SettingsCatchmentBarangayRequest extends FormRequest
         return [
             'year' => 'required',
             'barangay' => 'required|array',
-            'barangay.*.barangay_code' => 'required|exists:barangays,code',
+            'barangay.*.barangay_code' => 'required|exists:barangays,psgc_10_digit_code',
             'barangay.*.population' => 'nullable|numeric',
             'barangay.*.population_opt' => 'nullable|numeric',
             'barangay.*.population_wra' => 'nullable|numeric',
@@ -43,7 +43,7 @@ class SettingsCatchmentBarangayRequest extends FormRequest
                 'example' => fake()->year('now'),
             ],
             'barangay_code' => [
-                'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+                'example' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             ],
             'population' => [
                 'example' => fake()->randomNumber(),
