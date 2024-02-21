@@ -17,7 +17,7 @@ class ProvinceResource extends JsonResource
         $condition = $request->include != 'provinces' && ! is_null($request->province) && is_null($request->city) && is_null($request->municipality);
 
         return [
-            'code' => $this->code ?? $this->psgc_10_digit_code,
+            'code' => $this->psgc_10_digit_code,
             'name' => $this->name,
             'income_class' => $this->income_class,
             'population' => $this->population,

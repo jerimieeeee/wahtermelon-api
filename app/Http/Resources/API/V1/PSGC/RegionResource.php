@@ -15,7 +15,7 @@ class RegionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code' => $this->code ?? $this->psgc_10_digit_code,
+            'code' => $this->psgc_10_digit_code,
             'name' => $this->name,
             'population' => $this->population,
             'provinces' => ProvinceResource::collection($this->whenLoaded('provinces')),
