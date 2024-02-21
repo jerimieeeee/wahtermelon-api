@@ -105,7 +105,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
                 $join->on('patient_mc.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            //->whereNull('wahtermelon_mc_id')
+            ->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -129,7 +129,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
                     ->whereNotNull('user.wahtermelon_user_id');
             })
             ->where('mc_id', $mcId)
-            //->whereNull('wahtermelon_mc_id')
             ->get();
     }
 
@@ -159,7 +158,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('service_date', '>=', '0001-01-01')
             ->whereDate('service_date', '<=', '9999-12-31')
-            ->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -190,7 +188,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('prenatal_date', '>=', '0001-01-01')
             ->whereDate('prenatal_date', '<=', '9999-12-31')
-            //->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -225,7 +222,6 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('postpartum_date', '>=', '0001-01-01')
             ->whereDate('postpartum_date', '<=', '9999-12-31')
-            //->whereNull('wahtermelon_mc_id')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -375,7 +371,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
         $patientMcBar->start();
         $startTime = time();
 
-        $this->chunkAndProcess($patientMc, $facilityCode);
+        $this->chunkAndProcess($patientMc, $facilityCode, $patientMcBar);
 
         $patientMcBar->finish();
         $this->displayElapsedTime($startTime);
@@ -388,7 +384,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
      * @param $facilityCode
      * @return void
      */
-    private function chunkAndProcess($patientMc, $facilityCode): void
+    private function chunkAndProcess($patientMc, $facilityCode, $patientMcBar): void
     {
         $chunkSize = 200;
         $chunks = array_chunk($patientMc->toArray(), $chunkSize);
@@ -396,6 +392,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
         foreach ($chunks as $chunk) {
             foreach ($chunk as $patientMcData) {
                 $this->processPatientMcData($patientMcData, $facilityCode);
+                $patientMcBar->advance();
             }
         }
     }
