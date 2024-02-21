@@ -195,10 +195,16 @@ class KonsultaController extends Controller
     public function validatedXml(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
+        $columns = ['last_name', 'first_name', 'middle_name'];
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
-            ->when(isset($request->start_date) && isset($request->end_date), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
+            ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
+            ->when($request->filter['tranche'] == 1 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
+                $query->whereHas('patientPhilhealth', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
+            ->when($request->filter['tranche'] == 2 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
+                $query->whereHas('patientConsult', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('created_at')
