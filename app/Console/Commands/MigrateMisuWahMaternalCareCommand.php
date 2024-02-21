@@ -47,7 +47,8 @@ class MigrateMisuWahMaternalCareCommand extends Command
         $patientMc = $this->getPatientMc();
         $this->saveData($patientMc, $database, 'Patient Maternal Care', 'processPatientMcData');
 
-        dd($this->getMcVaccine());
+        $vaccines = $this->getMcVaccine();
+        $this->saveData($vaccines, $database, 'Maternal Care Vaccine', 'processMcVaccineData');
     }
 
     public function migrationConnection($connectionName, $database)
@@ -267,6 +268,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->whereDate('vaccine_date', '>=', '0001-01-01')
             ->whereDate('vaccine_date', '<=', '9999-12-31')
             ->whereNull('deleted_at')
+            ->whereNull('wahtermelon_vaccine_id')
             ->get();
     }
 
@@ -603,9 +605,11 @@ class MigrateMisuWahMaternalCareCommand extends Command
     {
         DB::transaction(function () use ($vaccineData, $facilityCode) {
             $vaccineData = (array)$vaccineData;
-            $success = false;
-            $vaccineData->vaccine_id = preg_replace('/[0-9]+/', '', $vaccineData->vaccine_id);
-            PatientVaccine::query()->u
+            $vaccineData['vaccine_id'] = preg_replace('/[0-9]+/', '', $vaccineData['vaccine_id']);
+            $vaccine = PatientVaccine::query()->updateOrCreate(['patient_id' => $vaccineData['patient_id'], 'vaccine_id' => $vaccineData['vaccine_id'], 'vaccine_date' => $vaccineData['vaccine_date']], $vaccineData + ['facility_code' => $facilityCode, 'status_id' => 1]);
+            if($vaccine) {
+                DB::connection('mysql_migration')->table('consult_mc_vaccine')->where('id', $vaccineData['id'])->update(['wahtermelon_vaccine_id' => $vaccine->id]);
+            }
         });
     }
 
