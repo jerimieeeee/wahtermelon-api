@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use App\Models\V1\MaternalCare\ConsultMcRisk;
 use App\Models\V1\MaternalCare\PatientMc;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
+use App\Models\V1\Patient\PatientVaccine;
+use App\Models\V1\PSGC\Barangay;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
@@ -43,7 +45,9 @@ class MigrateMisuWahMaternalCareCommand extends Command
         $this->migrationConnection($connectionName, $database);
 
         $patientMc = $this->getPatientMc();
-        $this->savePatientMc($patientMc, $database);
+        $this->saveData($patientMc, $database, 'Patient Maternal Care', 'processPatientMcData');
+
+        dd($this->getMcVaccine());
     }
 
     public function migrationConnection($connectionName, $database)
@@ -70,6 +74,20 @@ class MigrateMisuWahMaternalCareCommand extends Command
             // Add column if it doesn't exist on the 'patient' table
             Schema::connection($connectionName)->table('patient_mc', function (Blueprint $table) {
                 $table->string('wahtermelon_mc_id')->nullable()->after('mc_id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+
+        try {
+            // Add column if it doesn't exist on the 'patient' table
+            Schema::connection($connectionName)->table('consult_mc_vaccine', function (Blueprint $table) {
+                $table->string('wahtermelon_vaccine_id')->nullable()->after('id');
                 // Add more columns if needed
             });
 
@@ -106,6 +124,8 @@ class MigrateMisuWahMaternalCareCommand extends Command
                     ->whereNotNull('user.wahtermelon_user_id');
             })
             ->whereNull('wahtermelon_mc_id')
+            ->whereDate('postpartum_date', '>=', '0001-01-01')
+            ->whereDate('postpartum_date', '<=', '9999-12-31')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -222,6 +242,30 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ->where('mc_id', $mcId)
             ->whereDate('postpartum_date', '>=', '0001-01-01')
             ->whereDate('postpartum_date', '<=', '9999-12-31')
+            ->whereNull('deleted_at')
+            ->get();
+    }
+
+    public function getMcVaccine()
+    {
+        return DB::connection('mysql_migration')->table('consult_mc_vaccine')
+            ->selectRaw('
+                consult_mc_vaccine.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id'
+            )
+            ->join('patient', function ($join) {
+                $join->on('consult_mc_vaccine.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_mc_vaccine.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereDate('vaccine_date', '>=', '0001-01-01')
+            ->whereDate('vaccine_date', '<=', '9999-12-31')
             ->whereNull('deleted_at')
             ->get();
     }
@@ -343,56 +387,60 @@ class MigrateMisuWahMaternalCareCommand extends Command
         $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
     }*/
 
-    public function savePatientMc($patientMc, $facilityCode)
+    public function saveData($data, $facilityCode, $title, $process)
     {
-        $patientMcCount = count($patientMc);
-        if ($patientMcCount < 1) {
-            $this->components->info('Nothing to migrate');
+        $dataCount = count($data);
+        if ($dataCount < 1) {
+            $this->components->info('Nothing to migrate for ' . $title);
             return;
         }
 
-        $this->processPatientMc($patientMc, $facilityCode);
+        $this->createProgressBar($data, $facilityCode, $title, $process);
 
         $this->newLine();
-        $this->components->twoColumnDetail('Patient Maternal Care Migration', 'Done');
+        $this->components->twoColumnDetail($title . ' Migration', 'Done');
     }
 
     /**
      * Process Patient Maternal Care
      *
-     * @param $patientMc
+     * @param $data
      * @param $facilityCode
+     * @param $title
+     * @param $process
      * @return void
      */
-    private function processPatientMc($patientMc, $facilityCode): void
+    private function createProgressBar($data, $facilityCode, $title, $process): void
     {
-        $patientMcBar = $this->output->createProgressBar(count($patientMc));
-        $patientMcBar->setFormat('Processing Patient Maternal Care Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
-        $patientMcBar->start();
+        $dataBar = $this->output->createProgressBar(count($data));
+        $dataBar->setFormat("Processing $title Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%");
+        $dataBar->start();
         $startTime = time();
 
-        $this->chunkAndProcess($patientMc, $facilityCode, $patientMcBar);
+        $this->chunkAndProcess($data, $facilityCode, $dataBar, $process);
 
-        $patientMcBar->finish();
+        $dataBar->finish();
         $this->displayElapsedTime($startTime);
     }
 
     /**
      * Chunk and Process Patient Mc Data
      *
-     * @param $patientMc
+     * @param $data
      * @param $facilityCode
+     * @param $dataBar
+     * @param $process
      * @return void
      */
-    private function chunkAndProcess($patientMc, $facilityCode, $patientMcBar): void
+    private function chunkAndProcess($data, $facilityCode, $dataBar, $process): void
     {
         $chunkSize = 200;
-        $chunks = array_chunk($patientMc->toArray(), $chunkSize);
+        $chunks = array_chunk($data->toArray(), $chunkSize);
 
         foreach ($chunks as $chunk) {
-            foreach ($chunk as $patientMcData) {
-                $this->processPatientMcData($patientMcData, $facilityCode);
-                $patientMcBar->advance();
+            foreach ($chunk as $newData) {
+                $this->$process($newData, $facilityCode);
+                $dataBar->advance();
             }
         }
     }
@@ -488,6 +536,8 @@ class MigrateMisuWahMaternalCareCommand extends Command
                         $mc = PatientMc::query()->create($patientMcData + ['facility_code' => $facilityCode]);
                         $mc->preRegister()->create($patientMcDataWithoutMcId + ['facility_code' => $facilityCode]);
                         if (!empty($patientMcData['post_registration_date']) && !empty($patientMcData['admission_date']) && !empty($patientMcData['barangay_code'])) {
+                            $barangayCode = Barangay::query()->select('psgc_10_digit_code AS barangay_code')->whereCode($patientMcData['barangay_code'])->first();
+                            $patientMcData['barangay_code'] = $barangayCode->barangay_code;
                             $mc->postRegister()->create($patientMcData + ['facility_code' => $facilityCode]);
                         }
 
@@ -546,6 +596,16 @@ class MigrateMisuWahMaternalCareCommand extends Command
             if ($success) {
                 DB::connection('mysql_migration')->table('patient_mc')->where('mc_id', $patientMcData['mc_id'])->update(['wahtermelon_mc_id' => $mc->id]);
             }
+        });
+    }
+
+    private function processMcVaccineData($vaccineData, $facilityCode): void
+    {
+        DB::transaction(function () use ($vaccineData, $facilityCode) {
+            $vaccineData = (array)$vaccineData;
+            $success = false;
+            $vaccineData->vaccine_id = preg_replace('/[0-9]+/', '', $vaccineData->vaccine_id);
+            PatientVaccine::query()->u
         });
     }
 
