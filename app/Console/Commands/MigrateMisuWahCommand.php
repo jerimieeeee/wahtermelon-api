@@ -8,6 +8,7 @@ use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Konsulta\KonsultaRegistrationList;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
+use App\Models\V1\PSGC\Barangay;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -203,11 +204,12 @@ class MigrateMisuWahCommand extends Command
                 DB::transaction(function() use($connectionName, $database, $record, $resultArray, $patient_info) {
                     //echo $users[0];
                     //print_r($record);
+                    $barangayCode = Barangay::query()->select('psgc_10_digit_code AS barangay_code')->whereCode($record['brgy_code'])->first();
                     $data = [
                         'user_id' => $resultArray[0]['user_id'],
                         'facility_code' => $database,
                         'address' => $record['address'],
-                        'barangay_code' => $record['brgy_code'],
+                        'barangay_code' => $barangayCode->barangay_code,
                         'cct_date' => $record['cct_membership'],
                         'cct_id' => $record['cct_id']
                     ];
