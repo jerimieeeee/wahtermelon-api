@@ -6,10 +6,13 @@ use App\Models\V1\Barangay\SettingsBhs;
 use App\Models\V1\Barangay\SettingsCatchmentBarangay;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\MaternalCare\PatientMcPostRegistration;
+use Doctrine\DBAL\Schema\MySQLSchemaManager;
 use Illuminate\Console\Command;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class ParseBarangayCodeCommand extends Command
 {
@@ -32,157 +35,137 @@ class ParseBarangayCodeCommand extends Command
      */
     public function handle()
     {
-        //Household Folder
+        $tableNameHf = 'household_folders';
+        $foreignKeyNameHf = 'household_folders_barangay_code_foreign';
+        $referencedColumnNameHf = 'psgc_10_digit_code';
+
+        $tableNameBhs = 'settings_bhs';
+        $foreignKeyNameBhs = 'settings_bhs_barangay_code_foreign';
+        $referencedColumnNameBhs = 'psgc_10_digit_code';
+
+        $tableNameCb = 'settings_catchment_barangays';
+        $foreignKeyNameCb = 'settings_catchment_barangays_barangay_code_foreign';
+        $referencedColumnNameCb = 'psgc_10_digit_code';
+
+        $tableNameMc = 'patient_mc_post_registrations';
+        $foreignKeyNameMc = 'patient_mc_post_registrations_barangay_code_foreign';
+        $referencedColumnNameMc = 'psgc_10_digit_code';
+
+        $hf = $this->checkDatabase($tableNameHf, $foreignKeyNameHf, $referencedColumnNameHf);
+        $sbhs = $this->checkDatabase($tableNameBhs, $foreignKeyNameBhs, $referencedColumnNameBhs);
+        $scb = $this->checkDatabase($tableNameCb, $foreignKeyNameCb, $referencedColumnNameCb);
+        $pmc = $this->checkDatabase($tableNameMc, $foreignKeyNameMc, $referencedColumnNameMc);
+
+
+
         $household = HouseholdFolder::query()->select('barangay_code')->first();
-        if(!empty($household) && is_string($household->barangay_code) && strlen($household->barangay_code) === 9) {
-            Schema::table('household_folders', function ($table) {
-                $table->string('psgc_10_digit_code')->nullable()->after('barangay_code');
-            });
+        $bhs = SettingsBhs::query()->select('barangay_code')->first();
+        $catchment = SettingsCatchmentBarangay::query()->select('barangay_code')->first();
+        $mc = PatientMcPostRegistration::query()->select('barangay_code')->first();
+        $defaultIndex = 0;
+        $name = $this->choice(
+            'Select Module to Update Barangay Code',
+            [
+                'Update All',
+                'Household Folder - ' . $hf . ' digit psgc code',
+                'Settings BHS - ' . $sbhs . ' digit psgc code',
+                'Settings Catchment Barangay - ' . $scb . ' digit psgc code',
+                'Maternal Care - ' . $pmc . ' digit psgc code'
+            ],
+            $defaultIndex,
+            $maxAttempts = null,
+            $allowMultipleSelections = true
+        );
 
-            // Populate psgc_10_digit_code column
-            DB::statement('UPDATE household_folders hf
-                           JOIN barangays b ON hf.barangay_code = b.code
-                           SET hf.psgc_10_digit_code = b.psgc_10_digit_code');
+        $updateAll = $this->searchArray($name, 'Update All');
+        $updateHousehold = $this->searchArray($name, 'Household Folder');
+        $updateBHS = $this->searchArray($name, 'Settings BHS');
+        $updateCatchement = $this->searchArray($name, 'Settings Catchment Barangay');
+        $updateMaternalCare = $this->searchArray($name, 'Maternal Care');
 
-            // Remove old barangay_code column
-            Schema::table('household_folders', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('psgc_10_digit_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('psgc_10_digit_code')->on('barangays');
-            });
-        }
-        if(!empty($household) && is_string($household->barangay_code) && strlen($household->barangay_code) === 10) {
-            // Re-add the barangay_code column
-            Schema::table('household_folders', function ($table) {
-                $table->string('old_barangay_code')->nullable()->after('barangay_code');
-            });
-
-            // Populate barangay_code column if needed
-            DB::statement('UPDATE household_folders hf
-                       JOIN barangays b ON hf.barangay_code = b.psgc_10_digit_code
-                       SET hf.old_barangay_code = b.code');
-            // Remove the new psgc_10_digit_code column
-            Schema::table('household_folders', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('old_barangay_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('code')->on('barangays');
-            });
+        //Household Folder
+        if($updateAll || $updateHousehold) {
+            $this->updateDatabaseTable($tableNameHf,$hf);
         }
 
         //Settings BHS
-        $bhs = SettingsBhs::query()->select('barangay_code')->first();
-        if(!empty($bhs) && is_string($bhs->barangay_code) && strlen($bhs->barangay_code) === 9) {
-            Schema::table('settings_bhs', function (Blueprint $table) {
-                $table->string('psgc_10_digit_code')->nullable()->after('barangay_code');
-            });
-
-            // Populate psgc_10_digit_code column
-            DB::statement('UPDATE settings_bhs bhs
-                       JOIN barangays b ON bhs.barangay_code = b.code
-                       SET bhs.psgc_10_digit_code = b.psgc_10_digit_code');
-
-            // Remove old barangay_code column
-            Schema::table('settings_bhs', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('psgc_10_digit_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('psgc_10_digit_code')->on('barangays');
-            });
-        }
-        if(!empty($bhs) && is_string($bhs->barangay_code) && strlen($bhs->barangay_code) === 10) {
-            Schema::table('settings_bhs', function (Blueprint $table) {
-                $table->string('old_barangay_code')->nullable()->after('barangay_code');
-            });
-
-            // Populate barangay_code column if needed
-            DB::statement('UPDATE settings_bhs bhs
-                       JOIN barangays b ON bhs.barangay_code = b.psgc_10_digit_code
-                       SET bhs.old_barangay_code = b.code');
-            // Remove the new psgc_10_digit_code column
-            Schema::table('settings_bhs', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('old_barangay_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('code')->on('barangays');
-            });
+        if($updateAll || $updateBHS) {
+            $this->updateDatabaseTable($tableNameBhs,$sbhs);
         }
 
         //Settings Catchment Barangay
-        $catchment = SettingsCatchmentBarangay::query()->select('barangay_code')->first();
-        if(!empty($catchment) && is_string($catchment->barangay_code) && strlen($catchment->barangay_code) === 9) {
-            Schema::table('settings_catchment_barangays', function (Blueprint $table) {
-                $table->string('psgc_10_digit_code')->nullable()->after('barangay_code');
-            });
-
-            // Populate psgc_10_digit_code column
-            DB::statement('UPDATE settings_catchment_barangays catchment
-                           JOIN barangays b ON catchment.barangay_code = b.code
-                           SET catchment.psgc_10_digit_code = b.psgc_10_digit_code');
-
-            // Remove old barangay_code column
-            Schema::table('settings_catchment_barangays', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('psgc_10_digit_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('psgc_10_digit_code')->on('barangays');
-            });
-        }
-        if(!empty($catchment) && is_string($catchment->barangay_code) && strlen($catchment->barangay_code) === 10) {
-            Schema::table('settings_catchment_barangays', function (Blueprint $table) {
-                $table->string('old_barangay_code')->nullable()->after('barangay_code');
-            });
-
-            // Populate barangay_code column if needed
-            DB::statement('UPDATE settings_catchment_barangays catchment
-                       JOIN barangays b ON catchment.barangay_code = b.psgc_10_digit_code
-                       SET catchment.old_barangay_code = b.code');
-            // Remove the new psgc_10_digit_code column
-            Schema::table('settings_catchment_barangays', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('old_barangay_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('code')->on('barangays');
-            });
+        if($updateAll || $updateCatchement) {
+            $this->updateDatabaseTable($tableNameCb,$scb);
         }
 
         //Patient Maternal Care
-        $mc = PatientMcPostRegistration::query()->select('barangay_code')->first();
-        if(!empty($mc) && is_string($mc->barangay_code) && strlen($mc->barangay_code) === 9) {
-            Schema::table('patient_mc_post_registrations', function (Blueprint $table) {
-                $table->string('psgc_10_digit_code')->nullable()->after('barangay_code');
-            });
-
-            // Populate psgc_10_digit_code column
-            DB::statement('UPDATE patient_mc_post_registrations mc
-                       JOIN barangays b ON mc.barangay_code = b.code
-                       SET mc.psgc_10_digit_code = b.psgc_10_digit_code');
-
-            // Remove old barangay_code column
-            Schema::table('patient_mc_post_registrations', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('psgc_10_digit_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('psgc_10_digit_code')->on('barangays');
-            });
+        if($updateAll || $updateMaternalCare) {
+            $this->updateDatabaseTable($tableNameMc,$pmc);
         }
-        if(!empty($mc) && is_string($mc->barangay_code) && strlen($mc->barangay_code) === 10) {
-            Schema::table('patient_mc_post_registrations', function (Blueprint $table) {
-                $table->string('old_barangay_code')->nullable()->after('barangay_code');
-            });
+    }
 
-            // Populate barangay_code column if needed
-            DB::statement('UPDATE patient_mc_post_registrations mc
-                       JOIN barangays b ON mc.barangay_code = b.psgc_10_digit_code
-                       SET mc.old_barangay_code = b.code');
-            // Remove the new psgc_10_digit_code column
-            Schema::table('patient_mc_post_registrations', function ($table) {
-                $table->dropForeign(['barangay_code']);
-                $table->dropColumn('barangay_code');
-                $table->renameColumn('old_barangay_code', 'barangay_code');
-                $table->foreign('barangay_code')->references('code')->on('barangays');
-            });
+    private function checkDatabase($tableName, $foreignKeyName, $referencedColumnName)
+    {
+        if (Schema::hasTable($tableName)) {
+            $connection = Schema::getConnection();
+            $schemaManager = $connection->getDoctrineSchemaManager();
+
+            if ($schemaManager instanceof MySqlSchemaManager) {
+                $foreignKeys = $schemaManager->listTableForeignKeys($tableName);
+
+                foreach ($foreignKeys as $foreignKey) {
+                    if ($foreignKey->getName() === $foreignKeyName) {
+                        $referencedColumns = $foreignKey->getForeignColumns();
+                        if (in_array($referencedColumnName, $referencedColumns)) {
+                            return 10;
+                        } elseif(in_array('code', $referencedColumns)) {
+                            return 9;
+                        } else{
+                            echo "Referenced Column Name does not exist";
+                        }
+                        break;
+                    }
+                }
+            } else {
+                echo "Foreign key checks are only supported for MySQL databases.";
+            }
+        } else {
+            echo "Table '$tableName' does not exist";
         }
+    }
+
+    private function searchArray($array, $searchWord)
+    {
+        foreach ($array as $value) {
+            if (Str::contains($value, $searchWord)) {
+                return true;
+                break; // If found, exit the loop
+            }
+        }
+        return false;
+    }
+
+    private function updateDatabaseTable($table, $digit)
+    {
+        $newColumnName = ($digit === 9) ? "psgc_10_digit_code" : "old_barangay_code";
+        $oldReferenceColumnName = ($digit === 9) ? "code" : "psgc_10_digit_code";
+        $referenceColumnName = ($digit === 9) ? "psgc_10_digit_code" : "code";
+
+        Schema::table($table, function (Blueprint $table) use ($newColumnName) {
+            $table->string($newColumnName)->nullable()->after('barangay_code');
+        });
+
+        // Populate new column
+        DB::statement("UPDATE $table t
+               JOIN barangays b ON t.barangay_code = b.$oldReferenceColumnName
+               SET t.$newColumnName = b.$referenceColumnName");
+
+        // Remove old barangay_code column
+        Schema::table($table, function ($table) use ($newColumnName, $referenceColumnName) {
+            $table->dropForeign(['barangay_code']);
+            $table->dropColumn('barangay_code');
+            $table->renameColumn($newColumnName, 'barangay_code');
+            $table->foreign('barangay_code')->references($referenceColumnName)->on('barangays');
+        });
     }
 }

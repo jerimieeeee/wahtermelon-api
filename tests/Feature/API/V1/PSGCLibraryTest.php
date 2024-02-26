@@ -61,7 +61,7 @@ class PSGCLibraryTest extends TestCase
 
     public function test_can_view_specific_barangay(): void
     {
-        $code = fake()->randomElement(Barangay::pluck('code')->toArray());
+        $code = fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray());
         $response = $this->get('api/v1/libraries/barangays/'.$code);
         $response->assertStatus(200);
     }
