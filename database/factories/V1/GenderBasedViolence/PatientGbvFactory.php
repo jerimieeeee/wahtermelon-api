@@ -45,7 +45,7 @@ class PatientGbvFactory extends Factory
             'neglect_remarks' => fake()->sentence,
             'behavioral_remarks' => fake()->sentence,
             'economic_status_id' => fake()->randomElement(LibGbvEconomicStatus::pluck('id')->toArray()),
-            'barangay_code' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+            'barangay_code' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             'address' => fake()->address(),
             'direction_to_address' => fake()->address(),
             'guardian_name' => fake()->name(),

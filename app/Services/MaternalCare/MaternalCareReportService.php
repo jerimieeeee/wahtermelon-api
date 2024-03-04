@@ -355,14 +355,14 @@ class MaternalCareReportService
     {
         return DB::table(function ($query) use ($request, $service, $visit) {
             $query->selectRaw("
-                        consult_mc_services.patient_id AS patient_id,
                         patient_mc_id,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        service_id,
-                        service_qty,
                         birthdate,
-                        service_date,
-                        TIMESTAMPDIFF(YEAR, birthdate, DATE_FORMAT(service_date, '%Y-%m-%d')) AS age,
+                        service_id,
+                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m') ORDER BY service_date ASC) AS service_dates,
+                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m-%d') ORDER BY service_date ASC) AS date,
+                        GROUP_CONCAT(service_qty ORDER BY service_date ASC) AS service_qty,
+                        GROUP_CONCAT(TIMESTAMPDIFF(YEAR, birthdate, DATE_FORMAT(service_date, '%Y-%m-%d')) ORDER BY service_date ASC) AS age_year,
                         municipality_code,
                         barangay_code
 		            ")
@@ -385,29 +385,8 @@ class MaternalCareReportService
                 })
                 ->whereVisitStatus($visit)
                 ->whereServiceId($service)
-                ->groupBy('patient_mc_id', 'consult_mc_services.patient_id', 'service_qty', 'service_id', 'service_date', 'municipality_code', 'barangay_code');
-        })
-            ->selectRaw("
-                        patient_id,
-                        patient_mc_id,
-                        name,
-                        birthdate,
-                        service_id,
-                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m-%d')
-                        ORDER BY
-                            service_date ASC) AS service_dates,
-                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y')
-                        ORDER BY
-                            service_date ASC) AS service_dates_year,
-                        GROUP_CONCAT(DATE_FORMAT(service_date, '%m')
-                        ORDER BY
-                            service_date ASC) AS service_dates_month,
-                        GROUP_CONCAT(service_qty ORDER BY service_date ASC) AS service_qty,
-                        GROUP_CONCAT(age ORDER BY service_date ASC) AS age_year,
-                        municipality_code,
-                        barangay_code
-            ")
-            ->groupBy('patient_id', 'patient_mc_id', 'service_id', 'municipality_code', 'barangay_code');
+                ->groupBy('patient_mc_id');
+        });
     }
 
     public function pregnant_test($is_positive, $service, $request, $age_year_bracket1, $age_year_bracket2)
@@ -513,8 +492,8 @@ class MaternalCareReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
-            ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
-            ->groupBy('patient_id')
+            ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCF', 'LSCSM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
+            ->groupBy('patient_id', 'delivery_date', 'outcome_code')
             ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
@@ -556,7 +535,7 @@ class MaternalCareReportService
             ->when($gender == 'FEMALE', fn ($query) => $query->whereIn('outcome_code', ['LSCF', 'NSDF'])
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->groupBy('patient_id')
+            ->groupBy('patient_id', 'delivery_date', 'outcome_code')
             ->orderBy('name', 'ASC');
     }
 

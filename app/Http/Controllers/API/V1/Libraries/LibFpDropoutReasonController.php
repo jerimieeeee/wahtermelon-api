@@ -16,7 +16,9 @@ class LibFpDropoutReasonController extends Controller
      */
     public function index():ResourceCollection
     {
-        $query = QueryBuilder::for(LibFpDropoutReason::class);
+        $query = QueryBuilder::for(LibFpDropoutReason::class)
+                    ->orderBy('fhsis_code', 'ASC');
+
 
         return LibFpDropoutReasonResource::collection(($query->get()));
     }

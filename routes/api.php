@@ -342,6 +342,14 @@ Route::prefix('v1')->group(function () {
                 Route::post('dispensing', 'store');
                 Route::put('dispensing/{dispensing}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Medicine\MedicineListController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('list', 'index');
+                Route::post('list', 'store');
+                Route::put('list/{medicineList}', 'update');
+                Route::delete('list/{medicineList}', 'destroy');
+            });
     });
 
     //Konsulta
@@ -622,6 +630,33 @@ Route::prefix('v1')->group(function () {
                 Route::put('consult-laboratory-malaria/{malaria}', 'update');
                 Route::delete('consult-laboratory-malaria/{malaria}', 'destroy');
             });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySkinSlitSmearController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-skin-slit', 'index');
+                Route::post('consult-laboratory-skin-slit', 'store');
+                Route::put('consult-laboratory-skin-slit/{skinSleat}', 'update');
+                Route::delete('consult-laboratory-skin-slit/{skinSleat}', 'destroy');
+            });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySkinSlitSmearController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-wet-smear', 'index');
+                Route::post('consult-laboratory-wet-smear', 'store');
+                Route::put('consult-laboratory-wet-smear/{wetSmear}', 'update');
+                Route::delete('consult-laboratory-wet-smear/{wetSmear}', 'destroy');
+            });
+
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryCervicalCancerController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-cervical-cancer', 'index');
+                Route::post('consult-laboratory-cervical-cancer', 'store');
+                Route::put('consult-laboratory-cervical-cancer/{cancerScreening}', 'update');
+                Route::delete('consult-laboratory-cervical-cancer/{cancerScreening}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs
@@ -696,6 +731,48 @@ Route::prefix('v1')->group(function () {
         });
         Route::prefix('household-profiling')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\Household\HouseholdProfilingReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
+        Route::prefix('family-planning')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\FamilyPlanningReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
+        });
+        Route::prefix('daily-service')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\General\DailyServiceReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
+        Route::prefix('notifiable')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\DOH\NotifiableWeeklyReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('weekly', 'index');
+                });
+        });
+        Route::prefix('ncd')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\NcdReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
+        });
+        Route::prefix('household-environmental')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\HouseholdEnvironmentalReport2018::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
+        });
+        Route::prefix('animal-bite')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportController::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('report', 'index');

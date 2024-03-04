@@ -30,7 +30,7 @@ class PatientMcPostRegistrationFactory extends Factory
             'discharge_date' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
             'delivery_date' => fake()->dateTimeInInterval('-'.fake()->numberBetween(1, 7).' week')->format('Y-m-d H:i:s'),
             'delivery_location_code' => fake()->randomElement(LibMcDeliveryLocation::pluck('code')->toArray()),
-            'barangay_code' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+            'barangay_code' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             'gravidity' => 1,
             'parity' => 1,
             'full_term' => 1,

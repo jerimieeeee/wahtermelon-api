@@ -133,29 +133,44 @@ class KonsultaController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $columns = ['last_name', 'first_name', 'middle_name'];
+//        $data = QueryBuilder::for(PatientPhilhealth::class)
+//            ->whereEffectivityYear($request->effectivity_year)
+//            ->withWhereHas('konsultaRegistration', fn ($query) => $query->whereEffectivityYear($request->effectivity_year))
+//            ->withWhereHas('patient.patientHistory')
+//            ->when(isset($request->search), function ($q) use ($request, $columns) {
+//                //$q->search($request->filter['search'], $columns);
+//                $q->whereHas('patient', function ($q) use ($request, $columns) {
+//                    $q->orSearch($columns, 'LIKE', $request->search);
+//                });
+//            })
+//            ->when($request->tranche == 1,
+//                fn ($query) => $query->whereNull('transmittal_number')
+//            )
+//            ->when($request->tranche == 2,
+//                fn ($query) =>
+//                    //$query->whereNotNull('transmittal_number'),
+//                    $query->withWhereHas('patient.consult', fn ($q) => $q->whereNull('transmittal_number')->where('is_konsulta', 1)->wherePtGroup('cn')->whereHas('patient.consult.finalDiagnosis'))
+//
+//            )
+//            ->whereIn('membership_type_id', ['MM', 'DD'])
         $data = QueryBuilder::for(PatientPhilhealth::class)
             ->whereEffectivityYear($request->effectivity_year)
             ->withWhereHas('konsultaRegistration', fn ($query) => $query->whereEffectivityYear($request->effectivity_year))
             ->withWhereHas('patient.patientHistory')
             ->when(isset($request->search), function ($q) use ($request, $columns) {
-                //$q->search($request->filter['search'], $columns);
-                $q->whereHas('patient', function ($q) use ($request, $columns) {
-                    $q->orSearch($columns, 'LIKE', $request->search);
+                $q->whereHas('patient', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
+            ->when($request->tranche == 1, fn ($query) => $query->whereNull('transmittal_number'))
+            ->when($request->tranche == 2, function ($query) use($request){
+                $query->withWhereHas('patient.consult', function ($q) use($request){
+                    $q->whereNull('transmittal_number')->where('is_konsulta', 1)->whereYear('consult_date', $request->effectivity_year)->wherePtGroup('cn')->has('patient.consult.finalDiagnosis');
                 });
             })
-            ->when($request->tranche == 1,
-                fn ($query) => $query->whereNull('transmittal_number')
-            )
-            ->when($request->tranche == 2,
-                fn ($query) =>
-                    //$query->whereNotNull('transmittal_number'),
-                    $query->withWhereHas('patient.consult', fn ($q) => $q->whereNull('transmittal_number')->where('is_konsulta', 1)->wherePtGroup('cn')->whereHas('patient.consult.finalDiagnosis'))
-
-            )
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->allowedIncludes('facility', 'user')
             ->defaultSort('-effectivity_year', 'created_at')
             ->allowedSorts(['effectivity_year', 'created_at']);
+
         if ($perPage === 'all') {
             return PatientPhilhealthResource::collection($data->get());
         }
@@ -180,10 +195,16 @@ class KonsultaController extends Controller
     public function validatedXml(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
+        $columns = ['last_name', 'first_name', 'middle_name'];
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
-            ->when(isset($request->start_date) && isset($request->end_date), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
+            ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
+            ->when($request->filter['tranche'] == 1 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
+                $query->whereHas('patientPhilhealth', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
+            ->when($request->filter['tranche'] == 2 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
+                $query->whereHas('patientConsult', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('created_at')

@@ -23,7 +23,7 @@ class SettingsCatchmentBarangayFactory extends Factory
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'year' => fake()->year('now'),
-            'barangay_code' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+            'barangay_code' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             'population' => fake()->randomNumber(),
             'population_opt' => fake()->randomNumber(),
             'population_wra' => fake()->randomNumber(),

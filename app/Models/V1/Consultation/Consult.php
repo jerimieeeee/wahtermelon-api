@@ -5,6 +5,7 @@ namespace App\Models\V1\Consultation;
 use App\Models\User;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Medicine\MedicineDispensing;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
@@ -221,5 +222,10 @@ class Consult extends Model
     public function konsultaTransmittal()
     {
         return $this->hasMany(KonsultaTransmittal::class, 'transmittal_number', 'transmittal_number');
+    }
+
+    public function medicine()
+    {
+        return $this->hasManyThrough(MedicineDispensing::class, MedicinePrescription::class, 'consult_id', 'prescription_id', 'id', 'id');
     }
 }

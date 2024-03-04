@@ -43,6 +43,7 @@ class UserResource extends JsonResource
             'attendant_ml_flag' => $this->attendant_ml_flag,
             'attendant_fp_flag' => $this->attendant_fp_flag,
             'attendant_cv_flag' => $this->attendant_cv_flag,
+            'last_seen_at' => $this->last_seen_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
