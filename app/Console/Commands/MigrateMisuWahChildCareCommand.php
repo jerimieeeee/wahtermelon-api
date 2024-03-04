@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Childcare\PatientCcdev;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
@@ -86,8 +87,9 @@ class MigrateMisuWahChildCareCommand extends Command
                 patient_ccdev.id,
                 patient_ccdev.birth_weight,
                 patient_ccdev.admission_date,
-                patient_ccdev.discharge_date
-
+                patient_ccdev.discharge_date,
+                patient_ccdev.created_at,
+                patient_ccdev.updated_at
             ')
             ->addSelect(
                 'patient.wahtermelon_patient_id AS patient_id',
@@ -109,6 +111,33 @@ class MigrateMisuWahChildCareCommand extends Command
             //->whereNull('wahtermelon_ccdev_id')
             ->whereNull('deleted_at')
             ->whereNotNull('birth_weight')
+            ->get();
+    }
+
+    public function getCcServices($ccdevId)
+    {
+        return DB::connection('mysql_migration')->table('consult_ccdev_service')
+            ->selectRaw('
+                consult_ccdev_service.*,
+                1 AS status_id,
+                consult_ccdev_service.created_at,
+                consult_ccdev_service.updated_at
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('consult_ccdev_service.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_ccdev_service.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereCcdevId($ccdevId)
+            ->whereDate('service_date', '>=', '0001-01-01')
+            ->whereDate('service_date', '<=', '9999-12-31')
             ->get();
     }
 
@@ -173,10 +202,24 @@ class MigrateMisuWahChildCareCommand extends Command
             $patientCcData = (array)$patientCcData;
             $patientCcData['ccdev_ended'] = 0;
             $patientCcData['facility_code'] = $facilityCode;
-            dd($patientCcData);
+            //dd($patientCcData);
             $cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
-
+//            if($patientCcData['id'] == '268') {
+//                dd(count($this->getCcServices($patientCcData['id'])));
+//            }
+            $services = $this->getCcServices($patientCcData['id']);
+            if(count($services) > 0) {
+                $this->saveCcServices($services, $facilityCode);
+            }
             DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);
         });
+    }
+
+    private function saveCcServices($services, $facilityCode)
+    {
+        foreach ($services as $service) {
+            $service = (array)$service;
+            ConsultCcdevService::query()->updateOrCreate(['patient_id' => $service['patient_id'], 'service_id' => $service['service_id'], 'service_date' => $service['service_date']], $service + ['facility_code' => $facilityCode]);
+        }
     }
 }
