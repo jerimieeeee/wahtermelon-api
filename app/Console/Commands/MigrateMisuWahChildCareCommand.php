@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\V1\Childcare\ConsultCcdevService;
+use App\Models\V1\Childcare\ConsultCcdevVaccine;
 use App\Models\V1\Childcare\PatientCcdev;
+use App\Models\V1\Patient\PatientVaccine;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -141,6 +143,28 @@ class MigrateMisuWahChildCareCommand extends Command
             ->get();
     }
 
+    public function getCcVaccines($ccdevId)
+    {
+        return DB::connection('mysql_migration')->table('consult_ccdev_vaccine')
+            ->selectRaw('
+                consult_ccdev_vaccine.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('consult_ccdev_vaccine.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_ccdev_vaccine.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereCcdevId($ccdevId)
+            ->get();
+    }
+
     /**
      * Process Patient Child Care
      *
@@ -211,6 +235,12 @@ class MigrateMisuWahChildCareCommand extends Command
             if(count($services) > 0) {
                 $this->saveCcServices($services, $facilityCode);
             }
+
+            $vaccines = $this->getCcVaccines($patientCcData['id']);
+            if(count($vaccines) > 0) {
+                $this->saveCcVaccines($vaccines, $facilityCode);
+            }
+
             DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);
         });
     }
@@ -220,6 +250,14 @@ class MigrateMisuWahChildCareCommand extends Command
         foreach ($services as $service) {
             $service = (array)$service;
             ConsultCcdevService::query()->updateOrCreate(['patient_id' => $service['patient_id'], 'service_id' => $service['service_id'], 'service_date' => $service['service_date']], $service + ['facility_code' => $facilityCode]);
+        }
+    }
+
+    private function saveCcVaccines($vaccines, $facilityCode)
+    {
+        foreach ($vaccines as $vaccine) {
+            $vaccine = (array)$vaccine;
+            PatientVaccine::query()->updateOrCreate(['patient_id' => $vaccine['patient_id'], 'vaccine_id' => $vaccine['vaccine_id'], 'created_at' => $vaccine['created_at']], $vaccine + ['facility_code' => $facilityCode]);
         }
     }
 }
