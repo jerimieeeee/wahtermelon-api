@@ -56,9 +56,7 @@ class FamilyPlanningReportService
 
         return DB::table(function ($query) use ($request, $method, $client, $age_bracket1, $age_bracket2, $previous_month, $code) {
             $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
+                            COUNT(patient_fp_methods.patient_id) AS count,
                             TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) AS age
                 ")
                 ->from('patient_fp_methods')
@@ -88,17 +86,19 @@ class FamilyPlanningReportService
                     $query->whereYear('enrollment_date',  $request->year)
                           ->whereMonth('enrollment_date', $previous_month)
                     )
+                ->groupBy('birthdate', 'enrollment_date')
                 ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
+        })
+        ->selectRaw("
+                COUNT(count) AS count
+        ");
     }
 
     public function other_acceptor($request, $method, $age_bracket1, $age_bracket2)
     {
         return DB::table(function ($query) use ($request, $method, $age_bracket1, $age_bracket2) {
             $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
+                            COUNT(patient_fp_methods.patient_id) AS count,
                             TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) AS age
                 ")
                 ->from('patient_fp_methods')
@@ -122,18 +122,20 @@ class FamilyPlanningReportService
                 ->whereMonth('enrollment_date',  $request->month)
                 ->whereMethodCode($method)
                 ->whereIn('client_code', ['CC', 'CM', 'RS'])
+                ->groupBy('birthdate', 'enrollment_date')
                 ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
+        })
+        ->selectRaw("
+                COUNT(count) AS count
+        ");
     }
 
     public function dropout($request, $method, $age_bracket1, $age_bracket2)
     {
         return DB::table(function ($query) use ($request, $method, $age_bracket1, $age_bracket2) {
             $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
-                            TIMESTAMPDIFF(YEAR, birthdate, dropout_date) AS age
+                            COUNT(patient_fp_methods.patient_id) AS count,
+                            TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) AS age
                 ")
                 ->from('patient_fp_methods')
                 ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
@@ -156,7 +158,11 @@ class FamilyPlanningReportService
                 ->whereIn('dropout_reason_code', [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
                 ->whereYear('dropout_date', $request->year)
                 ->whereMonth('dropout_date',  $request->month)
+                ->groupBy('birthdate', 'enrollment_date')
                 ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
+        })
+        ->selectRaw("
+                COUNT(count) AS count
+        ");
     }
 }
