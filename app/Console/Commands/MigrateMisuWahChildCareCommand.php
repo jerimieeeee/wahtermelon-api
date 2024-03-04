@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\Childcare\PatientCcdev;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -39,7 +40,7 @@ class MigrateMisuWahChildCareCommand extends Command
         $this->migrationConnection($connectionName, $database);
 
         $patientCcdev = $this->getPatientCc();
-        dd($patientCcdev);
+        $this->processPatientCc($patientCcdev, $database);
 
     }
 
@@ -105,8 +106,77 @@ class MigrateMisuWahChildCareCommand extends Command
                 $join->on('patient_ccdev.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            ->whereNull('wahtermelon_ccdev_id')
+            //->whereNull('wahtermelon_ccdev_id')
             ->whereNull('deleted_at')
+            ->whereNotNull('birth_weight')
             ->get();
+    }
+
+    /**
+     * Process Patient Child Care
+     *
+     * @param $patientCc
+     * @param $facilityCode
+     * @return void
+     */
+    private function processPatientCc($patientCc, $facilityCode): void
+    {
+        $patientCcBar = $this->output->createProgressBar(count($patientCc));
+        $patientCcBar->setFormat('Processing Patient Child Care Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $patientCcBar->start();
+        $startTime = time();
+
+        $this->chunkAndProcess($patientCc, $facilityCode, $patientCcBar);
+
+        $patientCcBar->finish();
+        $this->displayElapsedTime($startTime);
+    }
+
+    /**
+     * Chunk and Process Patient Cc Data
+     *
+     * @param $patientCc
+     * @param $facilityCode
+     * @param $patientCcBar
+     * @return void
+     */
+    private function chunkAndProcess($patientCc, $facilityCode, $patientCcBar): void
+    {
+        $chunkSize = 200;
+        $chunks = array_chunk($patientCc->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $patientCcData) {
+                $this->processPatientCcData($patientCcData, $facilityCode);
+                $patientCcBar->advance();
+            }
+        }
+    }
+
+    /**
+     * Display Elapsed Time
+     *
+     * @param int $startTime
+     * @return void
+     */
+    private function displayElapsedTime(int $startTime): void
+    {
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+    }
+
+    private function processPatientCcData($patientCcData, $facilityCode): void
+    {
+        DB::transaction(function () use ($patientCcData, $facilityCode) {
+            $patientCcData = (array)$patientCcData;
+            $patientCcData['ccdev_ended'] = 0;
+            $patientCcData['facility_code'] = $facilityCode;
+            dd($patientCcData);
+            $cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
+
+            DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);
+        });
     }
 }
