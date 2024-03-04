@@ -151,7 +151,18 @@ class MigrateMisuWahChildCareCommand extends Command
             ')
             ->addSelect(
                 'patient.wahtermelon_patient_id AS patient_id',
-                'user.wahtermelon_user_id AS user_id'
+                'user.wahtermelon_user_id AS user_id',
+                DB::raw('CASE
+                    WHEN STR_TO_DATE(vaccine_date, "%Y-%m-%d") IS NULL
+                    THEN NULL
+                    ELSE vaccine_date
+                END AS vaccine_date,
+                CASE
+                    WHEN STR_TO_DATE(vaccine_date, "%Y-%m-%d") IS NULL
+                    THEN 3
+                    ELSE 1
+                END AS status_id
+                '),
             )
             ->join('patient AS patient', function ($join) {
                 $join->on('consult_ccdev_vaccine.patient_id', '=', 'patient.id')
@@ -257,6 +268,7 @@ class MigrateMisuWahChildCareCommand extends Command
     {
         foreach ($vaccines as $vaccine) {
             $vaccine = (array)$vaccine;
+            $vaccine['vaccine_id'] = preg_replace('/[0-9]+/', '', $vaccine['vaccine_id']);
             PatientVaccine::query()->updateOrCreate(['patient_id' => $vaccine['patient_id'], 'vaccine_id' => $vaccine['vaccine_id'], 'created_at' => $vaccine['created_at']], $vaccine + ['facility_code' => $facilityCode]);
         }
     }
