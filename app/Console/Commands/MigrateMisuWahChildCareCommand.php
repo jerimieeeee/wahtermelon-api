@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\V1\Childcare\ConsultCcdevBreastfed;
 use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Childcare\ConsultCcdevVaccine;
 use App\Models\V1\Childcare\PatientCcdev;
@@ -176,6 +177,73 @@ class MigrateMisuWahChildCareCommand extends Command
             ->get();
     }
 
+    public function getCcBreastfed($ccdevId)
+    {
+        return DB::connection('mysql_migration')->table('consult_ccdev_breastfed')
+            ->selectRaw('
+                consult_ccdev_breastfed.*,
+                consult_ccdev_breastfed.created_at,
+                consult_ccdev_breastfed.updated_at
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                DB::raw('
+                    CASE
+                        WHEN bfed_month1 = "Y"
+                        THEN 1
+                        ELSE 0
+                    END AS bfed_month1,
+                    CASE
+                        WHEN bfed_month2 = "Y"
+                        THEN 1
+                        ELSE 0
+                    END AS bfed_month2,
+                    CASE
+                        WHEN bfed_month3 = "Y"
+                        THEN 1
+                        ELSE 0
+                    END AS bfed_month3,
+                    CASE
+                        WHEN bfed_month4 = "Y"
+                        THEN 1
+                        ELSE 0
+                    END AS bfed_month4,
+                    CASE
+                        WHEN bfed_month5 = "Y"
+                        THEN 1
+                        ELSE 0
+                    END AS bfed_month5,
+                    CASE
+                        WHEN bfed_month6 = "Y"
+                        THEN 1
+                        ELSE 0
+                    END AS bfed_month6,
+                    CASE
+                        WHEN STR_TO_DATE(ebf_date, "%Y-%m-%d") IS NULL
+                        THEN NULL
+                        ELSE ebf_date
+                    END AS ebf_date,
+                    CASE
+                        WHEN STR_TO_DATE(ebf_date, "%Y-%m-%d") IS NULL
+                        THEN NULL
+                        ELSE ebf_date
+                    END AS comp_fed_date
+                ')
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('consult_ccdev_breastfed.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('consult_ccdev_breastfed.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereCcdevId($ccdevId)
+            ->whereNull('deleted_at')
+            ->first();
+    }
+
     /**
      * Process Patient Child Care
      *
@@ -252,6 +320,11 @@ class MigrateMisuWahChildCareCommand extends Command
                 $this->saveCcVaccines($vaccines, $facilityCode);
             }
 
+            $breastfed = $this->getCcBreastfed($patientCcData['id']);
+            if(!empty($breastfed)) {
+                $this->saveCcBreastfed($breastfed, $cc, $facilityCode);
+            }
+
             DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);
         });
     }
@@ -271,5 +344,12 @@ class MigrateMisuWahChildCareCommand extends Command
             $vaccine['vaccine_id'] = preg_replace('/[0-9]+/', '', $vaccine['vaccine_id']);
             PatientVaccine::query()->updateOrCreate(['patient_id' => $vaccine['patient_id'], 'vaccine_id' => $vaccine['vaccine_id'], 'created_at' => $vaccine['created_at']], $vaccine + ['facility_code' => $facilityCode]);
         }
+    }
+
+    private function saveCcBreastfed($breastfed, $ccdev, $facilityCode)
+    {
+        $breastfed = (array)$breastfed;
+        $ccdev->consultccdevbfed()->updateOrCreate(['patient_id' => $breastfed['patient_id']], $breastfed + ['facility_code' => $facilityCode]);
+        //ConsultCcdevBreastfed::query()->updateOrCreate(['patient_id' => $service['patient_id'], 'service_id' => $service['service_id'], 'service_date' => $service['service_date']], $service + ['facility_code' => $facilityCode]);
     }
 }
