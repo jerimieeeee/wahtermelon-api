@@ -44,7 +44,7 @@ class MigrateMisuWahChildCareCommand extends Command
         $this->migrationConnection($connectionName, $database);
 
         $patientCcdev = $this->getPatientCc();
-        $this->processPatientCc($patientCcdev, $database);
+        $this->savePatientCc($patientCcdev, $database);
 
     }
 
@@ -111,7 +111,7 @@ class MigrateMisuWahChildCareCommand extends Command
                 $join->on('patient_ccdev.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            //->whereNull('wahtermelon_ccdev_id')
+            ->whereNull('wahtermelon_ccdev_id')
             ->whereNull('deleted_at')
             ->whereNotNull('birth_weight')
             ->get();
@@ -327,6 +327,20 @@ class MigrateMisuWahChildCareCommand extends Command
 
             DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);
         });
+    }
+
+    public function savePatientCc($patientCc, $facilityCode)
+    {
+        $patientCcCount = count($patientCc);
+        if ($patientCcCount < 1) {
+            $this->components->info('Nothing to migrate for Patient Child Care');
+            return;
+        }
+
+        $this->processPatientCc($patientCc, $facilityCode);
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient Child Care Migration', 'Done');
     }
 
     private function saveCcServices($services, $facilityCode)
