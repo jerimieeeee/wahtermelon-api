@@ -11,7 +11,10 @@ class PatientCcdev extends Model
 {
     use SoftDeletes, HasFactory, FilterByUser;
 
-    protected $fillable = ['patient_id', 'user_id', 'birth_weight', 'ccdev_ended', 'mothers_id', 'admission_date', 'discharge_date', 'nbs_filter'];
+    //protected $fillable = ['patient_id', 'facility_code', 'user_id', 'birth_weight', 'ccdev_ended', 'mothers_id', 'admission_date', 'discharge_date', 'nbs_filter'];
+    protected $guarded = [
+        'id',
+    ];
 
     protected $casts = [
         'admission_date' => 'datetime:Y-m-d H:i:s',

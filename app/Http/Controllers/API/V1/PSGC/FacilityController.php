@@ -40,7 +40,9 @@ class FacilityController extends Controller
 
         $facilities = QueryBuilder::for(Facility::class)
             ->with('barangay', 'municipality', 'province', 'region')
-            ->allowedFilters(['barangay_code', 'municipality_code', 'province_code', 'region_code', 'code', 'facility_name']);
+            ->allowedFilters(['barangay_code', 'municipality_code', 'province_code', 'region_code', 'code', 'facility_name'])
+            ->defaultSort('facility_name')
+            ->allowedSorts('facility_name');
 
         if ($perPage === 'all') {
             return FacilityResource::collection($facilities->get());
