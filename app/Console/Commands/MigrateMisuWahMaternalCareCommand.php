@@ -255,7 +255,22 @@ class MigrateMisuWahMaternalCareCommand extends Command
             ')
             ->addSelect(
                 'patient.wahtermelon_patient_id AS patient_id',
-                'user.wahtermelon_user_id AS user_id'
+                'user.wahtermelon_user_id AS user_id',
+                DB::raw('
+                    CASE
+                        WHEN vaccine_id = "MSL"
+                        THEN "MCV"
+                        WHEN vaccine_id = "MMR"
+                        THEN "MCV"
+                        WHEN vaccine_id = "HEP"
+                        THEN "HEPB"
+                        WHEN vaccine_id = "PEN"
+                        THEN "PENTA"
+                        WHEN vaccine_id = "ROT"
+                        THEN "ROTA"
+                        ELSE vaccine_id
+                    END AS vaccine_id
+                ')
             )
             ->join('patient', function ($join) {
                 $join->on('consult_mc_vaccine.patient_id', '=', 'patient.id')
