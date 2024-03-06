@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ParsePSGCFileCommand extends Command
@@ -116,6 +117,9 @@ class ParsePSGCFileCommand extends Command
     private function processProv($data)
     {
         $data['region_id'] = Region::orderBy('id', 'desc')->pluck('id')->first();
+        if(isset($data['code']) && Str::of($data['code'])->is('13*')) {
+            $data['psgc_10_digit_code'] = Str::of($data['code'])->substrReplace('0', 2, 0);
+        }
         Province::create($data);
 
         $this->latest = Province::class;

@@ -21,7 +21,7 @@ class MunicipalityResource extends JsonResource
         $resource = get_class($this->geographic) == Province::class ? ProvinceResource::class : DistrictResource::class;
 
         return [
-            'code' => $this->code,
+            'code' => $this->psgc_10_digit_code,
             'name' => $this->name,
             'geo_level' => $this->geo_level,
             'income_class' => $this->income_class,

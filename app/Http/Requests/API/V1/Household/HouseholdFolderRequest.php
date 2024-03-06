@@ -31,7 +31,7 @@ class HouseholdFolderRequest extends FormRequest
             'patient_id' => 'required|exists:patients,id',
             'family_role_code' => 'required|exists:lib_family_roles,code',
             'address' => 'required',
-            'barangay_code' => 'required|exists:barangays,code',
+            'barangay_code' => 'required|exists:barangays,psgc_10_digit_code',
             'residence_classification_code' => 'nullable|exists:lib_residence_classifications,code',
             'cct_date' => 'date|date_format:Y-m-d|before:tomorrow|nullable',
             'cct_id' => 'nullable',
@@ -55,7 +55,7 @@ class HouseholdFolderRequest extends FormRequest
             ],
             'barangay_code' => [
                 'description' => 'Household barangay code',
-                'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+                'example' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             ],
             'residence_classification_code' => [
                 'description' => 'Residence classification code',

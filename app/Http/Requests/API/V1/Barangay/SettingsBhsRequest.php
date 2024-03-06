@@ -24,7 +24,7 @@ class SettingsBhsRequest extends FormRequest
         return [
             'bhs_name' => 'required',
             'assigned_user_id' => 'required|exists:users,id',
-            'barangay_code' => 'required|exists:barangays,code',
+            'barangay_code' => 'required|exists:barangays,psgc_10_digit_code',
             'barangay' => 'required|array',
         ];
     }

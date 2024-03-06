@@ -34,7 +34,7 @@ class PatientMcRequest extends FormRequest
             'admission_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required_with:post_registration_date',
             'discharge_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required_with:post_registration_date',
             'delivery_location_code' => 'exists:lib_mc_delivery_locations,code|required_with:post_registration_date',
-            'barangay_code' => 'exists:barangays,code|required_with:delivery_location_code',
+            'barangay_code' => 'exists:barangays,psgc_10_digit_code|required_with:delivery_location_code',
         ];
     }
 }

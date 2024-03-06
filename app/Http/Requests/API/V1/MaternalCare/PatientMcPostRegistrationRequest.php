@@ -53,7 +53,7 @@ class PatientMcPostRegistrationRequest extends FormRequest
             'discharge_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
             'delivery_date' => 'date|date_format:Y-m-d H:i:s|before:tomorrow|required',
             'delivery_location_code' => 'required|exists:lib_mc_delivery_locations,code',
-            'barangay_code' => 'required|exists:barangays,code',
+            'barangay_code' => 'required|exists:barangays,psgc_10_digit_code',
             'gravidity' => 'required|numeric',
             'parity' => 'required|numeric',
             'full_term' => 'required|numeric',
@@ -90,7 +90,7 @@ class PatientMcPostRegistrationRequest extends FormRequest
                 'example' => fake()->randomElement(LibMcDeliveryLocation::pluck('code')->toArray()),
             ],
             'barangay_code' => [
-                'example' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+                'example' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             ],
             'gravidity' => [
                 'example' => 1,

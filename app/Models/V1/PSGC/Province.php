@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\PSGC;
 
+use App\Traits\HasSearchFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Province extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSearchFilter;
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +34,19 @@ class Province extends Model
      */
     public function getRouteKeyName()
     {
-        return 'code';
+        $request = app('request');
+
+        // Retrieve the parameter value from the route
+        $parameterValue = $request->route()->parameter('province');
+        //dd($parameterValue);
+        // Check if the parameter value is a string and has a length of 10
+        if (is_string($parameterValue) && strlen($parameterValue) === 10) {
+            return 'psgc_10_digit_code';
+        } else {
+            // Default to 'slug' if the condition is not met
+            return 'code';
+        }
+
     }
 
     public function cities(): MorphMany

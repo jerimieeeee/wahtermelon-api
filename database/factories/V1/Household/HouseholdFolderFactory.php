@@ -27,7 +27,7 @@ class HouseholdFolderFactory extends Factory
             'facility_code' => fake()->randomElement(Facility::pluck('code')->toArray()),
             'user_id' => fake()->randomElement(User::pluck('id')->toArray()),
             'address' => fake()->address(),
-            'barangay_code' => fake()->randomElement(Barangay::pluck('code')->toArray()),
+            'barangay_code' => fake()->randomElement(Barangay::pluck('psgc_10_digit_code')->toArray()),
             'residence_classification_code' => fake()->randomElement(LibResidenceClassification::pluck('code')->toArray()),
             'cct_date' => fake()->optional()->date('Y-m-d'),
             'cct_id' => fake()->optional()->randomDigit(),

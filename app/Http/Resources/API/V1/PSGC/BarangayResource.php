@@ -72,7 +72,7 @@ class BarangayResource extends JsonResource
         $region = isset($level3) ? $level3->region : (get_class($level2) != Region::class ? $level2->region : $level2);
 
         return array_filter([
-            'code' => $this->code,
+            'code' => $this->psgc_10_digit_code,
             'name' => $this->name,
             'urban_rural' => $this->urban_rural,
             'population' => $this->population,

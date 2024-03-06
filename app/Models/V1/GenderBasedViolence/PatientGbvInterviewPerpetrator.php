@@ -74,6 +74,6 @@ class PatientGbvInterviewPerpetrator extends Model
 
     public function barangay()
     {
-        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'psgc_10_digit_code');
     }
 }
