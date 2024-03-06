@@ -4,23 +4,23 @@ namespace App\Services\FamilyPlanning;
 
 use Illuminate\Support\Facades\DB;
 
-class FamilyPlanningReportService
+class FamilyPlanningReportService3
 {
-    public function get_projected_population()
-    {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                        facility_code,
-                        barangay_code,
-                        name AS barangay_name,
-                        year,
-                        settings_catchment_barangays.population,
-                        (SELECT SUM(population) FROM settings_catchment_barangays) AS total_population
-                    ')
-            ->leftJoin('barangays', 'barangays.code', '=', 'settings_catchment_barangays.barangay_code')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code', 'barangay_code', 'year', 'population');
-    }
+//    public function get_projected_population()
+//    {
+//        return DB::table('settings_catchment_barangays')
+//            ->selectRaw('
+//                        facility_code,
+//                        barangay_code,
+//                        name AS barangay_name,
+//                        year,
+//                        settings_catchment_barangays.population,
+//                        (SELECT SUM(population) FROM settings_catchment_barangays) AS total_population
+//                    ')
+//            ->leftJoin('barangays', 'barangays.code', '=', 'settings_catchment_barangays.barangay_code')
+//            ->whereFacilityCode(auth()->user()->facility_code)
+//            ->groupBy('facility_code', 'barangay_code', 'year', 'population');
+//    }
 
     public function get_catchment_barangays()
     {

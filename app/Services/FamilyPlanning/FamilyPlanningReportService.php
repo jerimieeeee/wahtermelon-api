@@ -50,113 +50,133 @@ class FamilyPlanningReportService
             ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
     }
 
-    public function new_acceptor($request, $method, $client, $age_bracket1, $age_bracket2, $code)
+    public function get_fp_report($request)
     {
-        $previous_month = $request->month - 1;
+        return DB::table('patient_ccdevs')
+            ->selectRaw("
+                        method_code,
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                            THEN 1
+                            ELSE 0
+                            END) AS 'New Acceptor (Previous Month) - 10 to 14'),
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'New Acceptor (Present Month) - 10 to 14'),
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                                THEN 1
+                                ELSE 0
+                            END) AS 'New Acceptor (Previous Month) - 15 to 19'),
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'New Acceptor (Present Month) - 15 to 19'),
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                                THEN 1
+                                ELSE 0
+                            END) AS 'New Acceptor (Previous Month) - 20 to 49'),
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'New Acceptor (Present Month) - 20 to 49'),
+                        SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'RS') AND
+                            TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                            MONTH(enrollment_date) = ? AND
+                            YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'Other Acceptor (Present Month) - 10 to 14'),
+                        SUM(CASE
+                                WHEN
+                                    client_code IN('CC', 'CM', 'RS') AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'Other Acceptor (Present Month) - 15 to 19'),
+                        SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'RS') AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'Other Acceptor (Present Month) - 20 to 49')",
+                [
+                //BINDINGS FOR New Acceptor (Previous Month) - 10 to 14
+                $request->month, $request->year, $request->month, $request->year,
 
-        return DB::table(function ($query) use ($request, $method, $client, $age_bracket1, $age_bracket2, $previous_month, $code) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
-                            TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) AS age
-                ")
-                ->from('patient_fp_methods')
-                ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
-                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
-                })
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-                })
-                ->when($request->category == 'facility', function ($q) {
-                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-                })
-                ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-                })
-                ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-                })
-                ->whereMethodCode($method)
-                ->whereClientCode($client)
-                ->when($code == 'NA-present-MONTH', fn ($query) =>
-                    $query->whereYear('enrollment_date', $request->year)
-                        ->whereMonth('enrollment_date',  $request->month)
-                )
-                ->when($code == 'NA-previous-MONTH', fn ($query)  =>
-                    $query->whereYear('enrollment_date',  $request->year)
-                          ->whereMonth('enrollment_date', $previous_month)
-                    )
-                ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
-    }
+                //BINDINGS FOR New Acceptor (Present Month) - 10 to 14
+                $request->month, $request->year,
 
-    public function other_acceptor($request, $method, $age_bracket1, $age_bracket2)
-    {
-        return DB::table(function ($query) use ($request, $method, $age_bracket1, $age_bracket2) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
-                            TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) AS age
-                ")
-                ->from('patient_fp_methods')
-                ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
-                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
-                })
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-                })
-                ->when($request->category == 'facility', function ($q) {
-                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-                })
-                ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-                })
-                ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-                })
-                ->whereYear('enrollment_date', $request->year)
-                ->whereMonth('enrollment_date',  $request->month)
-                ->whereMethodCode($method)
-                ->whereIn('client_code', ['CC', 'CM', 'RS'])
-                ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
-    }
+                //BINDINGS FOR New Acceptor (Previous Month) - 15 to 19
+                $request->month, $request->year, $request->month, $request->year,
 
-    public function dropout($request, $method, $age_bracket1, $age_bracket2)
-    {
-        return DB::table(function ($query) use ($request, $method, $age_bracket1, $age_bracket2) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            municipalities_brgy.address,
-                            birthdate,
-                            TIMESTAMPDIFF(YEAR, birthdate, dropout_date) AS age
-                ")
-                ->from('patient_fp_methods')
-                ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
-                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
-                })
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-                })
-                ->when($request->category == 'facility', function ($q) {
-                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-                })
-                ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-                })
-                ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-                })
-                ->whereMethodCode($method)
-                ->whereIn('dropout_reason_code', [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
-                ->whereYear('dropout_date', $request->year)
-                ->whereMonth('dropout_date',  $request->month)
-                ->havingRaw('age BETWEEN ? AND ?', [$age_bracket1, $age_bracket2]);
-        });
+                //BINDINGS FOR New Acceptor (Present Month) - 15 to 19
+                $request->month, $request->year,
+
+                //BINDINGS FOR New Acceptor (Previous Month) - 20 to 49
+                $request->month, $request->year, $request->month, $request->year,
+
+                //BINDINGS FOR New Acceptor (Present Month) - 20 to 49
+                $request->month, $request->year,
+
+                //BINDINGS FOR Other Acceptor (Present Month) - 10 to 14
+                $request->month, $request->year,
+
+                //BINDINGS FOR Other Acceptor (Present Month) - 15 to 19
+                $request->month, $request->year,
+
+                //BINDINGS FOR Other Acceptor (Present Month) - 20 to 49
+                $request->month, $request->year
+                ])
+        ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
+        ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+            $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
+        })
+        ->when($request->category == 'all', function ($q) {
+            $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
+        })
+        ->when($request->category == 'facility', function ($q) {
+            $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+        })
+        ->when($request->category == 'municipality', function ($q) use ($request) {
+            $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+        })
+        ->when($request->category == 'barangay', function ($q) use ($request) {
+            $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+        })
+        ->groupBy('method_code');
     }
 }

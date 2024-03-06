@@ -51,13 +51,13 @@ class MorbidityReportService
                     $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
                 })
                 ->when($request->category == 'facility', function ($q) {
-                    $q->whereIn('barangays.code', $this->get_catchment_barangays());
+                    $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'municipality', function ($q) use ($request) {
-                    $q->whereIn('municipalities.code', explode(',', $request->code));
+                    $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'barangay', function ($q) use ($request) {
-                    $q->whereIn('barangays.code', explode(',', $request->code));
+                    $q->whereIn('barangays.psgc_10_digit_code', explode(',', $request->code));
                 })
                 ->whereGender($patient_gender);
         })
