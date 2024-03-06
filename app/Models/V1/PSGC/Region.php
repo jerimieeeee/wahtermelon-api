@@ -24,7 +24,18 @@ class Region extends Model
      */
     public function getRouteKeyName()
     {
-        return 'code';
+        $request = app('request');
+
+        // Retrieve the parameter value from the route
+        $parameterValue = $request->route()->parameter('region');
+        //dd($parameterValue);
+        // Check if the parameter value is a string and has a length of 10
+        if (is_string($parameterValue) && strlen($parameterValue) === 10) {
+            return 'psgc_10_digit_code';
+        } else {
+            // Default to 'slug' if the condition is not met
+            return 'code';
+        }
     }
 
     public function provinces(): HasMany

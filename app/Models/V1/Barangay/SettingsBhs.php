@@ -37,7 +37,7 @@ class SettingsBhs extends Model
 
     public function barangay(): BelongsTo
     {
-        return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+        return $this->belongsTo(Barangay::class, 'barangay_code', 'psgc_10_digit_code');
     }
 
     public function facility()

@@ -52,7 +52,7 @@ class PatientGbvIntakeRequest extends FormRequest
             'number_of_individual_members' => 'nullable',
             'number_of_family' => 'nullable',
             'same_address_flag' => 'nullable|boolean',
-            'barangay_code' => 'nullable|exists:barangays,code',
+            'barangay_code' => 'nullable|exists:barangays,psgc_10_digit_code',
             'address' => 'nullable',
             'direction_to_address' => 'nullable',
             'guardian_name' => 'nullable',

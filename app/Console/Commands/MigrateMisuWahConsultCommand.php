@@ -338,14 +338,15 @@ class MigrateMisuWahConsultCommand extends Command
             foreach ($chunk as $consult) {
                 $consult = (array)$consult;
                 // Your existing code for processing $consult
-                DB::transaction(function () use ($consult, $database, $connectionName) {
+                $success = false;
+                $newConsult = null;
+                DB::transaction(function () use ($consult, $database, $connectionName, &$success, &$newConsult) {
+
                     $newConsult = Consult::query()->updateOrCreate([
                         'patient_id' => $consult['patient_id'],
                         'consult_date' => $consult['consult_date'],
                         'pt_group' => $consult['pt_group']
                     ], $consult + ['facility_code' => $database]);
-
-                    DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
 
                     $consultNotes = (array)$this->getConsultNotes($consult['id']);
 
@@ -446,9 +447,13 @@ class MigrateMisuWahConsultCommand extends Command
                     });
 
                     ConsultNotesPe::query()->upsert($uniqueRecords->toArray(), ['notes_id', 'pe_id']);
+                    $success = true;
+
 
                 });
-
+                if ($success) {
+                    DB::connection($connectionName)->table('consult')->whereId($consult['id'])->update(['wahtermelon_consult_id' => $newConsult->id]);
+                }
                 $consultBar->advance();
             }
         }
