@@ -268,6 +268,7 @@ class MigrateMisuWahMaternalCareCommand extends Command
                         THEN "PENTA"
                         WHEN vaccine_id = "ROT"
                         THEN "ROTA"
+                        ELSE vaccine_id
                     END AS vaccine_id
                 ')
             )
