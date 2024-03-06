@@ -34,19 +34,19 @@ class NotifiableReportService
             ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->when($request->category == 'all', function ($q) {
                 $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+                $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
+                $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+                $q->whereIn('barangays.psgc_10_digit_code', explode(',', $request->code));
             })
             //CAT I
             ->when($icd10 == 'paralysis', fn ($q) =>

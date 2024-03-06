@@ -17,7 +17,7 @@ class FamilyPlanningReportService
                         settings_catchment_barangays.population,
                         (SELECT SUM(population) FROM settings_catchment_barangays) AS total_population
                     ')
-            ->leftJoin('barangays', 'barangays.code', '=', 'settings_catchment_barangays.barangay_code')
+            ->leftJoin('barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->whereFacilityCode(auth()->user()->facility_code)
             ->groupBy('facility_code', 'barangay_code', 'year', 'population');
     }
@@ -40,19 +40,19 @@ class FamilyPlanningReportService
             ->selectRaw("
                         patient_id,
                         CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
-                        municipalities.code AS municipality_code,
-                        barangays.code AS barangay_code
+                        municipalities.psgc_10_digit_code AS municipality_code,
+                        barangays.psgc_10_digit_code AS barangay_code
                     ")
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.code', '=', 'household_folders.barangay_code')
+            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
+            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_fp_report($request)
     {
-        return DB::table('patient_ccdevs')
+        return DB::table('patient_fp_methods')
             ->selectRaw("
                         method_code,
                         SUM(CASE
@@ -62,7 +62,7 @@ class FamilyPlanningReportService
                                 IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                             THEN 1
                             ELSE 0
-                            END) AS 'New Acceptor (Previous Month) - 10 to 14'),
+                            END) AS 'New Acceptor (Previous Month) - 10 to 14',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -71,7 +71,7 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'New Acceptor (Present Month) - 10 to 14'),
+                        END) AS 'New Acceptor (Present Month) - 10 to 14',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -79,7 +79,7 @@ class FamilyPlanningReportService
                                 IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
-                            END) AS 'New Acceptor (Previous Month) - 15 to 19'),
+                            END) AS 'New Acceptor (Previous Month) - 15 to 19',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -88,7 +88,7 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'New Acceptor (Present Month) - 15 to 19'),
+                        END) AS 'New Acceptor (Present Month) - 15 to 19',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -96,7 +96,7 @@ class FamilyPlanningReportService
                                 IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
-                            END) AS 'New Acceptor (Previous Month) - 20 to 49'),
+                            END) AS 'New Acceptor (Previous Month) - 20 to 49',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -105,7 +105,7 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'New Acceptor (Present Month) - 20 to 49'),
+                        END) AS 'New Acceptor (Present Month) - 20 to 49',
                         SUM(CASE
                             WHEN
                                 client_code IN('CC', 'CM', 'RS') AND
@@ -114,7 +114,7 @@ class FamilyPlanningReportService
                             YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'Other Acceptor (Present Month) - 10 to 14'),
+                        END) AS 'Other Acceptor (Present Month) - 10 to 14',
                         SUM(CASE
                                 WHEN
                                     client_code IN('CC', 'CM', 'RS') AND
@@ -123,7 +123,7 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'Other Acceptor (Present Month) - 15 to 19'),
+                        END) AS 'Other Acceptor (Present Month) - 15 to 19',
                         SUM(CASE
                             WHEN
                                 client_code IN('CC', 'CM', 'RS') AND
@@ -132,7 +132,7 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'Other Acceptor (Present Month) - 20 to 49')",
+                        END) AS 'Other Acceptor (Present Month) - 20 to 49'",
                 [
                 //BINDINGS FOR New Acceptor (Previous Month) - 10 to 14
                 $request->month, $request->year, $request->month, $request->year,
