@@ -1,0 +1,203 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Models\V1\FamilyPlanning\PatientFp;
+use Illuminate\Console\Command;
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class MigrateMisuWahFamilyPlanningCommand extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'misuwah:migrate-fp';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $databases = DB::select("SHOW DATABASES LIKE 'DOH%'");
+        $databaseNames = array_map('current', $databases);
+        $database = $this->choice(
+            'Select database to be migrated:',
+            $databaseNames
+        );
+        $connectionName = 'mysql_migration';
+        $this->migrationConnection($connectionName, $database);
+
+        $patientFp = $this->getPatientFp();
+        $this->savePatientFp($patientFp, $database);
+        //$patientCcdev = $this->getPatientCc();
+        //$this->savePatientCc($patientCcdev, $database);
+    }
+
+    public function migrationConnection($connectionName, $database)
+    {
+        //$connectionName = 'mysql_migration'; // Replace with the name of your database connection
+        $newDatabaseName = $database; // Replace with the new database name you want to use
+
+        DB::purge($connectionName); // Clear any previous configurations for the connection
+
+        // Retrieve the database connection configuration array
+        $config = config("database.connections.$connectionName");
+
+        // Update the 'database' parameter with the new database name
+        $config['database'] = $newDatabaseName;
+
+        // Set the updated configuration for the connection
+        $connection = app(ConnectionFactory::class)->make($config);
+
+        // Set the new connection instance for the specific connection name
+        DB::connection($connectionName)->setPdo($connection->getPdo())->setReadPdo($connection->getReadPdo());
+        // Add column if it doesn't exist on the 'patient' table
+        // Add column if it doesn't exist on the 'patient' table
+        try {
+            // Add column if it doesn't exist on the 'patient' table
+            Schema::connection($connectionName)->table('patient_fp', function (Blueprint $table) {
+                $table->string('wahtermelon_fp_id')->nullable()->after('id');
+                // Add more columns if needed
+            });
+
+        } catch (\Exception $e) {
+            // Handle the exception (column already exists)
+            // You can log the error or perform other actions if needed
+            // For now, we'll just skip this iteration
+            //continue;
+        }
+    }
+
+    /**
+     * Process Patient Child Care
+     *
+     * @param $patientFp
+     * @param $facilityCode
+     * @return void
+     */
+    private function processPatientFp($patientFp, $facilityCode): void
+    {
+        $patientFpBar = $this->output->createProgressBar(count($patientFp));
+        $patientFpBar->setFormat('Processing Patient Family Planning Table: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%');
+        $patientFpBar->start();
+        $startTime = time();
+
+        $this->chunkAndProcess($patientFp, $facilityCode, $patientFpBar);
+
+        $patientFpBar->finish();
+        $this->displayElapsedTime($startTime);
+    }
+
+    /**
+     * Chunk and Process Patient Cc Data
+     *
+     * @param $patientFp
+     * @param $facilityCode
+     * @param $patientFpBar
+     * @return void
+     */
+    private function chunkAndProcess($patientFp, $facilityCode, $patientFpBar): void
+    {
+        $chunkSize = 200;
+        $chunks = array_chunk($patientFp->toArray(), $chunkSize);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $patientFpData) {
+                $this->processPatientFpData($patientFpData, $facilityCode);
+                $patientFpBar->advance();
+            }
+        }
+    }
+
+    /**
+     * Display Elapsed Time
+     *
+     * @param int $startTime
+     * @return void
+     */
+    private function displayElapsedTime(int $startTime): void
+    {
+        $endTime = time();
+        $elapsedTime = $endTime - $startTime;
+        $this->newLine();
+        $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
+    }
+
+    public function savePatientFp($patientCc, $facilityCode)
+    {
+        $patientCcCount = count($patientCc);
+        if ($patientCcCount < 1) {
+            $this->components->info('Nothing to migrate for Patient Child Care');
+            return;
+        }
+
+        $this->processPatientFp($patientCc, $facilityCode);
+
+        $this->newLine();
+        $this->components->twoColumnDetail('Patient Child Care Migration', 'Done');
+    }
+
+    private function processPatientFpData($patientFpData, $facilityCode): void
+    {
+        DB::transaction(function () use ($patientFpData, $facilityCode) {
+            $patientFpData = (array)$patientFpData;
+            //dd($patientFpData);
+            $patientFpData['facility_code'] = $facilityCode;
+            $fp = PatientFp::query()->updateOrCreate(['patient_id' => $patientFpData['patient_id']], $patientFpData);
+            DB::connection('mysql_migration')->table('patient_fp')->where('id', $patientFpData['id'])->update(['wahtermelon_fp_id' => $fp->id]);
+            /*$cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
+
+            $services = $this->getCcServices($patientCcData['id']);
+            if(count($services) > 0) {
+                $this->saveCcServices($services, $facilityCode);
+            }
+
+            $vaccines = $this->getCcVaccines($patientCcData['id']);
+            if(count($vaccines) > 0) {
+                $this->saveCcVaccines($vaccines, $facilityCode);
+            }
+
+            $breastfed = $this->getCcBreastfed($patientCcData['id']);
+            if(!empty($breastfed)) {
+                $this->saveCcBreastfed($breastfed, $cc, $facilityCode);
+            }
+
+            DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);*/
+        });
+    }
+
+    public function getPatientFp()
+    {
+        return DB::connection('mysql_migration')->table('patient_fp')
+            ->selectRaw('
+                patient_fp.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                'ave_monthly_income AS average_monthly_income'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('patient_fp.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_fp.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            //->whereNull('wahtermelon_fp_id')
+            ->get();
+    }
+}
