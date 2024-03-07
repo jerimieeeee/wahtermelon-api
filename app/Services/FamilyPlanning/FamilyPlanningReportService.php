@@ -57,21 +57,42 @@ class FamilyPlanningReportService
                         method_code,
                         SUM(CASE
                             WHEN
+                                client_code IN('CC', 'CM', 'CU', 'RS') AND
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                                DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))
+                            THEN 1
+                            ELSE 0
+                            END) AS 'current_user_beginning_month_10_to_14',
+	                    SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'CU', 'RS') AND
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))
+                            THEN 1
+                            ELSE 0
+                            END) AS 'current_user_beginning_month_15_to_19',
+	                    SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'CU', 'RS') AND
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))
+                            THEN 1
+                            ELSE 0
+                            END) AS 'current_user_beginning_month_20_to_49',
+                        SUM(CASE
+                            WHEN
                                 client_code = 'NA' AND
                                 TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
                                 IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                             THEN 1
                             ELSE 0
-                            END) AS 'New Acceptor (Previous Month) - 10 to 14',
-                        SUM(CASE
-                            WHEN
-                                client_code = 'NA' AND
-                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
-                                MONTH(enrollment_date) = ? AND
-                                YEAR(enrollment_date) = ?
-                            THEN 1
-                            ELSE 0
-                        END) AS 'New Acceptor (Present Month) - 10 to 14',
+                            END) AS 'new_acceptor_previous_month_10_to_14',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -79,16 +100,7 @@ class FamilyPlanningReportService
                                 IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
-                            END) AS 'New Acceptor (Previous Month) - 15 to 19',
-                        SUM(CASE
-                            WHEN
-                                client_code = 'NA' AND
-                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
-                                MONTH(enrollment_date) = ? AND
-                                YEAR(enrollment_date) = ?
-                            THEN 1
-                            ELSE 0
-                        END) AS 'New Acceptor (Present Month) - 15 to 19',
+                            END) AS 'new_acceptor_previous_month_15_to_19',
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
@@ -96,16 +108,7 @@ class FamilyPlanningReportService
                                 IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
-                            END) AS 'New Acceptor (Previous Month) - 20 to 49',
-                        SUM(CASE
-                            WHEN
-                                client_code = 'NA' AND
-                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
-                                MONTH(enrollment_date) = ? AND
-                                YEAR(enrollment_date) = ?
-                            THEN 1
-                            ELSE 0
-                        END) AS 'New Acceptor (Present Month) - 20 to 49',
+                            END) AS 'new_acceptor_previous_month_20_to_49',
                         SUM(CASE
                             WHEN
                                 client_code IN('CC', 'CM', 'RS') AND
@@ -114,7 +117,7 @@ class FamilyPlanningReportService
                             YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'Other Acceptor (Present Month) - 10 to 14',
+                        END) AS 'other_acceptor_present_month_10_to_14',
                         SUM(CASE
                                 WHEN
                                     client_code IN('CC', 'CM', 'RS') AND
@@ -123,7 +126,7 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'Other Acceptor (Present Month) - 15 to 19',
+                        END) AS 'other_acceptor_present_month_15_to_19',
                         SUM(CASE
                             WHEN
                                 client_code IN('CC', 'CM', 'RS') AND
@@ -132,35 +135,111 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'Other Acceptor (Present Month) - 20 to 49'",
+                        END) AS 'other_acceptor_present_month_20_to_49',
+                          	SUM(CASE
+                                WHEN
+                                    dropout_date IS NOT NULL AND
+                                    dropout_reason_code IS NOT NULL AND
+                                    TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                                    MONTH(dropout_date) = ? AND
+                                    YEAR(dropout_date) = ?
+                                THEN 1
+                                ELSE 0
+                              END) AS 'dropout_present_month_10_to_14',
+                        SUM(CASE
+                            WHEN
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                MONTH(dropout_date) = ? AND
+                                YEAR(dropout_date) = ?
+                            THEN 1
+                            ELSE 0
+                          END) AS 'dropout_present_month_15_to_19',
+                        SUM(CASE
+                            WHEN
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                MONTH(dropout_date) = ? AND
+                                YEAR(dropout_date) = ?
+                            THEN 1
+                            ELSE 0
+                          END) AS 'dropout_present_month_20_to_49',
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'new_acceptor_present_month_10_to_14',
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'new_acceptor_present_month_15_to_19',
+                        SUM(CASE
+                            WHEN
+                                client_code = 'NA' AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                MONTH(enrollment_date) = ? AND
+                                YEAR(enrollment_date) = ?
+                            THEN 1
+                            ELSE 0
+                        END) AS 'new_acceptor_present_month_20_to_49'
+                    ",
                 [
-                //BINDINGS FOR New Acceptor (Previous Month) - 10 to 14
+                //BINDINGS FOR Current User (Beginning Month) 10 to 14
+                $request->month, $request->year,
+
+                //BINDINGS FOR Current User (Beginning Month) 15 to 19
+                $request->month, $request->year,
+
+                //BINDINGS FOR Current User (Beginning Month) 19 to 49
+                $request->month, $request->year,
+
+                //BINDINGS FOR New Acceptor (Previous Month) 10 to 14
                 $request->month, $request->year, $request->month, $request->year,
 
-                //BINDINGS FOR New Acceptor (Present Month) - 10 to 14
-                $request->month, $request->year,
-
-                //BINDINGS FOR New Acceptor (Previous Month) - 15 to 19
+                //BINDINGS FOR New Acceptor (Previous Month) 15 to 19
                 $request->month, $request->year, $request->month, $request->year,
 
-                //BINDINGS FOR New Acceptor (Present Month) - 15 to 19
-                $request->month, $request->year,
-
-                //BINDINGS FOR New Acceptor (Previous Month) - 20 to 49
+                //BINDINGS FOR New Acceptor (Previous Month) 20 to 49
                 $request->month, $request->year, $request->month, $request->year,
 
-                //BINDINGS FOR New Acceptor (Present Month) - 20 to 49
+                //BINDINGS FOR Other Acceptor (Present Month) 10 to 14
                 $request->month, $request->year,
 
-                //BINDINGS FOR Other Acceptor (Present Month) - 10 to 14
+                //BINDINGS FOR Other Acceptor (Present Month) 15 to 19
                 $request->month, $request->year,
 
-                //BINDINGS FOR Other Acceptor (Present Month) - 15 to 19
+                //BINDINGS FOR Other Acceptor (Present Month) 20 to 49
                 $request->month, $request->year,
 
-                //BINDINGS FOR Other Acceptor (Present Month) - 20 to 49
-                $request->month, $request->year
-                ])
+                //BINDINGS FOR Dropout (Present Month) 10 to 14
+                $request->month, $request->year,
+
+                //BINDINGS FOR Dropout (Present Month) 15 to 19
+                $request->month, $request->year,
+
+                //BINDINGS FOR Dropout (Present Month) 20 to 49
+                $request->month, $request->year,
+
+                //BINDINGS FOR New Acceptor (Present Month) 10 to 14
+                $request->month, $request->year,
+
+                //BINDINGS FOR New Acceptor (Present Month) 15 to 19
+                $request->month, $request->year,
+
+                //BINDINGS FOR New Acceptor (Present Month) 20 to 49
+                $request->month, $request->year,
+            ])
         ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
         ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
             $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
@@ -178,5 +257,34 @@ class FamilyPlanningReportService
             $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
         })
         ->groupBy('method_code');
+    }
+
+    public function get_fp_report_all($request)
+    {
+        return DB::table(function ($query) use($request) {
+            $query->selectRaw("
+                        code,
+                        method_code,
+                        current_user_beginning_month_10_to_14,
+                        current_user_beginning_month_15_to_19,
+                        current_user_beginning_month_20_to_49,
+                        new_acceptor_previous_month_10_to_14,
+                        new_acceptor_previous_month_15_to_19,
+                        new_acceptor_previous_month_20_to_49,
+                        other_acceptor_present_month_10_to_14,
+                        other_acceptor_present_month_15_to_19,
+                        other_acceptor_present_month_20_to_49,
+                        dropout_present_month_10_to_14,
+                        dropout_present_month_15_to_19,
+                        dropout_present_month_20_to_49,
+                        new_acceptor_present_month_10_to_14,
+                        new_acceptor_present_month_15_to_19,
+                        new_acceptor_present_month_20_to_49
+                    ")
+            ->from('lib_fp_methods')
+            ->leftJoinSub($this->get_fp_report($request), 'fp_report', function ($join) {
+                $join->on('fp_report.method_code', '=', 'lib_fp_methods.code');
+            });
+        });
     }
 }

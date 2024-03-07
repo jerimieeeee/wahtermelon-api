@@ -273,7 +273,7 @@ Route::prefix('v1')->group(function () {
             ->middleware('auth:api')
             ->group(function () {
                 Route::get('risk-assessment', 'index');
-                Route::get('risk-strat/{riskStrat}', 'show');
+//                Route::get('risk-strat/{riskStrat}', 'show');
                 Route::post('risk-assessment', 'store');
                 Route::put('risk-assessment/{ncdRisk}', 'update');
             });

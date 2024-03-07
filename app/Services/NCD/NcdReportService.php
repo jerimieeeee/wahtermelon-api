@@ -104,7 +104,7 @@ class NcdReportService
             ->whereSmoking(3)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
-            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
+//            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
 

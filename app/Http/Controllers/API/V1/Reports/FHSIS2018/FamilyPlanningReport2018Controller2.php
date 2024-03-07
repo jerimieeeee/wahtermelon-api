@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
  *
  * @subgroupDescription M1 Family Planning Report.
  */
-class FamilyPlanningReport2018Controller extends Controller
+class FamilyPlanningReport2018Controller2 extends Controller
 {
     /**
      * Display a listing of the resource.
