@@ -156,6 +156,10 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
             //dd($patientFpData);
             $patientFpData['facility_code'] = $facilityCode;
             $fp = PatientFp::query()->updateOrCreate(['patient_id' => $patientFpData['patient_id']], $patientFpData);
+
+            $fp_method = $this->getFpMethods($fp->id);
+            dd($fp_method);
+
             DB::connection('mysql_migration')->table('patient_fp')->where('id', $patientFpData['id'])->update(['wahtermelon_fp_id' => $fp->id]);
             /*$cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
 
@@ -198,6 +202,33 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                     ->whereNotNull('user.wahtermelon_user_id');
             })
             //->whereNull('wahtermelon_fp_id')
+            ->get();
+    }
+
+    public function getFpMethods($fpId)
+    {
+        return DB::connection('mysql_migration')->table('patient_fp_method')
+            ->selectRaw('
+                patient_fp_method.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                'method_id AS method_code',
+                'date_registered AS enrollment_date',
+                'date_dropout AS dropout_date'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('patient_fp_method.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_fp_method.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereNotNull('date_registered')
+            ->whereNotNull('treatment_partner')
+            ->whereFpId($fpId)
             ->get();
     }
 }
