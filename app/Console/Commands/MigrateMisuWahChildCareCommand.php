@@ -139,6 +139,7 @@ class MigrateMisuWahChildCareCommand extends Command
                     ->whereNotNull('user.wahtermelon_user_id');
             })
             ->whereCcdevId($ccdevId)
+            ->where('service_id', '!=', 'COMP')
             ->whereDate('service_date', '>=', '0001-01-01')
             ->whereDate('service_date', '<=', '9999-12-31')
             ->get();

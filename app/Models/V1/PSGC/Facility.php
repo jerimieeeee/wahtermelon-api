@@ -54,7 +54,7 @@ class Facility extends Model
 
     public function region(): BelongsTo
     {
-        return $this->belongsTo(Region::class, 'region_code', 'code');
+        return $this->belongsTo(Region::class, 'region_code', 'psgc_10_digit_code');
     }
 
     public function province(): BelongsTo
