@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\V1\FamilyPlanning\PatientFp;
+use App\Models\V1\FamilyPlanning\PatientFpMethod;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -159,7 +160,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
 
             $fp_method = $this->getFpMethods($fp->id);
             dd($fp_method);
-
+            $method = PatientFpMethod::query()->updateOrCreate()
             DB::connection('mysql_migration')->table('patient_fp')->where('id', $patientFpData['id'])->update(['wahtermelon_fp_id' => $fp->id]);
             /*$cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
 
@@ -216,7 +217,38 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                 'user.wahtermelon_user_id AS user_id',
                 'method_id AS method_code',
                 'date_registered AS enrollment_date',
-                'date_dropout AS dropout_date'
+                'date_dropout AS dropout_date',
+                DB::raw('
+                    CASE
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Pregnant%"
+                        THEN 1
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Desire%"
+                        THEN 2
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Medical%"
+                        THEN 3
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Fear%"
+                        THEN 4
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Changed%"
+                        THEN 5
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Husband%"
+                        THEN 6
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Menopause%"
+                        THEN 7
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Lost%"
+                        THEN 8
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Failed%"
+                        THEN 9
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "IUD%"
+                        THEN 10
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Unknown%"
+                        THEN 11
+                        WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Changing%"
+                        THEN 12
+                        WHEN dropout_reason IS NULL
+                        THEN NULL
+                        ELSE dropout_reason
+                    END AS dropout_reason
+                ')
             )
             ->join('patient AS patient', function ($join) {
                 $join->on('patient_fp_method.patient_id', '=', 'patient.id')
@@ -226,6 +258,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                 $join->on('patient_fp_method.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
+            //->whereRaw('dropout_reason LIKE "Lost%"')
             ->whereNotNull('date_registered')
             ->whereNotNull('treatment_partner')
             ->whereFpId($fpId)
