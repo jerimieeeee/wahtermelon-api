@@ -32,7 +32,7 @@ class NcdReport2018Controller extends Controller
         $assessed_male_alcohol = $ncdReportService->get_risk_assessed_alcohol($request, 'M', 'normal')->get();
         $assessed_male_alcohol_senior = $ncdReportService->get_risk_assessed_alcohol($request, 'M', 'senior')->get();
 
-        $assessed_female_alcohol = $ncdReportService->get_risk_assessed_alcohol($request, 'F', 'senior')->get();
+        $assessed_female_alcohol = $ncdReportService->get_risk_assessed_alcohol($request, 'F', 'normal')->get();
         $assessed_female_alcohol_senior = $ncdReportService->get_risk_assessed_alcohol($request, 'F', 'senior')->get();
 
         //Risk-Assessed PHILPEN Obese
