@@ -192,7 +192,37 @@ class FamilyPlanningReportService
                                 YEAR(enrollment_date) = ?
                             THEN 1
                             ELSE 0
-                        END) AS 'new_acceptor_present_month_20_to_49'
+                        END) AS 'new_acceptor_present_month_20_to_49',
+                        SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'CU', 'RS') AND
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
+                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                            THEN 1
+                            ELSE 0
+                            END) AS 'current_user_previous_month_10_to_14',
+                        SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'CU', 'RS') AND
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
+                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                                THEN 1
+                                ELSE 0
+                            END) AS 'current_user_previous_month_15_to_19',
+                        SUM(CASE
+                            WHEN
+                                client_code IN('CC', 'CM', 'CU', 'RS') AND
+                                dropout_date IS NOT NULL AND
+                                dropout_reason_code IS NOT NULL AND
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
+                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                                THEN 1
+                                ELSE 0
+                            END) AS 'current_user_previous_month_20_to_49'
                     ",
                 [
                 //BINDINGS FOR Current User (Beginning Month) 10 to 14
@@ -239,6 +269,15 @@ class FamilyPlanningReportService
 
                 //BINDINGS FOR New Acceptor (Present Month) 20 to 49
                 $request->month, $request->year,
+
+                //BINDINGS FOR Current User (Previous Month) 10 to 14
+                $request->month, $request->year, $request->month, $request->year,
+
+                //BINDINGS FOR Current User (Previous Month) 15 to 19
+                $request->month, $request->year, $request->month, $request->year,
+
+                //BINDINGS FOR Current User (Previous Month) 20 to 49
+                $request->month, $request->year, $request->month, $request->year,
             ])
         ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
         ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
@@ -265,21 +304,24 @@ class FamilyPlanningReportService
             $query->selectRaw("
                         code,
                         method_code,
-                        current_user_beginning_month_10_to_14,
-                        current_user_beginning_month_15_to_19,
-                        current_user_beginning_month_20_to_49,
-                        new_acceptor_previous_month_10_to_14,
-                        new_acceptor_previous_month_15_to_19,
-                        new_acceptor_previous_month_20_to_49,
-                        other_acceptor_present_month_10_to_14,
-                        other_acceptor_present_month_15_to_19,
-                        other_acceptor_present_month_20_to_49,
-                        dropout_present_month_10_to_14,
-                        dropout_present_month_15_to_19,
-                        dropout_present_month_20_to_49,
-                        new_acceptor_present_month_10_to_14,
-                        new_acceptor_present_month_15_to_19,
-                        new_acceptor_present_month_20_to_49
+                        CAST(current_user_beginning_month_10_to_14 AS UNSIGNED) AS current_user_beginning_month_10_to_14,
+                        CAST(current_user_beginning_month_15_to_19 AS UNSIGNED) AS current_user_beginning_month_15_to_19,
+                        CAST(current_user_beginning_month_20_to_49 AS UNSIGNED) AS current_user_beginning_month_20_to_49,
+                        CAST(new_acceptor_previous_month_10_to_14 AS UNSIGNED) AS new_acceptor_previous_month_10_to_14,
+                        CAST(new_acceptor_previous_month_15_to_19 AS UNSIGNED) AS new_acceptor_previous_month_15_to_19,
+                        CAST(new_acceptor_previous_month_20_to_49 AS UNSIGNED) AS new_acceptor_previous_month_20_to_49,
+                        CAST(other_acceptor_present_month_10_to_14 AS UNSIGNED) AS other_acceptor_present_month_10_to_14,
+                        CAST(other_acceptor_present_month_15_to_19 AS UNSIGNED) AS other_acceptor_present_month_15_to_19,
+                        CAST(other_acceptor_present_month_20_to_49 AS UNSIGNED) AS other_acceptor_present_month_20_to_49,
+                        CAST(dropout_present_month_10_to_14 AS UNSIGNED) AS dropout_present_month_10_to_14,
+                        CAST(dropout_present_month_15_to_19 AS UNSIGNED) AS dropout_present_month_15_to_19,
+                        CAST(dropout_present_month_20_to_49 AS UNSIGNED) AS dropout_present_month_20_to_49,
+                        CAST(new_acceptor_present_month_10_to_14 AS UNSIGNED) AS new_acceptor_present_month_10_to_14,
+                        CAST(new_acceptor_present_month_15_to_19 AS UNSIGNED) AS new_acceptor_present_month_15_to_19,
+                        CAST(new_acceptor_present_month_20_to_49 AS UNSIGNED) AS new_acceptor_present_month_20_to_49,
+                        CAST(current_user_previous_month_10_to_14 AS UNSIGNED) AS current_user_previous_month_10_to_14,
+                        CAST(current_user_previous_month_15_to_19 AS UNSIGNED) AS current_user_previous_month_15_to_19,
+                        CAST(current_user_previous_month_20_to_49 AS UNSIGNED) AS current_user_previous_month_20_to_49
                     ")
             ->from('lib_fp_methods')
             ->leftJoinSub($this->get_fp_report($request), 'fp_report', function ($join) {
