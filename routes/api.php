@@ -273,7 +273,7 @@ Route::prefix('v1')->group(function () {
             ->middleware('auth:api')
             ->group(function () {
                 Route::get('risk-assessment', 'index');
-                Route::get('risk-strat/{riskStrat}', 'show');
+//                Route::get('risk-strat/{riskStrat}', 'show');
                 Route::post('risk-assessment', 'store');
                 Route::put('risk-assessment/{ncdRisk}', 'update');
             });
@@ -656,6 +656,14 @@ Route::prefix('v1')->group(function () {
                 Route::post('consult-laboratory-cervical-cancer', 'store');
                 Route::put('consult-laboratory-cervical-cancer/{cancerScreening}', 'update');
                 Route::delete('consult-laboratory-cervical-cancer/{cancerScreening}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryBloodChemistryController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-blood-chemistry', 'index');
+                Route::post('consult-laboratory-blood-chemistry', 'store');
+                Route::put('consult-laboratory-blood-chemistry/{blodchemistry}', 'update');
+                Route::delete('consult-laboratory-blood-chemistry/{blodchemistry}', 'destroy');
             });
     });
 
