@@ -101,7 +101,7 @@ class EclaimsXmlService
             ->join('patient_philhealth', 'patients.id', '=', 'patient_philhealth.patient_id')
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('lib_philhealth_membership_categories', 'patient_philhealth.membership_category_id', '=', 'lib_philhealth_membership_categories.id')
