@@ -55,6 +55,7 @@ class ConsultLaboratory extends Model
         'wetSmear',
         'hematology',
         'syphilis',
+        'cervical',
     ];
 
     public $incrementing = false;
@@ -248,6 +249,11 @@ class ConsultLaboratory extends Model
     public function syphilis()
     {
         return $this->hasOne(ConsultLaboratorySyphilis::class, 'request_id', 'id');
+    }
+
+    public function cervical()
+    {
+        return $this->hasOne(ConsultLaboratoryCervicalCancer::class, 'request_id', 'id');
     }
 
     public function getRelatedModel($model)

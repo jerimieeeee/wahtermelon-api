@@ -43,7 +43,8 @@ class ConsultLaboratoryResource extends JsonResource
             'USND' => 'ultrasound',
             'URN' =>  'urinalysis',
             'WETS' => 'wetSmear',
-            'SYPH' => 'syphilis'
+            'SYPH' => 'syphilis',
+            'CCS' => 'cervical'
         };
 
         return [
