@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\V1\FamilyPlanning\PatientFp;
+use App\Models\V1\FamilyPlanning\PatientFpChart;
 use App\Models\V1\FamilyPlanning\PatientFpMethod;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
@@ -82,7 +83,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
     }
 
     /**
-     * Process Patient Child Care
+     * Process Patient Family Planning
      *
      * @param $patientFp
      * @param $facilityCode
@@ -136,18 +137,36 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
         $this->line('Elapsed Time: ' . gmdate('H:i:s', $elapsedTime));
     }
 
-    public function savePatientFp($patientCc, $facilityCode)
+    private function savePatientFp($patientCc, $facilityCode)
     {
         $patientCcCount = count($patientCc);
         if ($patientCcCount < 1) {
-            $this->components->info('Nothing to migrate for Patient Child Care');
+            $this->components->info('Nothing to migrate for Patient Family Planning');
             return;
         }
 
         $this->processPatientFp($patientCc, $facilityCode);
 
         $this->newLine();
-        $this->components->twoColumnDetail('Patient Child Care Migration', 'Done');
+        $this->components->twoColumnDetail('Patient Family Planning Migration', 'Done');
+    }
+
+    private function saveFpMethod($methods, $fpId, $facilityCode)
+    {
+        foreach ($methods as $method) {
+            $method = (array)$method;
+            $fpMethod = PatientFpMethod::query()->updateOrCreate(['patient_fp_id' => $fpId, 'enrollment_date' => $method['enrollment_date']], $method + ['facility_code' => $facilityCode]);
+            $services = $this->getMethodServices($method['id']);
+            $this->saveMethodServices($services, $fpId, $fpMethod->id, $facilityCode);
+        }
+    }
+
+    private function saveMethodServices($services, $fpId, $methodId, $facilityCode)
+    {
+        foreach ($services as $service) {
+            $service = (array)$service;
+            PatientFpChart::query()->updateOrCreate(['patient_fp_id' => $fpId, 'patient_fp_method_id' => $methodId, 'service_date' => $service['service_date']], $service + ['facility_code' => $facilityCode]);
+        }
     }
 
     private function processPatientFpData($patientFpData, $facilityCode): void
@@ -158,9 +177,10 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
             $patientFpData['facility_code'] = $facilityCode;
             $fp = PatientFp::query()->updateOrCreate(['patient_id' => $patientFpData['patient_id']], $patientFpData);
 
-            $fp_method = $this->getFpMethods($fp->id);
-            dd($fp_method);
-            $method = PatientFpMethod::query()->updateOrCreate()
+            $methods = $this->getFpMethods($patientFpData['id']);
+            if(count($methods) > 0) {
+                $this->saveFpMethod($methods, $fp->id, $facilityCode);
+            }
             DB::connection('mysql_migration')->table('patient_fp')->where('id', $patientFpData['id'])->update(['wahtermelon_fp_id' => $fp->id]);
             /*$cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
 
@@ -202,7 +222,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                 $join->on('patient_fp.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            //->whereNull('wahtermelon_fp_id')
+            ->whereNull('wahtermelon_fp_id')
             ->get();
     }
 
@@ -244,10 +264,12 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                         THEN 11
                         WHEN dropout_reason IS NOT NULL AND dropout_reason LIKE "Changing%"
                         THEN 12
-                        WHEN dropout_reason IS NULL
+                        WHEN dropout_reason IS NULL OR dropout_reason = ""
                         THEN NULL
-                        ELSE dropout_reason
-                    END AS dropout_reason
+                        WHEN dropout_reason IN ("1","2","3","4","5","6","7","8","9","10","11","12")
+                        THEN dropout_reason
+                        ELSE 11
+                    END AS dropout_reason_code
                 ')
             )
             ->join('patient AS patient', function ($join) {
@@ -260,8 +282,41 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
             })
             //->whereRaw('dropout_reason LIKE "Lost%"')
             ->whereNotNull('date_registered')
+            ->whereNotNull('client_code')
+            ->where('client_code', '!=', '')
             ->whereNotNull('treatment_partner')
+            ->whereDate('date_registered', '>=', '0001-01-01')
+            ->whereDate('date_registered', '<=', '9999-12-31')
             ->whereFpId($fpId)
+            ->get();
+    }
+
+    public function getMethodServices($methodId)
+    {
+        return DB::connection('mysql_migration')->table('patient_fp_method_service')
+            ->selectRaw('
+                patient_fp_method_service.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                'date_service AS service_date',
+                'source_id AS source_supply_code'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('patient_fp_method_service.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_fp_method_service.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('fp_px_id', $methodId)
+            ->whereNotNull('date_service')
+            ->where('source_id', '!=', 0)
+            ->whereDate('next_service_date', '>=', '0001-01-01')
+            ->whereDate('next_service_date', '<=', '9999-12-31')
+            //->whereNull('wahtermelon_fp_id')
             ->get();
     }
 }
