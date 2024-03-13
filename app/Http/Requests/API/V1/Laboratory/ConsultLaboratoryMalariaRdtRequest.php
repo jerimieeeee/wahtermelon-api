@@ -27,7 +27,7 @@ class ConsultLaboratoryMalariaRdtRequest extends FormRequest
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'referral_facility' => 'nullable',
-            'type' => 'required|exists:lib_laboratory_malaria_rdt_parasite_types,code',
+            'parasite_type_code' => 'required|exists:lib_laboratory_malaria_rdt_parasite_types,code',
             'rdt_number' => 'nullable',
             'remarks' => 'nullable',
             'lab_status_code' => 'required|exists:lib_laboratory_statuses,code',
