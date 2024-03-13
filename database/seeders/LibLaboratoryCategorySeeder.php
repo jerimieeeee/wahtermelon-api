@@ -306,6 +306,9 @@ class LibLaboratoryCategorySeeder extends Seeder
 
             ['lab_code' => 'HBA', 'field_name' => 'findings', 'field_desc' => 'Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => 'mmol/mol', 'sequence_id' => '1', 'field_active' => 1],
 
+            ['lab_code' => 'SYPH', 'field_name' => 'method_code', 'field_desc' => 'Method Used', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '1', 'field_active' => 1],
+            ['lab_code' => 'SYPH', 'field_name' => 'findings_code', 'field_desc' => 'Result/Findings', 'group_cat' => null, 'range_cat' => null, 'nv_min' => null, 'nv_max' => null, 'nv_uom' => null, 'sequence_id' => '2', 'field_active' => 1],
+
         ], ['lab_code', 'field_name']);
     }
 }
