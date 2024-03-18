@@ -49,7 +49,13 @@ class ConsultLaboratory extends Model
         'serology',
         'biopsy',
         'malariaRdt',
-        'skinSlit'
+        'skinSlit',
+        'bloodchem',
+        'potassium',
+        'wetSmear',
+        'hematology',
+        'syphilis',
+        'cervical',
     ];
 
     public $incrementing = false;
@@ -223,6 +229,31 @@ class ConsultLaboratory extends Model
     public function wetSmear()
     {
         return $this->hasOne(ConsultLaboratoryWetSmear::class, 'request_id', 'id');
+    }
+
+    public function bloodchem()
+    {
+        return $this->hasOne(ConsultLaboratoryBloodChemistry::class, 'request_id', 'id');
+    }
+
+    public function potassium()
+    {
+        return $this->hasOne(ConsultLaboratoryPotassium::class, 'request_id', 'id');
+    }
+
+    public function hematology()
+    {
+        return $this->hasOne(ConsultLaboratoryHematology::class, 'request_id', 'id');
+    }
+
+    public function syphilis()
+    {
+        return $this->hasOne(ConsultLaboratorySyphilis::class, 'request_id', 'id');
+    }
+
+    public function cervical()
+    {
+        return $this->hasOne(ConsultLaboratoryCervicalCancer::class, 'request_id', 'id');
     }
 
     public function getRelatedModel($model)

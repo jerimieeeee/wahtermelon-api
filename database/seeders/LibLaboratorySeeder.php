@@ -17,7 +17,7 @@ class LibLaboratorySeeder extends Seeder
         LibLaboratory::upsert([
             ['code' => 'BCHM', 'desc' => 'Blood Chemistry', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'CBC', 'desc' => 'Complete Blood Count', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 1],
-            ['code' => 'HEMA', 'desc' => 'Hematology', 'lab_active' => 0, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
+            ['code' => 'HEMA', 'desc' => 'Hematology', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'FCAL', 'desc' => 'Fecalysis', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 3],
             ['code' => 'CCS', 'desc' => 'Cervical Cancer Screening', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'SPTM', 'desc' => 'Direct Sputum Smear Microscopy', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 5],
@@ -45,6 +45,7 @@ class LibLaboratorySeeder extends Seeder
             ['code' => 'PPD', 'desc' => 'PPD Test (Tuberculosis)', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 17],
             ['code' => 'HBA', 'desc' => 'HbA1c', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 18],
             ['code' => 'RBS', 'desc' => 'Random Blood Sugar', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 19],
+            ['code' => 'SYPH', 'desc' => 'Syphilis Test', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
         ], ['code']);
     }
 }

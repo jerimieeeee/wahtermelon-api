@@ -640,7 +640,7 @@ Route::prefix('v1')->group(function () {
                 Route::delete('consult-laboratory-skin-slit/{skinSleat}', 'destroy');
             });
 
-        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySkinSlitSmearController::class)
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryWetSmearController::class)
             ->middleware('auth:api')
             ->group(function () {
                 Route::get('consult-laboratory-wet-smear', 'index');
@@ -664,6 +664,30 @@ Route::prefix('v1')->group(function () {
                 Route::post('consult-laboratory-blood-chemistry', 'store');
                 Route::put('consult-laboratory-blood-chemistry/{blodchemistry}', 'update');
                 Route::delete('consult-laboratory-blood-chemistry/{blodchemistry}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryHematologyController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-hematology', 'index');
+                Route::post('consult-laboratory-hematology', 'store');
+                Route::put('consult-laboratory-hematology/{hematology}', 'update');
+                Route::delete('consult-laboratory-hematology/{hematology}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratorySyphilisController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-syphilis', 'index');
+                Route::post('consult-laboratory-syphilis', 'store');
+                Route::put('consult-laboratory-syphilis/{syphilis}', 'update');
+                Route::delete('consult-laboratory-syphilis/{syphilis}', 'destroy');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryPotassiumController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-potassium', 'index');
+                Route::post('consult-laboratory-potassium', 'store');
+                Route::put('consult-laboratory-potassium/{potassium}', 'update');
+                Route::delete('consult-laboratory-potassium/{potassium}', 'destroy');
             });
     });
 

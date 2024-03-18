@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\Laboratory;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConsultLaboratoryMalariaRdtRequest extends FormRequest
+class ConsultLaboratorySyphilisRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,7 @@ class ConsultLaboratoryMalariaRdtRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -27,8 +27,9 @@ class ConsultLaboratoryMalariaRdtRequest extends FormRequest
             'request_id' => 'required|exists:consult_laboratories,id',
             'laboratory_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'referral_facility' => 'nullable',
-            'parasite_type_code' => 'required|exists:lib_laboratory_malaria_rdt_parasite_types,code',
-            'rdt_number' => 'nullable',
+            'method_code' => 'required|exists:lib_laboratory_syphilis_test_methods,code',
+            'other_method' => 'nullable',
+            'findings_code' => 'required|exists:lib_laboratory_results,code',
             'remarks' => 'nullable',
             'lab_status_code' => 'required|exists:lib_laboratory_statuses,code',
         ];
