@@ -4,7 +4,10 @@ namespace App\Console\Commands;
 
 use App\Models\V1\FamilyPlanning\PatientFp;
 use App\Models\V1\FamilyPlanning\PatientFpChart;
+use App\Models\V1\FamilyPlanning\PatientFpHistory;
 use App\Models\V1\FamilyPlanning\PatientFpMethod;
+use App\Models\V1\FamilyPlanning\PatientFpPelvicExam;
+use App\Models\V1\FamilyPlanning\PatientFpPhysicalExam;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\Schema\Blueprint;
@@ -169,6 +172,30 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
         }
     }
 
+    private function saveFpPelvic($pelvics, $fpId, $facilityCode)
+    {
+        foreach ($pelvics as $pelvic) {
+            $pelvic = (array)$pelvic;
+            PatientFpPelvicExam::query()->updateOrCreate(['patient_fp_id' => $fpId, 'pelvic_exam_code' => $pelvic['pelvic_exam_code']], $pelvic + ['facility_code' => $facilityCode]);
+        }
+    }
+
+    private function saveFpHistory($histories, $fpId, $facilityCode)
+    {
+        foreach ($histories as $history) {
+            $history = (array)$history;
+            PatientFpHistory::query()->updateOrCreate(['patient_fp_id' => $fpId, 'history_code' => $history['history_code']], $history + ['facility_code' => $facilityCode]);
+        }
+    }
+
+    private function saveFpPhysicalExam($physicalExams, $fpId, $facilityCode)
+    {
+        foreach ($physicalExams as $physicalExam) {
+            $physicalExam = (array)$physicalExam;
+            PatientFpPhysicalExam::query()->updateOrCreate(['patient_fp_id' => $fpId, 'pe_id' => $physicalExam['pe_id']], $physicalExam + ['facility_code' => $facilityCode]);
+        }
+    }
+
     private function processPatientFpData($patientFpData, $facilityCode): void
     {
         DB::transaction(function () use ($patientFpData, $facilityCode) {
@@ -181,25 +208,22 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
             if(count($methods) > 0) {
                 $this->saveFpMethod($methods, $fp->id, $facilityCode);
             }
+
+            $pelvics = $this->getPelvic($patientFpData['id']);
+            if(count($pelvics) > 0) {
+                $this->saveFpPelvic($pelvics, $fp->id, $facilityCode);
+            }
+
+            $histories = $this->getHistory($patientFpData['id']);
+            if(count($histories) > 0) {
+                $this->saveFpHistory($histories, $fp->id, $facilityCode);
+            }
+
+            $physicalExams = $this->getPhysicalExam($patientFpData['id']);
+            if(count($physicalExams) > 0) {
+                $this->saveFpPhysicalExam($physicalExams, $fp->id, $facilityCode);
+            }
             DB::connection('mysql_migration')->table('patient_fp')->where('id', $patientFpData['id'])->update(['wahtermelon_fp_id' => $fp->id]);
-            /*$cc = PatientCcdev::query()->updateOrCreate(['patient_id' => $patientCcData['patient_id']], $patientCcData);
-
-            $services = $this->getCcServices($patientCcData['id']);
-            if(count($services) > 0) {
-                $this->saveCcServices($services, $facilityCode);
-            }
-
-            $vaccines = $this->getCcVaccines($patientCcData['id']);
-            if(count($vaccines) > 0) {
-                $this->saveCcVaccines($vaccines, $facilityCode);
-            }
-
-            $breastfed = $this->getCcBreastfed($patientCcData['id']);
-            if(!empty($breastfed)) {
-                $this->saveCcBreastfed($breastfed, $cc, $facilityCode);
-            }
-
-            DB::connection('mysql_migration')->table('patient_ccdev')->where('id', $patientCcData['id'])->update(['wahtermelon_ccdev_id' => $cc->id]);*/
         });
     }
 
@@ -222,7 +246,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                 $join->on('patient_fp.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            ->whereNull('wahtermelon_fp_id')
+            //->whereNull('wahtermelon_fp_id')
             ->get();
     }
 
@@ -317,6 +341,95 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
             ->whereDate('next_service_date', '>=', '0001-01-01')
             ->whereDate('next_service_date', '<=', '9999-12-31')
             //->whereNull('wahtermelon_fp_id')
+            ->get();
+    }
+
+    public function getPelvic($fpId)
+    {
+        return DB::connection('mysql_migration')->table('patient_fp_pelvic')
+            ->selectRaw('
+                patient_fp_pelvic.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                'pelvic_id AS pelvic_exam_code'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('patient_fp_pelvic.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_fp_pelvic.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('fp_id', $fpId)
+            ->get();
+    }
+
+    public function getHistory($fpId)
+    {
+        return DB::connection('mysql_migration')->table('patient_fp_hx')
+            ->selectRaw('
+                patient_fp_hx.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                'history_id AS history_code'
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('patient_fp_hx.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_fp_hx.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->where('fp_id', $fpId)
+            ->get();
+    }
+
+    public function getPhysicalExam($fpId)
+    {
+        return DB::connection('mysql_migration')->table('patient_fp_pe')
+            ->selectRaw('
+                patient_fp_pe.*
+            ')
+            ->addSelect(
+                'patient.wahtermelon_patient_id AS patient_id',
+                'user.wahtermelon_user_id AS user_id',
+                DB::raw('
+                    CASE
+                        WHEN pe_id = "1" THEN "CONJUNCTIVA01"
+                        WHEN pe_id = "2" THEN "CONJUNCTIVA02"
+                        WHEN pe_id = "3" THEN "NECK01"
+                        WHEN pe_id = "4" THEN "NECK02"
+                        WHEN pe_id = "5" THEN "BREAST05"
+                        WHEN pe_id = "6" THEN "BREAST06"
+                        WHEN pe_id = "7" THEN "BREAST07"
+                        WHEN pe_id = "8" THEN "BREAST08"
+                        WHEN pe_id = "9" THEN "THORAX01"
+                        WHEN pe_id = "10" THEN "THORAX02"
+                        WHEN pe_id = "11" THEN "ABDOMEN10"
+                        WHEN pe_id = "12" THEN "ABDOMEN09"
+                        WHEN pe_id = "13" THEN "ABDOMEN05"
+                        WHEN pe_id = "14" THEN "EXTREMITIES04"
+                        WHEN pe_id = "15" THEN "EXTREMITIES05"
+                        ELSE NULL
+                    END AS pe_id
+                ')
+            )
+            ->join('patient AS patient', function ($join) {
+                $join->on('patient_fp_pe.patient_id', '=', 'patient.id')
+                    ->whereNotNull('patient.wahtermelon_patient_id');
+            })
+            ->join('user AS user', function ($join) {
+                $join->on('patient_fp_pe.user_id', '=', 'user.id')
+                    ->whereNotNull('user.wahtermelon_user_id');
+            })
+            ->whereIn('pe_id', [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+            ->where('fp_id', $fpId)
             ->get();
     }
 }
