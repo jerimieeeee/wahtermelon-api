@@ -15,6 +15,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 
 class EclaimsUploadController extends Controller
 {
@@ -41,7 +42,12 @@ class EclaimsUploadController extends Controller
                     $q->orSearch($columns, 'LIKE', $request->filter['search']);
                 });
             })
-            ->with(['caserate.attendant', 'patient'])
+            ->when(isset($request->code), function ($q) use ($request) {
+                $q->whereHas('caserate', function ($q) use ($request) {
+                    $q->where('code', $request->code);
+                });
+            })
+            ->with(['patient', 'caserate.attendant', 'caserate'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
