@@ -282,6 +282,12 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('laboratory-biopsy-type', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryBiopsyTypeController::class, 'index'])->name('laboratory-biopsy-type.index');
     Route::get('laboratory-biopsy-type/{$libLaboratoryRifResult}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryBiopsyTypeController::class, 'show'])->name('laboratory-biopsy-type.show');
 
+    Route::get('laboratory-syphilis-method', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySyphilisTestMethodController::class, 'index'])->name('laboratory-syphilis-method.index');
+    Route::get('laboratory-syphilis-method/{syphilisTestMethod}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratorySyphilisTestMethodController::class, 'show'])->name('laboratory-syphilis-method.show');
+
+    Route::get('laboratory-malaria-parasite', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryMalariaRdtParasiteTypeController::class, 'index'])->name('laboratory-malaria-parasite.index');
+    Route::get('laboratory-malaria-parasite/{malariaParasiteType}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryMalariaRdtParasiteTypeController::class, 'show'])->name('laboratory-malaria-parasite.show');
+
     //Patient Pregnancy History
     Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
     Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');

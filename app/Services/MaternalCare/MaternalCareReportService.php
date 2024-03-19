@@ -17,7 +17,7 @@ class MaternalCareReportService
                         settings_catchment_barangays.population,
                         (SELECT SUM(population) FROM settings_catchment_barangays) AS total_population
                     ')
-            ->leftJoin('barangays', 'barangays.code', '=', 'settings_catchment_barangays.barangay_code')
+            ->leftJoin('barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->whereFacilityCode(auth()->user()->facility_code)
             ->groupBy('facility_code', 'barangay_code', 'year', 'population');
     }
@@ -39,14 +39,14 @@ class MaternalCareReportService
         return DB::table('municipalities')
             ->selectRaw('
                         patient_id,
-                        municipalities.code AS municipality_code,
-                        barangays.code AS barangay_code
+                        municipalities.psgc_10_digit_code AS municipality_code,
+                        barangays.psgc_10_digit_code AS barangay_code
                     ')
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.code', '=', 'household_folders.barangay_code')
+            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
+            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_4prenatal_give_birth($request, $age_year_bracket1, $age_year_bracket2)

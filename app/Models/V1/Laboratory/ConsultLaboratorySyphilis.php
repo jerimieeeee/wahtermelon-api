@@ -4,7 +4,9 @@ namespace App\Models\V1\Laboratory;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Libraries\LibLaboratoryResult;
 use App\Models\V1\Libraries\LibLaboratoryStatus;
+use App\Models\V1\Libraries\LibLaboratorySyphilisTestMethod;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConsultLaboratoryCervicalCancer extends Model
+class ConsultLaboratorySyphilis extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUuids, FilterByUser;
 
@@ -54,6 +56,16 @@ class ConsultLaboratoryCervicalCancer extends Model
     public function consult()
     {
         return $this->belongsTo(Consult::class);
+    }
+
+    public function syphilisTestMethod()
+    {
+        return $this->belongsTo(LibLaboratorySyphilisTestMethod::class, 'method_code', 'code');
+    }
+
+    public function laboratoryResult()
+    {
+        return $this->belongsTo(LibLaboratoryResult::class, 'findings_code', 'code');
     }
 
     public function laboratoryRequest()

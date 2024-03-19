@@ -23,14 +23,14 @@ class NcdReportService
         return DB::table('municipalities')
             ->selectRaw('
                         patient_id,
-                        municipalities.code AS municipality_code,
-                        barangays.code AS barangay_code
+                        municipalities.psgc_10_digit_code AS municipality_code,
+                        barangays.psgc_10_digit_code AS barangay_code
                     ')
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.code', '=', 'household_folders.barangay_code')
+            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->groupBy('patient_id', 'municipalities.code', 'barangays.code');
+            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_risk_assessed($request, $patient_gender, $age)
@@ -104,7 +104,7 @@ class NcdReportService
             ->whereSmoking(3)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
-            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
+//            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
 
@@ -140,6 +140,7 @@ class NcdReportService
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereAlcoholIntake(1)
+            ->whereExcessiveAlcoholIntake('Y')
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')

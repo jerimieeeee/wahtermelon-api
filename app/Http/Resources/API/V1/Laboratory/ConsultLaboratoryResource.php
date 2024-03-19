@@ -15,23 +15,36 @@ class ConsultLaboratoryResource extends JsonResource
     public function toArray($request)
     {
         $lab_result = match ($this->lab_code) {
+            'BPSY' => 'biopsy',
+            'BCHM' => 'bloodchem',
             'CBC' => 'cbc',
-            'CRTN' => 'creatinine',
             'CXRAY' => 'chestXray',
+            'CRTN' => 'creatinine',
+            'RDT' => 'dengueRdt',
             'ECG' => 'ecg',
             'FBS' => 'fbs',
-            'RBS' => 'rbs',
-            'HBA' => 'hba1c',
-            'PSMR' => 'papsmear',
-            'PPD' => 'ppd',
-            'SPTM' => 'sputum',
-            'FCAL' => 'fecalysis',
-            'LPFL' => 'lipiProfile',
-            'URN' => 'urinalysis',
-            'OGTT' => 'oralGlucose',
             'FOBT' => 'fecalOccult',
+            'FCAL' => 'fecalysis',
+            'GXPT' => 'geneXpert',
             'GRMS' => 'gramStain',
-            'MCRP' => 'microscopy'
+            'HEMA' => 'hematology',
+            'HBA' => 'hba1c',
+            'LPFL' => 'lipiProfile',
+            'MRDT' => 'malariaRdt',
+            'MCRP' => 'microscopy',
+            'OGTT' => 'oralGlucose',
+            'PSMR' => 'papsmear',
+            'KOH' => 'potassium',
+            'PPD' => 'ppd',
+            'RBS' => 'rbs',
+            'SRLG' => 'serology',
+            'SSMR' => 'skinSlit',
+            'SPTM' => 'sputum',
+            'USND' => 'ultrasound',
+            'URN' =>  'urinalysis',
+            'WETS' => 'wetSmear',
+            'SYPH' => 'syphilis',
+            'CCS' => 'cervical'
         };
 
         return [

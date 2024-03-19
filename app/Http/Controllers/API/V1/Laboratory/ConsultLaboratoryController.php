@@ -76,7 +76,18 @@ class ConsultLaboratoryController extends Controller
                 'gramStain',
                 'microscopy',
                 'ultrasound',
-                'geneXpert')
+                'geneXpert',
+                'dengueRdt',
+                'serology',
+                'biopsy',
+                'malariaRdt',
+                'skinSlit',
+                'wetSmear',
+                'bloodchem',
+                'potassium',
+                'hematology',
+                'syphilis',
+                'cervical')
             ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')
             ->allowedSorts('request_date');
