@@ -25,6 +25,8 @@ class LibMedicineUnitOfMeasurementSeeder extends Seeder
             ['code' => 'qt', 'desc' => 'Quart'],
             ['code' => 'T, tbs', 'desc' => 'Tablespoon'],
             ['code' => 't, tsp', 'desc' => 'Teaspoon'],
+            ['code' => 'IU', 'desc' => 'International Unit'],
+            ['code' => 'Drops', 'desc' => 'Drops'],
         ], ['code']);
     }
 }
