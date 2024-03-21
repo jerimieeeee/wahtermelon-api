@@ -38,8 +38,8 @@ class ConsultLaboratoryGeneXpertRequest extends FormRequest
 
             'collection_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
             'release_date' => 'date|date_format:Y-m-d|before:tomorrow|required',
-            'mtb' => 'required|exists:lib_laboratory_mtb_results,code',
-            'rif' => 'required|exists:lib_laboratory_rif_results,code',
+            'mtb_code' => 'required|exists:lib_laboratory_mtb_results,code',
+            'rif_code' => 'required|exists:lib_laboratory_rif_results,code',
             'specimen_code' => 'required',
 
             'remarks' => 'nullable',
