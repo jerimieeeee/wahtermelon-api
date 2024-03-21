@@ -307,6 +307,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
             //->whereRaw('dropout_reason LIKE "Lost%"')
             ->whereNotNull('date_registered')
             ->whereNotNull('method_id')
+            ->where('method_id', '!=', '')
             ->whereNotNull('client_code')
             ->where('client_code', '!=', '')
             ->whereNotNull('treatment_partner')
