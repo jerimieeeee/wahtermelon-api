@@ -246,7 +246,7 @@ class MigrateMisuWahFamilyPlanningCommand extends Command
                 $join->on('patient_fp.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            //->whereNull('wahtermelon_fp_id')
+            ->whereNull('wahtermelon_fp_id')
             ->get();
     }
 
