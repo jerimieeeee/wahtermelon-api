@@ -111,7 +111,7 @@ class MigrateMisuWahChildCareCommand extends Command
                 $join->on('patient_ccdev.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            ->whereNull('wahtermelon_ccdev_id')
+            //->whereNull('wahtermelon_ccdev_id')
             ->whereNull('deleted_at')
             ->whereNotNull('birth_weight')
             ->get();
@@ -145,7 +145,7 @@ class MigrateMisuWahChildCareCommand extends Command
             ->get();
     }
 
-    public function getCcVaccines($ccdevId)
+    public function getCcVaccines($patientId)
     {
         return DB::connection('mysql_migration')->table('consult_ccdev_vaccine')
             ->selectRaw('
@@ -174,7 +174,8 @@ class MigrateMisuWahChildCareCommand extends Command
                 $join->on('consult_ccdev_vaccine.user_id', '=', 'user.id')
                     ->whereNotNull('user.wahtermelon_user_id');
             })
-            ->whereCcdevId($ccdevId)
+            ->where('patient.wahtermelon_patient_id', $patientId)
+            //->whereCcdevId($ccdevId)
             ->get();
     }
 
@@ -316,7 +317,7 @@ class MigrateMisuWahChildCareCommand extends Command
                 $this->saveCcServices($services, $facilityCode);
             }
 
-            $vaccines = $this->getCcVaccines($patientCcData['id']);
+            $vaccines = $this->getCcVaccines($patientCcData['patient_id']);
             if(count($vaccines) > 0) {
                 $this->saveCcVaccines($vaccines, $facilityCode);
             }
