@@ -42,6 +42,7 @@ class MedicineListResource extends JsonResource
             'preparation' => $this->whenLoaded('quantityPreparation'),
             'medicine_route_code' => $this->when(! $this->relationLoaded('medicineRoute'), $this->medicine_route),
             'medicine_route' => $this->whenLoaded('medicineRoute'),
+            'instruction_quantity' => $this->instruction_quantity,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

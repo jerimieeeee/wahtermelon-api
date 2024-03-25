@@ -70,7 +70,7 @@ class ConsultController extends Controller
             ->when(isset($request->not_consult_id), function ($q) use ($request) {
                 $q->where('id', '!=', $request->not_consult_id);
             })
-            ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription.konsultaMedicine', 'prescription.dosageUom', 'prescription.doseRegimen', 'prescription.medicinePurpose', 'prescription.durationFrequency', 'prescription.medicineRoute', 'prescription.quantityPreparation', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
+            ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription.konsultaMedicine', 'prescription.konsultaMedicine.generic', 'prescription.dosageUom', 'prescription.doseRegimen', 'prescription.medicinePurpose', 'prescription.durationFrequency', 'prescription.medicineRoute', 'prescription.quantityPreparation', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
             ->defaultSort('consult_date')
             ->allowedSorts('consult_date');
 

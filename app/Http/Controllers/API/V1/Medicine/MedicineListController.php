@@ -39,7 +39,7 @@ class MedicineListController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        $columns = ['brand_name', 'added_medicine'];
+        $columns = ['brand_name', 'added_medicine', 'dosage_quantity', 'dosage_uom'];
         $medicines = QueryBuilder::for(MedicineList::class)
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
                 $q->orSearch($columns, 'LIKE', $request->filter['search'])

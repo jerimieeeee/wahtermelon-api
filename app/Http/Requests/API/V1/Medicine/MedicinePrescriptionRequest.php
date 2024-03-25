@@ -52,6 +52,7 @@ class MedicinePrescriptionRequest extends FormRequest
             'quantity' => 'required:numeric',
             'quantity_preparation' => 'required:exists:lib_medicine_preparations,code',
             'medicine_route_code' => 'required:exists:lib_medicine_routes,code',
+            'remarks' => 'nullable',
         ];
     }
 

@@ -318,7 +318,7 @@ class EclaimsSyncController extends Controller
             // $desc = $e->getMessage();
 
             // return $desc;
-            return response()->json(['message' => $e->getMessage(), 'success' => false], 403);
+            return response()->json(['message' => $e->getMessage(), 'success' => false], 400);
         }
     }
 

@@ -15,6 +15,7 @@ use App\Models\V1\Libraries\LibMedicineUnitOfMeasurement;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByUser;
+use App\Traits\FilterByFacility;
 use App\Traits\HasSearchFilter;
 use DateTimeInterface;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MedicineList extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUlids, HasSearchFilter, FilterByUser;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, HasUlids, HasSearchFilter, FilterByUser, FilterByFacility;
 
     protected $guarded = [
         'id',
@@ -36,7 +37,7 @@ class MedicineList extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'dosage_quantity' => 'integer',
+        'dosage_quantity' => 'double',
         'duration_intake' => 'integer',
         'quantity' => 'integer',
     ];
@@ -98,6 +99,6 @@ class MedicineList extends Model
 
     public function medicineRoute()
     {
-        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route', 'code');
+        return $this->belongsTo(LibMedicineRoute::class, 'medicine_route_code', 'code');
     }
 }
