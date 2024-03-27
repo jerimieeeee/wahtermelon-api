@@ -55,4 +55,14 @@ class KonsultaTransmittal extends Model
         return $this->hasManyThrough(Patient::class, Consult::class, 'transmittal_number', 'id', 'transmittal_number', 'patient_id');
     }
 
+    public function consult()
+    {
+        return $this->hasMany(Consult::class, 'transmittal_number', 'transmittal_number');
+    }
+
+    public function philhealth()
+    {
+        return $this->hasMany(PatientPhilhealth::class, 'transmittal_number', 'transmittal_number');
+    }
+
 }
