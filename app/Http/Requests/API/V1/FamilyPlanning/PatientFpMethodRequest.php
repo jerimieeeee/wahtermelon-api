@@ -29,7 +29,7 @@ class PatientFpMethodRequest extends FormRequest
             'client_code' => 'required|exists:lib_fp_client_types,code',
             'treatment_partner' => 'required',
             'permananent_reason' => 'nullable',
-            'dropout_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'dropout_date' => 'nullable|date|date_format:Y-m-d|after_or_equal:enrollment_date',
             'dropout_reason_code' => 'nullable|exists:lib_fp_dropout_reasons,code',
             'dropout_remarks' => 'nullable',
         ];
