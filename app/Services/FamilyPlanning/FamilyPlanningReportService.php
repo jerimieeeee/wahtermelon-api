@@ -142,8 +142,8 @@ class FamilyPlanningReportService
                         SUM(CASE
                             WHEN
                                 client_code = 'NA' AND
-                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
-                                IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
+                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ?-1, MONTH(enrollment_date) = ?-1 AND YEAR(enrollment_date) = ?)
                             THEN 1
                             ELSE 0
                             END) AS 'new_acceptor_previous_month_10_to_14',
@@ -192,31 +192,31 @@ class FamilyPlanningReportService
                         END) AS 'other_acceptor_present_month_20_to_49',
                           	SUM(CASE
                                 WHEN
-                                    dropout_date IS NOT NULL AND
-                                    dropout_reason_code IS NOT NULL AND
-                                    TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14 AND
-                                    MONTH(dropout_date) = ? AND
-                                    YEAR(dropout_date) = ?
+                                    dropout_date IS NOT NULL
+                                    AND dropout_reason_code IS NOT NULL
+                                    AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 49
+                                    AND MONTH(dropout_date) = ?
+                                    AND YEAR(dropout_date) = ?
                                 THEN 1
                                 ELSE 0
                               END) AS 'dropout_present_month_10_to_14',
                         SUM(CASE
                             WHEN
-                                dropout_date IS NOT NULL AND
-                                dropout_reason_code IS NOT NULL AND
-                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19 AND
-                                MONTH(dropout_date) = ? AND
-                                YEAR(dropout_date) = ?
+                                dropout_date IS NOT NULL
+                                AND dropout_reason_code IS NOT NULL
+                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND MONTH(dropout_date) = ?
+                                AND YEAR(dropout_date) = ?
                             THEN 1
                             ELSE 0
                           END) AS 'dropout_present_month_15_to_19',
                         SUM(CASE
                             WHEN
-                                dropout_date IS NOT NULL AND
-                                dropout_reason_code IS NOT NULL AND
-                                TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49 AND
-                                MONTH(dropout_date) = ? AND
-                                YEAR(dropout_date) = ?
+                                dropout_date IS NOT NULL
+                                AND dropout_reason_code IS NOT NULL
+                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND MONTH(dropout_date) = ?
+                                AND YEAR(dropout_date) = ?
                             THEN 1
                             ELSE 0
                           END) AS 'dropout_present_month_20_to_49',
@@ -325,7 +325,6 @@ class FamilyPlanningReportService
         ->when($request->category == 'barangay', function ($q) use ($request) {
             $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
         })
-        ->where('method_code', '!=', 'NA')
         ->groupBy('method_code');
     }
 
@@ -354,7 +353,8 @@ class FamilyPlanningReportService
             ->from('lib_fp_methods')
             ->leftJoinSub($this->get_fp_report($request), 'fp_report', function ($join) {
                 $join->on('fp_report.method_code', '=', 'lib_fp_methods.code');
-            });
+            })
+            ->where('method_code', '!=', 'NA');
         });
     }
 }
