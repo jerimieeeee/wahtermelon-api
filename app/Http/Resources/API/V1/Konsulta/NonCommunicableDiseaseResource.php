@@ -100,7 +100,7 @@ class NonCommunicableDiseaseResource extends JsonResource
                 'pQid16_Yn' => $this->riskQuestionnaire->question8 ?? '',
                 'pQid17_Abcde' => $riskStrat->konsulta_risk_stratifcation_id ?? '',
                 'pQid18_Yn' => $this->diabetes_medications ?? '',
-                'pQid19_Yn' => $this->riskScreeningGlucose->raised_blood_glucose ?? '',
+                'pQid19_Yn' => !empty($this->riskScreeningGlucose->raised_blood_glucose) ? ($this->riskScreeningGlucose->raised_blood_glucose == 1 ? 'Y' : ($this->riskScreeningGlucose->raised_blood_glucose == 0 ? 'N' : '')) : '',
                 'pQid19_Fbsmg' => $this->riskScreeningGlucose->fbs ?? '',
                 'pQid19_Fbsmmol' => '',
                 'pQid19_Fbsdate' => ! empty($this->riskScreeningGlucose->date_taken) ? $this->riskScreeningGlucose->date_taken?->format('Y-m-d') : '',
