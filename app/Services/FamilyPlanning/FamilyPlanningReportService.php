@@ -78,7 +78,7 @@ class FamilyPlanningReportService
                         SUM(
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
                                 AND(dropout_date IS NULL
-                                    OR DATE_FORMAT(dropout_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0')))
+                                    OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
                                 AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')) THEN
                                             1
