@@ -340,29 +340,27 @@ class FamilyPlanningReportService
     {
         return DB::table(function ($query) use($request) {
             $query->selectRaw("
-                        code,
-                        method_code,
-                        CAST(current_user_beginning_month_10_to_14 AS UNSIGNED) AS current_user_beginning_month_10_to_14,
-                        CAST(current_user_beginning_month_15_to_19 AS UNSIGNED) AS current_user_beginning_month_15_to_19,
-                        CAST(current_user_beginning_month_20_to_49 AS UNSIGNED) AS current_user_beginning_month_20_to_49,
-                        CAST(new_acceptor_previous_month_10_to_14 AS UNSIGNED) AS new_acceptor_previous_month_10_to_14,
-                        CAST(new_acceptor_previous_month_15_to_19 AS UNSIGNED) AS new_acceptor_previous_month_15_to_19,
-                        CAST(new_acceptor_previous_month_20_to_49 AS UNSIGNED) AS new_acceptor_previous_month_20_to_49,
-                        CAST(other_acceptor_present_month_10_to_14 AS UNSIGNED) AS other_acceptor_present_month_10_to_14,
-                        CAST(other_acceptor_present_month_15_to_19 AS UNSIGNED) AS other_acceptor_present_month_15_to_19,
-                        CAST(other_acceptor_present_month_20_to_49 AS UNSIGNED) AS other_acceptor_present_month_20_to_49,
-                        CAST(dropout_present_month_10_to_14 AS UNSIGNED) AS dropout_present_month_10_to_14,
-                        CAST(dropout_present_month_15_to_19 AS UNSIGNED) AS dropout_present_month_15_to_19,
-                        CAST(dropout_present_month_20_to_49 AS UNSIGNED) AS dropout_present_month_20_to_49,
-                        CAST(new_acceptor_present_month_10_to_14 AS UNSIGNED) AS new_acceptor_present_month_10_to_14,
-                        CAST(new_acceptor_present_month_15_to_19 AS UNSIGNED) AS new_acceptor_present_month_15_to_19,
-                        CAST(new_acceptor_present_month_20_to_49 AS UNSIGNED) AS new_acceptor_present_month_20_to_49
+                        lib_fp_methods.code,
+                        CAST(IFNULL(current_user_beginning_month_10_to_14, 0) AS UNSIGNED) AS current_user_beginning_month_10_to_14,
+                        CAST(IFNULL(current_user_beginning_month_15_to_19, 0) AS UNSIGNED) AS current_user_beginning_month_15_to_19,
+                        CAST(IFNULL(current_user_beginning_month_20_to_49, 0) AS UNSIGNED) AS current_user_beginning_month_20_to_49,
+                        CAST(IFNULL(new_acceptor_previous_month_10_to_14, 0) AS UNSIGNED) AS new_acceptor_previous_month_10_to_14,
+                        CAST(IFNULL(new_acceptor_previous_month_15_to_19, 0) AS UNSIGNED) AS new_acceptor_previous_month_15_to_19,
+                        CAST(IFNULL(new_acceptor_previous_month_20_to_49, 0) AS UNSIGNED) AS new_acceptor_previous_month_20_to_49,
+                        CAST(IFNULL(other_acceptor_present_month_10_to_14, 0) AS UNSIGNED) AS other_acceptor_present_month_10_to_14,
+                        CAST(IFNULL(other_acceptor_present_month_15_to_19, 0) AS UNSIGNED) AS other_acceptor_present_month_15_to_19,
+                        CAST(IFNULL(other_acceptor_present_month_20_to_49, 0) AS UNSIGNED) AS other_acceptor_present_month_20_to_49,
+                        CAST(IFNULL(dropout_present_month_10_to_14, 0) AS UNSIGNED) AS dropout_present_month_10_to_14,
+                        CAST(IFNULL(dropout_present_month_15_to_19, 0) AS UNSIGNED) AS dropout_present_month_15_to_19,
+                        CAST(IFNULL(dropout_present_month_20_to_49, 0) AS UNSIGNED) AS dropout_present_month_20_to_49,
+                        CAST(IFNULL(new_acceptor_present_month_10_to_14, 0) AS UNSIGNED) AS new_acceptor_present_month_10_to_14,
+                        CAST(IFNULL(new_acceptor_present_month_15_to_19, 0) AS UNSIGNED) AS new_acceptor_present_month_15_to_19,
+                        CAST(IFNULL(new_acceptor_present_month_20_to_49, 0) AS UNSIGNED) AS new_acceptor_present_month_20_to_49
                     ")
             ->from('lib_fp_methods')
             ->leftJoinSub($this->get_fp_report($request), 'fp_report', function ($join) {
                 $join->on('fp_report.method_code', '=', 'lib_fp_methods.code');
-            })
-            ->where('method_code', '!=', 'NA');
+            });
         });
     }
 }
