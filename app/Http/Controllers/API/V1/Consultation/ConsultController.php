@@ -43,7 +43,7 @@ class ConsultController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        /*$perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
             ->when(isset($request->pt_group), function ($q) use ($request) {
@@ -83,9 +83,9 @@ class ConsultController extends Controller
             return ConsultResource::collection($consult->get());
         }
 
-        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());
+        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());*/
 
-        /*$perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
             ->when($request->filled('pt_group'), function ($q) use ($request) {
@@ -147,7 +147,7 @@ class ConsultController extends Controller
             return ConsultResource::collection($consult->get());
         }
 
-        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());*/
+        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());
     }
 
     /**
