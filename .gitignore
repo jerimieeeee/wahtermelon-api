@@ -21,3 +21,4 @@ resources/docs/
 resources/views/scribe/
 .scribe/
 public/vendor/scribe/
+public/vendor
