@@ -30,7 +30,7 @@ class ConsultStatsController extends Controller
      */
     public function index(StatsService $statsService)
     {
-        /*$date_today = Carbon::today()->toDateString();
+        $date_today = Carbon::today()->toDateString();
 
         $today_count = Consult::query()
             ->whereDate('consult_date', '=', $date_today)
@@ -69,18 +69,8 @@ class ConsultStatsController extends Controller
             //User Birthday Celebrant
             'user_birthdate' => $user_birthdate,
 
-        ];*/
-        return ['consult_count' => 0,
-            'program_count' => 0,
-            'patient_registered' => 0,
-
-            //Patient Birthday Celebrant
-            'patient_birthdate' => [],
-
-            //User Birthday Celebrant
-            'user_birthdate' => [],
-
         ];
+
     }
 
     /**
