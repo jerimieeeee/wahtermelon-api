@@ -36,8 +36,6 @@ class ReportFamilyPlanningNameListService
 
     public function get_report_namelist($request)
     {
-        $columns = ['last_name', 'first_name', 'middle_name'];
-
         return DB::table('patient_fp_methods')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
