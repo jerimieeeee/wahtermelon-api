@@ -231,77 +231,57 @@ class ChildCareReportService
 
     public function get_fic_cic($request, $patient_gender, $immunization_status)
     {
-        return DB::table(function ($query) {
-            $query->selectRaw("
-                            patient_vaccines.patient_id,
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            gender,
-                            birthdate,
-                            vaccine_date,
-                            vaccine_id,
-                            status_id,
-                            municipality_code,
-                            barangay_code,
-                            patient_vaccines.facility_code AS facility_code
-                ")
-                ->from('patient_vaccines')
-                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
-                })
-                ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
-                ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id', 'municipality_code', 'barangay_code');
-        })
+        return DB::table('patient_vaccines')
             ->selectRaw("
-                name,
-                gender,
-                birthdate,
-                MAX(vaccine_date) AS date_of_service,
-                TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month,
-                SUM(
-                    CASE WHEN vaccine_id = 'BCG' THEN
-                        1
-                    ELSE
-                        0
-                    END) AS 'BCG',
-                SUM(
-                    CASE WHEN vaccine_id = 'PENTA' THEN
-                        1
-                    ELSE
-                        0
-                    END) AS 'PENTA',
-                SUM(
-                    CASE WHEN vaccine_id = 'OPV' THEN
-                        1
-                    ELSE
-                        0
-                    END) AS 'OPV',
-                SUM(
-                    CASE WHEN vaccine_id = 'MCV' THEN
-                        1
-                    ELSE
-                        0
-                    END) AS 'MCV',
-                SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_id DESC), ',', 1), ',', - 1) AS status_id,
-                municipality_code,
-                barangay_code
-        ")
-            ->groupBy('birthdate', 'municipality_code', 'barangay_code', 'name', 'gender')
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        SUM(
+                            CASE WHEN vaccine_id = 'BCG' THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'BCG',
+                        SUM(
+                            CASE WHEN vaccine_id = 'PENTA' THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'PENTA',
+                        SUM(
+                            CASE WHEN vaccine_id = 'OPV' THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'OPV',
+                        SUM(
+                            CASE WHEN vaccine_id = 'MCV' THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'MCV',
+                        MAX(vaccine_date) AS date_of_service,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_id DESC), ',', 1), ',', - 1) AS status_id,
+                        TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month
+                    ")
+            ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
+            })
+            ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
             ->when($request->category == 'all', function ($q) {
-                $q->where('facility_code', auth()->user()->facility_code);
+                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'facility', function ($q) {
-                $q->whereIn('barangay_code', $this->get_catchment_barangays());
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipality_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->when($immunization_status == 'FIC', function ($query) use ($patient_gender, $request) {
                 $query->whereGender($patient_gender)
-                    ->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month <= 12 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
+                    ->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
             })
             ->when($immunization_status == 'CIC', function ($query) use ($patient_gender, $request) {
                 $query->whereGender($patient_gender)
@@ -309,7 +289,8 @@ class ChildCareReportService
             })
             ->when($immunization_status == 'COMPLETED', fn ($query) => $query->whereGender($patient_gender)
                 ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24) AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            );
+            )
+            ->orderBy('name', 'ASC');
     }
 
     public function init_breastfeeding($request, $patient_gender)

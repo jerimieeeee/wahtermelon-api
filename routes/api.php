@@ -810,6 +810,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('report', 'index');
                 });
         });
+        Route::prefix('fp-namelist')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\FamilyPlanningNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
