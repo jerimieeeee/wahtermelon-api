@@ -278,6 +278,9 @@ class ChildCareReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
+            ->whereGender($patient_gender)
+            ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
+            ->groupBy('patient_vaccines.patient_id')
             ->when($immunization_status == 'FIC', function ($query) use ($request) {
                 $query->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
             })
@@ -287,9 +290,6 @@ class ChildCareReportService
             ->when($immunization_status == 'COMPLETED', function ($query) use ($request) {
                 $query->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
             })
-            ->whereGender($patient_gender)
-            ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
-            ->groupBy('patient_vaccines.patient_id')
             ->orderBy('name', 'ASC');
     }
 
