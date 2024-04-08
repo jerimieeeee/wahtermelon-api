@@ -290,6 +290,7 @@ class ChildCareReportService
             ->when($immunization_status == 'COMPLETED', fn ($query) => $query->whereGender($patient_gender)
                 ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24) AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
+            ->groupBy('patient_vaccines.patient_id')
             ->orderBy('name', 'ASC');
     }
 
