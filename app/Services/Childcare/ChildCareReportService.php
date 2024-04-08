@@ -259,7 +259,7 @@ class ChildCareReportService
                                 0
                             END) AS 'MCV',
                         MAX(vaccine_date) AS date_of_service,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_id DESC), ',', 1), ',', - 1) AS status_id,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS status_id,
                         TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month
                     ")
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
