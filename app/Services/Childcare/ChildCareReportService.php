@@ -262,9 +262,9 @@ class ChildCareReportService
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_id DESC), ',', 1), ',', - 1) AS status_id,
                         TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month
                     ")
-            ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+            ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
             })
             ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
             ->when($request->category == 'all', function ($q) {
