@@ -266,7 +266,6 @@ class ChildCareReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
             })
-            ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
             ->when($request->category == 'all', function ($q) {
                 $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
             })
@@ -279,17 +278,17 @@ class ChildCareReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->when($immunization_status == 'FIC', function ($query) use ($patient_gender, $request) {
-                $query->whereGender($patient_gender)
-                    ->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
+            ->when($immunization_status == 'FIC', function ($query) use ($request) {
+                $query->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
             })
-            ->when($immunization_status == 'CIC', function ($query) use ($patient_gender, $request) {
-                $query->whereGender($patient_gender)
-                    ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month BETWEEN 13 AND 23) AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
+            ->when($immunization_status == 'CIC', function ($query) use ($request) {
+                $query->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month BETWEEN 13 AND 23) AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
             })
-            ->when($immunization_status == 'COMPLETED', fn ($query) => $query->whereGender($patient_gender)
-                ->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24) AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
+            ->when($immunization_status == 'COMPLETED', function ($query) use ($request) {
+                $query->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24 AND status_id = 1 AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]);
+            })
+            ->whereGender($patient_gender)
+            ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
             ->groupBy('patient_vaccines.patient_id')
             ->orderBy('name', 'ASC');
     }
