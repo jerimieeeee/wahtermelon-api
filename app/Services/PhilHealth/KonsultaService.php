@@ -794,10 +794,11 @@ class KonsultaService
 
         if ($tranche == 2) {
             $soap[1]['MEDICINE'] = array_filter([count($medicine) != 0 ? $medicineResource->resolve() : '', count($noMedicine) != 0 ? $noMedicineResource->resolve() : '']);
+            $soap[2]['DIAGNOSTICEXAMRESULT'] = $laboratoryResource->resolve();
         } else {
             $soap[1]['MEDICINE'] = [$medicineResource->resolve()];
         }
-        ! empty($laboratory) ? $soap[2]['DIAGNOSTICEXAMRESULT'] = [$laboratoryResource->resolve()] : null;
+        //! empty($laboratory) ? $soap[2]['DIAGNOSTICEXAMRESULT'] = [$laboratoryResource->resolve()] : null;
 
         return $soap;
     }
