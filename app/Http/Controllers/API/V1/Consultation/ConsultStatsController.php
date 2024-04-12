@@ -70,6 +70,7 @@ class ConsultStatsController extends Controller
             'user_birthdate' => $user_birthdate,
 
         ];
+
     }
 
     /**

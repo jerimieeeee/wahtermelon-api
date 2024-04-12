@@ -43,7 +43,7 @@ class ConsultController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        /*$perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
             ->when(isset($request->pt_group), function ($q) use ($request) {
@@ -70,8 +70,77 @@ class ConsultController extends Controller
             ->when(isset($request->not_consult_id), function ($q) use ($request) {
                 $q->where('id', '!=', $request->not_consult_id);
             })
-            ->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription.konsultaMedicine', 'prescription.konsultaMedicine.generic', 'prescription.dosageUom', 'prescription.doseRegimen', 'prescription.medicinePurpose', 'prescription.durationFrequency', 'prescription.medicineRoute', 'prescription.quantityPreparation', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility')
+            ->when(isset($request->todays_patient), function ($q) {
+                $q->with('user', 'patient', 'physician');
+            })
+            ->when(!isset($request->todays_patient), function ($q) {
+                $q->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription.konsultaMedicine', 'prescription.konsultaMedicine.generic', 'prescription.dosageUom', 'prescription.doseRegimen', 'prescription.medicinePurpose', 'prescription.durationFrequency', 'prescription.medicineRoute', 'prescription.quantityPreparation', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility');
+            })
             ->defaultSort('consult_date')
+            ->allowedSorts('consult_date');
+
+        if ($perPage === 'all') {
+            return ConsultResource::collection($consult->get());
+        }
+
+        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());*/
+
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $consult = QueryBuilder::for(Consult::class)
+            ->when($request->filled('pt_group'), function ($q) use ($request) {
+                $q->where('pt_group', $request->pt_group);
+            })
+            ->when($request->filled('patient_id'), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->when($request->filled('consult_done'), function ($q) use ($request) {
+                $q->where('consult_done', $request->consult_done);
+            })
+            ->when($request->filled('id'), function ($q) use ($request) {
+                $q->where('id', $request->id);
+            })
+            ->when($request->filled('physician_id'), function ($q) use ($request) {
+                $q->where('physician_id', $request->physician_id);
+            })
+            ->when($request->filled('is_konsulta'), function ($q) use ($request) {
+                $q->where('is_konsulta', $request->is_konsulta);
+            })
+            ->when(!$request->filled('patient_id') && !$request->filled('id') && !$request->filled('physician_id'), function ($q) {
+                $q->where('facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->filled('not_consult_id'), function ($q) use ($request) {
+                $q->where('id', '!=', $request->not_consult_id);
+            })
+            ->when($request->filled('todays_patient'), function ($q) {
+                $q->with('user', 'patient', 'physician');
+            })
+            ->when(!$request->filled('todays_patient'), function ($q) {
+                $q->with([
+                    'user',
+                    'patient',
+                    'physician',
+                    'vitals',
+                    'consultNotes',
+                    'prescription.konsultaMedicine',
+                    'prescription.konsultaMedicine.generic',
+                    'prescription.dosageUom',
+                    'prescription.doseRegimen',
+                    'prescription.medicinePurpose',
+                    'prescription.durationFrequency',
+                    'prescription.medicineRoute',
+                    'prescription.quantityPreparation',
+                    'prescription.dispensing',
+                    'consultNotes.complaints.libComplaints',
+                    'consultNotes.physicalExam.libPhysicalExam',
+                    'consultNotes.physicalExamRemarks',
+                    'consultNotes.initialdx.diagnosis',
+                    'consultNotes.finaldx.libIcd10',
+                    'management.libManagement',
+                    'facility'
+                ]);
+            })
+            ->defaultSort($request->sort ?? 'consult_date')
             ->allowedSorts('consult_date');
 
         if ($perPage === 'all') {
