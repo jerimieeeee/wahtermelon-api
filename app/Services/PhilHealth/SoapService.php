@@ -165,7 +165,7 @@ class SoapService
 
             // Return SOAP fault details as error response
             return response()->json([
-                'error' => [
+                [
                     'code' => $faultcode,
                     'message' => $faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again."
                 ]
@@ -178,7 +178,7 @@ class SoapService
 
             // Return SocketException details as error response
             return response()->json([
-                'error' => [
+                [
                     'code' => $faultcode,
                     'message' => $faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again."
                 ]
@@ -297,7 +297,7 @@ class SoapService
 
                 // Return error response
                 return response()->json([
-                    'error' => [
+                    [
                         'code' => $faultcode,
                         'message' => $faultstring
                     ]
@@ -316,7 +316,7 @@ class SoapService
 
             // Return error response
             return response()->json([
-                'error' => [
+                [
                     'code' => $faultcode,
                     'message' => $faultstring
                 ]
@@ -343,7 +343,7 @@ class SoapService
 
                 // Return error response
                 return response()->json([
-                    'error' => [
+                    [
                         'code' => $faultcode,
                         'message' => $faultstring
                     ]

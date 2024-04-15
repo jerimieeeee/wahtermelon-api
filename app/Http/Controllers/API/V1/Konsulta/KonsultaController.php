@@ -83,7 +83,7 @@ class KonsultaController extends Controller
             // Your code logic here...
             if (empty($list)) {
                 return response()->json([
-                    'error' => [
+                    [
                         'code' => 404,
                         'message' => "No Records Found!"
                     ]
