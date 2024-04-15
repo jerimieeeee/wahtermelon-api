@@ -164,12 +164,12 @@ class SoapService
             $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
 
             // Return SOAP fault details as error response
-            return response()->json([
+            return response()->json(
                 [
                     'code' => $faultcode,
                     'message' => $faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again."
                 ]
-            ], $faultcode);
+            , $faultcode);
         }
 
         if (property_exists($encryptedOutput, 'return') && strpos($encryptedOutput->return, 'java.net.SocketException') !== false) {
@@ -177,12 +177,12 @@ class SoapService
             $faultstring = $encryptedOutput->return;
 
             // Return SocketException details as error response
-            return response()->json([
+            return response()->json(
                 [
                     'code' => $faultcode,
                     'message' => $faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again."
                 ]
-            ], 503);
+            , 503);
         }
 
         // Extract the encrypted return value
@@ -296,12 +296,12 @@ class SoapService
                 $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
 
                 // Return error response
-                return response()->json([
+                return response()->json(
                     [
                         'code' => $faultcode,
                         'message' => $faultstring
                     ]
-                ], $faultcode); // Set appropriate HTTP status code for server error
+                , $faultcode); // Set appropriate HTTP status code for server error
             }
 
             // If result is not a SOAP fault, decrypt and return response
@@ -315,12 +315,12 @@ class SoapService
             $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
 
             // Return error response
-            return response()->json([
+            return response()->json(
                 [
                     'code' => $faultcode,
                     'message' => $faultstring
                 ]
-            ], $faultcode); // Set appropriate HTTP status code for server error
+            , $faultcode); // Set appropriate HTTP status code for server error
         }
     }
 
@@ -342,12 +342,12 @@ class SoapService
                 $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
 
                 // Return error response
-                return response()->json([
+                return response()->json(
                     [
                         'code' => $faultcode,
                         'message' => $faultstring
                     ]
-                ], $faultcode); // Set appropriate HTTP status code for server error
+                , $faultcode); // Set appropriate HTTP status code for server error
             }
 
             // If result is not a SOAP fault, decrypt and return response

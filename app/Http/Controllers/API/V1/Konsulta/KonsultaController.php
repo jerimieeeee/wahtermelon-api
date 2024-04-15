@@ -82,12 +82,12 @@ class KonsultaController extends Controller
         try {
             // Your code logic here...
             if (empty($list)) {
-                return response()->json([
+                return response()->json(
                     [
                         'code' => 404,
                         'message' => "No Records Found!"
                     ]
-                ], 404);
+                , 404);
                 //throw new \Exception('No Records Found!', 404);
             }
         } catch (\Exception $e) {
