@@ -79,8 +79,16 @@ class KonsultaController extends Controller
     public function extractRegistrationList(Request $request, SoapService $service)
     {
         $list = $service->soapMethod('extractRegistrationList', $request->only('pStartDate', 'pEndDate'));
+        try {
+            // Your code logic here...
+            if (empty($list)) {
+                throw new \Exception('No Records Found!', 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
         if (isset($list->ASSIGNMENT)) {
-            $service->saveRegistrationList(array_filter($list->ASSIGNMENT));
+            $service->saveRegistrationList(array_filter(!is_array($list->ASSIGNMENT) ? [$list->ASSIGNMENT] : $list->ASSIGNMENT));
         }
 
         return $list;
