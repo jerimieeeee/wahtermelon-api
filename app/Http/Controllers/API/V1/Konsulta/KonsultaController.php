@@ -222,6 +222,9 @@ class KonsultaController extends Controller
             ->when($request->filter['tranche'] == 2 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
                 $query->whereHas('patientConsult', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
             })
+            ->when(isset($request->effectivity_year) && !empty($request->effectivity_year), function ($query) use($request) {
+                $query->whereEffectivityYear($request->effectivity_year);
+            })
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('created_at')
