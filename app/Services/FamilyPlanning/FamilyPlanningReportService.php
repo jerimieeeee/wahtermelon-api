@@ -329,6 +329,7 @@ class FamilyPlanningReportService
         ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
             $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
         })
+        ->whereNull('deleted_at')
         ->when($request->category == 'all', function ($q) {
             $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
         })
