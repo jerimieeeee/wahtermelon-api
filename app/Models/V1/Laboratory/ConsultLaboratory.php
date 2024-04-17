@@ -56,6 +56,7 @@ class ConsultLaboratory extends Model
         'hematology',
         'syphilis',
         'cervical',
+        'xray',
     ];
 
     public $incrementing = false;
@@ -255,6 +256,12 @@ class ConsultLaboratory extends Model
     {
         return $this->hasOne(ConsultLaboratoryCervicalCancer::class, 'request_id', 'id');
     }
+
+    public function xray()
+    {
+        return $this->hasOne(ConsultLaboratoryXray::class, 'request_id', 'id');
+    }
+
 
     public function getRelatedModel($model)
     {
