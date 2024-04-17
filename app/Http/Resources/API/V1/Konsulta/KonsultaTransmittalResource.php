@@ -17,10 +17,27 @@ class KonsultaTransmittalResource extends JsonResource
         $facilityCode = auth()->user()->facility_code ?? '';
         $patient = [];
         if ($this->tranche == 1) {
-            $patient = $this->patientPhilhealth;
+            $patient = $this->patientPhilhealth->load(['philhealth' => function ($query) {
+                $query->select('id', 'patient_id', 'philhealth_id', 'transmittal_number', 'enlistment_date', 'effectivity_year'); // Specify the columns you want to select from the philhealth table
+                $query->where('effectivity_year', $this->effectivity_year);
+                $query->with(['konsultaRegistration' => function ($query) {
+                    $query->where('effectivity_year', $this->effectivity_year)
+                        ->select('id', 'philhealth_id', 'assigned_date');
+                }]);
+            }]);
         }
         if ($this->tranche == 2) {
-            $patient = $this->patientConsult;
+            $patient = $this->patientConsult->load(['philhealth' => function ($query) {
+                $query->select('id', 'patient_id', 'philhealth_id', 'transmittal_number', 'enlistment_date', 'effectivity_year'); // Specify the columns you want to select from the philhealth table
+                $query->where('effectivity_year', $this->effectivity_year);
+                $query->with(['konsultaRegistration' => function ($query) {
+                    $query->where('effectivity_year', $this->effectivity_year)
+                        ->select('id', 'philhealth_id', 'assigned_date');
+                }]);
+            }, 'consult' => function ($query) {
+                $query->where('transmittal_number', $this->transmittal_number)
+                    ->select('id', 'patient_id', 'transmittal_number', 'consult_date');
+            }]);
         }
         return [
             'id' => $this->id,
