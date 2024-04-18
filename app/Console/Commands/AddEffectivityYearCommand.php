@@ -141,7 +141,10 @@ class AddEffectivityYearCommand extends Command
 
             if ($relatedRecord) {
                 $effectivityYear = $relatedRecord->effectivity_year;
+                // Temporarily disable timestamps
+                $transmittal->timestamps = false;
                 $transmittal->update(['effectivity_year' => $effectivityYear]);
+                $transmittal->timestamps = true;
             }
 
             $progressBar->advance();
