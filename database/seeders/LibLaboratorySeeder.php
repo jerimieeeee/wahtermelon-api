@@ -28,7 +28,7 @@ class LibLaboratorySeeder extends Seeder
             ['code' => 'SSMR', 'desc' => 'Skin Slit Smear', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'MCRP', 'desc' => 'Microscopy', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'MRDT', 'desc' => 'Malaria RDT', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
-            ['code' => 'XRAY', 'desc' => 'X-ray', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
+            ['code' => 'XRAY', 'desc' => 'X-ray', 'lab_active' => 0, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'CXRAY', 'desc' => 'Chest X-ray', 'lab_active' => 1, 'konsulta_active' => 1, 'konsulta_lab_id' => 4],
             ['code' => 'USND', 'desc' => 'Ultrasound', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
             ['code' => 'BPSY', 'desc' => 'Biopsy', 'lab_active' => 1, 'konsulta_active' => 0, 'konsulta_lab_id' => null],
