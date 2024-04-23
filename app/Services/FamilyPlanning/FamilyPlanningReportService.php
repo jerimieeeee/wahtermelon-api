@@ -46,8 +46,8 @@ class FamilyPlanningReportService
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
             ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
-            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id');
+//            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_fp_report($request)
@@ -329,6 +329,7 @@ class FamilyPlanningReportService
         ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
             $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
         })
+        ->whereNull('deleted_at')
         ->when($request->category == 'all', function ($q) {
             $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
         })

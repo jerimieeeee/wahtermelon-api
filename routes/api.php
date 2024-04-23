@@ -689,6 +689,14 @@ Route::prefix('v1')->group(function () {
                 Route::put('consult-laboratory-potassium/{potassium}', 'update');
                 Route::delete('consult-laboratory-potassium/{potassium}', 'destroy');
             });
+        Route::controller(\App\Http\Controllers\API\V1\Laboratory\ConsultLaboratoryXrayController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('consult-laboratory-xray', 'index');
+                Route::post('consult-laboratory-xray', 'store');
+                Route::put('consult-laboratory-xray/{xray}', 'update');
+                Route::delete('consult-laboratory-xray/{xray}', 'destroy');
+            });
     });
 
     //Patient Menstrual History APIs
