@@ -612,15 +612,15 @@ class KonsultaService
 
     }
 
-    public function saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status)
+    public function saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status, $effectivityYear)
     {
         KonsultaTransmittal::updateOrCreate(
             ['transmittal_number' => $transmittalNumber],
-            ['total_enlistment' => $enlistmentCount, 'tranche' => $tranche, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report]
+            ['total_enlistment' => $enlistmentCount, 'tranche' => $tranche, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report, 'effectivity_year' => $effectivityYear]
         );
     }
 
-    public function storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save = false)
+    public function storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save = false, $effectivityYear = null)
     {
         $service = new SoapService();
         if ($save) {
@@ -633,7 +633,10 @@ class KonsultaService
         $report = $service->soapMethod('validateReport', ['pReport' => $xmlEnc ?? $service->encryptData($xml), 'pReportTagging' => $tranche]);
 
         if ($save) {
-            $this->saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $fileName, $report, ! empty($report->success) ? 'V' : 'F');
+            if ($effectivityYear === null) {
+                $effectivityYear = date('Y');
+            }
+            $this->saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $fileName, $report, ! empty($report->success) ? 'V' : 'F', $effectivityYear);
         }
 
         return $report;
