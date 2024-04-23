@@ -125,10 +125,14 @@ class AddEffectivityYearCommand extends Command
 
         $transmittals = KonsultaTransmittal::query()
             ->select('id', 'transmittal_number', 'effectivity_year')
+            ->whereNull('effectivity_year')
             ->whereHas($type == 'FPE' ? 'philhealth' : 'consult')
             ->whereTranche($tranche)
             ->get();
-
+        if(count($transmittals) < 1){
+            $this->components->info('Nothing to Update');
+            return;
+        }
         $progressBar = $this->output->createProgressBar(count($transmittals));
         $progressBar->setFormat("Processing Konsulta {$type}: %current%/%max% [%bar%] %percent:3s%% Elapsed: %elapsed:6s% Remaining: %remaining:6s% Estimated: %estimated:-6s%");
         $progressBar->start();
