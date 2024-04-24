@@ -6,14 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 class MorbidityReportService
 {
-//    public function get_morbidity_icd10_desc()
-//    {
-//        return DB::table('lib_icd10s')
-//            ->selectRaw('
-//                        icd10_desc
-//                    ');
-//    }
-
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')

@@ -45,8 +45,8 @@ class FamilyPlanningReportService
                     ")
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
             ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
-            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
-            ->join('patients', 'household_members.patient_id', '=', 'patients.id');
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
+//            ->join('patients', 'household_members.patient_id', '=', 'patients.id');
 //            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
