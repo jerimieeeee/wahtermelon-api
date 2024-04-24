@@ -265,6 +265,8 @@ class MaternalCareReportService
                 ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('patient_mc', 'patient_vaccines.patient_id', '=', 'patient_mc.patient_id')
+                ->join('patient_mc_pre_registrations', 'patient_mc.id', '=', 'patient_mc_pre_registrations.patient_mc_id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
@@ -280,6 +282,7 @@ class MaternalCareReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
+                ->whereInitialGravidity(1)
                 ->whereVaccineId('TD')
                 ->whereStatusId('1')
                 ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
@@ -308,6 +311,8 @@ class MaternalCareReportService
                 ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('patient_mc', 'patient_vaccines.patient_id', '=', 'patient_mc.patient_id')
+                ->join('patient_mc_pre_registrations', 'patient_mc.id', '=', 'patient_mc_pre_registrations.patient_mc_id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
@@ -323,6 +328,7 @@ class MaternalCareReportService
                 ->when($request->category == 'barangay', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
+                ->whereInitialGravidity(1)
                 ->whereVaccineId('TD')
                 ->whereStatusId('1')
                 ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
@@ -377,12 +383,7 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
                         service_date AS date_of_service,
-                        service_id,
-                        positive_result,
-                        visit_status,
-                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year,
-                        municipality_code,
-                        barangay_code
+                        TIMESTAMPDIFF(YEAR, birthdate, service_date) AS age_year
                     ")
             ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
@@ -419,10 +420,7 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birthdate,
                         postpartum_date AS date_of_service,
-                        visit_sequence,
-                        TIMESTAMPDIFF(YEAR, birthdate, postpartum_date) AS age_year,
-                        municipality_code,
-                        barangay_code
+                        TIMESTAMPDIFF(YEAR, birthdate, postpartum_date) AS age_year
                     ")
             ->join('patients', 'consult_mc_postparta.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
@@ -452,11 +450,7 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         patients.birthdate,
                         DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service,
-                        TIMESTAMPDIFF(YEAR, patients.birthdate, delivery_date) AS age_year,
-                        facilities.facility_name AS facility_name,
-                        facilities.code AS facility_code,
-                        facilities.municipality_code AS municipality_code,
-                        patient_mc_post_registrations.barangay_code AS barangay_code
+                        TIMESTAMPDIFF(YEAR, patients.birthdate, delivery_date) AS age_year
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
@@ -485,12 +479,7 @@ class MaternalCareReportService
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         patients.birthdate,
-                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service,
-                        outcome_code,
-                        facilities.facility_name AS facility_name,
-                        facilities.code AS facility_code,
-                        facilities.municipality_code AS municipality_code,
-                        patient_mc_post_registrations.barangay_code AS barangay_code
+                        DATE_FORMAT(delivery_date, '%Y-%m-%d') AS date_of_service
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
