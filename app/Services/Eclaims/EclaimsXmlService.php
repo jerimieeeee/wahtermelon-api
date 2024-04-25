@@ -118,7 +118,7 @@ class EclaimsXmlService
             'CASERATE' => [
                 '_attributes' => [
                     'pCaseRateCode' => $request->caserate_code,
-                    'pICDCode' => $request->icd10_code,
+                    'pICDCode' => '',
                     'pRVSCode' => $request->code,
                     'pCaseRateAmount' => (int) $request->caserate_fee,
                 ],
