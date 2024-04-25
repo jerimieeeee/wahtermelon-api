@@ -349,9 +349,7 @@ class MaternalCareReportService
                         GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m') ORDER BY service_date ASC) AS service_dates,
                         GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m-%d') ORDER BY service_date ASC) AS date,
                         GROUP_CONCAT(service_qty ORDER BY service_date ASC) AS service_qty,
-                        GROUP_CONCAT(TIMESTAMPDIFF(YEAR, birthdate, DATE_FORMAT(service_date, '%Y-%m-%d')) ORDER BY service_date ASC) AS age_year,
-                        municipality_code,
-                        barangay_code
+                        GROUP_CONCAT(TIMESTAMPDIFF(YEAR, birthdate, DATE_FORMAT(service_date, '%Y-%m-%d')) ORDER BY service_date ASC) AS age_year
 		            ")
                 ->from('consult_mc_services')
                 ->join('patients', 'consult_mc_services.patient_id', '=', 'patients.id')

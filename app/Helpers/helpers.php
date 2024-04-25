@@ -159,8 +159,8 @@ if (! function_exists('get_completed_services')) {
                         $serviceObject['name'] = $value->name;
                         $serviceObject['birthdate'] = $value->birthdate;
                         $serviceObject['date_of_service'] = $dates[$k];
-                        $serviceObject['municipality_code'] = $value->municipality_code;
-                        $serviceObject['barangay_code'] = $value->barangay_code;
+//                        $serviceObject['municipality_code'] = $value->municipality_code;
+//                        $serviceObject['barangay_code'] = $value->barangay_code;
                         if ($age >= $ageBracket1 && $age <= $ageBracket2) {
                             $serviceArray[] = $serviceObject;
                         }
