@@ -29,16 +29,16 @@ class ReportFamilyPlanningNameListService
                     ")
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
             ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
-            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
-            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
+//            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+//            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_report_namelist($request)
     {
         return DB::table('patient_fp_methods')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -49,6 +49,7 @@ class ReportFamilyPlanningNameListService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
             })
+            ->whereNull('deleted_at')
             ->when($request->client_code == 'current_user_beginning_month', function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
@@ -134,9 +135,6 @@ class ReportFamilyPlanningNameListService
                     );
                 });
             })
-//           ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
-//                $q->orSearch($columns, 'LIKE', $request->filter['search']);
-//            })
             ->when($request->client_code == 'dropout_present_month', function($query) use ($request) {
                 $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, dropout_date)"), $request->age);
             })
@@ -155,6 +153,8 @@ class ReportFamilyPlanningNameListService
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            })->groupBy('patient_fp_methods.patient_id');
+            })
+            ->groupBy('patient_fp_methods.patient_id')
+            ->orderBy('name');
     }
 }

@@ -87,7 +87,9 @@ class ConsultLaboratoryController extends Controller
                 'potassium',
                 'hematology',
                 'syphilis',
-                'cervical')
+                'cervical',
+                'xray'
+            )
             ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')
             ->allowedSorts('request_date');

@@ -16,9 +16,10 @@ class SoapService
 {
     public function _client($methodName = null, $args = null)
     {
+        ini_set('max_execution_time', 0);
         $opts = [
             'http' => [
-                'user_agent' => 'PHPSoapClient',
+                'user_agent' => 'PHPSoapClient'
             ],
             'ssl' => [
                 // set some SSL/TLS specific options
@@ -93,7 +94,7 @@ class SoapService
         }
     }
 
-    private function decryptResponse($encryptedOutput)
+    /*private function decryptResponse($encryptedOutput)
     {
         if (isset($encryptedOutput->return) && ! isJson($encryptedOutput->return)) {
             if (Str::contains($encryptedOutput->return, ['Please enter Valid', 'Token', 'token'])) {
@@ -113,6 +114,11 @@ class SoapService
             return $encryptedOutput;
         }
         if (isset($encryptedOutput->return)) {
+            if (property_exists($encryptedOutput, 'return') && strpos($encryptedOutput->return, 'java.net.SocketException') !== false) {
+                // The object has "return" property containing "java.net.SocketException"
+                // Do something here, like logging or handling the exception
+                throw new \Exception($encryptedOutput->return, 503);
+            }
             $jsonOutput = json_decode($encryptedOutput->return);
             $cipher_key = auth()->user()->konsultaCredential->cipher_key;
         } else {
@@ -145,6 +151,108 @@ class SoapService
         $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
 
         return XML2JSON($decryptedData);
+    }*/
+
+    private function decryptResponse($encryptedOutput)
+    {
+        // Check if the output is a SOAP fault
+        if ($encryptedOutput instanceof SoapFault) {
+            $faultcode = $encryptedOutput->faultcode;
+            $faultstring = $encryptedOutput->faultstring;
+
+            // Ensure $faultcode is an integer
+            $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
+
+            // Return SOAP fault details as error response
+            return response()->json(
+                [
+                    'code' => $faultcode,
+                    'message' => $faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again."
+                ]
+            , $faultcode);
+        }
+
+        if (property_exists($encryptedOutput, 'return') && strpos($encryptedOutput->return, 'java.net.SocketException') !== false) {
+            $faultcode = 503;
+            $faultstring = $encryptedOutput->return;
+
+            // Return SocketException details as error response
+            return response()->json(
+                [
+                    'code' => $faultcode,
+                    'message' => $faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again."
+                ]
+            , 503);
+        }
+
+        // Extract the encrypted return value
+        $encryptedReturn = property_exists($encryptedOutput, 'return') ? $encryptedOutput->return : $encryptedOutput;
+
+        // Check if the return value is JSON
+        if (! isJson($encryptedReturn)) {
+            if (Str::contains($encryptedReturn, ['Please enter Valid', 'Token', 'token'])) {
+                // Handle token-related errors
+                $result = $this->handleTokenError();
+
+                // If token addition is successful, return success response
+                if (isset($result['success'])) {
+                    return response()->json([
+                        'message' => 'Successfully added the token in the database! You may now use konsulta webservice.',
+                    ], 201);
+                }
+            }
+
+            // Return the original encrypted output
+            return $encryptedOutput;
+        }
+
+        // Decode the JSON return value
+        $jsonOutput = json_decode($encryptedReturn);
+
+        // Get the cipher key based on the context
+        $cipher_key = isset($encryptedOutput->return) ? auth()->user()->konsultaCredential->cipher_key : PhilhealthCredential::whereProgramCode(request()->program_code)->first()->cipher_key;
+
+        // Create an instance of the decryptor
+        $decryptor = new PhilHealthEClaimsEncryptor();
+
+        // Decrypt the data and return the result
+        return $this->handleDecryption($jsonOutput, $decryptor, $cipher_key, $encryptedOutput);
+    }
+
+    private function handleTokenError()
+    {
+        $credentials = auth()->user()->konsultaCredential;
+        $credentialsResource = GetTokenResource::make($credentials)->resolve();
+        $result = $this->soapMethod('getToken', $credentialsResource);
+
+        if (isset($result->success)) {
+            $result = (array) $result;
+            $credentials->update(['token' => $result['result']]);
+            return ['success' => true];
+        }
+
+        return ['success' => false];
+    }
+
+    private function handleDecryption($jsonOutput, $decryptor, $cipher_key, $encryptedOutput)
+    {
+        if (! isset($jsonOutput->hash)) {
+            if (isset($jsonOutput->encryptedxmlerrors)) {
+                $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput->encryptedxmlerrors), $cipher_key);
+                return json_decode($decryptedData);
+            }
+            if (isset($jsonOutput->uploadxmlresult) && isset($jsonOutput->uploadxmlresult->errors)) {
+                return json_decode($jsonOutput->uploadxmlresult->errors);
+            }
+            if (isset($jsonOutput->iv)) {
+                $decryptedData = $decryptor->decryptPayloadDataToXml(json_encode($jsonOutput), $cipher_key);
+                return XML2JSON($decryptedData);
+            }
+            return $jsonOutput;
+        }
+
+        $decryptedData = $decryptor->decryptPayloadDataToXml($encryptedOutput->return, $cipher_key);
+        return XML2JSON($decryptedData);
     }
 
     public function encryptData($data, $cipher_key = null, $mimeType = null)
@@ -156,18 +264,97 @@ class SoapService
         return $encryptor->encryptXmlPayloadData($data, $cipher_key, $mimeType);
     }
 
-    public function soapMethod($method, $params)
+    public function soapMethod1($method, $params)
     {
         //return $this->getToken();
         $this->client = $this->_client();
-        try {
+        /*try {
             $result = $this->client->$method($params);
 
             return $this->decryptResponse($result);
-        } catch (\Exception $e) {
-            return $e;       // just re-throw it
+        } catch (\SoapFault|\Exception $e) {
+            // Handle SOAP faults
+            // Return SOAP fault with error details
+            $faultcode = $e->faultcode;
+            $faultstring = $e->getMessage();
+
+            $response = new \SoapFault($faultcode, $faultstring);
+            // Return the SOAP fault as a response
+            return $response;
+        }*/
+        try {
+            // Call the SOAP method
+            $result = $this->client->$method($params);
+
+            // If the result is a SOAP fault, handle it
+            if ($result instanceof SoapFault) {
+                // Extract fault details
+                $faultcode = $result->faultcode;
+                $faultstring = $result->faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again.";
+
+                // Ensure $faultcode is an integer
+                $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
+
+                // Return error response
+                return response()->json(
+                    [
+                        'code' => $faultcode,
+                        'message' => $faultstring
+                    ]
+                , $faultcode); // Set appropriate HTTP status code for server error
+            }
+
+            // If result is not a SOAP fault, decrypt and return response
+            return $this->decryptResponse($result);
+        } catch (\SoapFault $e) {
+            // Handle SOAP faults that were not caught by the SoapClient
+            $faultcode = $e->faultcode;
+            $faultstring = $e->getMessage();
+
+            // Ensure $faultcode is an integer
+            $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
+
+            // Return error response
+            return response()->json(
+                [
+                    'code' => $faultcode,
+                    'message' => $faultstring
+                ]
+            , $faultcode); // Set appropriate HTTP status code for server error
         }
     }
+
+    public function soapMethod($method, $params)
+    {
+        $this->client = $this->_client();
+        // Use Laravel's retry function to attempt the SOAP method call with retries
+        return retry(5, function () use ($method, $params) {
+            // Call the SOAP method
+            $result = $this->client->$method($params);
+
+            // If the result is a SOAP fault, handle it
+            if ($result instanceof SoapFault) {
+                // Extract fault details
+                $faultcode = $result->faultcode;
+                $faultstring = $result->faultstring . " PhilHealth Server cannot handle the request (because it is overloaded or down for maintenance). Please try again.";
+
+                // Ensure $faultcode is an integer
+                $faultcode = is_numeric($faultcode) ? (int) $faultcode : 500;
+
+                // Return error response
+                return response()->json(
+                    [
+                        'code' => $faultcode,
+                        'message' => $faultstring
+                    ]
+                , $faultcode); // Set appropriate HTTP status code for server error
+            }
+
+            // If result is not a SOAP fault, decrypt and return response
+            return $this->decryptResponse($result);
+        }, 1000);
+    }
+
 
     public function saveRegistrationList(array $data)
     {

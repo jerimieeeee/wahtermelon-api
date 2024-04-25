@@ -288,6 +288,9 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('laboratory-malaria-parasite', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryMalariaRdtParasiteTypeController::class, 'index'])->name('laboratory-malaria-parasite.index');
     Route::get('laboratory-malaria-parasite/{malariaParasiteType}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryMalariaRdtParasiteTypeController::class, 'show'])->name('laboratory-malaria-parasite.show');
 
+    Route::get('laboratory-xray-type', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryXrayTypeController::class, 'index'])->name('laboratory-xray-type.index');
+    Route::get('laboratory-xray-type/{libLaboratoryXrayType}', [\App\Http\Controllers\API\V1\Libraries\LibLaboratoryXrayTypeController::class, 'show'])->name('laboratory-xray-type.show');
+
     //Patient Pregnancy History
     Route::get('pregnancy-delivery-type', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'index'])->name('pregnancy-delivery-type.index');
     Route::get('pregnancy-delivery-type/{pregnancyDeliveryType}', [\App\Http\Controllers\API\V1\Libraries\LibPregnancyDeliveryTypeController::class, 'show'])->name('pregnancy-delivery-type.show');

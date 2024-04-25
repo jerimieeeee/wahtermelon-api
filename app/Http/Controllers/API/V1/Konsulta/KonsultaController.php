@@ -79,8 +79,22 @@ class KonsultaController extends Controller
     public function extractRegistrationList(Request $request, SoapService $service)
     {
         $list = $service->soapMethod('extractRegistrationList', $request->only('pStartDate', 'pEndDate'));
+        try {
+            // Your code logic here...
+            if (empty($list)) {
+                return response()->json(
+                    [
+                        'code' => 404,
+                        'message' => "No Records Found!"
+                    ]
+                , 404);
+                //throw new \Exception('No Records Found!', 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
         if (isset($list->ASSIGNMENT)) {
-            $service->saveRegistrationList(array_filter($list->ASSIGNMENT));
+            $service->saveRegistrationList(array_filter(!is_array($list->ASSIGNMENT) ? [$list->ASSIGNMENT] : $list->ASSIGNMENT));
         }
 
         return $list;
@@ -207,6 +221,9 @@ class KonsultaController extends Controller
             })
             ->when($request->filter['tranche'] == 2 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
                 $query->whereHas('patientConsult', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
+            ->when(isset($request->effectivity_year) && !empty($request->effectivity_year), function ($query) use($request) {
+                $query->whereEffectivityYear($request->effectivity_year);
             })
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')

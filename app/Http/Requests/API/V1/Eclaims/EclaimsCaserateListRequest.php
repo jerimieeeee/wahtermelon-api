@@ -32,7 +32,7 @@ class EclaimsCaserateListRequest extends FormRequest
             'code' => 'required',
             'description' => 'required',
             'discharge_dx' => 'required',
-            'icd10_code' => 'required|exists:lib_icd10s,icd10_code',
+            'icd10_code' => 'nullable|exists:lib_icd10s,icd10_code',
             'hci_fee' => 'required|numeric',
             'prof_fee' => 'required|numeric',
             'caserate_fee' => 'required|numeric',

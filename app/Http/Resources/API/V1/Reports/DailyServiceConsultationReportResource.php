@@ -19,6 +19,7 @@ class DailyServiceConsultationReportResource extends JsonResource
             'consult_id' => $this->id,
             'patient_id' => $this->patient->id,
             'patient_name' => ($this->patient->last_name ?? '') . ', ' . ($this->patient->first_name ?? '') . ' ' . ($this->patient->middle_name ?? ''),
+            'user_name' => ($this->user->last_name ?? '') . ', ' . ($this->user->first_name ?? '') . ' ' . ($this->user->middle_name ?? ''),
             'gender' => $this->patient->gender ?? null,
             'birthdate' => $this->patient->birthdate ? Carbon::parse($this->patient->birthdate)->format('m-d-Y') : null,
             'age' => ! empty($this->patient->birthdate) ? Carbon::parse($this->patient->birthdate)->diff($this->consult_date ?? '')->y.' Year(s), '.Carbon::parse($this->patient->birthdate)->diff($this->consult_date ?? '')->m.' Month(s), '.Carbon::parse($this->patient->birthdate)->diff($this->consult_date ?? '')->d.' Day(s)' : '',

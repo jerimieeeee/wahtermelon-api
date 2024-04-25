@@ -12,6 +12,7 @@ class DailyServiceReportService
     public function get_daily_service_consultation($request)
     {
         return Consult::with([
+            'user',
             'patient',
             'consultNotes',
             'patient.householdFolder',
@@ -35,21 +36,5 @@ class DailyServiceReportService
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->orderBy('consult_date')
             ->get();
-    }
-
-    public function get_daily_service_maternal($request)
-    {
-//        return Consult::with(['patient',
-//            'consultNotes',
-//            'patient.householdFolder',
-//            'patient.householdFolder.barangay',
-//            'philhealthLatest',
-//            'consultNotes.complaints',
-//            'consultNotes.initialdx',
-//            'consultNotes.finaldx',
-//            'vitalsLatest'])
-//            ->where('pt_group', 'mc')
-//            ->whereDate('consult_date', $request->date)
-//            ->get();
     }
 }

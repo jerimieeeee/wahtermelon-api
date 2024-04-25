@@ -18,7 +18,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  *
  * APIs for managing laboratories
  *
- * @subgroup Serology
+ * @subgroup Malaria
  *
  * @subgroupDescription Consult laboratory for Malaria RDT.
  */
