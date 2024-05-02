@@ -88,7 +88,7 @@ class ConsultController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
-            ->when($request->filled('pt_group'), function ($q) use ($request) {
+            ->when($request->filled('pt_group') && !($request->pt_group == 'dn' && $request->filled('not_consult_id')), function ($q) use ($request) {
                 $q->where('pt_group', $request->pt_group);
             })
             ->when($request->filled('patient_id'), function ($q) use ($request) {
@@ -110,7 +110,10 @@ class ConsultController extends Controller
                 $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->filled('not_consult_id'), function ($q) use ($request) {
-                $q->where('id', '!=', $request->not_consult_id);
+                $q->where('id', '!=', $request->not_consult_id)
+                ->when($request->pt_group == 'dn', function ($query) use ($request) {
+                    $query->whereIn('pt_group', ['dn', 'cn']);
+                });
             })
             ->when($request->filled('todays_patient'), function ($q) {
                 $q->with('user', 'patient', 'physician');
