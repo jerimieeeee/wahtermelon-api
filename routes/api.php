@@ -1265,4 +1265,15 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-ab-post-exposure', 'store');
             });
     });
+
+    Route::prefix('dental')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalMedicalSocialsController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('medical-socials', 'index');
+                Route::post('medical-socials', 'store');
+                Route::get('medical-socials/{dentalMedicalSocials}', 'show');
+                Route::put('medical-socials/{dentalMedicalSocials}', 'update');
+            });
+    });
 });
