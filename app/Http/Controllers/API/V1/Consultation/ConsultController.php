@@ -164,7 +164,7 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        if (request('pt_group') == 'cn') {
+        if (request('pt_group') == 'cn' || request('pt_group') == 'dn') {
             $data = Consult::create($request->validated());
             $data->consultNotes()->create($request->validated());
         } else {
