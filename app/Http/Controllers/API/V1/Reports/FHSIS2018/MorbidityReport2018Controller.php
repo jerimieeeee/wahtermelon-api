@@ -43,7 +43,7 @@ class MorbidityReport2018Controller extends Controller
             ],
             'age_29_days_to_11_months' => [
                 'Male' => $morbidityReportService->get_morbidity_report_age_days_and_month($request, 'M', 29, 1, 11)->get(),
-                'Female' => $morbidityReportService->get_morbidity_report_age_days_and_month($request, 'M', 29, 1, 11)->get(),
+                'Female' => $morbidityReportService->get_morbidity_report_age_days_and_month($request, 'F', 29, 1, 11)->get(),
             ],
             'age_1_to_4_years' => [
                 'Male' => $morbidityReportService->get_morbidity_report_year($request, 'M', 1, 4)->get(),
