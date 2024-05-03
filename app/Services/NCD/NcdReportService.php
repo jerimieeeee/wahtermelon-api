@@ -61,7 +61,7 @@ class NcdReportService
                 $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60');
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereYear('assessment_date', $request->year)
@@ -98,7 +98,7 @@ class NcdReportService
                 $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60');
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereSmoking(3)
@@ -136,7 +136,7 @@ class NcdReportService
                 $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60');
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereAlcoholIntake(1)
@@ -175,7 +175,7 @@ class NcdReportService
                 $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60');
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereObesity(1)
@@ -213,7 +213,7 @@ class NcdReportService
                 $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60');
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereYear('assessment_date', $request->year)
@@ -254,7 +254,7 @@ class NcdReportService
                     ->whereMonth('assessment_date', $request->month);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60')
+                $q->where('age', '>=', '60')
                     ->whereYear('assessment_date', $request->year)
                     ->whereMonth('assessment_date', $request->month);
             })
@@ -295,7 +295,7 @@ class NcdReportService
                 $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->whereAge('age', '>=', '60');
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereRaisedBloodGlucose(1)
