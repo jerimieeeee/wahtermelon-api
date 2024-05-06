@@ -16,6 +16,7 @@ class LibDentalSocialHistoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'column_name' => $this->column_name,
             'desc' => $this->desc
         ];
     }

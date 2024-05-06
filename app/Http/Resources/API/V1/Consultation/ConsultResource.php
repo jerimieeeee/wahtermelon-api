@@ -34,6 +34,7 @@ class ConsultResource extends JsonResource
             'complaints' => $this->whenLoaded('consultNotes.complaints.libcomplaints'),
             'prescriptions' => $this->whenLoaded('prescription'),
             'management' => $this->whenLoaded('management'),
+            'dentalMedicalSocials' => $this->whenLoaded('dentalMedicalSocials'),
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,

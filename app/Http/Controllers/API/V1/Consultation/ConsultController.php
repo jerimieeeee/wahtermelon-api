@@ -140,7 +140,8 @@ class ConsultController extends Controller
                     'consultNotes.initialdx.diagnosis',
                     'consultNotes.finaldx.libIcd10',
                     'management.libManagement',
-                    'facility'
+                    'facility',
+                    'dentalMedicalSocials'
                 ]);
             })
             ->defaultSort($request->sort ?? 'consult_date')

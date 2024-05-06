@@ -7,15 +7,23 @@ use App\Http\Resources\API\V1\Dental\DentalMedicalSocialsResource;
 use App\Models\V1\Dental\DentalMedicalSocials;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DentalMedicalSocialsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): ResourceCollection
     {
-        //
+        $query = DentalMedicalSocials::query()
+                ->when(isset($request->patient_id), function ($q) use ($request) {
+                    return $q->wherePatientId($request->patient_id);
+                });
+
+        $dentalMedicalSocials = QueryBuilder::for($query);
+
+        return DentalMedicalSocialsResource::collection($dentalMedicalSocials->get());
     }
 
     /**

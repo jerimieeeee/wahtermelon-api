@@ -5,6 +5,7 @@ namespace App\Models\V1\Consultation;
 use App\Models\User;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Dental\DentalMedicalSocial;
 use App\Models\V1\Medicine\MedicineDispensing;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
@@ -90,6 +91,7 @@ class Consult extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+
 
     public function vitals()
     {
@@ -227,5 +229,10 @@ class Consult extends Model
     public function medicine()
     {
         return $this->hasManyThrough(MedicineDispensing::class, MedicinePrescription::class, 'consult_id', 'prescription_id', 'id', 'id');
+    }
+
+    public function dentalMedicalSocials()
+    {
+        return $this->hasOne(DentalMedicalSocial::class, 'patient_id', 'patient_id');
     }
 }
