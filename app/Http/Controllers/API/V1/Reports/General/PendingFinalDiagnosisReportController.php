@@ -26,9 +26,9 @@ class PendingFinalDiagnosisReportController extends Controller
 
             $query->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
-                    $query->where('last_name', 'like', "%$keyword%")
-                        ->orWhere('middle_name', 'like', "%$keyword%")
-                        ->orWhere('first_name', 'like', "%$keyword%");
+                    $query->where('patients.last_name', 'like', "%$keyword%")
+                        ->orWhere('patients.middle_name', 'like', "%$keyword%")
+                        ->orWhere('patients.first_name', 'like', "%$keyword%");
                 }
             });
         }
