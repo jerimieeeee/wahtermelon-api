@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Services\Consultation;
+
+use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
+use App\Models\V1\NCD\ConsultNcdRiskAssessment;
+use Illuminate\Support\Facades\DB;
+
+class PendingFinalDiagnosisReportService
+{
+    public function get_pending_fdx()
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        consult_id,
+                        consult_notes.id AS notes_id,
+                        DATE_FORMAT(consult_date, '%m/%d/%Y') AS consult_date,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT('Dr. ', users.first_name, ' ', users.last_name) AS doctor,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name
+                    ")
+            ->join('consult_notes', 'consults.id', '=', 'consult_notes.consult_id')
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftjoin('users', 'consults.physician_id', '=', 'users.id')
+            ->leftJoin('consult_notes_final_dxes', 'consult_notes.id', '=', 'consult_notes_final_dxes.notes_id')
+            ->wherePtGroup('cn')
+            ->where('consults.facility_code', auth()->user()->facility_code)
+            ->whereNull('icd10_code');
+    }
+}

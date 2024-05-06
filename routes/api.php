@@ -825,6 +825,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('name-list', 'index');
                 });
         });
+        Route::prefix('pending-fdx')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\General\PendingFinalDiagnosisReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
