@@ -50,9 +50,10 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
@@ -94,9 +95,10 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
@@ -127,9 +129,10 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
@@ -171,9 +174,10 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
@@ -195,9 +199,10 @@ class HouseholdEnvironmentalReportService
                         barangays.name AS barangay_name
                     ")
             ->join('barangays', 'settings_catchment_barangays.barangay_code', '=', 'barangays.code')
-            ->when($request->category == 'all', function ($q) {
-                $q->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
-            })
+            ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code)
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
+//            })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
