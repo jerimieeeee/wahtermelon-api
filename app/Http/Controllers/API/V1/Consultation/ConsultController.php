@@ -90,6 +90,14 @@ class ConsultController extends Controller
         $consult = QueryBuilder::for(Consult::class)
             ->when($request->filled('pt_group') && !($request->pt_group == 'dn' && $request->filled('not_consult_id')), function ($q) use ($request) {
                 $q->where('pt_group', $request->pt_group);
+
+                if($request->pt_group == 'dn') {
+                    $q->with([
+                        'dentalMedicalSocials',
+                        'dentalSurgicalHistory',
+                        'dentalHospitalizationHistory'
+                    ]);
+                }
             })
             ->when($request->filled('patient_id'), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
@@ -140,8 +148,7 @@ class ConsultController extends Controller
                     'consultNotes.initialdx.diagnosis',
                     'consultNotes.finaldx.libIcd10',
                     'management.libManagement',
-                    'facility',
-                    'dentalMedicalSocials'
+                    'facility'
                 ]);
             })
             ->defaultSort($request->sort ?? 'consult_date')
