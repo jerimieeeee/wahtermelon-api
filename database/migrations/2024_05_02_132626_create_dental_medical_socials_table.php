@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('malignancy_flag')->default(false);
             $table->boolean('blood_transfusion_flag')->default(false);
             $table->boolean('tattoo_flag')->default(false);
+            $table->boolean('medical_others_flag')->default(false);
             $table->string('medical_remarks')->nullable();
             $table->boolean('sweet_flag')->default(false);
             $table->boolean('tabacco_flag')->default(false);
