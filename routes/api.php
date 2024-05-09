@@ -721,6 +721,17 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    //Patient Hospitalization History APIs
+    Route::prefix('patient-hospitalizaion-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientHospitalizationHistoryController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::delete('history/{patientHospitalizationHistory}', 'destroy');
+            });
+    });
+
     //Patient Pregnancy History APIs
     Route::prefix('patient-pregnancy-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPregnancyHistoryController::class)
@@ -1274,13 +1285,13 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('dental')->group(function () {
-        Route::controller(App\Http\Controllers\API\V1\Dental\DentalMedicalSocialsController::class)
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalMedicalSocialController::class)
             ->middleware(('auth:api'))
             ->group(function () {
-                Route::get('medical-socials', 'index');
-                Route::post('medical-socials', 'store');
-                Route::get('medical-socials/{dentalMedicalSocials}', 'show');
-                Route::put('medical-socials/{dentalMedicalSocials}', 'update');
+                Route::get('medical-social', 'index');
+                Route::post('medical-social', 'store');
+                Route::get('medical-social/{dentalMedicalSocials}', 'show');
+                Route::put('medical-social/{dentalMedicalSocials}', 'update');
             });
     });
 });
