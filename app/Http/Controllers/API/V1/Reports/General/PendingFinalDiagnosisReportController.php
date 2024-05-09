@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\General;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
+use App\Services\Consultation\ConsultationReportService;
 use App\Services\Consultation\PendingFinalDiagnosisReportService;
 use App\Services\DailyService\DailyServiceReportService;
 use Illuminate\Http\Request;
@@ -49,9 +50,11 @@ class PendingFinalDiagnosisReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, ConsultationReportService $consultService)
     {
-        //
+        $query = $consultService->get_consultation($id);
+
+        return DailyServiceConsultationReportResource::collection($query);
     }
 
     /**
