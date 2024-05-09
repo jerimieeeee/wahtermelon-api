@@ -606,7 +606,7 @@ class KonsultaService
             $result = new ArrayToXml($array, $root, true, 'UTF-8');
             $xml = $result->dropXmlDeclaration()->toXml();
 
-            return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save);
+            return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save, $effectivityYear);
             // return $xml;
         });
 
