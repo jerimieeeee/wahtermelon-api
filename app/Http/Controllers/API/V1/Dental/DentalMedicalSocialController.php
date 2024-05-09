@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\API\V1\Dental;
 
-use App\Http\Requests\API\V1\Dental\DentalMedicalSocialsRequest;
-use App\Http\Resources\API\V1\Dental\DentalMedicalSocialsResource;
-use App\Models\V1\Dental\DentalMedicalSocials;
+use App\Http\Requests\API\V1\Dental\DentalMedicalSocialRequest;
+use App\Http\Resources\API\V1\Dental\DentalMedicalSocialResource;
+use App\Models\V1\Dental\DentalMedicalSocial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class DentalMedicalSocialsController extends Controller
+class DentalMedicalSocialController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = DentalMedicalSocials::query()
+        $query = DentalMedicalSocial::query()
                 ->when(isset($request->patient_id), function ($q) use ($request) {
                     return $q->wherePatientId($request->patient_id);
                 });
 
         $dentalMedicalSocials = QueryBuilder::for($query);
 
-        return DentalMedicalSocialsResource::collection($dentalMedicalSocials->get());
+        return DentalMedicalSocialResource::collection($dentalMedicalSocials->get());
     }
 
     /**
@@ -39,7 +39,7 @@ class DentalMedicalSocialsController extends Controller
      */
     public function store(DentalMedicalSocialRequest $request)
     {
-        $data = DentalMedicalSocial::updateOrCreate(['id' => $request->id], $request->validated());
+        $data = DentalMedicalSocial::updateOrCreate(['patient_id' => $request->patient_id], $request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\Dental;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DentalMedicalSocialsResource extends JsonResource
+class DentalMedicalSocialResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -30,6 +30,7 @@ class DentalMedicalSocialsResource extends JsonResource
             'malignancy_flag' => $this->malignancy_flag,
             'blood_transfusion_flag' => $this->blood_transfusion_flag,
             'tattoo_flag' => $this->tattoo_flag,
+            'medical_others_flag' => $this->medical_others_flag,
             'medical_remarks' => $this->medical_remarks,
             'sweet_flag' => $this->sweet_flag,
             'tabacco_flag' => $this->tabacco_flag,

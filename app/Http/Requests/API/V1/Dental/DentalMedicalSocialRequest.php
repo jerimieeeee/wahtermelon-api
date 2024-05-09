@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\Dental;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DentalMedicalSocialsRequest extends FormRequest
+class DentalMedicalSocialRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,6 +33,7 @@ class DentalMedicalSocialsRequest extends FormRequest
             'malignancy_flag' => 'boolean|nullable',
             'blood_transfusion_flag' => 'boolean|nullable',
             'tattoo_flag' => 'boolean|nullable',
+            'medical_others_flag' => 'boolean|nullable',
             'medical_remarks' => 'nullable',
             'sweet_flag' => 'boolean|nullable',
             'tabacco_flag' => 'boolean|nullable',
