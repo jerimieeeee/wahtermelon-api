@@ -13,6 +13,7 @@ use App\Models\V1\Patient\PatientPhilhealth;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientHospitalizationHistory;
+use App\Models\V1\Dental\DentalService;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -246,5 +247,10 @@ class Consult extends Model
     public function dentalHospitalizationHistory()
     {
         return $this->hasMany(PatientHospitalizationHistory::class, 'patient_id', 'patient_id');
+    }
+
+    public function dentalService()
+    {
+        return $this->hasMany(DentalService::class, 'patient_id', 'patient_id');
     }
 }

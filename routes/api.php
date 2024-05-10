@@ -1293,5 +1293,15 @@ Route::prefix('v1')->group(function () {
                 Route::get('medical-social/{dentalMedicalSocials}', 'show');
                 Route::put('medical-social/{dentalMedicalSocials}', 'update');
             });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('service', 'index');
+                Route::post('service', 'store');
+                Route::get('service/{dentalService}', 'show');
+                Route::put('service/{dentalService}', 'update');
+                Route::delete('service/{dentalService}', 'destroy');
+            });
     });
 });

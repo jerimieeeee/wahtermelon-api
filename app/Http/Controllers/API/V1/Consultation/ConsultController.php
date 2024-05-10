@@ -95,7 +95,9 @@ class ConsultController extends Controller
                     $q->with([
                         'dentalMedicalSocials',
                         'dentalSurgicalHistory',
-                        'dentalHospitalizationHistory'
+                        'dentalHospitalizationHistory',
+                        'dentalService',
+                        'dentalService.service'
                     ]);
                 }
             })

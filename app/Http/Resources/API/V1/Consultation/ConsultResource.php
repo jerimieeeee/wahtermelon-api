@@ -37,6 +37,7 @@ class ConsultResource extends JsonResource
             'dentalMedicalSocials' => $this->whenLoaded('dentalMedicalSocials'),
             'dentalSurgicalHistory' => $this->whenLoaded('dentalSurgicalHistory'),
             'dentalHospitalizationHistory' => $this->whenLoaded('dentalHospitalizationHistory'),
+            'dentalService' => $this->whenLoaded('dentalService'),
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,
