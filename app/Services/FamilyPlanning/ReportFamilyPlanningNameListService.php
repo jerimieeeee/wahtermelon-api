@@ -142,9 +142,10 @@ class ReportFamilyPlanningNameListService
                 $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, enrollment_date)"), $request->age);
             })
             ->whereMethodCode($request->method)
-            ->when($request->category == 'all', function ($q) {
-                $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })

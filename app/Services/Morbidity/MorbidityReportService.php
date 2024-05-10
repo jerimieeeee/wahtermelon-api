@@ -39,9 +39,10 @@ class MorbidityReportService
                 ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
                 ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-                })
+//                ->when($request->category == 'all', function ($q) {
+//                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+//                })
+                ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
                 ->when($request->category == 'facility', function ($q) {
                     $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
                 })
@@ -87,9 +88,10 @@ class MorbidityReportService
                 ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
                 ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-                })
+//                ->when($request->category == 'all', function ($q) {
+//                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+//                })
+                ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
                 ->when($request->category == 'facility', function ($q) {
                     $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
                 })
@@ -139,9 +141,10 @@ class MorbidityReportService
                 ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
                 ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-                })
+//                ->when($request->category == 'all', function ($q) {
+//                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+//                })
+                ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
                 ->when($request->category == 'facility', function ($q) {
                     $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
                 })
@@ -191,9 +194,10 @@ class MorbidityReportService
                 ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
                 ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-                })
+//                ->when($request->category == 'all', function ($q) {
+//                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+//                })
+                ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
                 ->when($request->category == 'facility', function ($q) {
                     $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
                 })
@@ -241,9 +245,10 @@ class MorbidityReportService
                 ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
                 ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-                ->when($request->category == 'all', function ($q) {
-                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-                })
+//                ->when($request->category == 'all', function ($q) {
+//                    $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+//                })
+                ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
                 ->when($request->category == 'facility', function ($q) {
                     $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
                 })
