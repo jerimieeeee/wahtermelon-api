@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
+use App\Models\V1\Consultation\ConsultNotesComplaint;
 use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Consultation\ConsultNotesInitialDx;
+use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Laboratory\ConsultLaboratory;
@@ -235,13 +237,13 @@ class Patient extends Model
     public function philhealth_id()
     {
         return $this->hasMany(PatientPhilhealth::class, 'patient_id', 'id')
-            ->select(['patient_id', 'philhealth_id']);;
+            ->select(['patient_id', 'philhealth_id']);
     }
 
     public function consult_notes()
     {
-        return $this->hasMany(ConsultNotes::class, 'patient_id', 'id')
-            ->select(['patient_id', 'complaint', 'history', 'plan']);
+        return $this->hasMany(ConsultNotes::class, 'patient_id', 'id');
+//            ->select(['patient_id', 'complaint', 'history', 'plan']);
     }
 
     public function vitals()
@@ -325,4 +327,71 @@ class Patient extends Model
 //                      'lib_medicine_purposes.desc AS purpose'
 //                ]);
 //    }
+
+    public function vitalsLatest()
+    {
+        /*return $this->hasMany(PatientVitals::class, 'patient_id', 'patient_id')
+                ->selectRaw('patient_vitals.*')
+                ->join('consults', function($join){
+                    $join->on(DB::raw("consults.patient_id"), "=", DB::raw("patient_vitals.patient_id"));
+                    $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), "=", DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
+                })
+                ->orderBy('vitals_date', 'DESC');*/
+        return $this->hasOne(Consult::class, 'id', 'id')
+            ->selectRaw('
+                consults.id,
+                patient_vitals.id as vitals_id,
+                patient_vitals.facility_code,
+                patient_vitals.patient_id,
+                patient_vitals.user_id,
+                vitals_date,
+                patient_age_years,
+                patient_age_months,
+                patient_temp,
+                patient_height,
+                patient_weight,
+                patient_bmi,
+                patient_bmi_class,
+                patient_weight_for_age,
+                patient_height_for_age,
+                patient_weight_for_height,
+                patient_head_circumference,
+                patient_skinfold_thickness,
+                bp_systolic,
+                bp_diastolic,
+                patient_heart_rate,
+                patient_respiratory_rate,
+                patient_pulse_rate,
+                patient_spo2,
+                patient_chest,
+                patient_abdomen,
+                patient_waist,
+                patient_hip,
+                patient_limbs,
+                patient_muac,
+                patient_vitals.created_at,
+                patient_vitals.updated_at
+            ')
+            ->join('patient_vitals', function ($join) {
+                $join->on(DB::raw('consults.patient_id'), '=', DB::raw('patient_vitals.patient_id'));
+                $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), '=', DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
+            })
+            ->orderBy('vitals_date', 'DESC');
+    }
+
+    public function complaints()
+    {
+        return $this->belongsTo(ConsultNotesComplaint::class, 'patient_id', 'id');
+    }
+
+    public function physicalExam()
+    {
+        return $this->hasManyThrough(ConsultNotesPe::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id');
+    }
+
+    public function consult_no_fdx()
+    {
+        return $this->hasMany(Consult::class, 'patient_id', 'id')
+            ->whereDoesntHave('finalDiagnosis');
+    }
 }

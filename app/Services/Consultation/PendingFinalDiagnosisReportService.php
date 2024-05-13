@@ -12,6 +12,7 @@ class PendingFinalDiagnosisReportService
     {
         return DB::table('consults')
             ->selectRaw("
+                        consults.patient_id,
                         consult_id,
                         consult_notes.id AS notes_id,
                         DATE_FORMAT(consult_date, '%m/%d/%Y') AS consult_date,

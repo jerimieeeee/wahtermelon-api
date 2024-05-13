@@ -39,6 +39,17 @@ class PendingFinalDiagnosisReportController extends Controller
         return response()->json($data);
     }
 
+    public function index2(Request $request, ConsultationReportService $consultService)
+    {
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $query = $consultService->get_consultation($request);
+
+        $data = $query->paginate($perPage);
+
+        return response()->json($data);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -50,11 +61,11 @@ class PendingFinalDiagnosisReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, ConsultationReportService $consultService)
+    public function show(string $id)
     {
-        $query = $consultService->get_consultation($id);
-
-        return DailyServiceConsultationReportResource::collection($query);
+//        $query = $consultService->get_consultation($id);
+//
+//        return DailyServiceConsultationReportResource::collection($query);
     }
 
     /**
