@@ -13,6 +13,7 @@ class FamilyPlanningNameListReport2018Controller extends Controller
      */
     public function index(Request $request, ReportFamilyPlanningNameListService $fpNamelistService)
     {
+//        return $request;
         $namelist = $fpNamelistService->get_report_namelist($request)->get();
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;

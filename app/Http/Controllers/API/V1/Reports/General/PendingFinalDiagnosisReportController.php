@@ -16,6 +16,7 @@ class PendingFinalDiagnosisReportController extends Controller
      */
     public function index(Request $request, PendingFinalDiagnosisReportService $pendingFdx)
     {
+//        return $request;
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = $pendingFdx->get_pending_fdx();

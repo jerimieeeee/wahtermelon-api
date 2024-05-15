@@ -197,7 +197,7 @@ class FamilyPlanningReportService
                                 0
                             END) AS 'other_acceptor_present_month_20_to_49',
                         SUM(
-                            CASE WHEN (dropout_date IS NULL
+                            CASE WHEN (dropout_date IS NOT NULL
                                 OR DATE_FORMAT(dropout_date, '%Y-%m') <= DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
                                 AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
@@ -206,7 +206,7 @@ class FamilyPlanningReportService
                                 0
                             END) AS 'dropout_present_month_10_to_14',
                         SUM(
-                            CASE WHEN (dropout_date IS NULL
+                            CASE WHEN (dropout_date IS NOT NULL
                                 OR DATE_FORMAT(dropout_date, '%Y-%m') <= DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
                                 AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
                                 AND DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
@@ -215,7 +215,7 @@ class FamilyPlanningReportService
                                 0
                             END) AS 'dropout_present_month_15_to_19',
                         SUM(
-                            CASE WHEN (dropout_date IS NULL
+                            CASE WHEN (dropout_date IS NOT NULL
                                 OR DATE_FORMAT(dropout_date, '%Y-%m') <= DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
                                 AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
                                 AND DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
