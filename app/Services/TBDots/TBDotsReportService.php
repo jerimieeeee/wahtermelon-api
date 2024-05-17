@@ -62,9 +62,10 @@ class TBDotsReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_findings.patient_id');
             })
-            ->when($request->category == 'all', function ($q) {
-                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -94,9 +95,10 @@ class TBDotsReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_holdings.patient_id');
             })
-            ->when($request->category == 'all', function ($q) {
-                $q->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -127,9 +129,10 @@ class TBDotsReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
             })
-            ->when($request->category == 'all', function ($q) {
-                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('patient_tbs.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -160,9 +163,10 @@ class TBDotsReportService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
             })
-            ->when($request->category == 'all', function ($q) {
-                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
-            })
+//            ->when($request->category == 'all', function ($q) {
+//                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
+//            })
+            ->where('patient_tbs.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
