@@ -24,7 +24,7 @@ class MedicineDispensingResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'dispensing_date' => $this->dispensing_date->format('Y-m-d'),
             'prescription_id' => $this->when(! $this->relationLoaded('prescription'), $this->prescription_id),
-            'prescription' => $this->when($this->relationLoaded('prescription'), new MedicinePrescriptionResource($this->prescription->load('konsultaMedicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'prescribedBy', 'dispensing'))),
+            'prescription' => $this->when($this->relationLoaded('prescription'), new MedicinePrescriptionResource($this->prescription->load('konsultaMedicine', 'medicine', 'dosageUom', 'doseRegimen', 'medicinePurpose', 'durationFrequency', 'quantityPreparation', 'prescribedBy', 'dispensing'))),
             'dispense_quantity' => $this->dispense_quantity,
             'unit_price' => $this->unit_price,
             'total_amount' => $this->total_amount,
