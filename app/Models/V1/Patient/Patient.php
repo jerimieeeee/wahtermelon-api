@@ -240,7 +240,7 @@ class Patient extends Model
             ->select(['patient_id', 'philhealth_id']);
     }
 
-    public function consult_notes()
+    public function consultNotes()
     {
         return $this->hasMany(ConsultNotes::class, 'patient_id', 'id');
 //            ->select(['patient_id', 'complaint', 'history', 'plan']);

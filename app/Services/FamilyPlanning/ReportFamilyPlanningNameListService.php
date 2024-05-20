@@ -38,7 +38,7 @@ class ReportFamilyPlanningNameListService
     {
         return DB::table('patient_fp_methods')
             ->selectRaw("
-                        patient_fp_methods.patient_id,
+                        patient_fp_methods.patient_id AS patient_id,
                         patient_fp_id,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
                         patients.last_name,

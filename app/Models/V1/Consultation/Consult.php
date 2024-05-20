@@ -228,4 +228,10 @@ class Consult extends Model
     {
         return $this->hasManyThrough(MedicineDispensing::class, MedicinePrescription::class, 'consult_id', 'prescription_id', 'id', 'id');
     }
+
+    public function consult_no_fdx()
+    {
+        return $this->hasOne(Consult::class, 'id', 'id')
+            ->whereDoesntHave('finalDiagnosis');
+    }
 }

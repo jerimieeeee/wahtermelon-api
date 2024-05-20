@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Consultation\PendingFinalDxResource;
 use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
 use App\Services\Consultation\ConsultationReportService;
 use App\Services\Consultation\PendingFinalDiagnosisReportService;
@@ -48,7 +49,9 @@ class PendingFinalDiagnosisReportController extends Controller
 
         $data = $query->paginate($perPage);
 
-        return response()->json($data);
+//        return response()->json($data);
+
+        return PendingFinalDxResource::collection($data);
     }
 
     /**
