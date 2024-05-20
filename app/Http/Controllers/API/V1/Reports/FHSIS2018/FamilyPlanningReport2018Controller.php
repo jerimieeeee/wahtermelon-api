@@ -27,6 +27,7 @@ class FamilyPlanningReport2018Controller extends Controller
      */
     public function index(Request $request, FamilyPlanningReportService $familyPlanningReportService)
     {
+//        return $request;
         $g = $familyPlanningReportService->get_fp_report_all($request)->get()->groupBy('code');
 
         return $g;

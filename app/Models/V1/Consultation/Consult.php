@@ -252,5 +252,12 @@ class Consult extends Model
     public function dentalService()
     {
         return $this->hasMany(DentalService::class, 'patient_id', 'patient_id');
+
+    }
+
+    public function consult_no_fdx()
+    {
+        return $this->hasOne(Consult::class, 'id', 'id')
+            ->whereDoesntHave('finalDiagnosis');
     }
 }

@@ -38,6 +38,8 @@ class ReportFamilyPlanningNameListService
     {
         return DB::table('patient_fp_methods')
             ->selectRaw("
+                        patient_fp_methods.patient_id AS patient_id,
+                        patient_fp_id,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
@@ -76,7 +78,7 @@ class ReportFamilyPlanningNameListService
                         $query->whereIn('client_code', ['CC', 'CM', 'RS'])
                             ->where(function($query) use($request) {
                                 $query->whereNull('dropout_date')
-                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
+                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                             })
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(IF(? = 1, ? - 1, ?), '-', LPAD(IF(? = 1, 12, ? - 1), 2, '0'))",
                                 [$request->month, $request->year, $request->year, $request->month, $request->month]

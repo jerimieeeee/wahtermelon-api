@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Reports;
+namespace App\Http\Resources\API\V1\Consultation;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DailyServiceConsultationReportResource extends JsonResource
+class PendingFinalDxResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,16 +16,16 @@ class DailyServiceConsultationReportResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'consult_id' => $this->id,
-            'patient_id' => $this->patient->id,
-            'patient_name' => ($this->patient->last_name ?? '') . ', ' . ($this->patient->first_name ?? '') . ' ' . ($this->patient->middle_name ?? ''),
+            'patient_id' => $this->id ?? null,
+            'consult_id' => $this->consult->id ?? null,
+            'patient_name' => ($this->last_name ?? '') . ', ' . ($this->first_name ?? '') . ' ' . ($this->middle_name ?? ''),
+            'name' => ($this->first_name ?? '') . ' ' . ($this->middle_name ?? '') . '.' . ($this->last_name ?? ''),
             'user_name' => ($this->user->last_name ?? '') . ', ' . ($this->user->first_name ?? '') . ' ' . ($this->user->middle_name ?? ''),
-            'gender' => $this->patient->gender ?? null,
-            'birthdate' => $this->patient->birthdate ? Carbon::parse($this->patient->birthdate)->format('m/d/Y') : null,
-            'age' => ! empty($this->patient->birthdate) ? Carbon::parse($this->patient->birthdate)->diff($this->consult_date ?? '')->y.' Year(s), '.Carbon::parse($this->patient->birthdate)->diff($this->consult_date ?? '')->m.' Month(s), '.Carbon::parse($this->patient->birthdate)->diff($this->consult_date ?? '')->d.' Day(s)' : '',
-            'consult_date' => $this->consult_date ? Carbon::parse($this->consult_date)->format('m/d/Y') : null,
-            'address' => ($this->patient->householdFolder->address ?? '') . ', ' . ($this->patient->householdFolder->barangay->name ?? ''),
-            'is_konsulta' => $this->is_konsulta ?? null,
+            'gender' => $this->gender ?? null,
+            'birthdate' => $this->birthdate ? Carbon::parse($this->birthdate)->format('m/d/Y') : null,
+            'age' => ! empty($this->birthdate) ? Carbon::parse($this->birthdate)->diff($this->consult->consult_date ?? '')->y.' Year(s), '.Carbon::parse($this->birthdate)->diff($this->consult->consult_date ?? '')->m.' Month(s), '.Carbon::parse($this->birthdate)->diff($this->consult->consult_date ?? '')->d.' Day(s)' : '',
+            'consult_date' => $this->consult->consult_date ? Carbon::parse($this->consult->consult_date)->format('m/d/Y') : null,
+            'address' => ($this->householdFolder->address ?? '') . ', ' . ($this->householdFolder->barangay->name ?? ''),
             'vitals_date' => $this->vitalsLatest ? Carbon::parse($this->vitalsLatest->vitals_date)->format('m/d/Y') : null,
             'bp_systolic' => $this->vitalsLatest->bp_systolic ?? null,
             'bp_diastolic' => $this->vitalsLatest->bp_diastolic ?? null,
@@ -49,6 +49,7 @@ class DailyServiceConsultationReportResource extends JsonResource
             'treatment_notes' => $this->consultNotes->plan ?? null,
             'prescription' => $this->prescription ?? null,
             'pe_remarks' => $this->consultNotes->physicalExamRemarks ?? null,
+            'consult_no_fdx' => $this->consult_no_fdx ?? null,
         ];
     }
 }

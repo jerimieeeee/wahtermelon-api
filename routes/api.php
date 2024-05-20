@@ -841,6 +841,7 @@ Route::prefix('v1')->group(function () {
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('report', 'index');
+                    Route::get('get-consultation', 'index2');
                 });
         });
     });

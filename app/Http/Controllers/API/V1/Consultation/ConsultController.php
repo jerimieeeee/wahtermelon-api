@@ -136,6 +136,7 @@ class ConsultController extends Controller
                     'vitals',
                     'consultNotes',
                     'prescription.konsultaMedicine',
+                    'prescription.medicine',
                     'prescription.konsultaMedicine.generic',
                     'prescription.dosageUom',
                     'prescription.doseRegimen',

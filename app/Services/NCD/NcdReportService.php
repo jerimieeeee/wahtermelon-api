@@ -363,7 +363,6 @@ class NcdReportService
 //                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
 //            })
             ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
