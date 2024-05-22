@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\API\V1\Dental;
 
-use App\Http\Requests\API\V1\Dental\DentalServiceRequest;
-use App\Http\Resources\API\V1\Dental\DentalServiceResource;
-use App\Models\V1\Dental\DentalService;
+use App\Http\Requests\API\V1\Dental\DentalToothConditionRequest;
+use App\Http\Resources\API\V1\Dental\DentalToothConditionResource;
+use App\Models\V1\Dental\DentalToothCondition;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class DentalServiceController extends Controller
+class DentalToothConditionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = DentalService::query()
+        $query = DentalToothCondition::query()
                 ->when(isset($request->patient_id), function ($q) use ($request) {
                     return $q->wherePatientId($request->patient_id);
                 });
 
-        $dentalService = QueryBuilder::for($query);
+        $dentalToothCondition = QueryBuilder::for($query);
 
-        return DentalServiceResource::collection($dentalService->get());
+        return DentalToothConditionResource::collection($dentalToothCondition->get());
     }
 
     /**
@@ -37,11 +37,15 @@ class DentalServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DentalServiceRequest $request)
+    public function store(DentalToothConditionRequest $request)
     {
-        $data = DentalService::updateOrCreate(['consult_id' => $request->consult_id, 'patient_id' => $request->patient_id, 'service_id' => $request->service_id], $request->validated());
+        $conditions = $request->input('tooth_arr');
+        foreach ($conditions as $value) {
+            DentalToothCondition::updateOrCreate(['patient_id' => $request->patient_id, 'tooth_number' => $value['tooth_number'], 'consult_id' => $request->consult_id],
+                ['patient_id' => $request->input('patient_id'), 'consult_id' => $request->input('consult_id')] + $value);
+        }
 
-        return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
+        return response()->json(['status' => 'Successfully saved'], 201);
     }
 
     /**
@@ -71,10 +75,8 @@ class DentalServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DentalService $dentalService)
+    public function destroy(string $id)
     {
-        $dentalService->deleteOrFail();
-
-        return response()->json(['status' => 'Successfully deleted!'], 200);
+        //
     }
 }

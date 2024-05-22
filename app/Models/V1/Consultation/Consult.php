@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\V1\Konsulta\KonsultaTransmittal;
 use App\Models\V1\Laboratory\ConsultLaboratory;
 use App\Models\V1\Dental\DentalMedicalSocial;
+use App\Models\V1\Dental\DentalToothCondition;
 use App\Models\V1\Medicine\MedicineDispensing;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
@@ -14,6 +15,7 @@ use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientHospitalizationHistory;
 use App\Models\V1\Dental\DentalService;
+use App\Models\V1\Dental\DentalToothService;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -253,6 +255,21 @@ class Consult extends Model
     {
         return $this->hasMany(DentalService::class, 'patient_id', 'patient_id');
 
+    }
+
+    public function dentalToothService()
+    {
+        return $this->hasMany(DentalToothService::class, 'patient_id', 'patient_id')
+            ->orderBy('consult_id', 'DESC');
+
+    }
+
+    public function dentalToothCondition()
+    {
+        return $this->hasMany(DentalToothCondition::class, 'consult_id', 'id')
+            ->select(['consult_id', 'tooth_number', 'tooth_condition'])
+            ->orderBy('consult_id', 'DESC')
+            ->limit(52);
     }
 
     public function consult_no_fdx()

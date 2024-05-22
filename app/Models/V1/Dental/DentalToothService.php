@@ -4,18 +4,19 @@ namespace App\Models\V1\Dental;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use App\Models\V1\Libraries\LibDentalToothCondition;
+use App\Models\V1\Libraries\LibDentalToothService;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DentalToothCondition extends Model
+class DentalToothService extends Model
 {
     use HasFactory, FilterByUser, FilterByFacility, HasUlids;
 
-    protected $table = 'dental_tooth_conditions';
+    protected $table = 'dental_tooth_services';
 
     protected $primaryKey = 'id';
 
@@ -40,8 +41,13 @@ class DentalToothCondition extends Model
         return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 
-    /* public function toothCondition()
+    public function toothService()
     {
-        return $this->belongsTo(LibDentalToothCondition::class, 'service_code', 'code');
-    } */
+        return $this->belongsTo(LibDentalToothService::class, 'service_code', 'code');
+    }
+
+    public function consult()
+    {
+        return $this->belongsTo(Consult::class, 'consult_id', 'id');
+    }
 }

@@ -1291,8 +1291,6 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('medical-social', 'index');
                 Route::post('medical-social', 'store');
-                Route::get('medical-social/{dentalMedicalSocials}', 'show');
-                Route::put('medical-social/{dentalMedicalSocials}', 'update');
             });
 
         Route::controller(App\Http\Controllers\API\V1\Dental\DentalServiceController::class)
@@ -1300,9 +1298,22 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('service', 'index');
                 Route::post('service', 'store');
-                Route::get('service/{dentalService}', 'show');
-                Route::put('service/{dentalService}', 'update');
                 Route::delete('service/{dentalService}', 'destroy');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalToothServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tooth-service', 'index');
+                Route::post('tooth-service', 'store');
+                Route::delete('tooth-service/{dentalToothService}', 'destroy');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalToothConditionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tooth-condition', 'index');
+                Route::post('tooth-condition', 'store');
             });
     });
 });

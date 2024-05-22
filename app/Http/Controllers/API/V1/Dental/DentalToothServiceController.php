@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\API\V1\Dental;
 
-use App\Http\Requests\API\V1\Dental\DentalServiceRequest;
-use App\Http\Resources\API\V1\Dental\DentalServiceResource;
-use App\Models\V1\Dental\DentalService;
+use App\Http\Requests\API\V1\Dental\DentalToothServiceRequest;
+use App\Http\Resources\API\V1\Dental\DentalToothServiceResource;
+use App\Models\V1\Dental\DentalToothService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class DentalServiceController extends Controller
+class DentalToothServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): ResourceCollection
     {
-        $query = DentalService::query()
+        $query = DentalToothService::query()
                 ->when(isset($request->patient_id), function ($q) use ($request) {
                     return $q->wherePatientId($request->patient_id);
                 });
 
-        $dentalService = QueryBuilder::for($query);
+        $dentalToothService = QueryBuilder::for($query);
 
-        return DentalServiceResource::collection($dentalService->get());
+        return DentalToothServiceResource::collection($dentalToothService->get());
     }
 
     /**
@@ -37,9 +37,9 @@ class DentalServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DentalServiceRequest $request)
+    public function store(DentalToothServiceRequest $request)
     {
-        $data = DentalService::updateOrCreate(['consult_id' => $request->consult_id, 'patient_id' => $request->patient_id, 'service_id' => $request->service_id], $request->validated());
+        $data = DentalToothService::updateOrCreate(['consult_id' => $request->consult_id, 'patient_id' => $request->patient_id, 'tooth_number' => $request->tooth_number, 'service_code' => $request->service_code], $request->validated());
 
         return response()->json(['data' => $data, 'status' => 'Successfully saved'], 201);
     }
@@ -71,9 +71,9 @@ class DentalServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DentalService $dentalService)
+    public function destroy(DentalToothService $dentalToothService)
     {
-        $dentalService->deleteOrFail();
+        $dentalToothService->deleteOrFail();
 
         return response()->json(['status' => 'Successfully deleted!'], 200);
     }

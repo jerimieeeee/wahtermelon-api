@@ -97,7 +97,11 @@ class ConsultController extends Controller
                         'dentalSurgicalHistory',
                         'dentalHospitalizationHistory',
                         'dentalService',
-                        'dentalService.service'
+                        'dentalService.service',
+                        'dentalToothService',
+                        'dentalToothService.toothService',
+                        'dentalToothService.consult',
+                        'dentalToothCondition'
                     ]);
                 }
             })
