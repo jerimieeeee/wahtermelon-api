@@ -34,6 +34,7 @@ class ReportMorbidityNameListService
 
     public function get_report_namelist($request)
     {
+//        dd($request);
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         consult_notes.patient_id AS patient_id,
@@ -41,8 +42,7 @@ class ReportMorbidityNameListService
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
-                        birthdate,
-                        TIMESTAMPDIFF(YEAR, birthdate, consult_date)
+                        birthdate
                         ")
             ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
@@ -50,16 +50,24 @@ class ReportMorbidityNameListService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->where('consult_notes_final_dxes.icd10_code',$request->icd10_code)
             ->when($request->date_type == 'days', function ($q) use ($request) {
-                $q->whereBetween(DB::raw('DATEDIFF(consult_date, birthdate)'), [$request->age1, $request->age2]);
+                $q->whereBetween(DB::raw('DATEDIFF(consult_date, birthdate)'), $request->age);
+            })
+            ->when($request->date_type == 'days_months', function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
+                    $query->where(function ($query) use ($request) {
+                        $query->whereRaw("DATEDIFF(consult_date, birthdate) >= 29")
+                            ->whereRaw("TIMESTAMPDIFF(MONTH, birthdate, consult_date) <= 11");
+                    });
+                });
             })
             ->when($request->date_type == 'years', function ($q) use ($request) {
-                $q->whereBetween(DB::raw('TIMESTAMPDIFF(YEAR, birthdate, consult_date)'), [$request->age1, $request->age2]);
+                $q->whereBetween(DB::raw('TIMESTAMPDIFF(YEAR, birthdate, consult_date)'), $request->age);
             })
             ->whereGender($request->gender)
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
+            ->where('consult_notes_final_dxes.icd10_code', $request->icd10)
+//            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })

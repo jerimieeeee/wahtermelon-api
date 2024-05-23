@@ -46,7 +46,7 @@ class MorbidityReportService
                                 1
                             ELSE
                                 0
-                        END) AS 'Male 0 - 6 days',
+                        END) AS 'male_age_0_to_6_days',
                             SUM(
                         CASE
                             WHEN (DATEDIFF(consult_date, birthdate) BETWEEN 0 AND 6)
@@ -55,7 +55,7 @@ class MorbidityReportService
                                 1
                             ELSE
                                 0
-                        END) AS 'Female 0 - 6 days',
+                        END) AS 'female_age_0_to_6_days',
                      SUM(
                         CASE
                             WHEN (DATEDIFF(consult_date, birthdate) BETWEEN 7 AND 28)
@@ -64,7 +64,7 @@ class MorbidityReportService
                                 1
                             ELSE
                                 0
-                        END) AS 'Male 7 - 28 days',
+                        END) AS 'male_age_7_to_28_days',
                      SUM(
                         CASE
                             WHEN (DATEDIFF(consult_date, birthdate) BETWEEN 7 AND 28)
@@ -73,7 +73,7 @@ class MorbidityReportService
                                 1
                             ELSE
                                 0
-                        END) AS 'Female 7 - 28 days',
+                        END) AS 'female_age_7_to_28_days',
                     SUM(
                         CASE
                             WHEN (DATEDIFF(consult_date, birthdate) >= 29)
@@ -83,7 +83,7 @@ class MorbidityReportService
                                 1
                             ELSE
                                 0
-                        END) AS 'Male 29 days - 11 months',
+                        END) AS 'male_age_29_days_to_11_months',
                     SUM(
                         CASE
                             WHEN (DATEDIFF(consult_date, birthdate) >= 29)
@@ -93,7 +93,7 @@ class MorbidityReportService
                                 1
                             ELSE
                                 0
-                        END) AS 'Female 29 days - 11 months',
+                        END) AS 'female_age_29_days_to_11_months',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 1 AND 4)
@@ -102,7 +102,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 1 - 4 years',
+                        END) AS 'male_age_1_to_4_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 1 AND 4)
@@ -111,7 +111,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 1 - 4 years',
+                        END) AS 'female_age_1_to_4_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 5 AND 9)
@@ -120,7 +120,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 5 - 9 years',
+                        END) AS 'male_age_5_to_9_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 5 AND 9)
@@ -129,7 +129,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 5 - 9 years',
+                        END) AS 'female_age_5_to_9_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 10 AND 14)
@@ -138,7 +138,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 10 - 14 years',
+                        END) AS 'male_age_10_to_14_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 10 AND 14)
@@ -147,7 +147,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 10 - 14 years',
+                        END) AS 'female_age_10_to_14_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 15 AND 19)
@@ -156,7 +156,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 15 - 19 years',
+                        END) AS 'male_age_15_to_19_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 15 AND 19)
@@ -165,7 +165,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 15 - 19 years',
+                        END) AS 'female_age_15_to_19_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 20 AND 24)
@@ -174,7 +174,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 20 - 24 years',
+                        END) AS 'male_age_20_to_24_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 20 AND 24)
@@ -183,7 +183,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 20 - 24 years',
+                        END) AS 'female_age_20_to_24_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 25 AND 29)
@@ -192,7 +192,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 25 - 29 years',
+                        END) AS 'male_age_25_to_29_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 25 AND 29)
@@ -201,7 +201,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 25 - 29 years',
+                        END) AS 'female_age_25_to_29_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 30 AND 34)
@@ -210,7 +210,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 30 - 34 years',
+                        END) AS 'male_age_30_to_34_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 30 AND 34)
@@ -219,7 +219,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 30 - 34 years',
+                        END) AS 'female_age_30_to_34_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 35 AND 39)
@@ -228,7 +228,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 35 - 39 years',
+                        END) AS 'male_age_35_to_39_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 35 AND 39)
@@ -237,7 +237,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 35 - 39 years',
+                        END) AS 'female_age_35_to_39_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 40 AND 44)
@@ -246,7 +246,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 40 - 44 years',
+                        END) AS 'male_age_40_to_44_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 40 AND 44)
@@ -255,7 +255,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 40 - 44 years',
+                        END) AS 'female_age_40_to_44_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 45 AND 49)
@@ -264,7 +264,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 45 - 49 years',
+                        END) AS 'male_age_45_to_49_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 45 AND 49)
@@ -273,7 +273,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 45 - 49 years',
+                        END) AS 'female_age_45_to_49_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 50 AND 54)
@@ -282,7 +282,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 50 - 54 years',
+                        END) AS 'male_age_50_to_54_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 50 AND 54)
@@ -291,7 +291,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 50- 54 years',
+                        END) AS 'female_age_50_to_54_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 55 AND 59)
@@ -300,7 +300,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 55 - 59 years',
+                        END) AS 'male_age_55_to_59_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 55 AND 59)
@@ -309,7 +309,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 55- 59 years',
+                        END) AS 'female_age_55_to_59_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 60 AND 64)
@@ -318,7 +318,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 60 - 64 years',
+                        END) AS 'male_age_60_to_64_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 60 AND 64)
@@ -327,7 +327,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 60- 64 years',
+                        END) AS 'female_age_60_to_64_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 65 AND 69)
@@ -336,7 +336,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 65 - 69 years',
+                        END) AS 'male_age_65_to_69_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) BETWEEN 65 AND 69)
@@ -345,7 +345,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 65- 69 years',
+                        END) AS 'female_age_65_to_69_years',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) >= 70)
@@ -354,7 +354,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Male 70 above',
+                        END) AS 'male_age_70_years_above',
                     SUM(
                         CASE
                         WHEN (TIMESTAMPDIFF(YEAR, birthdate, consult_date) >= 70)
@@ -363,7 +363,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Female 70 above',
+                        END) AS 'female_age_70_years_above',
                     SUM(
                         CASE
                         WHEN patients.gender = 'M'
@@ -371,7 +371,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Grand Total Male',
+                        END) AS 'male_age_total',
                     SUM(
                         CASE
                         WHEN patients.gender = 'F'
@@ -379,7 +379,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Grand Total Female',
+                        END) AS 'female_age_total',
                     SUM(
                         CASE
                         WHEN patients.gender IN('F', 'M')
@@ -387,7 +387,7 @@ class MorbidityReportService
                             1
                         ELSE
                             0
-                        END) AS 'Grand Total both sex'
+                        END) AS 'male_female_total'
                 ")
             ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')

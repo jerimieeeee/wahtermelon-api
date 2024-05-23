@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\FamilyPlanning\ReportFamilyPlanningNameListService;
+use App\Services\Morbidity\ReportMorbidityNameListService;
 use Illuminate\Http\Request;
 
-class FamilyPlanningNameListReport2018Controller extends Controller
+class MorbidityNameListReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ReportFamilyPlanningNameListService $fpNamelistService)
+    public function index(Request $request, ReportMorbidityNameListService $nameListService)
     {
-//        return $request;
-        $namelist = $fpNamelistService->get_report_namelist($request)->get();
+        $namelist = $nameListService->get_report_namelist($request)->get();
         return $namelist;
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
@@ -58,7 +57,6 @@ class FamilyPlanningNameListReport2018Controller extends Controller
             'last_page' => $lastPage,
             'data' => $data,
         ];
-
     }
 
     /**
