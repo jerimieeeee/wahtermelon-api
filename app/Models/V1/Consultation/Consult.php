@@ -264,10 +264,16 @@ class Consult extends Model
 
     }
 
-    public function dentalToothCondition()
+    public function consultToothCondition()
     {
         return $this->hasMany(DentalToothCondition::class, 'consult_id', 'id')
-            ->select(['consult_id', 'tooth_number', 'tooth_condition'])
+            ->select(['consult_id', 'patient_id', 'tooth_number', 'tooth_condition']);
+    }
+
+    public function latestToothCondition()
+    {
+        return $this->hasMany(DentalToothCondition::class, 'patient_id', 'patient_id')
+            ->select(['consult_id', 'patient_id', 'tooth_number', 'tooth_condition'])
             ->orderBy('consult_id', 'DESC')
             ->limit(52);
     }

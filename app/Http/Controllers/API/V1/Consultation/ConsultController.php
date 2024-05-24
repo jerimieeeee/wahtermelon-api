@@ -101,7 +101,8 @@ class ConsultController extends Controller
                         'dentalToothService',
                         'dentalToothService.toothService',
                         'dentalToothService.consult',
-                        'dentalToothCondition'
+                        'consultToothCondition',
+                        'latestToothCondition'
                     ]);
                 }
             })
