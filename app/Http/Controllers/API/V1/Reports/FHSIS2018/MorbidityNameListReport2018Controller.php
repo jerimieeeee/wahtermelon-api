@@ -14,7 +14,6 @@ class MorbidityNameListReport2018Controller extends Controller
     public function index(Request $request, ReportMorbidityNameListService $nameListService)
     {
         $namelist = $nameListService->get_report_namelist($request)->get();
-        return $namelist;
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 

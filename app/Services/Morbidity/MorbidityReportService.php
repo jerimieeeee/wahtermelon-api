@@ -406,7 +406,8 @@ class MorbidityReportService
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month)
             ->groupBy('consult_notes_final_dxes.icd10_code')
             ->orderBy('icd10_desc', 'ASC');
     }

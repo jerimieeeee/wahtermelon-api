@@ -15,7 +15,6 @@ class FamilyPlanningNameListReport2018Controller extends Controller
     {
 //        return $request;
         $namelist = $fpNamelistService->get_report_namelist($request)->get();
-        return $namelist;
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
