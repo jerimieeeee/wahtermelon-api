@@ -222,18 +222,6 @@ class Patient extends Model
         return $this->hasOne(PhilhealthCredential::class, 'facility_code', 'facility_code')->whereProgramCode('kp');
     }
 
-    public function initial_dx()
-    {
-        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id')
-            ->select(['class_id']);
-    }
-
-    public function final_dx()
-    {
-        return $this->hasManyThrough(ConsultNotesFinalDx::class, ConsultNotes::class, 'patient_id', 'notes_id', 'id', 'id')
-            ->select(['icd10_code']);
-    }
-
     public function philhealth_id()
     {
         return $this->hasMany(PatientPhilhealth::class, 'patient_id', 'id')
@@ -395,17 +383,65 @@ class Patient extends Model
             ->whereDoesntHave('finalDiagnosis');
     }
 
-    public function consultFdx()
+    public function patient_vitals()
+    {
+        return $this->hasOne(Consult::class, 'patient_id', 'id')
+            ->selectRaw('
+                patient_vitals.patient_id AS patient_id,
+                bp_systolic,
+                bp_diastolic,
+                patient_bmi,
+                patient_bmi_class,
+                patient_weight,
+                patient_height,
+                patient_waist,
+                patient_temp,
+                patient_heart_rate,
+                patient_respiratory_rate,
+                patient_pulse_rate
+            ')
+            ->join('patient_vitals', function ($join) {
+                $join->on(DB::raw('consults.patient_id'), '=', DB::raw('patient_vitals.patient_id'));
+                $join->on(DB::raw('consults.id'), '=', DB::raw('patient_vitals.consult_id'));
+                $join->on(DB::raw("DATE_FORMAT(consults.consult_date, '%Y-%m-%d')"), '=', DB::raw("DATE_FORMAT(patient_vitals.vitals_date, '%Y-%m-%d')"));
+            })
+            ->orderBy('vitals_date', 'DESC');
+    }
+
+    public function initialdx()
     {
         return $this->hasMany(ConsultNotes::class, 'patient_id', 'id')
-            ->join('consult_notes_final_dxes', function ($join) {
-                $join->on('consult_notes.id', '=', 'consult_notes_final_dxes.notes_id');
+            ->leftJoin('consult_notes_initial_dxes', function ($join) {
+                $join->on('consult_notes.id', '=', 'consult_notes_initial_dxes.notes_id');
             })
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
+            ->leftJoin('lib_diagnoses', 'consult_notes_initial_dxes.class_id', '=', 'lib_diagnoses.class_id')
             ->select([
-                'consult_notes_final_dxes.icd10_code',
-                'lib_icd10s.icd10_desc'
+                'consult_notes.patient_id AS patient_id',
+                'lib_diagnoses.class_name AS diagnosis_name'
             ]);
+    }
+
+    public function finaldx()
+    {
+        return $this->hasMany(ConsultNotes::class, 'patient_id', 'id')
+            ->leftJoin('consult_notes_final_dxes', function ($join) {
+            $join->on('consult_notes.id', '=', 'consult_notes_final_dxes.notes_id');
+        })
+        ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
+        ->leftJoin('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
+        ->select([
+            'consult_notes.consult_id',
+            'consult_notes.id',
+            'consult_notes.patient_id AS patient_id',
+            'consults.consult_date AS consult_date',
+            'consult_notes_final_dxes.icd10_code AS icd10_code',
+            'lib_icd10s.icd10_desc AS icd10_desc'
+        ]);
+    }
+
+    public function consultpe()
+    {
+        return $this->hasMany(ConsultNotes::class, 'patient_id', 'id');
     }
 }

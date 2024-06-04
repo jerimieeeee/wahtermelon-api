@@ -34,7 +34,6 @@ class ReportMorbidityNameListService
 
     public function get_report_namelist($request)
     {
-//        dd($request);
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         consult_notes.patient_id AS patient_id,

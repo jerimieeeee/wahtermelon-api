@@ -29,4 +29,9 @@ class ConsultNotesPe extends Model
     {
         return $this->belongsTo(LibPe::class, 'pe_id', 'pe_id');
     }
+
+    public function peRemarks(): BelongsTo
+    {
+        return $this->belongsTo(ConsultPeRemarks::class, 'notes_id', 'notes_id');
+    }
 }
