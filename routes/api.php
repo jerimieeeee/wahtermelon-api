@@ -721,6 +721,17 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    //Patient Hospitalization History APIs
+    Route::prefix('patient-hospitalizaion-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientHospitalizationHistoryController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::delete('history/{patientHospitalizationHistory}', 'destroy');
+            });
+    });
+
     //Patient Pregnancy History APIs
     Route::prefix('patient-pregnancy-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPregnancyHistoryController::class)
@@ -1278,6 +1289,38 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('patient-ab-post-exposure', 'index');
                 Route::post('patient-ab-post-exposure', 'store');
+            });
+    });
+
+    Route::prefix('dental')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalMedicalSocialController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('medical-social', 'index');
+                Route::post('medical-social', 'store');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('service', 'index');
+                Route::post('service', 'store');
+                Route::delete('service/{dentalService}', 'destroy');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalToothServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tooth-service', 'index');
+                Route::post('tooth-service', 'store');
+                Route::delete('tooth-service/{dentalToothService}', 'destroy');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalToothConditionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tooth-condition', 'index');
+                Route::post('tooth-condition', 'store');
             });
     });
 });

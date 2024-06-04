@@ -88,8 +88,23 @@ class ConsultController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
-            ->when($request->filled('pt_group'), function ($q) use ($request) {
+            ->when($request->filled('pt_group') && !($request->pt_group == 'dn' && $request->filled('not_consult_id')), function ($q) use ($request) {
                 $q->where('pt_group', $request->pt_group);
+
+                if($request->pt_group == 'dn') {
+                    $q->with([
+                        'dentalMedicalSocials',
+                        'dentalSurgicalHistory',
+                        'dentalHospitalizationHistory',
+                        'dentalService',
+                        'dentalService.service',
+                        'dentalToothService',
+                        'dentalToothService.toothService',
+                        'dentalToothService.consult',
+                        'consultToothCondition',
+                        'latestToothCondition'
+                    ]);
+                }
             })
             ->when($request->filled('patient_id'), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
@@ -110,7 +125,10 @@ class ConsultController extends Controller
                 $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->filled('not_consult_id'), function ($q) use ($request) {
-                $q->where('id', '!=', $request->not_consult_id);
+                $q->where('id', '!=', $request->not_consult_id)
+                ->when($request->pt_group == 'dn', function ($query) use ($request) {
+                    $query->whereIn('pt_group', ['dn', 'cn']);
+                });
             })
             ->when($request->filled('todays_patient'), function ($q) {
                 $q->with('user', 'patient', 'physician');
@@ -165,7 +183,7 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        if (request('pt_group') == 'cn') {
+        if (request('pt_group') == 'cn' || request('pt_group') == 'dn') {
             $data = Consult::create($request->validated());
             $data->consultNotes()->create($request->validated());
         } else {

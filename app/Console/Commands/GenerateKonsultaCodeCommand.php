@@ -52,7 +52,7 @@ class GenerateKonsultaCodeCommand extends Command
         //Update Transaction Number of Consult Table
         $consults = new Consult;
         $consultTableName = $consults->getTable();
-        $consultData = $consults->whereNull('transaction_number')->wherePtGroup('cn')->whereHas('consultNotes.finaldx')->withWhereHas('patient.philhealthKonsulta')->get();
+        $consultData = $consults->whereNull('transaction_number')->wherePtGroup('cn')->whereHas('consultNotes.finaldx')->whereHas('patient.philhealthKonsulta')->get();
 
         $consultBar = $this->output->createProgressBar(count($consultData));
         $consultBar->setFormat('Processing Consult Table: %current%/%max% [%bar%] %percent:3s%%');

@@ -549,4 +549,11 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('environmental-toilet-facility', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalToiletFacilityController::class, 'index'])->name('environmental-toilet-facility.index');
     Route::get('environmental-sewage', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalSewageController::class, 'index'])->name('environmental-sewage.index');
     Route::get('environmental-waste-management', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalWasteManagementController::class, 'index'])->name('environmental-waste-management.index');
+
+    //Dental
+    Route::get('dental-medical-history', [\App\Http\Controllers\API\V1\Libraries\LibDentalMedicalHistoryController::class, 'index'])->name('dental-medical-history.index');
+    Route::get('dental-social-history', [\App\Http\Controllers\API\V1\Libraries\LibDentalSocialHistoryController::class, 'index'])->name('dental-social-history.index');
+    Route::get('dental-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalServiceController::class, 'index'])->name('dental-service.index');
+    Route::get('dental-tooth-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalToothServiceController::class, 'index'])->name('dental-tooth-service.index');
+
 });

@@ -197,6 +197,8 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryMalariaRdtParasiteTypeSeeder::class,
             LibLaboratorySyphilisTestMethodSeeder::class,
             LibLaboratoryXrayTypeSeeder::class,
+            LibDentalServiceSeeder::class,
+            LibDentalToothServiceSeeder::class,
         ]);
     }
 }
