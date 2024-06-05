@@ -308,13 +308,11 @@ class ChildCareReportService
                         municipalities_brgy.barangay_code
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
-            ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
+            ->join('patient_ccdevs', 'patient_mc.patient_id', '=', 'patient_ccdevs.mothers_id')
+            ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
-//            })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
