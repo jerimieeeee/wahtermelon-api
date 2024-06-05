@@ -394,4 +394,18 @@ class Patient extends Model
         return $this->hasMany(Consult::class, 'patient_id', 'id')
             ->whereDoesntHave('finalDiagnosis');
     }
+
+    public function consultFdx()
+    {
+        return $this->hasMany(ConsultNotes::class, 'patient_id', 'id')
+            ->join('consult_notes_final_dxes', function ($join) {
+                $join->on('consult_notes.id', '=', 'consult_notes_final_dxes.notes_id');
+            })
+            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
+            ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
+            ->select([
+                'consult_notes_final_dxes.icd10_code',
+                'lib_icd10s.icd10_desc'
+            ]);
+    }
 }

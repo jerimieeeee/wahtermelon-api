@@ -836,6 +836,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('name-list', 'index');
                 });
         });
+        Route::prefix('morbidity-namelist')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MorbidityNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
+        });
         Route::prefix('pending-fdx')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\General\PendingFinalDiagnosisReportController::class)
                 ->middleware('auth:api')
