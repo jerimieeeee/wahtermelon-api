@@ -324,6 +324,11 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('risk-stratification', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskCasdtVisionController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::post('risk-casdt-vision', 'store');
+            });
     });
     //Medicine
     Route::prefix('medicine')->group(function () {

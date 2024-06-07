@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibNcdEyeReferProfessional;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -199,6 +200,10 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryXrayTypeSeeder::class,
             LibDentalServiceSeeder::class,
             LibDentalToothServiceSeeder::class,
+            LibNcdEyeComplaintSeeder::class,
+            LibNcdEyeReferSeeder::class,
+            LibNcdEyeVisionScreeningSeeder::class,
+            LibNcdEyeReferProfessionalSeeder::class,
         ]);
     }
 }

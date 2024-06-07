@@ -556,4 +556,10 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('dental-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalServiceController::class, 'index'])->name('dental-service.index');
     Route::get('dental-tooth-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalToothServiceController::class, 'index'])->name('dental-tooth-service.index');
 
+    //NCD Casdt Vision
+    Route::get('ncd-eye-complaint', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeComplaintController::class, 'index'])->name('ncd-eye-complaint.index');
+    Route::get('ncd-eye-refer', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferController::class, 'index'])->name('ncd-eye-refer.index');
+    Route::get('ncd-eye-vision-screen', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeVisionScreeningController::class, 'index'])->name('ncd-eye-vision-screen.index');
+    Route::get('ncd-eye-refer-prof', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferProfessionalController::class, 'index'])->name('ncd-eye-refer-prof.index');
+
 });
