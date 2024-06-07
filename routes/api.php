@@ -1322,5 +1322,12 @@ Route::prefix('v1')->group(function () {
                 Route::get('tooth-condition', 'index');
                 Route::post('tooth-condition', 'store');
             });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalOralHealthConditionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('oral-condition', 'index');
+                Route::post('oral-condition', 'store');
+            });
     });
 });

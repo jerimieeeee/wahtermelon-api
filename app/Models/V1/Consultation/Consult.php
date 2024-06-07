@@ -16,6 +16,7 @@ use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientHospitalizationHistory;
 use App\Models\V1\Dental\DentalService;
 use App\Models\V1\Dental\DentalToothService;
+use App\Models\V1\Dental\DentalOralHealthCondition;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -254,7 +255,6 @@ class Consult extends Model
     public function dentalService()
     {
         return $this->hasMany(DentalService::class, 'patient_id', 'patient_id');
-
     }
 
     public function dentalToothService()
@@ -276,6 +276,11 @@ class Consult extends Model
             ->select(['consult_id', 'patient_id', 'tooth_number', 'tooth_condition'])
             ->orderBy('consult_id', 'DESC')
             ->limit(52);
+    }
+
+    public function dentalOralHealthCondition()
+    {
+        return $this->hasOne(DentalOralHealthCondition::class, 'consult_id', 'id');
     }
 
     public function consult_no_fdx()

@@ -555,5 +555,6 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('dental-social-history', [\App\Http\Controllers\API\V1\Libraries\LibDentalSocialHistoryController::class, 'index'])->name('dental-social-history.index');
     Route::get('dental-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalServiceController::class, 'index'])->name('dental-service.index');
     Route::get('dental-tooth-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalToothServiceController::class, 'index'])->name('dental-tooth-service.index');
+    Route::get('dental-oral-condition', [\App\Http\Controllers\API\V1\Libraries\LibDentalOralConditionController::class, 'index'])->name('dental-oral-condition.index');
 
 });

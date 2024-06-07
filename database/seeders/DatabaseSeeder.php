@@ -199,6 +199,7 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryXrayTypeSeeder::class,
             LibDentalServiceSeeder::class,
             LibDentalToothServiceSeeder::class,
+            LibDentalOralConditionSeeder::class
         ]);
     }
 }
