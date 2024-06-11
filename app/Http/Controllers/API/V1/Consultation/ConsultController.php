@@ -203,9 +203,12 @@ class ConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $consult = Consult::findOrFail($id);
+        $hasFeedback = $consult->feedback()->exists();
+
+        return response()->json(['for_feedback' => !$hasFeedback], 201);
     }
 
     /**
