@@ -17,7 +17,7 @@ class ConsultResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
+            'patient_id' => $this->patient_id,
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
