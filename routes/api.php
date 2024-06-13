@@ -333,6 +333,11 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('risk-stratification', 'index');
             });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskCasdtVisionController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::post('risk-casdt-vision', 'store');
+            });
     });
     //Medicine
     Route::prefix('medicine')->group(function () {
@@ -860,6 +865,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('get-consultation', 'index2');
                 });
         });
+        Route::prefix('feedback')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\General\ConsultFeedbackReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
@@ -1339,4 +1351,5 @@ Route::prefix('v1')->group(function () {
                 Route::post('oral-condition', 'store');
             });
     });
+
 });

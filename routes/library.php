@@ -560,4 +560,10 @@ Route::prefix('v1/libraries')->group(function () {
     // Feedback
     Route::get('feedback-question', [\App\Http\Controllers\API\V1\Libraries\LibFeedbackQuestionController::class, 'index'])->name('feedback-question.index');
 
+    //NCD Casdt Vision
+    Route::get('ncd-eye-complaint', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeComplaintController::class, 'index'])->name('ncd-eye-complaint.index');
+    Route::get('ncd-eye-refer', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferController::class, 'index'])->name('ncd-eye-refer.index');
+    Route::get('ncd-eye-vision-screen', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeVisionScreeningController::class, 'index'])->name('ncd-eye-vision-screen.index');
+    Route::get('ncd-eye-refer-prof', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferProfessionalController::class, 'index'])->name('ncd-eye-refer-prof.index');
+
 });
