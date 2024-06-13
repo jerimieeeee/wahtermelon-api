@@ -154,7 +154,6 @@ Route::prefix('v1')->group(function () {
                 Route::post('records', 'store');
                 Route::put('records/{id}', 'update');
                 // Route::get('cn-records', 'show');
-                Route::get('count', 'show');
                 Route::get('records', 'index');
             });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
@@ -203,6 +202,16 @@ Route::prefix('v1')->group(function () {
             ->middleware('auth:api')
             ->group(function () {
                 Route::post('management', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
+            ->middleware('guest')
+            ->group(function () {
+                Route::get('records/{id}', 'show');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultFeedbackController::class)
+            ->middleware('guest')
+            ->group(function () {
+                Route::post('feedback', 'store');
             });
     });
 
@@ -1326,6 +1335,13 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('tooth-condition', 'index');
                 Route::post('tooth-condition', 'store');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalOralHealthConditionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('oral-condition', 'index');
+                Route::post('oral-condition', 'store');
             });
     });
 });
