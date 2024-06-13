@@ -141,7 +141,7 @@ class ReportFamilyPlanningNameListService
                 $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, dropout_date)"), $request->age);
             })
             ->when($request->client_code !== 'dropout_present_month', function($query) use ($request) {
-                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, enrollment_date)"), $request->age);
+                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, NOW())"), $request->age);
             })
             ->whereMethodCode($request->method)
 //            ->when($request->category == 'all', function ($q) {
