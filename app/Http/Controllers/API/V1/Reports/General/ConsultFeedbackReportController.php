@@ -17,12 +17,14 @@ class ConsultFeedbackReportController extends Controller
         $total = $feedbackService->get_total_consult($request)->first();
         $back_encode = $feedbackService->get_back_encoded($request)->first();
         $no_feedback = $feedbackService->get_without_feedback($request);
+        $with_feedback = $feedbackService->get_with_feedback($request);
 
         return [
             'score' => $score,
             'total_consult' => $total->total_consult,
             'back_encode' => $back_encode->total_consult,
-            'no_feedback' => $no_feedback
+            'no_feedback' => $no_feedback,
+            'with_feedback' => $with_feedback
         ];
     }
 

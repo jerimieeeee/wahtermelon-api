@@ -96,4 +96,14 @@ class ConsultFeedbackService
             ->whereBetween(DB::raw('DATE(consults.consult_date)'), [$request->start_date, $request->end_date])
             ->count();
     }
+
+    public function get_with_feedback($request)
+    {
+        return Consult::query()
+            ->whereHas('feedback')
+            ->where('consults.facility_code', auth()->user()->facility_code)
+            ->whereDate(DB::raw('DATE(consults.consult_date)'), '=', DB::raw('DATE(consults.created_at)'))
+            ->whereBetween(DB::raw('DATE(consults.consult_date)'), [$request->start_date, $request->end_date])
+            ->count();
+    }
 }
