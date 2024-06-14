@@ -13,20 +13,17 @@ class ConsultFeedbackReportController extends Controller
      */
     public function index(Request $request, ConsultFeedbackService $feedbackService)
     {
-        $score = $feedbackService->get_feedback_score($request);
+        $score = $feedbackService->get_feedback_score($request)->get();
+        $total = $feedbackService->get_total_consult($request)->first();
+        $back_encode = $feedbackService->get_back_encoded($request)->first();
+        $no_feedback = $feedbackService->get_without_feedback($request)->first();
 
-        $total = $feedbackService->get_total_consult($request);
-
-        $back_encode = $feedbackService->get_back_encoded($request);
-
-        $no_feedback = $feedbackService->get_without_feedback($request);
-
-            return [
-              'score' => $score,
-              'total' => $total,
-              'back_encode' => $back_encode,
-              'no_feedback' => $no_feedback
-            ];
+        return [
+            'score' => $score,
+            'total_consult' => $total->total_consult,
+            'back_encode' => $back_encode->total_consult,
+            'no_feedback' => $no_feedback->count
+        ];
     }
 
     /**

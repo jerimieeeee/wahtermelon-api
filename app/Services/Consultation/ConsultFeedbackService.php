@@ -43,8 +43,7 @@ class ConsultFeedbackService
         ->where('consults.facility_code', auth()->user()->facility_code)
         ->whereDate(DB::raw('DATE(consults.consult_date)'), '=', DB::raw('DATE(consults.created_at)'))
         ->whereBetween(DB::raw('DATE(consults.consult_date)'), [$request->start_date, $request->end_date])
-        ->groupBy('score')
-        ->get();
+        ->groupBy('score');
     }
 
     public function get_total_consult($request)
