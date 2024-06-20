@@ -934,6 +934,12 @@ Route::prefix('v1')->group(function () {
                 Route::get('patient-tb-caseholding/{patientTb}', 'show');
                 Route::put('patient-tb-caseholding/{patientTb}', 'update');
             });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbDotsChartController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb-chart', 'index');
+                Route::post('patient-tb-chart', 'store');
+            });
     });
 
     //Appointment

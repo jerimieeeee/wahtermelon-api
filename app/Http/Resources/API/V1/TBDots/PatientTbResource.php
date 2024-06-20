@@ -30,6 +30,7 @@ class PatientTbResource extends JsonResource
             'symptom' => $this->when($this->relationLoaded('tbSymptom'), new PatientTbSymptomResource($this->tbSymptom)),
             'physical_exam' => $this->when($this->relationLoaded('tbPhysicalExam'), new PatientTbPeResource($this->tbPhysicalExam)),
             'case_holding' => $this->when($this->relationLoaded('tbCaseHolding'), new PatientTbCaseHoldingResource($this->tbCaseHolding)),
+            'dots_chart' => $this->whenLoaded('tbDotsChart'),
         ];
     }
 }

@@ -46,7 +46,7 @@ class PatientTbController extends Controller
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-            ->with('tbCaseFinding', 'tbCaseHolding', 'treatmentOutcome', 'outcomeReason', 'tbSymptom', 'tbPhysicalExam')
+            ->with('tbCaseFinding', 'tbCaseHolding', 'treatmentOutcome', 'outcomeReason', 'tbSymptom', 'tbPhysicalExam', 'tbDotsChart')
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
