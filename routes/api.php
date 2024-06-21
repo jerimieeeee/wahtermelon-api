@@ -23,11 +23,12 @@ Route::prefix('v1')->group(function () {
 //use App\Events\UserUpdated;
 
     Route::get('/test-broadcast', function () {
-        $user = \App\Models\User::find('98d2f114-7bab-45c8-bfbc-3c70d3c3e051');
-        broadcast(new UserUpdated($user));
-        event(new \App\Events\WebSocketTestEvent($user));
+        //$user = \App\Models\User::find('98d2f114-7bab-45c8-bfbc-3c70d3c3e051');
+        //broadcast(new UserUpdated($user));
+        //event(new \App\Events\WebSocketTestEvent($user));
+        event(new \App\Events\TodaysPatientEvent());
         return 'Event has been broadcast!';
-    });
+    })->middleware('auth:api');
     Route::post('login', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'login']);
     Route::get('logout', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'logout'])->middleware('auth:api');
     Route::get('email/verify/{id}', [\App\Http\Controllers\API\Auth\VerificationController::class, 'verify'])->name('verification.verify');

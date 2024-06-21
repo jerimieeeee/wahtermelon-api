@@ -7,36 +7,34 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class WebSocketTestEvent implements ShouldBroadcastNow
+class TodaysPatientEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
     /**
      * Create a new event instance.
      */
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user = $user;
+        //
     }
 
     public function broadcastOn()
     {
-        return new Channel('websocket-test-channel'. $this->user->facility_code);
+        return new Channel('todays-patient.'. auth()->user()->facility_code);
     }
 
     public function broadcastAs()
     {
-        return 'websocket.test';
+        return 'todays.patient';
     }
 
     public function broadcastWith()
     {
-        return ['message' => 'WebSocket test message'];
+        return ['message' => 'Created new consult'];
     }
-}
 
+}
