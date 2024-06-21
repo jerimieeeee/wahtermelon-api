@@ -60,4 +60,9 @@ class PatientTb extends Model
     {
         return $this->hasOne(PatientTbCaseHolding::class, 'patient_tb_id', 'id');
     }
+
+    public function tbDotsChart()
+    {
+        return $this->hasMany(PatientTbDotsChart::class, 'patient_tb_id', 'id');
+    }
 }
