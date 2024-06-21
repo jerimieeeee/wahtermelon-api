@@ -26,11 +26,16 @@ class UserUpdated implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return PrivateChannel
+     * @return Channel
      */
-    public function broadcastOn(): PrivateChannel
+    public function broadcastOn(): Channel
     {
         //return "OK";
-        return new PrivateChannel('App.Models.User.' . $this->user->id);
+        return new Channel('facility' . $this->user->facility_code);
+    }
+
+    public function broadcastWith()
+    {
+        return ['user' => $this->user];
     }
 }

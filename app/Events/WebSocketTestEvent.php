@@ -15,9 +15,18 @@ class WebSocketTestEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user;
+    /**
+     * Create a new event instance.
+     */
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
+
     public function broadcastOn()
     {
-        return new Channel('websocket-test-channel');
+        return new Channel('websocket-test-channel'. $this->user->facility_code);
     }
 
     public function broadcastAs()

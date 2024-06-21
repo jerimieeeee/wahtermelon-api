@@ -25,7 +25,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/test-broadcast', function () {
         $user = \App\Models\User::find('98d2f114-7bab-45c8-bfbc-3c70d3c3e051');
         broadcast(new UserUpdated($user));
-        event(new \App\Events\WebSocketTestEvent());
+        event(new \App\Events\WebSocketTestEvent($user));
         return 'Event has been broadcast!';
     });
     Route::post('login', [\App\Http\Controllers\API\Auth\AuthenticationController::class, 'login']);
