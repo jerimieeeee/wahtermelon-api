@@ -26,9 +26,8 @@ class PatientFpChartController extends Controller
                 $q->where('patient_id', $request->patient_id);
             })
             ->with(['fpMethod', 'fpMethod.dropout', 'fpMethod.method', 'source'])
-            ->defaultSort('service_date')
-            ->allowedSorts('enrollment_date', 'next_service_date')
-            ->orderBy('service_date', 'DESC');
+            ->defaultSort('-service_date')
+            ->allowedSorts('enrollment_date', 'next_service_date', 'service_date');
 
         if ($perPage === 'all') {
             return PatientFpChartResource::collection($query->get());

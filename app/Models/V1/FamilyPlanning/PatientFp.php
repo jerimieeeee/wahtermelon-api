@@ -76,6 +76,6 @@ class PatientFp extends Model
     public function fpChart()
     {
         return $this->hasMany(PatientFpChart::class)
-            ->orderBy('service_date', 'DESC');
+            ->orderBy('service_date', 'ASC');
     }
 }
