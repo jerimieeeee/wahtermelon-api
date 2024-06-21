@@ -164,7 +164,6 @@ Route::prefix('v1')->group(function () {
                 Route::post('records', 'store');
                 Route::put('records/{id}', 'update');
                 // Route::get('cn-records', 'show');
-                Route::get('count', 'show');
                 Route::get('records', 'index');
             });
         Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultNotesComplaintController::class)
@@ -213,6 +212,16 @@ Route::prefix('v1')->group(function () {
             ->middleware('auth:api')
             ->group(function () {
                 Route::post('management', 'store');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultController::class)
+            ->middleware('guest')
+            ->group(function () {
+                Route::get('records/{id}', 'show');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Consultation\ConsultFeedbackController::class)
+            ->middleware('guest')
+            ->group(function () {
+                Route::post('feedback', 'store');
             });
     });
 
@@ -333,6 +342,11 @@ Route::prefix('v1')->group(function () {
             ->middleware('auth:api')
             ->group(function () {
                 Route::get('risk-stratification', 'index');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskCasdtVisionController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::post('risk-casdt-vision', 'store');
             });
     });
     //Medicine
@@ -731,6 +745,17 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    //Patient Hospitalization History APIs
+    Route::prefix('patient-hospitalizaion-history')->group(function () {
+        Route::controller(\App\Http\Controllers\API\V1\Patient\PatientHospitalizationHistoryController::class)
+            ->middleware('auth:api')
+            ->group(function () {
+                Route::get('history', 'index');
+                Route::post('history', 'store');
+                Route::delete('history/{patientHospitalizationHistory}', 'destroy');
+            });
+    });
+
     //Patient Pregnancy History APIs
     Route::prefix('patient-pregnancy-history')->group(function () {
         Route::controller(\App\Http\Controllers\API\V1\Patient\PatientPregnancyHistoryController::class)
@@ -835,8 +860,23 @@ Route::prefix('v1')->group(function () {
                     Route::get('name-list', 'index');
                 });
         });
+        Route::prefix('morbidity-namelist')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MorbidityNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
+        });
         Route::prefix('pending-fdx')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\General\PendingFinalDiagnosisReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('report', 'index');
+                    Route::get('get-consultation', 'index2');
+                });
+        });
+        Route::prefix('feedback')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\General\ConsultFeedbackReportController::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('report', 'index');
@@ -903,6 +943,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-tb-caseholding', 'store');
                 Route::get('patient-tb-caseholding/{patientTb}', 'show');
                 Route::put('patient-tb-caseholding/{patientTb}', 'update');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\TBDots\PatientTbDotsChartController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('patient-tb-chart', 'index');
+                Route::post('patient-tb-chart', 'store');
             });
     });
 
@@ -1282,4 +1328,44 @@ Route::prefix('v1')->group(function () {
                 Route::post('patient-ab-post-exposure', 'store');
             });
     });
+
+    Route::prefix('dental')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalMedicalSocialController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('medical-social', 'index');
+                Route::post('medical-social', 'store');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('service', 'index');
+                Route::post('service', 'store');
+                Route::delete('service/{dentalService}', 'destroy');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalToothServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tooth-service', 'index');
+                Route::post('tooth-service', 'store');
+                Route::delete('tooth-service/{dentalToothService}', 'destroy');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalToothConditionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('tooth-condition', 'index');
+                Route::post('tooth-condition', 'store');
+            });
+
+        Route::controller(App\Http\Controllers\API\V1\Dental\DentalOralHealthConditionController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('oral-condition', 'index');
+                Route::post('oral-condition', 'store');
+            });
+    });
+
 });

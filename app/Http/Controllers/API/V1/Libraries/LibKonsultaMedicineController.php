@@ -35,9 +35,11 @@ class LibKonsultaMedicineController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
+        $columns = ['desc'];
         $query = QueryBuilder::for(LibKonsultaMedicine::class)
-            ->allowedFilters(['code', 'desc']);
+            ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
+                $q->orSearch($columns, 'LIKE', $request->filter['search']);
+            });
 
         if ($perPage === 'all') {
             return LibKonsultaMedicineResource::collection($query->get());

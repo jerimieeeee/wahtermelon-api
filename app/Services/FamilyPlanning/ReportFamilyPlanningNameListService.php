@@ -38,6 +38,8 @@ class ReportFamilyPlanningNameListService
     {
         return DB::table('patient_fp_methods')
             ->selectRaw("
+                        patient_fp_methods.patient_id AS patient_id,
+                        patient_fp_id,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
@@ -49,7 +51,7 @@ class ReportFamilyPlanningNameListService
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
             })
-            ->whereNull('deleted_at')
+            ->whereNull('patient_fp_methods.deleted_at')
             ->when($request->client_code == 'current_user_beginning_month', function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
@@ -76,7 +78,7 @@ class ReportFamilyPlanningNameListService
                         $query->whereIn('client_code', ['CC', 'CM', 'RS'])
                             ->where(function($query) use($request) {
                                 $query->whereNull('dropout_date')
-                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
+                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                             })
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(IF(? = 1, ? - 1, ?), '-', LPAD(IF(? = 1, 12, ? - 1), 2, '0'))",
                                 [$request->month, $request->year, $request->year, $request->month, $request->month]
@@ -139,7 +141,7 @@ class ReportFamilyPlanningNameListService
                 $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, dropout_date)"), $request->age);
             })
             ->when($request->client_code !== 'dropout_present_month', function($query) use ($request) {
-                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, enrollment_date)"), $request->age);
+                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, NOW())"), $request->age);
             })
             ->whereMethodCode($request->method)
 //            ->when($request->category == 'all', function ($q) {

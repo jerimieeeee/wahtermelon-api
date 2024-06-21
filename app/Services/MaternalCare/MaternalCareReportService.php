@@ -460,7 +460,7 @@ class MaternalCareReportService
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
-            ->join('facilities', 'patient_mc_post_registrations.barangay_code', '=', 'facilities.barangay_code')
+            ->leftJoin('facilities', 'patient_mc_post_registrations.barangay_code', '=', 'facilities.barangay_code')
 //            ->when($request->category == 'all', function ($q) {
 //                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
 //            })

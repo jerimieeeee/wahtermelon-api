@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\V1\Reports\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Consultation\PendingFinalDxResource;
 use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
+use App\Services\Consultation\ConsultationReportService;
 use App\Services\Consultation\PendingFinalDiagnosisReportService;
 use App\Services\DailyService\DailyServiceReportService;
 use Illuminate\Http\Request;
@@ -15,6 +17,7 @@ class PendingFinalDiagnosisReportController extends Controller
      */
     public function index(Request $request, PendingFinalDiagnosisReportService $pendingFdx)
     {
+//        return $request;
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $query = $pendingFdx->get_pending_fdx();
@@ -38,6 +41,19 @@ class PendingFinalDiagnosisReportController extends Controller
         return response()->json($data);
     }
 
+    public function index2(Request $request, ConsultationReportService $consultService)
+    {
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $query = $consultService->get_consultation($request);
+
+        $data = $query->paginate($perPage);
+
+        return response()->json($data);
+
+//        return PendingFinalDxResource::collection($data);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -51,7 +67,9 @@ class PendingFinalDiagnosisReportController extends Controller
      */
     public function show(string $id)
     {
-        //
+//        $query = $consultService->get_consultation($id);
+//
+//        return DailyServiceConsultationReportResource::collection($query);
     }
 
     /**

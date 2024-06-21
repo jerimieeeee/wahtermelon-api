@@ -17,7 +17,7 @@ class ConsultResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient_id' => $this->when(! $this->relationLoaded('patient'), $this->patient_id),
+            'patient_id' => $this->patient_id,
             'patient' => $this->whenLoaded('patient'),
             'user_id' => $this->when(! $this->relationLoaded('user'), $this->user_id),
             'user' => $this->whenLoaded('user'),
@@ -34,6 +34,14 @@ class ConsultResource extends JsonResource
             'complaints' => $this->whenLoaded('consultNotes.complaints.libcomplaints'),
             'prescriptions' => $this->whenLoaded('prescription'),
             'management' => $this->whenLoaded('management'),
+            'dentalMedicalSocials' => $this->whenLoaded('dentalMedicalSocials'),
+            'dentalSurgicalHistory' => $this->whenLoaded('dentalSurgicalHistory'),
+            'dentalHospitalizationHistory' => $this->whenLoaded('dentalHospitalizationHistory'),
+            'dentalService' => $this->whenLoaded('dentalService'),
+            'dentalToothService' => $this->whenLoaded('dentalToothService'),
+            'consultToothCondition' => $this->whenLoaded('consultToothCondition'),
+            'latestToothCondition' => $this->whenLoaded('latestToothCondition'),
+            'dentalOralHealthCondition' => $this->whenLoaded('dentalOralHealthCondition'),
             'is_pregnant' => $this->is_pregnant,
             'consult_done' => $this->consult_done,
             'pt_group' => $this->pt_group,
