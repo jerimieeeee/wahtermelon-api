@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Consultation;
 
+use App\Events\TodaysPatientEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
 use App\Http\Resources\API\V1\Consultation\ConsultResource;
@@ -148,7 +149,7 @@ class ConsultController extends Controller
         } else {
             $data = Consult::create($request->except(['physician_id', 'is_pregnant']));
         }
-
+        event(new TodaysPatientEvent());
         return new ConsultResource($data);
     }
 
@@ -180,7 +181,7 @@ class ConsultController extends Controller
     {
         Consult::query()->findOrFail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant', 'is_konsulta', 'walkedin_status', 'authorization_transaction_code', 'consult_date']));
         $data = Consult::query()->findOrFail($id);
-
+        event(new TodaysPatientEvent());
         return response()->json(['data' => $data], 201);
     }
 
