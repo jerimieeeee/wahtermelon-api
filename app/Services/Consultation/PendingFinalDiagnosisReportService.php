@@ -29,8 +29,10 @@ class PendingFinalDiagnosisReportService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->leftjoin('users', 'consults.physician_id', '=', 'users.id')
             ->leftJoin('users as users2', 'consults.user_id', '=', 'users2.id')
+            ->leftJoin('consult_notes_initial_dxes', 'consult_notes.id', '=', 'consult_notes_initial_dxes.notes_id')
             ->leftJoin('consult_notes_final_dxes', 'consult_notes.id', '=', 'consult_notes_final_dxes.notes_id')
             ->wherePtGroup('cn')
+            ->whereNotNull('class_id')
             ->where('consults.facility_code', auth()->user()->facility_code)
             ->whereNull('icd10_code');
     }

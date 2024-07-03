@@ -13,7 +13,8 @@ class ConsultationReportService
     public function get_consultation($request)
     {
         return Patient::with([
-            'initialdx',
+            'consults',
+            'householdFolder.barangay',
             'patient_vitals',
             'finaldx',
             'consultpe'

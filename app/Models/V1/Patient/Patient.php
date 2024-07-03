@@ -109,6 +109,7 @@ class Patient extends Model
     public function householdFolder()
     {
         return $this->hasOneThrough(HouseholdFolder::class, HouseholdMember::class, 'patient_id', 'id', 'id', 'household_folder_id');
+//            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code');
     }
 
     public function householdMember()
