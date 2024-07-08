@@ -850,7 +850,7 @@ Route::prefix('v1')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportController::class)
                 ->middleware('auth:api')
                 ->group(function () {
-                    Route::get('report', 'index');
+                    Route::get('post-exposure-cohort', 'index');
                 });
         });
         Route::prefix('fp-namelist')->group(function () {
