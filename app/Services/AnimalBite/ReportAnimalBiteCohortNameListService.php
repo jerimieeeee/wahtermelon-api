@@ -41,7 +41,8 @@ class ReportAnimalBiteCohortNameListService
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
-                        birthdate
+                        birthdate,
+                        exposure_date AS date_of_service
                         ")
             ->join('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->join('patient_abs', 'patient_ab_post_exposures.patient_ab_id', '=', 'patient_abs.id')
