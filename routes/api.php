@@ -847,7 +847,12 @@ Route::prefix('v1')->group(function () {
                 });
         });
         Route::prefix('animal-bite')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportController::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteCohortNameListReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportCohortController::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('post-exposure-cohort', 'index');

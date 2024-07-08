@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\API\V1\Reports\AnimalBite;
 
 use App\Http\Controllers\Controller;
-use App\Services\AnimalBite\AnimalBiteReportService;
+use App\Services\AnimalBite\AnimalBiteReportCohortService;
 use Illuminate\Http\Request;
 
-class AnimalBiteReportController extends Controller
+class AnimalBiteReportCohortController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, AnimalBiteReportService $animalbite)
+    public function index(Request $request, AnimalBiteReportCohortService $animalbite)
     {
         return $animalbite->get_ab_post_exp_prophylaxis($request)->get();
 

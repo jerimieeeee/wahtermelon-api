@@ -6,7 +6,7 @@ use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use Illuminate\Support\Facades\DB;
 
-class AnimalBiteReportService
+class AnimalBiteReportCohortService
 {
     public function get_catchment_barangays()
     {
@@ -119,9 +119,9 @@ class AnimalBiteReportService
                             AND day3_date IS NOT NULL
                             AND day7_date IS NOT NULL
                         THEN
-                            1
-                        ELSE
                             0
+                        ELSE
+                            1
                         END) AS 'total_cat2_incomplete',
                     SUM(
                         CASE WHEN exposure_type_code IN('CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC')
@@ -129,9 +129,9 @@ class AnimalBiteReportService
                             AND day3_date IS NOT NULL
                             AND day7_date IS NOT NULL
                         THEN
-                            1
-                        ELSE
                             0
+                        ELSE
+                            1
                         END) AS 'total_cat3_incomplete',
                     SUM(
                         CASE WHEN exposure_type_code IN('MINOR', 'NIBB', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC')
@@ -139,9 +139,9 @@ class AnimalBiteReportService
                             AND day3_date IS NOT NULL
                             AND day7_date IS NOT NULL
                         THEN
-                            1
-                        ELSE
                             0
+                        ELSE
+                            1
                         END) AS 'total_cat2_and_cat3_incomplete',
                     SUM(
                         CASE WHEN exposure_type_code IN('MINOR', 'NIBB')
@@ -175,11 +175,12 @@ class AnimalBiteReportService
                         END) AS 'total_cat2_and_cat3_none'
                     ")
             ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
-            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
             ->join('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
+            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_ab_exposures.patient_id');
             })
+            ->whereNull('patient_ab_exposures.deleted_at')
             ->whereBetween(DB::raw('DATE(exposure_date)'), [$request->start_date, $request->end_date])
             ->where('patient_ab_exposures.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
