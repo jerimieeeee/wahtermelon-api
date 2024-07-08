@@ -58,7 +58,9 @@ class ConsultLaboratoryController extends Controller
                 return $query->whereRequestStatusCode($request->request_status_code);
             });
         $laboratory = QueryBuilder::for($query)
-            ->with('cbc',
+            ->with(
+                'facility',
+                'cbc',
                 'creatinine',
                 'chestXray',
                 'ecg',
@@ -88,7 +90,7 @@ class ConsultLaboratoryController extends Controller
                 'hematology',
                 'syphilis',
                 'cervical',
-                'xray'
+                'xray',
             )
             ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')

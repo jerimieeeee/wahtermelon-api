@@ -49,7 +49,7 @@ class ConsultLaboratoryResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
+            'facility_code' => $this->facility_code,
             'facility' => $this->whenLoaded('facility'),
             'consult_id' => $this->when(! $this->relationLoaded('consult'), $this->consult_id),
             'consult' => $this->whenLoaded('consult'),

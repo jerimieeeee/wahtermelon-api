@@ -42,6 +42,7 @@ class UserRequest extends FormRequest
             'photo_url' => 'nullable|url',
             'tin_number' => 'sometimes|max:9',
             'accreditation_number' => 'sometimes|max:14',
+            'prc_number' => 'sometimes',
             'designation_code' => 'required|exists:lib_designations,code',
             'employer_code' => 'required|exists:lib_employers,code',
             'password' => [

@@ -113,6 +113,10 @@ class UserUpdateRequest extends FormRequest
             $rules['accreditation_number'] = 'sometimes|max:14';
         }
 
+        if (request()->has('prc_number') && $this->input('prc_number') !== $user->prc_number) {
+            $rules['prc_number'] = 'sometimes';
+        }
+
         if (request()->has('designation_code') && $this->input('designation_code') !== $user->designation_code) {
             $rules['designation_code'] = 'required|exists:lib_designations,code';
         }

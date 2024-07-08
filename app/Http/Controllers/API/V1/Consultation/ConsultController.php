@@ -44,48 +44,6 @@ class ConsultController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        /*$perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
-        $consult = QueryBuilder::for(Consult::class)
-            ->when(isset($request->pt_group), function ($q) use ($request) {
-                $q->where('pt_group', $request->pt_group);
-            })
-            ->when(isset($request->patient_id), function ($q) use ($request) {
-                $q->where('patient_id', '=', $request->patient_id);
-            })
-            ->when(isset($request->consult_done), function ($q) use ($request) {
-                $q->where('consult_done', '=', $request->consult_done);
-            })
-            ->when(isset($request->id), function ($q) use ($request) {
-                $q->where('id', '=', $request->id);
-            })
-            ->when(isset($request->physician_id), function ($q) use ($request) {
-                $q->where('physician_id', '=', $request->physician_id);
-            })
-            ->when(isset($request->is_konsulta), function ($q) use ($request) {
-                $q->where('is_konsulta', $request->is_konsulta);
-            })
-            ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
-                $q->where('facility_code', '=', auth()->user()->facility_code);
-            })
-            ->when(isset($request->not_consult_id), function ($q) use ($request) {
-                $q->where('id', '!=', $request->not_consult_id);
-            })
-            ->when(isset($request->todays_patient), function ($q) {
-                $q->with('user', 'patient', 'physician');
-            })
-            ->when(!isset($request->todays_patient), function ($q) {
-                $q->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription.konsultaMedicine', 'prescription.konsultaMedicine.generic', 'prescription.dosageUom', 'prescription.doseRegimen', 'prescription.medicinePurpose', 'prescription.durationFrequency', 'prescription.medicineRoute', 'prescription.quantityPreparation', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility');
-            })
-            ->defaultSort('consult_date')
-            ->allowedSorts('consult_date');
-
-        if ($perPage === 'all') {
-            return ConsultResource::collection($consult->get());
-        }
-
-        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());*/
-
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
@@ -185,13 +143,13 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        if (request('pt_group') == 'cn' || request('pt_group') == 'dn') {
+        if (request('pt_group') == 'cn' || request('pt_group') == 'dn' || request('pt_group') == 'tb') {
             $data = Consult::create($request->validated());
             $data->consultNotes()->create($request->validated());
         } else {
             $data = Consult::create($request->except(['physician_id', 'is_pregnant']));
         }
-        event(new TodaysPatientEvent());
+        //event(new TodaysPatientEvent());
         return new ConsultResource($data);
     }
 
@@ -223,7 +181,7 @@ class ConsultController extends Controller
     {
         Consult::query()->findOrFail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant', 'is_konsulta', 'walkedin_status', 'authorization_transaction_code', 'consult_date']));
         $data = Consult::query()->findOrFail($id);
-        event(new TodaysPatientEvent());
+        //event(new TodaysPatientEvent());
         return response()->json(['data' => $data], 201);
     }
 
