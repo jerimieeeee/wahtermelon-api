@@ -34,6 +34,7 @@ class PendingFinalDiagnosisReportService
             ->wherePtGroup('cn')
             ->whereNotNull('class_id')
             ->where('consults.facility_code', auth()->user()->facility_code)
-            ->whereNull('icd10_code');
+            ->whereNull('icd10_code')
+            ->groupBy('consult_id');
     }
 }

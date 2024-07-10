@@ -283,12 +283,6 @@ class Consult extends Model
         return $this->hasOne(DentalOralHealthCondition::class, 'consult_id', 'id');
     }
 
-    public function consult_no_fdx()
-    {
-        return $this->hasOne(Consult::class, 'id', 'id')
-            ->whereDoesntHave('finalDiagnosis');
-    }
-
     public function feedback(){
         return $this->hasOne(ConsultFeedback::class, 'consult_id', 'id');
     }

@@ -256,7 +256,7 @@ class Patient extends Model
     public function consults()
     {
         return $this->hasMany(Consult::class, 'patient_id', 'id')
-            ->select(['patient_id', 'consult_date']);
+            ->select(['id', 'patient_id', 'consult_date']);
     }
 
     public function address()

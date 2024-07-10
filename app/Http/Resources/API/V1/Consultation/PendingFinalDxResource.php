@@ -16,13 +16,23 @@ class PendingFinalDxResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'patient_name' => ($this->last_name ?? '') . ', ' . ($this->first_name ?? '') . ' ' . ($this->middle_name ?? ''),
-            'name' => ($this->first_name ?? '') . ' ' . ($this->middle_name ?? '') . ' ' . ($this->last_name ?? ''),
-            'gender' => $this->gender ?? null,
-            'birthdate' => $this->birthdate ? Carbon::parse($this->birthdate)->format('m/d/Y') : null,
-            'address' => ($this->householdFolder->address ?? '') . ', ' . ($this->householdFolder->barangay->name ?? ''),
-            'consult_no_fdx' => $this->consult_no_fdx ?? null,
-            'final_dx' => $this->final_dx
+            'patient_name' => ($this->patient->first_name ?? null) . ', ' . ($this->patient->middle_name ?? 'N/a') . ' ' . ($this->patient->last_name ?? null),
+            'gender' => $this->patient->gender,
+            'birthdate' => $this->patient->birthdate ? Carbon::parse($this->patient->birthdate)->format('m/d/Y') : null,
+            'address' => ($this->patient->householdFolder->address ?? null) . ', ' . ($this->patient->householdFolder->barangay->name ?? null),
+            'bp_systolic' => $this->vitalsLatest->bp_systolic ?? null,
+            'bp_diastolic' => $this->vitalsLatest->bp_diastolic ?? null,
+            'bmi' => ($this->vitalsLatest->patient_bmi ?? null),
+            'bmi_class' => ($this->vitalsLatest->patient_bmi_class ?? null),
+            'weight' => ($this->vitalsLatest->patient_weight ?? null),
+            'height' => ($this->vitalsLatest->patient_height ?? null),
+            'waist' => ($this->vitalsLatest->patient_weight ?? null),
+            'temp' => ($this->vitalsLatest->patient_temp ?? null),
+            'heart_rate' => ($this->vitalsLatest->patient_heart_rate ?? null),
+            'respiratory_rate' => ($this->vitalsLatest->patient_respiratory_rate ?? null),
+            'pulse_rate' => ($this->vitalsLatest->patient_pulse_rate ?? null),
+            'complaints' => $this->consultNotes->complaints ?? null,
+            'complaint_remarks' => $this->consultNotes->complaint ?? null,
         ];
     }
 }
