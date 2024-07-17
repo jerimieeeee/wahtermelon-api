@@ -116,33 +116,39 @@ class AnimalBiteReportCohortService
                     SUM(
                         CASE WHEN exposure_type_code IN('MINOR', 'NIBB')
                             AND day0_date IS NOT NULL
-                            AND day3_date IS NOT NULL
-                            AND day7_date IS NOT NULL
-                        THEN
-                            0
-                        ELSE
+                            OR day3_date IS NOT NULL
+                            OR day7_date IS NOT NULL THEN
                             1
+                        ELSE
+                            0
                         END) AS 'total_cat2_incomplete',
                     SUM(
                         CASE WHEN exposure_type_code IN('CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC')
                             AND day0_date IS NOT NULL
-                            AND day3_date IS NOT NULL
-                            AND day7_date IS NOT NULL
-                        THEN
-                            0
-                        ELSE
+                            OR day3_date IS NOT NULL
+                            OR day7_date IS NOT NULL THEN
                             1
+                        ELSE
+                            0
                         END) AS 'total_cat3_incomplete',
                     SUM(
-                        CASE WHEN exposure_type_code IN('MINOR', 'NIBB', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC')
+                        CASE WHEN exposure_type_code IN('MINOR', 'NIBB')
                             AND day0_date IS NOT NULL
-                            AND day3_date IS NOT NULL
-                            AND day7_date IS NOT NULL
-                        THEN
-                            0
-                        ELSE
+                            OR day3_date IS NOT NULL
+                            OR day7_date IS NOT NULL THEN
                             1
-                        END) AS 'total_cat2_and_cat3_incomplete',
+                        ELSE
+                            0
+                        END) +
+                    SUM(
+                        CASE WHEN exposure_type_code IN('CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC')
+                            AND day0_date IS NOT NULL
+                            OR day3_date IS NOT NULL
+                            OR day7_date IS NOT NULL THEN
+                            1
+                        ELSE
+                            0
+                        END) AS 'total_cat2_and_cat3_incomplete'
                     SUM(
                         CASE WHEN exposure_type_code IN('MINOR', 'NIBB')
                             AND day0_date IS NULL

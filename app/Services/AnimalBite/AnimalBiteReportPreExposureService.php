@@ -89,13 +89,15 @@ class AnimalBiteReportPreExposureService
                             1
                         ELSE
                             0
-                        END) + SUM(
+                        END) +
+                    SUM(
                         CASE WHEN day0_date IS NOT NULL
                             AND day7_date IS NOT NULL THEN
                             1
                         ELSE
                             0
-                        END) + SUM(
+                        END) +
+                    SUM(
                         CASE WHEN day0_date IS NOT NULL
                             AND day7_date IS NOT NULL
                             AND day21_date IS NOT NULL THEN

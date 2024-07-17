@@ -80,8 +80,9 @@ class ReportMorbidityNameListService
             })
             ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
             ->where('consult_notes_final_dxes.icd10_code', $request->icd10)
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('consult_date', $request->year)
+//            ->whereMonth('consult_date', $request->month)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
