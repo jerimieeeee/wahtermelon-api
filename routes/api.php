@@ -897,6 +897,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('report', 'index');
                 });
         });
+        Route::prefix('dental')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\DentalReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
