@@ -298,15 +298,13 @@ class DentalReportService
     {
         return DB::table('dental_tooth_conditions')
             ->selectRaw("
-                        COUNT(DISTINCT consult_id) AS dmft_count
+                        COUNT(DISTINCT consult_id) AS count
                     ")
             ->join('patients', 'dental_tooth_conditions.patient_id', '=', 'patients.id')
             ->join('consults', 'dental_tooth_conditions.consult_id', '=', 'consults.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'dental_tooth_conditions.patient_id');
             })
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
             ->whereGender($gender)
             ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, consult_date) >= 5')
             ->whereIn('tooth_number',
@@ -316,9 +314,11 @@ class DentalReportService
                         '43', '44', '45', '46', '47', '48', '31', '32', '33',
                         '34', '35', '36', '37', '38'
                     ])
-            ->orWhere('tooth_condition', 'D')
-            ->orWhere('tooth_condition', 'M')
-            ->orWhere('tooth_condition', 'F')
+            ->where(function($query) {
+                $query->where('tooth_condition', 'D')
+                    ->orWhere('tooth_condition', 'M')
+                    ->orWhere('tooth_condition', 'F');
+            })
             ->where('dental_tooth_conditions.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -328,6 +328,8 @@ class DentalReportService
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            })
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month);
     }
 }
