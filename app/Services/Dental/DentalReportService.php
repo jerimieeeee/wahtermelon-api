@@ -40,6 +40,22 @@ class DentalReportService
             ->selectRaw("
                         SUM(
                             CASE WHEN gender = 'M'
+                            AND orally_fit_flag = 1
+                                AND(TIMESTAMPDIFF(MONTH, birthdate, consult_date) BETWEEN 12 AND 59) THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'male_12_59_months_orally_fit',
+                        SUM(
+                            CASE WHEN gender = 'F'
+                            AND orally_fit_flag = 1
+                                AND(TIMESTAMPDIFF(MONTH, birthdate, consult_date) BETWEEN 12 AND 59) THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'female_12_59_months_orally_fit',
+                        SUM(
+                            CASE WHEN gender = 'M'
                             AND service_id = 1
                             AND service_id = 6
                             AND service_id = 7
@@ -260,12 +276,50 @@ class DentalReportService
             ->join('consults', 'dental_services.consult_id', '=', 'consults.id')
             ->join('patients', 'dental_services.patient_id', '=', 'patients.id')
             ->leftJoin('dental_tooth_services', 'dental_services.consult_id', '=', 'dental_tooth_services.consult_id')
+            ->leftJoin('dental_oral_health_conditions', 'dental_services.consult_id', '=', 'dental_oral_health_conditions.consult_id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'dental_services.patient_id');
             })
             ->whereYear('consult_date', $request->year)
             ->whereMonth('consult_date', $request->month)
             ->where('dental_services.facility_code', auth()->user()->facility_code)
+            ->when($request->category == 'facility', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'municipality', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'barangay', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            });
+    }
+
+    public function get_patient_dmft($request, $gender)
+    {
+        return DB::table('dental_tooth_conditions')
+            ->selectRaw("
+                        COUNT(DISTINCT consult_id) AS dmft_count
+                    ")
+            ->join('patients', 'dental_tooth_conditions.patient_id', '=', 'patients.id')
+            ->join('consults', 'dental_tooth_conditions.consult_id', '=', 'consults.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'dental_tooth_conditions.patient_id');
+            })
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month)
+            ->whereGender($gender)
+            ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, consult_date) >= 5')
+            ->whereIn('tooth_number',
+                    [
+                        '11', '12', '13', '14', '15', '16', '17', '18', '21',
+                        '22', '23', '24', '25', '26', '27', '28', '41', '42',
+                        '43', '44', '45', '46', '47', '48', '31', '32', '33',
+                        '34', '35', '36', '37', '38'
+                    ])
+            ->orWhere('tooth_condition', 'D')
+            ->orWhere('tooth_condition', 'M')
+            ->orWhere('tooth_condition', 'F')
+            ->where('dental_tooth_conditions.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
