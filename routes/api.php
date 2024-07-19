@@ -1368,4 +1368,13 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    Route::prefix('mortality')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Mortality\PatientDeathRecordController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('record', 'index');
+                Route::post('record', 'store');
+            });
+    });
+
 });
