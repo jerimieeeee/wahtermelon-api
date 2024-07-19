@@ -1,8 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
-use App\Models\V1\Libraries\LibNcdEyeReferProfessional;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -198,6 +196,8 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryMalariaRdtParasiteTypeSeeder::class,
             LibLaboratorySyphilisTestMethodSeeder::class,
             LibLaboratoryXrayTypeSeeder::class,
+            LibMortalityDeathTypeSeeder::class,
+            LibMortalityDeathPlaceSeeder::class,
             LibDentalServiceSeeder::class,
             LibDentalToothServiceSeeder::class,
             LibNcdEyeComplaintSeeder::class,
