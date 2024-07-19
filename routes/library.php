@@ -566,4 +566,8 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('ncd-eye-vision-screen', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeVisionScreeningController::class, 'index'])->name('ncd-eye-vision-screen.index');
     Route::get('ncd-eye-refer-prof', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferProfessionalController::class, 'index'])->name('ncd-eye-refer-prof.index');
 
+    //Mortality
+    Route::get('mortality-death-type', [\App\Http\Controllers\API\V1\Libraries\LibMortalityDeathPlaceController::class, 'index'])->name('mortality-death-type.index');
+    Route::get('mortality-death-place', [\App\Http\Controllers\API\V1\Libraries\LibMortalityDeathTypeController::class, 'index'])->name('mortality-death-place.index');
+
 });
