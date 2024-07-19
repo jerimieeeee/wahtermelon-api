@@ -308,13 +308,11 @@ class ChildCareReportService
                         municipalities_brgy.barangay_code
                     ")
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
-            ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
+            ->join('patient_ccdevs', 'patient_mc.patient_id', '=', 'patient_ccdevs.mothers_id')
+            ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
-//            })
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -510,8 +508,8 @@ class ChildCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         gender,
                         birthdate,
-                        prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(YEAR, birthdate, prescription_date) as age_year,
+                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1) AS date_of_service,
+                        TIMESTAMPDIFF(YEAR, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1)) AS age,
                         municipality_code,
                         barangay_code
                     ")
@@ -533,9 +531,10 @@ class ChildCareReportService
             })
             ->where('medicine_prescriptions.facility_code', auth()->user()->facility_code)
             ->whereIn('konsulta_medicine_code', ['ALBED0000000006SUS1400195BOTTL', 'ALBED0000000006SUS1400231BOTTL', 'ALBED0000000006SUS1400379BOTTL', 'ALBED0000000006SUS1400469BOTTL', 'ALBED0000000034TAB490000000000'])
+            ->whereYear('prescription_date', $request->year)
             ->whereGender($patient_gender)
-            ->groupBy('medicine_prescriptions.patient_id', 'prescription_date', 'municipality_code', 'barangay_code')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND (COUNT(medicine_prescriptions.patient_id) >= 2) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
+            ->groupBy('medicine_prescriptions.patient_id', 'municipality_code', 'barangay_code')
+            ->havingRaw('(age BETWEEN ? AND ?) AND (COUNT(medicine_prescriptions.patient_id) >= 2) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
 

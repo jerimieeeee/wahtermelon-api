@@ -166,6 +166,17 @@ class LibPeSeeder extends Seeder
             ['category_id' => 'THORAX', 'pe_id' => 'THORAX01',  'pe_desc' => 'Abnormal Heart Sounds/Cardiac Rate',           'konsulta_pe_id' => null,  'seq_id' => '1',  'konsulta_library_status' => '0', 'modules' => 'fp'],
             ['category_id' => 'THORAX', 'pe_id' => 'THORAX02',  'pe_desc' => 'Abnormal Breath Sounds/Respiratory Rate',       'konsulta_pe_id' => null,  'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'fp'],
 
+            //BARTHOLINS AND SKENE
+            ['category_id' => 'BARTHOLINS', 'pe_id' => 'BARTHOLINS01',  'pe_desc' => 'Swelling',      'konsulta_pe_id' => null,  'seq_id' => '1',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'BARTHOLINS', 'pe_id' => 'BARTHOLINS02',  'pe_desc' => 'Tenderness',    'konsulta_pe_id' => null,  'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'BARTHOLINS', 'pe_id' => 'BARTHOLINS03',  'pe_desc' => 'Discharge',     'konsulta_pe_id' => null,  'seq_id' => '3',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+
+            //SPECULUM
+            ['category_id' => 'SPECULUM', 'pe_id' => 'SPECULUM01',  'pe_desc' => 'Vaginal or Cervical Lesion',      'konsulta_pe_id' => null,  'seq_id' => '1',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'SPECULUM', 'pe_id' => 'SPECULUM02',  'pe_desc' => 'Tears',                           'konsulta_pe_id' => null,  'seq_id' => '2',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'SPECULUM', 'pe_id' => 'SPECULUM03',  'pe_desc' => 'Ulcers',                          'konsulta_pe_id' => null,  'seq_id' => '3',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+            ['category_id' => 'SPECULUM', 'pe_id' => 'SPECULUM04',  'pe_desc' => 'Other Abnormalities',             'konsulta_pe_id' => null,  'seq_id' => '4',  'konsulta_library_status' => '0', 'modules' => 'ncd'],
+
         ], ['category_id']);
     }
 }

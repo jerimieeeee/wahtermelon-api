@@ -26,6 +26,8 @@ class DailyServiceConsultationReportResource extends JsonResource
             'consult_date' => $this->consult_date ? Carbon::parse($this->consult_date)->format('m/d/Y') : null,
             'address' => ($this->patient->householdFolder->address ?? '') . ', ' . ($this->patient->householdFolder->barangay->name ?? ''),
             'is_konsulta' => $this->is_konsulta ?? null,
+            'consent_flag' => $this->patient->consent_flag ?? null,
+            'philhealth_id' => $this->philhealthLatest->philhealth_id ?? null,
             'vitals_date' => $this->vitalsLatest ? Carbon::parse($this->vitalsLatest->vitals_date)->format('m/d/Y') : null,
             'bp_systolic' => $this->vitalsLatest->bp_systolic ?? null,
             'bp_diastolic' => $this->vitalsLatest->bp_diastolic ?? null,

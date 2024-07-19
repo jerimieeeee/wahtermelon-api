@@ -59,7 +59,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'CU'
                                 AND(DATE_FORMAT(dropout_date, '%Y-%m') IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -69,7 +69,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'NA'
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? <= 2, ? - 1, ?), '-', LPAD( IF(? <= 2, ? + 10, ? - 2), 2, '0')) THEN
                                             1
                                         ELSE
@@ -79,7 +79,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')) THEN
                                             1
                                         ELSE
@@ -89,7 +89,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'CU'
                                 AND(DATE_FORMAT(dropout_date, '%Y-%m') IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 15 AND 19
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -99,7 +99,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'NA'
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 15 AND 19
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? <= 2, ? - 1, ?), '-', LPAD( IF(? <= 2, ? + 10, ? - 2), 2, '0')) THEN
                                             1
                                         ELSE
@@ -109,7 +109,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 15 AND 19
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')) THEN
                                             1
                                         ELSE
@@ -119,7 +119,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'CU'
                                 AND(DATE_FORMAT(dropout_date, '%Y-%m') IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 20 AND 49
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -129,7 +129,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'NA'
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 20 AND 49
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? <= 2, ? - 1, ?), '-', LPAD( IF(? <= 2, ? + 10, ? - 2), 2, '0')) THEN
                                             1
                                         ELSE
@@ -139,7 +139,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 20 AND 49
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')) THEN
                                             1
                                         ELSE
@@ -149,7 +149,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'NA'
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 10 AND 14
                                 AND IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ? - 1, MONTH(enrollment_date) = ? - 1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
@@ -158,7 +158,7 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'NA'
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 15 AND 19
                                 AND IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ? - 1, MONTH(enrollment_date) = ? - 1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
@@ -167,14 +167,14 @@ class FamilyPlanningReportService
                             CASE WHEN client_code = 'NA'
                                 AND(dropout_date IS NULL
                                     OR DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT( IF(? = 1, ? - 1, ?), '-', LPAD( IF(? = 1, 12, ? - 1), 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 20 AND 49
                                 AND IF(? = 1, MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ? - 1, MONTH(enrollment_date) = ? - 1 AND YEAR(enrollment_date) = ?)
                                 THEN 1
                                 ELSE 0
                             END) AS 'new_acceptor_previous_month_20_to_49',
                         SUM(
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -182,7 +182,7 @@ class FamilyPlanningReportService
                             END) AS 'other_acceptor_present_month_10_to_14',
                         SUM(
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 15 AND 19
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -190,7 +190,7 @@ class FamilyPlanningReportService
                             END) AS 'other_acceptor_present_month_15_to_19',
                         SUM(
                             CASE WHEN client_code IN('CC', 'CM', 'RS')
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 20 AND 49
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -199,7 +199,7 @@ class FamilyPlanningReportService
                         SUM(
                             CASE WHEN (dropout_date IS NOT NULL
                                 OR DATE_FORMAT(dropout_date, '%Y-%m') <= DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 10 AND 14
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 10 AND 14
                                 AND DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -208,7 +208,7 @@ class FamilyPlanningReportService
                         SUM(
                             CASE WHEN (dropout_date IS NOT NULL
                                 OR DATE_FORMAT(dropout_date, '%Y-%m') <= DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 15 AND 19
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 15 AND 19
                                 AND DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -217,7 +217,7 @@ class FamilyPlanningReportService
                         SUM(
                             CASE WHEN (dropout_date IS NOT NULL
                                 OR DATE_FORMAT(dropout_date, '%Y-%m') <= DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')))
-                                AND TIMESTAMPDIFF(YEAR, birthdate, enrollment_date) BETWEEN 20 AND 49
+                                AND TIMESTAMPDIFF(YEAR, birthdate, NOW()) BETWEEN 20 AND 49
                                 AND DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0')) THEN
                                 1
                             ELSE
@@ -329,7 +329,7 @@ class FamilyPlanningReportService
         ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
             $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
         })
-        ->whereNull('deleted_at')
+        ->whereNull('patient_fp_methods.deleted_at')
         ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
 //        ->when($request->category == 'all', function ($q) {
 //            $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);

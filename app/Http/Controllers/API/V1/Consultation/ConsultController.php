@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Consultation;
 
+use App\Events\TodaysPatientEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Consultation\ConsultRequest;
 use App\Http\Resources\API\V1\Consultation\ConsultResource;
@@ -43,53 +44,27 @@ class ConsultController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        /*$perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
-        $consult = QueryBuilder::for(Consult::class)
-            ->when(isset($request->pt_group), function ($q) use ($request) {
-                $q->where('pt_group', $request->pt_group);
-            })
-            ->when(isset($request->patient_id), function ($q) use ($request) {
-                $q->where('patient_id', '=', $request->patient_id);
-            })
-            ->when(isset($request->consult_done), function ($q) use ($request) {
-                $q->where('consult_done', '=', $request->consult_done);
-            })
-            ->when(isset($request->id), function ($q) use ($request) {
-                $q->where('id', '=', $request->id);
-            })
-            ->when(isset($request->physician_id), function ($q) use ($request) {
-                $q->where('physician_id', '=', $request->physician_id);
-            })
-            ->when(isset($request->is_konsulta), function ($q) use ($request) {
-                $q->where('is_konsulta', $request->is_konsulta);
-            })
-            ->when((! isset($request->patient_id) && ! isset($request->id) && ! isset($request->physician_id)), function ($q) {
-                $q->where('facility_code', '=', auth()->user()->facility_code);
-            })
-            ->when(isset($request->not_consult_id), function ($q) use ($request) {
-                $q->where('id', '!=', $request->not_consult_id);
-            })
-            ->when(isset($request->todays_patient), function ($q) {
-                $q->with('user', 'patient', 'physician');
-            })
-            ->when(!isset($request->todays_patient), function ($q) {
-                $q->with('user', 'patient', 'physician', 'vitals', 'consultNotes', 'prescription.konsultaMedicine', 'prescription.konsultaMedicine.generic', 'prescription.dosageUom', 'prescription.doseRegimen', 'prescription.medicinePurpose', 'prescription.durationFrequency', 'prescription.medicineRoute', 'prescription.quantityPreparation', 'prescription.dispensing', 'consultNotes.complaints.libComplaints', 'consultNotes.physicalExam.libPhysicalExam', 'consultNotes.physicalExamRemarks', 'consultNotes.initialdx.diagnosis', 'consultNotes.finaldx.libIcd10', 'management.libManagement', 'facility');
-            })
-            ->defaultSort('consult_date')
-            ->allowedSorts('consult_date');
-
-        if ($perPage === 'all') {
-            return ConsultResource::collection($consult->get());
-        }
-
-        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());*/
-
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
-            ->when($request->filled('pt_group'), function ($q) use ($request) {
+            ->when($request->filled('pt_group') && !($request->pt_group == 'dn' && $request->filled('not_consult_id')), function ($q) use ($request) {
                 $q->where('pt_group', $request->pt_group);
+
+                if($request->pt_group == 'dn') {
+                    $q->with([
+                        'dentalMedicalSocials',
+                        'dentalSurgicalHistory',
+                        'dentalHospitalizationHistory',
+                        'dentalService',
+                        'dentalService.service',
+                        'dentalToothService',
+                        'dentalToothService.toothService',
+                        'dentalToothService.consult',
+                        'consultToothCondition',
+                        'latestToothCondition',
+                        'dentalOralHealthCondition'
+                    ]);
+                }
             })
             ->when($request->filled('patient_id'), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
@@ -110,7 +85,10 @@ class ConsultController extends Controller
                 $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->filled('not_consult_id'), function ($q) use ($request) {
-                $q->where('id', '!=', $request->not_consult_id);
+                $q->where('id', '!=', $request->not_consult_id)
+                ->when($request->pt_group == 'dn', function ($query) use ($request) {
+                    $query->whereIn('pt_group', ['dn', 'cn']);
+                });
             })
             ->when($request->filled('todays_patient'), function ($q) {
                 $q->with('user', 'patient', 'physician');
@@ -165,13 +143,13 @@ class ConsultController extends Controller
     public function store(ConsultRequest $request)
     {
         $request['consult_done'] = 0;
-        if (request('pt_group') == 'cn') {
+        if (request('pt_group') == 'cn' || request('pt_group') == 'dn' || request('pt_group') == 'tb') {
             $data = Consult::create($request->validated());
             $data->consultNotes()->create($request->validated());
         } else {
             $data = Consult::create($request->except(['physician_id', 'is_pregnant']));
         }
-
+        //event(new TodaysPatientEvent());
         return new ConsultResource($data);
     }
 
@@ -184,9 +162,12 @@ class ConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $consult = Consult::findOrFail($id);
+        $hasFeedback = $consult->feedback()->exists();
+
+        return response()->json(['for_feedback' => !$hasFeedback], 201);
     }
 
     /**
@@ -200,7 +181,7 @@ class ConsultController extends Controller
     {
         Consult::query()->findOrFail($id)->update($request->only(['physician_id', 'consult_done', 'is_pregnant', 'is_konsulta', 'walkedin_status', 'authorization_transaction_code', 'consult_date']));
         $data = Consult::query()->findOrFail($id);
-
+        //event(new TodaysPatientEvent());
         return response()->json(['data' => $data], 201);
     }
 

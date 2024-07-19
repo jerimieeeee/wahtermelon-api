@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Consultation\ConsultNotesFinalDx;
 use App\Models\V1\Libraries\LibIcd10;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,8 @@ class LibIcd10Seeder extends Seeder
      */
     public function run()
     {
+        ConsultNotesFinalDx::query()->where('icd10_code', 'Acute Meningitis')->update(['icd10_code' => 'J00']);
+        LibIcd10::query()->where('icd10_code', 'Acute Meningitis')->delete();
         LibIcd10::upsert([
             ['icd10_code' => 'A00', 'icd10_desc' => 'Cholera'],
             ['icd10_code' => 'A00.0', 'icd10_desc' => 'Cholera due to Vibrio cholerae 01, biovar cholera (CLASSIC CHOLERA)'],
@@ -481,7 +484,6 @@ class LibIcd10Seeder extends Seeder
             ['icd10_code' => 'A98.5', 'icd10_desc' => 'Hemorrhagic fever with renal syndrome'],
             ['icd10_code' => 'A98.8', 'icd10_desc' => 'Other specified viral hemorrhagic fevers'],
             ['icd10_code' => 'A99', 'icd10_desc' => 'Unspecified viral hemorrhagic fever'],
-            ['icd10_code' => 'Acute Meningitis', 'icd10_desc' => 'Acute nasopharyngitis [Common Cold]'],
             ['icd10_code' => 'B00', 'icd10_desc' => 'Herpesviral [Herpes Simplex] infections'],
             ['icd10_code' => 'B00.0', 'icd10_desc' => 'Eczema herpeticum'],
             ['icd10_code' => 'B00.1', 'icd10_desc' => 'Herpesviral vesicular dermatitis'],

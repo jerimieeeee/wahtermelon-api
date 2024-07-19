@@ -549,4 +549,21 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('environmental-toilet-facility', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalToiletFacilityController::class, 'index'])->name('environmental-toilet-facility.index');
     Route::get('environmental-sewage', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalSewageController::class, 'index'])->name('environmental-sewage.index');
     Route::get('environmental-waste-management', [\App\Http\Controllers\API\V1\Libraries\LibEnvironmentalWasteManagementController::class, 'index'])->name('environmental-waste-management.index');
+
+    //Dental
+    Route::get('dental-medical-history', [\App\Http\Controllers\API\V1\Libraries\LibDentalMedicalHistoryController::class, 'index'])->name('dental-medical-history.index');
+    Route::get('dental-social-history', [\App\Http\Controllers\API\V1\Libraries\LibDentalSocialHistoryController::class, 'index'])->name('dental-social-history.index');
+    Route::get('dental-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalServiceController::class, 'index'])->name('dental-service.index');
+    Route::get('dental-tooth-service', [\App\Http\Controllers\API\V1\Libraries\LibDentalToothServiceController::class, 'index'])->name('dental-tooth-service.index');
+    Route::get('dental-oral-condition', [\App\Http\Controllers\API\V1\Libraries\LibDentalOralConditionController::class, 'index'])->name('dental-oral-condition.index');
+
+    // Feedback
+    Route::get('feedback-question', [\App\Http\Controllers\API\V1\Libraries\LibFeedbackQuestionController::class, 'index'])->name('feedback-question.index');
+
+    //NCD Casdt Vision
+    Route::get('ncd-eye-complaint', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeComplaintController::class, 'index'])->name('ncd-eye-complaint.index');
+    Route::get('ncd-eye-refer', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferController::class, 'index'])->name('ncd-eye-refer.index');
+    Route::get('ncd-eye-vision-screen', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeVisionScreeningController::class, 'index'])->name('ncd-eye-vision-screen.index');
+    Route::get('ncd-eye-refer-prof', [\App\Http\Controllers\API\V1\Libraries\LibNcdEyeReferProfessionalController::class, 'index'])->name('ncd-eye-refer-prof.index');
+
 });
