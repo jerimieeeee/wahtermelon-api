@@ -68,16 +68,16 @@ class PatientDeathRecord extends Model
 
     public function immediateCause()
     {
-        return $this->belongsTo(LibIcd10::class, 'immediate_cause', 'code');
+        return $this->belongsTo(LibIcd10::class, 'immediate_cause', 'icd10_code');
     }
 
     public function antecedentCause()
     {
-        return $this->belongsTo(LibIcd10::class, 'antecedent_cause', 'code');
+        return $this->belongsTo(LibIcd10::class, 'antecedent_cause', 'icd10_code');
     }
 
     public function underlyingCause()
     {
-        return $this->belongsTo(LibIcd10::class, 'underlying_cause', 'code');
+        return $this->belongsTo(LibIcd10::class, 'underlying_cause', 'icd10_code');
     }
 }
