@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\V1\Libraries\LibMortalityDeathPlace;
+use App\Models\V1\Libraries\LibMortalityDeathType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -197,6 +199,8 @@ class DatabaseSeeder extends Seeder
             LibLaboratoryMalariaRdtParasiteTypeSeeder::class,
             LibLaboratorySyphilisTestMethodSeeder::class,
             LibLaboratoryXrayTypeSeeder::class,
+            LibMortalityDeathTypeSeeder::class,
+            LibMortalityDeathPlaceSeeder::class,
         ]);
     }
 }
