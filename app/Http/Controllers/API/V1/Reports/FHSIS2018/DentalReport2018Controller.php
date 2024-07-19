@@ -13,16 +13,7 @@ class DentalReport2018Controller extends Controller
      */
     public function index(Request $request, DentalReportService $dentalReportService)
     {
-        $dental = $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
-
-        $male_dental_dmft = $dentalReportService->get_patient_dmft($request, 'M')->get();
-        $female_dental_dmft = $dentalReportService->get_patient_dmft($request, 'F')->get();
-
-        return [
-            'data' => $dental[0],  // Extracting the contents of $dental[0]
-            'male_dental_dmft' => $male_dental_dmft,
-            'female_dental_dmft' => $female_dental_dmft
-        ];
+         return $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
     }
 
     /**
