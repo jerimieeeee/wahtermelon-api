@@ -12,19 +12,30 @@ class ConsultationReportService
 {
     public function get_consultation($request)
     {
-        return Patient::with([
-            'consults',
-            'householdFolder.barangay',
-            'patient_vitals',
-            'finaldx',
-            'consultpe'
+        return Consult::with([
+            'patient.householdFolder.barangay',
+            'consultNotes.complaints.libComplaints',
+            'vitalsLatest',
+            'finalDiagnosis',
+//            'consultpe'
         ])
-        ->when($request->filled('consult_id'), function ($q) use ($request) {
-            $q->whereHas('finaldx', function($q) use ($request) {
-                $q->where('consult_id', $request->consult_id);
-                });
-            })
         ->where('facility_code', auth()->user()->facility_code)
+        ->where('id', $request->consult_id)
         ->get();
+
+//        return Patient::with([
+//            'consults',
+//            'householdFolder.barangay',
+//            'patient_vitals',
+//            'finaldx',
+//            'consultpe'
+//        ])
+//        ->when($request->filled('consult_id'), function ($q) use ($request) {
+//            $q->whereHas('finaldx', function($q) use ($request) {
+//                $q->where('consult_id', $request->consult_id);
+//                });
+//            })
+//        ->where('facility_code', auth()->user()->facility_code)
+//        ->get();
     }
 }

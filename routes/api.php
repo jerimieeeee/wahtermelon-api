@@ -847,10 +847,25 @@ Route::prefix('v1')->group(function () {
                 });
         });
         Route::prefix('animal-bite')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportController::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteCohortNameListReportController::class)
                 ->middleware('auth:api')
                 ->group(function () {
-                    Route::get('report', 'index');
+                    Route::get('cohort-name-list', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportCohortController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('post-exposure-cohort', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBiteReportPreExposureController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('pre-exposure', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\AnimalBite\AnimalBitePreExposureNameListReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('pre-exposure-name-list', 'index');
                 });
         });
         Route::prefix('fp-namelist')->group(function () {
@@ -880,6 +895,13 @@ Route::prefix('v1')->group(function () {
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('report', 'index');
+                });
+        });
+        Route::prefix('dental')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\DentalReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
                 });
         });
     });
