@@ -526,22 +526,16 @@ class MaternalCareReportService
             ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
             ->join('patient_mc', 'patient_ccdevs.mothers_id', '=', 'patient_mc.patient_id')
             ->join('patient_mc_post_registrations', 'patient_mc.id', '=', 'patient_mc_post_registrations.patient_mc_id')
-            ->join('facilities', 'patient_mc_post_registrations.barangay_code', '=', 'facilities.barangay_code')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
-            })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code)
+            ->join('barangays', 'patient_mc_post_registrations.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'municipality', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+                $q->where('municipalities.psgc_10_digit_code', explode(',', $request->code));
             })
             ->when($request->category == 'barangay', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+                $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->when($weight == 'NORMAL', fn ($query) => $query->where('patient_ccdevs.birth_weight', '>=', 2.5)
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])

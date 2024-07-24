@@ -36,7 +36,7 @@ class DentalReportService
 
     public function get_ab_post_exp_prophylaxis($request)
     {
-        return DB::table('dental_services')
+        return DB::table('consults')
             ->selectRaw("
                         SUM(
                             CASE WHEN gender = 'M'
@@ -289,16 +289,16 @@ class DentalReportService
                                 0
                             END) AS 'pregnant_women_20_49_years_bohc'
                     ")
-            ->join('consults', 'dental_services.consult_id', '=', 'consults.id')
-            ->join('patients', 'dental_services.patient_id', '=', 'patients.id')
-            ->leftJoin('dental_tooth_services', 'dental_services.consult_id', '=', 'dental_tooth_services.consult_id')
-            ->leftJoin('dental_oral_health_conditions', 'dental_services.consult_id', '=', 'dental_oral_health_conditions.consult_id')
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
+            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
+            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'dental_services.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
             ->whereYear('consult_date', $request->year)
             ->whereMonth('consult_date', $request->month)
-            ->where('dental_services.facility_code', auth()->user()->facility_code)
+            ->where('consults.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
