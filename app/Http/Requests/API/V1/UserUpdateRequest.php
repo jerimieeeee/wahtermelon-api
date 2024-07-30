@@ -101,6 +101,11 @@ class UserUpdateRequest extends FormRequest
             //$rules['contact_number'] = 'nullable|min:11|max:13'; // Make contact_number nullable if is_active changed
         }
 
+        if (request()->has('reports_flag') && $this->input('reports_flag') !== $user->reports_flag) {
+            $rules['reports_flag'] = 'nullable|boolean';
+            // 'reports_flag' => 'nullable|boolean', $rules['contact_number'] = 'nullable|min:11|max:13'; // Make contact_number nullable if is_active changed
+        }
+
         if (request()->has('photo_url') && $this->input('photo_url') !== $user->photo_url) {
             $rules['photo_url'] = 'nullable|url';
         }

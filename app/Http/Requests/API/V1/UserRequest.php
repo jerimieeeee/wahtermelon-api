@@ -39,6 +39,7 @@ class UserRequest extends FormRequest
             //'username' => 'required|min:4|unique:users',// . (request()->has('id') ? ',username, ' . request()->input('id') : ''),
             'email' => 'nullable|email|unique:users'.(request()->has('id') ? ',email, '.request()->input('id') : ''),
             'is_active' => 'nullable|boolean',
+            'reports_flag' => 'nullable|boolean',
             'photo_url' => 'nullable|url',
             'tin_number' => 'sometimes|max:9',
             'accreditation_number' => 'sometimes|max:14',
