@@ -333,7 +333,7 @@ class MaternalCareReportService
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
-                ->whereInitialGravidity(1)
+                ->where('initial_gravidity', '>=', 2)
                 ->whereVaccineId('TD')
                 ->whereStatusId('1')
                 ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])

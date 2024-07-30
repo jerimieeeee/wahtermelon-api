@@ -554,7 +554,7 @@ class ChildCareReportService
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
 //            ->when($request->category == 'all', function ($q) {
 //                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
@@ -572,7 +572,7 @@ class ChildCareReportService
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
             ->whereGender($patient_gender)
-            ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
+//            ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
             ->havingRaw('(age_month BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
@@ -593,7 +593,7 @@ class ChildCareReportService
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
 //            ->when($request->category == 'all', function ($q) {
 //                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
@@ -613,7 +613,7 @@ class ChildCareReportService
             ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->whereGender($patient_gender)
-            ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
+//            ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
     }
 
@@ -674,7 +674,7 @@ class ChildCareReportService
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
 //            ->when($request->category == 'all', function ($q) {
 //                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
@@ -720,7 +720,7 @@ class ChildCareReportService
             ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
 //            ->when($request->category == 'all', function ($q) {
 //                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
@@ -743,7 +743,7 @@ class ChildCareReportService
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->whereGender($patient_gender)
-            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
+//            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
     }
 
@@ -824,7 +824,7 @@ class ChildCareReportService
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->whereGender($patient_gender)
-            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
+//            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
     }
 
