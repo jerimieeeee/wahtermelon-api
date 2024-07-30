@@ -181,13 +181,13 @@ class AnimalBiteReportAnnualService
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
             ->where('patient_abs.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
             ->groupBy('barangays.name');

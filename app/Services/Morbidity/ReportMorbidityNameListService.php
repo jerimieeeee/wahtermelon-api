@@ -83,13 +83,13 @@ class ReportMorbidityNameListService
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('consult_date', $request->year)
 //            ->whereMonth('consult_date', $request->month)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->orderBy('name');

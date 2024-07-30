@@ -66,13 +66,13 @@ class TBDotsReportService
 //                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
 //            })
             ->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->where('reg_group_code', ['N', 'O', 'PTLOU', 'R', 'TAF', 'TALF'])
@@ -99,13 +99,13 @@ class TBDotsReportService
 //                $q->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code);
 //            })
             ->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereBacteriologicalStatusCode('BC')
@@ -133,13 +133,13 @@ class TBDotsReportService
 //                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
 //            })
             ->where('patient_tbs.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
@@ -167,13 +167,13 @@ class TBDotsReportService
 //                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
 //            })
             ->where('patient_tbs.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereBacteriologicalStatusCode('BC')

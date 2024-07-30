@@ -40,13 +40,13 @@ class NotifiableReportService
 //                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
 //            })
             ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.psgc_10_digit_code', explode(',', $request->code));
             })
             //CAT I
