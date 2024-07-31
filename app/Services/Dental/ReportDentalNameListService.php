@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\AnimalBite;
+namespace App\Services\Dental;
 
 use Illuminate\Support\Facades\DB;
 
-class ReportAnimalBiteCohortNameListService
+class ReportDentalNameListService
 {
     public function get_catchment_barangays()
     {
@@ -34,7 +34,7 @@ class ReportAnimalBiteCohortNameListService
 
     public function get_report_namelist($request)
     {
-        return DB::table('patient_ab_exposures')
+        return DB::table('consults')
             ->selectRaw("
                         patient_ab_exposures.patient_id AS patient_id,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
@@ -44,13 +44,14 @@ class ReportAnimalBiteCohortNameListService
                         birthdate,
                         exposure_date AS date_of_service
                         ")
-            ->join('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
-            ->join('patient_abs', 'patient_ab_post_exposures.patient_ab_id', '=', 'patient_abs.id')
-            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
+            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
+            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_ab_exposures.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->whereNull('patient_ab_exposures.deleted_at')
+            ->where('consults.facility_code', auth()->user()->facility_code)
             // total for cat2, cat3, and both
             ->when($request->params == 'total_cat2', function ($query) use ($request) {
                 $query->whereIn('exposure_type_code', ['MINOR', 'NIBB']);
