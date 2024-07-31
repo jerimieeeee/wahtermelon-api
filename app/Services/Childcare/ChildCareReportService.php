@@ -691,7 +691,7 @@ class ChildCareReportService
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
             ->where('medicine_prescriptions.facility_code', auth()->user()->facility_code)
-            ->when($age_month == 6, fn ($query) => $query>whereIn('konsulta_medicine_code', ['RETA10000001103CAP310000000000'])
+            ->when($age_month == 6, fn ($query) => $query->whereIn('konsulta_medicine_code', ['RETA10000001103CAP310000000000'])
                 ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($age_month == 12, fn ($query) => $query->whereIn('konsulta_medicine_code', ['VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000'])
