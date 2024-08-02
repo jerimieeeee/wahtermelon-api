@@ -77,13 +77,27 @@ class AppointmentController extends Controller
             ->when(isset($request->date), function ($query) use ($request) {
                 return $query->whereDate('appointment_date', $request->date);
             })
-            ->when(isset($request->facility_code), function ($query) use ($today, $request) {
+            ->when(isset($request->facility_code) && isset($request->referral_facility_code), function ($query) use ($today, $request) {
+                /* return $query->where('appointments.facility_code', $request->facility_code)
+                    ->whereNot('appointment_code', 'REF')
+                    ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules'); */
+
+                return  $query->where(function ($q) use ($request) {
+                            $q->where('appointments.facility_code', $request->facility_code)
+                                ->whereNot('appointment_code', 'REF');
+                        })
+                        ->orWhere(function ($q) use ($request) {
+                            $q->where('appointments.referral_facility_code', $request->referral_facility_code);
+                        })
+                    ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules');
+            })
+            ->when(isset($request->facility_code) && ! isset($request->referral_facility_code), function ($query) use ($today, $request) {
                 return $query->where('appointments.facility_code', $request->facility_code)
                     ->whereDate('appointment_date', $today->toDateString())
                     ->whereNot('appointment_code', 'REF')
                     ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules');
             })
-            ->when(isset($request->referral_facility_code), function ($query) use ($today, $request) {
+            ->when(isset($request->referral_facility_code) && ! isset($request->facility_code), function ($query) use ($today, $request) {
                 return $query->where('appointments.referral_facility_code', $request->referral_facility_code)
                     ->whereDate('appointment_date', '>=', $today->toDateString())
                     ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules');
@@ -98,7 +112,11 @@ class AppointmentController extends Controller
                 return $query->whereDate('appointment_date', $today->toDateString());
             });
 
-        if (isset($request->facility_code) || isset($request->referral_facility_code)) {
+        if (isset($request->filter_type) && $request->filter_type == 'calendar') {
+            $data = $data->get()->groupBy(function ($item) {
+                return $item->appointment_date->format('Y-m-d');
+            });
+        }  else if (isset($request->facility_code) || isset($request->referral_facility_code)) {
             $data = $data->get()->groupBy(function ($item) {
                 return $item->name;
             });
