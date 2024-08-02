@@ -78,10 +78,6 @@ class AppointmentController extends Controller
                 return $query->whereDate('appointment_date', $request->date);
             })
             ->when(isset($request->facility_code) && isset($request->referral_facility_code), function ($query) use ($today, $request) {
-                /* return $query->where('appointments.facility_code', $request->facility_code)
-                    ->whereNot('appointment_code', 'REF')
-                    ->groupBy('patient_id', 'facility_code', 'appointment_desc', 'appointment_date', 'modules'); */
-
                 return  $query->where(function ($q) use ($request) {
                             $q->where('appointments.facility_code', $request->facility_code)
                                 ->whereNot('appointment_code', 'REF');
