@@ -29,8 +29,6 @@ class NcdReportService
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
             ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
-//            ->join('patients', 'household_members.patient_id', '=', 'patients.id');
-//            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_risk_assessed($request, $patient_gender, $age)
@@ -38,17 +36,17 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -76,17 +74,17 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -106,7 +104,6 @@ class NcdReportService
             ->whereSmoking(3)
             ->whereYear('assessment_date', $request->year)
             ->whereMonth('assessment_date', $request->month)
-//            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
 
@@ -115,17 +112,17 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -155,17 +152,17 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -194,16 +191,17 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -233,17 +231,17 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -277,17 +275,18 @@ class NcdReportService
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
             ->join('consult_ncd_risk_screening_glucose', 'consult_ncd_risk_assessment.patient_id', '=', 'consult_ncd_risk_screening_glucose.patient_id')
+            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
+            })
             ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -317,17 +316,17 @@ class NcdReportService
         return DB::table('patient_vaccines')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         vaccine_date AS date_of_service
                     ")
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -337,7 +336,7 @@ class NcdReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->whereGender($patient_gender)
+            ->where('patients.gender',$patient_gender)
             ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) >= 60',)
             ->whereVaccineId('PPV')
             ->whereStatusId(1)
@@ -352,16 +351,17 @@ class NcdReportService
         return DB::table('patient_vaccines')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         vaccine_date AS date_of_service
                     ")
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+            })
             ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -372,7 +372,7 @@ class NcdReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->whereGender($patient_gender)
+            ->where('patients.gender',$patient_gender)
             ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) >= 60',)
             ->whereVaccineId('IV')
             ->whereStatusId(1)
@@ -381,38 +381,4 @@ class NcdReportService
             ->groupBy('patient_vaccines.patient_id', 'vaccine_date')
             ->orderBy('name', 'ASC');
     }
-
-//    public function senior_ppv($request, $patient_gender)
-//    {
-//        return DB::table('consult_ncd_risk_assessment')
-//            ->selectRaw("
-//                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-//                        birthdate,
-//                        assessment_date AS date_of_service
-//                    ")
-//            ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
-//            ->leftJoin('patient_vaccines', 'consult_ncd_risk_assessment.patient_id', '=', 'patient_vaccines.patient_id')
-//            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-//                $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_assessment.patient_id');
-//            })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code);
-//            })
-//            ->when($request->category == 'facility', function ($q) {
-//                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-//            })
-//            ->when($request->category == 'municipality', function ($q) use ($request) {
-//                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-//            })
-//            ->when($request->category == 'barangay', function ($q) use ($request) {
-//                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-//            })
-//            ->where('consult_ncd_risk_assessment.gender', $patient_gender)
-//            ->whereAge('age', '>=', '60')
-//            ->whereVaccineId('PPV')
-//            ->whereYear('assessment_date', $request->year)
-//            ->whereMonth('assessment_date', $request->month)
-//            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
-//            ->orderBy('name', 'ASC');
-//    }
 }

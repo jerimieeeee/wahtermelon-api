@@ -54,18 +54,19 @@ class TBDotsReportService
         return DB::table('patient_tb_case_findings')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         consult_date AS date_of_service
                     ")
             ->join('patient_tbs', 'patient_tb_case_findings.patient_tb_id', '=', 'patient_tbs.id')
             ->join('patients', 'patient_tb_case_findings.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_tb_case_findings.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_findings.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
+            })
+            ->whereNull('patient_tb_case_findings.deleted_at')
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -76,7 +77,7 @@ class TBDotsReportService
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->where('reg_group_code', ['N', 'O', 'PTLOU', 'R', 'TAF', 'TALF'])
-            ->whereGender($gender)
+            ->where('patients.gender', $gender)
             ->whereYear('consult_date', $request->year)
             ->whereMonth('consult_date', $request->month)
             ->orderBy('name', 'ASC');
@@ -87,18 +88,19 @@ class TBDotsReportService
         return DB::table('patient_tb_case_holdings')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         treatment_end AS date_of_service
                     ")
             ->join('patient_tbs', 'patient_tb_case_holdings.patient_tb_id', '=', 'patient_tbs.id')
             ->join('patients', 'patient_tb_case_holdings.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_tb_case_holdings.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_holdings.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code);
+            })
+            ->whereNull('patient_tb_case_holdings.deleted_at')
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -110,7 +112,7 @@ class TBDotsReportService
             })
             ->whereBacteriologicalStatusCode('BC')
             ->whereDrugResistantFlag(1)
-            ->whereGender($gender)
+            ->where('patients.gender', $gender)
             ->whereYear('registration_date', $request->year)
             ->whereMonth('registration_date', $request->month)
             ->orderBy('name', 'ASC');
@@ -121,18 +123,19 @@ class TBDotsReportService
         return DB::table('patient_tbs')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         outcome_date AS date_of_service
                     ")
             ->join('patient_tb_case_holdings', 'patient_tbs.id', '=', 'patient_tb_case_holdings.patient_tb_id')
             ->join('patients', 'patient_tbs.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_tbs.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('patient_tbs.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
+            })
+            ->whereNull('patient_tbs.deleted_at')
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -144,7 +147,7 @@ class TBDotsReportService
             })
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
-            ->whereGender($gender)
+            ->where('patients.gender', $gender)
             ->whereYear('outcome_date', $request->year)
             ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');
@@ -155,17 +158,19 @@ class TBDotsReportService
         return DB::table('patient_tbs')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         outcome_date AS date_of_service
                     ")
             ->join('patient_tb_case_holdings', 'patient_tbs.id', '=', 'patient_tb_case_holdings.patient_tb_id')
             ->join('patients', 'patient_tbs.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_tbs.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
+            })
+            ->whereNull('patient_tbs.deleted_at')
             ->where('patient_tbs.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -180,7 +185,7 @@ class TBDotsReportService
             ->whereDrugResistantFlag(1)
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
-            ->whereGender($gender)
+            ->where('patients.gender', $gender)
             ->whereYear('outcome_date', $request->year)
             ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');

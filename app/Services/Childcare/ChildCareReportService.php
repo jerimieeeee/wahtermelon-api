@@ -56,8 +56,6 @@ class ChildCareReportService
             ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
             ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
-//            ->join('patients', 'household_members.patient_id', '=', 'patients.id');
-//            ->groupBy('patient_id', 'municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
     public function get_vaccines($request, $vaccine_id, $vaccine_seq, $patient_gender)
@@ -65,7 +63,7 @@ class ChildCareReportService
         return DB::table(function ($query) use ($request, $vaccine_id, $patient_gender, $vaccine_seq) {
             $query->selectRaw("
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            birthdate,
+                            patients.birthdate,
                             vaccine_date AS date_of_service,
                             vaccine_id,
                             status_id,
@@ -83,12 +81,13 @@ class ChildCareReportService
                 ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
-//                ->when($request->category == 'all', function ($q) {
-//                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-//                })
+                ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+                })
                 ->when($request->category == 'fac', function ($q) {
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
@@ -98,44 +97,10 @@ class ChildCareReportService
                 ->when($request->category == 'brgys', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
-                ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
                 ->whereStatusId('1')
                 ->whereVaccineId($vaccine_id)
-                ->whereGender($patient_gender)
-//                ->orderBy('patient_vaccines.patient_id', 'vaccine_id', 'vaccine_date')
+                ->where('patients.gender', $patient_gender)
                 ->havingRaw('vaccine_seq = ? AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', [$vaccine_seq, $request->year, $request->month]);
-
-//        return DB::table(function ($query) use ($request, $vaccine_id, $patient_gender, $vaccine_seq) {
-//            $query->selectRaw("
-//                    CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-//                    birthdate,
-//                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_date ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS date_of_service,
-//                    SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vaccine_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS vaccine_id,
-//                    municipality_code,
-//                    barangay_code
-//                ")
-//                ->from('patient_vaccines')
-//                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-//                ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-//                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
-//                })
-//                ->when($request->category == 'all', function ($q) {
-//                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-//                })
-//                ->when($request->category == 'facility', function ($q) {
-//                    $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-//                })
-//                ->when($request->category == 'municipality', function ($q) use ($request) {
-//                    $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-//                })
-//                ->when($request->category == 'barangay', function ($q) use ($request) {
-//                    $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-//                })
-//                ->whereStatusId('1')
-//                ->whereVaccineId($vaccine_id)
-//                ->whereGender($patient_gender)
-//                ->groupBy('patient_vaccines.patient_id')
-//                ->havingRaw('COUNT(patient_vaccines.id) = ? AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', [$vaccine_seq, $request->year, $request->month]);
         });
     }
 
@@ -144,21 +109,22 @@ class ChildCareReportService
         return DB::table('patient_ccdevs')
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
-	                    birthdate,
-	                    birthdate AS date_of_service,
+	                    patients.birthdate,
+                        patients.birthdate AS date_of_service,
 	                    municipality_code,
 	                    barangay_code
                     ")
             ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_ccdevs.user_id', '=', 'users.id')
             ->joinSub($this->get_mother_vaccine(), 'mother_vaccine', function ($join) {
                 $join->on('mother_vaccine.patient_id', '=', 'patient_ccdevs.mothers_id');
             })
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_ccdevs.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_ccdevs.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -168,10 +134,9 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('patient_ccdevs.facility_code', auth()->user()->facility_code)
-            ->whereYear('birthdate', $request->year)
-            ->whereMonth('birthdate', $request->month)
-            ->whereGender($patient_gender)
+            ->whereYear('patients.birthdate', $request->year)
+            ->whereMonth('patients.birthdate', $request->month)
+            ->where('patients.gender', $patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -180,7 +145,7 @@ class ChildCareReportService
         return DB::table(function ($query) use ($request, $patient_gender) {
             $query->selectRaw("
                             CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            birthdate,
+                            patients.birthdate AS birthdate,
                             vaccine_date AS date_of_service,
                             vaccine_id,
                             status_id,
@@ -193,18 +158,19 @@ class ChildCareReportService
                                     pv.patient_id = patient_vaccines.patient_id
                                     AND pv.vaccine_id = patient_vaccines.vaccine_id
                                     AND pv.vaccine_date <= patient_vaccines.vaccine_date) AS vaccine_seq,
-                            TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) AS age_year,
+                            TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) AS age_year,
                             municipality_code,
                             barangay_code
                     ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
                 })
-//                ->when($request->category == 'all', function ($q) {
-//                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-//                })
+                ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+                })
                 ->when($request->category == 'fac', function ($q) {
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
@@ -214,9 +180,8 @@ class ChildCareReportService
                 ->when($request->category == 'brgys', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
-                ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
                 ->whereVaccineId('IPV')
-                ->whereGender($patient_gender)
+                ->where('patients.gender', $patient_gender)
                 ->whereStatusId('1');
         })
             ->selectRaw('
@@ -263,15 +228,16 @@ class ChildCareReportService
                             END) AS 'MCV',
                         MAX(vaccine_date) AS date_of_service,
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS status_id,
-                        TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, MAX(vaccine_date)) AS age_month
                     ")
             ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -281,8 +247,7 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('patient_vaccines.facility_code', auth()->user()->facility_code)
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
             ->groupBy('patient_vaccines.patient_id')
             ->when($immunization_status == 'FIC', function ($query) use ($request) {
@@ -302,7 +267,7 @@ class ChildCareReportService
         return DB::table('patient_mc_post_registrations')
             ->selectRaw("
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
-	                    birthdate,
+	                    patients.birthdate,
                         breastfed_date AS date_of_service,
                         municipalities_brgy.municipality_code AS municipality_code,
                         municipalities_brgy.barangay_code
@@ -310,8 +275,12 @@ class ChildCareReportService
             ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
             ->join('patient_ccdevs', 'patient_mc.patient_id', '=', 'patient_ccdevs.mothers_id')
             ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
+            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -322,9 +291,8 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code)
             ->whereBreastfeeding(1)
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->whereYear('breastfed_date', $request->year)
             ->whereMonth('breastfed_date', $request->month)
             ->orderBy('name', 'ASC');
@@ -335,15 +303,14 @@ class ChildCareReportService
         return DB::table(function ($query) use ($request, $patient_gender) {
             $query->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
                         birth_weight,
-                        birthdate,
+                        patients.birthdate AS birthdate,
                         service_date AS date_of_service,
                         service_id,
                         status_id,
-                        TIMESTAMPDIFF(MONTH, birthdate, service_date) AS age_month,
-                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(birthdate, INTERVAL TIMESTAMPDIFF(YEAR, birthdate, service_date)
-                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(birthdate, INTERVAL TIMESTAMPDIFF(YEAR, birthdate, service_date)
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
+                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
+                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
                                         YEAR), service_date) MONTH), service_date) AS days,
                         municipality_code,
                         barangay_code
@@ -351,12 +318,13 @@ class ChildCareReportService
                 ->from('consult_ccdev_services')
                 ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
                 ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
+                ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
                 })
-//                ->when($request->category == 'all', function ($q) {
-//                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-//                })
+                ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
+                })
                 ->when($request->category == 'fac', function ($q) {
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
@@ -366,15 +334,13 @@ class ChildCareReportService
                 ->when($request->category == 'brgys', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
-                ->where('consult_ccdev_services.facility_code', auth()->user()->facility_code)
                 ->whereServiceId('IRON')
-                ->whereGender($patient_gender)
+                ->where('patients.gender', $patient_gender)
                 ->whereStatusId('1')
                 ->groupBy('patients.id', 'service_id', 'service_date', 'status_id', 'birth_weight', 'municipality_code', 'barangay_code');
         })
             ->selectRaw('
                         name,
-                        gender,
                         birth_weight,
                         birthdate,
                         date_of_service,
@@ -394,13 +360,13 @@ class ChildCareReportService
         return DB::table(function ($query) use ($request, $patient_gender) {
             $query->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate AS birthdate,
                         service_date AS date_of_service,
                         service_id,
                         status_id,
-                        TIMESTAMPDIFF(MONTH, birthdate, service_date) AS age_month,
-                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(birthdate, INTERVAL TIMESTAMPDIFF(YEAR, birthdate, service_date)
-                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(birthdate, INTERVAL TIMESTAMPDIFF(YEAR, birthdate, service_date)
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
+                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
+                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
                                         YEAR), service_date) MONTH), service_date) AS days,
                         municipality_code,
                         barangay_code
@@ -408,12 +374,13 @@ class ChildCareReportService
                 ->from('consult_ccdev_services')
                 ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
                 ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
+                ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
                 })
-//                ->when($request->category == 'all', function ($q) {
-//                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-//                })
+                ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
+                })
                 ->when($request->category == 'fac', function ($q) {
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
@@ -423,9 +390,8 @@ class ChildCareReportService
                 ->when($request->category == 'brgys', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
-                ->where('consult_ccdev_services.facility_code', auth()->user()->facility_code)
                 ->whereServiceId('VITA')
-                ->whereGender($patient_gender)
+                ->where('patients.gender',$patient_gender)
                 ->whereStatusId('1')
                 ->groupBy('patients.id', 'service_id', 'service_date', 'status_id', 'birth_weight', 'municipality_code', 'barangay_code');
         })
@@ -450,13 +416,13 @@ class ChildCareReportService
             $query->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         birth_weight,
-                        birthdate,
+                        patients.birthdate AS birthdate,
                         service_date AS date_of_service,
                         service_id,
                         status_id,
-                        TIMESTAMPDIFF(MONTH, birthdate, service_date) AS age_month,
-                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(birthdate, INTERVAL TIMESTAMPDIFF(YEAR, birthdate, service_date)
-                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(birthdate, INTERVAL TIMESTAMPDIFF(YEAR, birthdate, service_date)
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
+                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
+                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
                                         YEAR), service_date) MONTH), service_date) AS days,
                         municipality_code,
                         barangay_code
@@ -464,12 +430,13 @@ class ChildCareReportService
                 ->from('consult_ccdev_services')
                 ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
                 ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
+                ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
                 ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                     $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
                 })
-//                ->when($request->category == 'all', function ($q) {
-//                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-//                })
+                ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
+                })
                 ->when($request->category == 'fac', function ($q) {
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
@@ -479,9 +446,8 @@ class ChildCareReportService
                 ->when($request->category == 'brgys', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
-                ->where('consult_ccdev_services.facility_code', auth()->user()->facility_code)
                 ->whereIn('service_id', ['VITA2', 'VITA3'])
-                ->whereGender($patient_gender)
+                ->where('patients.gender', $patient_gender)
                 ->whereStatusId('1')
                 ->groupBy('patients.id', 'service_id', 'service_date', 'status_id', 'birth_weight', 'municipality_code', 'barangay_code');
         })
@@ -506,20 +472,20 @@ class ChildCareReportService
         return DB::table('medicine_prescriptions')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1) AS date_of_service,
-                        TIMESTAMPDIFF(YEAR, birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1)) AS age,
+                        TIMESTAMPDIFF(YEAR, patients.birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1)) AS age,
                         municipality_code,
                         barangay_code
                     ")
             ->join('patients', 'medicine_prescriptions.patient_id', '=', 'patients.id')
+            ->join('users', 'medicine_prescriptions.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'medicine_prescriptions.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -529,10 +495,8 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('medicine_prescriptions.facility_code', auth()->user()->facility_code)
             ->whereIn('konsulta_medicine_code', ['ALBED0000000006SUS1400195BOTTL', 'ALBED0000000006SUS1400231BOTTL', 'ALBED0000000006SUS1400379BOTTL', 'ALBED0000000006SUS1400469BOTTL', 'ALBED0000000034TAB490000000000'])
-            // ->whereYear('prescription_date', $request->year)
-            ->whereGender($patient_gender)
+            ->where('patients.gender',$patient_gender)
             ->groupBy('medicine_prescriptions.patient_id', 'municipality_code', 'barangay_code')
             ->havingRaw('(age BETWEEN ? AND ?) AND (COUNT(medicine_prescriptions.patient_id) >= 2) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
@@ -543,22 +507,22 @@ class ChildCareReportService
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
            	            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, consult_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
             ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
+            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -571,8 +535,7 @@ class ChildCareReportService
             ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
-            ->whereGender($patient_gender)
-//            ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
+            ->where('patients.gender',$patient_gender)
             ->havingRaw('(age_month BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$param1, $param2, $request->year, $request->month])
             ->orderBy('name', 'ASC');
     }
@@ -582,22 +545,22 @@ class ChildCareReportService
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
            	            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, consult_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
             ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
+            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -607,13 +570,11 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
             ->when($disease == 'DIARRHEA', fn ($query) => $query->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
-            ->whereGender($patient_gender)
-//            ->groupBy('patients.id', 'age_month', 'consult_date', 'municipality_code', 'barangay_code')
+            ->where('patients.gender',$patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -622,21 +583,22 @@ class ChildCareReportService
         return DB::table('consult_ccdev_services')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         service_id,
            	            service_date AS date_of_service,
            	            quantity,
-                        TIMESTAMPDIFF(MONTH, birthdate, service_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
             ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -646,12 +608,11 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('consult_ccdev_services.facility_code', auth()->user()->facility_code)
             ->when($service == 'MNP', fn ($query) => $query->whereServiceId('MNP')
                 ->havingRaw('(age_month BETWEEN 6 AND 11) AND (quantity >= 90) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
             ->when($service == 'MNP2', fn ($query) => $query->whereServiceId('MNP2')
                 ->havingRaw('(age_month BETWEEN 12 AND 23) AND (quantity >= 180) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month]))
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->whereStatusId('1')
             ->groupBy('consult_ccdev_services.patient_id', 'service_id', 'service_date', 'quantity', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
@@ -662,10 +623,9 @@ class ChildCareReportService
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
                         prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, consult_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
@@ -673,12 +633,13 @@ class ChildCareReportService
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
+            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -690,14 +651,13 @@ class ChildCareReportService
             })
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
-            ->where('medicine_prescriptions.facility_code', auth()->user()->facility_code)
             ->when($age_month == 6, fn ($query) => $query->whereIn('konsulta_medicine_code', ['RETA10000001103CAP310000000000'])
                 ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($age_month == 12, fn ($query) => $query->whereIn('konsulta_medicine_code', ['VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000'])
                 ->havingRaw('(age_month BETWEEN 12 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
     }
@@ -707,10 +667,9 @@ class ChildCareReportService
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
                         prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, consult_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
@@ -718,13 +677,14 @@ class ChildCareReportService
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
+            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -742,8 +702,7 @@ class ChildCareReportService
                 ->whereIn('konsulta_medicine_code', ['ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL', 'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->whereGender($patient_gender)
-//            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
+            ->where('patients.gender', $patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -752,19 +711,19 @@ class ChildCareReportService
         return DB::table('consult_ccdev_breastfeds')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
-                        DATE_ADD(DATE_ADD(birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) AS date_of_service,
+                        patients.birthdate,
+                        DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) AS date_of_service,
                         municipality_code,
                         barangay_code
                     ")
             ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ccdev_breastfeds.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -774,7 +733,6 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code)
             ->where(fn ($query) => $query->where([
                 ['bfed_month1', '=', '1'],
                 ['bfed_month2', '=', '1'],
@@ -782,8 +740,8 @@ class ChildCareReportService
                 ['bfed_month4', '=', '1'],
             ])
             )
-            ->havingRaw('DATE_ADD(DATE_ADD(birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            ->whereGender($patient_gender)
+            ->havingRaw('DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
+            ->where('patients.gender', $patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -792,10 +750,9 @@ class ChildCareReportService
         return DB::table('consult_notes_final_dxes')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
                         prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, consult_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
@@ -803,12 +760,13 @@ class ChildCareReportService
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
+            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -823,8 +781,7 @@ class ChildCareReportService
             ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('konsulta_medicine_code', ['AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000', 'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01', 'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'])
                 ->havingRaw('(age_month BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->whereGender($patient_gender)
-//            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
+            ->where('patients.gender',$patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -833,8 +790,7 @@ class ChildCareReportService
         return DB::table('patient_vitals')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
-                        gender,
+                        patients.birthdate,
                         DATE_FORMAT(SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vitals_date ORDER BY vitals_date DESC), ',', 1), ',', - 1), '%Y-%m-%d') AS date_of_service,
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(patient_weight_for_age ORDER BY vitals_date DESC), ',', 1), ',', - 1) AS weight_for_age,
                         SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(patient_age_months ORDER BY vitals_date DESC), ',', 1), ',', - 1) AS patient_age_months,
@@ -842,12 +798,13 @@ class ChildCareReportService
                         barangay_code
                     ")
             ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_vitals.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vitals.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_vitals.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_vitals.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -864,7 +821,7 @@ class ChildCareReportService
             ->when($class == 'Normal', fn ($query) => $query->whereIn('patient_weight_for_age', ['Normal'])
                 ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->groupBy('patient_vitals.patient_id', 'municipality_code', 'barangay_code')
             ->orderBy('name', 'ASC');
     }
@@ -874,19 +831,20 @@ class ChildCareReportService
         return DB::table('consult_ccdev_breastfeds')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         comp_fed_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, comp_fed_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
             ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ccdev_breastfeds.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -904,9 +862,8 @@ class ChildCareReportService
             ])
                 ->whereNotNull('comp_fed_date')
             )
-            ->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code)
             ->havingRaw('(age_month BETWEEN 6 AND 11) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -915,19 +872,20 @@ class ChildCareReportService
         return DB::table('consult_ccdev_breastfeds')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birthdate,
+                        patients.birthdate,
                         comp_fed_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, birthdate, comp_fed_date) AS age_month,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) AS age_month,
                         municipality_code,
                         barangay_code
                     ")
             ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ccdev_breastfeds.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -941,7 +899,7 @@ class ChildCareReportService
             ->whereNotNull('comp_fed_date')
             ->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code)
             ->havingRaw('(age_month >= 6) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->orderBy('name', 'ASC');
     }
 
@@ -950,8 +908,7 @@ class ChildCareReportService
         return DB::table('patient_vitals')
             ->selectRaw("
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        gender,
-                        birthdate,
+                        patients.birthdate,
                         DATE_FORMAT(vitals_date, '%Y-%m-%d') AS date_of_service,
                         patient_age_months,
                         patient_height_for_age AS height_for_age,
@@ -959,12 +916,13 @@ class ChildCareReportService
                         barangay_code
                     ")
             ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_vitals.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_vitals.patient_id');
             })
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_vitals.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_vitals.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -974,14 +932,13 @@ class ChildCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
-            ->where('patient_vitals.facility_code', auth()->user()->facility_code)
             ->when($class == 'Stunted', fn ($query) => $query->whereIn('patient_height_for_age', ['Stunted'])
                 ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->when($class == 'Wasted', fn ($query) => $query->wherePatientHeightForAge($class)
                 ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->whereGender($patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->orderBy('name', 'ASC');
     }
 }

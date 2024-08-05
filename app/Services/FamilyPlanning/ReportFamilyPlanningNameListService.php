@@ -44,10 +44,11 @@ class ReportFamilyPlanningNameListService
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
-                        birthdate,
+                        patients.birthdate,
                         patient_fp_methods.id
                         ")
             ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
+            ->join('users', 'patient_fp_methods.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
             })
@@ -138,15 +139,15 @@ class ReportFamilyPlanningNameListService
                 });
             })
             ->when($request->client_code == 'dropout_present_month', function($query) use ($request) {
-                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, dropout_date)"), $request->age);
+                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, dropout_date)"), $request->age);
             })
             ->when($request->client_code !== 'dropout_present_month', function($query) use ($request) {
-                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, NOW())"), $request->age);
+                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age);
             })
             ->whereMethodCode($request->method)
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-//            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
+            })
             ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());

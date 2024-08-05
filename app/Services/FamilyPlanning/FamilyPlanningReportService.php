@@ -334,13 +334,6 @@ class FamilyPlanningReportService
         ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
             $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
         })
-//        ->when('users.reports_flag' == 0, function ($q) {
-//            $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-//        })
-//        ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
-//        ->when($request->category == 'all', function ($q) {
-//            $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-//        })
         ->when($request->category == 'fac', function ($q) {
             $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
         })
