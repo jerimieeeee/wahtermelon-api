@@ -56,6 +56,43 @@ class ConsultLaboratoryController extends Controller
             })
             ->when(isset($request->request_status_code), function ($query) use ($request) {
                 return $query->whereRequestStatusCode($request->request_status_code);
+            })
+            ->when($request->list_type == 'pending', function ($query) use ($request) {
+                // return $query->whereRequestStatusCode($request->request_status_code);
+                return $query->where('request_status_code', '!=', 'RF')
+                    ->where(function($q) {
+                        $q->doesntHave('cbc')
+                        ->doesntHave('creatinine')
+                        ->doesntHave('chestXray')
+                        ->doesntHave('ecg')
+                        ->doesntHave('fbs')
+                        ->doesntHave('rbs')
+                        ->doesntHave('hba1c')
+                        ->doesntHave('papsmear')
+                        ->doesntHave('ppd')
+                        ->doesntHave('sputum')
+                        ->doesntHave('fecalysis')
+                        ->doesntHave('lipiProfile')
+                        ->doesntHave('urinalysis')
+                        ->doesntHave('oralGlucose')
+                        ->doesntHave('fecalOccult')
+                        ->doesntHave('gramStain')
+                        ->doesntHave('microscopy')
+                        ->doesntHave('ultrasound')
+                        ->doesntHave('geneXpert')
+                        ->doesntHave('dengueRdt')
+                        ->doesntHave('serology')
+                        ->doesntHave('biopsy')
+                        ->doesntHave('malariaRdt')
+                        ->doesntHave('skinSlit')
+                        ->doesntHave('wetSmear')
+                        ->doesntHave('bloodchem')
+                        ->doesntHave('potassium')
+                        ->doesntHave('hematology')
+                        ->doesntHave('syphilis')
+                        ->doesntHave('cervical')
+                        ->doesntHave('xray');
+                    });
             });
         $laboratory = QueryBuilder::for($query)
             ->with(
@@ -91,6 +128,7 @@ class ConsultLaboratoryController extends Controller
                 'syphilis',
                 'cervical',
                 'xray',
+                'patient'
             )
             ->allowedIncludes('laboratory', 'recommendation', 'requestStatus')
             ->defaultSort('-request_date')

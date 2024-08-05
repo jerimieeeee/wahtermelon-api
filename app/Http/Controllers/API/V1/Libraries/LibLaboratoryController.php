@@ -32,6 +32,7 @@ class LibLaboratoryController extends Controller
     public function index(): ResourceCollection
     {
         $query = QueryBuilder::for(LibLaboratory::class)
+            ->orderBy('konsulta_active', 'DESC')
             ->allowedIncludes('category')
             ->whereLabActive(1);
 
