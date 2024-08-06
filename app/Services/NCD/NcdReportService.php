@@ -337,7 +337,7 @@ class NcdReportService
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->where('patients.gender',$patient_gender)
-            ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) >= 60',)
+            ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) >= 60',)
             ->whereVaccineId('PPV')
             ->whereStatusId(1)
             ->whereYear('vaccine_date', $request->year)
@@ -373,7 +373,7 @@ class NcdReportService
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->where('patients.gender',$patient_gender)
-            ->whereRaw('TIMESTAMPDIFF(YEAR, birthdate, vaccine_date) >= 60',)
+            ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) >= 60',)
             ->whereVaccineId('IV')
             ->whereStatusId(1)
             ->whereYear('vaccine_date', $request->year)

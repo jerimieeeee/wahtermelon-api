@@ -48,13 +48,16 @@ class ReportDentalNameListService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
-            ->where('consults.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consults.facility_code', auth()->user()->facility_code);
+            })
             // total for cat2, cat3, and both
-            ->when($request->params == 'total_cat2', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB']);
+            ->when($request->params == 'male_12_59_months_orally_fit', function ($query) use ($request) {
+                $query->where('patients.gender', 'M');
             })
             ->when($request->params == 'total_cat3', function ($query) use ($request) {
                 $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC']);
