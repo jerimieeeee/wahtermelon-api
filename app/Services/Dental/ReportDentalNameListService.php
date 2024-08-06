@@ -41,7 +41,7 @@ class ReportDentalNameListService
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
-                        birthdate,
+                        patients.birthdate,
                         exposure_date AS date_of_service
                         ")
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
@@ -55,100 +55,27 @@ class ReportDentalNameListService
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
-            // total for cat2, cat3, and both
+            // orally fit 12-59 months male
             ->when($request->params == 'male_12_59_months_orally_fit', function ($query) use ($request) {
-                $query->where('patients.gender', 'M');
+                $query->where('patients.gender', 'M')
+                    ->where('orally_fit_flag', 1)
+                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59)");
             })
-            ->when($request->params == 'total_cat3', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC']);
+            // orally fit 12-59 months female
+            ->when($request->params == 'female_12_59_months_orally_fit', function ($query) use ($request) {
+                $query->where('patients.gender', 'F')
+                    ->where('orally_fit_flag', 1)
+                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59)");
             })
-            ->when($request->params == 'total_cat2_and_cat3', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC']);
+            // orally fit 12-59 months total male and female
+            ->when($request->params == 'male_female_12_59_months_orally_fit', function ($query) use ($request) {
+                $query->whereIn('patients.gender', ['M', 'F'])
+                    ->where('orally_fit_flag', 1)
+                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59)");
             })
-            // total with rig for cat2, cat3, and both
-            ->when($request->params == 'total_cat2_with_rig', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
-                    ->whereIn('rig_type_code', ['ERIG', 'HRIG']);
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consults.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->params == 'total_cat3_with_rig', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                    ->whereIn('rig_type_code', ['ERIG', 'HRIG']);
-            })
-            ->when($request->params == 'total_cat2_and_cat3_with_rig', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                    ->whereIn('rig_type_code', ['ERIG', 'HRIG']);
-            })
-            // total complete cat2, cat3, and both
-            ->when($request->params == 'total_cat2_complete', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
-                    ->whereNotNull('day0_date')
-                    ->whereNotNull('day3_date')
-                    ->whereNotNull('day7_date');
-            })
-            ->when($request->params == 'total_cat3_complete', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                    ->whereNotNull('day0_date')
-                    ->whereNotNull('day3_date')
-                    ->whereNotNull('day7_date');
-            })
-            ->when($request->params == 'total_cat2_and_cat3_complete', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                    ->whereNotNull('day0_date')
-                    ->whereNotNull('day3_date')
-                    ->whereNotNull('day7_date');
-            })
-            // total incomplete cat2, cat3, and both
-            ->when($request->params == 'total_cat2_incomplete', function ($query) use ($request) {
-                $query->where(function ($query) use ($request) {
-                    $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
-                        ->where(function($query) use ($request) {
-                            $query->whereNull('day0_date')
-                                ->orWhereNull('day3_date')
-                                ->orWhereNull('day7_date');
-                        });
-                });
-            })
-            ->when($request->params == 'total_cat3_incomplete', function ($query) use ($request) {
-                $query->where(function ($query) use ($request) {
-                    $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                        ->where(function($query) use ($request) {
-                            $query->whereNull('day0_date')
-                                ->orWhereNull('day3_date')
-                                ->orWhereNull('day7_date');
-                        });
-                });
-            })
-            ->when($request->params == 'total_cat2_and_cat3_incomplete', function ($query) use ($request) {
-                $query->where(function ($query) use ($request) {
-                    $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                        ->where(function ($query) use ($request) {
-                            $query->whereNull('day0_date')
-                                ->orWhereNull('day3_date')
-                                ->orWhereNull('day7_date');
-                        });
-                });
-            })
-            // total none cat2, cat3, and both
-            ->when($request->params == 'total_cat2_none', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
-                    ->whereNull('day0_date')
-                    ->whereNull('day3_date')
-                    ->whereNull('day7_date');
-            })
-            ->when($request->params == 'total_cat3_none', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                    ->whereNull('day0_date')
-                    ->whereNull('day3_date')
-                    ->whereNull('day7_date');
-            })
-            ->when($request->params == 'total_cat2_and_cat3_none', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
-                    ->whereNull('day0_date')
-                    ->whereNull('day3_date')
-                    ->whereNull('day7_date');
-            })
-            ->where('patient_ab_exposures.facility_code', auth()->user()->facility_code)
-            ->whereBetween(DB::raw('DATE(exposure_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'facility', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
