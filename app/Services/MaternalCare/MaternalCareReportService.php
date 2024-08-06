@@ -739,7 +739,7 @@ class MaternalCareReportService
                         *
             ')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
+                $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', $this->get_catchment_barangays());
@@ -792,7 +792,7 @@ class MaternalCareReportService
                         *
             ')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
+                $q->where('facility_code', auth()->user()->facility_code);
             })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', $this->get_catchment_barangays());

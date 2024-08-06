@@ -54,30 +54,30 @@ class ReportMorbidityNameListService
             })
             ->when($request->type == 'days', function ($q) use ($request) {
                 $q->whereBetween(DB::raw('DATEDIFF(consult_date, patients.birthdate)'), $request->age)
-                    ->whereGender($request->gender);
+                    ->where('patients.gender', $request->gender);
             })
             ->when($request->type == 'days_months', function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereRaw("DATEDIFF(consult_date, patients.birthdate) >= 29")
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) <= 11")
-                            ->whereGender($request->gender);
+                            ->where('patients.gender', $request->gender);
                     });
                 });
             })
             ->when($request->type == 'years', function ($q) use ($request) {
                 $q->whereBetween(DB::raw('TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)'), $request->age)
-                    ->whereGender($request->gender);
+                    ->where('patients.gender', $request->gender);
             })
             ->when($request->type == 'above_70', function ($q) use ($request) {
                 $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 70")
-                    ->whereGender($request->gender);
+                    ->where('patients.gender', $request->gender);
             })
             ->when($request->type == 'total', function ($q) use ($request) {
-                $q->whereGender($request->gender);
+                    $q->where('patients.gender', $request->gender);
             })
             ->when($request->type == 'total_both', function ($q) use ($request) {
-                $q->whereIn('gender', ['M', 'F']);
+                    $q->whereIn('patients.gender', ['M', 'F']);
             })
             ->where('consult_notes_final_dxes.icd10_code', $request->icd10)
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
