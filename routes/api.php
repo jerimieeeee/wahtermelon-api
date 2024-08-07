@@ -903,6 +903,11 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('m1', 'index');
                 });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\DentalNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
         });
     });
 

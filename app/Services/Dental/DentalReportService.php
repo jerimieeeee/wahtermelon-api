@@ -97,9 +97,9 @@ class DentalReportService
                             AND service_id = 17
                             AND service_id = 15
                             AND service_id = 8
-                            OR service_id = 2
+                            AND (service_id = 2
                             OR service_id = 19
-                            OR service_id = 14
+                            OR service_id = 14)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4) THEN
                                 1
                             ELSE
@@ -110,9 +110,9 @@ class DentalReportService
                             AND service_id = 7
                             AND service_id = 15
                             AND service_id = 8
-                            OR service_code = 'TF'
+                            AND (service_code = 'TF'
                             OR service_code = 'PF'
-                            OR service_code = 'PFS'
+                            OR service_code = 'PFS')
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9) THEN
                                 1
                             ELSE
@@ -122,11 +122,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'M'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_code = 'TF'
+                            AND (service_code = 'TF'
                             OR service_code = 'PF'
                             OR service_code = 'PFS'
                             OR service_id = 19
-                            OR service_id = 9
+                            OR service_id = 9)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19) THEN
                                 1
                             ELSE
@@ -136,11 +136,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'M'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 5
+                            AND (service_id = 5
                             OR service_id = 19
-                            or service_id = 14
+                            OR service_id = 14
                             OR service_code = 'PF'
-                            OR service_id = 2
+                            OR service_id = 2)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59) THEN
                                 1
                             ELSE
@@ -150,10 +150,10 @@ class DentalReportService
                             CASE WHEN patients.gender = 'M'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 9
+                            AND (service_id = 9
                             OR service_id = 12
-                            or service_id = 13
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 ) THEN
+                            OR service_id = 13)
+                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60) THEN
                                 1
                             ELSE
                                 0
@@ -185,9 +185,9 @@ class DentalReportService
                             AND service_id = 17
                             AND service_id = 15
                             AND service_id = 8
-                            OR service_id = 2
+                            AND (service_id = 2
                             OR service_id = 19
-                            OR service_id = 14
+                            OR service_id = 14)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4) THEN
                                 1
                             ELSE
@@ -198,9 +198,9 @@ class DentalReportService
                             AND service_id = 7
                             AND service_id = 15
                             AND service_id = 8
-                            OR service_code = 'TF'
+                            AND (service_code = 'TF'
                             OR service_code = 'PF'
-                            OR service_code = 'PFS'
+                            OR service_code = 'PFS')
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9) THEN
                                 1
                             ELSE
@@ -210,11 +210,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_code = 'TF'
+                            AND (service_code = 'TF'
                             OR service_code = 'PF'
                             OR service_code = 'PFS'
                             OR service_id = 19
-                            OR service_id = 9
+                            OR service_id = 9)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19) THEN
                                 1
                             ELSE
@@ -224,11 +224,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 5
+                            AND (service_id = 5
                             OR service_id = 19
-                            or service_id = 14
+                            OR service_id = 14
                             OR service_code = 'PF'
-                            OR service_id = 2
+                            OR service_id = 2)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59) THEN
                                 1
                             ELSE
@@ -238,9 +238,9 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 9
+                            AND (service_id = 9
                             OR service_id = 12
-                            or service_id = 13
+                            OR service_id = 13)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 ) THEN
                                 1
                             ELSE
@@ -250,11 +250,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 19
+                            AND (service_id = 19
                             OR service_id = 14
-                            or service_id = 5
+                            OR service_id = 5
                             OR service_code = 'PF'
-                            OR service_code = 'TF'
+                            OR service_code = 'TF')
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14) THEN
                                 1
                             ELSE
@@ -264,11 +264,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 19
+                            AND (service_id = 19
                             OR service_id = 14
-                            or service_id = 5
+                            OR service_id = 5
                             OR service_code = 'PF'
-                            OR service_code = 'TF'
+                            OR service_code = 'TF')
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19) THEN
                                 1
                             ELSE
@@ -278,11 +278,11 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                             AND service_id = 7
                             AND service_id = 4
-                            OR service_id = 19
+                            AND (service_id = 19
                             OR service_id = 14
-                            or service_id = 5
+                            OR service_id = 5
                             OR service_code = 'PF'
-                            OR service_code = 'TF'
+                            OR service_code = 'TF')
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49) THEN
                                 1
                             ELSE
