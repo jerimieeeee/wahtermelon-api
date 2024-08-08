@@ -3,7 +3,7 @@
 namespace Database\Factories\V1\NCD;
 
 use App\Models\V1\Consultation\Consult;
-use App\Models\V1\Libraries\LibNcdEyeComplaint;
+use App\Models\V1\Libraries\LibNcdAnswerS2;
 use App\Models\V1\Libraries\LibNcdEyeRefer;
 use App\Models\V1\Libraries\LibNcdEyeReferProfessional;
 use App\Models\V1\Libraries\LibNcdEyeVisionScreening;
@@ -13,9 +13,9 @@ use App\Models\V1\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\NCD\ConsultNcdRiskCasdtVision>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\NCD\ConsultNcdRiskCasdt2>
  */
-class ConsultNcdRiskCasdtVisionFactory extends Factory
+class ConsultNcdRiskCasdt2Factory extends Factory
 {
     /**
      * Define the model's default state.
@@ -27,9 +27,9 @@ class ConsultNcdRiskCasdtVisionFactory extends Factory
         return [
             'consult_ncd_risk_id' => fake()->randomElement(ConsultNcdRiskAssessment::pluck('id')->toArray()),
             'patient_ncd_id' => fake()->randomElement(PatientNcd::pluck('id')->toArray()),
-            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
             'consult_id' => fake()->randomElement(Consult::pluck('id')->toArray()),
-            'eye_complaint' => fake()->randomElement(LibNcdEyeComplaint::pluck('code')->toArray()),
+            'patient_id' => fake()->randomElement(Patient::pluck('id')->toArray()),
+
             'eye_refer' => fake()->randomElement(LibNcdEyeRefer::pluck('code')->toArray()),
             'unaided' => fake()->randomElement(LibNcdEyeVisionScreening::pluck('code')->toArray()),
             'pinhole' => fake()->randomElement(LibNcdEyeVisionScreening::pluck('code')->toArray()),

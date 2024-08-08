@@ -67,6 +67,8 @@ class ConsultNcdRiskAssessmentResource extends JsonResource
             'ncdRecordDiagnosis' => $this->whenLoaded('ncdRecordDiagnosis'),
             'ncdRecordTargetOrgan' => $this->whenLoaded('ncdRecordTargetOrgan'),
             'ncdRecordCounselling' => $this->whenLoaded('ncdRecordCounselling'),
+            'riskCasdt2' => $this->whenLoaded('riskCasdt2'),
+            'eye_complaints' => $this->whenLoaded('riskCasdt2Vision'),
             'riskStrat' => $this->whenLoaded('riskStrat'),
         ];
     }

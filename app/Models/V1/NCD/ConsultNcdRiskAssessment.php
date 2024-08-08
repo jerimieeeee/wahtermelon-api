@@ -99,4 +99,17 @@ class ConsultNcdRiskAssessment extends Model
     {
         return $this->hasMany(PatientNcdRecordCounselling::class, 'consult_ncd_risk_id', 'id');
     }
+
+    public function riskCasdt2()
+    {
+        return $this->hasMany(ConsultNcdRiskCasdt2::class, 'consult_ncd_risk_id', 'id');
+    }
+
+    public function riskCasdt2Vision()
+    {
+        return $this->hasManyThrough(ConsultNcdRiskCasdt2Vision::class, ConsultNcdRiskCasdt2::class, 'consult_ncd_risk_id', 'casdt2_id', 'id', 'id')
+            ->selectRaw('
+                eye_complaint
+            ');
+    }
 }

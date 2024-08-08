@@ -3,7 +3,7 @@
 namespace App\Models\V1\NCD;
 
 use App\Models\User;
-use App\Models\V1\Libraries\LibNcdEyeComplaint;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibNcdEyeRefer;
 use App\Models\V1\Libraries\LibNcdEyeReferProfessional;
 use App\Models\V1\Libraries\LibNcdEyeVisionScreening;
@@ -15,13 +15,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 
-class ConsultNcdRiskCasdtVision extends Model
+class ConsultNcdRiskCasdt2 extends Model
 {
     use HasFactory, HasUlids, FilterByUser;
 
     protected $guarded = [
         'id',
     ];
+
+    public $incrementing = false;
 
     protected $keyType = 'string';
 
@@ -30,14 +32,19 @@ class ConsultNcdRiskCasdtVision extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function facility()
+    public function consultRiskAssessment()
     {
-        return $this->belongsTo(Facility::class, 'facility_code', 'code');
+        return $this->belongsTo(ConsultNcdRiskAssessment::class, 'consult_ncd_risk_id', 'id');
     }
 
-    public function user()
+    public function patientNcd()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(PatientNcd::class, 'patient_ncd_id', 'id');
+    }
+
+    public function consult()
+    {
+        return $this->belongsTo(Consult::class, 'consult_id', 'id');
     }
 
     public function patient()
@@ -45,17 +52,17 @@ class ConsultNcdRiskCasdtVision extends Model
         return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 
-    public function consultRiskAssessment()
+    public function user()
     {
-        return $this->belongsTo(ConsultNcdRiskAssessment::class, 'consult_ncd_risk_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function complaint()
+    public function facility()
     {
-        return $this->belongsTo(LibNcdEyeComplaint::class, 'eye_complaint', 'code');
+        return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-    public function refer()
+    public function eyeRefer()
     {
         return $this->belongsTo(LibNcdEyeRefer::class, 'eye_refer', 'code');
     }
@@ -80,8 +87,13 @@ class ConsultNcdRiskCasdtVision extends Model
         return $this->belongsTo(LibNcdEyeVisionScreening::class, 'aided', 'code');
     }
 
-    public function referProf()
+    public function eyeReferProf()
     {
         return $this->belongsTo(LibNcdEyeReferProfessional::class, 'eye_refer_prof', 'code');
+    }
+
+    public function casdt2Vision()
+    {
+        return $this->belongsTo(ConsultNcdRiskCasdt2Vision::class, 'casdt2_id', 'id');
     }
 }
