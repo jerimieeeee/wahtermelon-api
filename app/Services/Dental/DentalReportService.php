@@ -54,18 +54,20 @@ class DentalReportService
                             ELSE
                                 0
                             END) AS 'female_12_59_months_orally_fit',
-                        COUNT(DISTINCT
-                            CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5
+                        COUNT(
+                             DISTINCT CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5
                                 AND patients.gender = 'M'
-                                AND tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38') THEN
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND dental_tooth_conditions.tooth_condition IN('D', 'M', 'F') THEN
                                 1
                             ELSE
                                 0
                             END) AS male_dental_dmft,
-                        COUNT(DISTINCT
-                            CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5
+                        COUNT(
+                             DISTINCT CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5
                                 AND patients.gender = 'F'
-                                AND tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38') THEN
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND dental_tooth_conditions.tooth_condition IN('D', 'M', 'F') THEN
                                 1
                             ELSE
                                 0
@@ -293,6 +295,7 @@ class DentalReportService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
+            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
