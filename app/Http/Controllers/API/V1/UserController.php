@@ -100,7 +100,7 @@ class UserController extends Controller
     {
         $query = User::where('id', $user->id);
         $user = QueryBuilder::for($query)
-            ->with('facility', 'designation', 'employer')
+            ->with('konsultaCredential', 'facility', 'designation', 'employer')
             ->first();
 
         return new UserResource($user);
@@ -115,7 +115,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        return response()->json(['status' => 'Update successful!'], 200);
+        return response()->json(['data' => $user->load(['konsultaCredential', 'facility', 'designation', 'employer']), 'status' => 'Update successful!'], 200);
     }
 
     /**
