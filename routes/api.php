@@ -909,6 +909,18 @@ Route::prefix('v1')->group(function () {
                     Route::get('name-list', 'index');
                 });
         });
+        Route::prefix('mortality')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalitylNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
