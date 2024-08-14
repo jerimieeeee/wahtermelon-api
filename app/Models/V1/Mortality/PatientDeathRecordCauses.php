@@ -4,10 +4,8 @@ namespace App\Models\V1\Mortality;
 
 use App\Models\User;
 use App\Models\V1\Libraries\LibIcd10;
-use App\Models\V1\Libraries\LibMortalityDeathPlace;
-use App\Models\V1\Libraries\LibMortalityDeathType;
+use App\Models\V1\Libraries\LibMortalityCause;
 use App\Models\V1\Patient\Patient;
-use App\Models\V1\PSGC\Barangay;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -16,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 
-class PatientDeathRecord extends Model
+class PatientDeathRecordCauses extends Model
 {
     use HasFactory, FilterByUser, FilterByFacility, HasUlids;
 
@@ -29,11 +27,6 @@ class PatientDeathRecord extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    protected $casts = [
-        'date_of_death' => 'date:Y-m-d H:i:s',
-    ];
-
-
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id', 'id');
@@ -44,35 +37,18 @@ class PatientDeathRecord extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-
     public function facility()
     {
         return $this->belongsTo(Facility::class, 'facility_code', 'code');
     }
 
-
-    public function deathType()
+    public function icd10()
     {
-        return $this->belongsTo(LibMortalityDeathType::class, 'death_type', 'code');
+        return $this->belongsTo(LibIcd10::class, 'icd10', 'icd10_code');
     }
 
-    public function deathPlace()
+    public function cause()
     {
-        return $this->belongsTo(LibMortalityDeathPlace::class, 'death_place', 'code');
-    }
-
-    public function barangay()
-    {
-        return $this->belongsTo(Barangay::class, 'barangay_code', 'psgc_10_digit_code');
-    }
-
-    public function immediateCause()
-    {
-        return $this->belongsTo(LibIcd10::class, 'immediate_cause', 'icd10_code');
-    }
-
-    public function deathCause()
-    {
-        return $this->belongsTo(PatientDeathRecordCauses::class, 'death_record_id', 'id');
+        return $this->belongsTo(LibMortalityCause::class, 'cause', 'code');
     }
 }

@@ -205,7 +205,8 @@ class DatabaseSeeder extends Seeder
             LibNcdEyeVisionScreeningSeeder::class,
             LibNcdEyeReferProfessionalSeeder::class,
             LibDentalOralConditionSeeder::class,
-            LibFeedbackQuestionSeeder::class
+            LibFeedbackQuestionSeeder::class,
+            LibMortalityCauseSeeder::class,
         ]);
     }
 }

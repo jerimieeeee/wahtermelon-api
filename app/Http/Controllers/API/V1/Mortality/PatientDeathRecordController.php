@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Mortality\PatientDeathRecordRequest;
 use App\Http\Resources\API\V1\Mortality\PatientDeathRecordResource;
 use App\Models\V1\Mortality\PatientDeathRecord;
+use App\Models\V1\Mortality\PatientDeathRecordCauses;
+use App\Models\V1\NCD\ConsultNcdRiskCasdt2;
+use App\Models\V1\NCD\ConsultNcdRiskCasdt2Vision;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -45,7 +49,7 @@ class PatientDeathRecordController extends Controller
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-            ->with(['deathType', 'deathPlace', 'barangay', 'immediateCause', 'antecedentCause', 'underlyingCause']);
+            ->with(['deathType', 'deathPlace', 'barangay', 'immediateCause', 'deathCause.cause']);
 
         if ($perPage === 'all') {
             return PatientDeathRecordResource::collection($query->get());
@@ -59,9 +63,30 @@ class PatientDeathRecordController extends Controller
      */
     public function store(PatientDeathRecordRequest $request): JsonResponse
     {
-        $data = PatientDeathRecord::updateOrCreate(['patient_id' => $request->patient_id], $request->validatedWithCasts());
+        DB::transaction(function() use ($request) {
 
-        return response()->json(['data' => new PatientDeathRecordResource($data), 'status' => 'Success'], 201);
+            $cause = $request->input('cause');
+
+            $data = PatientDeathRecord::updateOrCreate(['patient_id' => $request->patient_id], $request->validatedWithCasts());
+
+            PatientDeathRecordCauses::query()
+                ->where('patient_id', $data->patient_id)
+                ->where('death_record_id', $data->id)
+                ->delete();
+
+            foreach ($cause as $value) {
+                PatientDeathRecordCauses::updateOrCreate([
+                    'death_record_id' => $data->id,
+                    'patient_id' => $data->patient_id,
+                    'icd10_code' => $value['icd10_code'],
+                    'cause_code' => $value['cause_code'],
+                ], $value);
+            }
+        });
+
+        return response()->json([
+            'message' => 'Death record successfully saved',
+        ], 201);
     }
 
     /**

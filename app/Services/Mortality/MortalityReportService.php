@@ -283,7 +283,7 @@ class MortalityReportService
                                 0
                             END) AS 'male_female_perinatal_deaths',
                         SUM(
-                            CASE WHEN patients.gender = 'F'
+                            CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('LSCSM', 'NSDM')
                                 AND MONTH(delivery_date) = ?
                                 AND YEAR(delivery_date) = ? THEN
@@ -301,7 +301,7 @@ class MortalityReportService
                                 0
                             END) AS 'live_births_female',
                         SUM(
-                            CASE WHEN patients.gender = 'F'
+                            CASE WHEN patients.gender IN('M', 'F')
                                 AND outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NDSF')
                                 AND MONTH(delivery_date) = ?
                                 AND YEAR(delivery_date) = ? THEN
@@ -310,7 +310,7 @@ class MortalityReportService
                                 0
                             END) AS 'live_births_male_female',
                         SUM(
-                            CASE WHEN patients.gender = 'F'
+                            CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('LSCSM', 'NSDM')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
                                 AND MONTH(delivery_date) = ?
@@ -328,9 +328,9 @@ class MortalityReportService
                                 1
                             ELSE
                                 0
-                            END) AS 'live_births_15_19_male',
+                            END) AS 'live_births_15_19_female',
                         SUM(
-                            CASE WHEN patients.gender = 'F'
+                            CASE WHEN patients.gender IN('M', 'F')
                                 AND outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NDSF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
                                 AND MONTH(delivery_date) = ?
@@ -338,7 +338,7 @@ class MortalityReportService
                                 1
                             ELSE
                                 0
-                            END) AS 'live_births_15_19_male'
+                            END) AS 'live_births_15_19_male_female'
                     ",
                     [
                         //BINDINGS FOR male_total_deaths
