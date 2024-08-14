@@ -68,11 +68,20 @@ class PatientDeathRecord extends Model
 
     public function immediateCause()
     {
-        return $this->belongsTo(LibIcd10::class, 'immediate_cause', 'icd10_code');
+        return $this->belongsTo(LibIcd10::class, 'immediate_cause', 'icd10_code')
+            ->selectRaw('
+                icd10_code,
+                icd10_desc
+            ');
     }
 
     public function deathCause()
     {
-        return $this->belongsTo(PatientDeathRecordCauses::class, 'death_record_id', 'id');
+        return $this->hasMany(PatientDeathRecordCauses::class, 'death_record_id', 'id')
+        ->selectRaw('
+                death_record_id,
+                icd10_code,
+                cause_code
+            ');
     }
 }

@@ -44,11 +44,15 @@ class PatientDeathRecordCauses extends Model
 
     public function icd10()
     {
-        return $this->belongsTo(LibIcd10::class, 'icd10', 'icd10_code');
+        return $this->belongsTo(LibIcd10::class, 'icd10_code', 'icd10_code')
+            ->selectRaw('
+                icd10_code,
+                icd10_desc
+            ');
     }
 
     public function cause()
     {
-        return $this->belongsTo(LibMortalityCause::class, 'cause', 'code');
+        return $this->belongsTo(LibMortalityCause::class, 'cause_code', 'code');
     }
 }

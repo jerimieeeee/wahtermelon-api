@@ -49,7 +49,7 @@ class PatientDeathRecordController extends Controller
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
             })
-            ->with(['deathType', 'deathPlace', 'barangay', 'immediateCause', 'deathCause.cause']);
+            ->with(['deathType', 'deathPlace', 'barangay', 'immediateCause', 'deathCause.cause', 'deathCause.icd10']);
 
         if ($perPage === 'all') {
             return PatientDeathRecordResource::collection($query->get());
