@@ -331,4 +331,68 @@ class ReportDentalNameListService
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             });
     }
+
+    public function get_dental_dmft($request)
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        consults.patient_id AS patient_id,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name,
+                        patients.birthdate,
+                        consult_date AS date_of_service
+                        ")
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
+            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
+            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consults.facility_code', auth()->user()->facility_code);
+            })
+            // male dental dmft
+            ->when($request->params == 'male_dental_dmft', function ($query) use ($request) {
+                $query->where('patients.gender', 'M')
+                    ->whereIn('tooth_number',
+                        [
+                            '11', '12', '13', '14', '15', '16', '17',
+                            '18', '21', '22', '23', '24', '25', '26',
+                            '27', '28', '41', '42', '43', '44', '45',
+                            '46', '47', '48', '31', '32', '33', '34',
+                            '35', '36', '37', '38'
+                        ]
+                    )
+                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5");
+            })
+            // female dental dmft
+            ->when($request->params == 'female_dental_dmft', function ($query) use ($request) {
+                $query->where('patients.gender', 'F')
+                    ->whereIn('tooth_number',
+                        [
+                            '11', '12', '13', '14', '15', '16', '17',
+                            '18', '21', '22', '23', '24', '25', '26',
+                            '27', '28', '41', '42', '43', '44', '45',
+                            '46', '47', '48', '31', '32', '33', '34',
+                            '35', '36', '37', '38'
+                        ]
+                    )
+                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5");
+            })
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month)
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            });
+    }
 }

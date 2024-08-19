@@ -3,27 +3,17 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\Dental\DentalReportService;
+use App\Services\Mortality\MortalityUnderlyingReportService;
 use Illuminate\Http\Request;
 
-class DentalReport2018Controller extends Controller
+class MortalityUnderlyingReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, DentalReportService $dentalReportService)
+    public function index(Request $request, MortalityUnderlyingReportService $mortalityUnderlyingReportService)
     {
-//         return $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
-
-        $part1 = $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
-        $male_dmft = $dentalReportService->get_dmft($request, 'M')->get();
-        $female_dmft = $dentalReportService->get_dmft($request, 'F')->get();
-
-        return [
-            'data' => $part1,
-            'male_dental_dmft'  => $male_dmft,
-            'female_dental_dmft'  => $female_dmft,
-        ];
+         return $mortalityUnderlyingReportService->get_mortality_underlying($request)->get();
     }
 
     /**

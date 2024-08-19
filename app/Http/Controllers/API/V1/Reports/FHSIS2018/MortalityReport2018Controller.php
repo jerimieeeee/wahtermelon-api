@@ -11,9 +11,9 @@ class MortalityReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, MortalityReportService $dentalReportService)
+    public function index(Request $request, MortalityReportService $mortalityReportService)
     {
-         return $dentalReportService->get_mortality_natality($request)->get();
+         return $mortalityReportService->get_mortality_natality($request)->get();
     }
 
     /**
