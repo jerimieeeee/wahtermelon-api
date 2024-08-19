@@ -56,8 +56,8 @@ class UserUpdateRequest extends FormRequest
     }*/
     public function rules()
     {
-        $userId = $this->route('user'); // Assuming you pass the user ID in the route
-        $user = User::find($userId)->first();
+        $user = $this->route('user'); // Assuming you pass the user ID in the route
+        //$user = User::find($userId)->first();
         $rules = [];
 
         if (request()->has('facility_code') && $this->input('facility_code') !== $user->facility_code) {
@@ -93,7 +93,7 @@ class UserUpdateRequest extends FormRequest
         }
 
         if (request()->has('email') && $this->input('email') !== $user->email) {
-            $rules['email'] = 'nullable|email|unique:users' . ($userId ? ',email,' . $userId : '');
+            $rules['email'] = 'nullable|email|unique:users' . ($user->id ? ',email,' . $user->id : '');
         }
 
         if (request()->has('is_active') && $this->input('is_active') !== $user->is_active) {
