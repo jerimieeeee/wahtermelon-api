@@ -510,6 +510,9 @@ Route::prefix('v1/libraries')->group(function () {
     //Animal Bite Anatomical Location
     Route::get('ab-anatomical-location', [\App\Http\Controllers\API\V1\Libraries\LibAbAnatomicalLocationController::class, 'index'])->name('ab-anatomical-location.index');
 
+    //Animal Bite Anatomical Location
+    Route::get('ab-category', [\App\Http\Controllers\API\V1\Libraries\LibAbCategoryController::class, 'index'])->name('ab-category.index');
+
     //Animal Bite Animal Status
     Route::get('ab-animal-status', [\App\Http\Controllers\API\V1\Libraries\LibAbAnimalStatusController::class, 'index'])->name('ab-animal-status.index');
 

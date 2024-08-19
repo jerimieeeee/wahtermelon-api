@@ -29,6 +29,7 @@ class PatientAbExposureRequest extends FormRequest
             'exposure_place' => 'nullable',
             'bite_flag' => 'nullable|boolean',
             'animal_ownership_id' => 'required|exists:lib_ab_animal_ownerships,id',
+            'animal_vaccine_date' => 'nullable',
             'feet_flag' => 'nullable|boolean',
             'leg_flag' => 'nullable|boolean',
             'arms_flag' => 'nullable|boolean',
@@ -38,10 +39,12 @@ class PatientAbExposureRequest extends FormRequest
             'head_flag' => 'nullable|boolean',
             'others_flag' => 'nullable|boolean',
             'al_remarks' => 'nullable',
+            'category_id' => 'required|exists:lib_ab_categories,id',
             'exposure_type_code' => 'required|exists:lib_ab_exposure_types,code',
             'wash_flag' => 'nullable|boolean',
             'pep_flag' => 'nullable|boolean',
             'tandok_name' => 'nullable',
+            'tandok_date' => 'nullable',
             'tandok_addresss' => 'nullable',
             'remarks' => 'nullable'
         ];
