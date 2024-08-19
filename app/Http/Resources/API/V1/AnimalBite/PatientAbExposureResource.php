@@ -27,6 +27,7 @@ class PatientAbExposureResource extends JsonResource
             'bite_flag' => $this->bite_flag,
             'animal_ownership_id' => $this->animal_ownership_id,
             'animal_ownership' => $this->whenLoaded('animalOwnership'),
+            'animal_vaccine_date' => $this->animal_vaccine_date,
             'feet_flag' => $this->feet_flag,
             'leg_flag' => $this->leg_flag,
             'arms_flag' => $this->arms_flag,
@@ -35,12 +36,15 @@ class PatientAbExposureResource extends JsonResource
             'neck_flag' => $this->neck_flag,
             'head_flag' => $this->head_flag,
             'others_flag' => $this->others_flag,
+            'category_id' => $this->category_id,
+            'category' => $this->whenLoaded('category'),
             'al_remarks' => $this->al_remarks,
             'exposure_type_code' => $this->exposure_type_code,
             'exposure_type' => $this->whenLoaded('exposureType'),
             'wash_flag' => $this->wash_flag,
             'pep_flag' => $this->pep_flag,
             'tandok_name' => $this->tandok_name,
+            'tandok_date' => $this->tandok_date,
             'tandok_addresss' => $this->tandok_addresss,
             'remarks' => $this->remarks
         ];

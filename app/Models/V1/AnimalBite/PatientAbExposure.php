@@ -5,6 +5,7 @@ namespace App\Models\V1\AnimalBite;
 use App\Models\V1\Libraries\LibAbAnimalOwnership;
 use App\Models\V1\Libraries\LibAbAnimalType;
 use App\Models\V1\Libraries\LibAbExposureType;
+use App\Models\V1\Libraries\LibAbCategory;
 use App\Traits\FilterByUser;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -44,5 +45,10 @@ class PatientAbExposure extends Model
     public function exposureType()
     {
         return $this->belongsTo(LibAbExposureType::class, 'exposure_type_code', 'code');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(LibAbCategory::class, 'category_id', 'id');
     }
 }

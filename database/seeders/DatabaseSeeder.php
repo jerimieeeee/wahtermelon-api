@@ -207,6 +207,7 @@ class DatabaseSeeder extends Seeder
             LibDentalOralConditionSeeder::class,
             LibFeedbackQuestionSeeder::class,
             LibMortalityCauseSeeder::class,
+            LibAbCategorySeeder::class,
         ]);
     }
 }
