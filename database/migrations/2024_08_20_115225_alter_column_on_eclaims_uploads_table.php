@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('eclaims_uploads', function (Blueprint $table) {
             $table->json('denied_reason')->change();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
