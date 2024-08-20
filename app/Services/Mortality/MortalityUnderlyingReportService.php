@@ -293,12 +293,12 @@ class MortalityUnderlyingReportService
                                 0
                             END) AS 'female_70_years_above'
                     ")
-            ->leftJoin('patient_death_record_causes', 'patient_death_records.id', '=', 'patient_death_record_causes.death_record_id')
+            ->join('patient_death_record_causes', 'patient_death_records.id', '=', 'patient_death_record_causes.death_record_id')
             ->join('patients', 'patient_death_records.patient_id', '=', 'patients.id')
             ->join('lib_icd10s', 'patient_death_record_causes.icd10_code', '=', 'lib_icd10s.icd10_code')
             ->join('users', 'patient_death_record_causes.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_death_records.patient_id');
+                $join->on('municipalities_brgy.patient_id', '=', 'patient_death_record_causes.patient_id');
             })
             ->where('patient_death_record_causes.cause_code', 'UND')
             ->whereYear('date_of_death', $request->year)

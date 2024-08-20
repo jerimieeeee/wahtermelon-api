@@ -926,6 +926,11 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('m1-underlying', 'index');
                 });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityUnderlyingNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1-underlying-name-list', 'index');
+                });
         });
     });
 
