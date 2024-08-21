@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\Dental\ReportDentalNameListService;
-use App\Services\Dental\ReportMortalityNameListService;
-use App\Services\Morbidity\ReportMorbidityNameListService;
+use App\Services\Mortality\ReportMortalityNameListService;
 use Illuminate\Http\Request;
 
-class DentalNameListReport2018Controller extends Controller
+class MortalitylNameListReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ReportDentalNameListService $nameListService)
+    public function index(Request $request, ReportMortalityNameListService $nameListService)
     {
         $namelist = $nameListService->get_report_namelist($request)->get();
 

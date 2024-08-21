@@ -343,10 +343,10 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('risk-stratification', 'index');
             });
-        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskCasdtVisionController::class)
+        Route::controller(\App\Http\Controllers\API\V1\NCD\ConsultNcdRiskCasdt2Controller::class)
             ->middleware('auth:api')
             ->group(function () {
-                Route::post('risk-casdt-vision', 'store');
+                Route::post('risk-casdt2', 'store');
             });
     });
     //Medicine
@@ -904,6 +904,18 @@ Route::prefix('v1')->group(function () {
                     Route::get('m1', 'index');
                 });
             Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\DentalNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
+        });
+        Route::prefix('mortality')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalitylNameListReport2018Controller::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('name-list', 'index');

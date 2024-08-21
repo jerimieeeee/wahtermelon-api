@@ -34,6 +34,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'accreditation_number' => $this->accreditation_number,
             'prc_number' => $this->prc_number,
+            'konsulta_credential' => $this->whenLoaded('konsultaCredential'),
             'designation_code' => $this->when(! $this->relationLoaded('designation'), $this->designation_code),
             'designation' => $this->when($this->relationLoaded('designation'), new LibDesignationResource($this->designation)),
             'employer_code' => $this->when(! $this->relationLoaded('employer'), $this->employer_code),

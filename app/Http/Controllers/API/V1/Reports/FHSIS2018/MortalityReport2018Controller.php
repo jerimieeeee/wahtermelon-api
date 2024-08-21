@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\Dental\DentalReportService;
-use App\Services\Dental\MortalityReportService;
+use App\Services\Mortality\MortalityReportService;
 use Illuminate\Http\Request;
 
-class DentalReport2018Controller extends Controller
+class MortalityReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, DentalReportService $dentalReportService)
+    public function index(Request $request, MortalityReportService $dentalReportService)
     {
-         return $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
+         return $dentalReportService->get_mortality_natality($request)->get();
     }
 
     /**

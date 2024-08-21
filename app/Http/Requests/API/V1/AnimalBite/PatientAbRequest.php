@@ -35,6 +35,8 @@ class PatientAbRequest extends FormRequest
 
             'animal_type_id' => 'required|exists:lib_ab_animal_types,id',
             'animal_ownership_id' => 'required|exists:lib_ab_animal_ownerships,id',
+            'animal_vaccine_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
+            'category_id' => 'required|exists:lib_ab_categories,id',
             'exposure_type_code' => 'required|exists:lib_ab_exposure_types,code',
 
             'animal_type_remarks' => 'nullable',
@@ -52,7 +54,10 @@ class PatientAbRequest extends FormRequest
             'al_remarks' => 'nullable',
 
             'wash_flag' => 'nullable|boolean',
-            'pep_flag' => 'nullable|boolean'
+            'pep_flag' => 'nullable|boolean',
+            'tandok_name' => 'nullable',
+            'tandok_addresss' => 'nullable',
+            'tandok_date' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
         ];
     }
 }

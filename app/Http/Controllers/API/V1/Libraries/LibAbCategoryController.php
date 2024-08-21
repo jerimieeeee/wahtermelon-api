@@ -1,20 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
+namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
-use App\Services\Dental\DentalReportService;
-use App\Services\Dental\MortalityReportService;
+use App\Http\Resources\API\V1\Libraries\LibAbCategoryResource;
+use App\Models\V1\Libraries\LibAbCategory;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
-class DentalReport2018Controller extends Controller
+class LibAbCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, DentalReportService $dentalReportService)
+    public function index()
     {
-         return $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
+        $query = QueryBuilder::for(LibAbCategory::class);
+
+        return LibAbCategoryResource::collection($query->get());
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -22,13 +33,21 @@ class DentalReport2018Controller extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         //
     }

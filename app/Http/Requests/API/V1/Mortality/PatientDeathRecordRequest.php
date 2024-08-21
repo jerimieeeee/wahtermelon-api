@@ -44,8 +44,8 @@ class PatientDeathRecordRequest extends FormRequest
             'death_place' => 'required|exists:lib_mortality_death_place,code',
             'barangay_code' => 'required|exists:barangays,psgc_10_digit_code',
             'immediate_cause' => 'nullable|exists:lib_icd10s,icd10_code',
-            'antecedent_cause' => 'nullable|exists:lib_icd10s,icd10_code',
-            'underlying_cause' => 'nullable|exists:lib_icd10s,icd10_code',
+            'cause.*.icd10_code' => 'nullable|exists:lib_icd10s,icd10_code',
+            'cause.*.cause_code' => 'nullable|exists:lib_mortality_causes,code',
             'remarks' => 'nullable',
         ];
     }

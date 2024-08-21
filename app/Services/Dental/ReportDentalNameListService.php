@@ -75,8 +75,7 @@ class ReportDentalNameListService
             })
             // male dental dmft
            ->when($request->params == 'male_dental_dmft', function ($query) use ($request) {
-                 $query->distinct('dental_tooth_number.patient_id')
-                    ->where('patients.gender', 'M')
+                 $query->where('patients.gender', 'M')
                     ->whereIn('tooth_number',
                         [
                             '11', '12', '13', '14', '15', '16', '17',
@@ -86,12 +85,12 @@ class ReportDentalNameListService
                             '35', '36', '37', '38'
                         ]
                     )
-                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5");
+                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5")
+                ->distinct();
             })
             // female dental dmft
             ->when($request->params == 'female_dental_dmft', function ($query) use ($request) {
-                $query->distinct('dental_tooth_number.patient_id')
-                    ->where('patients.gender', 'F')
+                $query->where('patients.gender', 'F')
                     ->whereIn('tooth_number',
                         [
                             '11', '12', '13', '14', '15', '16', '17',
@@ -101,7 +100,8 @@ class ReportDentalNameListService
                             '35', '36', '37', '38'
                         ]
                     )
-                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5");
+                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5")
+                ->distinct();
             })
             // male 0 to 11 months BOHC
             ->when($request->client_code == 'male_0_11_months_bohc', function ($query) use ($request) {

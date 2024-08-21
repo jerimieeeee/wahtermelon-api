@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\NCD;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\NCD\ConsultNcdRiskCasdt2Request;
 use App\Http\Requests\API\V1\NCD\ConsultNcdRiskCasdtVisionRequest;
 use App\Models\V1\NCD\ConsultNcdRiskCasdtVision;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class ConsultNcdRiskCasdtVisionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ConsultNcdRiskCasdtVisionRequest $request)
+    public function store(ConsultNcdRiskCasdt2Request $request)
     {
         $casdtvision = $request->input('casdt');
 

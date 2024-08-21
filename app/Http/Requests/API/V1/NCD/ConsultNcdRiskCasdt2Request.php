@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\NCD;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConsultNcdRiskCasdtVisionRequest extends FormRequest
+class ConsultNcdRiskCasdt2Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,8 @@ class ConsultNcdRiskCasdtVisionRequest extends FormRequest
             'patient_ncd_id' => 'required|exists:patient_ncd,id',
             'consult_id' => 'required|exists:consults,id',
             'patient_id' => 'required|exists:patients,id',
-            'eye_complaint' => 'nullable|exists:lib_ncd_eye_complaints,code',
+
+            'complaint.*.eye_complaint' => 'nullable|exists:lib_ncd_eye_complaints,code',
             'eye_refer' => 'nullable|exists:lib_ncd_eye_refers,code',
             'unaided' => 'nullable|exists:lib_ncd_eye_vision_screenings,code',
             'pinhole' => 'nullable|exists:lib_ncd_eye_vision_screenings,code',

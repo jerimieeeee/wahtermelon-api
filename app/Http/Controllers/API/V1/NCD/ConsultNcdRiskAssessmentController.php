@@ -55,7 +55,20 @@ class ConsultNcdRiskAssessmentController extends Controller
             ->when(isset($request->id), function ($q) use ($request) {
                 $q->where('id', '=', $request->id);
             })
-            ->with('riskScreeningGlucose', 'riskScreeningLipid', 'riskScreeningKetones', 'riskScreeningProtein', 'riskQuestionnaire', 'patientNcdRecord', 'ncdRecordDiagnosis', 'ncdRecordTargetOrgan', 'ncdRecordCounselling')
+            ->with(
+
+                'riskScreeningGlucose',
+                'riskScreeningLipid',
+                'riskScreeningKetones',
+                'riskScreeningProtein',
+                'riskQuestionnaire',
+                'riskCasdt2',
+                'riskCasdt2Vision',
+                'patientNcdRecord',
+                'ncdRecordDiagnosis',
+                'ncdRecordTargetOrgan',
+                'ncdRecordCounselling'
+            )
             ->defaultSort('assessment_date')
             ->allowedSorts('assessment_date');
 
