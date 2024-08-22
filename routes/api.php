@@ -907,6 +907,7 @@ Route::prefix('v1')->group(function () {
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('name-list', 'index');
+                    Route::get('name-list-dmft', 'dmft');
                 });
         });
         Route::prefix('mortality')->group(function () {
@@ -915,10 +916,20 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('m1', 'index');
                 });
-            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalitylNameListReport2018Controller::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityNameListReport2018Controller::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('name-list', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityUnderlyingReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1-underlying', 'index');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityUnderlyingNameListReport2018Controller::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('m1-underlying-name-list', 'index');
                 });
         });
     });

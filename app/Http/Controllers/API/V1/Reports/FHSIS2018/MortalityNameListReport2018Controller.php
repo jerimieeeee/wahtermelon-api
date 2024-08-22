@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Mortality\ReportMortalityNameListService;
 use Illuminate\Http\Request;
 
-class MortalitylNameListReport2018Controller extends Controller
+class MortalityNameListReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.

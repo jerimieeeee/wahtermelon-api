@@ -54,24 +54,6 @@ class DentalReportService
                             ELSE
                                 0
                             END) AS 'female_12_59_months_orally_fit',
-                        COUNT(
-                             DISTINCT CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5
-                                AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
-                                AND dental_tooth_conditions.tooth_condition IN('D', 'M', 'F') THEN
-                                1
-                            ELSE
-                                0
-                            END) AS male_dental_dmft,
-                        COUNT(
-                             DISTINCT CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5
-                                AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
-                                AND dental_tooth_conditions.tooth_condition IN('D', 'M', 'F') THEN
-                                1
-                            ELSE
-                                0
-                            END) AS female_dental_dmft,
                         SUM(
                             CASE WHEN patients.gender = 'M'
                             AND service_id = 1
@@ -305,6 +287,49 @@ class DentalReportService
             })
             ->whereYear('consult_date', $request->year)
             ->whereMonth('consult_date', $request->month)
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            });
+    }
+
+    public function get_dmft($request, $gender)
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        COUNT(DISTINCT patients.id) AS male_dental_dmft
+                    ")
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
+            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
+            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
+            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consults.facility_code', auth()->user()->facility_code);
+            })
+            ->whereYear('consult_date', $request->year)
+            ->whereMonth('consult_date', $request->month)
+            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5")
+            ->where('patients.gender', $gender)
+            ->whereIn('dental_tooth_conditions.tooth_number',
+                [
+                    '11', '12', '13', '14', '15', '16', '17',
+                    '18', '21', '22', '23', '24', '25', '26',
+                    '27', '28', '41', '42', '43', '44', '45',
+                    '46', '47', '48', '31', '32', '33', '34',
+                    '35', '36', '37', '38'
+                ]
+            )
+            ->whereIn('dental_tooth_conditions.tooth_number', ['D', 'M', 'F'])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
