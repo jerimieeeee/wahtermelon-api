@@ -48,13 +48,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == '4ps', function ($q) use ($request) {
@@ -87,13 +87,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == '4ps', function ($q) use ($request) {
@@ -127,13 +127,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == '4ps', function ($q) use ($request) {
@@ -177,13 +177,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == '4ps', function ($q) use ($request) {
@@ -253,13 +253,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == 'direct', function ($q) use ($request, $direct) {
@@ -297,13 +297,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($gender == 'M', function ($q) use ($request, $gender) {
@@ -339,13 +339,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($ethnicity == 'indegenous', function ($q) use ($request) {
@@ -378,13 +378,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($education == '1', function ($q) use ($request) {
@@ -462,13 +462,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == 'single', function ($q) use ($request) {
@@ -513,13 +513,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == 'roman-catholic', function ($q) use ($request) {
@@ -605,13 +605,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == 'hypertension', function ($q) use ($request) {
@@ -655,13 +655,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereGender($gender)
@@ -775,13 +775,13 @@ class HouseholdProfilingReportService
             ->when($request->category == 'all', function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
-            ->when($request->category == 'facility', function ($q) {
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($type == '4ps', function ($q) use ($request) {

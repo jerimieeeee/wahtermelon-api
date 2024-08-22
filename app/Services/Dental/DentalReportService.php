@@ -302,7 +302,7 @@ class DentalReportService
     {
         return DB::table('consults')
             ->selectRaw("
-                        COUNT(DISTINCT patients.id) AS male_dental_dmft
+                        COUNT(DISTINCT patients.id) AS dmft
                     ")
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
