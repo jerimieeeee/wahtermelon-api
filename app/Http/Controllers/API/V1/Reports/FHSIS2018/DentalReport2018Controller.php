@@ -20,7 +20,7 @@ class DentalReport2018Controller extends Controller
         $female_dmft = $dentalReportService->get_dmft($request, 'F')->get();
 
         return [
-            'data' => $part1,
+            'data' => $part1[0],
             'dental_dmft'  => [
                 'male' => $male_dmft[0]->dmft,
                 'female' => $female_dmft[0]->dmft
