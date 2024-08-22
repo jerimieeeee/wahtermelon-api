@@ -21,8 +21,10 @@ class DentalReport2018Controller extends Controller
 
         return [
             'data' => $part1,
-            'male_dental_dmft'  => $male_dmft,
-            'female_dental_dmft'  => $female_dmft,
+            'dental_dmft'  => [
+                'male' => $male_dmft[0]->dmft,
+                'female' => $female_dmft[0]->dmft
+            ]
         ];
     }
 
