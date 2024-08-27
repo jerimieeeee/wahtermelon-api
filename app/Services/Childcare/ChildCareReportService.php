@@ -10,16 +10,11 @@ class ChildCareReportService
     {
         return DB::table('settings_catchment_barangays')
             ->selectRaw('
-                        facility_code,
-                        barangay_code,
-                        name AS barangay_name,
-                        year,
-                        settings_catchment_barangays.population,
-                        (SELECT SUM(population) FROM settings_catchment_barangays) AS total_population
+                    year,
+                    SUM(settings_catchment_barangays.population) AS total_population
                     ')
-            ->leftJoin('barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code', 'barangay_code', 'year', 'population');
+            ->groupBy('facility_code');
     }
 
     public function get_catchment_barangays()

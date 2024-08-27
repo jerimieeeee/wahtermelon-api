@@ -27,9 +27,14 @@ class MorbidityReport2018Controller extends Controller
      */
     public function index(Request $request, MorbidityReportService $morbidityReportService)
     {
+        //Projected Population
+        $projected_population = $morbidityReportService->get_projected_population()->get();
         $g = $morbidityReportService->get_morbidity_report_all($request)->get();
 
-        return $g;
+        return [
+            'catchment_population' => $projected_population,
+            'data' => $g,
+        ];
     }
 
     /**

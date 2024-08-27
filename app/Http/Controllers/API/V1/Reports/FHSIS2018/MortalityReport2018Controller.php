@@ -13,7 +13,14 @@ class MortalityReport2018Controller extends Controller
      */
     public function index(Request $request, MortalityReportService $mortalityReportService)
     {
-         return $mortalityReportService->get_mortality_natality($request)->get();
+        //Projected Population
+        $projected_population = $mortalityReportService->get_projected_population()->get();
+        $g = $mortalityReportService->get_mortality_natality($request)->get();
+
+        return [
+            'catchment_population' => $projected_population,
+            'data' => $g,
+        ];
     }
 
     /**

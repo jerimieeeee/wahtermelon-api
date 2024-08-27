@@ -13,7 +13,14 @@ class MortalityUnderlyingReport2018Controller extends Controller
      */
     public function index(Request $request, MortalityUnderlyingReportService $mortalityUnderlyingReportService)
     {
-         return $mortalityUnderlyingReportService->get_mortality_underlying($request)->get();
+        //Projected Population
+        $projected_population = $mortalityUnderlyingReportService->get_projected_population()->get();
+        $g = $mortalityUnderlyingReportService->get_mortality_underlying($request)->get();
+
+        return [
+            'projected_population' => $projected_population,
+            'data' => $g,
+        ];
     }
 
     /**

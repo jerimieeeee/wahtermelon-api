@@ -11,30 +11,30 @@ class TBDotsReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, TBDotsReportService $TBDotsReportService)
+    public function index(Request $request, TBDotsReportService $tbdotsReportService)
     {
-        $catchment_population = $TBDotsReportService->get_projected_population()->get();
+        $projected_population = $tbdotsReportService->get_projected_population()->get();
 
         //1. No. of notified TB cases, all forms - Total
-        $indicator1_male = $TBDotsReportService->get_notified_tb_cases_all_forms($request, 'M')->get();
-        $indicator1_female = $TBDotsReportService->get_notified_tb_cases_all_forms($request, 'F')->get();
+        $indicator1_male = $tbdotsReportService->get_notified_tb_cases_all_forms($request, 'M')->get();
+        $indicator1_female = $tbdotsReportService->get_notified_tb_cases_all_forms($request, 'F')->get();
 
         //2. No. of registered bacteriologically confirmed drug resistant TB (RR/MDR-TB Cases)
-        $indicator2_male = $TBDotsReportService->get_drtb_drug_resistant_confirmed($request, 'M')->get();
-        $indicator2_female = $TBDotsReportService->get_drtb_drug_resistant_confirmed($request, 'F')->get();
+        $indicator2_male = $tbdotsReportService->get_drtb_drug_resistant_confirmed($request, 'M')->get();
+        $indicator2_female = $tbdotsReportService->get_drtb_drug_resistant_confirmed($request, 'F')->get();
 
         //3. Number of TB, all forms that are cured and completely treated - Total
-        $indicator3_male = $TBDotsReportService->get_tb_outcome_cured_and_complete($request, 'M')->get();
-        $indicator3_female = $TBDotsReportService->get_tb_outcome_cured_and_complete($request, 'F')->get();
+        $indicator3_male = $tbdotsReportService->get_tb_outcome_cured_and_complete($request, 'M')->get();
+        $indicator3_female = $tbdotsReportService->get_tb_outcome_cured_and_complete($request, 'F')->get();
 
-        //4. Number of registered acteriologically confirmed drug resistant TB (RR/MDR-TB Cases) that are cured and completed treatment
-        $indicator4_male = $TBDotsReportService->get_tb_drtb_outcome_cured_and_complete($request, 'M')->get();
-        $indicator4_female = $TBDotsReportService->get_tb_drtb_outcome_cured_and_complete($request, 'F')->get();
+        //4. Number of registered bacteriologically confirmed drug resistant TB (RR/MDR-TB Cases) that are cured and completed treatment
+        $indicator4_male = $tbdotsReportService->get_tb_drtb_outcome_cured_and_complete($request, 'M')->get();
+        $indicator4_female = $tbdotsReportService->get_tb_drtb_outcome_cured_and_complete($request, 'F')->get();
 
         return [
 
             //Get catchment population
-            'catchment_population' => $catchment_population,
+            'projected_population' => $projected_population,
 
             //1. No. of notified TB cases, all forms - Total
             'indicator1_male' => $indicator1_male,
