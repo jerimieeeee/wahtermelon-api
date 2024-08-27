@@ -208,7 +208,7 @@ class HouseholdEnvironmentalReportService
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereZod(1)
-            ->whereBetween(DB::raw('DATE(updated_at)'), [$request->start_date, $request->end_date]);
+            ->whereBetween(DB::raw('DATE(settings_catchment_barangays.updated_at)'), [$request->start_date, $request->end_date]);
 //            ->whereYear('settings_catchment_barangays.updated_at', $request->year)
 //            ->whereMonth('settings_catchment_barangays.updated_at', $request->month);
     }

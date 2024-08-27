@@ -124,6 +124,6 @@ class AnimalBiteReportPreExposureService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
-            ->groupBy('barangays.name');
+            ->groupBy('barangays.code');
     }
 }
