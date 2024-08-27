@@ -18,7 +18,7 @@ class MortalityReport2018Controller extends Controller
         $g = $mortalityReportService->get_mortality_natality($request)->get();
 
         return [
-            'catchment_population' => $projected_population,
+            'projected_population' => $projected_population,
             'data' => $g,
         ];
     }
