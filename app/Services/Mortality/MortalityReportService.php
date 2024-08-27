@@ -6,6 +6,17 @@ use Illuminate\Support\Facades\DB;
 
 class MortalityReportService
 {
+    public function get_projected_population()
+    {
+        return DB::table('settings_catchment_barangays')
+            ->selectRaw('
+                    year,
+                    SUM(settings_catchment_barangays.population) AS total_population
+                    ')
+            ->whereFacilityCode(auth()->user()->facility_code)
+            ->groupBy('facility_code');
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')

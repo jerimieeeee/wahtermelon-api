@@ -13,6 +13,8 @@ class NcdReport2018Controller extends Controller
      */
     public function index(Request $request, NcdReportService $ncdReportService)
     {
+        //Projected Population
+        $projected_population = $ncdReportService->get_projected_population()->get();
 
         //Risk-Assessed PHILPEN
         $assessed_male = $ncdReportService->get_risk_assessed($request, 'M', 'normal')->get();
@@ -65,6 +67,9 @@ class NcdReport2018Controller extends Controller
         $female_senior_influenza = $ncdReportService->senior_influenza($request, 'F')->get();
 
         return [
+
+            //Projected Population
+            'projected_population' => $projected_population,
 
             //Risk-Assessed PHILPEN
             'assessed_male' => $assessed_male,

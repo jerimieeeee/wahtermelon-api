@@ -27,10 +27,15 @@ class FamilyPlanningReport2018Controller extends Controller
      */
     public function index(Request $request, FamilyPlanningReportService $familyPlanningReportService)
     {
-//        return $request;
+        //Projected Population
+        $projected_population = $familyPlanningReportService->get_projected_population()->get();
+
         $g = $familyPlanningReportService->get_fp_report_all($request)->get()->groupBy('code');
 
-        return $g;
+        return [
+            'projected_population' => $projected_population,
+            'data' => $g,
+        ];
     }
 
     /**

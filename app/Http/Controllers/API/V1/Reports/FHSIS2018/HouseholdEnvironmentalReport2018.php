@@ -13,8 +13,8 @@ class HouseholdEnvironmentalReport2018 extends Controller
      */
     public function index(Request $request, HouseholdEnvironmentalReportService $householdEnvironmentalService)
     {
-        // Catchment Population
-        $catchment_population = $householdEnvironmentalService->get_projected_population()->get();
+        // Projected Population
+        $projected_population = $householdEnvironmentalService->get_projected_population()->get();
 
         //Water Supply
         $water_level_all = $householdEnvironmentalService->get_household_environmental_water_source($request, 'all')->get()->groupBy('family_id');
@@ -38,6 +38,9 @@ class HouseholdEnvironmentalReport2018 extends Controller
         $zod_barangays = $householdEnvironmentalService->get_zod_barangays($request)->get();
 
         return [
+            //GET PROJECTED POPULATION
+            'projected_population' => $projected_population,
+
             // Water Supply
             'water_level_all' => $water_level_all,
             'water_level1' => $water_level1,
