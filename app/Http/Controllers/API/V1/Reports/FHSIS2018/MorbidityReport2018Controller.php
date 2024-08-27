@@ -32,7 +32,7 @@ class MorbidityReport2018Controller extends Controller
         $g = $morbidityReportService->get_morbidity_report_all($request)->get();
 
         return [
-            'catchment_population' => $projected_population,
+            'projected_population' => $projected_population,
             'data' => $g,
         ];
     }
