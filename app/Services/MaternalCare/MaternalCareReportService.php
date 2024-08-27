@@ -104,8 +104,9 @@ class MaternalCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
-            ->whereYear('date_of_service', $request->year)
-            ->whereMonth('date_of_service', $request->month)
+            ->whereBetween(DB::raw('DATE(date_of_service)'), [$request->start_date, $request->end_date])
+//            ->whereYear('date_of_service', $request->year)
+//            ->whereMonth('date_of_service', $request->month)
             ->groupBy('name', 'birthdate', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code')
             ->havingRaw('(trimester1_count >= 1 AND trimester2_count >= 1 AND trimester3_count >= 2) AND (age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
@@ -137,7 +138,11 @@ class MaternalCareReportService
                     $q->whereIn('municipality_code', explode(',', $request->code));
                 })
                 ->when($request->category == 'brgys', function ($q) use ($request) {
-                    $q->whereIn('barangay_code', explode(',', $request->code));
+                    $q->whereIn('barangay_code', explode(',', $request->code))
+                    ;
+                })
+                ->when($request->category == 'fac', function ($q) {
+                    $q->whereIn('barangay_code', $this->get_catchment_barangays());
                 });
         })
             ->selectRaw("
@@ -157,11 +162,8 @@ class MaternalCareReportService
                         trimester,
                         TIMESTAMPDIFF(YEAR, birthdate,  SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(date_of_service ORDER BY date_of_service DESC), ',', 1), ',', - 1)) AS age_year
             ")
-            ->whereYear('date_of_service', $request->year)
-            ->whereMonth('date_of_service', $request->month)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangay_code', $this->get_catchment_barangays());
-            })
+//            ->whereYear('date_of_service', $request->year)
+//            ->whereMonth('date_of_service', $request->month)
 /*            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipality_code', explode(',', $request->code));
             })
@@ -169,15 +171,16 @@ class MaternalCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })*/
             ->groupBy('name', 'bmi', 'birthdate', 'trimester', 'municipality_code', 'barangay_code')
-            ->when($bmi_status == 'NORMAL', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw("(bmi_status = 'NORMAL' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
+            ->when($bmi_status == 'NORMAL', function ($query) use ($age_year_bracket1, $age_year_bracket2, $request) {
+                $query->havingRaw("(bmi_status = 'NORMAL' AND trimester = 1) AND (age_year BETWEEN ? AND ?) AND (date_of_service BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date]);
             })
-            ->when($bmi_status == 'HIGH', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw("(bmi_status = 'HIGH' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
+            ->when($bmi_status == 'HIGH', function ($query) use ($age_year_bracket1, $age_year_bracket2, $request) {
+                $query->havingRaw("(bmi_status = 'HIGH' AND trimester = 1) AND (age_year BETWEEN ? AND ?) AND (date_of_service BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date]);
             })
-            ->when($bmi_status == 'LOW', function ($query) use ($age_year_bracket1, $age_year_bracket2) {
-                $query->havingRaw("(bmi_status = 'LOW' AND trimester = 1) AND (age_year BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2]);
-            });
+            ->when($bmi_status == 'LOW', function ($query) use ($age_year_bracket1, $age_year_bracket2, $request) {
+                $query->havingRaw("(bmi_status = 'LOW' AND trimester = 1) AND (age_year BETWEEN ? AND ?) AND (date_of_service BETWEEN ? AND ?)", [$age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date]);
+            })
+            ->havingRaw("DATE(date_of_service) BETWEEN ? AND ?", [$request->start_date, $request->end_date]);
     }
 
     public function pregnant_assessed_bmi($request, $age_year_bracket1, $age_year_bracket2)
@@ -281,8 +284,9 @@ class MaternalCareReportService
                 ->whereInitialGravidity(1)
                 ->whereVaccineId('TD')
                 ->whereStatusId('1')
+                ->whereBetween(DB::raw('DATE(vaccine_date)'), [$request->start_date, $request->end_date])
                 ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
-                ->havingRaw('vaccine_seq = 2 AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('vaccine_seq = 2')
                 ->orderBy('name', 'ASC');
         });
     }
@@ -327,8 +331,9 @@ class MaternalCareReportService
                 ->where('initial_gravidity', '>=', 2)
                 ->whereVaccineId('TD')
                 ->whereStatusId('1')
+                ->whereBetween(DB::raw('DATE(vaccine_date)'), [$request->start_date, $request->end_date])
                 ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2])
-                ->havingRaw('vaccine_seq IN (3,4,5) AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', [$request->year, $request->month])
+                ->havingRaw('vaccine_seq IN (3,4,5)')
                 ->orderBy('name', 'ASC');
         });
     }
@@ -341,8 +346,7 @@ class MaternalCareReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         patients.birthdate,
                         service_id,
-                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m') ORDER BY service_date ASC) AS service_dates,
-                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m-%d') ORDER BY service_date ASC) AS date,
+                        GROUP_CONCAT(DATE_FORMAT(service_date, '%Y-%m-%d') ORDER BY service_date ASC) AS service_dates,
                         GROUP_CONCAT(service_qty ORDER BY service_date ASC) AS service_qty,
                         GROUP_CONCAT(TIMESTAMPDIFF(YEAR, patients.birthdate, DATE_FORMAT(service_date, '%Y-%m-%d')) ORDER BY service_date ASC) AS age_year
 		            ")
@@ -396,14 +400,15 @@ class MaternalCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
+            ->whereBetween(DB::raw('DATE(service_date)'), [$request->start_date, $request->end_date])
             ->when($is_positive == 'N', fn ($query) => $query->whereServiceId($service)
                 ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             )
             ->when($is_positive == 'Y', fn ($query) => $query->whereServiceId($service)
                 ->wherePositiveResult('1')
                 ->whereVisitStatus('Prenatal')
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             )
             ->orderBy('name', 'ASC');
     }
@@ -435,7 +440,8 @@ class MaternalCareReportService
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
             })
             ->whereVisitSequence(2)
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->whereBetween(DB::raw('DATE(postpartum_date)'), [$request->start_date, $request->end_date])
+            ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
 
@@ -465,8 +471,9 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCSF', 'LSCSM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
+            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
             ->groupBy('patient_id', 'delivery_date', 'outcome_code')
-            ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
 
@@ -501,8 +508,9 @@ class MaternalCareReportService
             )
             ->when($gender == 'FEMALE', fn ($query) => $query->whereIn('outcome_code', ['LSCSF', 'NSDF'])
             )
-            ->whereYear('delivery_date', $request->year)
-            ->whereMonth('delivery_date', $request->month)
+            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('delivery_date', $request->year)
+//            ->whereMonth('delivery_date', $request->month)
             ->groupBy('patient_id', 'delivery_date', 'outcome_code', 'barangays.psgc_10_digit_code', 'patient_mc_post_registrations.barangay_code')
             ->orderBy('name', 'ASC');
     }
@@ -535,15 +543,10 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->groupBy('patient_ccdevs.patient_id')
-            ->when($weight == 'NORMAL', fn ($query) => $query->where('patient_ccdevs.birth_weight', '>=', 2.5)
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($weight == 'LOW', fn ($query) => $query->where('patient_ccdevs.birth_weight', '<', 2.5)
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($weight == 'UNKNOWN', fn ($query) => $query->where('patient_ccdevs.birth_weight', 0)
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
+            ->when($weight == 'NORMAL', fn ($query) => $query->where('patient_ccdevs.birth_weight', '>=', 2.5))
+            ->when($weight == 'LOW', fn ($query) => $query->where('patient_ccdevs.birth_weight', '<', 2.5))
+            ->when($weight == 'UNKNOWN', fn ($query) => $query->where('patient_ccdevs.birth_weight', 0))
+            ->whereBetween(DB::raw('DATE( patients.birthdate)'), [$request->start_date, $request->end_date])
             ->orderBy('name', 'ASC');
     }
 
@@ -573,18 +576,11 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->groupBy('patient_id')
-            ->when($attendant == 'ALL', fn ($query) => $query->whereIn('attendant_code', ['MD', 'MW', 'RN'])
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($attendant == 'DOCTOR', fn ($query) => $query->whereAttendantCode('MD')
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($attendant == 'NURSE', fn ($query) => $query->whereAttendantCode('RN')
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($attendant == 'MIDWIFE', fn ($query) => $query->whereAttendantCode('MW')
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
+            ->when($attendant == 'ALL', fn ($query) => $query->whereIn('attendant_code', ['MD', 'MW', 'RN']))
+            ->when($attendant == 'DOCTOR', fn ($query) => $query->whereAttendantCode('MD'))
+            ->when($attendant == 'NURSE', fn ($query) => $query->whereAttendantCode('RN'))
+            ->when($attendant == 'MIDWIFE', fn ($query) => $query->whereAttendantCode('MW'))
+            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
             ->orderBy('name', 'ASC');
     }
 
@@ -618,15 +614,10 @@ class MaternalCareReportService
                 ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
             ->groupBy('patient_id')
-            ->when($facility == 'PUBLIC-HF', fn ($query) => $query->whereIn('delivery_location_code', ['BHS', 'HC', 'HOSP', 'LYINP', 'DOHAM'])
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($facility == 'PRIVATE-HF', fn ($query) => $query->whereIn('delivery_location_code', ['HOSPP', 'LYIN'])
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
-            ->when($facility == 'NON-HF', fn ($query) => $query->whereIn('delivery_location_code', ['OTHERS', 'HOME'])
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
+            ->when($facility == 'PUBLIC-HF', fn ($query) => $query->whereIn('delivery_location_code', ['BHS', 'HC', 'HOSP', 'LYINP', 'DOHAM']))
+            ->when($facility == 'PRIVATE-HF', fn ($query) => $query->whereIn('delivery_location_code', ['HOSPP', 'LYIN']))
+            ->when($facility == 'NON-HF', fn ($query) => $query->whereIn('delivery_location_code', ['OTHERS', 'HOME']))
+            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
             ->orderBy('name', 'ASC');
     }
 
@@ -657,9 +648,8 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->groupBy('patient_id')
-            ->when($delivery == 'ALL', fn ($query) => $query->whereIn('outcome_code', ['LSCSF', 'LSCSM', 'NSDF', 'NSDM'])
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
-            )
+            ->when($delivery == 'ALL', fn ($query) => $query->whereIn('outcome_code', ['LSCSF', 'LSCSM', 'NSDF', 'NSDM']))
+            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
             ->orderBy('name', 'ASC');
     }
 
@@ -690,12 +680,13 @@ class MaternalCareReportService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
+            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
             ->groupBy('patient_id')
             ->when($delivery == 'NSD', fn ($query) => $query->whereIn('outcome_code', ['NSDF', 'NSDM'])
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             )
             ->when($delivery == 'CS', fn ($query) => $query->whereIn('outcome_code', ['LSCSF', 'LSCSM'])
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             )
             ->orderBy('name', 'ASC');
     }
@@ -748,7 +739,7 @@ class MaternalCareReportService
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'SB', 'SBF'])
             ->whereIn('pregnancy_termination_code', ['SPON', 'IND'])
             ->groupBy('birthdate', 'status', 'name', 'lmp_date', 'date_of_service', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code')
-            ->havingRaw('(year(date_of_service) = ? AND month(date_of_service)) = ? OR year(pregnancy_termination_date) = ? AND month(pregnancy_termination_date) = ?', [$request->year, $request->month, $request->year, $request->month])
+            ->havingRaw('(date_of_service BETWEEN ? AND ?) OR (pregnancy_termination_date BETWEEN ? AND ?)', [$request->start_date, $request->end_date, $request->start_date, $request->end_date])
             ->orderBy('name', 'ASC');
     }
 
@@ -798,15 +789,15 @@ class MaternalCareReportService
                 $q->whereIn('barangay_code', explode(',', $request->code));
             })
             ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code')
-            ->when($status == 'FULL-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', ['full_term', $age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->when($status == 'FULL-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND date_of_service BETWEEN ? AND ?', ['full_term', $age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date])
             )
-            ->when($status == 'PRE-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', ['pre_term', $age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+            ->when($status == 'PRE-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND date_of_service BETWEEN ? AND ?', ['pre_term', $age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date])
             )
             ->when($status == 'FETAL-DEATH', fn ($query) => $query->whereIn('outcome_code', ['FDU', 'FDUF', 'SB', 'SBF'])
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(date_of_service) = ? AND month(date_of_service) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?) AND date_of_service BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
             )
             ->when($status == 'ABORTION', fn ($query) => $query->whereIn('pregnancy_termination_code', ['SPON', 'IND'])
-                ->havingRaw('(age_year BETWEEN ? AND ?) AND year(pregnancy_termination_date) = ? AND month(pregnancy_termination_date) = ?', [$age_year_bracket1, $age_year_bracket2, $request->year, $request->month])
+                ->havingRaw('(age_year BETWEEN ? AND ?) AND pregnancy_termination_date BETWEEN ? AND ?', [$age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date])
             )
 //            ->groupBy('birthdate', 'status', 'name', 'lmp_date', 'date_of_service', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code')
             ->orderBy('name', 'ASC');

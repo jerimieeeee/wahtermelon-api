@@ -312,8 +312,9 @@ class MortalityUnderlyingReportService
                 $join->on('municipalities_brgy.patient_id', '=', 'patient_death_record_causes.patient_id');
             })
             ->where('patient_death_record_causes.cause_code', 'UND')
-            ->whereYear('date_of_death', $request->year)
-            ->whereMonth('date_of_death', $request->month)
+            ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date])
+//            ->whereYear('date_of_death', $request->year)
+//            ->whereMonth('date_of_death', $request->month)
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('patient_death_records.facility_code', auth()->user()->facility_code);
             })

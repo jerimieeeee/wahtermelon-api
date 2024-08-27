@@ -144,7 +144,9 @@ if (! function_exists('get_completed_services')) {
         $serviceArray = [];
         $ageBracket1 = $age_year_bracket1;
         $ageBracket2 = $age_year_bracket2;
-        $date = Carbon::parse($request->year.'-'.$request->month)->format('Y-m');
+//        $date = Carbon::parse($request->year.'-'.$request->month)->format('Y-m');
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
 
         foreach ($service as $value) {
             $quantity = explode(',', $value->service_qty);
@@ -155,7 +157,7 @@ if (! function_exists('get_completed_services')) {
                 $subtotal += $qty;
                 $age = Carbon::parse($value->birthdate)->diffInYears(Carbon::parse($dates[$k]));
                 if ($subtotal >= $serviceQty) {
-                    if ($date == $dates[$k]) {
+                    if ($start_date == $dates[$k] && $end_date == $dates[$k]) {
                         $serviceObject['name'] = $value->name;
                         $serviceObject['birthdate'] = $value->birthdate;
                         $serviceObject['date_of_service'] = $dates[$k];

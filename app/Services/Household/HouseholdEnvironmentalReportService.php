@@ -45,17 +45,16 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($water_type == 'all', function ($q) use ($request, $water_type) {
@@ -70,8 +69,9 @@ class HouseholdEnvironmentalReportService
             ->when($water_type == 3, function ($q) use ($request) {
                 $q->where('water_type_code', 3);
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month);
+            ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month);
     }
 
     public function get_household_environmental_safety_managed_water($request)
@@ -90,22 +90,22 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'munctiy', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereSafetyManagedFlag(1)
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month);
+            ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month);
     }
 
     public function get_household_environmental_toilet_type($request, $toilet_type)
@@ -124,17 +124,16 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->when($toilet_type == 'all', function ($q) use ($request) {
@@ -149,8 +148,9 @@ class HouseholdEnvironmentalReportService
             ->when($toilet_type == 3, function ($q) use ($request) {
                 $q->where('toilet_facility_code', 3);
             })
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month);
+            ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month);
     }
 
     public function get_household_environmental_safety_managed_sanitation($request)
@@ -169,22 +169,22 @@ class HouseholdEnvironmentalReportService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('household_environmentals.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'facility', function ($q) {
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereSanitationManagedFlag(1)
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month);
+            ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month);
     }
 
     public function get_zod_barangays($request)
@@ -195,20 +195,21 @@ class HouseholdEnvironmentalReportService
                     ")
             ->join('barangays', 'settings_catchment_barangays.barangay_code', '=', 'barangays.code')
             ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code)
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
-//            })
-            ->when($request->category == 'facility', function ($q) {
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('barangays.code', $this->get_catchment_barangays());
             })
-            ->when($request->category == 'municipality', function ($q) use ($request) {
+            ->when($request->category == 'muncity', function ($q) use ($request) {
                 $q->whereIn('municipalities.code', explode(',', $request->code));
             })
-            ->when($request->category == 'barangay', function ($q) use ($request) {
+            ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('barangays.code', explode(',', $request->code));
             })
             ->whereZod(1)
-            ->whereYear('settings_catchment_barangays.updated_at', $request->year)
-            ->whereMonth('settings_catchment_barangays.updated_at', $request->month);
+            ->whereBetween(DB::raw('DATE(updated_at)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('settings_catchment_barangays.updated_at', $request->year)
+//            ->whereMonth('settings_catchment_barangays.updated_at', $request->month);
     }
 }

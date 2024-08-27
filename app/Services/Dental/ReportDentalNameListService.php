@@ -319,8 +319,9 @@ class ReportDentalNameListService
                     })
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
             })
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('consult_date', $request->year)
+//            ->whereMonth('consult_date', $request->month)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -383,8 +384,9 @@ class ReportDentalNameListService
                     )
                 ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5");
             })
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('consult_date', $request->year)
+//            ->whereMonth('consult_date', $request->month)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })

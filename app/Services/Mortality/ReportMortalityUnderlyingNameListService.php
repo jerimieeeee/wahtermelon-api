@@ -52,8 +52,9 @@ class ReportMortalityUnderlyingNameListService
             })
             ->where('patient_death_record_causes.cause_code', 'UND')
             ->where('patient_death_record_causes.icd10_code', $request->icd10_code)
-            ->whereYear('date_of_death', $request->year)
-            ->whereMonth('date_of_death', $request->month)
+            ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date])
+//            ->whereYear('date_of_death', $request->year)
+//            ->whereMonth('date_of_death', $request->month)
             //male_0_to_6_days
             ->when($request->params == 'male_0_to_6_days', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')

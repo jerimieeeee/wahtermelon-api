@@ -296,8 +296,9 @@ class DentalReportService
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('consult_date', $request->year)
+//            ->whereMonth('consult_date', $request->month)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
@@ -327,8 +328,9 @@ class DentalReportService
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('consult_date', $request->year)
+//            ->whereMonth('consult_date', $request->month)
             ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5")
             ->where('patients.gender', $gender)
             ->whereIn('dental_tooth_conditions.tooth_number',

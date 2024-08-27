@@ -57,64 +57,55 @@ class ReportMortalityNameListService
             ->when($request->params == 'male_total_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
                     ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD'])
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //female_total_deaths
             ->when($request->params == 'female_total_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD'])
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_female_total_deaths
             ->when($request->params == 'male_female_total_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD'])
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_maternal_deaths
             ->when($request->params == 'male_maternal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
                     ->where('death_type', 'MATD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //female_maternal_deaths
             ->when($request->params == 'female_maternal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->where('death_type', 'MATD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_female_maternal_deaths
             ->when($request->params == 'male_female_maternal_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->where('death_type', 'MATD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_under_five_deaths
             ->when($request->params == 'male_under_five_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
                     ->where('death_type', 'UDFD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //female_under_five_deaths
             ->when($request->params == 'female_under_five_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->where('death_type', 'UDFD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_female_under_five_deaths
             ->when($request->params == 'male_female_under_five_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->where('death_type', 'UDFD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_infant_deaths
             ->when($request->params == 'male_infant_deaths', function ($query) use ($request) {
@@ -127,64 +118,55 @@ class ReportMortalityNameListService
             ->when($request->params == 'female_infant_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->where('death_type', 'INFD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_female_infant_deaths
             ->when($request->params == 'male_female_infant_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->where('death_type', 'INFD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_neonatal_deaths
             ->when($request->params == 'male_neonatal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
                     ->where('death_type', 'NEOD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //female_neonatal_deaths
             ->when($request->params == 'female_neonatal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->where('death_type', 'NEOD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_female_neonatal_deaths
             ->when($request->params == 'male_female_neonatal_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->where('death_type', 'NEOD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_fetal_deaths
             ->when($request->params == 'male_fetal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
                     ->whereIn('outcome_code', ['FDU', 'SB'])
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //female_fetal_deaths
             ->when($request->params == 'female_fetal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['FDUF', 'SBF'])
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //male_female_fetal_deaths
             ->when($request->params == 'male_female_fetal_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->whereIn('outcome_code', ['FDU', 'SB', 'FDUF', 'SBF'])
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //male_early_neonatal_deaths
             ->when($request->params == 'male_early_neonatal_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
                     ->where('death_type', 'ENEOD')
-                    ->whereYear('date_of_death', $request->year)
-                    ->whereMonth('date_of_death', $request->month);
+                    ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //female_early_neontal_deaths
             ->when($request->params == 'female_early_neontal_deaths', function ($query) use ($request) {
@@ -197,8 +179,7 @@ class ReportMortalityNameListService
             ->when($request->params == 'male_female_early_neontal_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
                     ->where('death_type', 'ENEOD')
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //male_perinatal_deaths
             ->when($request->params == 'male_perinatal_deaths', function ($q) use ($request) {
@@ -206,14 +187,12 @@ class ReportMortalityNameListService
                     $query->where(function ($query) use ($request) {
                         $query->where('patients.gender', 'M')
                             ->whereIn('outcome_code', ['FDU', 'SB'])
-                            ->whereYear('delivery_date', $request->year)
-                            ->whereMonth('delivery_date', $request->month);
+                            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
                     })
                     ->orWhere(function ($query) use ($request) {
                         $query->where('patients.gender', 'M')
                             ->where('death_type', 'ENEOD')
-                            ->whereYear('delivery_date', $request->year)
-                            ->whereMonth('delivery_date', $request->month);
+                            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
                     });
                 });
             })
@@ -223,14 +202,12 @@ class ReportMortalityNameListService
                     $query->where(function ($query) use ($request) {
                         $query->where('patients.gender', 'F')
                             ->whereIn('outcome_code', ['FDUF', 'SBF'])
-                            ->whereYear('delivery_date', $request->year)
-                            ->whereMonth('delivery_date', $request->month);
+                            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
                     })
                         ->orWhere(function ($query) use ($request) {
                             $query->where('patients.gender', 'F')
                                 ->where('death_type', 'ENEOD')
-                                ->whereYear('delivery_date', $request->year)
-                                ->whereMonth('delivery_date', $request->month);
+                                ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
                         });
                 });
             })
@@ -240,14 +217,12 @@ class ReportMortalityNameListService
                     $query->where(function ($query) use ($request) {
                         $query->whereIn('patients.gender', ['M', 'F'])
                             ->whereIn('outcome_code', ['FDU', 'SB', 'FDUF', 'SBF'])
-                            ->whereYear('delivery_date', $request->year)
-                            ->whereMonth('delivery_date', $request->month);
+                            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
                     })
                     ->orWhere(function ($query) use ($request) {
                         $query->whereIn('patients.gender', ['M', 'F'])
                             ->where('death_type', 'ENEOD')
-                            ->whereYear('delivery_date', $request->year)
-                            ->whereMonth('delivery_date', $request->month);
+                            ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
                     });
                 });
             })
@@ -255,46 +230,40 @@ class ReportMortalityNameListService
             ->when($request->params == 'live_births_male', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSM', 'NSDM'])
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_female
             ->when($request->params == 'live_births_male', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSF', 'NDSF'])
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_male_female
             ->when($request->params == 'live_births_male', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSM', 'NSDM', 'LSCSF', 'NDSF'])
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_15_19_male
             ->when($request->params == 'live_births_15_19_male', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSM', 'NSDM'])
                     ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 15 AND 19")
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_15_19_female
             ->when($request->params == 'live_births_15_19_female', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSF', 'NDSF'])
                     ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 15 AND 19")
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_15_19_male_female
             ->when($request->params == 'live_births_15_19_male_female', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSF', 'LSCSM', 'NDSF', 'NSDM'])
                     ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 15 AND 19")
-                    ->whereYear('delivery_date', $request->year)
-                    ->whereMonth('delivery_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());

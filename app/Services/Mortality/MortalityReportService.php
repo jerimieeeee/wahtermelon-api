@@ -50,8 +50,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND death_type IN('ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD')
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -59,8 +58,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND death_type IN('ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD')
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -68,8 +66,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type IN('ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD')
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -77,8 +74,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND death_type = 'MATD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -86,8 +82,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND death_type = 'MATD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -95,8 +90,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type = 'MATD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -105,8 +99,7 @@ class MortalityReportService
                             CASE WHEN patients.gender = 'M'
                                 AND death_type = 'UDFD'
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 0 AND 59
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -115,8 +108,7 @@ class MortalityReportService
                             CASE WHEN patients.gender = 'F'
                                 AND death_type = 'UDFD'
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 0 AND 59
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -125,8 +117,7 @@ class MortalityReportService
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type = 'UDFD'
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 0 AND 59
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -134,8 +125,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND death_type = 'INFD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -143,8 +133,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND death_type = 'INFD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -152,8 +141,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type = 'INFD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -161,8 +149,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND death_type = 'NEOD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -170,8 +157,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND death_type = 'NEOD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -179,8 +165,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type = 'NEOD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -188,8 +173,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('FDU', 'SB')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -197,8 +181,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND outcome_code IN('FDUF', 'SBF')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -206,8 +189,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND outcome_code IN('FDU', 'FDUF', 'SB', 'SBF')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -215,8 +197,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND death_type = 'ENEOD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -224,8 +205,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND death_type = 'ENEOD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -242,8 +222,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('FDU', 'SB')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -251,8 +230,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND death_type = 'ENEOD'
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -260,8 +238,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND outcome_code IN('FDUF', 'SBF')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -269,8 +246,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND death_type = 'ENEOD'
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) =  ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -278,8 +254,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND outcome_code IN('FDU', 'FDUF', 'SB', 'SBF')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -287,8 +262,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type = 'ENEOD'
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -296,8 +270,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('LSCSM', 'NSDM')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -305,8 +278,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND outcome_code IN('LSCSF', 'NDSF')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -314,8 +286,7 @@ class MortalityReportService
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NDSF')
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -324,8 +295,7 @@ class MortalityReportService
                             CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('LSCSM', 'NSDM')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -334,8 +304,7 @@ class MortalityReportService
                             CASE WHEN patients.gender = 'F'
                                 AND outcome_code IN('LSCSF', 'NDSF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
@@ -344,106 +313,105 @@ class MortalityReportService
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NDSF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
-                                AND MONTH(delivery_date) = ?
-                                AND YEAR(delivery_date) = ? THEN
+                                AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
                             END) AS 'live_births_15_19_male_female'
                     ",
                     [
-                        //BINDINGS FOR male_total_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_total_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_total_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_total_deaths
+                     $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_total_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_total_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_maternal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_maternal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_maternal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_maternal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_maternal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_maternal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_under_five_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_under_five_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_under_five_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_under_five_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_under_five_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_under_five_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_infant_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_infant_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_infant_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_infant_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_infant_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_infant_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_neonatal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_neonatal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_neonatal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_neonatal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_neonatal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_neonatal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_fetal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_fetal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_fetal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_fetal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_fetal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_fetal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_early_neonatal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_early_neonatal_deaths
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_early_neontal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_early_neontal_deaths
+                   $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_early_neontal_deaths
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_early_neontal_deaths
+                   $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_perinatal_deaths
-                        $request->year, $request->month,
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_perinatal_deaths
+                    $request->start_date, $request->end_date,
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR female_perinatal_deaths
-                        $request->year, $request->month,
-                        $request->year, $request->month,
+                    //BINDINGS FOR female_perinatal_deaths
+                    $request->start_date, $request->end_date,
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR male_female_perinatal_deaths
-                        $request->year, $request->month,
-                        $request->year, $request->month,
+                    //BINDINGS FOR male_female_perinatal_deaths
+                    $request->start_date, $request->end_date,
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR live_births_male
-                        $request->year, $request->month,
+                    //BINDINGS FOR live_births_male
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR live_births_female
-                        $request->year, $request->month,
+                    //BINDINGS FOR live_births_female
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR live_births_male_female
-                        $request->year, $request->month,
+                    //BINDINGS FOR live_births_male_female
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR live_births_15_19_male
-                        $request->year, $request->month,
+                    //BINDINGS FOR live_births_15_19_male
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR live_births_15_19_female
-                        $request->year, $request->month,
+                    //BINDINGS FOR live_births_15_19_female
+                    $request->start_date, $request->end_date,
 
-                        //BINDINGS FOR live_births_15_19_male_female
-                        $request->year, $request->month,
+                    //BINDINGS FOR live_births_15_19_male_female
+                    $request->start_date, $request->end_date,
                     ])
             ->join('patients', 'patient_death_records.patient_id', '=', 'patients.id')
             ->leftJoin('patient_mc', 'patient_death_records.patient_id', '=', 'patient_mc.patient_id')
