@@ -73,8 +73,9 @@ class TBDotsReportService
             })
             ->where('reg_group_code', ['N', 'O', 'PTLOU', 'R', 'TAF', 'TALF'])
             ->where('patients.gender', $gender)
-            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('consult_date', $request->year)
+//            ->whereMonth('consult_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 
@@ -108,8 +109,9 @@ class TBDotsReportService
             ->whereBacteriologicalStatusCode('BC')
             ->whereDrugResistantFlag(1)
             ->where('patients.gender', $gender)
-            ->whereYear('registration_date', $request->year)
-            ->whereMonth('registration_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 
@@ -143,8 +145,9 @@ class TBDotsReportService
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
             ->where('patients.gender', $gender)
-            ->whereYear('outcome_date', $request->year)
-            ->whereMonth('outcome_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('outcome_date', $request->year)
+//            ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 
@@ -181,8 +184,9 @@ class TBDotsReportService
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
             ->where('patients.gender', $gender)
-            ->whereYear('outcome_date', $request->year)
-            ->whereMonth('outcome_date', $request->month)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('outcome_date', $request->year)
+//            ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 }

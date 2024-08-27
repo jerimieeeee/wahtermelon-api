@@ -74,8 +74,9 @@ class NcdReportService
                 $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('assessment_date', $request->year)
+//            ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id')
             ->orderBy('name', 'ASC');
     }
@@ -113,8 +114,9 @@ class NcdReportService
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereSmoking(3)
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('assessment_date', $request->year)
+//            ->whereMonth('assessment_date', $request->month)
             ->orderBy('name', 'ASC');
     }
 
@@ -152,8 +154,9 @@ class NcdReportService
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereAlcoholIntake(1)
             ->whereExcessiveAlcoholIntake('Y')
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('assessment_date', $request->year)
+//            ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
@@ -191,8 +194,9 @@ class NcdReportService
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereObesity(1)
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('assessment_date', $request->year)
+//            ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
@@ -230,8 +234,9 @@ class NcdReportService
                 $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('assessment_date', $request->year)
+//            ->whereMonth('assessment_date', $request->month)
             ->whereRaisedBp(1)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
@@ -265,13 +270,15 @@ class NcdReportService
             // OLD CASE
             ->when($age == 'normal', function ($q) use ($request) {
                 $q->whereBetween('age', [20, 59])
-                    ->whereYear('assessment_date', $request->year)
-                    ->whereMonth('assessment_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date]);
+//                    ->whereYear('assessment_date', $request->year)
+//                    ->whereMonth('assessment_date', $request->month);
             })
             ->when($age == 'senior', function ($q) use ($request) {
                 $q->where('age', '>=', '60')
-                    ->whereYear('assessment_date', $request->year)
-                    ->whereMonth('assessment_date', $request->month);
+                    ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date]);
+//                    ->whereYear('assessment_date', $request->year)
+//                    ->whereMonth('assessment_date', $request->month);
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereYear('assessment_date', $request->year)
@@ -314,10 +321,11 @@ class NcdReportService
             ->when($age == 'senior', function ($q) use ($request) {
                 $q->where('age', '>=', '60');
             })
-            ->where('consult_ncd_risk_assessment.gender', $patient_gender)
+            ->where('patients.gender', $patient_gender)
             ->whereRaisedBloodGlucose(1)
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('assessment_date', $request->year)
+//            ->whereMonth('assessment_date', $request->month)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
@@ -351,8 +359,9 @@ class NcdReportService
             ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) >= 60',)
             ->whereVaccineId('PPV')
             ->whereStatusId(1)
-            ->whereYear('vaccine_date', $request->year)
-            ->whereMonth('vaccine_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('vaccine_date', $request->year)
+//            ->whereMonth('vaccine_date', $request->month)
             ->groupBy('patient_vaccines.patient_id', 'vaccine_date')
             ->orderBy('name', 'ASC');
     }
@@ -387,8 +396,9 @@ class NcdReportService
             ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) >= 60',)
             ->whereVaccineId('IV')
             ->whereStatusId(1)
-            ->whereYear('vaccine_date', $request->year)
-            ->whereMonth('vaccine_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+//            ->whereYear('vaccine_date', $request->year)
+//            ->whereMonth('vaccine_date', $request->month)
             ->groupBy('patient_vaccines.patient_id', 'vaccine_date')
             ->orderBy('name', 'ASC');
     }
