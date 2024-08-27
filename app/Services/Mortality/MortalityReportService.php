@@ -209,16 +209,15 @@ class MortalityReportService
                                 1
                             ELSE
                                 0
-                            END) AS 'female_early_neontal_deaths',
+                            END) AS 'female_early_neonatal_deaths',
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
                                 AND death_type = 'ENEOD'
-                                AND YEAR(date_of_death) = ?
-                                AND MONTH(date_of_death) = ? THEN
+                                AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
-                            END) AS 'male_female_early_neontal_deaths',
+                            END) AS 'male_female_early_neonatal_deaths',
                         SUM(
                             CASE WHEN patients.gender = 'M'
                                 AND outcome_code IN('FDU', 'SB')
@@ -377,11 +376,11 @@ class MortalityReportService
                     //BINDINGS FOR male_early_neonatal_deaths
                     $request->start_date, $request->end_date,
 
-                    //BINDINGS FOR female_early_neontal_deaths
-                   $request->start_date, $request->end_date,
+                    //BINDINGS FOR female_early_neonatal_deaths
+                    $request->start_date, $request->end_date,
 
-                    //BINDINGS FOR male_female_early_neontal_deaths
-                   $request->start_date, $request->end_date,
+                    //BINDINGS FOR male_female_early_neonatal_deaths
+                    $request->start_date, $request->end_date,
 
                     //BINDINGS FOR male_perinatal_deaths
                     $request->start_date, $request->end_date,
