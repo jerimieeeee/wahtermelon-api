@@ -114,7 +114,9 @@ class AnimalBiteReportPreExposureService
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->whereNull('patient_ab_pre_exposures.deleted_at')
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
-            ->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
             })

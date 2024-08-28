@@ -82,8 +82,10 @@ class ReportAnimalBitePreExposureNameListService
                     ->orWhereNotNull('day7_date')
                     ->orWhereNotNull('day21_date');
             })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code);
+            })
             ->where('barangays.code', $request->barangay_code)
-            ->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code)
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
@@ -94,7 +96,7 @@ class ReportAnimalBitePreExposureNameListService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
-            ->groupBy('barangays.name')
+            ->groupBy('barangays.code')
             ->orderBy('name');
     }
 }
