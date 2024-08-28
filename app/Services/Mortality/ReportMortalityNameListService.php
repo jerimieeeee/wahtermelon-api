@@ -230,25 +230,25 @@ class ReportMortalityNameListService
             })
             //live_births_male
             ->when($request->params == 'live_births_male', function ($query) use ($request) {
-                $query->where('patients.gender', 'F')
+                $query->where('patients.gender', 'M')
                     ->whereIn('outcome_code', ['LSCSM', 'NSDM'])
                     ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_female
-            ->when($request->params == 'live_births_male', function ($query) use ($request) {
+            ->when($request->params == 'live_births_female', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
                     ->whereIn('outcome_code', ['LSCSF', 'NDSF'])
                     ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_male_female
-            ->when($request->params == 'live_births_male', function ($query) use ($request) {
-                $query->where('patients.gender', 'F')
+            ->when($request->params == 'live_births_male_female', function ($query) use ($request) {
+                $query->whereIn('patients.gender', ['M', 'F'])
                     ->whereIn('outcome_code', ['LSCSM', 'NSDM', 'LSCSF', 'NDSF'])
                     ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
             })
             //live_births_15_19_male
             ->when($request->params == 'live_births_15_19_male', function ($query) use ($request) {
-                $query->where('patients.gender', 'F')
+                $query->where('patients.gender', 'M')
                     ->whereIn('outcome_code', ['LSCSM', 'NSDM'])
                     ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 15 AND 19")
                     ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);
@@ -262,7 +262,7 @@ class ReportMortalityNameListService
             })
             //live_births_15_19_male_female
             ->when($request->params == 'live_births_15_19_male_female', function ($query) use ($request) {
-                $query->where('patients.gender', 'F')
+                $query->whereIn('patients.gender', ['M', 'F'])
                     ->whereIn('outcome_code', ['LSCSF', 'LSCSM', 'NDSF', 'NSDM'])
                     ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, date_of_death) BETWEEN 15 AND 19")
                     ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date]);

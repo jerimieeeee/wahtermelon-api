@@ -122,7 +122,6 @@ class AnimalBiteReportCohortService
                             ELSE
                                 0
                             END) AS 'total_cat3_incomplete',
-
                         SUM(
                             CASE WHEN category_id = 2
                                 AND (day0_date IS NOT NULL

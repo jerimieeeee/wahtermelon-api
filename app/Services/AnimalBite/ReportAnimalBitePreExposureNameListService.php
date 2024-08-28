@@ -50,7 +50,6 @@ class ReportAnimalBitePreExposureNameListService
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->whereNull('patient_ab_pre_exposures.deleted_at')
-            // total for cat2, cat3, and both
             ->when($request->params == 'male', function ($query) use ($request) {
                 $query->whereGender('M');
             })
@@ -78,9 +77,9 @@ class ReportAnimalBitePreExposureNameListService
                     ->whereNotNull('day7_date');
             })
             ->when($request->params == 'day0_day7_day21', function ($query) use ($request) {
-                $query->orWhereNotNull('day0_date')
-                    ->orWhereNotNull('day7_date')
-                    ->orWhereNotNull('day21_date');
+                $query->whereNotNull('day0_date')
+                    ->whereNotNull('day7_date')
+                    ->whereNotNull('day21_date');
             })
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code);
