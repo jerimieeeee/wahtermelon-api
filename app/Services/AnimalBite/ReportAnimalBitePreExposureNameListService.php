@@ -40,7 +40,7 @@ class ReportAnimalBitePreExposureNameListService
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
-                        birthdate,
+                        patients.birthdate,
                         day0_date AS date_of_service
                         ")
             ->join('patients', 'patient_ab_pre_exposures.patient_id', '=', 'patients.id')
@@ -49,25 +49,29 @@ class ReportAnimalBitePreExposureNameListService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'patient_ab_pre_exposures.user_id', '=', 'users.id')
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code);
+            })
             ->whereNull('patient_ab_pre_exposures.deleted_at')
             ->when($request->params == 'male', function ($query) use ($request) {
-                $query->whereGender('M');
+                $query->where('patients.gender', 'M');
             })
             ->when($request->params == 'female', function ($query) use ($request) {
-                $query->whereGender('F');
+                $query->where('patients.gender', 'F');
             })
             ->when($request->params == 'male_female_total', function ($query) use ($request) {
-                $query->whereIn('gender', ['M', 'F']);
+                $query->whereIn('patients.gender', ['M', 'F']);
             })
             ->when($request->params == 'less_than_15', function ($query) use ($request) {
-                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15"));
+                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) < 15"));
             })
             ->when($request->params == 'greater_than_15', function ($query) use ($request) {
-                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15"));
+                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) >= 15"));
             })
             ->when($request->params == 'less_than_and_greater_than_15', function ($query) use ($request) {
-                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15"))
-                    ->orWhere(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15"));
+                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) >= 15"))
+                    ->orWhere(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) < 15"));
             })
             ->when($request->params == 'day0', function ($query) use ($request) {
                 $query->whereNotNull('day0_date');
@@ -80,9 +84,6 @@ class ReportAnimalBitePreExposureNameListService
                 $query->whereNotNull('day0_date')
                     ->whereNotNull('day7_date')
                     ->whereNotNull('day21_date');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code);
             })
             ->where('barangays.code', $request->barangay_code)
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])

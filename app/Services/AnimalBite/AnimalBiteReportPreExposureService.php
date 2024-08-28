@@ -45,33 +45,36 @@ class AnimalBiteReportPreExposureService
                             0
                         END) AS 'male_female_total',
                     SUM(
-                        CASE WHEN (TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15) THEN
+                        CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15 THEN
                             1
                         ELSE
                             0
                         END) AS 'less_than_15',
                     SUM(
-                        CASE WHEN (TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15) THEN
+                        CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) >= 5 THEN
                             1
                         ELSE
                             0
                         END) AS 'greater_than_15',
                     SUM(
-                        CASE WHEN (TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15)
-                            OR(TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15) THEN
+                        CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15
+                            OR TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15 THEN
                             1
                         ELSE
                             0
                         END) AS 'less_than_and_greater_than_15',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL THEN
+                        CASE WHEN day0_date IS NOT NULL
+                         AND day7_date IS NULL
+                         AND day21_date IS NULL THEN
                             1
                         ELSE
                             0
                         END) AS 'day0',
                     SUM(
                         CASE WHEN day0_date IS NOT NULL
-                            AND day7_date IS NOT NULL THEN
+                         AND day7_date IS NOT NULL
+                         AND day21_date IS NULL THEN
                             1
                         ELSE
                             0
@@ -85,14 +88,17 @@ class AnimalBiteReportPreExposureService
                             0
                         END) AS 'day0_day7_day21',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL THEN
+                        CASE WHEN day0_date IS NOT NULL
+                             AND day7_date IS NULL
+                             AND day21_date IS NULL THEN
                             1
                         ELSE
                             0
                         END) +
                     SUM(
                         CASE WHEN day0_date IS NOT NULL
-                            AND day7_date IS NOT NULL THEN
+                             AND day7_date IS NOT NULL
+                             AND day21_date IS NULL THEN
                             1
                         ELSE
                             0
