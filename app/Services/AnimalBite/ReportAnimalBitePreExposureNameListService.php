@@ -79,8 +79,8 @@ class ReportAnimalBitePreExposureNameListService
             })
             ->when($request->params == 'day0_day7_day21', function ($query) use ($request) {
                 $query->orWhereNotNull('day0_date')
-                    ->orWhereNotNull('day3_date')
-                    ->orWhereNotNull('day7_date');
+                    ->orWhereNotNull('day7_date')
+                    ->orWhereNotNull('day21_date');
             })
             ->where('barangays.code', $request->barangay_code)
             ->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code)
