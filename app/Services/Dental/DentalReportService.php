@@ -51,91 +51,91 @@ class DentalReportService
             ->selectRaw("
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND orally_fit_flag = 1
-                                AND(TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59) THEN
+                                AND orally_fit_flag = 1
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'male_12_59_months_orally_fit',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND orally_fit_flag = 1
-                                AND(TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59) THEN
+                                AND orally_fit_flag = 1
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 12 AND 59 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_12_59_months_orally_fit',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 1
-                            AND service_id = 6
-                            AND service_id = 7
-                                AND(TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8) THEN
+                                AND service_id = 1
+                                AND service_id = 6
+                                AND service_id = 7
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8 THEN
                                 1
                             ELSE
                                 0
                             END) +
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 1
-                            AND service_id = 6
-                            AND service_id = 7
-                            AND service_id = 17
-                                AND(TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11) THEN
+                                AND service_id = 1
+                                AND service_id = 6
+                                AND service_id = 7
+                                AND service_id = 17
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'male_0_11_months_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 7
-                            AND service_id = 17
-                            AND service_id = 15
-                            AND service_id = 8
-                            AND (service_id = 2
-                            OR service_id = 19
-                            OR service_id = 14)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4) THEN
+                                AND service_id = 7
+                                AND service_id = 17
+                                AND service_id = 15
+                                AND service_id = 8
+                                AND (service_id = 2
+                                OR service_id = 19
+                                OR service_id = 14)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'male_1_4_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 7
-                            AND service_id = 15
-                            AND service_id = 8
-                            AND (service_code = 'TF'
-                            OR service_code = 'PF'
-                            OR service_code = 'PFS')
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9) THEN
+                                AND service_id = 7
+                                AND service_id = 15
+                                AND service_id = 8
+                                AND (service_code = 'TF'
+                                OR service_code = 'PF'
+                                OR service_code = 'PFS')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'male_5_9_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_code = 'TF'
-                            OR service_code = 'PF'
-                            OR service_code = 'PFS'
-                            OR service_id = 19
-                            OR service_id = 9)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_code = 'TF'
+                                OR service_code = 'PF'
+                                OR service_code = 'PFS'
+                                OR service_id = 19
+                                OR service_id = 9)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'male_10_19_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 5
-                            OR service_id = 19
-                            OR service_id = 14
-                            OR service_code = 'PF'
-                            OR service_id = 2)
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 5
+                                OR service_id = 19
+                                OR service_id = 14
+                                OR service_code = 'PF'
+                                OR service_id = 2)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59) THEN
                                 1
                             ELSE
@@ -143,142 +143,142 @@ class DentalReportService
                             END) AS 'male_20_59_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 9
-                            OR service_id = 12
-                            OR service_id = 13)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 9
+                                OR service_id = 12
+                                OR service_id = 13)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'male_60_above_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                            AND service_id = 1
-                            AND service_id = 6
-                            AND service_id = 7
-                                AND(TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8) THEN
+                                AND service_id = 1
+                                AND service_id = 6
+                                AND service_id = 7
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8 THEN
                                 1
                             ELSE
                                 0
                             END) +
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 1
-                            AND service_id = 6
-                            AND service_id = 7
-                            AND service_id = 17
-                                AND(TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11) THEN
+                                AND service_id = 1
+                                AND service_id = 6
+                                AND service_id = 7
+                                AND service_id = 17
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_0_11_months_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 17
-                            AND service_id = 15
-                            AND service_id = 8
-                            AND (service_id = 2
-                            OR service_id = 19
-                            OR service_id = 14)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4) THEN
+                                AND service_id = 7
+                                AND service_id = 17
+                                AND service_id = 15
+                                AND service_id = 8
+                                AND (service_id = 2
+                                OR service_id = 19
+                                OR service_id = 14)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_1_4_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 15
-                            AND service_id = 8
-                            AND (service_code = 'TF'
-                            OR service_code = 'PF'
-                            OR service_code = 'PFS')
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9) THEN
+                                AND service_id = 7
+                                AND service_id = 15
+                                AND service_id = 8
+                                AND (service_code = 'TF'
+                                OR service_code = 'PF'
+                                OR service_code = 'PFS')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_5_9_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_code = 'TF'
-                            OR service_code = 'PF'
-                            OR service_code = 'PFS'
-                            OR service_id = 19
-                            OR service_id = 9)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_code = 'TF'
+                                OR service_code = 'PF'
+                                OR service_code = 'PFS'
+                                OR service_id = 19
+                                OR service_id = 9)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_10_19_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 5
-                            OR service_id = 19
-                            OR service_id = 14
-                            OR service_code = 'PF'
-                            OR service_id = 2)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 5
+                                OR service_id = 19
+                                OR service_id = 14
+                                OR service_code = 'PF'
+                                OR service_id = 2)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_20_59_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 9
-                            OR service_id = 12
-                            OR service_id = 13)
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 ) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 9
+                                OR service_id = 12
+                                OR service_id = 13)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_60_above_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 19
-                            OR service_id = 14
-                            OR service_id = 5
-                            OR service_code = 'PF'
-                            OR service_code = 'TF')
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 19
+                                OR service_id = 14
+                                OR service_id = 5
+                                OR service_code = 'PF'
+                                OR service_code = 'TF')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'pregnant_women_10_14_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 19
-                            OR service_id = 14
-                            OR service_id = 5
-                            OR service_code = 'PF'
-                            OR service_code = 'TF')
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 19
+                                OR service_id = 14
+                                OR service_id = 5
+                                OR service_code = 'PF'
+                                OR service_code = 'TF')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
                                 1
                             ELSE
                                 0
                             END) AS 'pregnant_women_15_19_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                            AND service_id = 7
-                            AND service_id = 4
-                            AND (service_id = 19
-                            OR service_id = 14
-                            OR service_id = 5
-                            OR service_code = 'PF'
-                            OR service_code = 'TF')
-                                AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49) THEN
+                                AND service_id = 7
+                                AND service_id = 4
+                                AND (service_id = 19
+                                OR service_id = 14
+                                OR service_id = 5
+                                OR service_code = 'PF'
+                                OR service_code = 'TF')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
                                 1
                             ELSE
                                 0
@@ -288,7 +288,7 @@ class DentalReportService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
-            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
+//            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
@@ -317,9 +317,9 @@ class DentalReportService
                         COUNT(DISTINCT patients.id) AS dmft
                     ")
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
-            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
-            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
-            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
+//            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
+//            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
+//            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
