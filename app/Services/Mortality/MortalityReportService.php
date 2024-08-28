@@ -267,32 +267,28 @@ class MortalityReportService
                                 0
                             END) AS 'male_female_perinatal_deaths',
                         SUM(
-                            CASE WHEN patients.gender = 'M'
-                                AND outcome_code IN('LSCSM', 'NSDM')
+                            CASE WHEN outcome_code IN('LSCSM', 'NSDM')
                                 AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
                             END) AS 'live_births_male',
                         SUM(
-                            CASE WHEN patients.gender = 'F'
-                                AND outcome_code IN('LSCSF', 'NDSF')
+                            CASE WHEN outcome_code IN('LSCSF', 'NSDF')
                                 AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
                             END) AS 'live_births_female',
                         SUM(
-                            CASE WHEN patients.gender IN('M', 'F')
-                                AND outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NDSF')
+                            CASE WHEN outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NSDF')
                                 AND delivery_date BETWEEN ? AND ? THEN
                                 1
                             ELSE
                                 0
                             END) AS 'live_births_male_female',
                         SUM(
-                            CASE WHEN patients.gender = 'M'
-                                AND outcome_code IN('LSCSM', 'NSDM')
+                            CASE WHEN outcome_code IN('LSCSM', 'NSDM')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
                                 AND delivery_date BETWEEN ? AND ? THEN
                                 1
@@ -300,8 +296,7 @@ class MortalityReportService
                                 0
                             END) AS 'live_births_15_19_male',
                         SUM(
-                            CASE WHEN patients.gender = 'F'
-                                AND outcome_code IN('LSCSF', 'NDSF')
+                            CASE WHEN outcome_code IN('LSCSF', 'NSDF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
                                 AND delivery_date BETWEEN ? AND ? THEN
                                 1
@@ -309,8 +304,7 @@ class MortalityReportService
                                 0
                             END) AS 'live_births_15_19_female',
                         SUM(
-                            CASE WHEN patients.gender IN('M', 'F')
-                                AND outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NDSF')
+                            CASE WHEN outcome_code IN('LSCSM', 'NSDM', 'LSCSF', 'NSDF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, date_of_death) BETWEEN 15 AND 19
                                 AND delivery_date BETWEEN ? AND ? THEN
                                 1
