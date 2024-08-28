@@ -109,7 +109,7 @@ class TBDotsReportService
             ->whereBacteriologicalStatusCode('BC')
             ->whereDrugResistantFlag(1)
             ->where('patients.gender', $gender)
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->whereBetween(DB::raw('DATE(treatment_end)'), [$request->start_date, $request->end_date])
 //            ->whereYear('registration_date', $request->year)
 //            ->whereMonth('registration_date', $request->month)
             ->orderBy('name', 'ASC');
@@ -145,7 +145,7 @@ class TBDotsReportService
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
             ->where('patients.gender', $gender)
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->whereBetween(DB::raw('DATE(outcome_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('outcome_date', $request->year)
 //            ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');
@@ -184,7 +184,7 @@ class TBDotsReportService
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
             ->where('patients.gender', $gender)
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->whereBetween(DB::raw('DATE(outcome_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('outcome_date', $request->year)
 //            ->whereMonth('outcome_date', $request->month)
             ->orderBy('name', 'ASC');

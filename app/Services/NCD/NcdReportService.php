@@ -390,7 +390,7 @@ class NcdReportService
                 $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
             })
             ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->tcode));
             })
             ->where('patients.gender',$patient_gender)
             ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) >= 60',)
