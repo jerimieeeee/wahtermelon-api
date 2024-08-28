@@ -241,6 +241,15 @@ class ReportMortalityUnderlyingNameListService
                 $query->where('patients.gender', 'F')
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, patient_death_records.date_of_death) >= 70");
             })
+            ->when($request->type == 'total_male', function ($q) use ($request) {
+                $q->where('patients.gender', 'M');
+            })
+            ->when($request->type == 'total_female', function ($q) use ($request) {
+                $q->where('patients.gender', 'F');
+            })
+            ->when($request->type == 'total_both', function ($q) use ($request) {
+                $q->whereIn('patients.gender', ['M', 'F']);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })

@@ -302,7 +302,31 @@ class MortalityUnderlyingReportService
                                 1
                             ELSE
                                 0
-                            END) AS 'female_70_years_above'
+                            END) AS 'female_70_years_above',
+                        SUM(
+                            CASE
+                            WHEN patients.gender = 'M'
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'male_age_total',
+                        SUM(
+                            CASE
+                            WHEN patients.gender = 'F'
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'female_age_total',
+                        SUM(
+                            CASE
+                            WHEN patients.gender IN('F', 'M')
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'male_female_total'
                     ")
             ->join('patient_death_record_causes', 'patient_death_records.id', '=', 'patient_death_record_causes.death_record_id')
             ->join('patients', 'patient_death_records.patient_id', '=', 'patients.id')
