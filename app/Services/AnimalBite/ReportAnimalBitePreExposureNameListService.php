@@ -41,7 +41,7 @@ class ReportAnimalBitePreExposureNameListService
                         patients.first_name,
                         patients.middle_name,
                         birthdate,
-                        day0_date AS date_of_service,
+                        day0_date AS date_of_service
                         ")
             ->join('patients', 'patient_ab_pre_exposures.patient_id', '=', 'patients.id')
             ->join('household_members', 'patient_ab_pre_exposures.patient_id', '=', 'household_members.patient_id')
