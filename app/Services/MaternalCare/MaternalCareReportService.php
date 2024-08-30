@@ -228,8 +228,7 @@ class MaternalCareReportService
                         trimester,
                         TIMESTAMPDIFF(YEAR, birthdate,  SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(date_of_service ORDER BY date_of_service DESC), ',', 1), ',', - 1)) AS age_year
             ")
-            ->whereYear('date_of_service', $request->year)
-            ->whereMonth('date_of_service', $request->month)
+            ->whereBetween(DB::raw('DATE(date_of_service)'), [$request->start_date, $request->end_date])
 /*            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
