@@ -49,7 +49,7 @@ class MortalityReportService
             ->selectRaw("
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND death_type IN('ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD')
+                                AND death_type IN('ENEOD', 'INFD', 'MATD', 'MRTLY', 'NEOD', 'UDFD')
                                 AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
@@ -57,7 +57,7 @@ class MortalityReportService
                             END) AS 'male_total_deaths',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND death_type IN('ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD')
+                                AND death_type IN('ENEOD', 'INFD', 'MATD', 'MRTLY', 'NEOD', 'UDFD')
                                 AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
@@ -65,7 +65,7 @@ class MortalityReportService
                             END) AS 'female_total_deaths',
                         SUM(
                             CASE WHEN patients.gender IN('M', 'F')
-                                AND death_type IN('ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD')
+                                AND death_type IN('ENEOD', 'INFD', 'MATD', 'MRTLY', 'NEOD', 'UDFD')
                                 AND date_of_death BETWEEN ? AND ? THEN
                                 1
                             ELSE
