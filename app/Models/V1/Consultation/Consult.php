@@ -286,4 +286,10 @@ class Consult extends Model
     public function feedback(){
         return $this->hasOne(ConsultFeedback::class, 'consult_id', 'id');
     }
+
+    public function previousConsultNotes()
+    {
+        return $this->hasMany(ConsultNotes::class, 'consult_id', 'id')
+            ->select('id');
+    }
 }
