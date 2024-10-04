@@ -16,7 +16,7 @@ class PreviousFinalDxResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-//            'consult_id' => $this->id,
+            'prev_date' => $this->consult_date,
             'final_diagnosis' => $this->consultNotes
         ];
     }

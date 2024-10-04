@@ -30,8 +30,8 @@ class ConsultationReportService
         return Consult::with([
             'consultNotes.finaldx.libIcd10'
         ])
-            ->where('facility_code', auth()->user()->facility_code)
-            ->where('patient_id', $request->patient_id)
-            ->get();
+        ->where('facility_code', auth()->user()->facility_code)
+        ->where('patient_id', $request->patient_id)
+        ->get();
     }
 }

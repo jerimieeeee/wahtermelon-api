@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\API\V1\Reports\General;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Consultation\PendingFinalDxResource;
+use App\Http\Resources\API\V1\Consultation\GetPendingFinalDxResource;
 use App\Http\Resources\API\V1\Consultation\PreviousFinalDxResource;
-use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
 use App\Services\Consultation\ConsultationReportService;
 use App\Services\Consultation\PendingFinalDiagnosisReportService;
-use App\Services\DailyService\DailyServiceReportService;
 use Illuminate\Http\Request;
 
 class PendingFinalDiagnosisReportController extends Controller
@@ -20,25 +18,25 @@ class PendingFinalDiagnosisReportController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
+        // Start the query
         $query = $pendingFdx->get_pending_fdx();
 
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
+        // Apply search conditions
+        $columns = ['last_name', 'first_name', 'middle_name'];
 
-            $keywords = explode(' ', $searchTerm);
-
-            $query->where(function ($query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->where('patients.last_name', 'like', "%$keyword%")
-                        ->orWhere('patients.middle_name', 'like', "%$keyword%")
-                        ->orWhere('patients.first_name', 'like', "%$keyword%");
-                }
+        $query->withWhereHas('patient', function ($query) use ($columns, $request) {
+            $query->when(isset($request->search), function ($q) use ($request, $columns) {
+                $q->orSearch($columns, 'LIKE', $request->search);
             });
+        });
+
+//        return $query->get();
+
+        if ($perPage === 'all') {
+            return GetPendingFinalDxResource::collection($query->get());
         }
 
-        $data = $query->paginate($perPage);
-
-        return response()->json($data);
+        return GetPendingFinalDxResource::collection($query->paginate($perPage)->withQueryString());
     }
 
     public function index2(Request $request, ConsultationReportService $consultService)

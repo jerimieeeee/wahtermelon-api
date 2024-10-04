@@ -2,13 +2,29 @@
 
 namespace App\Services\Consultation;
 
+use App\Models\V1\Consultation\Consult;
 use Illuminate\Support\Facades\DB;
 
 class PendingFinalDiagnosisReportService
 {
     public function get_pending_fdx()
     {
-        return DB::table('consults')
+        return Consult::with(['consultNotes', 'physician', 'user'])
+//             with Initial without doctor referred
+            ->where(function ($query) {
+                $query->whereHas('initialDiagnosis')
+                    ->whereNull('physician_id')
+                    ->whereDoesntHave('finalDiagnosis')
+                    // without Initial with doctor referred
+                    ->orWhere(function ($query) {
+                        $query->whereDoesntHave('initialDiagnosis')
+                            ->whereNotNull('physician_id')
+                            ->whereDoesntHave('finalDiagnosis');
+                    });
+            });
+    }
+
+/*        return DB::table('consults')
             ->selectRaw("
                         consults.patient_id,
                         consult_id,
@@ -29,15 +45,16 @@ class PendingFinalDiagnosisReportService
             ->join('users as users2', 'consults.user_id', '=', 'users2.id')
             ->leftJoin('consult_notes_initial_dxes', 'consult_notes.id', '=', 'consult_notes_initial_dxes.notes_id')
             ->leftJoin('consult_notes_final_dxes', 'consult_notes.id', '=', 'consult_notes_final_dxes.notes_id')
-            ->wherePtGroup('cn')
+            ->where('consults.pt_group', '=', 'cn')
             ->where('consults.facility_code', auth()->user()->facility_code)
             //with Initial without doctor referred
             ->where(
                 function($query) {
                     return $query
-                        ->whereNotNull('consult_notes_initial_dxes.class_id')
+                        ->whereHas('consult_notes_initial_d')
                         ->whereNull('consults.physician_id')
-                        ->whereNull('consult_notes_final_dxes.icd10_code');
+                        ->whereDoesntHave('consult_notes_final_dxes.icd10_code');
+//                        ->where('consults.facility_code', auth()->user()->facility_code);
                 })
             //without Initial with doctor referred
             ->orWhere(
@@ -46,10 +63,6 @@ class PendingFinalDiagnosisReportService
                         ->whereNull('consult_notes_initial_dxes.class_id')
                         ->whereNotNull('consults.physician_id')
                         ->whereNull('consult_notes_final_dxes.icd10_code');
-                })
-/*            ->whereNotNull('class_id')
-            ->whereNull('icd10_code')
-            ->groupBy('consult_id')*/
-;
-    }
+//                        ->where('consults.facility_code', auth()->user()->facility_code);
+                });*/
 }

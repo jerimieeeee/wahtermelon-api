@@ -207,6 +207,11 @@ class Consult extends Model
             ->latest('effectivity_year');
     }
 
+    public function initialDiagnosis()
+    {
+        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
+    }
+
     public function finalDiagnosis()
     {
         return $this->hasManyThrough(ConsultNotesFinalDx::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
