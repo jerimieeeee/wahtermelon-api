@@ -7,10 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 class PendingFinalDiagnosisReportService
 {
-    public function get_pending_fdx()
+    public function get_pending_fdx($request)
     {
         return Consult::with(['consultNotes', 'physician', 'user'])
-//             with Initial without doctor referred
+            ->whereYear('consult_date', '>=', '2023')
+            ->when($request->filled('physician_id'), function ($q) use ($request) {
+                $q->where('physician_id', $request->physician_id);
+            })
+            ->where(function ($query) {
+                $query->whereNotNull('physician_id')
+                    ->whereDoesntHave('finalDiagnosis');
+/*//             with Initial without doctor referred
             ->where(function ($query) {
                 $query->whereHas('initialDiagnosis')
                     ->whereNull('physician_id')
@@ -21,7 +28,8 @@ class PendingFinalDiagnosisReportService
                             ->whereNotNull('physician_id')
                             ->whereDoesntHave('finalDiagnosis');
                     });
-            });
+            });*/
+        });
     }
 
 /*        return DB::table('consults')

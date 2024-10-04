@@ -19,7 +19,7 @@ class PendingFinalDiagnosisReportController extends Controller
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         // Start the query
-        $query = $pendingFdx->get_pending_fdx();
+        $query = $pendingFdx->get_pending_fdx()->orderBy('consult_date', 'DESC');
 
         // Apply search conditions
         $columns = ['last_name', 'first_name', 'middle_name'];

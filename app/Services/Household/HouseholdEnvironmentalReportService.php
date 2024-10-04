@@ -187,6 +187,74 @@ class HouseholdEnvironmentalReportService
 //            ->whereMonth('registration_date', $request->month);
     }
 
+    public function get_household_environmental_satisfaction_solid_waste($request)
+    {
+        return DB::table('household_environmentals')
+            ->selectRaw("
+                        household_folders.id AS family_id,
+                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        family_role_code AS family_role,
+                        mobile_number
+                    ")
+            ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities.code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('barangays.code', explode(',', $request->code));
+            })
+            ->whereSatisfactionManagementFlag(1)
+            ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month);
+    }
+
+    public function get_household_environmental_complete_sanitation($request)
+    {
+        return DB::table('household_environmentals')
+            ->selectRaw("
+                        household_folders.id AS family_id,
+                        CONCAT(address, ',', ' ', barangays.name, ',', ' ', municipalities.name, ',', ' ', provinces.name) AS address,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        family_role_code AS family_role,
+                        mobile_number
+                    ")
+            ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
+            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
+            ->join('patients', 'household_members.patient_id', '=', 'patients.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('barangays.code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities.code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('barangays.code', explode(',', $request->code));
+            })
+            ->whereCompleteSanitationFlag(1)
+            ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
+//            ->whereYear('registration_date', $request->year)
+//            ->whereMonth('registration_date', $request->month);
+    }
+
     public function get_zod_barangays($request)
     {
         return DB::table('settings_catchment_barangays')
