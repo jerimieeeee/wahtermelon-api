@@ -58,4 +58,10 @@ class ConsultNotes extends Model
     {
         return $this->belongsTo(LibGeneralSurvey::class, 'general_survey_code', 'code');
     }
+
+    public function libFdx()
+    {
+        return $this->hasMany(ConsultNotesFinalDx::class, 'notes_id', 'id')
+            ->select(['notes_id', 'icd10_code']);
+    }
 }

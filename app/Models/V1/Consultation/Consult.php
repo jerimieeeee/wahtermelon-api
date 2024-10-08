@@ -207,6 +207,11 @@ class Consult extends Model
             ->latest('effectivity_year');
     }
 
+    public function initialDiagnosis()
+    {
+        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
+    }
+
     public function finalDiagnosis()
     {
         return $this->hasManyThrough(ConsultNotesFinalDx::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
@@ -285,5 +290,11 @@ class Consult extends Model
 
     public function feedback(){
         return $this->hasOne(ConsultFeedback::class, 'consult_id', 'id');
+    }
+
+    public function previousConsultNotes()
+    {
+        return $this->hasMany(ConsultNotes::class, 'consult_id', 'id')
+            ->select('id');
     }
 }

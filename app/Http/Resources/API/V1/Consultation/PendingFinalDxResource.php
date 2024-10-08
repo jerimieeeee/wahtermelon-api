@@ -16,6 +16,8 @@ class PendingFinalDxResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'patient_id' => $this->consultNotes->patient_id,
+            'notes_id' => $this->consultNotes->id,
             'patient_name' => ($this->patient->first_name ?? null) . ', ' . ($this->patient->middle_name ?? 'N/a') . ' ' . ($this->patient->last_name ?? null),
             'gender' => $this->patient->gender,
             'birthdate' => $this->patient->birthdate ? Carbon::parse($this->patient->birthdate)->format('m/d/Y') : null,
