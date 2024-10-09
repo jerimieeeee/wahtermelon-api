@@ -84,7 +84,7 @@ class LibComplaintSeeder extends Seeder
             ['complaint_id' => 'LBM', 'complaint_desc' => 'Loose bowel movement', 'complaint_active' => 1, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
             ['complaint_id' => 'LESION', 'complaint_desc' => 'Lesion', 'complaint_active' => 1, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
             ['complaint_id' => 'LOC', 'complaint_desc' => 'Loss Of Consciousnes', 'complaint_active' => 1, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
-            ['complaint_id' => 'LOSS APP', 'complaint_desc' => 'Loss of Apetite', 'complaint_active' => 1, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
+            ['complaint_id' => 'LOSS APP', 'complaint_desc' => 'Loss of Appetite', 'complaint_active' => 1, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
             ['complaint_id' => 'LOWERBACKP', 'complaint_desc' => 'Lower Back Pain', 'complaint_active' => 1, 'konsulta_complaint_id' => '38',  'konsulta_library_status' => '1', 'gbv_library_status' => '0'],
             ['complaint_id' => 'M WOUND', 'complaint_desc' => 'Macerated Wound', 'complaint_active' => 0, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
             ['complaint_id' => 'MASS', 'complaint_desc' => 'Mass/Tumor', 'complaint_active' => 1, 'konsulta_complaint_id' => null,  'konsulta_library_status' => '0', 'gbv_library_status' => '0'],
