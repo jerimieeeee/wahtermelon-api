@@ -22,10 +22,10 @@ class GetPendingFinalDxResource extends JsonResource
             'first_name' => $this->patient->first_name,
             'middle_name' => $this->patient->middle_name,
             'last_name' => $this->patient->last_name,
-            'patient_name' => ($this->patient->first_name ?? null) . ' ' . ($this->patient->middle_name ?? 'N/a') . ', ' . ($this->patient->last_name ?? null),
+            'patient_name' => ($this->patient->last_name ?? null) . ', ' . ($this->patient->first_name ?? 'N/a') . ' ' . ($this->patient->middle_name ?? null),
             'consult_date' => $this->consult_date ? Carbon::parse($this->consult_date)->format('m/d/Y') : null,
-            'physician_name' => ($this->physician->first_name ?? null) . ', ' . ($this->physician->middle_name ?? null) . ' ' . ($this->physician->last_name ?? null),
-            'enocder_name' => ($this->user->first_name ?? null) . ', ' . ($this->user->middle_name ?? null) . ' ' . ($this->user->last_name ?? null),
+            'physician_name' => ($this->physician->last_name ?? null) . ', ' . ($this->physician->first_name ?? null) . ' ' . ($this->physician->middle_name ?? null),
+            'enocder_name' => ($this->user->last_name ?? null) . ', ' . ($this->user->first_name ?? null) . ' ' . ($this->user->middle_name ?? null),
 //            'bp_systolic' => $this->vitalsLatest->bp_systolic ?? null,
         ];
     }
