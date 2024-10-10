@@ -14,7 +14,7 @@ use Str;
 
 class SoapService
 {
-    public function _client($methodName = null, $args = null)
+    public function _client($methodName = null, $args = null, $jobs = false)
     {
         ini_set('max_execution_time', 0);
         $opts = [
@@ -29,7 +29,7 @@ class SoapService
             ],
         ];
 
-        if (isset(request()->program_code) && request()->program_code !== 'kp') {
+        if ((isset(request()->program_code) && request()->program_code !== 'kp') || $jobs) {
             $eclaimsSyncService = new EclaimsSyncService();
             return $eclaimsSyncService->checkEclaimsUrl($methodName, $args);
         } else {
