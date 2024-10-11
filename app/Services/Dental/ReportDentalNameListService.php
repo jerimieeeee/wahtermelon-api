@@ -331,7 +331,8 @@ class ReportDentalNameListService
             })
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            })
+            ->groupBy('consults.patient_id'); ;
     }
 
     public function get_dental_dmft($request)
@@ -396,6 +397,7 @@ class ReportDentalNameListService
             })
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            })
+            ->groupBy('consults.patient_id');
     }
 }

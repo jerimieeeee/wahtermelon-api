@@ -18,7 +18,7 @@ class DentalReport2018Controller extends Controller
 
 //         return $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
 
-        $part1 = $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
+        $part1 = $dentalReportService->get_dental_report($request)->get();
         $male_dmft = $dentalReportService->get_dmft($request, 'M')->get();
         $female_dmft = $dentalReportService->get_dmft($request, 'F')->get();
 

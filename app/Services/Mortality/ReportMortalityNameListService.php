@@ -56,19 +56,19 @@ class ReportMortalityNameListService
             //male_total_deaths
             ->when($request->params == 'male_total_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
-                    ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD'])
+                    ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MRTLY', 'NEOD', 'UDFD'])
                     ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //female_total_deaths
             ->when($request->params == 'female_total_deaths', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD'])
+                    ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MRTLY', 'NEOD', 'UDFD'])
                     ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_female_total_deaths
             ->when($request->params == 'male_female_total_deaths', function ($query) use ($request) {
                 $query->whereIn('patients.gender', ['M', 'F'])
-                    ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MARTLY', 'NEOD', 'UDFD'])
+                    ->whereIn('death_type', ['ENEOD', 'INFD', 'MATD', 'MRTLY', 'NEOD', 'UDFD'])
                     ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date]);
             })
             //male_maternal_deaths
