@@ -40,6 +40,10 @@ class ConsultPeRemarksRequest extends FormRequest
             'neuro_remarks' => 'nullable',
             'rectal_remarks' => 'nullable',
             'genitourinary_remarks' => 'nullable',
+            'conjunctiva_remarks' => 'nullable',
+            'neck_remarks' => 'nullable',
+            'speculum_remarks' => 'nullable',
+            'thorax_remarks' => 'nullable',
         ];
     }
 
