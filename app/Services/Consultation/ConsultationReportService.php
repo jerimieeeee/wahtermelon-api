@@ -17,7 +17,18 @@ class ConsultationReportService
             'consultNotes.complaints.libComplaints',
             'vitalsLatest',
             'consultNotes.physicalExam.libPhysicalExam',
-//            'finalDiagnosis',
+            'consultNotes.physicalExamRemarks',
+            'consultNotes.initialdx.diagnosis',
+            'surgicalHistory',
+            'prescription',
+            'prescription.konsultaMedicine',
+            'prescription.medicine',
+            'prescription.dosageUom',
+            'prescription.doseRegimen',
+            'prescription.durationFrequency',
+            'prescription.medicinePurpose',
+            'medicine',
+            'prescription.dispensingLatest',
 //            'consultpe'
         ])
         ->where('facility_code', auth()->user()->facility_code)

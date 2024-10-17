@@ -909,6 +909,12 @@ Route::prefix('v1')->group(function () {
                     Route::get('name-list', 'index');
                     Route::get('name-list-dmft', 'dmft');
                 });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\DentalConsolidatedOHSReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('dental-consolidated', 'index');
+//                    Route::get('name-list-dmft', 'dmft');
+                });
         });
         Route::prefix('mortality')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MortalityReport2018Controller::class)

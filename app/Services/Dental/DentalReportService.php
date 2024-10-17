@@ -45,7 +45,7 @@ class DentalReportService
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
     }
 
-    public function get_ab_post_exp_prophylaxis($request)
+    public function get_dental_report($request)
     {
         return DB::table('consults')
             ->selectRaw("
@@ -67,20 +67,18 @@ class DentalReportService
                             END) AS 'female_12_59_months_orally_fit',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 1
-                                AND service_id = 6
                                 AND service_id = 7
+                                AND service_id = 6
+                                AND service_id = 1
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8 THEN
                                 1
                             ELSE
                                 0
-                            END) +
-                        SUM(
+                            END) + SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 1
-                                AND service_id = 6
                                 AND service_id = 7
-                                AND service_id = 17
+                                AND service_id = 6
+                                AND service_id = 1
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11 THEN
                                 1
                             ELSE
@@ -92,9 +90,6 @@ class DentalReportService
                                 AND service_id = 17
                                 AND service_id = 15
                                 AND service_id = 8
-                                AND (service_id = 2
-                                OR service_id = 19
-                                OR service_id = 14)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -105,9 +100,6 @@ class DentalReportService
                                 AND service_id = 7
                                 AND service_id = 15
                                 AND service_id = 8
-                                AND (service_code = 'TF'
-                                OR service_code = 'PF'
-                                OR service_code = 'PFS')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -117,11 +109,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'M'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_code = 'TF'
-                                OR service_code = 'PF'
-                                OR service_code = 'PFS'
-                                OR service_id = 19
-                                OR service_id = 9)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -131,11 +118,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'M'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 5
-                                OR service_id = 19
-                                OR service_id = 14
-                                OR service_code = 'PF'
-                                OR service_id = 2)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59) THEN
                                 1
                             ELSE
@@ -145,9 +127,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'M'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 9
-                                OR service_id = 12
-                                OR service_id = 13)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -162,8 +141,7 @@ class DentalReportService
                                 1
                             ELSE
                                 0
-                            END) +
-                        SUM(
+                            END) + SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 1
                                 AND service_id = 6
@@ -180,9 +158,6 @@ class DentalReportService
                                 AND service_id = 17
                                 AND service_id = 15
                                 AND service_id = 8
-                                AND (service_id = 2
-                                OR service_id = 19
-                                OR service_id = 14)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -193,9 +168,6 @@ class DentalReportService
                                 AND service_id = 7
                                 AND service_id = 15
                                 AND service_id = 8
-                                AND (service_code = 'TF'
-                                OR service_code = 'PF'
-                                OR service_code = 'PFS')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -205,11 +177,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_code = 'TF'
-                                OR service_code = 'PF'
-                                OR service_code = 'PFS'
-                                OR service_id = 19
-                                OR service_id = 9)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -219,11 +186,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 5
-                                OR service_id = 19
-                                OR service_id = 14
-                                OR service_code = 'PF'
-                                OR service_id = 2)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -233,9 +195,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 9
-                                OR service_id = 12
-                                OR service_id = 13)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -245,11 +204,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 19
-                                OR service_id = 14
-                                OR service_id = 5
-                                OR service_code = 'PF'
-                                OR service_code = 'TF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
@@ -259,11 +213,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 19
-                                OR service_id = 14
-                                OR service_id = 5
-                                OR service_code = 'PF'
-                                OR service_code = 'TF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
                                 1
                             ELSE
@@ -273,11 +222,6 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 7
                                 AND service_id = 4
-                                AND (service_id = 19
-                                OR service_id = 14
-                                OR service_id = 5
-                                OR service_code = 'PF'
-                                OR service_code = 'TF')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
                                 1
                             ELSE
@@ -296,6 +240,7 @@ class DentalReportService
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
+            ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('consult_date', $request->year)
 //            ->whereMonth('consult_date', $request->month)
@@ -328,6 +273,7 @@ class DentalReportService
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
+            ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('consult_date', $request->year)
 //            ->whereMonth('consult_date', $request->month)

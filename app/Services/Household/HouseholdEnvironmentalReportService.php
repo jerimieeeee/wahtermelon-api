@@ -262,6 +262,8 @@ class HouseholdEnvironmentalReportService
                         barangays.name AS barangay_name
                     ")
             ->join('barangays', 'settings_catchment_barangays.barangay_code', '=', 'barangays.code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code)
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);

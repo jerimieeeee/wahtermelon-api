@@ -191,6 +191,8 @@ class Consult extends Model
                 patient_hip,
                 patient_limbs,
                 patient_muac,
+                patient_left_vision_acuity,
+                patient_right_vision_acuity,
                 patient_vitals.created_at,
                 patient_vitals.updated_at
             ')
@@ -296,5 +298,10 @@ class Consult extends Model
     {
         return $this->hasMany(ConsultNotes::class, 'consult_id', 'id')
             ->select('id');
+    }
+
+    public function surgicalHistory()
+    {
+        return $this->hasMany(PatientSurgicalHistory::class, 'patient_id', 'patient_id');
     }
 }
