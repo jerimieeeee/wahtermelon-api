@@ -840,7 +840,7 @@ Route::prefix('v1')->group(function () {
                 });
         });
         Route::prefix('household-environmental')->group(function () {
-            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\HouseholdEnvironmentalReport2018::class)
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\HouseholdEnvironmentalReport2018Controller::class)
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('m1', 'index');

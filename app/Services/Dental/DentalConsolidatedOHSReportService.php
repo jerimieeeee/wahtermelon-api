@@ -3629,17 +3629,553 @@ class DentalConsolidatedOHSReportService
             });
     }
 
-    public function get_dmft($request, $gender)
+    public function get_tooth_condition($request)
     {
         return DB::table('consults')
             ->selectRaw("
-                        COUNT(DISTINCT patients.id) AS dmft
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_male_5_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_female_5_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_male_6_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_female_6_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_male_7_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_female_7_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_male_8_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_female_8_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_male_9_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_female_9_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_male_total,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_female_total,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_adolescent_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_adolescent_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_adult_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_adult_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_senior_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_senior_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_tota_all_ages_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_tota_all_ages_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_male_5_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_female_5_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_male_6_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_female_6_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_male_7_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_female_7_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_male_8_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_female_8_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_male_9_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_female_9_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_male_total,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_female_total,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_adolescent_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_adolescent_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_adult_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_adult_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_senior_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_senior_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_tota_all_ages_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_tota_all_ages_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_male_5_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_female_5_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_male_6_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_female_6_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_male_7_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_female_7_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_male_8_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_female_8_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_male_9_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_female_9_years_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_male_total,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_female_total,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_adolescent_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_adolescent_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_adult_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_adult_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_senior_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_senior_female,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_tota_all_ages_male,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_tota_all_ages_female
                     ")
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
-//            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
-//            ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
-//            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
-            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
+            ->join('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
             ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
@@ -3649,20 +4185,6 @@ class DentalConsolidatedOHSReportService
             })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-//            ->whereYear('consult_date', $request->year)
-//            ->whereMonth('consult_date', $request->month)
-            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consults.consult_date) >= 5")
-            ->where('patients.gender', $gender)
-            ->whereIn('dental_tooth_conditions.tooth_number',
-                [
-                    '11', '12', '13', '14', '15', '16', '17',
-                    '18', '21', '22', '23', '24', '25', '26',
-                    '27', '28', '41', '42', '43', '44', '45',
-                    '46', '47', '48', '31', '32', '33', '34',
-                    '35', '36', '37', '38'
-                ]
-            )
-            ->whereIn('dental_tooth_conditions.tooth_number', ['D', 'M', 'F'])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })

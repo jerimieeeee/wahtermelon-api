@@ -42,9 +42,10 @@ class HouseholdEnvironmentalReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->leftJoin('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->leftJoin('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
@@ -87,9 +88,10 @@ class HouseholdEnvironmentalReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->leftJoin('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->leftJoin('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
@@ -121,9 +123,10 @@ class HouseholdEnvironmentalReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->leftJoin('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->leftJoin('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
@@ -166,9 +169,10 @@ class HouseholdEnvironmentalReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->leftJoin('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->leftJoin('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
@@ -200,9 +204,10 @@ class HouseholdEnvironmentalReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->leftJoin('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->leftJoin('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
@@ -234,9 +239,10 @@ class HouseholdEnvironmentalReportService
             ->join('household_folders', 'household_environmentals.household_folder_id', '=', 'household_folders.id')
             ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id')
             ->join('patients', 'household_members.patient_id', '=', 'patients.id')
-            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.code')
-            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->leftJoin('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->leftJoin('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
             })
@@ -251,8 +257,6 @@ class HouseholdEnvironmentalReportService
             })
             ->whereCompleteSanitationFlag(1)
             ->whereBetween(DB::raw('DATE(registration_date)'), [$request->start_date, $request->end_date]);
-//            ->whereYear('registration_date', $request->year)
-//            ->whereMonth('registration_date', $request->month);
     }
 
     public function get_zod_barangays($request)
@@ -261,7 +265,7 @@ class HouseholdEnvironmentalReportService
             ->selectRaw("
                         barangays.name AS barangay_name
                     ")
-            ->join('barangays', 'settings_catchment_barangays.barangay_code', '=', 'barangays.code')
+            ->join('barangays', 'settings_catchment_barangays.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code)
@@ -279,7 +283,5 @@ class HouseholdEnvironmentalReportService
             })
             ->whereZod(1)
             ->whereBetween(DB::raw('DATE(settings_catchment_barangays.updated_at)'), [$request->start_date, $request->end_date]);
-//            ->whereYear('settings_catchment_barangays.updated_at', $request->year)
-//            ->whereMonth('settings_catchment_barangays.updated_at', $request->month);
     }
 }
