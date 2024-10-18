@@ -109,17 +109,16 @@ class ReportDentalNameListService
                 $query->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->where('patients.gender', 'M')
-                            ->whereServiceId(1)
-                            ->whereServiceId(6)
-                            ->whereServiceId(7)
+                            ->whereIn('service_id',
+                                [1, 6, 7]
+                            )
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8");
                     })
                     ->orWhere(function ($query) use ($request) {
                         $query->where('patients.gender', 'M')
-                            ->whereServiceId(1)
-                            ->whereServiceId(6)
-                            ->whereServiceId(7)
-                            ->whereServiceId(17)
+                            ->whereIn('service_id',
+                                [1, 6, 7]
+                            )
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11");
                     });
                 });
@@ -129,17 +128,16 @@ class ReportDentalNameListService
                 $query->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->where('patients.gender', 'F')
-                            ->whereServiceId(1)
-                            ->whereServiceId(6)
-                            ->whereServiceId(7)
+                            ->whereIn('service_id',
+                                [1, 6, 7]
+                            )
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8");
                     })
                     ->orWhere(function ($query) use ($request) {
                         $query->where('patients.gender', 'F')
-                            ->whereServiceId(1)
-                            ->whereServiceId(6)
-                            ->whereServiceId(7)
-                            ->whereServiceId(17)
+                            ->whereIn('service_id',
+                                [1, 6, 7, 17]
+                            )
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11");
                     });
                 });
@@ -147,182 +145,109 @@ class ReportDentalNameListService
             // male 1 to 4 years BOHC
             ->when($request->params == 'male_1_4_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
-                    ->whereServiceId(7)
-                    ->whereServiceId(17)
-                    ->whereServiceId(15)
-                    ->whereServiceId(8)
-                    ->where(function($query) use($request) {
-                        $query->where('service_id', 2)
-                            ->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14);
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 1 AND 4");
+                    ->whereIn('service_id',
+                        [7, 17, 15, 8]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4");
             })
             // female 1 to 4 years BOHC
             ->when($request->params == 'female_1_4_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(17)
-                    ->whereServiceId(15)
-                    ->whereServiceId(8)
-                    ->where(function($query) use($request) {
-                        $query->where('service_id', 2)
-                            ->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14);
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 1 AND 4");
+                    ->whereIn('service_id',
+                        [7, 17, 15, 8]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4");
             })
             // male 5 to 9 years BOHC
             ->when($request->params == 'male_5_9_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
-                    ->whereServiceId(7)
-                    ->whereServiceId(15)
-                    ->whereServiceId(8)
-                    ->where(function($query) use($request) {
-                        $query->where('service_code', 'TF')
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'PFS');
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 5 AND 9");
+                    ->whereIn('service_id',
+                        [7, 15, 8]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9");
             })
             // female 5 to 9 years BOHC
             ->when($request->params == 'female_5_9_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(15)
-                    ->whereServiceId(8)
-                    ->where(function($query) use($request) {
-                        $query->where('service_code', 'TF')
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'PFS');
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 5 AND 9");
+                    ->whereIn('service_id',
+                        [7, 15, 8]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9");
             })
             // male 10 to 19 years BOHC
             ->when($request->params == 'male_10_19_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request) {
-                        $query->where('service_code', 'TF')
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'PFS')
-                            ->orWhere('service_id', 19)
-                            ->orWhere('service_id', 9);
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 5 AND 9");
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19");
             })
             // female 10 to 19 years BOHC
             ->when($request->params == 'female_10_19_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->orWhere('service_code', 'TF')
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'PFS')
-                            ->orWhere('service_id', 19)
-                            ->orWhere('service_id', 9);
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 5 AND 9");
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19");
             })
             // male 20 to 59 years BOHC
             ->when($request->params == 'male_20_59_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->where('service_id', 5)
-                            ->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14)
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_id', 2);
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 20 AND 59");
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59");
             })
             // female 20 to 59 years BOHC
             ->when($request->params == 'female_20_59_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->where('service_id', 5)
-                            ->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14)
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_id', 2);
-                    })
-                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 20 AND 59");
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59");
             })
             // male 60 years above BOHC
             ->when($request->params == 'male_60_above_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->where('service_id', 9)
-                            ->orWhere('service_id', 12)
-                            ->orWhere('service_id', 13);
-                    })
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60");
             })
             // female 60 years above BOHC
             ->when($request->params == 'female_60_above_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->where('service_id', 9)
-                            ->orWhere('service_id', 12)
-                            ->orWhere('service_id', 13);
-                    })
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60");
             })
             // pregnant 10 to 14 years BOHC
             ->when($request->params == 'pregnant_women_10_14_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14)
-                            ->orWhere('service_id', 5)
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'TF');
-                    })
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14");
             })
             // pregnant 15 to 19 years BOHC
             ->when($request->params == 'pregnant_women_15_19_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14)
-                            ->orWhere('service_id', 5)
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'TF');
-                    })
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19");
             })
             // pregnant 20 to 49 years BOHC
             ->when($request->params == 'pregnant_women_20_49_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
-                    ->whereServiceId(7)
-                    ->whereServiceId(4)
-                    ->where(function($query) use($request){
-                        $query->orWhere('service_id', 19)
-                            ->orWhere('service_id', 14)
-                            ->orWhere('service_id', 5)
-                            ->orWhere('service_code', 'PF')
-                            ->orWhere('service_code', 'TF');
-                    })
+                    ->whereIn('service_id',
+                        [7, 4]
+                    )
                     ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
             })
+            ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-//            ->whereYear('consult_date', $request->year)
-//            ->whereMonth('consult_date', $request->month)
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
