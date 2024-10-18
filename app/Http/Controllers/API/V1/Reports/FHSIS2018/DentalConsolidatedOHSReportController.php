@@ -13,7 +13,16 @@ class DentalConsolidatedOHSReportController extends Controller
      */
     public function index(Request $request, DentalConsolidatedOHSReportService $dentalConsolidated)
     {
-        return $dentalConsolidated->get_dental_consolidated_report($request)->get();
+        $part1 = $dentalConsolidated->get_dental_consolidated_report($request)->get();
+
+
+        //TOOTH CONDITION
+        $part2 = $dentalConsolidated->get_tooth_condition($request)->get();
+
+        return [
+            'data' => $part1[0],
+            'adult_tooth_condition'  => $part2[0]
+        ];
     }
 
     /**

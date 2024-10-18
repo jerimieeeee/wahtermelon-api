@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Household\HouseholdEnvironmentalReportService;
 use Illuminate\Http\Request;
 
-class HouseholdEnvironmentalReport2018 extends Controller
+class HouseholdEnvironmentalReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
