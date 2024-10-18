@@ -67,18 +67,14 @@ class DentalReportService
                             END) AS 'female_12_59_months_orally_fit',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 6
-                                AND service_id = 1
+                            	AND service_id IN(7, 6, 1)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8 THEN
                                 1
                             ELSE
                                 0
                             END) + SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 6
-                                AND service_id = 1
+                            	AND service_id IN(7, 6, 1)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11 THEN
                                 1
                             ELSE
@@ -86,10 +82,7 @@ class DentalReportService
                             END) AS 'male_0_11_months_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 17
-                                AND service_id = 15
-                                AND service_id = 8
+                                AND service_id IN(7, 17, 15, 8)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -97,9 +90,7 @@ class DentalReportService
                             END) AS 'male_1_4_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 15
-                                AND service_id = 8
+                                AND service_id IN(7, 17, 15, 8)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -107,8 +98,7 @@ class DentalReportService
                             END) AS 'male_5_9_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -116,8 +106,7 @@ class DentalReportService
                             END) AS 'male_10_19_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND(TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59) THEN
                                 1
                             ELSE
@@ -125,8 +114,7 @@ class DentalReportService
                             END) AS 'male_20_59_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -134,19 +122,14 @@ class DentalReportService
                             END) AS 'male_60_above_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'M'
-                                AND service_id = 1
-                                AND service_id = 6
-                                AND service_id = 7
+                                AND service_id IN(1, 6, 7)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 8 THEN
                                 1
                             ELSE
                                 0
                             END) + SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 1
-                                AND service_id = 6
-                                AND service_id = 7
-                                AND service_id = 17
+                                AND service_id IN(1, 6, 7, 17)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 9 AND 11 THEN
                                 1
                             ELSE
@@ -154,10 +137,7 @@ class DentalReportService
                             END) AS 'female_0_11_months_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 17
-                                AND service_id = 15
-                                AND service_id = 8
+                                AND service_id IN(7, 17, 15, 8)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -165,9 +145,7 @@ class DentalReportService
                             END) AS 'female_1_4_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 15
-                                AND service_id = 8
+                                AND service_id IN(7, 15, 8)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -175,8 +153,7 @@ class DentalReportService
                             END) AS 'female_5_9_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -184,8 +161,7 @@ class DentalReportService
                             END) AS 'female_10_19_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -193,8 +169,7 @@ class DentalReportService
                             END) AS 'female_20_59_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -202,8 +177,7 @@ class DentalReportService
                             END) AS 'female_60_above_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
@@ -211,8 +185,7 @@ class DentalReportService
                             END) AS 'pregnant_women_10_14_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
                                 1
                             ELSE
@@ -220,8 +193,7 @@ class DentalReportService
                             END) AS 'pregnant_women_15_19_years_bohc',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 7
-                                AND service_id = 4
+                                AND service_id IN(7, 4)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
                                 1
                             ELSE
