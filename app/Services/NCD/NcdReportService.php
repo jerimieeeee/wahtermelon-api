@@ -402,4 +402,44 @@ class NcdReportService
             ->groupBy('patient_vaccines.patient_id', 'vaccine_date')
             ->orderBy('name', 'ASC');
     }
+
+    public function eye_problems_disease($request, $patient_gender, $indicator)
+    {
+        return DB::table('consult_ncd_risk_casdt2s')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        patients.birthdate,
+                        assessment_date AS date_of_service
+                    ")
+            ->join('consult_ncd_risk_assessment', 'consult_ncd_risk_casdt2s.consult_ncd_risk_id', '=', 'consult_ncd_risk_assessment.id')
+            ->join('patients', 'consult_ncd_risk_casdt2s.patient_id', '=', 'patients.id')
+            ->join('users', 'consult_ncd_risk_casdt2s.user_id', '=', 'users.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consult_ncd_risk_casdt2s.patient_id');
+            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consult_ncd_risk_casdt2s.facility_code', auth()->user()->facility_code);
+            })
+            ->where('consult_ncd_risk_casdt2s.facility_code', auth()->user()->facility_code)
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->tcode));
+            })
+            ->where('patients.gender',$patient_gender)
+            ->whereRaw('TIMESTAMPDIFF(YEAR, patients.birthdate, assessment_date) >= 60')
+            ->when($indicator == 'eye_problem', function ($q) {
+                $q->whereNotNull('eye_refer');
+            })
+            ->when($request->indicator == 'eye_refer_prof', function ($q) {
+                $q->whereNotNull('eye_refer_prof');
+            })
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
+            ->groupBy('consult_ncd_risk_casdt2s.patient_id', 'assessment_date')
+            ->orderBy('name', 'ASC');
+    }
 }
