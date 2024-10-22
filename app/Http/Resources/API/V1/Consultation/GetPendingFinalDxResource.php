@@ -18,6 +18,7 @@ class GetPendingFinalDxResource extends JsonResource
         return [
             'patient_id' => $this->patient_id,
             'notes_id' => $this->consultNotes->id,
+            'is_konsulta' => $this->is_konsulta ? 'YES' : 'NO',
             'consult_id' => $this->id,
             'first_name' => $this->patient->first_name,
             'middle_name' => $this->patient->middle_name,
