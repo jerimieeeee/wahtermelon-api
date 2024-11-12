@@ -13,6 +13,8 @@ class NcdReport2018Controller extends Controller
      */
     public function index(Request $request, NcdReportService $ncdReportService)
     {
+        //Projected Population
+        $projected_population = $ncdReportService->get_projected_population()->get();
 
         //Risk-Assessed PHILPEN
         $assessed_male = $ncdReportService->get_risk_assessed($request, 'M', 'normal')->get();
@@ -64,7 +66,18 @@ class NcdReport2018Controller extends Controller
         $male_senior_influenza = $ncdReportService->senior_influenza($request, 'M')->get();
         $female_senior_influenza = $ncdReportService->senior_influenza($request, 'F')->get();
 
+        //Senior Citizen screened with eye problems
+        $male_senior_eye_problem = $ncdReportService->eye_problems_disease($request, 'M', 'eye_problem')->get();
+        $female_senior_eye_problem = $ncdReportService->eye_problems_disease($request, 'F', 'eye_problem')->get();
+
+        //Senior Citizen screened with eye refer prof
+        $male_senior_eye_refer_prof = $ncdReportService->eye_problems_disease($request, 'M', 'eye_refer_prof')->get();
+        $female_senior_eye_refer_prof = $ncdReportService->eye_problems_disease($request, 'F', 'eye_refer_prof')->get();
+
         return [
+
+            //Projected Population
+            'projected_population' => $projected_population,
 
             //Risk-Assessed PHILPEN
             'assessed_male' => $assessed_male,
@@ -114,7 +127,15 @@ class NcdReport2018Controller extends Controller
 
             //Senior Citizen with Influenza Vaccine
             'male_senior_influenza' => $male_senior_influenza,
-            'female_senior_influenza' => $female_senior_influenza
+            'female_senior_influenza' => $female_senior_influenza,
+
+            //Senior Citizen screened with eye problems
+            'male_senior_eye_problem' => $male_senior_eye_problem,
+            'female_senior_eye_problem' => $female_senior_eye_problem,
+
+            //Senior Citizen screened with eye refer prof
+            'male_senior_eye_refer_prof' => $male_senior_eye_refer_prof,
+            'female_senior_eye_refer_prof' => $female_senior_eye_refer_prof,
 
         ];
     }

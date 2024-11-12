@@ -47,7 +47,7 @@ class EclaimsUploadController extends Controller
                     $q->where('code', $request->code);
                 });
             })
-            ->with(['patient', 'caserate.attendant', 'caserate'])
+            ->with(['patient', 'patient.philhealthLatest', 'caserate.attendant', 'caserate'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 

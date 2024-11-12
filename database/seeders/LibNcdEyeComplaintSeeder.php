@@ -13,7 +13,7 @@ class LibNcdEyeComplaintSeeder extends Seeder
     public function run(): void
     {
         LibNcdEyeComplaint::upsert([
-            ['code' => 'BLUR',    'desc' => 'Blurred (Malabo, maupal o mausok)'],
+            ['code' => 'BLUR',    'desc' => 'Blurred (Malabo, maulap o mausok)'],
             ['code' => 'PAIN',    'desc' => 'Pain (Mahapdi, masakit o mabigat sa pakiramdam)'],
             ['code' => 'DISCH',   'desc' => 'Discharge (May muta)'],
             ['code' => 'FLOAT',   'desc' => 'Floaters (May lumulutang)'],

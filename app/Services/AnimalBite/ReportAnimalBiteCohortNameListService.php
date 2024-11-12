@@ -53,42 +53,42 @@ class ReportAnimalBiteCohortNameListService
             ->whereNull('patient_ab_exposures.deleted_at')
             // total for cat2, cat3, and both
             ->when($request->params == 'total_cat2', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB']);
+                $query->where('category_id', 2);
             })
             ->when($request->params == 'total_cat3', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC']);
+                $query->where('category_id', 3);
             })
             ->when($request->params == 'total_cat2_and_cat3', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC']);
+                $query->whereIn('category_id', [2, 3]);
             })
             // total with rig for cat2, cat3, and both
             ->when($request->params == 'total_cat2_with_rig', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
+                $query->where('category_id', 2)
                     ->whereIn('rig_type_code', ['ERIG', 'HRIG']);
             })
             ->when($request->params == 'total_cat3_with_rig', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                $query->where('category_id', 3)
                     ->whereIn('rig_type_code', ['ERIG', 'HRIG']);
             })
             ->when($request->params == 'total_cat2_and_cat3_with_rig', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                $query->whereIn('category_id', [2, 3])
                     ->whereIn('rig_type_code', ['ERIG', 'HRIG']);
             })
             // total complete cat2, cat3, and both
             ->when($request->params == 'total_cat2_complete', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
+                $query->where('category_id', 2)
                     ->whereNotNull('day0_date')
                     ->whereNotNull('day3_date')
                     ->whereNotNull('day7_date');
             })
             ->when($request->params == 'total_cat3_complete', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                $query->where('category_id', 3)
                     ->whereNotNull('day0_date')
                     ->whereNotNull('day3_date')
                     ->whereNotNull('day7_date');
             })
             ->when($request->params == 'total_cat2_and_cat3_complete', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                $query->where('category_id', 2)
                     ->whereNotNull('day0_date')
                     ->whereNotNull('day3_date')
                     ->whereNotNull('day7_date');
@@ -96,7 +96,7 @@ class ReportAnimalBiteCohortNameListService
             // total incomplete cat2, cat3, and both
             ->when($request->params == 'total_cat2_incomplete', function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
-                    $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
+                    $query->where('category_id', 2)
                         ->where(function($query) use ($request) {
                             $query->whereNull('day0_date')
                                 ->orWhereNull('day3_date')
@@ -106,7 +106,7 @@ class ReportAnimalBiteCohortNameListService
             })
             ->when($request->params == 'total_cat3_incomplete', function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
-                    $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                    $query->where('category_id', 3)
                         ->where(function($query) use ($request) {
                             $query->whereNull('day0_date')
                                 ->orWhereNull('day3_date')
@@ -116,7 +116,7 @@ class ReportAnimalBiteCohortNameListService
             })
             ->when($request->params == 'total_cat2_and_cat3_incomplete', function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
-                    $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                    $query->whereIn('category_id', [2, 3])
                         ->where(function ($query) use ($request) {
                             $query->whereNull('day0_date')
                                 ->orWhereNull('day3_date')
@@ -126,24 +126,26 @@ class ReportAnimalBiteCohortNameListService
             })
             // total none cat2, cat3, and both
             ->when($request->params == 'total_cat2_none', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['MINOR', 'NIBB'])
+                $query->where('category_id', 2)
                     ->whereNull('day0_date')
                     ->whereNull('day3_date')
                     ->whereNull('day7_date');
             })
             ->when($request->params == 'total_cat3_none', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                $query->where('category_id', 3)
                     ->whereNull('day0_date')
                     ->whereNull('day3_date')
                     ->whereNull('day7_date');
             })
             ->when($request->params == 'total_cat2_and_cat3_none', function ($query) use ($request) {
-                $query->whereIn('exposure_type_code', ['NIBB', 'MINOR', 'CONTAM', 'INGESTION', 'TRANS', 'BATS', 'UNPROC'])
+                $query->whereIn('category_id', [2, 3])
                     ->whereNull('day0_date')
                     ->whereNull('day3_date')
                     ->whereNull('day7_date');
             })
-            ->where('patient_ab_exposures.facility_code', auth()->user()->facility_code)
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_ab_exposures.facility_code', auth()->user()->facility_code);
+            })
             ->whereBetween(DB::raw('DATE(exposure_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());

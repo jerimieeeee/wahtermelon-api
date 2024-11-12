@@ -142,30 +142,45 @@ if (! function_exists('get_completed_services')) {
     function get_completed_services($request, $service, $serviceQty, $age_year_bracket1, $age_year_bracket2)
     {
         $serviceArray = [];
-        $ageBracket1 = $age_year_bracket1;
-        $ageBracket2 = $age_year_bracket2;
-        $date = Carbon::parse($request->year.'-'.$request->month)->format('Y-m');
+
+        // Retrieve start and end dates from the request
+        $start_date = Carbon::parse($request->start_date)->startOfDay();
+        $end_date = Carbon::parse($request->end_date)->endOfDay();
 
         foreach ($service as $value) {
+            // Break down the service quantity and service dates into arrays
             $quantity = explode(',', $value->service_qty);
             $dates = explode(',', $value->service_dates);
+
             $subtotal = 0;
             $serviceObject = [];
+
             foreach ($quantity as $k => $qty) {
                 $subtotal += $qty;
-                $age = Carbon::parse($value->birthdate)->diffInYears(Carbon::parse($dates[$k]));
+                $serviceDate = Carbon::parse($dates[$k]);
+
+                // Calculate age based on the date of birth and service date
+                $age = Carbon::parse($value->birthdate)->diffInYears($serviceDate);
+
+                // If the subtotal meets or exceeds the required service quantity
                 if ($subtotal >= $serviceQty) {
-                    if ($date == $dates[$k]) {
+                    // Check if the service date falls within the specified range
+                    if ($serviceDate->between($start_date, $end_date)) {
+                        // Prepare the service object
                         $serviceObject['name'] = $value->name;
                         $serviceObject['birthdate'] = $value->birthdate;
-                        $serviceObject['date_of_service'] = $dates[$k];
-//                        $serviceObject['municipality_code'] = $value->municipality_code;
-//                        $serviceObject['barangay_code'] = $value->barangay_code;
-                        if ($age >= $ageBracket1 && $age <= $ageBracket2) {
+                        $serviceObject['date_of_service'] = $serviceDate->format('Y-m-d');
+
+                        // Optionally, add more fields like municipality_code, barangay_code
+                        // $serviceObject['municipality_code'] = $value->municipality_code;
+                        // $serviceObject['barangay_code'] = $value->barangay_code;
+
+                        // Check if the age falls within the provided age bracket
+                        if ($age >= $age_year_bracket1 && $age <= $age_year_bracket2) {
                             $serviceArray[] = $serviceObject;
                         }
                     }
-                    break;
+                    break; // Exit loop after finding the matching service date
                 }
             }
         }

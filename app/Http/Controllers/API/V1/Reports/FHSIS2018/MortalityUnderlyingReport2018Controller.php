@@ -3,33 +3,19 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\Morbidity\MorbidityReportService;
+use App\Services\Mortality\MortalityUnderlyingReportService;
 use Illuminate\Http\Request;
 
-/**
- * @authenticated
- *
- * @group FHSIS Reports 2018
- *
- * APIs for managing Morbidity Report Information
- *
- * @subgroup M1 Child Care Report
- *
- * @subgroupDescription M1 FHSIS 2018 Morbidity Report.
- */
-class MorbidityReport2018Controller extends Controller
+class MortalityUnderlyingReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @queryParam year date to view.
-     * @queryParam month date to view.
      */
-    public function index(Request $request, MorbidityReportService $morbidityReportService)
+    public function index(Request $request, MortalityUnderlyingReportService $mortalityUnderlyingReportService)
     {
         //Projected Population
-        $projected_population = $morbidityReportService->get_projected_population()->get();
-        $g = $morbidityReportService->get_morbidity_report_all($request)->get();
+        $projected_population = $mortalityUnderlyingReportService->get_projected_population()->get();
+        $g = $mortalityUnderlyingReportService->get_mortality_underlying($request)->get();
 
         return [
             'projected_population' => $projected_population,
@@ -42,7 +28,7 @@ class MorbidityReport2018Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

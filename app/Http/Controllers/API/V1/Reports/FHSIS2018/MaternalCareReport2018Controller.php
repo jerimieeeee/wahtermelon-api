@@ -27,8 +27,8 @@ class MaternalCareReport2018Controller extends Controller
      */
     public function index(Request $request, MaternalCareReportService $maternalCareReportService): array
     {
-        //Catchment Population
-        $catchment_population = $maternalCareReportService->get_projected_population()->get();
+        //Projected Population
+        $projected_population = $maternalCareReportService->get_projected_population()->get();
 
         //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
         $prenatal_give_birth_10_14 = $maternalCareReportService->get_4prenatal_give_birth($request, '10', '14')->get();
@@ -424,8 +424,8 @@ class MaternalCareReport2018Controller extends Controller
 
         return [
 
-            //GET CATCHMENT POPULATION
-            'catchment_population' => $catchment_population,
+            //GET PROJECTED POPULATION
+            'projected_population' => $projected_population,
 
             //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
             'Prenatal_give_birth_10_14' => $prenatal_give_birth_10_14,

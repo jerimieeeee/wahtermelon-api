@@ -191,6 +191,8 @@ class Consult extends Model
                 patient_hip,
                 patient_limbs,
                 patient_muac,
+                patient_left_vision_acuity,
+                patient_right_vision_acuity,
                 patient_vitals.created_at,
                 patient_vitals.updated_at
             ')
@@ -205,6 +207,11 @@ class Consult extends Model
     {
         return $this->hasOne(PatientPhilhealth::class, 'patient_id', 'patient_id')
             ->latest('effectivity_year');
+    }
+
+    public function initialDiagnosis()
+    {
+        return $this->hasManyThrough(ConsultNotesInitialDx::class, ConsultNotes::class, 'consult_id', 'notes_id', 'id', 'id');
     }
 
     public function finalDiagnosis()
@@ -285,5 +292,16 @@ class Consult extends Model
 
     public function feedback(){
         return $this->hasOne(ConsultFeedback::class, 'consult_id', 'id');
+    }
+
+    public function previousConsultNotes()
+    {
+        return $this->hasMany(ConsultNotes::class, 'consult_id', 'id')
+            ->select('id');
+    }
+
+    public function surgicalHistory()
+    {
+        return $this->hasMany(PatientSurgicalHistory::class, 'patient_id', 'patient_id');
     }
 }
