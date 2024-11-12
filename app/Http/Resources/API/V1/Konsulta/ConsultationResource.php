@@ -53,7 +53,7 @@ class ConsultationResource extends JsonResource
             ")
             ->join('consult_notes', fn ($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id'))
             ->join('consult_notes_pes', fn ($join) => $join->on('consult_notes.id', '=', 'consult_notes_pes.notes_id')->select('notes_id', 'pe_id'))
-            ->join('lib_pes', fn ($join) => $join->on('lib_pes.pe_id', '=', 'consult_notes_pes.pe_id')->select('pe_id', 'category_id', 'konsulta_pe_id'))
+            ->join('lib_pes', fn ($join) => $join->on('lib_pes.pe_id', '=', 'consult_notes_pes.pe_id')->select('pe_id', 'category_id', 'konsulta_pe_id')->where('konsulta_library_status', 1))
             ->whereRaw('!ISNULL(konsulta_pe_id) AND consults.id = ? AND DATE_FORMAT(consult_date, "%Y-%m-%d") = ?', [$this->id ?? '', ! empty($this->consult_date) ? $this->consult_date->format('Y-m-d') : ''])
             ->where('is_konsulta', 1)
             ->groupByRaw('consult_notes.id, consult_notes_pes.pe_id')
