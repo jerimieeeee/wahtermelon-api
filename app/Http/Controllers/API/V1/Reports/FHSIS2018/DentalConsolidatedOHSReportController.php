@@ -22,10 +22,18 @@ class DentalConsolidatedOHSReportController extends Controller
         //TEMPORARY TOOTH CONDITION
         $temporary_tooth = $dentalConsolidated->get_temporary_tooth_condition($request)->get();
 
+        //DENTAL SERVICES
+        $dental_services = $dentalConsolidated->get_dental_services($request)->get();
+
+        //TOOTH SERVICES
+        $tooth_service = $dentalConsolidated->get_tooth_services($request)->get();
+
         return [
             'data' => $part1[0],
+            'temporary_tooth_condition'  => $temporary_tooth[0],
             'adult_tooth_condition'  => $adult_tooth[0],
-            'temporary_tooth_condition'  => $temporary_tooth[0]
+            'dental_services'  => $dental_services[0],
+            'tooth_service'  => $tooth_service[0]
         ];
     }
 

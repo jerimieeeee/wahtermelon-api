@@ -122,7 +122,7 @@ class AnimalBiteReportPreExposureService
                             1
                         ELSE
                             0
-                        END) AS 'others',
+                        END) AS 'others',3
                     SUM(
                         CASE WHEN patient_ab_pre_exposures.day0_date IS NOT NULL
                              AND patient_ab_pre_exposures.day7_date IS NOT NULL

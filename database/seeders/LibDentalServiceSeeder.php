@@ -27,7 +27,7 @@ class LibDentalServiceSeeder extends Seeder
             ['id' => 11, 'desc' => 'Referral of complicated cases',             'sequence' => 11],
             ['id' => 12, 'desc' => 'Relief of pain',                            'sequence' => 12],
             ['id' => 13, 'desc' => 'Removal of unsavable teeth',                'sequence' => 13],
-            ['id' => 14, 'desc' => 'Scalling',                                  'sequence' => 14],
+            ['id' => 14, 'desc' => 'Scaling',                                  'sequence' => 14],
             ['id' => 15, 'desc' => 'Supervised tooth brushing',                 'sequence' => 15],
             ['id' => 16, 'desc' => 'Temporary filling',                         'sequence' => 16],
             ['id' => 17, 'desc' => 'Topical fluoride application',              'sequence' => 17],
