@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('eclaims_uploads', function (Blueprint $table) {
-            $table->longText('denied_reason')->change();
+            $table->longText('denied_reason')->nullable()->change();
         });
     }
 
