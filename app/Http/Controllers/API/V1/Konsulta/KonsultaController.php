@@ -178,6 +178,7 @@ class KonsultaController extends Controller
             ->when($request->tranche == 2, function ($query) use($request){
                 $query->withWhereHas('patient.consult', function ($q) use($request){
                     $q->whereNull('transmittal_number')->where('is_konsulta', 1)
+                        ->where('facility_code', auth()->user()->facility_code)
                         ->whereYear('consult_date', $request->effectivity_year)
                         ->wherePtGroup('cn')
                         ->whereHas('finalDiagnosis');
