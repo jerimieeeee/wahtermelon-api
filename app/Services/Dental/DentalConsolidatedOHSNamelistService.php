@@ -888,7 +888,6 @@ class DentalConsolidatedOHSNamelistService
                     '45', '46', '47', '48', '31',
                     '32', '33', '34', '35', '36',
                     '37', '38'
-                    '37', '38'
                 ]
             )
             ->where('patients.gender', $request->gender)
