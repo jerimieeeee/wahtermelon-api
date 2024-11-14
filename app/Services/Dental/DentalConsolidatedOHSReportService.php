@@ -190,13 +190,6 @@ class DentalConsolidatedOHSReportService
                                 0
                             END) AS pregnant_women_with_dento_facial,
                         SUM(
-                            CASE WHEN is_pregnant = 1
-                                AND dental_caries_flag = 1 THEN
-                                1
-                            ELSE
-                                0
-                            END) AS pregnant_women_with_dental_carries,
-                        SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'M'
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
@@ -5422,7 +5415,6 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'D'
                                 AND is_pregnant = 1
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                             THEN
                                 1
                             ELSE
@@ -5431,7 +5423,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5440,7 +5431,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5449,7 +5439,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5458,7 +5447,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5467,7 +5455,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5476,7 +5463,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5485,7 +5471,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5494,7 +5479,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5503,7 +5487,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5512,7 +5495,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5521,7 +5503,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5530,7 +5511,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5539,7 +5519,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5548,7 +5527,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5557,7 +5535,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5566,7 +5543,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5575,7 +5551,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5584,7 +5559,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5593,7 +5567,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5602,7 +5575,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5612,7 +5584,6 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'M'
                                 AND is_pregnant = 1
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                             THEN
                                 1
                             ELSE
@@ -5621,7 +5592,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5630,7 +5600,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5639,7 +5608,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5648,7 +5616,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5657,7 +5624,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5666,7 +5632,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5675,7 +5640,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5684,7 +5648,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5693,7 +5656,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5702,7 +5664,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5711,7 +5672,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5720,7 +5680,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5729,7 +5688,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5738,7 +5696,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5747,7 +5704,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5756,7 +5712,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5765,7 +5720,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5774,7 +5728,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5783,7 +5736,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5792,7 +5744,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5802,7 +5753,6 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'F'
                                 AND is_pregnant = 1
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                             THEN
                                 1
                             ELSE
@@ -5811,7 +5761,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5820,7 +5769,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5829,7 +5777,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5838,7 +5785,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5847,7 +5793,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5856,7 +5801,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5865,7 +5809,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5874,7 +5817,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5883,7 +5825,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5892,7 +5833,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5901,7 +5841,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5910,7 +5849,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5919,7 +5857,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5928,7 +5865,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5937,7 +5873,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5946,7 +5881,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5955,7 +5889,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5964,7 +5897,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5973,7 +5905,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5982,7 +5913,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5990,7 +5920,6 @@ class DentalConsolidatedOHSReportService
                             END) AS filled_tooth_female_all_age,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5
                             THEN
                                 1
@@ -5999,7 +5928,6 @@ class DentalConsolidatedOHSReportService
                             END) AS decayed_tooth_grand_total,
                         SUM(
                             CASE WHEN tooth_condition = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5
                             THEN
                                 1
@@ -6008,7 +5936,6 @@ class DentalConsolidatedOHSReportService
                             END) AS missing_tooth_grand_total,
                         SUM(
                             CASE WHEN tooth_condition = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('11', '12', '13', '14', '15', '16', '17', '18', '21', '22', '23', '24', '25', '26', '27', '28', '41', '42', '43', '44', '45', '46', '47', '48', '31', '32', '33', '34', '35', '36', '37', '38')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5
                             THEN
                                 1
@@ -6026,6 +5953,17 @@ class DentalConsolidatedOHSReportService
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
             ->wherePtGroup('dn')
+            ->whereIn('dental_tooth_conditions.tooth_number',
+                [
+                    '11', '12', '13', '14', '15',
+                    '16', '17', '18', '21', '22',
+                    '23', '24', '25', '26', '27',
+                    '28', '41', '42', '43', '44',
+                    '45', '46', '47', '48', '31',
+                    '32', '33', '34', '35', '36',
+                    '37', '38'
+                ]
+            )
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
@@ -6045,7 +5983,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6054,7 +5991,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6063,7 +5999,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6072,7 +6007,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6081,7 +6015,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6090,7 +6023,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6099,7 +6031,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6108,7 +6039,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6117,7 +6047,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -6126,7 +6055,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -6135,7 +6063,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -6144,7 +6071,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -6153,7 +6079,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -6162,7 +6087,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -6171,7 +6095,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -6180,7 +6103,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -6189,7 +6111,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -6198,7 +6119,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -6207,7 +6127,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -6216,7 +6135,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -6225,7 +6143,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -6234,7 +6151,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -6243,7 +6159,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -6252,7 +6167,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -6261,7 +6175,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -6270,7 +6183,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -6279,7 +6191,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
@@ -6288,7 +6199,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
@@ -6297,7 +6207,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6306,7 +6215,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6315,7 +6223,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6324,7 +6231,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6333,7 +6239,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6342,7 +6247,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6351,7 +6255,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6360,7 +6263,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6369,7 +6271,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -6378,7 +6279,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -6387,7 +6287,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -6396,7 +6295,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -6405,7 +6303,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -6414,7 +6311,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -6423,7 +6319,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -6432,7 +6327,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -6441,7 +6335,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -6450,7 +6343,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -6459,7 +6351,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -6468,7 +6359,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -6477,7 +6367,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -6486,7 +6375,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -6495,7 +6383,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -6504,7 +6391,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -6513,7 +6399,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -6522,7 +6407,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -6531,7 +6415,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -6540,7 +6423,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
-                                AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -6548,7 +6430,6 @@ class DentalConsolidatedOHSReportService
                             END) AS filled_tooth_female_all_age,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
-                            AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                             THEN
                                 1
                             ELSE
@@ -6556,7 +6437,6 @@ class DentalConsolidatedOHSReportService
                             END) AS decayed_tooth_grand_total,
                         SUM(
                             CASE WHEN tooth_condition = 'M'
-                            AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                             THEN
                                 1
                             ELSE
@@ -6564,7 +6444,6 @@ class DentalConsolidatedOHSReportService
                             END) AS missing_tooth_grand_total,
                         SUM(
                             CASE WHEN tooth_condition = 'F'
-                            AND dental_tooth_conditions.tooth_number IN('51', '52', '53', '54', '55', '61', '62', '63', '64', '65', '81', '82', '83', '84', '85', '71', '72', '73', '74', '75')
                             THEN
                                 1
                             ELSE
@@ -6581,6 +6460,14 @@ class DentalConsolidatedOHSReportService
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
             ->wherePtGroup('dn')
+            ->whereIn('dental_tooth_conditions.tooth_number',
+                [
+                    '51', '52', '53', '54', '55',
+                    '61', '62', '63', '64', '65',
+                    '81', '82', '83', '84', '85',
+                    '71', '72', '73', '74', '75'
+                ]
+            )
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
