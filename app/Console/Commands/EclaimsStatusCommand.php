@@ -81,7 +81,11 @@ class EclaimsStatusCommand extends Command
                     return new EclaimsStatusJob($claim);
                 })->toArray();
 
-                Bus::batch($jobs)->dispatch();
+                $batch = Bus::batch($jobs)
+                    ->name('Eclaims Status Batch')
+                    ->dispatch();
+
+                $this->info("Batch ID: {$batch->id} dispatched successfully.");
             });
     }
 

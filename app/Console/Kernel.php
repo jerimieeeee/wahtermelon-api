@@ -15,6 +15,18 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            // Fetch the claims that need processing
+            $claims = EclaimsUpload::where('status', 'pending') // Example condition
+            ->get();
+
+            // Dispatch the EclaimsStatusJob for each claim
+            foreach ($claims as $claim) {
+                EclaimsStatusJob::dispatch($claim);
+            }
+        })
+            ->weeklyOn(6, '20:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
+            ->timezone('Asia/Manila'); // Set the timezone to Asia/Manila
     }
 
     /**
