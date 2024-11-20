@@ -16,12 +16,14 @@ class DentalConsolidatedOHSNamelistReportController extends Controller
         $part1 = $namelistService->get_medical_hx($request)->get();
         $temporary_tooth = $namelistService->get_temporary_tooth_condition($request)->get();
         $adult_tooth = $namelistService->get_adult_tooth_condition($request)->get();
+//        $services = $namelistService->get_dental_services($request)->get();
 
 
         return [
             'data' => $part1,
             'temporary_tooth' => $temporary_tooth,
             'adult_tooth' => $adult_tooth,
+//            'services' => $services
         ];
     }
 

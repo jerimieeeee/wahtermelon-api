@@ -320,6 +320,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -328,6 +329,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -336,6 +338,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -344,6 +347,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -352,6 +356,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -360,6 +365,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -368,6 +374,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -376,6 +383,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -384,6 +392,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -392,6 +401,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -400,6 +410,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -408,6 +419,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -416,6 +428,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -424,6 +437,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -432,6 +446,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -440,6 +455,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -584,6 +600,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -592,6 +609,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -600,6 +618,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -608,6 +627,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -616,6 +636,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -624,6 +645,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -632,6 +654,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -640,6 +663,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -648,6 +672,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -656,6 +681,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -664,6 +690,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -672,6 +699,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -680,6 +708,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -688,6 +717,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -696,6 +726,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -704,6 +735,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -712,6 +744,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -856,6 +889,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -864,6 +898,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -872,6 +907,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -880,6 +916,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -888,6 +925,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -896,6 +934,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -904,6 +943,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -912,6 +952,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -920,6 +961,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -928,6 +970,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -936,6 +979,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -944,6 +988,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -952,6 +997,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -960,6 +1006,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -968,6 +1015,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -976,6 +1024,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -984,6 +1033,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -1128,6 +1178,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1136,6 +1187,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1144,6 +1196,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1152,6 +1205,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1160,6 +1214,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1168,6 +1223,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1176,6 +1232,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1184,6 +1241,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1192,6 +1250,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1200,6 +1259,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1208,6 +1268,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1216,6 +1277,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1224,6 +1286,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1232,6 +1295,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1240,6 +1304,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1248,6 +1313,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1256,6 +1322,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -1400,6 +1467,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1416,6 +1484,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1424,6 +1493,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1432,6 +1502,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1440,6 +1511,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1448,6 +1520,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1456,6 +1529,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1464,6 +1538,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1472,6 +1547,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1480,6 +1556,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1488,6 +1565,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1496,6 +1574,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1504,6 +1583,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1512,6 +1592,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1520,6 +1601,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -1664,6 +1746,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1672,6 +1755,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1680,6 +1764,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1688,6 +1773,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1696,6 +1782,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1704,6 +1791,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1712,6 +1800,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1720,6 +1809,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1728,6 +1818,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1736,6 +1827,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1744,6 +1836,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1752,6 +1845,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1760,6 +1854,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1768,6 +1863,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1776,6 +1872,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1784,6 +1881,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -1968,6 +2066,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -1976,6 +2075,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -1984,6 +2084,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -1992,6 +2093,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2000,6 +2102,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2008,6 +2111,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2016,6 +2120,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2024,6 +2129,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2032,6 +2138,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2040,6 +2147,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2048,6 +2156,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2056,6 +2165,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2064,6 +2174,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2072,6 +2183,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2080,6 +2192,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2088,6 +2201,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2096,6 +2210,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2104,6 +2219,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2112,6 +2228,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2120,6 +2237,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2128,6 +2246,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -2304,6 +2423,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2312,6 +2432,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2320,6 +2441,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2328,6 +2450,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2336,6 +2459,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2344,6 +2468,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2352,6 +2477,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2360,6 +2486,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2368,6 +2495,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2376,6 +2504,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2384,6 +2513,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2392,6 +2522,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2400,6 +2531,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2408,6 +2540,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2416,6 +2549,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2424,6 +2558,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2432,6 +2567,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2440,6 +2576,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2448,6 +2585,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2456,6 +2594,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2464,6 +2603,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -2640,6 +2780,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2648,6 +2789,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2656,6 +2798,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2664,6 +2807,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2672,6 +2816,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2680,6 +2825,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2688,6 +2834,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2696,6 +2843,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2704,6 +2852,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2712,6 +2861,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2720,6 +2870,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2728,6 +2879,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2736,6 +2888,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2744,6 +2897,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2752,6 +2906,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2760,6 +2915,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2768,6 +2924,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2776,6 +2933,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2784,6 +2942,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2792,6 +2951,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2800,6 +2960,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -2976,6 +3137,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -2984,6 +3146,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -2992,6 +3155,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3000,6 +3164,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3008,6 +3173,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3016,6 +3182,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3024,6 +3191,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3032,6 +3200,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3040,6 +3209,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3048,6 +3218,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3056,6 +3227,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3064,6 +3236,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3072,6 +3245,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3080,6 +3254,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3088,6 +3263,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3096,6 +3272,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3104,6 +3281,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3112,6 +3290,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3120,6 +3299,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3128,6 +3308,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3136,6 +3317,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -3312,6 +3494,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3320,6 +3503,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3328,6 +3512,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3336,6 +3521,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3344,6 +3530,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3352,6 +3539,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3360,6 +3548,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3368,6 +3557,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3376,6 +3566,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3384,6 +3575,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3392,6 +3584,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3400,6 +3593,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3407,7 +3601,8 @@ class DentalConsolidatedOHSReportService
                             END) AS female_9_year_old_with_alcohol,
                         SUM(
                             CASE WHEN tabacco_flag = 1
-                                AND patients.gender = 'M'
+                                AND patients.gender = 'F'
+
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3415,7 +3610,8 @@ class DentalConsolidatedOHSReportService
                             END) AS female_9_year_old_with_tobacco,
                         SUM(
                             CASE WHEN nut_flag = 1
-                                AND patients.gender = 'M'
+                                AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3424,6 +3620,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3432,6 +3629,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3440,6 +3638,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3448,6 +3647,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3456,6 +3656,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3464,6 +3665,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3472,6 +3674,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -3648,6 +3851,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3656,6 +3860,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3664,6 +3869,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3672,6 +3878,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3680,6 +3887,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3688,6 +3896,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3696,6 +3905,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3704,6 +3914,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3712,6 +3923,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3720,6 +3932,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3728,6 +3941,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3736,6 +3950,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3744,6 +3959,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3752,6 +3968,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3760,6 +3977,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3768,6 +3986,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3776,6 +3995,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3784,6 +4004,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3792,6 +4013,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3800,6 +4022,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -3968,6 +4191,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -3976,6 +4200,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -3984,6 +4209,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -3992,6 +4218,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4000,6 +4227,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4008,6 +4236,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4016,6 +4245,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4024,6 +4254,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4032,6 +4263,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4040,6 +4272,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4048,6 +4281,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4056,6 +4290,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4064,6 +4299,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4072,6 +4308,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4080,6 +4317,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4088,6 +4326,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4096,6 +4335,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4104,6 +4344,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4112,6 +4353,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4120,6 +4362,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -4288,6 +4531,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4296,6 +4540,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4304,6 +4549,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4312,6 +4558,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4320,6 +4567,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4328,6 +4576,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4336,6 +4585,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4344,6 +4594,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4352,6 +4603,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4360,6 +4612,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4368,6 +4621,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4376,6 +4630,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4384,6 +4639,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4392,6 +4648,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4400,6 +4657,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4408,6 +4666,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4416,6 +4675,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4424,6 +4684,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4432,6 +4693,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4440,6 +4702,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -4608,6 +4871,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4616,6 +4880,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hypertension_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4624,6 +4889,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN diabetes_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4632,6 +4898,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4640,6 +4907,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN heart_disease_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4648,6 +4916,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN thyroid_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4656,6 +4925,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN hepatitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4664,6 +4934,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN malignancy_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4672,6 +4943,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4680,6 +4952,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tattoo_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4688,6 +4961,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -4696,6 +4970,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN alcohol_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -4704,6 +4979,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tabacco_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -4712,6 +4988,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -4720,6 +4997,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dental_caries_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4728,6 +5006,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN gingivitis_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4736,6 +5015,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN periodontal_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4744,6 +5024,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN debris_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4752,6 +5033,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN calculus_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4760,6 +5042,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN dento_facial_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date)  >= 60 THEN
                                 1
                             ELSE
@@ -4839,7 +5122,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN sweet_flag = 1
                                 AND patients.gender = 'M'
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                            THEN
                                 1
                             ELSE
                                 0
@@ -4911,6 +5194,7 @@ class DentalConsolidatedOHSReportService
                             END) AS male_all_age_with_dento_facial,
                         SUM(
                             CASE WHEN allergies_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4918,6 +5202,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_allergies,
                         SUM(
                             CASE WHEN hypertension_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4925,6 +5210,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_hypertension,
                         SUM(
                             CASE WHEN diabetes_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4932,6 +5218,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_diabetes,
                         SUM(
                             CASE WHEN blood_disorder_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4939,6 +5226,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_blood_disorder,
                         SUM(
                             CASE WHEN heart_disease_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4946,6 +5234,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_heart_disease,
                         SUM(
                             CASE WHEN thyroid_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4953,6 +5242,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_thyroid,
                         SUM(
                             CASE WHEN hepatitis_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4960,6 +5250,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_hepatitis,
                         SUM(
                             CASE WHEN malignancy_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4967,6 +5258,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_malignancy,
                         SUM(
                             CASE WHEN blood_transfusion_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4974,6 +5266,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_blood_transfusion,
                         SUM(
                             CASE WHEN tattoo_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F'
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
@@ -4982,6 +5275,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_tattoo,
                         SUM(
                             CASE WHEN sweet_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -4989,6 +5283,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_sugar_sweetened,
                         SUM(
                             CASE WHEN alcohol_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F'
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
@@ -4997,6 +5292,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_alcohol,
                         SUM(
                             CASE WHEN tabacco_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F'
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
@@ -5006,6 +5302,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN nut_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5013,6 +5310,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_nut,
                         SUM(
                             CASE WHEN dental_caries_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -5020,6 +5318,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_dental_carries,
                         SUM(
                             CASE WHEN gingivitis_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -5027,6 +5326,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_gingivitis,
                         SUM(
                             CASE WHEN periodontal_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -5034,6 +5334,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_periodontal,
                         SUM(
                             CASE WHEN debris_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -5041,6 +5342,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_debris,
                         SUM(
                             CASE WHEN calculus_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -5048,6 +5350,7 @@ class DentalConsolidatedOHSReportService
                             END) AS female_all_age_with_calculus,
                         SUM(
                             CASE WHEN dento_facial_flag = 1
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND patients.gender = 'F' THEN
                                 1
                             ELSE
@@ -5188,6 +5491,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -5196,6 +5500,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'M'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -5204,6 +5509,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -5220,6 +5526,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -5236,6 +5543,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -5252,6 +5560,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -5268,6 +5577,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN orally_fit_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -5291,6 +5601,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN oral_rehab_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -5307,6 +5618,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN oral_rehab_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -5323,6 +5635,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN oral_rehab_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -5339,6 +5652,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN oral_rehab_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -5355,6 +5669,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN oral_rehab_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -5371,6 +5686,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN oral_rehab_flag = 1
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -5431,6 +5747,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5447,6 +5764,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5463,6 +5781,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5479,6 +5798,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5495,6 +5815,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5511,6 +5832,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5527,6 +5849,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5543,6 +5866,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5567,6 +5891,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5575,6 +5900,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5600,6 +5926,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5616,6 +5943,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5632,6 +5960,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5648,6 +5977,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5664,6 +5994,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5680,6 +6011,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5696,6 +6028,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5712,6 +6045,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5728,6 +6062,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5744,6 +6079,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5769,6 +6105,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -5785,6 +6122,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -5801,6 +6139,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -5817,6 +6156,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -5833,6 +6173,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -5849,6 +6190,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -5865,6 +6207,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -5881,6 +6224,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -5897,6 +6241,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -5913,6 +6258,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -5991,6 +6337,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6007,6 +6354,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6023,6 +6371,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6039,6 +6388,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6055,6 +6405,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -6071,6 +6422,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -6087,6 +6439,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -6103,6 +6456,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -6119,6 +6473,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -6135,6 +6490,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -6151,6 +6507,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -6167,6 +6524,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -6183,6 +6541,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -6199,6 +6558,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
@@ -6215,6 +6575,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6231,6 +6592,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6247,6 +6609,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6263,6 +6626,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6279,6 +6643,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -6295,6 +6660,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -6311,6 +6677,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -6327,6 +6694,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -6343,6 +6711,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -6359,6 +6728,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -6375,6 +6745,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -6391,6 +6762,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -6407,6 +6779,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -6423,6 +6796,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -6594,6 +6968,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
                             THEN
                                 patients.id
@@ -6603,6 +6978,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6611,6 +6987,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6619,6 +6996,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6627,6 +7005,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6635,6 +7014,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN
                                 1
                             ELSE
@@ -6700,6 +7080,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1
                             THEN
                                 patients.id
@@ -6709,6 +7090,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6717,6 +7099,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6725,6 +7108,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6733,6 +7117,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6741,6 +7126,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6749,6 +7135,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN
                                 1
                             ELSE
@@ -6814,6 +7201,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2
                             THEN
                                 patients.id
@@ -6823,6 +7211,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  2 THEN
                                 1
                             ELSE
@@ -6831,6 +7220,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN
                                 1
                             ELSE
@@ -6839,6 +7229,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  2 THEN
                                 1
                             ELSE
@@ -6847,6 +7238,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  2 THEN
                                 1
                             ELSE
@@ -6855,6 +7247,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  2 THEN
                                 1
                             ELSE
@@ -6863,6 +7256,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  2 THEN
                                 1
                             ELSE
@@ -6945,6 +7339,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3
                             THEN
                                 patients.id
@@ -6954,6 +7349,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  3 THEN
                                 1
                             ELSE
@@ -6962,6 +7358,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -6970,6 +7367,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  3 THEN
                                 1
                             ELSE
@@ -6978,6 +7376,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  3 THEN
                                 1
                             ELSE
@@ -6986,6 +7385,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  3 THEN
                                 1
                             ELSE
@@ -6994,6 +7394,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  3 THEN
                                 1
                             ELSE
@@ -7002,6 +7403,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  3
                             THEN
                                 patients.id
@@ -7011,6 +7413,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 15
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN
                                 1
                             ELSE
@@ -7093,6 +7496,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4
                             THEN
                                 patients.id
@@ -7102,6 +7506,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  4 THEN
                                 1
                             ELSE
@@ -7110,6 +7515,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -7118,6 +7524,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  4 THEN
                                 1
                             ELSE
@@ -7126,6 +7533,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  4 THEN
                                 1
                             ELSE
@@ -7134,6 +7542,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  4 THEN
                                 1
                             ELSE
@@ -7142,6 +7551,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  4 THEN
                                 1
                             ELSE
@@ -7150,6 +7560,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'M'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) =  4
                             THEN
                                 patients.id
@@ -7159,6 +7570,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 15
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN
                                 1
                             ELSE
@@ -7241,6 +7653,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4
                             THEN
                                 patients.id
@@ -7250,6 +7663,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -7258,6 +7672,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -7266,6 +7681,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -7274,6 +7690,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -7282,6 +7699,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -7290,6 +7708,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN
                                 1
                             ELSE
@@ -7298,6 +7717,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'M'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 3 AND 4
                             THEN
                                 patients.id
@@ -7307,6 +7727,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 15
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 3 AND 4 THEN
                                 1
                             ELSE
@@ -7397,6 +7818,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
                             THEN
                                 patients.id
@@ -7406,6 +7828,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7414,6 +7837,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7422,6 +7846,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7430,6 +7855,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7438,6 +7864,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7446,6 +7873,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7454,6 +7882,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7462,6 +7891,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
                             THEN
                                 patients.id
@@ -7471,6 +7901,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 15
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -7553,6 +7984,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
                             THEN
                                 patients.id
@@ -7562,6 +7994,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7570,6 +8003,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7578,6 +8012,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7586,6 +8021,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7594,6 +8030,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7602,6 +8039,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7610,6 +8048,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN
                                 1
                             ELSE
@@ -7618,6 +8057,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
                             THEN
                                 patients.id
@@ -7701,6 +8141,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
                             THEN
                                 patients.id
@@ -7710,6 +8151,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7718,6 +8160,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7726,6 +8169,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7734,6 +8178,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7742,6 +8187,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7750,6 +8196,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7758,6 +8205,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN
                                 1
                             ELSE
@@ -7766,6 +8214,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
                             THEN
                                 patients.id
@@ -7838,8 +8287,18 @@ class DentalConsolidatedOHSReportService
                                 0
                             END) AS 'male_8_year_old_with_referred',
                         COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'M'
+                                AND service_id IN(4, 8)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'male_8_year_old_with_counseling',
+                        COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
                             THEN
                                 patients.id
@@ -7849,6 +8308,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7857,6 +8317,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7865,6 +8326,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7873,6 +8335,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7881,6 +8344,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7889,6 +8353,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7897,6 +8362,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN
                                 1
                             ELSE
@@ -7905,6 +8371,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
                             THEN
                                 patients.id
@@ -7988,6 +8455,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
                             THEN
                                 patients.id
@@ -7997,6 +8465,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8005,6 +8474,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8013,6 +8483,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8021,6 +8492,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8029,6 +8501,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8037,6 +8510,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8045,6 +8519,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN
                                 1
                             ELSE
@@ -8053,6 +8528,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
                             THEN
                                 patients.id
@@ -8144,6 +8620,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
                             THEN
                                 patients.id
@@ -8153,6 +8630,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8161,6 +8639,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8169,6 +8648,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8177,6 +8657,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8185,6 +8666,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8193,6 +8675,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8201,6 +8684,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN
                                 1
                             ELSE
@@ -8209,6 +8693,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
                             THEN
                                 patients.id
@@ -8218,6 +8703,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 15
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN
                                 1
                             ELSE
@@ -8292,6 +8778,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
                             THEN
                                 patients.id
@@ -8301,6 +8788,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -8309,6 +8797,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -8317,6 +8806,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -8325,6 +8815,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -8333,6 +8824,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -8341,6 +8833,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN
                                 1
                             ELSE
@@ -8349,6 +8842,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
                             THEN
                                 patients.id
@@ -8416,6 +8910,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
                             THEN
                                 patients.id
@@ -8425,6 +8920,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -8433,6 +8929,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -8441,6 +8938,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -8449,6 +8947,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -8457,6 +8956,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
                                 1
                             ELSE
@@ -8465,6 +8965,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
                             THEN
                                 patients.id
@@ -8532,6 +9033,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
                             THEN
                                 patients.id
@@ -8541,6 +9043,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -8549,6 +9052,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -8557,6 +9061,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -8565,6 +9070,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -8573,6 +9079,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
                                 1
                             ELSE
@@ -8581,6 +9088,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
                             THEN
                                 patients.id
@@ -8666,6 +9174,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                             THEN
                                 patients.id
                             ELSE
@@ -8673,7 +9182,8 @@ class DentalConsolidatedOHSReportService
                             END) AS 'female_all_age_with_op_scaling',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 5 THEN
+                                AND service_id = 5
+                                AND (is_pregnant IS NULL OR is_pregnant = 0) THEN
                                 1
                             ELSE
                                 0
@@ -8681,7 +9191,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 10
-                                AND is_pregnant IS NULL
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
                             THEN
                                 1
@@ -8691,7 +9201,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 17
-                                AND is_pregnant IS NULL
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 19
                             THEN
                                 1
@@ -8700,28 +9210,36 @@ class DentalConsolidatedOHSReportService
                             END) AS 'female_all_age_with_flouride',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 18 THEN
+                                AND service_id = 18
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                            THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_all_age_with_post_operative',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 3 THEN
+                                AND service_id = 3
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                            THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_all_age_with_abscess',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 20 THEN
+                                AND service_id = 20
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                            THEN
                                 1
                             ELSE
                                 0
                             END) AS 'female_all_age_with_other_services',
                         SUM(
                             CASE WHEN patients.gender = 'F'
-                                AND service_id = 11 THEN
+                                AND service_id = 11
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                            THEN
                                 1
                             ELSE
                                 0
@@ -8729,6 +9247,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 3
                             THEN
                                 patients.id
@@ -8738,6 +9257,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 15
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 3 AND 5 THEN
                                 1
                             ELSE
@@ -8893,6 +9413,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
                             THEN
                                 patients.id
@@ -8902,6 +9423,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
                             THEN
                                 patients.id
@@ -8911,6 +9433,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
                             THEN
                                 patients.id
@@ -8947,6 +9470,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1
                             THEN
                                 patients.id
@@ -8956,6 +9480,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1
                             THEN
                                 patients.id
@@ -8965,6 +9490,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1
                             THEN
                                 patients.id
@@ -9001,6 +9527,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2
                             THEN
                                 patients.id
@@ -9010,6 +9537,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2
                             THEN
                                 patients.id
@@ -9019,6 +9547,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2
                             THEN
                                 patients.id
@@ -9055,6 +9584,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3
                             THEN
                                 patients.id
@@ -9064,6 +9594,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3
                             THEN
                                 patients.id
@@ -9073,6 +9604,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3
                             THEN
                                 patients.id
@@ -9109,6 +9641,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4
                             THEN
                                 patients.id
@@ -9118,6 +9651,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4
                             THEN
                                 patients.id
@@ -9127,6 +9661,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4
                             THEN
                                 patients.id
@@ -9163,6 +9698,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4
                             THEN
                                 patients.id
@@ -9172,6 +9708,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4
                             THEN
                                 patients.id
@@ -9181,6 +9718,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4
                             THEN
                                 patients.id
@@ -9217,6 +9755,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
                             THEN
                                 patients.id
@@ -9226,6 +9765,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
                             THEN
                                 patients.id
@@ -9235,6 +9775,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
                             THEN
                                 patients.id
@@ -9271,6 +9812,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
                             THEN
                                 patients.id
@@ -9280,6 +9822,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
                             THEN
                                 patients.id
@@ -9289,6 +9832,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
                             THEN
                                 patients.id
@@ -9325,6 +9869,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
                             THEN
                                 patients.id
@@ -9334,6 +9879,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
                             THEN
                                 patients.id
@@ -9343,6 +9889,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
                             THEN
                                 patients.id
@@ -9379,6 +9926,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
                             THEN
                                 patients.id
@@ -9388,6 +9936,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
                             THEN
                                 patients.id
@@ -9397,6 +9946,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
                             THEN
                                 patients.id
@@ -9433,6 +9983,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
                             THEN
                                 patients.id
@@ -9442,6 +9993,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
                             THEN
                                 patients.id
@@ -9451,6 +10003,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
                             THEN
                                 patients.id
@@ -9487,6 +10040,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
                             THEN
                                 patients.id
@@ -9496,6 +10050,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
                             THEN
                                 patients.id
@@ -9505,6 +10060,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
                             THEN
                                 patients.id
@@ -9541,6 +10097,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
                             THEN
                                 patients.id
@@ -9550,6 +10107,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
                             THEN
                                 patients.id
@@ -9559,6 +10117,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
                             THEN
                                 patients.id
@@ -9595,6 +10154,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
                             THEN
                                 patients.id
@@ -9604,6 +10164,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
                             THEN
                                 patients.id
@@ -9613,6 +10174,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
                             THEN
                                 patients.id
@@ -9649,6 +10211,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
                             THEN
                                 patients.id
@@ -9658,6 +10221,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
                             THEN
                                 patients.id
@@ -9667,6 +10231,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
                             THEN
                                 patients.id
@@ -9700,6 +10265,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                             THEN
                                 patients.id
                             ELSE
@@ -9708,6 +10274,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                             THEN
                                 patients.id
                             ELSE
@@ -9716,6 +10283,7 @@ class DentalConsolidatedOHSReportService
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND dental_tooth_services.service_code = 'X'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                             THEN
                                 patients.id
                             ELSE
