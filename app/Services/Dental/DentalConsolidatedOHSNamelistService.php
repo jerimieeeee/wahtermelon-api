@@ -920,7 +920,7 @@ class DentalConsolidatedOHSNamelistService
             ->groupBy('patients.id');
     }
 
-    public function get_services($request)
+    public function get_dental_services($request)
     {
         return DB::table('consults')
             ->selectRaw("
