@@ -116,6 +116,7 @@ class DentalConsolidatedOHSNamelistService
             })
             ->when($request->indicator == 'infant', function ($q) use ($request) {
                 $q->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11")
+                    ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11")
                     ->when($request->params == 'allergies', function ($q) use ($request) {
                         $q->where('allergies_flag', 1);
                     })
@@ -876,8 +877,8 @@ class DentalConsolidatedOHSNamelistService
                 ->when($request->params == 'filled', function ($q) use ($request) {
                     $q->where('tooth_condition', 'F');
                 })
-                ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5")
-                ->whereIn('patients.gender', ['M', 'F']);
+            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5")
+            ->whereIn('patients.gender', ['M', 'F']);
             })
             ->whereIn('dental_tooth_conditions.tooth_number',
                 [
@@ -891,6 +892,59 @@ class DentalConsolidatedOHSNamelistService
                 ]
             )
             ->where('patients.gender', $request->gender)
+            ->wherePtGroup('dn')
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->groupBy('patients.id');
+    }
+
+    public function get_services($request)
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        consults.patient_id AS patient_id,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name,
+                        patients.birthdate,
+                        DATE_FORMAT(consult_date, '%Y-%m-%Y') AS date_of_service
+                    ")
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->join('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consults.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->indicator == 'pregnant', function ($q) use ($request) {
+                $q->where('consults.is_pregnant', 1)
+                ->when($request->params == 'op_scaling', function ($q) use ($request) {
+                    $q->whereIn('service_id', [19, 14]);
+                })
+                ->when($request->params == 'gum_treatment', function ($q) use ($request) {
+                    $q->where('service_id', 5);
+                })
+                ->when($request->params == 'post_operative', function ($q) use ($request) {
+                    $q->where('service_id', 18);
+                })
+                ->when($request->params == 'post_operative', function ($q) use ($request) {
+                    $q->where('service_id', 18);
+                })
+                ->when($request->params == 'post_operative', function ($q) use ($request) {
+                    $q->where('service_id', 18);
+                })
+            })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'fac', function ($q) {
