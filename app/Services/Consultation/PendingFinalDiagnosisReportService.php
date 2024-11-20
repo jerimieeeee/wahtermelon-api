@@ -14,6 +14,7 @@ class PendingFinalDiagnosisReportService
             ->when($request->filled('physician_id'), function ($q) use ($request) {
                 $q->where('physician_id', $request->physician_id);
             })
+            ->where('consult_done', 1)
             ->where(function ($query) {
                 $query->whereNotNull('physician_id')
                     ->whereDoesntHave('finalDiagnosis');
