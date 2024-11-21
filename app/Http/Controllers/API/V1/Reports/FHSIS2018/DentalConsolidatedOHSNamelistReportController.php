@@ -13,6 +13,8 @@ class DentalConsolidatedOHSNamelistReportController extends Controller
      */
     public function index(Request $request, DentalConsolidatedOHSNamelistService $namelistService)
     {
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
         $data = null;
 
         //Return Medical, Social, Oral Health Status
@@ -66,7 +68,6 @@ class DentalConsolidatedOHSNamelistReportController extends Controller
             $data = $query->get();
         }
 
-
         //Return Dental Services
         if (in_array($request->params, [
             'op_scaling',
@@ -100,7 +101,49 @@ class DentalConsolidatedOHSNamelistReportController extends Controller
             $data = $query->get();
         }
 
-        return $data; // Return the data
+        // Check if search term is provided
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+
+            // Split the search term by space
+            $keywords = explode(' ', $searchTerm);
+
+            // Filter the namelist collection based on each keyword
+            $filteredNamelist = $data->filter(function ($item) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    if (stripos($item->last_name, $keyword) !== false ||
+                        stripos($item->middle_name, $keyword) !== false ||
+                        stripos($item->first_name, $keyword) !== false) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        } else {
+            // If no search term provided, use the original namelist
+            $filteredNamelist = $data;
+        }
+
+       $data = $filteredNamelist->paginate($perPage)->withQueryString();
+
+        return $data;
+
+/*        // Count the total number of items in the filtered namelist
+        $totalItems = $filteredNamelist->count();
+
+        // Calculate the last page
+        $lastPage = ceil($totalItems / $perPage);
+
+        // Paginate the filtered namelist
+        $page = $request->has('page') ? $request->input('page') : 1;
+        $offset = ($page - 1) * $perPage;
+        $data = $filteredNamelist->slice($offset, $perPage)->values();
+
+        return [
+            'current_page' => $page,
+            'last_page' => $lastPage,
+            'data' => $data,
+        ];*/
 
     }
 
