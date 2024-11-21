@@ -651,21 +651,21 @@ class DentalConsolidatedOHSNamelistService
                 $q->where('consults.facility_code', auth()->user()->facility_code);
             })
             ->when($request->indicator == 'infant', function ($q) use ($request) {
-                $q->when($request->params == 'decayed', function ($q) use ($request) {
+                $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                         $q->where('tooth_condition', 'D')
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11");
                     })
-                    ->when($request->params == 'filled', function ($q) use ($request) {
+                    ->when($request->params == 'temp_filled', function ($q) use ($request) {
                         $q->where('tooth_condition', 'F')
                             ->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11");
                     })
                     ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
             })
             ->when($request->indicator == 'underfive', function ($q) use ($request) {
-                $q->when($request->params == 'decayed', function ($q) use ($request) {
+                $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                     $q->where('tooth_condition', 'D');
                 })
-                ->when($request->params == 'filled', function ($q) use ($request) {
+                ->when($request->params == 'temp_filled', function ($q) use ($request) {
                     $q->where('tooth_condition', 'F');
                 })
                 ->when($request->age == '1', function ($q) use ($request) {
@@ -686,10 +686,10 @@ class DentalConsolidatedOHSNamelistService
                 ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
             })
             ->when($request->indicator == 'school_age', function ($q) use ($request) {
-                $q->when($request->params == 'decayed', function ($q) use ($request) {
+                $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                     $q->where('tooth_condition', 'D');
                 })
-                ->when($request->params == 'filled', function ($q) use ($request) {
+                ->when($request->params == 'temp_filled', function ($q) use ($request) {
                     $q->where('tooth_condition', 'F');
                 })
                 ->when($request->age == '5', function ($q) use ($request) {
@@ -713,30 +713,30 @@ class DentalConsolidatedOHSNamelistService
                 ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
             })
             ->when($request->indicator == 'adolescent', function ($q) use ($request) {
-                $q->when($request->params == 'decayed', function ($q) use ($request) {
+                $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                     $q->where('tooth_condition', 'D');
                 })
-                ->when($request->params == 'filled', function ($q) use ($request) {
+                ->when($request->params == 'temp_filled', function ($q) use ($request) {
                     $q->where('tooth_condition', 'F');
                 })
                 ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19")
                 ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
             })
             ->when($request->indicator == 'total', function ($q) use ($request) {
-                $q->when($request->params == 'decayed', function ($q) use ($request) {
+                $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                     $q->where('tooth_condition', 'D');
                 })
-                ->when($request->params == 'filled', function ($q) use ($request) {
+                ->when($request->params == 'temp_filled', function ($q) use ($request) {
                     $q->where('tooth_condition', 'F');
                 })
                 ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19")
                 ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
             })
             ->when($request->indicator == 'grand_total', function ($q) use ($request) {
-                $q->when($request->params == 'decayed', function ($q) use ($request) {
+                $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                     $q->where('tooth_condition', 'D');
                 })
-                ->when($request->params == 'filled', function ($q) use ($request) {
+                ->when($request->params == 'temp_filled', function ($q) use ($request) {
                     $q->where('tooth_condition', 'F');
                 })
                 ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19")
@@ -1319,5 +1319,66 @@ class DentalConsolidatedOHSNamelistService
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
                 })
                 ->groupBy('patients.id');
+    }
+
+    public function get_dental_ofc($request)
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        consults.patient_id AS patient_id,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name,
+                        patients.birthdate,
+                        DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service
+                    ")
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
+            ->leftJoin('dental_medical_socials', 'dental_oral_health_conditions.patient_id', '=', 'dental_medical_socials.patient_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
+                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            })
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('consults.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->indicator == 'underfive', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
+                    ->when($request->age == '1', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1");
+                    })
+                    ->when($request->age == '2', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2");
+                    })
+                    ->when($request->age == '3', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3");
+                    })
+                    ->when($request->age == '4', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4");
+                    })
+                    ->when($request->age == 'total', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4");
+                    })
+                    ->when($request->params == 'orally_fit', function ($q) use ($request) {
+                        $q->where('orally_fit_flag', 1);
+                    })
+                    ->when($request->params == 'oral_rehab', function ($q) use ($request) {
+                        $q->where('oral_rehab', 1);
+                    });
+            })
+            ->whereIn('patients.gender', explode(',', $request->gender))
+            ->wherePtGroup('dn')
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            })
+            ->groupBy('patients.id');
     }
 }
