@@ -74,6 +74,9 @@ class DentalConsolidatedOHSNamelistService
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
                     })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
+                    })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
                     })
@@ -134,6 +137,9 @@ class DentalConsolidatedOHSNamelistService
                     })
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
+                    })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
                     })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
@@ -197,6 +203,9 @@ class DentalConsolidatedOHSNamelistService
                     })
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
+                    })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
                     })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
@@ -264,6 +273,9 @@ class DentalConsolidatedOHSNamelistService
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
                     })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
+                    })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
                     })
@@ -324,6 +336,9 @@ class DentalConsolidatedOHSNamelistService
                     })
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
+                    })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
                     })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
@@ -386,6 +401,9 @@ class DentalConsolidatedOHSNamelistService
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
                     })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
+                    })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
                     })
@@ -447,6 +465,9 @@ class DentalConsolidatedOHSNamelistService
                     ->when($request->params == 'thyroid', function ($q) use ($request) {
                         $q->where('thyroid_flag', 1);
                     })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
+                    })
                     ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                         $q->where('malignancy_flag', 1);
                     })
@@ -507,6 +528,9 @@ class DentalConsolidatedOHSNamelistService
             ->when($request->params == 'thyroid', function ($q) use ($request) {
                 $q->where('thyroid_flag', 1);
             })
+            ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                $q->where('hepatitis_flag', 1);
+            })
             ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                 $q->where('malignancy_flag', 1);
             })
@@ -566,6 +590,9 @@ class DentalConsolidatedOHSNamelistService
             })
             ->when($request->params == 'thyroid', function ($q) use ($request) {
                 $q->where('thyroid_flag', 1);
+            })
+            ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                $q->where('hepatitis_flag', 1);
             })
             ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
                 $q->where('malignancy_flag', 1);

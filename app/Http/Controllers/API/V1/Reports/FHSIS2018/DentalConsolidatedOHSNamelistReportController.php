@@ -128,23 +128,6 @@ class DentalConsolidatedOHSNamelistReportController extends Controller
 
         return $data;
 
-/*        // Count the total number of items in the filtered namelist
-        $totalItems = $filteredNamelist->count();
-
-        // Calculate the last page
-        $lastPage = ceil($totalItems / $perPage);
-
-        // Paginate the filtered namelist
-        $page = $request->has('page') ? $request->input('page') : 1;
-        $offset = ($page - 1) * $perPage;
-        $data = $filteredNamelist->slice($offset, $perPage)->values();
-
-        return [
-            'current_page' => $page,
-            'last_page' => $lastPage,
-            'data' => $data,
-        ];*/
-
     }
 
     /**
