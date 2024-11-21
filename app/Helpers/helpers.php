@@ -48,7 +48,7 @@ if (! function_exists('get_postpartum_week')) {
      */
     function get_postpartum_week($visit_date, $delivery_date)
     {
-        $delivery_date = Carbon::parse($delivery_date);
+        $delivery_date = Carbon::parse(Carbon::parse($delivery_date)->format('Y-m-d'));
 
         return $delivery_date->diffInWeeks(Carbon::parse($visit_date)->format('Y-m-d'));
     }
