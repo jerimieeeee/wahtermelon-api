@@ -9,6 +9,7 @@ use App\Models\V1\PSGC\Barangay;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ImportController extends Controller
@@ -41,6 +42,13 @@ class ImportController extends Controller
                 }
                 //dd($row);
                 $row['BIRTHDATE'] = Carbon::parse($row['BIRTHDATE'])->format('Y-m-d');
+                $consultDate = Carbon::parse($row['CONSULTATION DATE'])
+                    ->setTime(rand(9, 16), rand(0, 59), rand(0, 59)); // Set a random time between 9:00:00 and 16:59:59
+                //->format('Y-m-d H:i:s');
+                $row['CONSULTATION DATE'] = $consultDate->format('Y-m-d H:i:s');
+                $row['VITALS DATE 1st'] = $consultDate->addMinutes(5)->format('Y-m-d H:i:s');
+                $row['VITALS DATE 2nd'] = $consultDate->addMinutes(5)->format('Y-m-d H:i:s');
+
                 $patient = Patient::query()->where([
                     'last_name' => $row['LAST NAME'],
                     'first_name' => $row['FIRST NAME'],
@@ -75,6 +83,25 @@ class ImportController extends Controller
                         ]
                     );
                 }
+
+                if ($patient->socialHistory == null) {
+                    $row['SMOKING'] = $row['SMOKING'] == 'NO' ? 'N' : 'Y';
+                    $row['ALCOHOL'] = $row['ALCOHOL'] == 'NO' ? 'N' : 'Y';
+                    $row['ILLICIT DRUGS'] = $row['ILLICIT DRUGS'] == 'NO' ? 'N' : 'Y';
+                    $row['SEXUALLY ACTIVE'] = $row['SEXUALLY ACTIVE'] == 'NO' ? 'N' : 'Y';
+
+                    $patient->socialHistory()->create([
+                        'facility_code' => 'DOH000000000048882',
+                        'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                        'patient_id' => $patient->id,
+                        'smoking' => $row['SMOKING'],
+                        'alcohol' => $row['ALCOHOL'],
+                        'illicit_drugs' => $row['SMOKING'],
+                        'sexually_active' => $row['SMOKING'],
+                    ]);
+                    //dd('social');
+                }
+
                 //dd($patient->householdFolder->id);
                 if ($patient->householdFolder === null) {
                     $barangay = Barangay::query()->where('psgc_10_digit_code', 'LIKE', '%'.$row['ADDRESS'])->first();
@@ -102,12 +129,7 @@ class ImportController extends Controller
                         'membership_category_id' => $row['MEMBERSHIP CATEGORY'],
                     ]);
                 }
-                $consultDate = Carbon::parse($row['CONSULTATION DATE'])
-                    ->setTime(rand(9, 16), rand(0, 59), rand(0, 59)); // Set a random time between 9:00:00 and 16:59:59
-                    //->format('Y-m-d H:i:s');
-                $row['CONSULTATION DATE'] = $consultDate->format('Y-m-d H:i:s');
-                $row['VITALS DATE 1st'] = $consultDate->addMinutes(5)->format('Y-m-d H:i:s');
-                $row['VITALS DATE 2nd'] = $consultDate->addMinutes(5)->format('Y-m-d H:i:s');
+
                 //dd($row);
                 $consult = Consult::query()
                     ->where(['patient_id' => $patient->id, 'pt_group' => 'cn'])
@@ -139,7 +161,7 @@ class ImportController extends Controller
                         'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
                         'consult_id' => $consult->id,
                         'patient_id' => $patient->id,
-                        'complaint_id' => $row['CHIEF COMPLAINT']
+                        'complaint_id' => $row['CHIEF COMPLAINT'] == 'OTEHRS' ? 'OTHERS' : $row['CHIEF COMPLAINT']
                     ]);
 
                     $management = $notes->management()->create([
@@ -149,11 +171,22 @@ class ImportController extends Controller
                         'management_code' => $row['MGMT/COUNSELLING'],
                     ]);
 
-                    $finalDx = $notes->finaldx()->create([
-                        'facility_code' => 'DOH000000000048882',
-                        'user_id' => '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e',
-                        'icd10_code' => $row['FINAL DIAGNOSIS']
-                    ]);
+                    if (Str::contains($row['FINAL DIAGNOSIS'], ';')) {
+                        $icd10s = array_map('trim', explode(';', $row['FINAL DIAGNOSIS'])); // Split and trim
+                        foreach ($icd10s as $icd10) {
+                            $finalDx = $notes->finaldx()->create([
+                                'facility_code' => 'DOH000000000048882',
+                                'user_id' => '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e',
+                                'icd10_code' => $icd10
+                            ]);
+                        }
+                    } else {
+                        $finalDx = $notes->finaldx()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'user_id' => '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e',
+                            'icd10_code' => $row['FINAL DIAGNOSIS']
+                        ]);
+                    }
 
                     $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15'];
                     foreach ($physicalExams as $pe)
@@ -163,10 +196,10 @@ class ImportController extends Controller
                             'pe_id' => $pe
                         ]);
 
-                    dd($finalDx);
+                    //dd($finalDx);
 
                 }
-                dd('done');
+                //dd('done');
             });
         });
 
