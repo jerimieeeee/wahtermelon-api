@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API\V1\Import;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\UploadCsvJob;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Barangay;
+use App\Services\Patient\PatientVitalsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\SimpleExcel\SimpleExcelReader;
@@ -82,6 +86,7 @@ class ImportController extends Controller
                             'consent_flag' => 1,
                         ]
                     );
+
                 }
 
                 if ($patient->socialHistory == null) {
@@ -136,6 +141,51 @@ class ImportController extends Controller
                     ->whereDate('consult_date', Carbon::parse($row['CONSULTATION DATE'])->format('Y-m-d'))->first();
 
                 if (!$consult) {
+                    $patientVitals = new PatientVitalsService();
+                    $years = Carbon::parse($patient->birthdate)->diffInYears($row['VITALS DATE 1st']);
+                    $months = Carbon::parse($patient->birthdate)->diffInMonths($row['VITALS DATE 1st']);
+                    //dd(['Years' => $years, 'Months' => $months, 'Birthdate' => $patient, 'Vitals Date' => $row['VITALS DATE 1st']]);
+                    $bp1 = explode('/',$row['BP1']);
+                    $bp2 = explode('/',$row['BP2']);
+
+                    $firstVitalDetails = [
+                        'facility_code' => 'DOH000000000048882',
+                        'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                        'patient_id' => $patient->id,
+                        'patient_age_years' => $years,
+                        'patient_age_months' => $months,
+                        'patient_temp' => $row['TEMP'],
+                        'patient_height' => $row['HT (CM)'],
+                        'patient_weight' => $row['WT (KG)'],
+                        'patient_heart_rate' => $row['HR/CR'],
+                        'patient_respiratory_rate' => $row['RR'],
+                        'patient_pulse_rate' => $row['PR'],
+                        'patient_spo2' => $row['SPO2'],
+                        'patient_waist' => $row['WAISTC (CM)'],
+                        'patient_hip' => $row['HIPC (CM)'],
+                    ];
+
+                    if ($years > 6) {
+                        //dd($row['WT (KG)'], $row['HT (CM)']);
+                        [$bmi, $bmiClass] = compute_bmi($row['WT (KG)'], $row['HT (CM)']);
+                        $firstVitalDetails['patient_bmi'] = $bmi;
+                        $firstVitalDetails['patient_bmi_class'] = $bmiClass;
+                    }
+                    if ($months < 72) {
+                        $weightForAge = $patientVitals->get_weight_for_age($months, $patient->gender, $row['WT (KG)']);
+                        $weightForAgeClass = $weightForAge ? $weightForAge->wt_class : null;
+
+                        $heightForAge = $patientVitals->get_height_for_age($months, $patient->gender, $row['HT (CM)']);
+                        $heightForAgeClass = $heightForAge ? $heightForAge->lt_class : null;
+
+                        $weightForHeight = $patientVitals->get_weight_for_height($months, $patient->gender, $row['WT (KG)'], $row['HT (CM)']);
+                        $weightForHeightClass = $weightForHeight ? $weightForHeight->wt_class : null;
+
+                        $firstVitalDetails['patient_weight_for_age'] = $weightForAgeClass;
+                        $firstVitalDetails['patient_height_for_age'] = $heightForAgeClass;
+                        $firstVitalDetails['patient_weight_for_height'] = $weightForHeightClass;
+                    }
+
                     $consult = Consult::query()->create([
                         'facility_code' => 'DOH000000000048882',
                         'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
@@ -146,6 +196,20 @@ class ImportController extends Controller
                         'consult_done' => 1,
                         'pt_group' => 'cn'
                     ]);
+
+                    $firstVitalDetails['consult_id'] = $consult->id;
+
+                    $vitals1 = PatientVitals::query()->create([
+                        'vitals_date' => $row['VITALS DATE 1st'],
+                        'bp_systolic' => $bp1[0],
+                        'bp_diastolic' => $bp1[1],
+                        ] + $firstVitalDetails);
+
+                    $vitals2 = PatientVitals::query()->create([
+                            'vitals_date' => $row['VITALS DATE 2nd'],
+                            'bp_systolic' => $bp2[0],
+                            'bp_diastolic' => $bp2[1],
+                        ] + $firstVitalDetails);
 
                     $notes = $consult->consultNotes()->create([
                         'facility_code' => 'DOH000000000048882',
@@ -199,7 +263,7 @@ class ImportController extends Controller
                     //dd($finalDx);
 
                 }
-                //dd('done');
+                dd('done');
             });
         });
 
@@ -211,5 +275,38 @@ class ImportController extends Controller
 //        });
 
         return 'Data imported successfully!';
+    }
+
+    public function importCsv(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,xlsx',
+        ]);
+
+        $file = $request->file('file');
+
+        // Move the file to a permanent location
+        $filePath = $file->store('temp'); // Stored in storage/app/temp
+
+        // Get the absolute path to the stored file
+        $absolutePath = storage_path('app/' . $filePath);
+
+        // Process the file with Spatie Simple Excel
+        $rows = SimpleExcelReader::create($absolutePath)
+            ->getRows();
+
+        $batch = Bus::batch([])->dispatch();
+
+        $rows->chunk(500)->each(function ($chunk) use ($batch) {
+            $batch->add(new UploadCsvJob($chunk->toArray()));
+        });
+
+        // Delete the file after processing
+        Storage::delete($filePath);
+
+        return response()->json([
+            'message' => 'Import batch dispatched successfully!',
+            'batch_id' => $batch->id,
+        ]);
     }
 }
