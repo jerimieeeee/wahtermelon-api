@@ -2,12 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Models\User;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Barangay;
 use App\Services\Patient\PatientVitalsService;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
@@ -56,6 +58,9 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     $row[$key] = number_format((float) $value, 0, '', ''); // Convert to full number as text
                 }
             }
+            $randomUser = User::query()->where('facility_code', 'DOH000000000048882')->where('is_active', 1)->where('designation_code', '!=', 'MD')->inRandomOrder()->first();
+
+            //dd($randomUser->konsultaCredential->accreditation_number);
             //dd($row);
             $row['BIRTHDATE'] = Carbon::parse($row['BIRTHDATE'])->format('Y-m-d');
             $consultDate = Carbon::parse($row['CONSULTATION DATE'])
@@ -74,6 +79,9 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
             ])->first();
 
             if(!$patient) {
+                $caseNumberDate = Carbon::parse($row['ENLISTMENT DATE'])->format('Ym');
+                $caseNumberPrefix = 'T' . $randomUser->konsultaCredential->accreditation_number . $caseNumberDate;
+                $caseNumber = IdGenerator::generate(['table' => 'patients', 'field' => 'case_number', 'length' => 21, 'prefix' => $caseNumberPrefix, 'reset_on_prefix_change' => true]);
                 $patient = Patient::query()->updateOrCreate(
                     [
                         'last_name' => $row['LAST NAME'],
@@ -84,7 +92,8 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     ],
                     [
                         'facility_code' => 'DOH000000000048882',
-                        'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                        'case_number' => $caseNumber,
+                        'user_id' => $randomUser->id,
                         'mothers_name' => $row["MOTHER'S MAIDEN NAME"],
                         'gender' => $row["SEX"],
                         'mobile_number' => $row["MOBILE NUMBER"],
@@ -109,7 +118,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
                 $patient->socialHistory()->create([
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'patient_id' => $patient->id,
                     'smoking' => $row['SMOKING'],
                     'alcohol' => $row['ALCOHOL'],
@@ -124,20 +133,25 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                 $barangay = Barangay::query()->where('psgc_10_digit_code', 'LIKE', '%'.$row['ADDRESS'])->first();
                 $patient->householdFolder()->create([
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'address' => 'Purok 1',
                     'barangay_code' => $barangay->psgc_10_digit_code
-                ])->householdMember()->create(['patient_id' => $patient->id, 'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a', 'family_role_code' => $row['FAMILY ROLE']]);
+                ])->householdMember()->create(['patient_id' => $patient->id, 'user_id' => $randomUser->id, 'family_role_code' => $row['FAMILY ROLE']]);
             }
 
             if ($patient->philhealthLatest === null) {
+                $philhealthTransactionDate = Carbon::parse($row['ENLISTMENT DATE'])->format('Ym');
                 $row['ENLISTMENT DATE'] = Carbon::parse($row['ENLISTMENT DATE'])->format('Y-m-d');
                 $row['EFFECTIVITY YEAR'] = Carbon::parse($row['ENLISTMENT DATE'])->format('Y');
+
+                $philhealthPrefix = $randomUser->konsultaCredential->accreditation_number . $philhealthTransactionDate;
+                $philhealthTransactionNumber = IdGenerator::generate(['table' => 'patient_philhealth', 'field' => 'transaction_number', 'length' => 21, 'prefix' => $philhealthPrefix, 'reset_on_prefix_change' => true]);
                 $patient->philhealthLatest()->create([
                     'facility_code' => 'DOH000000000048882',
+                    'transaction_number' => $philhealthTransactionNumber,
                     'patient_id' => $patient->id,
                     'philhealth_id' => $row['PHIC ID'],
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'enlistment_date' => $row['ENLISTMENT DATE'],
                     'effectivity_year' => $row['EFFECTIVITY YEAR'],
                     'enlistment_status_id' => 1,
@@ -162,7 +176,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
                 $firstVitalDetails = [
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'patient_id' => $patient->id,
                     'patient_age_years' => $years,
                     'patient_age_months' => $months,
@@ -199,9 +213,14 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     $firstVitalDetails['patient_weight_for_height'] = $weightForHeightClass;
                 }
 
+                $consultTransactionDate = Carbon::parse($row['CONSULTATION DATE'])->format('Ym');
+                $consultPrefix = $randomUser->konsultaCredential->accreditation_number . $consultTransactionDate;
+                $consultTransactionNumber = IdGenerator::generate(['table' => 'consults', 'field' => 'transaction_number', 'length' => 21, 'prefix' => $consultPrefix, 'reset_on_prefix_change' => true]);
+
                 $consult = Consult::query()->create([
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'transaction_number' => $consultTransactionNumber,
+                    'user_id' => $randomUser->id,
                     'patient_id' => $patient->id,
                     'is_konsulta' => 1,
                     'physician_id' => '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e',
@@ -226,7 +245,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
                 $notes = $consult->consultNotes()->create([
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'patient_id' => $patient->id,
                     'complaint' => $row['COMPLAINT NOTES'],
                     'history' => $row['HISTORY NOTES'],
@@ -235,7 +254,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
                 $complaint = $notes->complaints()->create([
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'consult_id' => $consult->id,
                     'patient_id' => $patient->id,
                     'complaint_id' => $row['CHIEF COMPLAINT'] == 'OTEHRS' ? 'OTHERS' : $row['CHIEF COMPLAINT']
@@ -243,7 +262,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
                 $management = $notes->management()->create([
                     'facility_code' => 'DOH000000000048882',
-                    'user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a',
+                    'user_id' => $randomUser->id,
                     'patient_id' => $patient->id,
                     'management_code' => $row['MGMT/COUNSELLING'],
                 ]);
@@ -269,7 +288,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                 foreach ($physicalExams as $pe)
                     $notes->physicalExam()->create([
                         'facility_code' => 'DOH000000000048882',
-                        'user_id' => '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e',
+                        'user_id' => $randomUser->id,
                         'pe_id' => $pe
                     ]);
 
