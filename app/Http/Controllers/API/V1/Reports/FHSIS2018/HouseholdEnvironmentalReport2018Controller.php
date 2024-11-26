@@ -6,15 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Services\Household\HouseholdEnvironmentalReportService;
 use Illuminate\Http\Request;
 
-class HouseholdEnvironmentalReport2018 extends Controller
+class HouseholdEnvironmentalReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request, HouseholdEnvironmentalReportService $householdEnvironmentalService)
     {
-        // Catchment Population
-        $catchment_population = $householdEnvironmentalService->get_projected_population()->get();
+        // Projected Population
+        $projected_population = $householdEnvironmentalService->get_projected_population()->get();
 
         //Water Supply
         $water_level_all = $householdEnvironmentalService->get_household_environmental_water_source($request, 'all')->get()->groupBy('family_id');
@@ -34,10 +34,19 @@ class HouseholdEnvironmentalReport2018 extends Controller
         //Safety Managed Sanitation Services
         $safety_managed_sanitation = $householdEnvironmentalService->get_household_environmental_safety_managed_sanitation($request)->get()->groupBy('family_id');
 
+        //Satisfaction Solid Waste Management
+        $satisfaction_solid_waste_management = $householdEnvironmentalService->get_household_environmental_satisfaction_solid_waste($request)->get()->groupBy('family_id');
+
+        //Complete Sanitation Facilities
+        $complete_sanitation_facilities = $householdEnvironmentalService->get_household_environmental_complete_sanitation($request)->get()->groupBy('family_id');
+
         //Total Number of Barangays ZOD
         $zod_barangays = $householdEnvironmentalService->get_zod_barangays($request)->get();
 
         return [
+            //GET PROJECTED POPULATION
+            'projected_population' => $projected_population,
+
             // Water Supply
             'water_level_all' => $water_level_all,
             'water_level1' => $water_level1,
@@ -55,6 +64,12 @@ class HouseholdEnvironmentalReport2018 extends Controller
 
             //Safety Managed Sanitation Services
             'safety_managed_sanitation' => $safety_managed_sanitation,
+
+            //Safety Managed Sanitation Services
+            'satisfaction_solid_waste_management' => $satisfaction_solid_waste_management,
+
+            //Complete Sanitation Facilities
+            'complete_sanitation_facilities' => $complete_sanitation_facilities,
 
             //Total Number of Barangays ZOD
             'zod_barangays' => $zod_barangays,

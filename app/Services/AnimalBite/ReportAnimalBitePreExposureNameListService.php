@@ -40,8 +40,8 @@ class ReportAnimalBitePreExposureNameListService
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
-                        birthdate,
-                        day0_date AS date_of_service,
+                        patients.birthdate,
+                        day0_date AS date_of_service
                         ")
             ->join('patients', 'patient_ab_pre_exposures.patient_id', '=', 'patients.id')
             ->join('household_members', 'patient_ab_pre_exposures.patient_id', '=', 'household_members.patient_id')
@@ -49,26 +49,29 @@ class ReportAnimalBitePreExposureNameListService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('users', 'patient_ab_pre_exposures.user_id', '=', 'users.id')
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code);
+            })
             ->whereNull('patient_ab_pre_exposures.deleted_at')
-            // total for cat2, cat3, and both
             ->when($request->params == 'male', function ($query) use ($request) {
-                $query->whereGender('M');
+                $query->where('patients.gender', 'M');
             })
             ->when($request->params == 'female', function ($query) use ($request) {
-                $query->whereGender('F');
+                $query->where('patients.gender', 'F');
             })
             ->when($request->params == 'male_female_total', function ($query) use ($request) {
-                $query->whereIn('gender', ['M', 'F']);
+                $query->whereIn('patients.gender', ['M', 'F']);
             })
             ->when($request->params == 'less_than_15', function ($query) use ($request) {
-                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15"));
+                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) < 15"));
             })
             ->when($request->params == 'greater_than_15', function ($query) use ($request) {
-                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15"));
+                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) >= 15"));
             })
             ->when($request->params == 'less_than_and_greater_than_15', function ($query) use ($request) {
-                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15"))
-                    ->orWhere(DB::raw("TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15"));
+                $query->where(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) >= 15"))
+                    ->orWhere(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, day0_date) < 15"));
             })
             ->when($request->params == 'day0', function ($query) use ($request) {
                 $query->whereNotNull('day0_date');
@@ -78,12 +81,11 @@ class ReportAnimalBitePreExposureNameListService
                     ->whereNotNull('day7_date');
             })
             ->when($request->params == 'day0_day7_day21', function ($query) use ($request) {
-                $query->orWhereNotNull('day0_date')
-                    ->orWhereNotNull('day3_date')
-                    ->orWhereNotNull('day7_date');
+                $query->whereNotNull('day0_date')
+                    ->whereNotNull('day7_date')
+                    ->whereNotNull('day21_date');
             })
             ->where('barangays.code', $request->barangay_code)
-            ->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code)
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
@@ -94,7 +96,7 @@ class ReportAnimalBitePreExposureNameListService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
-            ->groupBy('barangays.name')
+            ->groupBy('barangays.code')
             ->orderBy('name');
     }
 }

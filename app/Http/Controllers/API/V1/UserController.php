@@ -52,6 +52,10 @@ class UserController extends Controller
                 $q->whereDesignationCode($request->designation_code)
                 ->whereIsActive(1);
             })
+            ->when(isset($request->doctors_list), function ($q) use ($request) {
+                $q->whereIn('designation_code', ['MD', 'DENTIST'])
+                ->whereIsActive(1);
+            })
             ->when(isset($request->facility_code), function ($q) use ($request) {
                 $q->whereFacilityCode($request->facility_code);
             })

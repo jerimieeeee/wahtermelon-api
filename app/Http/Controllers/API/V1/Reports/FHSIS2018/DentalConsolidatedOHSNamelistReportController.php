@@ -3,23 +3,25 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\Mortality\MortalityReportService;
+use App\Services\Dental\DentalConsolidatedOHSNamelistService;
 use Illuminate\Http\Request;
 
-class MortalityReport2018Controller extends Controller
+class DentalConsolidatedOHSNamelistReportController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, MortalityReportService $mortalityReportService)
+    public function index(Request $request, DentalConsolidatedOHSNamelistService $namelistService)
     {
-        //Projected Population
-        $projected_population = $mortalityReportService->get_projected_population()->get();
-        $g = $mortalityReportService->get_mortality_natality($request)->get();
+        $part1 = $namelistService->get_medical_hx($request)->get();
+        $temporary_tooth = $namelistService->get_temporary_tooth_condition($request)->get();
+        $adult_tooth = $namelistService->get_adult_tooth_condition($request)->get();
+
 
         return [
-            'projected_population' => $projected_population,
-            'data' => $g,
+            'data' => $part1,
+            'temporary_tooth' => $temporary_tooth,
+            'adult_tooth' => $adult_tooth,
         ];
     }
 
@@ -28,7 +30,7 @@ class MortalityReport2018Controller extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**

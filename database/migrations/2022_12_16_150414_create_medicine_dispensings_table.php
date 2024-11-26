@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('dispensing_date')->index();
             $table->foreignUuid('prescription_id')->nullable()->index()->constrained('medicine_prescriptions');
             $table->unsignedInteger('dispense_quantity');
-            $table->unsignedFloat('unit_price', 10, 2)->default(0);
-            $table->unsignedFloat('total_amount', 10, 2)->default(0);
+            $table->decimal('unit_price', 10, 2)->default(0);
+            $table->decimal('total_amount', 10, 2)->default(0);
             $table->string('remarks');
             $table->softDeletes();
             $table->timestamps();

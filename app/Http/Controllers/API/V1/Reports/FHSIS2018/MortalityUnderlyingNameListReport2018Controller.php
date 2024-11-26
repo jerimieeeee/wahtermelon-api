@@ -3,66 +3,18 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\Dental\ReportDentalNameListService;
-use App\Services\Dental\ReportMortalityNameListService;
-use App\Services\Morbidity\ReportMorbidityNameListService;
+use App\Services\Mortality\ReportMortalityNameListService;
+use App\Services\Mortality\ReportMortalityUnderlyingNameListService;
 use Illuminate\Http\Request;
 
-class DentalNameListReport2018Controller extends Controller
+class MortalityUnderlyingNameListReport2018Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ReportDentalNameListService $nameListService)
+    public function index(Request $request, ReportMortalityUnderlyingNameListService $nameListService)
     {
         $namelist = $nameListService->get_report_namelist($request)->get();
-
-        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
-        // Check if search term is provided
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
-
-            // Split the search term by space
-            $keywords = explode(' ', $searchTerm);
-
-            // Filter the namelist collection based on each keyword
-            $filteredNamelist = $namelist->filter(function ($item) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    if (stripos($item->last_name, $keyword) !== false ||
-                        stripos($item->middle_name, $keyword) !== false ||
-                        stripos($item->first_name, $keyword) !== false) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-        } else {
-            // If no search term provided, use the original namelist
-            $filteredNamelist = $namelist;
-        }
-
-        // Count the total number of items in the filtered namelist
-        $totalItems = $filteredNamelist->count();
-
-        // Calculate the last page
-        $lastPage = ceil($totalItems / $perPage);
-
-        // Paginate the filtered namelist
-        $page = $request->has('page') ? $request->input('page') : 1;
-        $offset = ($page - 1) * $perPage;
-        $data = $filteredNamelist->slice($offset, $perPage)->values();
-
-        return [
-            'current_page' => $page,
-            'last_page' => $lastPage,
-            'data' => $data,
-        ];
-    }
-
-    public function dmft(Request $request, ReportDentalNameListService $nameListService)
-    {
-        $namelist = $nameListService->get_dental_dmft($request)->get();
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 

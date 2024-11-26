@@ -106,7 +106,7 @@ class ParseBarangayCodeCommand extends Command
 
     private function checkDatabase($tableName, $foreignKeyName, $referencedColumnName)
     {
-        if (Schema::hasTable($tableName)) {
+        /*if (Schema::hasTable($tableName)) {
             $connection = Schema::getConnection();
             $schemaManager = $connection->getDoctrineSchemaManager();
 
@@ -131,6 +131,27 @@ class ParseBarangayCodeCommand extends Command
             }
         } else {
             echo "Table '$tableName' does not exist";
+        }*/
+
+        if (Schema::hasTable($tableName)) {
+            $foreignKeys = Schema::getConnection()->getSchemaBuilder()->getForeignKeys($tableName);
+
+            foreach ($foreignKeys as $foreignKey) {
+                if ($foreignKey['name'] === $foreignKeyName) {
+                    $referencedColumns = $foreignKey['foreign_columns'];
+                    if (in_array($referencedColumnName, $referencedColumns)) {
+                        return 10;
+                    } elseif (in_array('code', $referencedColumns)) {
+                        return 9;
+                    } else {
+                        return "Referenced Column Name does not exist";
+                    }
+                }
+            }
+
+            return "Foreign key '$foreignKeyName' not found.";
+        } else {
+            return "Table '$tableName' does not exist.";
         }
     }
 

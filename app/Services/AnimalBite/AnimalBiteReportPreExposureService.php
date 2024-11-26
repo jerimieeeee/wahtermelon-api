@@ -45,76 +45,106 @@ class AnimalBiteReportPreExposureService
                             0
                         END) AS 'male_female_total',
                     SUM(
-                        CASE WHEN (TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15) THEN
+                        CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, consult_date) < 15 THEN
                             1
                         ELSE
                             0
                         END) AS 'less_than_15',
                     SUM(
-                        CASE WHEN (TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15) THEN
+                        CASE WHEN TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                             1
                         ELSE
                             0
                         END) AS 'greater_than_15',
                     SUM(
-                        CASE WHEN (TIMESTAMPDIFF(YEAR, birthdate, day0_date) >= 15)
-                            OR(TIMESTAMPDIFF(YEAR, birthdate, day0_date) < 15) THEN
+                        CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, consult_date) >= 15
+                            OR TIMESTAMPDIFF(YEAR, birthdate, consult_date) < 15 THEN
                             1
                         ELSE
                             0
                         END) AS 'less_than_and_greater_than_15',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL THEN
+                        CASE WHEN category_id = 1 THEN
                             1
                         ELSE
                             0
-                        END) AS 'day0',
+                        END) AS 'category1',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL
-                            AND day7_date IS NOT NULL THEN
+                        CASE WHEN category_id = 2 THEN
                             1
                         ELSE
                             0
-                        END) AS 'day0_day7',
+                        END) AS 'category2',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL
-                            AND day7_date IS NOT NULL
-                            AND day21_date IS NOT NULL THEN
+                        CASE WHEN category_id = 3 THEN
                             1
                         ELSE
                             0
-                        END) AS 'day0_day7_day21',
+                        END) AS 'category3',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL THEN
+                        CASE WHEN category_id = 2 THEN
                             1
                         ELSE
                             0
                         END) +
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL
-                            AND day7_date IS NOT NULL THEN
+                        CASE WHEN category_id = 3 THEN
                             1
                         ELSE
                             0
-                        END) +
+                        END) AS 'total_cat2_and_cat3',
                     SUM(
-                        CASE WHEN day0_date IS NOT NULL
-                            AND day7_date IS NOT NULL
-                            AND day21_date IS NOT NULL THEN
+                        CASE WHEN rig_type_code = 'HRIG' THEN
                             1
                         ELSE
                             0
-                        END) AS 'day0_day7_day21_total'
+                        END) AS 'HRIG',
+                    SUM(
+                        CASE WHEN rig_type_code = 'ERIG' THEN
+                            1
+                        ELSE
+                            0
+                        END) AS 'ERIG',
+                    SUM(
+                        CASE WHEN animal_type_id = 1 THEN
+                            1
+                        ELSE
+                            0
+                        END) AS 'dog',
+                    SUM(
+                        CASE WHEN animal_type_id = '2' THEN
+                            1
+                        ELSE
+                            0
+                        END) AS 'cat',
+                    SUM(
+                        CASE WHEN animal_type_id IN(3,4,5) THEN
+                            1
+                        ELSE
+                            0
+                        END) AS 'others',3
+                    SUM(
+                        CASE WHEN patient_ab_pre_exposures.day0_date IS NOT NULL
+                             AND patient_ab_pre_exposures.day7_date IS NOT NULL
+                             AND patient_ab_pre_exposures.day21_date IS NOT NULL THEN
+                            1
+                        ELSE
+                            0
+                        END) AS 'completed'
                     ")
-            ->join('patients', 'patient_ab_pre_exposures.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_ab_pre_exposures.patient_id', '=', 'household_members.patient_id')
+            ->join('patient_abs', 'patient_ab_pre_exposures.patient_id', '=', 'patient_abs.patient_id')
+            ->join('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
+            ->join('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
+            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->whereNull('patient_ab_pre_exposures.deleted_at')
-            ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
-            ->where('patient_ab_pre_exposures.facility_code', auth()->user()->facility_code)
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_abs.facility_code', auth()->user()->facility_code);
+            })
             ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
             })
@@ -124,6 +154,6 @@ class AnimalBiteReportPreExposureService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
-            ->groupBy('barangays.name');
+            ->groupBy('barangays.code');
     }
 }
