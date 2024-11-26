@@ -72,7 +72,7 @@ class EclaimsStatusCommand extends Command
 //        });
 
         EclaimsUpload::query()
-            //->whereIn('pStatus', ['IN PROCESS', 'VOUCHERING', 'WITH VOUCHER'])
+            ->whereIn('pStatus', ['IN PROCESS', 'VOUCHERING', 'WITH VOUCHER'])
             ->whereNotNull('pClaimSeriesLhio')
             //->where('pClaimSeriesLhio','240401070294507')
             //->where('pClaimSeriesLhio','240404070172907')
