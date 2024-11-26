@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\EclaimsStatusJob;
+use App\Models\V1\Eclaims\EclaimsUpload;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,8 +27,8 @@ class Kernel extends ConsoleKernel
                 EclaimsStatusJob::dispatch($claim);
             }
         })
-            ->weeklyOn(6, '20:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
-            ->timezone('Asia/Manila'); // Set the timezone to Asia/Manila
+        ->weeklyOn(6, '20:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
+        ->timezone('Asia/Manila'); // Set the timezone to Asia/Manila
     }
 
     /**
