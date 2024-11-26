@@ -37,6 +37,8 @@ Route::prefix('v1')->group(function () {
         ->middleware('guest');
     Route::post('reset-password', [\App\Http\Controllers\API\Auth\ChangePasswordController::class, 'passwordResetProcess'])->middleware('guest');
 
+    Route::post('import-data', [\App\Http\Controllers\API\V1\Import\ImportController::class, 'importCsv']);
+
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
         ->middleware('auth:api')
         ->group(function () {
@@ -914,6 +916,11 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('dental-consolidated', 'index');
 //                    Route::get('name-list-dmft', 'dmft');
+                });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\DentalConsolidatedOHSNamelistReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('dental-consolidated-name-list', 'index');
                 });
         });
         Route::prefix('mortality')->group(function () {

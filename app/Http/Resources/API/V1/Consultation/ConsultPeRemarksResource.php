@@ -34,6 +34,7 @@ class ConsultPeRemarksResource extends JsonResource
             'neck_remarks' => $this->neck_remarks,
             'speculum_remarks' => $this->speculum_remarks,
             'thorax_remarks' => $this->thorax_remarks,
+            'bartholins_remarks' => $this->bartholins_remarks,
             'remarks' => $this->remarks,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),

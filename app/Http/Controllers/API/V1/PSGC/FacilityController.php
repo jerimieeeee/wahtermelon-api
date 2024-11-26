@@ -40,6 +40,10 @@ class FacilityController extends Controller
 
         $facilities = QueryBuilder::for(Facility::class)
             ->with('barangay', 'municipality', 'province', 'region')
+            ->when($request->facility_list, function ($q) use($request){
+                $q->join('users', 'code', 'users.facility_code')
+                ->groupBy('code');
+            })
             ->allowedFilters(['barangay_code', 'municipality_code', 'province_code', 'region_code', 'code', 'facility_name'])
             ->defaultSort('facility_name')
             ->allowedSorts('facility_name');

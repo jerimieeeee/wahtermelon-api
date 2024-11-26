@@ -44,6 +44,7 @@ class ConsultPeRemarksRequest extends FormRequest
             'neck_remarks' => 'nullable',
             'speculum_remarks' => 'nullable',
             'thorax_remarks' => 'nullable',
+            'bartholins_remarks' => 'nullable',
         ];
     }
 

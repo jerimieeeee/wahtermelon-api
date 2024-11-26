@@ -30,6 +30,7 @@ class LibMedicineRouteSeeder extends Seeder
             ['code' => 13, 'desc' => 'Cutaneous'],
             ['code' => 14, 'desc' => 'Transdermal'],
             ['code' => 15, 'desc' => 'Intrathecal'],
+            ['code' => 16, 'desc' => 'Intradermal'],
         ], ['desc']);
     }
 }
