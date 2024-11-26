@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         ->weeklyOn(6, '20:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
         ->timezone('Asia/Manila'); // Set the timezone to Asia/Manila
 
-        $schedule->command('clean:household-folders')->dailyAt('10:00')->timezone('Asia/Manila');
+        $schedule->command('clean:household-folders')->dailyAt('12:00')->timezone('Asia/Manila');
     }
 
     /**
