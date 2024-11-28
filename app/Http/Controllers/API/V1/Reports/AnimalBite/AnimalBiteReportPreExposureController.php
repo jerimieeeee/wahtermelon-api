@@ -14,7 +14,13 @@ class AnimalBiteReportPreExposureController extends Controller
      */
     public function index(Request $request, AnimalBiteReportPreExposureService $animalbite)
     {
-        return $animalbite->get_ab_pre_exp_prophylaxis($request)->get();
+        //Projected Population
+
+        $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get();
+
+        return [
+            'data' => $part1,
+        ];
     }
 
     /**
