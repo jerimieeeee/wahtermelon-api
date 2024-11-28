@@ -8,17 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class DentalReportService
 {
-    public function get_projected_population()
-    {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
-    }
-
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')
@@ -206,25 +195,13 @@ class DentalReportService
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
 //            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('consult_date', $request->year)
 //            ->whereMonth('consult_date', $request->month)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            });;
     }
 
     public function get_dmft($request, $gender)
@@ -239,12 +216,6 @@ class DentalReportService
 //            ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('consult_date', $request->year)
@@ -261,14 +232,8 @@ class DentalReportService
                 ]
             )
             ->whereIn('dental_tooth_conditions.tooth_number', ['D', 'M', 'F'])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            });;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\TBDots\TBDotsReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 class TBDotsReport2018Controller extends Controller
@@ -11,9 +12,9 @@ class TBDotsReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, TBDotsReportService $tbdotsReportService)
+    public function index(Request $request, TBDotsReportService $tbdotsReportService, CategoryFilterService $categoryFilterService)
     {
-        $projected_population = $tbdotsReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
         //1. No. of notified TB cases, all forms - Total
         $indicator1_male = $tbdotsReportService->get_notified_tb_cases_all_forms($request, 'M')->get();

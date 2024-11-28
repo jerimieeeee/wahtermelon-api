@@ -142,17 +142,8 @@ class AnimalBiteReportPreExposureService
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_abs.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
             ->groupBy('barangays.code');
     }

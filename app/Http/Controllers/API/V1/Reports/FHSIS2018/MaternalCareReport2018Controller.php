@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\MaternalCare\MaternalCareReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 /**
@@ -25,10 +26,10 @@ class MaternalCareReport2018Controller extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, MaternalCareReportService $maternalCareReportService): array
+    public function index(Request $request, MaternalCareReportService $maternalCareReportService, CategoryFilterService $categoryFilterService): array
     {
         //Projected Population
-        $projected_population = $maternalCareReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
         //4 PRENATAL GIVE BIRTH AGE 10-14 YEARS
         $prenatal_give_birth_10_14 = $maternalCareReportService->get_4prenatal_give_birth($request, '10', '14')->get();

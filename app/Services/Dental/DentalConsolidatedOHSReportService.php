@@ -8,15 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class DentalConsolidatedOHSReportService
 {
-    public function get_projected_population()
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
     {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
+        $this->categoryFilterService = $categoryFilterService;
     }
 
     public function get_catchment_barangays()
@@ -5388,22 +5384,10 @@ class DentalConsolidatedOHSReportService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_medical_socials', 'dental_oral_health_conditions.patient_id', '=', 'dental_medical_socials.patient_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             });
     }
 
@@ -5946,12 +5930,6 @@ class DentalConsolidatedOHSReportService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereIn('dental_tooth_conditions.tooth_number',
                 [
@@ -5965,15 +5943,9 @@ class DentalConsolidatedOHSReportService
                 ]
             )
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            });;
     }
 
     public function get_temporary_tooth_condition($request)
@@ -6453,12 +6425,6 @@ class DentalConsolidatedOHSReportService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereIn('dental_tooth_conditions.tooth_number',
                 [
@@ -6469,15 +6435,9 @@ class DentalConsolidatedOHSReportService
                 ]
             )
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            });;
     }
 
     public function get_dental_services($request)
@@ -8813,23 +8773,11 @@ class DentalConsolidatedOHSReportService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            });;
     }
 
     public function get_tooth_services($request)
@@ -9746,22 +9694,10 @@ class DentalConsolidatedOHSReportService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            });
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            });;
     }
 }

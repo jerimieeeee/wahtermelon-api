@@ -47,9 +47,6 @@ class ReportMortalityUnderlyingNameListService
             ->join('patients', 'patient_death_records.patient_id', '=', 'patients.id')
             ->join('lib_icd10s', 'patient_death_record_causes.icd10_code', '=', 'lib_icd10s.icd10_code')
             ->join('users', 'patient_death_record_causes.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_death_records.patient_id');
-            })
             ->where('patient_death_record_causes.cause_code', 'UND')
             ->where('patient_death_record_causes.icd10_code', $request->icd10_code)
             ->whereBetween(DB::raw('DATE(date_of_death)'), [$request->start_date, $request->end_date])
@@ -250,14 +247,8 @@ class ReportMortalityUnderlyingNameListService
             ->when($request->type == 'total_both', function ($q) use ($request) {
                 $q->whereIn('patients.gender', ['M', 'F']);
             })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_death_records.facility_code', 'patient_death_records.patient_id');
             })
             ->groupBy('patient_death_record_causes.icd10_code');
     }
