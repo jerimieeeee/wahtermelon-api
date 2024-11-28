@@ -49,146 +49,486 @@ class DentalConsolidatedOHSReportService
     {
         return DB::table('consults')
             ->selectRaw("
-                    	SUM(
-                            CASE WHEN is_pregnant = 1
-                                AND allergies_flag = 1 THEN
-                                1
-                            ELSE
-                                0
-                            END) AS pregnant_women_with_allergies,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND hypertension_flag = 1 THEN
+                                AND allergies_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_hypertension,
+                            END) AS pregnant_women_10_14_year_old_with_allergies,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND diabetes_flag = 1 THEN
+                                AND hypertension_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_diabetes,
+                            END) AS pregnant_women_10_14_year_old_with_hypertension,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND blood_disorder_flag = 1 THEN
+                                AND diabetes_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_blood_disorder,
+                            END) AS pregnant_women_10_14_year_old_with_diabetes,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND heart_disease_flag = 1 THEN
+                                AND blood_disorder_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_heart_disease,
+                            END) AS pregnant_women_10_14_year_old_with_blood_disorder,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND thyroid_flag = 1 THEN
+                                AND heart_disease_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_thyroid,
+                            END) AS pregnant_women_10_14_year_old_with_heart_disease,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND hepatitis_flag = 1 THEN
+                                AND thyroid_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_hepatitis,
+                            END) AS pregnant_women_10_14_year_old_with_thyroid,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND malignancy_flag = 1 THEN
+                                AND hepatitis_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_malignancy,
+                            END) AS pregnant_women_10_14_year_old_with_hepatitis,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND blood_transfusion_flag = 1 THEN
+                                AND malignancy_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_blood_transfusion,
+                            END) AS pregnant_women_10_14_year_old_with_malignancy,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND tattoo_flag = 1 THEN
+                                AND blood_transfusion_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_tattoo,
+                            END) AS pregnant_women_10_14_year_old_with_blood_transfusion,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND sweet_flag = 1 THEN
+                                AND tattoo_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_sugar_sweetened,
+                            END) AS pregnant_women_10_14_year_old_with_tattoo,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND alcohol_flag = 1 THEN
+                                AND sweet_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_alcohol,
+                            END) AS pregnant_women_10_14_year_old_with_sugar_sweetened,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND tabacco_flag = 1 THEN
+                                AND alcohol_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_tobacco,
+                            END) AS pregnant_women_10_14_year_old_with_alcohol,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND nut_flag = 1 THEN
+                                AND tabacco_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_nut,
+                            END) AS pregnant_women_10_14_year_old_with_tobacco,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND dental_caries_flag = 1 THEN
+                                AND nut_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_dental_carries,
+                            END) AS pregnant_women_10_14_year_old_with_nut,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND gingivitis_flag = 1 THEN
+                                AND dental_caries_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_gingivitis,
+                            END) AS pregnant_women_10_14_year_old_with_dental_carries,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND periodontal_flag = 1 THEN
+                                AND gingivitis_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_periodontal,
+                            END) AS pregnant_women_10_14_year_old_with_gingivitis,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND debris_flag = 1 THEN
+                                AND periodontal_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_debris,
+                            END) AS pregnant_women_10_14_year_old_with_periodontal,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND calculus_flag = 1 THEN
+                                AND debris_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_calculus,
+                            END) AS pregnant_women_10_14_year_old_with_debris,
                         SUM(
                             CASE WHEN is_pregnant = 1
-                                AND dento_facial_flag = 1 THEN
+                                AND calculus_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
-                            END) AS pregnant_women_with_dento_facial,
+                            END) AS pregnant_women_10_14_year_old_with_calculus,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND dento_facial_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_10_14_year_old_with_dento_facial,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND allergies_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_allergies,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND hypertension_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_hypertension,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND diabetes_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_diabetes,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND blood_disorder_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_blood_disorder,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND heart_disease_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_heart_disease,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND thyroid_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_thyroid,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND hepatitis_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_hepatitis,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND malignancy_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_malignancy,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND blood_transfusion_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_blood_transfusion,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND tattoo_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_tattoo,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND sweet_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_sugar_sweetened,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND alcohol_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_alcohol,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND tabacco_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_tobacco,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND nut_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_nut,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND dental_caries_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_dental_carries,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND gingivitis_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_gingivitis,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND periodontal_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_periodontal,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND debris_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_debris,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND calculus_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_calculus,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND dento_facial_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_15_19_year_old_with_dento_facial,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND allergies_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_allergies,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND hypertension_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_hypertension,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND diabetes_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_diabetes,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND blood_disorder_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_blood_disorder,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND heart_disease_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_heart_disease,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND thyroid_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_thyroid,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND hepatitis_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_hepatitis,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND malignancy_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_malignancy,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND blood_transfusion_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_blood_transfusion,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND tattoo_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_tattoo,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND sweet_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_sugar_sweetened,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND alcohol_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_alcohol,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND tabacco_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_tobacco,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND nut_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_nut,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND dental_caries_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_dental_carries,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND gingivitis_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_gingivitis,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND periodontal_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_periodontal,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND debris_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_debris,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND calculus_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_calculus,
+                        SUM(
+                            CASE WHEN is_pregnant = 1
+                                AND dento_facial_flag = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS pregnant_women_20_49_year_old_with_dento_facial,
                         SUM(
                             CASE WHEN allergies_flag = 1
                                 AND patients.gender = 'M'
@@ -5731,11 +6071,32 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'D'
                                 AND is_pregnant = 1
                                 AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 1
                             ELSE
                                 0
-                            END) AS decayed_tooth_pregnant_women,
+                            END) AS decayed_tooth_pregnant_women_10_14_year_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_pregnant_women_15_19_year_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS decayed_tooth_pregnant_women_20_49_year_old,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -5910,11 +6271,32 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'M'
                                 AND is_pregnant = 1
                                 AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 1
                             ELSE
                                 0
-                            END) AS missing_tooth_pregnant_women,
+                            END) AS missing_tooth_pregnant_women_10_14_year_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_pregnant_women_15_19_year_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'M'
+                                AND is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS missing_tooth_pregnant_women_20_49_year_old,
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                                 AND patients.gender = 'M'
@@ -6089,11 +6471,32 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'F'
                                 AND is_pregnant = 1
                                 AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 1
                             ELSE
                                 0
-                            END) AS filled_tooth_pregnant_women,
+                            END) AS filled_tooth_pregnant_women_10_14_year_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_pregnant_women_15_19_year_old,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS filled_tooth_pregnant_women_20_49_year_old,
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
@@ -6862,60 +7265,212 @@ class DentalConsolidatedOHSReportService
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(19, 14)
                                 AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 patients.id
                             ELSE
                                 NULL
-                            END) AS 'pregnant_women_with_op_scaling',
+                            END) AS 'pregnant_women_10_14_year_old_with_op_scaling',
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 5
-                                AND is_pregnant = 1 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
                                 1
                             ELSE
                                 0
-                            END) AS 'pregnant_women_with_gum_treatment',
+                            END) AS 'pregnant_women_10_14_year_old_with_gum_treatment',
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 18
-                                AND is_pregnant = 1 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
                                 1
                             ELSE
                                 0
-                            END) AS 'pregnant_women_with_post_operative',
+                            END) AS 'pregnant_women_10_14_year_old_with_post_operative',
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 3
-                                AND is_pregnant = 1 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
                                 1
                             ELSE
                                 0
-                            END) AS 'pregnant_women_with_abscess',
+                            END) AS 'pregnant_women_10_14_year_old_with_abscess',
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 20
-                                AND is_pregnant = 1 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
                                 1
                             ELSE
                                 0
-                            END) AS 'pregnant_women_with_other_services',
+                            END) AS 'pregnant_women_10_14_year_old_with_other_services',
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id = 11
-                                AND is_pregnant = 1 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
                                 1
                             ELSE
                                 0
-                            END) AS 'pregnant_women_with_referred',
+                            END) AS 'pregnant_women_10_14_year_old_with_referred',
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND service_id IN(4, 8)
                                 AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 patients.id
                             ELSE
                                 NULL
-                            END) AS 'pregnant_women_with_counseling',
+                            END) AS 'pregnant_women_10_14_year_old_with_counseling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND service_id IN(19, 14)
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_15_19_year_old_with_op_scaling',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 5
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_15_19_year_old_with_gum_treatment',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 18
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_15_19_year_old_with_post_operative',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 3
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_15_19_year_old_with_abscess',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 20
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_15_19_year_old_with_other_services',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 11
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_15_19_year_old_with_referred',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND service_id IN(4, 8)
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_15_19_year_old_with_counseling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND service_id IN(19, 14)
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_20_49_year_old_with_op_scaling',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 5
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_20_49_year_old_with_gum_treatment',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 18
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_20_49_year_old_with_post_operative',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 3
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_20_49_year_old_with_abscess',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 20
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_20_49_year_old_with_other_services',
+                        SUM(
+                            CASE WHEN patients.gender = 'F'
+                                AND service_id = 11
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                1
+                            ELSE
+                                0
+                            END) AS 'pregnant_women_20_49_year_old_with_referred',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND service_id IN(4, 8)
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_20_49_year_old_with_counseling',
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'M'
                                 AND service_id IN(19, 14)
@@ -9360,20 +9915,92 @@ class DentalConsolidatedOHSReportService
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND is_pregnant = 1
                                 AND dental_tooth_services.service_code = 'PF'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 patients.id
                             ELSE
                                 NULL
-                            END) AS 'pregnant_women_with_permanent_filling',
+                            END) AS 'pregnant_women_10_14_year_old_with_permanent_filling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'PF'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_15_19_year_old_with_permanent_filling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'PF'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_20_49_year_old_with_permanent_filling',
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND is_pregnant = 1
                                 AND dental_tooth_services.service_code = 'TF'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
                             THEN
                                 patients.id
                             ELSE
                                 NULL
-                            END) AS 'pregnant_women_with_temporary_filling',
+                            END) AS 'pregnant_women_10_14_year_old_with_temporary_filling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'TF'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_15_19_year_old_with_temporary_filling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'TF'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_20_49_year_old_with_temporary_filling',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'X'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_10_14_year_old_with_extraction',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'X'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_15_19_year_old_with_extraction',
+                        COUNT(
+                            DISTINCT CASE WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND dental_tooth_services.service_code = 'X'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END) AS 'pregnant_women_20_49_year_old_with_extraction',
                         COUNT(
                             DISTINCT CASE WHEN patients.gender = 'F'
                                 AND is_pregnant = 1

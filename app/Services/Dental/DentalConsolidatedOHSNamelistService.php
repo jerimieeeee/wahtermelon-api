@@ -54,7 +54,16 @@ class DentalConsolidatedOHSNamelistService
                 $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
             })
             ->when($request->indicator == 'pregnant', function ($q) use ($request) {
-                $q->where('patients.gender', 'F')
+                $q->when($request->age == '10', function ($q) use ($request) {
+                    $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14");
+                    })
+                    ->when($request->age == '15', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19");
+                    })
+                    ->when($request->age == '20', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
+                    })
+                    ->where('patients.gender', 'F')
                     ->where('consults.is_pregnant', 1)
                     ->when($request->params == 'allergies', function ($q) use ($request) {
                         $q->where('allergies_flag', 1);
@@ -576,8 +585,11 @@ class DentalConsolidatedOHSNamelistService
             });
         })
         ->when($request->indicator == 'grand_total', function ($q) use ($request) {
-            $q->when($request->params == 'hypertension', function ($q) use ($request) {
-                $q->where('hypertension_flag', 1);
+            $q->when($request->params == 'allergies', function ($q) use ($request) {
+                $q->where('allergies_flag', 1);
+            })
+            ->when($request->params == 'hypertension', function ($q) use ($request) {
+            $q->where('hypertension_flag', 1);
             })
             ->when($request->params == 'diabetes', function ($q) use ($request) {
                 $q->where('diabetes_flag', 1);
@@ -825,7 +837,16 @@ class DentalConsolidatedOHSNamelistService
                     $q->where('tooth_condition', 'F');
                 })
                 ->where('consults.is_pregnant', 1)
-                ->where('patients.gender', 'F');
+                ->where('patients.gender', 'F')
+                ->when($request->age == '10-14', function ($q) use ($request) {
+                    $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14");
+                })
+                ->when($request->age == '15-19', function ($q) use ($request) {
+                    $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19");
+                })
+                ->when($request->age == '20-49', function ($q) use ($request) {
+                    $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
+                });
             })
             ->when($request->indicator == 'school_age', function ($q) use ($request) {
                 $q->when($request->params == 'decayed', function ($q) use ($request) {
@@ -972,6 +993,15 @@ class DentalConsolidatedOHSNamelistService
             })
             ->when($request->indicator == 'pregnant', function ($q) use ($request) {
                 $q->where('consults.is_pregnant', 1)
+                    ->when($request->age == '10-14', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14");
+                    })
+                    ->when($request->age == '15-19', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19");
+                    })
+                    ->when($request->age == '20-49', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
+                    })
                     ->when($request->params == 'op_scaling', function ($q) use ($request) {
                         $q->whereIn('service_id', [19, 14]);
                     })
