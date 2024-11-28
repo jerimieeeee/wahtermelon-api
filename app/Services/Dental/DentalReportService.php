@@ -5,9 +5,17 @@ namespace App\Services\Dental;
 use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use Illuminate\Support\Facades\DB;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class DentalReportService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')

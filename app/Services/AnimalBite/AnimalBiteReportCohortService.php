@@ -5,9 +5,17 @@ namespace App\Services\AnimalBite;
 use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use Illuminate\Support\Facades\DB;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class AnimalBiteReportCohortService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')
@@ -171,12 +179,6 @@ class AnimalBiteReportCohortService
             ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
             ->join('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_ab_exposures.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_ab_exposures.facility_code', auth()->user()->facility_code);
-            })
             ->whereNull('patient_ab_exposures.deleted_at')
             ->whereBetween(DB::raw('DATE(exposure_date)'), [$request->start_date, $request->end_date])
             ->tap(function ($query) use ($request) {

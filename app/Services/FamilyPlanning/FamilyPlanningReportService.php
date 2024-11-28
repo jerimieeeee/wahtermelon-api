@@ -3,9 +3,17 @@
 namespace App\Services\FamilyPlanning;
 
 use Illuminate\Support\Facades\DB;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class FamilyPlanningReportService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')

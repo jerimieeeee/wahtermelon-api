@@ -59,14 +59,21 @@ class CategoryFilterService
             });
         }
 
-        if(isset($tableColumnFacCode)) {
+        /* if(isset($tableColumnFacCode)) {
             $query->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) use ($tableColumnFacCode) {
                 $q->where($tableColumnFacCode, auth()->user()->facility_code);
             });
-        }
+        } */
 
-        $query->when($request->category == 'fac', function ($q) {
+        $query->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) && $request->category == 'fac', function ($q) {
+            // If user is not for provincial report
+            // get list base on catchment barangay
             $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+        })
+        ->when((auth()->user()->reports_flag == 1) && $request->category == 'fac', function ($q) use ($request, $tableColumnFacCode) {
+            // If user if provincial report
+            // Receive array of facility code
+            $q->whereIn($tableColumnFacCode, explode(',', $request->code));
         })
         ->when($request->category == 'muncity', function ($q) use ($request) {
             $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));

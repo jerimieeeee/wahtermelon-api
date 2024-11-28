@@ -6,9 +6,17 @@ use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
 use App\Models\V1\Consultation\Consult;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class DailyServiceReportService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_all_brgy_municipalities_patient()
     {
         return DB::table('municipalities')
