@@ -16,7 +16,7 @@ class AnimalBiteReportPreExposureController extends Controller
     {
         //Projected Population
 
-        $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get();
+        $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get()->groupBy('municipality_name');
 
         return [
             'data' => $part1,
