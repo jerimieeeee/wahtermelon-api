@@ -6252,7 +6252,6 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
-                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
                                 1
                             ELSE
@@ -7191,7 +7190,7 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
                                 0
@@ -7200,28 +7199,28 @@ class DentalConsolidatedOHSReportService
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'F'
                                 AND (is_pregnant IS NULL OR is_pregnant = 0)
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 5 THEN
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
                                 0
                             END) AS filled_tooth_female_all_age,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
-                            THEN
+                            AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
                                 0
                             END) AS decayed_tooth_grand_total,
                         SUM(
                             CASE WHEN tooth_condition = 'M'
-                            THEN
+                            AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
                                 0
                             END) AS missing_tooth_grand_total,
                         SUM(
                             CASE WHEN tooth_condition = 'F'
-                            THEN
+                            AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
                                 0
@@ -9869,13 +9868,12 @@ class DentalConsolidatedOHSReportService
                             ELSE
                                 0
                             END) AS 'grand_total_with_referred',
-                        SUM(
+                        COUNT(
                             DISTINCT CASE WHEN service_id IN(4, 8)
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 3
                             THEN
-                                1
+                                patients.id
                             ELSE
-                                0
+                                NULL
                             END) AS 'grand_total_with_counseling',
                         SUM(
                             CASE WHEN service_id = 15

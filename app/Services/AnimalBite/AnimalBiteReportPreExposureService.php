@@ -36,8 +36,7 @@ class AnimalBiteReportPreExposureService
     {
         return DB::table('patient_ab_pre_exposures')
             ->selectRaw("
-                        barangays.code,
-                        barangays.name,
+                        municipalities.name,
                         SUM(
                             CASE
                                 WHEN patients.gender = 'M' THEN 1
@@ -181,6 +180,6 @@ class AnimalBiteReportPreExposureService
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
-            ->groupBy('barangays.code');
+            ->groupBy('municipalities.psgc_10_digit_code');
     }
 }
