@@ -246,6 +246,24 @@ class AnimalBiteReportPreExposureService
                         barangays.name AS barangay_name,
                         SUM(
                             CASE
+                                WHEN category_id = 1 THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'category1',
+                        SUM(
+                            CASE
+                                WHEN category_id = 2 THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'category2',
+                        SUM(
+                            CASE
+                                WHEN category_id = 3 THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'category3',
+                        SUM(
+                            CASE
                                 WHEN category_id = 2 THEN 1
                                 ELSE 0
                             END
@@ -257,15 +275,15 @@ class AnimalBiteReportPreExposureService
                         ) AS 'total_cat2_and_cat3_previos_quarter'
                     ")
             ->join('patient_abs', 'patient_ab_exposures.patient_id', '=', 'patient_abs.patient_id')
-            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
+            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_abs.facility_code', auth()->user()->facility_code);
+                $q->where('patient_ab_exposures.facility_code', auth()->user()->facility_code);
             })
             ->whereNull('patient_ab_exposures.deleted_at')
             ->when($request->quarter == 1, function ($q) use ($request) {
