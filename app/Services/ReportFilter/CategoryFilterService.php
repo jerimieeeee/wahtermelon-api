@@ -65,13 +65,23 @@ class CategoryFilterService
             });
         } */
 
-        $query->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) && $request->category == 'fac', function ($q) {
-            // If user is not for provincial report
+        $query->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) && $request->category == 'all', function ($q) {
+            // If user is not for provincial report cat is all
+            // get list base on catchment barangay
+            $q->where($tableColumnFacCode, auth()->user()->facility_code);
+        })
+        ->when((auth()->user()->reports_flag == 1) && $request->category == 'all', function ($q) use ($request, $tableColumnFacCode) {
+            // If user if provincial report and cat is all
+            // Receive array of facility code
+            // $q->whereIn($tableColumnFacCode, explode(',', $request->code));
+        })
+        ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) && $request->category == 'fac', function ($q) {
+            // If user is not for provincial report and cat if facility
             // get list base on catchment barangay
             $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
         })
         ->when((auth()->user()->reports_flag == 1) && $request->category == 'fac', function ($q) use ($request, $tableColumnFacCode) {
-            // If user if provincial report
+            // If user if provincial report and cat if facility
             // Receive array of facility code
             $q->whereIn($tableColumnFacCode, explode(',', $request->code));
         })
