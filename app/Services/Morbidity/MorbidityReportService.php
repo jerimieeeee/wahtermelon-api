@@ -402,7 +402,7 @@ class MorbidityReportService
             ->join('lib_icd10s', 'consult_notes_final_dxes.icd10_code', '=', 'lib_icd10s.icd10_code')
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
+//            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consults.patient_id');
             })
