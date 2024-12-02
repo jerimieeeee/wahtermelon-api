@@ -450,7 +450,7 @@ class ChildCareReportService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consult_notes.patient_id');
             })
-            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
+//            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
             ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
                 'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
             ->where('patients.gender',$patient_gender)
