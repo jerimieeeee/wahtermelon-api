@@ -1,11 +1,19 @@
 <?php
 
 namespace App\Services\Mortality;
+use App\Services\ReportFilter\CategoryFilterService;
 
 use Illuminate\Support\Facades\DB;
 
 class ReportMortalityUnderlyingNameListService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')

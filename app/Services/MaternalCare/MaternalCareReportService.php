@@ -651,7 +651,7 @@ class MaternalCareReportService
                 $q->where('facility_code', auth()->user()->facility_code);
             })
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request);
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code');
             })
             ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code')
             ->when($status == 'FULL-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND date_of_service BETWEEN ? AND ?', ['full_term', $age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date])

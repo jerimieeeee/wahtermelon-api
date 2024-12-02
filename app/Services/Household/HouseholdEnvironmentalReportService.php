@@ -44,7 +44,7 @@ class HouseholdEnvironmentalReportService
             ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request);
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($water_type == 'all', function ($q) use ($request, $water_type) {
                 $q->whereIn('water_type_code', [1,2,3]);
@@ -107,7 +107,7 @@ class HouseholdEnvironmentalReportService
             ->leftJoin('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('users', 'household_environmentals.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request);
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($toilet_type == 'all', function ($q) use ($request) {
                 $q->where('toilet_facility_code', 1);
