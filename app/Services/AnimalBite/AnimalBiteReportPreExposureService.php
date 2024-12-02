@@ -16,18 +16,6 @@ class AnimalBiteReportPreExposureService
         $this->categoryFilterService = $categoryFilterService;
     }
 
-    public function get_catchment_barangays()
-    {
-        $result = DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                        facility_code,
-                        barangay_code
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code);
-
-        return $result->pluck('barangay_code');
-    }
-
     public function barangay_population()
     {
         return DB::table('settings_catchment_barangays')
@@ -194,14 +182,14 @@ class AnimalBiteReportPreExposureService
             ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
             ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
+            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('users', 'patient_ab_pre_exposures.user_id', '=', 'users.id')
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_abs.facility_code', auth()->user()->facility_code);
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
             ->whereNull('patient_ab_pre_exposures.deleted_at')
             ->when($request->quarter == 1, function ($q) use ($request) {
@@ -232,9 +220,6 @@ class AnimalBiteReportPreExposureService
                 ]);
             })
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
-            })
             ->groupBy('municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }
 
@@ -282,8 +267,8 @@ class AnimalBiteReportPreExposureService
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_ab_exposures.facility_code', auth()->user()->facility_code);
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
             ->whereNull('patient_ab_exposures.deleted_at')
             ->when($request->quarter == 1, function ($q) use ($request) {
@@ -310,18 +295,6 @@ class AnimalBiteReportPreExposureService
                     "{$request->year}-07-01", // July 1st of the requested year
                     "{$request->year}-09-30"  // September 30th of the requested year
                 ]);
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_abs.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
             })
             ->groupBy('municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
     }

@@ -14,32 +14,6 @@ class ReportAnimalBitePreExposureNameListService
         $this->categoryFilterService = $categoryFilterService;
     }
 
-    public function get_catchment_barangays()
-    {
-        $result = DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                        facility_code,
-                        barangay_code
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code);
-
-        return $result->pluck('barangay_code');
-    }
-
-    public function get_all_brgy_municipalities_patient()
-    {
-        return DB::table('municipalities')
-            ->selectRaw("
-                        patient_id,
-                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
-                        municipalities.psgc_10_digit_code AS municipality_code,
-                        barangays.psgc_10_digit_code AS barangay_code
-                    ")
-            ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
-            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
-    }
-
     public function get_report_namelist($request)
     {
         return DB::table('patient_ab_pre_exposures')
@@ -55,14 +29,14 @@ class ReportAnimalBitePreExposureNameListService
             ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
             ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
+/*            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')*/
             ->join('users', 'patient_ab_pre_exposures.user_id', '=', 'users.id')
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_abs.facility_code', auth()->user()->facility_code);
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
             ->whereNull('patient_ab_pre_exposures.deleted_at')
             ->when($request->params == 'male', function ($query) use ($request) {
@@ -158,19 +132,7 @@ class ReportAnimalBitePreExposureNameListService
                     "{$request->year}-12-31"  // December 31st of the requested year
                 ]);
             })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
-            })
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_pre_exposures.facility_code', 'patient_ab_pre_exposures.patient_id');
-            })
             ->groupBy('municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code')
             ->orderBy('name');
     }
