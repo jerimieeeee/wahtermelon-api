@@ -2,10 +2,18 @@
 
 namespace App\Services\AnimalBite;
 
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Support\Facades\DB;
 
 class ReportAnimalBitePreExposureNameListService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')
@@ -158,6 +166,10 @@ class ReportAnimalBitePreExposureNameListService
             })
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
+            })
+            ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_pre_exposures.facility_code', 'patient_ab_pre_exposures.patient_id');
             })
             ->groupBy('municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code')
             ->orderBy('name');

@@ -147,14 +147,8 @@ class ReportAnimalBiteCohortNameListService
                 $q->where('patient_ab_exposures.facility_code', auth()->user()->facility_code);
             })
             ->whereBetween(DB::raw('DATE(exposure_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
             })
             ->groupBy('patient_ab_exposures.patient_id')
             ->orderBy('name');

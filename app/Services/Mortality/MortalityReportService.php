@@ -1,20 +1,17 @@
 <?php
 
 namespace App\Services\Mortality;
+use App\Services\ReportFilter\CategoryFilterService;
 
 use Illuminate\Support\Facades\DB;
 
 class MortalityReportService
 {
-    public function get_projected_population()
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
     {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
+        $this->categoryFilterService = $categoryFilterService;
     }
 
     public function get_catchment_barangays()
@@ -410,20 +407,8 @@ class MortalityReportService
             ->leftJoin('patient_mc', 'patient_death_records.patient_id', '=', 'patient_mc.patient_id')
             ->leftJoin('patient_mc_post_registrations', 'patient_mc.id', '=', 'patient_mc_post_registrations.patient_mc_id')
             ->join('users', 'patient_death_records.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_death_records.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_death_records.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_death_records.facility_code', 'patient_death_records.patient_id');
             });
     }
 }

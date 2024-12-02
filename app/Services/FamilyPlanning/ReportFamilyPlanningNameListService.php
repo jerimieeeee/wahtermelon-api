@@ -49,9 +49,6 @@ class ReportFamilyPlanningNameListService
                         ")
             ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
             ->join('users', 'patient_fp_methods.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
-            })
             ->whereNull('patient_fp_methods.deleted_at')
             ->when($request->client_code == 'current_user_beginning_month', function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
@@ -145,18 +142,9 @@ class ReportFamilyPlanningNameListService
                 $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age);
             })
             ->whereMethodCode($request->method)
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-            })
             ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_fp_methods.facility_code', 'patient_fp_methods.patient_id');
             })
             ->groupBy('patient_fp_methods.patient_id')
             ->orderBy('name');

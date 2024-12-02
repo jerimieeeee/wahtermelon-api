@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\Mortality\MortalityReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 class MortalityReport2018Controller extends Controller
@@ -11,10 +12,10 @@ class MortalityReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, MortalityReportService $mortalityReportService)
+    public function index(Request $request, MortalityReportService $mortalityReportService, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $mortalityReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
         $g = $mortalityReportService->get_mortality_natality($request)->get();
 
         return [

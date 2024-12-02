@@ -4,34 +4,14 @@ namespace App\Services\Dental;
 
 use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Support\Facades\DB;
 
 class DentalConsolidatedOHSNamelistService
 {
-    public function get_catchment_barangays()
+    public function __construct(CategoryFilterService $categoryFilterService)
     {
-        $result = DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                        facility_code,
-                        barangay_code
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code);
-
-        return $result->pluck('barangay_code');
-    }
-
-    public function get_all_brgy_municipalities_patient()
-    {
-        return DB::table('municipalities')
-            ->selectRaw("
-                        patient_id,
-                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
-                        municipalities.psgc_10_digit_code AS municipality_code,
-                        barangays.psgc_10_digit_code AS barangay_code
-                    ")
-            ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
-            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
+        $this->categoryFilterService = $categoryFilterService;
     }
 
     public function get_medical_hx($request)
@@ -50,8 +30,8 @@ class DentalConsolidatedOHSNamelistService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_medical_socials', 'dental_oral_health_conditions.patient_id', '=', 'dental_medical_socials.patient_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
             ->when($request->indicator == 'pregnant', function ($q) use ($request) {
                 $q->when($request->age == '10', function ($q) use ($request) {
@@ -520,150 +500,138 @@ class DentalConsolidatedOHSNamelistService
             ->when($request->indicator == 'all_age', function ($q) use ($request) {
                 $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
                     ->when($request->params == 'allergies', function ($q) use ($request) {
+                        $q->where('allergies_flag', 1);
+                    })
+                    ->when($request->params == 'hypertension', function ($q) use ($request) {
+                        $q->where('hypertension_flag', 1);
+                    })
+                    ->when($request->params == 'diabetes', function ($q) use ($request) {
+                        $q->where('diabetes_flag', 1);
+                    })
+                    ->when($request->params == 'blood_disorder', function ($q) use ($request) {
+                        $q->where('blood_disorder_flag', 1);
+                    })
+                    ->when($request->params == 'heart_disease', function ($q) use ($request) {
+                        $q->where('heart_disease_flag', 1);
+                    })
+                    ->when($request->params == 'thyroid', function ($q) use ($request) {
+                        $q->where('thyroid_flag', 1);
+                    })
+                    ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                        $q->where('hepatitis_flag', 1);
+                    })
+                    ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
+                        $q->where('malignancy_flag', 1);
+                    })
+                    ->when($request->params == 'blood_transfusion', function ($q) use ($request) {
+                        $q->where('blood_transfusion_flag', 1);
+                    })
+                    ->when($request->params == 'tattoo', function ($q) use ($request) {
+                        $q->where('tattoo_flag', 1)
+                            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
+                    })
+                    ->when($request->params == 'sweet', function ($q) use ($request) {
+                        $q->where('sweet_flag', 1);
+                    })
+                    ->when($request->params == 'alcohol', function ($q) use ($request) {
+                        $q->where('alcohol_flag', 1)
+                            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");;
+                    })
+                    ->when($request->params == 'tobacco', function ($q) use ($request) {
+                        $q->where('tabacco_flag', 1)
+                            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");;
+                    })
+                    ->when($request->params == 'nut', function ($q) use ($request) {
+                        $q->where('nut_flag', 1)
+                            ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");;
+                    })
+                    ->when($request->params == 'dental_carries', function ($q) use ($request) {
+                        $q->where('dental_caries_flag', 1);
+                    })
+                    ->when($request->params == 'gingivitis', function ($q) use ($request) {
+                        $q->where('gingivitis_flag', 1);
+                    })
+                    ->when($request->params == 'periodontal', function ($q) use ($request) {
+                        $q->where('periodontal_flag', 1);
+                    })
+                    ->when($request->params == 'debris', function ($q) use ($request) {
+                        $q->where('debris_flag', 1);
+                    })
+                    ->when($request->params == 'calculus', function ($q) use ($request) {
+                        $q->where('calculus_flag', 1);
+                    })
+                    ->when($request->params == 'dento_facial', function ($q) use ($request) {
+                        $q->where('dento_facial_flag', 1);
+                    })
+            ->when($request->indicator == 'grand_total', function ($q) use ($request) {
+                $q->when($request->params == 'allergies', function ($q) use ($request) {
                     $q->where('allergies_flag', 1);
+                })
+                ->when($request->params == 'hypertension', function ($q) use ($request) {
+                    $q->where('hypertension_flag', 1);
+                })
+                ->when($request->params == 'diabetes', function ($q) use ($request) {
+                    $q->where('diabetes_flag', 1);
+                })
+                ->when($request->params == 'blood_disorder', function ($q) use ($request) {
+                    $q->where('blood_disorder_flag', 1);
+                })
+                ->when($request->params == 'heart_disease', function ($q) use ($request) {
+                    $q->where('heart_disease_flag', 1);
+                })
+                ->when($request->params == 'thyroid', function ($q) use ($request) {
+                    $q->where('thyroid_flag', 1);
+                })
+                ->when($request->params == 'hepatitis', function ($q) use ($request) {
+                    $q->where('hepatitis_flag', 1);
+                })
+                ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
+                    $q->where('malignancy_flag', 1);
+                })
+                ->when($request->params == 'blood_transfusion', function ($q) use ($request) {
+                    $q->where('blood_transfusion_flag', 1);
+                })
+                ->when($request->params == 'tattoo', function ($q) use ($request) {
+                    $q->where('tattoo_flag', 1)
+                        ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
+                })
+                ->when($request->params == 'sweet', function ($q) use ($request) {
+                    $q->where('sweet_flag', 1);
+                })
+                ->when($request->params == 'alcohol', function ($q) use ($request) {
+                    $q->where('alcohol_flag', 1)
+                        ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
+                })
+                ->when($request->params == 'tobacco', function ($q) use ($request) {
+                    $q->where('tabacco_flag', 1)
+                        ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
+                })
+                ->when($request->params == 'nut', function ($q) use ($request) {
+                    $q->where('nut_flag', 1)
+                        ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
+                })
+                ->when($request->params == 'dental_carries', function ($q) use ($request) {
+                    $q->where('dental_caries_flag', 1);
+                })
+                ->when($request->params == 'gingivitis', function ($q) use ($request) {
+                    $q->where('gingivitis_flag', 1);
+                })
+                ->when($request->params == 'periodontal', function ($q) use ($request) {
+                    $q->where('periodontal_flag', 1);
+                })
+                ->when($request->params == 'debris', function ($q) use ($request) {
+                    $q->where('debris_flag', 1);
+                })
+                ->when($request->params == 'calculus', function ($q) use ($request) {
+                    $q->where('calculus_flag', 1);
+                })
+                ->when($request->params == 'dento_facial', function ($q) use ($request) {
+                    $q->where('dento_facial_flag', 1);
+                });
             })
-            ->when($request->params == 'hypertension', function ($q) use ($request) {
-                $q->where('hypertension_flag', 1);
-            })
-            ->when($request->params == 'diabetes', function ($q) use ($request) {
-                $q->where('diabetes_flag', 1);
-            })
-            ->when($request->params == 'blood_disorder', function ($q) use ($request) {
-                $q->where('blood_disorder_flag', 1);
-            })
-            ->when($request->params == 'heart_disease', function ($q) use ($request) {
-                $q->where('heart_disease_flag', 1);
-            })
-            ->when($request->params == 'thyroid', function ($q) use ($request) {
-                $q->where('thyroid_flag', 1);
-            })
-            ->when($request->params == 'hepatitis', function ($q) use ($request) {
-                $q->where('hepatitis_flag', 1);
-            })
-            ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
-                $q->where('malignancy_flag', 1);
-            })
-            ->when($request->params == 'blood_transfusion', function ($q) use ($request) {
-                $q->where('blood_transfusion_flag', 1);
-            })
-            ->when($request->params == 'tattoo', function ($q) use ($request) {
-                $q->where('tattoo_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
-            })
-            ->when($request->params == 'sweet', function ($q) use ($request) {
-                $q->where('sweet_flag', 1);
-            })
-            ->when($request->params == 'alcohol', function ($q) use ($request) {
-                $q->where('alcohol_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");;
-            })
-            ->when($request->params == 'tobacco', function ($q) use ($request) {
-                $q->where('tabacco_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");;
-            })
-            ->when($request->params == 'nut', function ($q) use ($request) {
-                $q->where('nut_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");;
-            })
-            ->when($request->params == 'dental_carries', function ($q) use ($request) {
-                $q->where('dental_caries_flag', 1);
-            })
-            ->when($request->params == 'gingivitis', function ($q) use ($request) {
-                $q->where('gingivitis_flag', 1);
-            })
-            ->when($request->params == 'periodontal', function ($q) use ($request) {
-                $q->where('periodontal_flag', 1);
-            })
-            ->when($request->params == 'debris', function ($q) use ($request) {
-                $q->where('debris_flag', 1);
-            })
-            ->when($request->params == 'calculus', function ($q) use ($request) {
-                $q->where('calculus_flag', 1);
-            })
-            ->when($request->params == 'dento_facial', function ($q) use ($request) {
-                $q->where('dento_facial_flag', 1);
-            });
-        })
-        ->when($request->indicator == 'grand_total', function ($q) use ($request) {
-            $q->when($request->params == 'allergies', function ($q) use ($request) {
-                $q->where('allergies_flag', 1);
-            })
-            ->when($request->params == 'hypertension', function ($q) use ($request) {
-            $q->where('hypertension_flag', 1);
-            })
-            ->when($request->params == 'diabetes', function ($q) use ($request) {
-                $q->where('diabetes_flag', 1);
-            })
-            ->when($request->params == 'blood_disorder', function ($q) use ($request) {
-                $q->where('blood_disorder_flag', 1);
-            })
-            ->when($request->params == 'heart_disease', function ($q) use ($request) {
-                $q->where('heart_disease_flag', 1);
-            })
-            ->when($request->params == 'thyroid', function ($q) use ($request) {
-                $q->where('thyroid_flag', 1);
-            })
-            ->when($request->params == 'hepatitis', function ($q) use ($request) {
-                $q->where('hepatitis_flag', 1);
-            })
-            ->when($request->params == 'malignancy_flag', function ($q) use ($request) {
-                $q->where('malignancy_flag', 1);
-            })
-            ->when($request->params == 'blood_transfusion', function ($q) use ($request) {
-                $q->where('blood_transfusion_flag', 1);
-            })
-            ->when($request->params == 'tattoo', function ($q) use ($request) {
-                $q->where('tattoo_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
-            })
-            ->when($request->params == 'sweet', function ($q) use ($request) {
-                $q->where('sweet_flag', 1);
-            })
-            ->when($request->params == 'alcohol', function ($q) use ($request) {
-                $q->where('alcohol_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
-            })
-            ->when($request->params == 'tobacco', function ($q) use ($request) {
-                $q->where('tabacco_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
-            })
-            ->when($request->params == 'nut', function ($q) use ($request) {
-                $q->where('nut_flag', 1)
-                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 4");
-            })
-            ->when($request->params == 'dental_carries', function ($q) use ($request) {
-                $q->where('dental_caries_flag', 1);
-            })
-            ->when($request->params == 'gingivitis', function ($q) use ($request) {
-                $q->where('gingivitis_flag', 1);
-            })
-            ->when($request->params == 'periodontal', function ($q) use ($request) {
-                $q->where('periodontal_flag', 1);
-            })
-            ->when($request->params == 'debris', function ($q) use ($request) {
-                $q->where('debris_flag', 1);
-            })
-            ->when($request->params == 'calculus', function ($q) use ($request) {
-                $q->where('calculus_flag', 1);
-            })
-            ->when($request->params == 'dento_facial', function ($q) use ($request) {
-                $q->where('dento_facial_flag', 1);
-            });
-        })
-        ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-            $q->where('consults.facility_code', auth()->user()->facility_code);
-        })
-        ->whereIn('patients.gender', explode(',', $request->gender))
-        ->wherePtGroup('dn')
-        ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-        ->when($request->category == 'fac', function ($q) {
-            $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-        })
-        ->when($request->category == 'muncity', function ($q) use ($request) {
-            $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-        })
-        ->when($request->category == 'brgys', function ($q) use ($request) {
-            $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->whereIn('patients.gender', explode(',', $request->gender))
+            ->wherePtGroup('dn')
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date]);
         });
     }
 
@@ -683,12 +651,6 @@ class DentalConsolidatedOHSNamelistService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->when($request->indicator == 'infant', function ($q) use ($request) {
                 $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                         $q->where('tooth_condition', 'D')
@@ -792,14 +754,8 @@ class DentalConsolidatedOHSNamelistService
             ->whereIn('patients.gender', explode(',', $request->gender))
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
             ->groupBy('patients.id');
     }
@@ -820,11 +776,8 @@ class DentalConsolidatedOHSNamelistService
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
             ->when($request->indicator == 'pregnant', function ($q) use ($request) {
                 $q->when($request->params == 'decayed', function ($q) use ($request) {
@@ -956,7 +909,7 @@ class DentalConsolidatedOHSNamelistService
             ->whereIn('patients.gender', explode(',', $request->gender))
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
+/*            ->when($request->category == 'fac', function ($q) {
                 $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
             })
             ->when($request->category == 'muncity', function ($q) use ($request) {
@@ -964,7 +917,7 @@ class DentalConsolidatedOHSNamelistService
             })
             ->when($request->category == 'brgys', function ($q) use ($request) {
                 $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            })
+            })*/
             ->groupBy('patients.id');
     }
 
@@ -985,8 +938,8 @@ class DentalConsolidatedOHSNamelistService
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
@@ -1366,7 +1319,7 @@ class DentalConsolidatedOHSNamelistService
                 ->whereIn('patients.gender', explode(',', $request->gender))
                 ->wherePtGroup('dn')
                 ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-                ->when($request->category == 'fac', function ($q) {
+/*                ->when($request->category == 'fac', function ($q) {
                     $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
                 })
                 ->when($request->category == 'muncity', function ($q) use ($request) {
@@ -1374,7 +1327,7 @@ class DentalConsolidatedOHSNamelistService
                 })
                 ->when($request->category == 'brgys', function ($q) use ($request) {
                     $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-                })
+                })*/
                 ->groupBy('patients.id');
     }
 
@@ -1394,8 +1347,8 @@ class DentalConsolidatedOHSNamelistService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_medical_socials', 'dental_oral_health_conditions.patient_id', '=', 'dental_medical_socials.patient_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
             ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
                 $q->where('consults.facility_code', auth()->user()->facility_code);
@@ -1427,15 +1380,6 @@ class DentalConsolidatedOHSNamelistService
             ->whereIn('patients.gender', explode(',', $request->gender))
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            })
             ->groupBy('patients.id');
     }
 }

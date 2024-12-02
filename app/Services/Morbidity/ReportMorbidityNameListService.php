@@ -1,11 +1,19 @@
 <?php
 
 namespace App\Services\Morbidity;
+use App\Services\ReportFilter\CategoryFilterService;
 
 use Illuminate\Support\Facades\DB;
 
 class ReportMorbidityNameListService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')
@@ -49,9 +57,6 @@ class ReportMorbidityNameListService
             ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
             ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
             ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
             ->when($request->type == 'days', function ($q) use ($request) {
                 $q->whereBetween(DB::raw('DATEDIFF(consult_date, patients.birthdate)'), $request->age)
                     ->where('patients.gender', $request->gender);
@@ -81,19 +86,8 @@ class ReportMorbidityNameListService
             })
             ->where('consult_notes_final_dxes.icd10_code', $request->icd10)
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-/*            ->whereYear('consult_date', $request->year)
-            ->whereMonth('consult_date', $request->month)*/
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consults.patient_id');
             })
             ->orderBy('name');
     }

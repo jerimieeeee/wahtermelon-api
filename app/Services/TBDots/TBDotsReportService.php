@@ -3,18 +3,15 @@
 namespace App\Services\TBDots;
 
 use Illuminate\Support\Facades\DB;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class TBDotsReportService
 {
-    public function get_projected_population()
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
     {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
+        $this->categoryFilterService = $categoryFilterService;
     }
 
     public function get_catchment_barangays()
@@ -55,21 +52,9 @@ class TBDotsReportService
             ->join('patient_tbs', 'patient_tb_case_findings.patient_tb_id', '=', 'patient_tbs.id')
             ->join('patients', 'patient_tb_case_findings.patient_id', '=', 'patients.id')
             ->join('users', 'patient_tb_case_findings.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_findings.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_tb_case_findings.facility_code', auth()->user()->facility_code);
-            })
             ->whereNull('patient_tb_case_findings.deleted_at')
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_tb_case_findings.facility_code', 'patient_tb_case_findings.patient_id');
             })
             ->where('reg_group_code', ['N', 'O', 'PTLOU', 'R', 'TAF', 'TALF'])
             ->where('patients.gender', $gender)
@@ -90,21 +75,9 @@ class TBDotsReportService
             ->join('patient_tbs', 'patient_tb_case_holdings.patient_tb_id', '=', 'patient_tbs.id')
             ->join('patients', 'patient_tb_case_holdings.patient_id', '=', 'patients.id')
             ->join('users', 'patient_tb_case_holdings.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_tb_case_holdings.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_tb_case_holdings.facility_code', auth()->user()->facility_code);
-            })
             ->whereNull('patient_tb_case_holdings.deleted_at')
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_tb_case_holdings.facility_code', 'patient_tb_case_holdings.patient_id');
             })
             ->whereBacteriologicalStatusCode('BC')
             ->whereDrugResistantFlag(1)
@@ -126,21 +99,9 @@ class TBDotsReportService
             ->join('patient_tb_case_holdings', 'patient_tbs.id', '=', 'patient_tb_case_holdings.patient_tb_id')
             ->join('patients', 'patient_tbs.patient_id', '=', 'patients.id')
             ->join('users', 'patient_tbs.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
-            })
             ->whereNull('patient_tbs.deleted_at')
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_tbs.facility_code', 'patient_tbs.patient_id');
             })
             ->whereIn('tb_treatment_outcome_code', ['C', 'TR'])
             ->whereTreatmentDone(1)
@@ -162,22 +123,9 @@ class TBDotsReportService
             ->join('patient_tb_case_holdings', 'patient_tbs.id', '=', 'patient_tb_case_holdings.patient_tb_id')
             ->join('patients', 'patient_tbs.patient_id', '=', 'patients.id')
             ->join('users', 'patient_tbs.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_tbs.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_tbs.facility_code', auth()->user()->facility_code);
-            })
             ->whereNull('patient_tbs.deleted_at')
-            ->where('patient_tbs.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_tbs.facility_code', 'patient_tbs.patient_id');
             })
             ->whereBacteriologicalStatusCode('BC')
             ->whereDrugResistantFlag(1)
