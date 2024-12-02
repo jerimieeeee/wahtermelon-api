@@ -65,7 +65,7 @@ class CategoryFilterService
             });
         } */
 
-        $query->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) && $request->category == 'all', function ($q) {
+        $query->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) && $request->category == 'all', function ($q) use ($tableColumnFacCode){
             // If user is not for provincial report cat is all
             // get list base on catchment barangay
             $q->where($tableColumnFacCode, auth()->user()->facility_code);
