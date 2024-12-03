@@ -16,30 +16,648 @@ class DentalConsolidatedOHSReportService
         $this->categoryFilterService = $categoryFilterService;
     }
 
-    public function get_catchment_barangays()
+    public function get_attended_examined($request)
     {
-        $result = DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                        facility_code,
-                        barangay_code
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code);
-
-        return $result->pluck('barangay_code');
-    }
-
-    public function get_all_brgy_municipalities_patient()
-    {
-        return DB::table('municipalities')
+        return DB::table('consults')
             ->selectRaw("
-                        patient_id,
-                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
-                        municipalities.psgc_10_digit_code AS municipality_code,
-                        barangays.psgc_10_digit_code AS barangay_code
+                    	SUM(
+                            CASE
+                                WHEN is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14  THEN 1
+                                ELSE 0
+                            END
+                        ) AS pregnant_women_10_14_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19  THEN 1
+                                ELSE 0
+                            END
+                        ) AS pregnant_women_15_19_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN is_pregnant = 1
+                                AND patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49  THEN 1
+                                ELSE 0
+                            END
+                        ) AS pregnant_women_20_49_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11  THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_infant_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_1_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_2_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_3_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_4_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_total_underfive_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_5_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_6_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_7_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_8_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_9_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_total_school_age_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_adolescent_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_adult_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_senior_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 0 THEN 1
+                                ELSE 0
+                            END
+                        ) AS male_all_age_attended,
+                            SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_infant_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_1_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_2_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_3_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_4_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_total_underfive_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_5_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_6_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_7_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_8_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_9_year_old_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_total_school_age_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_adolescent_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_adult_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_senior_attended,
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 0 THEN 1
+                                ELSE 0
+                            END
+                        ) AS female_all_age_attended,
+                        COUNT(consults.patient_id) AS grand_total_attended,
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'pregnant_women_10_14_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'pregnant_women_15_19_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'pregnant_women_20_49_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'pregnant_women_20_49_year_old_examined',
+                            COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_infant_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_1_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_2_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_3_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_4_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_total_underfive_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_5_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_6_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_7_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_8_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_9_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_total_school_age_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_adolescent_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_adult_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_senior_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 0
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'male_all_age_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_infant_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_1_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_2_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_3_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_4_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_total_underfive_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_5_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_6_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_7_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_8_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_9_year_old_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_total_school_age_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_adolescent_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_adult_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_senior_examined',
+                        COUNT(
+                            DISTINCT CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 0
+                            THEN
+                                patients.id
+                            ELSE
+                                NULL
+                            END
+                        ) AS 'female_all_age_examined',
+                        COUNT(DISTINCT consults.patient_id) AS grand_total_examined
                     ")
-            ->join('barangays', 'municipalities.id', '=', 'barangays.geographic_id')
-            ->join('household_folders', 'barangays.psgc_10_digit_code', '=', 'household_folders.barangay_code')
-            ->join('household_members', 'household_folders.id', '=', 'household_members.household_folder_id');
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            })
+            ->wherePtGroup('dn')
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date]);
     }
 
     public function get_dental_consolidated_report($request)
