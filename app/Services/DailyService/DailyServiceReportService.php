@@ -6,9 +6,17 @@ use App\Http\Resources\API\V1\Reports\DailyServiceConsultationReportResource;
 use App\Models\V1\Consultation\Consult;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class DailyServiceReportService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_all_brgy_municipalities_patient()
     {
         return DB::table('municipalities')
@@ -57,17 +65,8 @@ class DailyServiceReportService
             'medicine',
             'prescription.dispensingLatest',
         ])
-        ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-            $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-        })
-        ->when($request->category == 'fac', function ($q) {
-            $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-        })
-        ->when($request->category == 'muncity', function ($q) use ($request) {
-            $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-        })
-        ->when($request->category == 'brgys', function ($q) use ($request) {
-            $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+        ->tap(function ($query) use ($request) {
+            $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
         })
         ->where('pt_group', 'cn')
         ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\FamilyPlanning\FamilyPlanningReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 /**
@@ -25,10 +26,10 @@ class FamilyPlanningReport2018Controller extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, FamilyPlanningReportService $familyPlanningReportService)
+    public function index(Request $request, FamilyPlanningReportService $familyPlanningReportService, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $familyPlanningReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
         $g = $familyPlanningReportService->get_fp_report_all($request)->get()->groupBy('code');
 

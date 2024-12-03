@@ -8,17 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class NotifiableReportService
 {
-    public function get_projected_population()
-    {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
-    }
-
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')
@@ -47,18 +36,8 @@ class NotifiableReportService
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
-//            ->when($request->category == 'all', function ($q) {
-//                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-//            })
-            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.psgc_10_digit_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.psgc_10_digit_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code');
             })
             //CAT I
             ->when($icd10 == 'paralysis', fn ($q) =>

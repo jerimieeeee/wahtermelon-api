@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\Childcare\ChildCareReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 /**
@@ -25,10 +26,10 @@ class ChildCareReport2018Controller extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, ChildCareReportService $childCareReportService)
+    public function index(Request $request, ChildCareReportService $childCareReportService, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $childCareReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
         //CPAB
         $cpab_m = $childCareReportService->get_cpab($request, 'M')->get();

@@ -50,12 +50,6 @@ class ReportDentalNameListService
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             // orally fit 12-59 months male
             ->when($request->params == 'male_12_59_months_orally_fit', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
@@ -248,16 +242,10 @@ class ReportDentalNameListService
             })
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
-            })
-            ->groupBy('consults.patient_id'); ;
+            ->groupBy('consults.patient_id');
     }
 
     public function get_dental_dmft($request)
@@ -277,12 +265,6 @@ class ReportDentalNameListService
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
-            ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             // male dental dmft
             ->when($request->params == 'male_dental_dmft', function ($query) use ($request) {
                 $query->where('patients.gender', 'M')
@@ -314,14 +296,8 @@ class ReportDentalNameListService
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
 //            ->whereYear('consult_date', $request->year)
 //            ->whereMonth('consult_date', $request->month)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
             ->groupBy('consults.patient_id');
     }

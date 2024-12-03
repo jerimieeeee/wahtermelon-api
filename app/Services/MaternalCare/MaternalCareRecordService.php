@@ -8,6 +8,13 @@ use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 
 class MaternalCareRecordService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function getLatestMcRecord(array $request): mixed
     {
         return PatientMc::addSelect([

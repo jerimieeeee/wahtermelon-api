@@ -3,18 +3,15 @@
 namespace App\Services\FamilyPlanning;
 
 use Illuminate\Support\Facades\DB;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class FamilyPlanningReportService
 {
-    public function get_projected_population()
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
     {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
+        $this->categoryFilterService = $categoryFilterService;
     }
 
     public function get_catchment_barangays()
@@ -322,21 +319,9 @@ class FamilyPlanningReportService
             ])
         ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
         ->join('users', 'patient_fp_methods.user_id', '=', 'users.id')
-        ->joinSub($this->get_all_brgy_municipalities_patient(), 'municipalities_brgy', function ($join) {
-            $join->on('municipalities_brgy.patient_id', '=', 'patient_fp_methods.patient_id');
-        })
         ->whereNull('patient_fp_methods.deleted_at')
-        ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-            $q->where('patient_fp_methods.facility_code', auth()->user()->facility_code);
-        })
-        ->when($request->category == 'fac', function ($q) {
-            $q->whereIn('municipalities_brgy.barangay_code', $this->get_catchment_barangays());
-        })
-        ->when($request->category == 'muncity', function ($q) use ($request) {
-            $q->whereIn('municipalities_brgy.municipality_code', explode(',', $request->code));
-        })
-        ->when($request->category == 'brgys', function ($q) use ($request) {
-            $q->whereIn('municipalities_brgy.barangay_code', explode(',', $request->code));
+        ->tap(function ($query) use ($request) {
+            $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_fp_methods.facility_code', 'patient_fp_methods.patient_id');
         })
         ->groupBy('method_code');
     }

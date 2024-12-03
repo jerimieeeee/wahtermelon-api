@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\Morbidity\MorbidityReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 /**
@@ -25,10 +26,10 @@ class MorbidityReport2018Controller extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, MorbidityReportService $morbidityReportService)
+    public function index(Request $request, MorbidityReportService $morbidityReportService, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $morbidityReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
         $g = $morbidityReportService->get_morbidity_report_all($request)->get();
 
         return [

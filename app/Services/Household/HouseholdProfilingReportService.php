@@ -3,18 +3,15 @@
 namespace App\Services\Household;
 
 use Illuminate\Support\Facades\DB;
+use App\Services\ReportFilter\CategoryFilterService;
 
 class HouseholdProfilingReportService
 {
-    public function get_projected_population()
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
     {
-        return DB::table('settings_catchment_barangays')
-            ->selectRaw('
-                    year,
-                    SUM(settings_catchment_barangays.population) AS total_population
-                    ')
-            ->whereFacilityCode(auth()->user()->facility_code)
-            ->groupBy('facility_code');
+        $this->categoryFilterService = $categoryFilterService;
     }
 
     public function get_catchment_barangays()
@@ -56,17 +53,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == '4ps', function ($q) use ($request) {
                 $q->whereNotNull('cct_id');
@@ -95,17 +83,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == '4ps', function ($q) use ($request) {
                 $q->whereNotNull('cct_id');
@@ -135,17 +114,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == '4ps', function ($q) use ($request) {
                 $q->whereNotNull('cct_id');
@@ -185,17 +155,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == '4ps', function ($q) use ($request) {
                 $q->whereNotNull('cct_id');
@@ -261,17 +222,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == 'direct', function ($q) use ($request, $direct) {
                 $q->whereIn('membership_category_id', explode(',', $direct));
@@ -305,17 +257,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($gender == 'M', function ($q) use ($request, $gender) {
                 $q->whereGender($gender);
@@ -347,17 +290,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($ethnicity == 'indegenous', function ($q) use ($request) {
                 $q->where('patients.indegenous_flag', 1);
@@ -386,17 +320,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($education == '1', function ($q) use ($request) {
                 $q->where('patients.education_code', 1);
@@ -470,17 +395,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == 'single', function ($q) use ($request) {
                 $q->where('patients.civil_status_code', 'SNGL');
@@ -521,17 +437,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == 'roman-catholic', function ($q) use ($request) {
                 $q->where('patients.religion_code', 'RMNCATHO');
@@ -613,17 +520,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == 'hypertension', function ($q) use ($request) {
                 $q->where('patient_histories.medical_history_id', 11);
@@ -663,17 +561,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->whereGender($gender)
             ->whereBetween('registration_date', [$request->start_date, $request->end_date])
@@ -783,17 +672,8 @@ class HouseholdProfilingReportService
 //            ->join('lib_religions', 'patients.religion_code', '=', 'lib_religions.code')
 //            ->join('lib_civil_statuses', 'patients.civil_status_code', '=', 'lib_civil_statuses.code')
 //            ->join('lib_education', 'patients.education_code', '=', 'lib_education.code');
-            ->when($request->category == 'all', function ($q) {
-                $q->where('household_environmentals.facility_code', auth()->user()->facility_code);
-            })
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('barangays.code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('barangays.code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'household_environmentals.facility_code');
             })
             ->when($type == '4ps', function ($q) use ($request) {
                 $q->whereNotNull('cct_id');
