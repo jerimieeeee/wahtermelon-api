@@ -345,11 +345,11 @@ class MaternalCareReportService
             ->leftJoin('facilities', 'patient_mc_post_registrations.barangay_code', '=', 'facilities.barangay_code')
             ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code', 'patient_mc.patient_id');
             })
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCSF', 'LSCSM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
             ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
-            ->groupBy('patient_id', 'delivery_date', 'outcome_code')
+            ->groupBy('patient_mc.patient_id', 'delivery_date', 'outcome_code')
             ->havingRaw('(age_year BETWEEN ? AND ?)', [$age_year_bracket1, $age_year_bracket2])
             ->orderBy('name', 'ASC');
     }
@@ -570,8 +570,9 @@ class MaternalCareReportService
 
     public function get_no_of_pregnancy_outcome_all($request)
     {
-        return DB::table(function ($query) {
+        return DB::table(function ($query) use ($request) {
             $query->selectRaw("
+                    patient_mc.patient_id,
                     CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                     patients.birthdate AS birthdate,
                     lmp_date,
@@ -595,17 +596,16 @@ class MaternalCareReportService
                 ->join('barangays', 'patient_mc_post_registrations.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
                 ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
+
+                ->tap(function ($query) use ($request) {
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code', 'patient_mc.patient_id');
+                })
                 ->groupBy('status', 'date_of_service', 'patient_mc_post_registrations.delivery_date', 'birthdate', 'name', 'lmp_date', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code');
         })
             ->selectRaw('
                         *
             ')
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('facility_code', auth()->user()->facility_code);
-            })
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code');
-            })
+
             ->whereIn('status', ['full_term', 'pre_term'])
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'SB', 'SBF'])
             ->whereIn('pregnancy_termination_code', ['SPON', 'IND'])
@@ -616,7 +616,7 @@ class MaternalCareReportService
 
     public function get_no_of_pregnancy_outcome($request, $status, $age_year_bracket1, $age_year_bracket2)
     {
-        return DB::table(function ($query) {
+        return DB::table(function ($query) use ($request) {
             $query->selectRaw("
                     CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                     patients.birthdate AS birthdate,
@@ -642,17 +642,15 @@ class MaternalCareReportService
                 ->join('barangays', 'patient_mc_post_registrations.barangay_code', '=', 'barangays.psgc_10_digit_code')
                 ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
                 ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
+
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code', 'patient_mc.patient_id');
+            })
                 ->groupBy('status', 'date_of_service', 'patient_mc_post_registrations.delivery_date', 'birthdate', 'name', 'lmp_date', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code');
             })
             ->selectRaw('
                         *
             ')
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('facility_code', auth()->user()->facility_code);
-            })
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code');
-            })
             ->groupBy('name', 'date_of_service', 'age_year', 'municipality_code', 'barangay_code')
             ->when($status == 'FULL-TERM', fn ($query) => $query->havingRaw('status = ? AND (age_year BETWEEN ? AND ?) AND date_of_service BETWEEN ? AND ?', ['full_term', $age_year_bracket1, $age_year_bracket2, $request->start_date, $request->end_date])
             )
