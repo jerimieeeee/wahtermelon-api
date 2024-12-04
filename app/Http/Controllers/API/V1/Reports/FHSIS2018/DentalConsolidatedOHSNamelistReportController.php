@@ -17,6 +17,22 @@ class DentalConsolidatedOHSNamelistReportController extends Controller
 
         $data = null;
 
+        //Return Attended
+        if ($request->params == 'attended') {
+            // If the condition is true, fetch the data
+            $query = $namelistService->get_attended($request);
+
+            $data = $query->get();
+        }
+
+        //Return Examined
+        if ($request->params == 'examined') {
+            // If the condition is true, fetch the data
+            $query = $namelistService->get_examined($request);
+
+            $data = $query->get();
+        }
+
         //Return Medical, Social, Oral Health Status
         if (in_array($request->params, [
             'allergies',

@@ -940,9 +940,6 @@ class DentalConsolidatedOHSNamelistService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->when($request->indicator == 'pregnant', function ($q) use ($request) {
                 $q->where('consults.is_pregnant', 1)
                     ->when($request->age == '10-14', function ($q) use ($request) {
@@ -1349,9 +1346,6 @@ class DentalConsolidatedOHSNamelistService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
-            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consults.facility_code', auth()->user()->facility_code);
-            })
             ->when($request->indicator == 'underfive', function ($q) use ($request) {
                 $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
                     ->when($request->age == '1', function ($q) use ($request) {
@@ -1376,8 +1370,214 @@ class DentalConsolidatedOHSNamelistService
                         $q->where('oral_rehab', 1);
                     });
             })
+            ->when($request->indicator == 'all_age', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4")
+                    ->when($request->params == 'orally_fit', function ($q) use ($request) {
+                        $q->where('orally_fit_flag', 1);
+                    })
+                    ->when($request->params == 'oral_rehab', function ($q) use ($request) {
+                        $q->where('oral_rehab', 1);
+                    });
+            })
+            ->when($request->indicator == 'grand_total', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4")
+                    ->when($request->params == 'orally_fit', function ($q) use ($request) {
+                        $q->where('orally_fit_flag', 1);
+                    })
+                    ->when($request->params == 'oral_rehab', function ($q) use ($request) {
+                        $q->where('oral_rehab', 1);
+                    });
+            })
             ->whereIn('patients.gender', explode(',', $request->gender))
             ->wherePtGroup('dn')
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->groupBy('patients.id');
+    }
+
+    public function get_attended($request)
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        consults.patient_id AS patient_id,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name,
+                        patients.birthdate,
+                        DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service
+                    ")
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            })
+            ->when($request->indicator == 'pregnant', function ($q) use ($request) {
+                $q->where('consults.is_pregnant', 1)
+                    ->when($request->age == '10', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14");
+                    })
+                    ->when($request->age == '15', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19");
+                    })
+                    ->when($request->age == '20', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
+                    });
+            })
+            ->when($request->indicator == 'infant', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'underfive', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
+                    ->when($request->age == '1', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1");
+                    })
+                    ->when($request->age == '2', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2");
+                    })
+                    ->when($request->age == '3', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3");
+                    })
+                    ->when($request->age == '4', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4");
+                    })
+                    ->when($request->age == 'total', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4");
+                    });
+            })
+            ->when($request->indicator == 'school_age', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
+                    ->when($request->age == '5', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5");
+                    })
+                    ->when($request->age == '6', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6");
+                    })
+                    ->when($request->age == '7', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7");
+                    })
+                    ->when($request->age == '8', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8");
+                    })
+                    ->when($request->age == '9', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9");
+                    })
+                    ->when($request->age == 'total', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9");
+                    });
+            })
+            ->when($request->indicator == 'adolescent', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'adult', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'senior', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'all_age', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->wherePtGroup('dn')
+            ->whereIn('patients.gender', explode(',', $request->gender))
+            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
+            ->groupBy('consults.id');
+    }
+
+    public function get_examined($request)
+    {
+        return DB::table('consults')
+            ->selectRaw("
+                        consults.patient_id AS patient_id,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name,
+                        patients.birthdate,
+                        DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
+                        COUNT(consults.id) AS count
+                    ")
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
+            })
+            ->when($request->indicator == 'pregnant', function ($q) use ($request) {
+                $q->where('consults.is_pregnant', 1)
+                    ->when($request->age == '10', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14");
+                    })
+                    ->when($request->age == '15', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19");
+                    })
+                    ->when($request->age == '20', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49");
+                    });
+            })
+            ->when($request->indicator == 'infant', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'underfive', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
+                    ->when($request->age == '1', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 1");
+                    })
+                    ->when($request->age == '2', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 2");
+                    })
+                    ->when($request->age == '3', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 3");
+                    })
+                    ->when($request->age == '4', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 4");
+                    })
+                    ->when($request->age == 'total', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 1 AND 4");
+                    });
+            })
+            ->when($request->indicator == 'school_age', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)")
+                    ->when($request->age == '5', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 5");
+                    })
+                    ->when($request->age == '6', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 6");
+                    })
+                    ->when($request->age == '7', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 7");
+                    })
+                    ->when($request->age == '8', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 8");
+                    })
+                    ->when($request->age == '9', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) = 9");
+                    })
+                    ->when($request->age == 'total', function ($q) use ($request) {
+                        $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 5 AND 9");
+                    });
+            })
+            ->when($request->indicator == 'adolescent', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'adult', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'senior', function ($q) use ($request) {
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60")
+                    ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->when($request->indicator == 'all_age', function ($q) use ($request) {
+                $q->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
+            })
+            ->wherePtGroup('dn')
+            ->whereIn('patients.gender', explode(',', $request->gender))
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
             ->groupBy('patients.id');
     }
