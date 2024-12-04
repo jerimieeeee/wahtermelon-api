@@ -43,11 +43,11 @@ class DentalConsolidatedOHSReportService
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49  THEN 1
                                 ELSE 0
                             END
-                        ) AS pregnant_women_20_49_year_old_attended,
+                        ) AS 'pregnant_women_20_49_year_old_attended',
                         SUM(
                             CASE
                                 WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11  THEN 1
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11 THEN 1
                                 ELSE 0
                             END
                         ) AS male_infant_attended,
@@ -156,7 +156,7 @@ class DentalConsolidatedOHSReportService
                                 ELSE 0
                             END
                         ) AS male_all_age_attended,
-                            SUM(
+                        SUM(
                             CASE
                                 WHEN patients.gender = 'F'
                                 AND (is_pregnant IS NULL OR is_pregnant = 0)
@@ -311,25 +311,11 @@ class DentalConsolidatedOHSReportService
                             DISTINCT CASE
                                 WHEN patients.gender = 'F'
                                 AND is_pregnant = 1
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
-                            THEN
-                                patients.id
-                            ELSE
-                                NULL
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49  THEN patients.id
+                                ELSE NULL
                             END
                         ) AS 'pregnant_women_20_49_year_old_examined',
                         COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'M'
-                                AND is_pregnant = 1
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49
-                            THEN
-                                patients.id
-                            ELSE
-                                NULL
-                            END
-                        ) AS 'pregnant_women_20_49_year_old_examined',
-                            COUNT(
                             DISTINCT CASE
                                 WHEN patients.gender = 'M'
                                 AND TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) BETWEEN 0 AND 11
