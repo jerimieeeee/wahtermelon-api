@@ -598,7 +598,7 @@ class MaternalCareReportService
                 ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
 
                 ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code', 'patient_mc.patient_id');
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code', 'patient_mc.patient_id');
                 })
                 ->groupBy('status', 'date_of_service', 'patient_mc_post_registrations.delivery_date', 'birthdate', 'name', 'lmp_date', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code');
         })
@@ -644,7 +644,7 @@ class MaternalCareReportService
                 ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
 
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'facility_code', 'patient_mc.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code', 'patient_mc.patient_id');
             })
                 ->groupBy('status', 'date_of_service', 'patient_mc_post_registrations.delivery_date', 'birthdate', 'name', 'lmp_date', 'outcome_code', 'pregnancy_termination_date', 'pregnancy_termination_code');
             })
