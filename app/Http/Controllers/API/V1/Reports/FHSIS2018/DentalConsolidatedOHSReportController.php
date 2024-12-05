@@ -28,12 +28,16 @@ class DentalConsolidatedOHSReportController extends Controller
         //TOOTH SERVICES
         $tooth_service = $dentalConsolidated->get_tooth_services($request)->get();
 
+        //ATTENDED & EXAMINED
+        $attended_examined = $dentalConsolidated->get_attended_examined($request)->get();
+
         return [
             'data' => $part1[0],
             'temporary_tooth_condition'  => $temporary_tooth[0],
             'adult_tooth_condition'  => $adult_tooth[0],
             'dental_services'  => $dental_services[0],
-            'tooth_service'  => $tooth_service[0]
+            'tooth_service'  => $tooth_service[0],
+            'attended_examined'  => $attended_examined[0]
         ];
     }
 

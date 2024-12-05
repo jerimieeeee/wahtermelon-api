@@ -4,10 +4,18 @@ namespace App\Services\AnimalBite;
 
 use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Support\Facades\DB;
 
 class AnimalBiteReportAnnualService
 {
+    protected $categoryFilterService;
+
+    public function __construct(CategoryFilterService $categoryFilterService)
+    {
+        $this->categoryFilterService = $categoryFilterService;
+    }
+
     public function get_catchment_barangays()
     {
         $result = DB::table('settings_catchment_barangays')
@@ -180,15 +188,8 @@ class AnimalBiteReportAnnualService
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->whereBetween(DB::raw('DATE(day0_date)'), [$request->start_date, $request->end_date])
-            ->where('patient_abs.facility_code', auth()->user()->facility_code)
-            ->when($request->category == 'fac', function ($q) {
-                $q->whereIn('household_folders.barangay_code', $this->get_catchment_barangays());
-            })
-            ->when($request->category == 'muncity', function ($q) use ($request) {
-                $q->whereIn('municipalities.psgc_10_digit_code', explode(',', $request->code));
-            })
-            ->when($request->category == 'brgys', function ($q) use ($request) {
-                $q->whereIn('household_folders.barangay_code', explode(',', $request->code));
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
             ->groupBy('barangays.name');
     }

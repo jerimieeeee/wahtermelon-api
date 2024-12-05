@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\Household\HouseholdEnvironmentalReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 class HouseholdEnvironmentalReport2018Controller extends Controller
@@ -11,10 +12,10 @@ class HouseholdEnvironmentalReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, HouseholdEnvironmentalReportService $householdEnvironmentalService)
+    public function index(Request $request, HouseholdEnvironmentalReportService $householdEnvironmentalService, CategoryFilterService $categoryFilterService)
     {
         // Projected Population
-        $projected_population = $householdEnvironmentalService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
         //Water Supply
         $water_level_all = $householdEnvironmentalService->get_household_environmental_water_source($request, 'all')->get()->groupBy('family_id');

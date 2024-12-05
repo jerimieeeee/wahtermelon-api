@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\NCD\NcdReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 class NcdReport2018Controller extends Controller
@@ -11,10 +12,10 @@ class NcdReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, NcdReportService $ncdReportService)
+    public function index(Request $request, NcdReportService $ncdReportService, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $ncdReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
         //Risk-Assessed PHILPEN
         $assessed_male = $ncdReportService->get_risk_assessed($request, 'M', 'normal')->get();

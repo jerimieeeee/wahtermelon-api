@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
 use App\Services\Dental\DentalReportService;
+use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
 class DentalReport2018Controller extends Controller
@@ -11,10 +12,10 @@ class DentalReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, DentalReportService $dentalReportService)
+    public function index(Request $request, DentalReportService $dentalReportService, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $dentalReportService->get_projected_population()->get();
+        $projected_population = $categoryFilterService->get_projected_population()->get();
 
 //         return $dentalReportService->get_ab_post_exp_prophylaxis($request)->get();
 
