@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
             foreach ($claims as $claim) {
                 EclaimsStatusJob::dispatch($claim);
             }
+
         })*/
         $schedule->command('eclaims:status')
         ->weeklyOn(6, '20:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
