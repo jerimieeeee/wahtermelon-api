@@ -8,6 +8,7 @@ use App\Models\V1\Libraries\LibMcPresentation;
 use App\Models\V1\MaternalCare\PatientMcPreRegistration;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultMcPrenatalRequest extends FormRequest
@@ -30,7 +31,6 @@ class ConsultMcPrenatalRequest extends FormRequest
     public function validatedWithCasts(): array
     {
         $mc = PatientMcPreRegistration::select('id', 'lmp_date', 'trimester1_date', 'trimester2_date')->where('patient_mc_id', request()->patient_mc_id)->first();
-
         [$weeks, $remainingDays] = get_aog($mc->lmp_date, request()->prenatal_date);
         $trimester = get_trimester(request()->prenatal_date, $mc->trimester1_date, $mc->trimester2_date);
 

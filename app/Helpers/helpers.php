@@ -4,13 +4,16 @@ use Carbon\Carbon;
 
 if (! function_exists('get_aog')) {
     /**
-     * @param  date  $lmp_date
-     * @param  date  $visit_date
+     * @param  \Carbon\Carbon|string|\DateTime  $lmp_date
+     * @param  \Carbon\Carbon|string|\DateTime  $visit_date
      * @return array
      */
     function get_aog($lmp_date, $visit_date)
     {
-        $numberOfDays = $lmp_date->diff($visit_date)->days;
+        $lmp_date = Carbon::parse($lmp_date);
+        $visit_date = Carbon::parse($visit_date);
+
+        $numberOfDays = $lmp_date->diffInDays($visit_date);
         $weeks = floor(($numberOfDays) / 7);
         $remainingDays = $numberOfDays % 7;
 
