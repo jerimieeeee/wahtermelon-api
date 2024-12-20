@@ -168,8 +168,8 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
             if (!$consult) {
                 $patientVitals = new PatientVitalsService();
-                $years = Carbon::parse($patient->birthdate)->diffInYears($row['VITALS DATE 1st']);
-                $months = Carbon::parse($patient->birthdate)->diffInMonths($row['VITALS DATE 1st']);
+                $years = Carbon::parse($patient->birthdate)->diffInYears($row['VITALS DATE 1st'], true);
+                $months = Carbon::parse($patient->birthdate)->diffInMonths($row['VITALS DATE 1st'], true);
                 //dd(['Years' => $years, 'Months' => $months, 'Birthdate' => $patient, 'Vitals Date' => $row['VITALS DATE 1st']]);
                 $bp1 = explode('/',$row['BP1']);
                 $bp2 = explode('/',$row['BP2']);
