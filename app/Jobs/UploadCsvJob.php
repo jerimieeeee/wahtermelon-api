@@ -308,7 +308,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     ]);
                 }
 
-                $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15'];
+                $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15', 'HEENT11'];
                 foreach ($physicalExams as $pe)
                     $notes->physicalExam()->create([
                         'facility_code' => 'DOH000000000048882',
