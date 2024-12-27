@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\V1\Import;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProcessCsvJob;
 use App\Jobs\UploadCsvJob;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Medicine\MedicineList;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Barangay;
@@ -46,6 +48,39 @@ class ImportController extends Controller
                         $row[$key] = number_format((float) $value, 0, '', ''); // Convert to full number as text
                     }
                 }
+                if ($row['MEDICINE LIST ID'] == 'NA') {
+                    dd($row['MEDICINE LIST ID']);
+                }
+                /* $medicineList = explode(',', $row['MEDICINE LIST ID']);
+                    foreach ($medicineList as $key => $medicineId) {
+                        // dd($medicineId);
+                        $data = MedicineList::query()
+                            ->find($medicineId)
+                            ->select(
+                                "facility_code",
+                                "brand_name",
+                                "medicine_code",
+                                "konsulta_medicine_code",
+                                "added_medicine",
+                                "dosage_quantity",
+                                "dosage_uom",
+                                "dose_regimen",
+                                "instruction_quantity",
+                                "medicine_purpose",
+                                "purpose_other",
+                                "duration_intake",
+                                "duration_frequency",
+                                "quantity",
+                                "quantity_preparation",
+                                "medicine_route_code",
+                            )
+                            ->first();
+                        $prescription = $data->toArray();
+                        $prescriptionData = array_filter($prescription, function ($value) {
+                            return $value !== null && $value !== "";
+                        });
+                        dd($prescriptionData);
+                    }
                 $randomUser = User::query()->where('facility_code', 'DOH000000000048882')->where('is_active', 1)->where('designation_code', '!=', 'MD')->inRandomOrder()->first();
 
                 //dd($randomUser->konsultaCredential->accreditation_number);
@@ -283,7 +318,7 @@ class ImportController extends Controller
                     //dd($finalDx);
 
                 }
-                dd('done');
+                dd('done'); */
             });
         });
 
@@ -299,7 +334,7 @@ class ImportController extends Controller
 
     public function importCsv(Request $request)
     {
-        $request->validate([
+        /* $request->validate([
             'file' => 'required|file|mimes:csv,xlsx',
         ]);
 
@@ -327,6 +362,21 @@ class ImportController extends Controller
         return response()->json([
             'message' => 'Import batch dispatched successfully!',
             'batch_id' => $batch->id,
+        ]); */
+        $request->validate([
+            'file' => 'required|file|mimes:csv,xlsx',
+        ]);
+
+        $file = $request->file('file');
+
+        // Move the file to a permanent location
+        $filePath = $file->store('temp'); // Stored in storage/app/temp
+
+        // Dispatch a job to handle the import process
+        ProcessCsvJob::dispatch($filePath);
+
+        return response()->json([
+            'message' => 'Import job dispatched successfully!',
         ]);
     }
 }
