@@ -574,4 +574,7 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('mortality-death-type', [\App\Http\Controllers\API\V1\Libraries\LibMortalityDeathTypeController::class, 'index'])->name('mortality-death-place.index');
     Route::get('mortality-cause', [\App\Http\Controllers\API\V1\Libraries\LibMortalityCauseController::class, 'index'])->name('mortality-cause.index');
 
+    //Adolescent
+    Route::get('rapid-questionaire', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionaireController::class, 'index'])->name('repid-questionaire.index');
+    Route::get('rapid-questionaire/{rapidQuestionaire}', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionaireController::class, 'show'])->name('repid-questionaire.show');
 });

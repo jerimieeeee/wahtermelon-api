@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\V1\Libraries\LibRapidQuestionaire;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -208,6 +210,7 @@ class DatabaseSeeder extends Seeder
             LibFeedbackQuestionSeeder::class,
             LibMortalityCauseSeeder::class,
             LibAbCategorySeeder::class,
+            LibRapidQuestionaireSeeder::class,
         ]);
     }
 }
