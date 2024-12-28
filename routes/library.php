@@ -575,6 +575,9 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('mortality-cause', [\App\Http\Controllers\API\V1\Libraries\LibMortalityCauseController::class, 'index'])->name('mortality-cause.index');
 
     //Adolescent
-    Route::get('rapid-questionaire', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionaireController::class, 'index'])->name('repid-questionaire.index');
-    Route::get('rapid-questionaire/{rapidQuestionaire}', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionaireController::class, 'show'])->name('repid-questionaire.show');
+    Route::get('rapid-questionnaire', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionnaireController::class, 'index'])->name('repid-questionnaire.index');
+    Route::get('rapid-questionnaire/{rapidQuestionnaire}', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionnaireController::class, 'show'])->name('repid-questionnaire.show');
+
+    Route::get('comprehensive', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveController::class, 'index'])->name('comprehensive.index');
+    Route::get('comprehensive/{comprehensive}', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveController::class, 'show'])->name('comprehensive.show');
 });

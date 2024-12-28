@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lib_rapid_questionaires', function (Blueprint $table) {
-            $table->id();
-            $table->string('question');
+        Schema::create('lib_comprehensives', function (Blueprint $table) {
+            $table->char('code', 10)->primary()->index();
+            $table->string('desc');
+            $table->text('instruction');
             $table->unsignedInteger('sequence');
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lib_rapid_questionaires');
+        Schema::dropIfExists('lib_comprehensives');
     }
 };

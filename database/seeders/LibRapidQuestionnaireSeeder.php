@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibRapidQuestionaire;
+use App\Models\V1\Libraries\LibRapidQuestionnaire;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class LibRapidQuestionaireSeeder extends Seeder
+class LibRapidQuestionnaireSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        LibRapidQuestionaire::upsert([
+        LibRapidQuestionnaire::upsert([
             ['id' => 1, 'question' => 'Ikaw ba ay nakaranas ng pananakit o panananakot sa inyong bahay, paaralan o trabaho?', 'sequence' => 1],
             ['id' => 2, 'question' => 'May mgapagkakataon ba na pinag-isipan mo ng maglayas o umalis ng inyong bahay?', 'sequence' => 2],
             ['id' => 3, 'question' => 'Nakaranas ka ba ng bullying na pisikal o cyber bullying sa paaralan o sa trabaho?', 'sequence' => 3],

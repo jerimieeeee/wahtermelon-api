@@ -210,7 +210,8 @@ class DatabaseSeeder extends Seeder
             LibFeedbackQuestionSeeder::class,
             LibMortalityCauseSeeder::class,
             LibAbCategorySeeder::class,
-            LibRapidQuestionaireSeeder::class,
+            LibRapidQuestionnaireSeeder::class,
+            LibComprehensiveSeeder::class,
         ]);
     }
 }

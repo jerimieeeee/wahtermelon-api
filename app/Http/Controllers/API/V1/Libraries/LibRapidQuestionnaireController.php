@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\API\V1\Libraries;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Libraries\LibRapidQuestionaireResource;
-use App\Models\V1\Libraries\LibRapidQuestionaire;
+use App\Http\Resources\API\V1\Libraries\LibRapidQuestionnaireResource;
+use App\Models\V1\Libraries\LibRapidQuestionnaire;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class LibRapidQuestionaireController extends Controller
+class LibRapidQuestionnaireController extends Controller
 {
     /**
      * Display a listing of the PWD Type resource.
      *
      * @queryParam sort string Sort the sequence of Occupations. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
      *
-     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibRapidQuestionaireResource
+     * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibRapidQuestionnaireResource
      *
-     * @apiResourceModel App\Models\V1\Libraries\LibRapidQuestionaire
+     * @apiResourceModel App\Models\V1\Libraries\LibRapidQuestionnaire
      */
     public function index()
     {
-        $query = QueryBuilder::for(LibRapidQuestionaire::class)
+        $query = QueryBuilder::for(LibRapidQuestionnaire::class)
             ->defaultSort('sequence')
             ->allowedSorts('sequence');
 
-        return LibRapidQuestionaireResource::collection($query->get());
+        return LibRapidQuestionnaireResource::collection($query->get());
     }
 
     /**
@@ -39,17 +39,17 @@ class LibRapidQuestionaireController extends Controller
     /**
      * Display the specified PWD Type resource.
      *
-     * @apiResource App\Http\Resources\API\V1\Libraries\LibRapidQuestionaireResource
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibRapidQuestionnaireResource
      *
-     * @apiResourceModel App\Models\V1\Libraries\LibRapidQuestionaire
+     * @apiResourceModel App\Models\V1\Libraries\LibRapidQuestionnaire
      */
-    public function show(LibRapidQuestionaire $rapidQuestionaire)
+    public function show(LibRapidQuestionnaire $rapidQuestionnaire)
     {
-        $query = LibRapidQuestionaire::where('id', $rapidQuestionaire->id);
-        $questionaire = QueryBuilder::for($query)
+        $query = LibRapidQuestionnaire::where('id', $rapidQuestionnaire->id);
+        $questionnaire = QueryBuilder::for($query)
             ->first();
 
-        return new LibRapidQuestionaireResource($questionaire);
+        return new LibRapidQuestionnaireResource($questionnaire);
     }
 
     /**
