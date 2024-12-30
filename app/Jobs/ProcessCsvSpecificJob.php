@@ -15,6 +15,7 @@ class ProcessCsvSpecificJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 1200;
     protected $filePath;
 
     public function __construct($filePath)
