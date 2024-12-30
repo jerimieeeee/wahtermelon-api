@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Import;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\ProcessCsvJob;
+use App\Jobs\ProcessCsvSpecificJob;
 use App\Jobs\UploadCsvJob;
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\SimpleExcel\SimpleExcelReader;
@@ -48,9 +50,126 @@ class ImportController extends Controller
                         $row[$key] = number_format((float) $value, 0, '', ''); // Convert to full number as text
                     }
                 }
-                if ($row['MEDICINE LIST ID'] == 'NA') {
-                    dd($row['MEDICINE LIST ID']);
+                $patient = Patient::query()->where([
+                    'last_name' => $row['LAST NAME'],
+                    'first_name' => $row['FIRST NAME'],
+                    'middle_name' => $row['MIDDLE NAME'],
+                    'suffix_name' => $row['SUFFIX'],
+                    'birthdate' => $row['BIRTHDATE'],
+                ])->first();
+
+                if ($patient) {
+                    $consultDate = Carbon::parse($row['CONSULTATION DATE'])->format('Y-m-d');
+                    $consult = Consult::query()
+                    ->where(['patient_id' => $patient->id, 'pt_group' => 'cn', 'is_konsulta' => 1])
+                    ->whereDate('consult_date', $consultDate)->first();
+                    if ($consult) {
+                        $medicineList = explode(',', $row['MEDICINE LIST ID']);
+                            $dispenseList = explode(',', $row['DISPENSE QUANTITY']);
+                            $medicines = [];
+                            foreach ($medicineList as $key => $medicineId) {
+                                // dd($medicineId);
+                                $data = MedicineList::query()
+                                ->select(
+                                    "facility_code",
+                                    "brand_name",
+                                    "medicine_code",
+                                    "konsulta_medicine_code",
+                                    "added_medicine",
+                                    "dosage_quantity",
+                                    "dosage_uom",
+                                    "dose_regimen",
+                                    "instruction_quantity",
+                                    "medicine_purpose",
+                                    "purpose_other",
+                                    "duration_intake",
+                                    "duration_frequency",
+                                    "quantity",
+                                    "quantity_preparation",
+                                    "medicine_route_code",
+                                )
+                                ->find($medicineId);
+                                if(!$data) {
+                                    Log::warning("Medicine ID not found", [
+                                        'medicine_id' => $medicineId,
+                                        'row' => $row,
+                                    ]);
+                                }
+                            }
+                        $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15', 'HEENT11'];
+                            foreach ($physicalExams as $pe) {
+                                $consult->consultNotes->physicalExam()->updateOrCreate([
+                                    'facility_code' => 'DOH000000000048882',
+                                    'user_id' => $patient->user_id,
+                                    'pe_id' => $pe
+                                ], ['pe_id' => $pe]);
+                            }
+                        $consult->consultNotes->management()->updateOrCreate([
+                            'facility_code' => 'DOH000000000048882',
+                            'patient_id' => $patient->id,
+                            'management_code' => $row['MGMT/COUNSELLING'],
+                        ], [
+                            'user_id' => $patient->user_id,
+                            'management_code' => $row['MGMT/COUNSELLING']
+                        ]);
+
+                        if($consult->prescription()->doesntExist() && $row['MEDICINE LIST ID'] != 'NA') {
+                            $medicineList = explode(',', $row['MEDICINE LIST ID']);
+                            $dispenseList = explode(',', $row['DISPENSE QUANTITY']);
+                            foreach ($medicineList as $key => $medicineId) {
+                                // dd($medicineId);
+                                $data = MedicineList::query()
+                                ->select(
+                                    "facility_code",
+                                    "brand_name",
+                                    "medicine_code",
+                                    "konsulta_medicine_code",
+                                    "added_medicine",
+                                    "dosage_quantity",
+                                    "dosage_uom",
+                                    "dose_regimen",
+                                    "instruction_quantity",
+                                    "medicine_purpose",
+                                    "purpose_other",
+                                    "duration_intake",
+                                    "duration_frequency",
+                                    "quantity",
+                                    "quantity_preparation",
+                                    "medicine_route_code",
+                                )
+                                ->find($medicineId);
+
+                                if(!$data) {
+                                    dd([$patient, $medicineId]);
+                                }
+                                $prescription = $data->toArray();
+                                $prescriptionData = array_filter($prescription, function ($value) {
+                                    return $value !== null && $value !== "";
+                                });
+                                $prescriptionData['user_id'] = $patient->user_id;
+                                $prescriptionData['patient_id'] = $patient->id;
+                                //$prescriptionData['consult_id'] = $consult->id;
+                                $prescriptionData['prescribed_by'] = '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e';
+                                $prescriptionData['prescription_date'] = $row['PRESCRIPTION DATE'];
+                                $prescribeMedicine = $consult->prescription()->create($prescriptionData);
+
+                                $dispenseMedicine = [
+                                    'facility_code' => 'DOH000000000048882',
+                                    'user_id' => $patient->user_id,
+                                    'patient_id' => $patient->id,
+                                    'dispensing_date' => $row['DISPENSING DATE'],
+                                    'dispense_quantity' => $dispenseList[$key],
+                                    'remarks' => 'NA'
+                                ];
+                                $prescribeMedicine->dispensing()->create($dispenseMedicine);
+                            }
+                        }
+                        //dd('ok');
+                    }
                 }
+                /* if ($row['MEDICINE LIST ID'] == 'NA') {
+                    dd($row['MEDICINE LIST ID']);
+                } */
                 /* $medicineList = explode(',', $row['MEDICINE LIST ID']);
                     foreach ($medicineList as $key => $medicineId) {
                         // dd($medicineId);
@@ -374,6 +493,25 @@ class ImportController extends Controller
 
         // Dispatch a job to handle the import process
         ProcessCsvJob::dispatch($filePath);
+
+        return response()->json([
+            'message' => 'Import job dispatched successfully!',
+        ]);
+    }
+
+    public function importCsvSpecific(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,xlsx',
+        ]);
+
+        $file = $request->file('file');
+
+        // Move the file to a permanent location
+        $filePath = $file->store('temp'); // Stored in storage/app/temp
+
+        // Dispatch a job to handle the import process
+        ProcessCsvSpecificJob::dispatch($filePath);
 
         return response()->json([
             'message' => 'Import job dispatched successfully!',
