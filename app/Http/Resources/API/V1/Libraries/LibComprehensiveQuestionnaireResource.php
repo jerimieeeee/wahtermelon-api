@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\Libraries;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LibComprehensiveResource extends JsonResource
+class LibComprehensiveQuestionnaireResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,10 @@ class LibComprehensiveResource extends JsonResource
     {
         return [
             'code' => $this->code,
-            'desc' => $this->desc,
-            'instruction' => $this->instruction,
+            'lib_comprehensive_code' => $this->when(! $this->relationLoaded('comprehensive'), $this->lib_comprehensive_code),
+            'comprehensive' => $this->whenLoaded('comprehensive'),
+            'question' => $this->question,
             'sequence' => $this->sequence,
-            'questions' => LibComprehensiveQuestionnaireResource::collection($this->whenLoaded('questions')),
         ];
     }
 }

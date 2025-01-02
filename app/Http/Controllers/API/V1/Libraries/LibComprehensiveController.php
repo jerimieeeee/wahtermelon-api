@@ -22,6 +22,7 @@ class LibComprehensiveController extends Controller
     public function index()
     {
         $query = QueryBuilder::for(LibComprehensive::class)
+            ->with('questions')
             ->defaultSort('sequence')
             ->allowedSorts('sequence');
 
@@ -39,7 +40,7 @@ class LibComprehensiveController extends Controller
     /**
      * Display the specified PWD Type resource.
      *
-     * @apiResource App\Http\Resources\API\V1\Libraries\LibCOmprehensiveResource
+     * @apiResource App\Http\Resources\API\V1\Libraries\LibComprehensiveResource
      *
      * @apiResourceModel App\Models\V1\Libraries\LibComprehensive
      */

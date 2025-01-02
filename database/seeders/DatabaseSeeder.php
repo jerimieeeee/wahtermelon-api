@@ -212,6 +212,7 @@ class DatabaseSeeder extends Seeder
             LibAbCategorySeeder::class,
             LibRapidQuestionnaireSeeder::class,
             LibComprehensiveSeeder::class,
+            LibComprehensiveQuestionnaireSeeder::class,
         ]);
     }
 }

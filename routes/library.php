@@ -580,4 +580,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('comprehensive', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveController::class, 'index'])->name('comprehensive.index');
     Route::get('comprehensive/{comprehensive}', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveController::class, 'show'])->name('comprehensive.show');
+
+    Route::get('comprehensive-questionnaire', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveQuestionnaireController::class, 'index'])->name('comprehensive-questionnaire.index');
+    Route::get('comprehensive-questionnaire/{comprehensiveQuestionnaire}', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveQuestionnaireController::class, 'show'])->name('comprehensive-questionnaire.show');
 });
