@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Libraries\LibComprehensiveResource;
 use App\Models\V1\Libraries\LibComprehensive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class LibComprehensiveController extends Controller
@@ -21,12 +22,19 @@ class LibComprehensiveController extends Controller
      */
     public function index()
     {
-        $query = QueryBuilder::for(LibComprehensive::class)
-            ->with('questions')
-            ->defaultSort('sequence')
-            ->allowedSorts('sequence');
+        $sort = request()->get('sort', 'sequence'); // Default to 'sequence' if not provided
+        $cacheKey = "lib_comprehensive_index_sort_{$sort}";
+        $cacheDuration = now()->addDay(); // Cache for a day
 
-        return LibComprehensiveResource::collection($query->get());
+        $data = Cache::remember($cacheKey, $cacheDuration, function () {
+            return QueryBuilder::for(LibComprehensive::class)
+                ->with('questions')
+                ->defaultSort('sequence')
+                ->allowedSorts('sequence')
+                ->get();
+        });
+
+        return LibComprehensiveResource::collection($data);
     }
 
     /**
