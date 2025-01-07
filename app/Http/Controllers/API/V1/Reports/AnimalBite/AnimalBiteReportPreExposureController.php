@@ -16,14 +16,29 @@ class AnimalBiteReportPreExposureController extends Controller
     public function index(Request $request, AnimalBiteReportPreExposureService $animalbite, CategoryFilterService $categoryFilterService)
     {
         //Projected Population
-        $projected_population = $categoryFilterService->get_projected_population()->get();
+        $total_population = $categoryFilterService->get_projected_population()->get();
 
-        $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get()->groupBy('municipality_name');
-//        $part2 = $animalbite->get_previous_quarter_cat2_cat3($request)->get()->groupBy('municipality_name');
+        $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get();
+        $part1_others = $animalbite->get_ab_pre_exp_prophylaxis_others($request)->get();
+        $part2 = $animalbite->get_previous_quarter_cat2_cat3($request)->get();
+
+        if (auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) {
+            $part1 = $part1->groupBy('barangay_name');
+            $part1_others = $part1_others->groupBy('barangay_name');
+            $part2 = $part2->groupBy('barangay_name');
+        }
+
+        // Apply groupBy for municipality_name only if reports_flag is 1
+        if (auth()->user()->reports_flag == 1) {
+            $part1 = $part1->groupBy('municipality_name');
+            $part1_others = $part1_others->groupBy('municipality_name');
+            $part2 = $part2->groupBy('municipality_name');
+        }
 
         return [
-            'projected_population' => $projected_population,
+            'projected_population' => $total_population,
             'data' => $part1,
+            'other_muncity' => $part1_others,
 //            'data2' => $part2,
         ];
     }
