@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class EclaimsUploadController extends Controller
 {
@@ -47,7 +48,11 @@ class EclaimsUploadController extends Controller
                     $q->where('code', $request->code);
                 });
             })
-            ->with(['patient', 'patient.philhealthLatest', 'caserate.attendant', 'caserate'])
+            ->with(['patient', 'patient.philhealthLatest', 'caserate', 'caserate.attendant',
+                'caserate.patientAb', 'caserate.patientAb.abPostExposure',
+                'caserate.patientCc',
+                'caserate.patientMc', 'caserate.patientMc.prenatal', 'caserate.patientMc.postRegister',
+                'caserate.patientTb', 'caserate.patientTb.tbCaseHolding'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 
