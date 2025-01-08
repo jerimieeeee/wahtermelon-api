@@ -11,9 +11,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 class LibRapidQuestionnaireController extends Controller
 {
     /**
-     * Display a listing of the PWD Type resource.
+     * Display a listing of the Rapid Questionnaire resource.
      *
-     * @queryParam sort string Sort the sequence of Occupations. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
+     * @queryParam sort string Sort the sequence of Rapid Questionnaire. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibRapidQuestionnaireResource
      *
@@ -37,7 +37,7 @@ class LibRapidQuestionnaireController extends Controller
     }
 
     /**
-     * Display the specified PWD Type resource.
+     * Display the specified Rapid Questionnaire resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibRapidQuestionnaireResource
      *

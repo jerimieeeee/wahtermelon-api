@@ -1440,4 +1440,13 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    Route::prefix('asrh')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhRapidController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('rapid', 'index');
+                Route::post('rapid', 'store');
+            });
+    });
+
 });

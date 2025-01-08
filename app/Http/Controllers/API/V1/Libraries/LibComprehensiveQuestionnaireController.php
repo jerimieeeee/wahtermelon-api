@@ -11,9 +11,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 class LibComprehensiveQuestionnaireController extends Controller
 {
     /**
-     * Display a listing of the PWD Type resource.
+     * Display a listing of the Comprehensive Questionnaire resource.
      *
-     * @queryParam sort string Sort the sequence of Occupations. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
+     * @queryParam sort string Sort the sequence of Comprehensive Questionnaire. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibComprehensiveQuestionnaireResource
      *
@@ -38,7 +38,7 @@ class LibComprehensiveQuestionnaireController extends Controller
     }
 
     /**
-     * Display the specified PWD Type resource.
+     * Display the specified Comprehensive Questionnaire resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibComprehensiveQuestionnaireResource
      *

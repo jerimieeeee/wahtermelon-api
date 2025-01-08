@@ -583,4 +583,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('comprehensive-questionnaire', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveQuestionnaireController::class, 'index'])->name('comprehensive-questionnaire.index');
     Route::get('comprehensive-questionnaire/{comprehensiveQuestionnaire}', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveQuestionnaireController::class, 'show'])->name('comprehensive-questionnaire.show');
+
+    Route::get('asrh-client-type', [\App\Http\Controllers\API\V1\Libraries\LibAsrhClientTypeController::class, 'index'])->name('asrh-client-type.index');
+    Route::get('asrh-client-type/{asrhClientType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhClientTypeController::class, 'show'])->name('asrh-client-type.show');
 });

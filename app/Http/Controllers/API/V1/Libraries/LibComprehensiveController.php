@@ -12,9 +12,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 class LibComprehensiveController extends Controller
 {
     /**
-     * Display a listing of the PWD Type resource.
+     * Display a listing of the Comprehensive HEEADSSSS resource.
      *
-     * @queryParam sort string Sort the sequence of Occupations. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
+     * @queryParam sort string Sort the sequence of Comprehensive HEEADSSSS. Add hyphen (-) to descend the list: e.g. -sequence. Example: sequence
      *
      * @apiResourceCollection App\Http\Resources\API\V1\Libraries\LibComprehensiveResource
      *
@@ -46,7 +46,7 @@ class LibComprehensiveController extends Controller
     }
 
     /**
-     * Display the specified PWD Type resource.
+     * Display the specified Comprehensive HEEADSSSS resource.
      *
      * @apiResource App\Http\Resources\API\V1\Libraries\LibComprehensiveResource
      *
@@ -54,9 +54,20 @@ class LibComprehensiveController extends Controller
      */
     public function show(LibComprehensive $comprehensive)
     {
-        $query = LibComprehensive::where('code', $comprehensive->code);
+        /* $query = LibComprehensive::where('code', $comprehensive->code);
         $comprehensive = QueryBuilder::for($query)
             ->first();
+
+        return new LibComprehensiveResource($comprehensive); */
+        $cacheKey = "lib_comprehensive_show_{$comprehensive->code}";
+        $cacheDuration = now()->addDay(); // Cache for 24 hours
+
+        $comprehensive = Cache::remember($cacheKey, $cacheDuration, function () use ($comprehensive) {
+            return QueryBuilder::for(LibComprehensive::class)
+                ->with('questions')
+                ->where('code', $comprehensive->code)
+                ->firstOrFail();
+        });
 
         return new LibComprehensiveResource($comprehensive);
     }
