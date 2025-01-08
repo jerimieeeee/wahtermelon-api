@@ -123,6 +123,15 @@ class AnimalBiteReportPreExposureService
                         SUM(
                             CASE
                                 WHEN patient_ab_post_exposures.day0_date IS NOT NULL
+                                AND patient_ab_post_exposures.day3_date IS NOT NULL
+                                AND patient_ab_post_exposures.day7_date IS NOT NULL
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'pep_completed',
+                        SUM(
+                            CASE
+                                WHEN patient_ab_post_exposures.day0_date IS NOT NULL
                                 THEN 1
                                 ELSE 0
                             END
@@ -341,6 +350,15 @@ class AnimalBiteReportPreExposureService
                         SUM(
                             CASE
                                 WHEN patient_ab_post_exposures.day0_date IS NOT NULL
+                                AND patient_ab_post_exposures.day3_date IS NOT NULL
+                                AND patient_ab_post_exposures.day7_date IS NOT NULL
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'pep_completed',
+                        SUM(
+                            CASE
+                                WHEN patient_ab_post_exposures.day0_date IS NOT NULL
                                 THEN 1
                                 ELSE 0
                             END
@@ -461,22 +479,65 @@ class AnimalBiteReportPreExposureService
                         settings_catchment_barangays.population,
                         SUM(
                             CASE
-                                WHEN category_id = 1 THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'category1',
-                        SUM(
-                            CASE
                                 WHEN category_id = 2 THEN 1
                                 ELSE 0
                             END
-                        ) AS 'category2',
-                        SUM(
+                        ) + SUM(
                             CASE
                                 WHEN category_id = 3 THEN 1
                                 ELSE 0
                             END
-                        ) AS 'category3',
+                        ) AS 'total_cat2_and_cat3_previous_quarter'
+                    ")
+            ->join('patient_abs', 'patient_ab_exposures.patient_id', '=', 'patient_abs.patient_id')
+            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
+            ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
+            ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
+            ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
+            })
+            ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->whereNull('patient_ab_exposures.deleted_at')
+            ->when($request->quarter == 1, function ($q) use ($request) {
+                $previousYear = $request->year - 1;  // Calculate the previous year
+                $q->whereBetween(DB::raw('DATE(consult_date)'), [
+                    "{$previousYear}-10-01", // October 1st of the previous year
+                    "{$previousYear}-12-31"  // December 31st of the previous year
+                ]);
+            })
+            ->when($request->quarter == 2, function ($q) use ($request) {
+                $q->whereBetween(DB::raw('DATE(consult_date)'), [
+                    "{$request->year}-01-01", // January 1st of the requested year
+                    "{$request->year}-03-31"  // March 31st of the requested year
+                ]);
+            })
+            ->when($request->quarter == 3, function ($q) use ($request) {
+                $q->whereBetween(DB::raw('DATE(consult_date)'), [
+                    "{$request->year}-04-01", // April 1st of the requested year
+                    "{$request->year}-06-30"  // June 30th of the requested year
+                ]);
+            })
+            ->when($request->quarter == 4, function ($q) use ($request) {
+                $q->whereBetween(DB::raw('DATE(consult_date)'), [
+                    "{$request->year}-07-01", // July 1st of the requested year
+                    "{$request->year}-09-30"  // September 30th of the requested year
+                ]);
+            })
+            ->groupBy('municipalities.psgc_10_digit_code', 'barangays.psgc_10_digit_code');
+    }
+
+    public function get_previous_quarter_cat2_cat3_others($request)
+    {
+        return DB::table('patient_ab_exposures')
+            ->selectRaw("
+                        municipalities.name AS municipality_name,
+                        barangays.name AS barangay_name,
+                        settings_catchment_barangays.population,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1
@@ -501,6 +562,7 @@ class AnimalBiteReportPreExposureService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
+            ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
             ->whereNull('patient_ab_exposures.deleted_at')
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year

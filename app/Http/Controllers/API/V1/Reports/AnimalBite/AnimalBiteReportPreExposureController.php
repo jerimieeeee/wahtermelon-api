@@ -21,6 +21,7 @@ class AnimalBiteReportPreExposureController extends Controller
         $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get();
         $part1_others = $animalbite->get_ab_pre_exp_prophylaxis_others($request)->get();
         $part2 = $animalbite->get_previous_quarter_cat2_cat3($request)->get();
+        $part2_others = $animalbite->get_previous_quarter_cat2_cat3_others($request)->get();
 
         if (auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) {
             $part1 = $part1->groupBy('barangay_name');
@@ -38,8 +39,9 @@ class AnimalBiteReportPreExposureController extends Controller
         return [
             'projected_population' => $total_population,
             'data' => $part1,
-            'other_muncity' => $part1_others,
-//            'data2' => $part2,
+            'data1_others' => $part1_others,
+            'data2' => $part2,
+            'data2_others' => $part2_others,
         ];
     }
 
