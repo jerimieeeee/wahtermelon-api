@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ConsultAsrhRapid extends Model
+class ConsultAsrhComprehensive extends Model
 {
-    /** @use HasFactory<\Database\Factories\V1\Adolescent\ConsultAsrhRapidFactory> */
+    /** @use HasFactory<\Database\Factories\V1\Adolescent\ConsultAsrhComprehensiveFactory> */
     use HasFactory, HasUlids, FilterByUser, FilterByFacility, CascadeSoftDeletes;
 
     protected $guarded = [
@@ -26,13 +26,11 @@ class ConsultAsrhRapid extends Model
 
     protected $keyType = 'string';
 
-    protected $cascadeDeletes = [
-        'answers',
-        'comprehensive',
-    ];
-
     protected $casts = [
         'assessment_date' => 'date:Y-m-d',
+        'risky_behavior' => 'boolean',
+        'seriously_injured' => 'boolean',
+        'consent_flag' => 'boolean',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -55,19 +53,8 @@ class ConsultAsrhRapid extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function answers()
+    public function consultRapid()
     {
-        return $this->hasMany(ConsultAsrhRapidAnswer::class);
+        return $this->belongsTo(ConsultAsrhRapid::class);
     }
-
-    public function comprehensive()
-    {
-        return $this->hasOne(ConsultAsrhComprehensive::class);
-    }
-
-    public function referToUser()
-    {
-        return $this->belongsTo(User::class, 'refer_to_user_id');
-    }
-
 }

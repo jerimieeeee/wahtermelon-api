@@ -17,7 +17,7 @@ class ConsultAsrhRapidController extends Controller
     public function index()
     {
         $data = QueryBuilder::for(ConsultAsrhRapid::class)
-                ->with('answers')
+                ->with('answers', 'comprehensive')
                 ->defaultSort('assessment_date')
                 ->allowedSorts('assessment_date')
                 ->get();

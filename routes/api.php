@@ -1453,6 +1453,14 @@ Route::prefix('v1')->group(function () {
             ->group(function () {
                 Route::get('rapid-answer', 'index');
                 Route::post('rapid-answer', 'store');
+                Route::put('rapid-answer/{consultAsrhRapidAnswer}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhComprehensiveController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('comprehensive', 'index');
+                Route::get('comprehensive/{consultAsrhComprehensive}', 'show');
+                Route::post('comprehensive', 'store');
             });
     });
 

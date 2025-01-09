@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Adolescent;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Adolescent\ConsultAsrhRapidAnswerRequest;
+use App\Http\Requests\API\V1\Adolescent\ConsultAsrhRapidAnswerUpdateRequest;
 use App\Models\V1\Adolescent\ConsultAsrhRapidAnswer;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,9 @@ class ConsultAsrhRapidAnswerController extends Controller
         foreach ($validatedData['answers'] as $answer) {
             $consultAsrhRapidAnswer = ConsultAsrhRapidAnswer::updateOrCreate(
                 [
-                'patient_id' => $validatedData['patient_id'],
-                'consult_asrh_rapid_id' => $answer['consult_asrh_rapid_id'],
-                'lib_rapid_questionnaire_id' => $answer['lib_rapid_questionnaire_id']
+                    'patient_id' => $validatedData['patient_id'],
+                    'consult_asrh_rapid_id' => $answer['consult_asrh_rapid_id'],
+                    'lib_rapid_questionnaire_id' => $answer['lib_rapid_questionnaire_id']
                 ],
                 $answer
             );
@@ -51,9 +52,14 @@ class ConsultAsrhRapidAnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ConsultAsrhRapidAnswerUpdateRequest $request, ConsultAsrhRapidAnswer $consultAsrhRapidAnswer)
     {
-        //
+        $validatedData = $request->validated();
+        $consultAsrhRapidAnswer->update($validatedData);
+        return response()->json([
+            'message' => 'Consult ASRH Rapid Answer updated successfully',
+            'data' => $validatedData
+        ], 201);
     }
 
     /**
