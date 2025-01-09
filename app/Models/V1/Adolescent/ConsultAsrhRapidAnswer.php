@@ -3,6 +3,7 @@
 namespace App\Models\V1\Adolescent;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibRapidQuestionnaire;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
@@ -13,9 +14,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ConsultAsrhRapid extends Model
+class ConsultAsrhRapidAnswer extends Model
 {
-    /** @use HasFactory<\Database\Factories\V1\Adolescent\ConsultAsrhRapidFactory> */
+    /** @use HasFactory<\Database\Factories\V1\Adolescent\ConsultAsrhRapidAnswerFactory> */
     use HasFactory, HasUlids, FilterByUser, FilterByFacility, CascadeSoftDeletes;
 
     protected $guarded = [
@@ -25,15 +26,6 @@ class ConsultAsrhRapid extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
-
-    protected $cascadeDeletes = [
-        'answers',
-    ];
-
-    protected $casts = [
-        'assessment_date' => 'date:Y-m-d',
-        'end_date' => 'date:Y-m-d',
-    ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -55,9 +47,13 @@ class ConsultAsrhRapid extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function answers()
+    public function consultRapid()
     {
-        return $this->hasMany(ConsultAsrhRapidAnswer::class);
+        return $this->belongsTo(ConsultAsrhRapid::class);
     }
 
+    public function question()
+    {
+        return $this->belongsTo(LibRapidQuestionnaire::class);
+    }
 }

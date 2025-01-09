@@ -1445,7 +1445,14 @@ Route::prefix('v1')->group(function () {
             ->middleware(('auth:api'))
             ->group(function () {
                 Route::get('rapid', 'index');
+                Route::get('rapid/{consultAsrhRapid}', 'show');
                 Route::post('rapid', 'store');
+            });
+        Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhRapidAnswerController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('rapid-answer', 'index');
+                Route::post('rapid-answer', 'store');
             });
     });
 

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\V1\Adolescent;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Adolescent\ConsultAsrhRapidRequest;
+use App\Http\Resources\API\V1\Adolescent\ConsultAsrhRapidResource;
 use App\Models\V1\Adolescent\ConsultAsrhRapid;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ConsultAsrhRapidController extends Controller
 {
@@ -14,7 +16,12 @@ class ConsultAsrhRapidController extends Controller
      */
     public function index()
     {
-        //
+        $data = QueryBuilder::for(ConsultAsrhRapid::class)
+                ->with('answers')
+                ->defaultSort('assessment_date')
+                ->allowedSorts('assessment_date')
+                ->get();
+        return ConsultAsrhRapidResource::collection($data);
     }
 
     /**
@@ -47,9 +54,14 @@ class ConsultAsrhRapidController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(ConsultAsrhRapid $consultAsrhRapid)
     {
-        //
+        $data = QueryBuilder::for(ConsultAsrhRapid::class)
+                ->with('answers')
+                ->where('id', $consultAsrhRapid->id)
+                ->firstOrFail();
+
+        return new ConsultAsrhRapidResource($data);
     }
 
     /**

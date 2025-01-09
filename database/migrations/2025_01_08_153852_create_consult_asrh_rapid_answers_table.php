@@ -11,20 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('consult_asrh_rapids', function (Blueprint $table) {
+        Schema::create('consult_asrh_rapid_answers', function (Blueprint $table) {
             $table->ulid('id')->index()->primary();
+            $table->foreignUlid('consult_asrh_rapid_id')->index()->constrained()->cascadeOnDelete();
             $table->string('facility_code')->index();
             $table->foreign('facility_code')->references('code')->on('facilities');
             $table->foreignUuid('patient_id')->index()->constrained();
             $table->foreignUuid('user_id')->index()->constrained();
-            $table->date('assessment_date')->index();
-            $table->date('end_date')->index()->nullable(1);
-            $table->enum('client_type', ['walk-in', 'referred'])->default('walk-in');
-            $table->char('lib_asrh_client_type_code', 10)->nullable(1);
-            $table->string('other_client_type')->nullable(1);
-            $table->foreign('lib_asrh_client_type_code')->references('code')->on('lib_asrh_client_types');
-            $table->boolean('consent_flag')->default(false);
-            $table->text('notes')->nullable();
+            $table->foreignId('lib_rapid_questionnaire_id')->index()->constrained('lib_rapid_questionnaires');
+            $table->enum('answer', ['1', '2', 'x'])->default('x');
+            $table->text('remarks')->nullable(1);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('consult_asrh_rapids');
+        Schema::dropIfExists('consult_asrh_rapid_answers');
     }
 };
