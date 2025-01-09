@@ -36,7 +36,11 @@ class EclaimsUploadController extends Controller
                 $q->where('program_desc', $request->program_desc);
             })
             ->when(isset($request->pStatus), function ($q) use ($request) {
-                $q->where('pStatus', $request->pStatus);
+                if($request->pStatus == 'TRANSMITTED') {
+                    $q->whereNotNull('pTransmissionControlNumber');
+                } else {
+                    $q->where('pStatus', $request->pStatus);
+                }
             })
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
                 $q->whereHas('patient', function ($q) use ($request, $columns) {
