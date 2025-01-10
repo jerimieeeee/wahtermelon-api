@@ -28,7 +28,7 @@ class ConsultAsrhRapidAnswerController extends Controller
             $consultAsrhRapidAnswer = ConsultAsrhRapidAnswer::updateOrCreate(
                 [
                     'patient_id' => $validatedData['patient_id'],
-                    'consult_asrh_rapid_id' => $answer['consult_asrh_rapid_id'],
+                    'consult_asrh_rapid_id' => $validatedData['consult_asrh_rapid_id'],
                     'lib_rapid_questionnaire_id' => $answer['lib_rapid_questionnaire_id']
                 ],
                 $answer

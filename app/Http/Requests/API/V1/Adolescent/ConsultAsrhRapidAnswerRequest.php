@@ -24,7 +24,7 @@ class ConsultAsrhRapidAnswerRequest extends FormRequest
         return [
             'answers' => ['required', 'array'],
             'patient_id' => ['required', 'exists:patients,id'],
-            'answers.*.consult_asrh_rapid_id' => ['required', 'exists:consult_asrh_rapids,id'],
+            'consult_asrh_rapid_id' => ['required', 'exists:consult_asrh_rapids,id'],
             'answers.*.lib_rapid_questionnaire_id' => ['required', 'exists:lib_rapid_questionnaires,id'],
             'answers.*.answer' => ['required', 'in:1,2,x'],
             'answers.*.remarks' => ['nullable', 'string'],
