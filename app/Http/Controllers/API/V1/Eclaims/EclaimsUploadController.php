@@ -52,6 +52,15 @@ class EclaimsUploadController extends Controller
                     $q->where('code', $request->code);
                 });
             })
+            ->when(isset($request->start_date) && ! isset($request->end_date), function ($q) use ($request) {
+                $q->where('pTransmissionDate', '>=', $request->start_date);
+            })
+            ->when(! isset($request->start_date) && isset($request->end_date), function ($q) use ($request) {
+                $q->where('pTransmissionDate', '<=', $request->end_date);
+            })
+            ->when(isset($request->start_date) && isset($request->end_date), function ($q) use ($request) {
+                $q->whereBetween('pTransmissionDate', [$request->start_date, $request->end_date]);
+            })
             ->with(['patient', 'patient.philhealthLatest', 'caserate', 'caserate.attendant',
                 'caserate.patientAb', 'caserate.patientAb.abPostExposure',
                 'caserate.patientCc',
