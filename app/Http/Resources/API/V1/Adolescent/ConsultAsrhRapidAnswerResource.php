@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1\Adolescent;
 
+use App\Http\Resources\API\V1\Libraries\LibRapidQuestionnaireResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,6 +26,7 @@ class ConsultAsrhRapidAnswerResource extends JsonResource
             'consult_asrh_rapid_id' => $this->when(! $this->relationLoaded('consultRapid'), $this->consult_asrh_rapid_id),
             'consult_asrh_rapid' => $this->whenLoaded('consultRapid'),
             'lib_rapid_questionnaire_id' => $this->when(! $this->relationLoaded('question'), $this->lib_rapid_questionnaire_id),
+            //'question' => LibRapidQuestionnaireResource::collection($this->whenLoaded('question')),
             'question' => $this->whenLoaded('question'),
             'answer' => $this->answer,
             'remarks' => $this->remarks,

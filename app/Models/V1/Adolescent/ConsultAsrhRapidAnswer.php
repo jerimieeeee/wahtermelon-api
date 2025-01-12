@@ -3,6 +3,7 @@
 namespace App\Models\V1\Adolescent;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibAsrhAlgorithm;
 use App\Models\V1\Libraries\LibRapidQuestionnaire;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
@@ -54,6 +55,6 @@ class ConsultAsrhRapidAnswer extends Model
 
     public function question()
     {
-        return $this->belongsTo(LibRapidQuestionnaire::class);
+        return $this->belongsTo(LibRapidQuestionnaire::class, 'lib_rapid_questionnaire_id', 'id');
     }
 }

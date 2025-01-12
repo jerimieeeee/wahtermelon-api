@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\V1\Libraries;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LibRapidQuestionnaireResource extends JsonResource
+class LibAsrhAlgorithmResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,9 @@ class LibRapidQuestionnaireResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'question' => $this->question,
-            'algorithm' => $this->algorithms,
+            'code' => $this->code,
+            'desc' => $this->desc,
+            'ask_instruction' => $this->ask_instruction,
             'sequence' => $this->sequence,
         ];
     }

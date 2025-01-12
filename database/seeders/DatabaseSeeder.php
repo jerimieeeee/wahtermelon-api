@@ -214,6 +214,8 @@ class DatabaseSeeder extends Seeder
             LibComprehensiveSeeder::class,
             LibComprehensiveQuestionnaireSeeder::class,
             LibAsrhClientTypeSeeder::class,
+            LibAsrhAlgorithmSeeder::class,
+            LibAsrhAlgorithmPivotSeeder::class,
         ]);
     }
 }
