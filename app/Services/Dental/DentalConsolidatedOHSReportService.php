@@ -629,13 +629,14 @@ class DentalConsolidatedOHSReportService
                             DISTINCT CASE
                                 WHEN patients.gender = 'F'
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 0
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
                             THEN
                                 patients.id
                             ELSE
                                 NULL
                             END
                         ) AS 'female_all_age_examined',
-                        COUNT(DISTINCT consults.patient_id) AS grand_total_examined
+                        COUNT(DISTINCT patients.id) AS grand_total_examined
                     ")
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
             ->join('users', 'consults.user_id', '=', 'users.id')

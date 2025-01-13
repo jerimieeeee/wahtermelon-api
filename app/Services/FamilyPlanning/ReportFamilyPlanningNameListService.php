@@ -150,7 +150,7 @@ class ReportFamilyPlanningNameListService
                 $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age);
             })
             ->whereMethodCode($request->method)
-            ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
+//            ->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_fp_methods.facility_code', 'patient_fp_methods.patient_id');
             })

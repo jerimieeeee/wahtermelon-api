@@ -208,6 +208,9 @@ class ChildCareReport2018Controller extends Controller
         $normal_0_59_months_m = $childCareReportService->get_overweight_obese($request, 'M', 'Normal')->get();
         $normal_0_59_months_f = $childCareReportService->get_overweight_obese($request, 'F', 'Normal')->get();
 
+/*        //0-59 MONTHS OVERWEIGH, OBESE & NORMAL
+        $obese_overweight_normal_0_59_months = $childCareReportService->get_overweight_obese($request)->get();*/
+
         //6-11 MONTHS COMPLIMENTARY FEEDING
         $comp_feeding_6_11_months_m = $childCareReportService->get_complimentary_feeding($request, 'M')->get();
         $comp_feeding_6_11_months_f = $childCareReportService->get_complimentary_feeding($request, 'F')->get();
