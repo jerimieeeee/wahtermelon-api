@@ -14,13 +14,22 @@ class ConsultAsrhRapidController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = QueryBuilder::for(ConsultAsrhRapid::class)
-                ->with('answers', 'comprehensive', 'answers.question.algorithm')
-                ->defaultSort('assessment_date')
-                ->allowedSorts('assessment_date')
-                ->get();
+            ->when($request->filled('patient_id'), function ($q) use ($request) {
+                $q->where('patient_id', $request->patient_id);
+            })
+            ->with(['answers.question', 'comprehensive'])
+            ->get()
+            ->each(function($consultAsrhRapid) {
+                $consultAsrhRapid->answers->each(function($answer) {
+                    if ($answer->answer == 1) {
+                        $answer->load('question.algorithm');
+                    }
+                });
+            })
+            ->sortBy('assessment_date');
         return ConsultAsrhRapidResource::collection($data);
     }
 
@@ -57,9 +66,17 @@ class ConsultAsrhRapidController extends Controller
     public function show(ConsultAsrhRapid $consultAsrhRapid)
     {
         $data = QueryBuilder::for(ConsultAsrhRapid::class)
-                ->with('answers')
-                ->where('id', $consultAsrhRapid->id)
-                ->firstOrFail();
+            ->with(['answers.question', 'comprehensive'])
+            ->get()
+            ->each(function($consultAsrhRapid) {
+                $consultAsrhRapid->answers->each(function($answer) {
+                    if ($answer->answer == 1) {
+                        $answer->load('question.algorithm');
+                    }
+                });
+            })
+            ->where('id', $consultAsrhRapid->id)
+            ->firstOrFail();
 
         return new ConsultAsrhRapidResource($data);
     }

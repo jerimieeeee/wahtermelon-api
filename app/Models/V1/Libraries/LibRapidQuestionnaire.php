@@ -22,9 +22,4 @@ class LibRapidQuestionnaire extends Model
             'lib_asrh_algorithm_code'
         );
     }
-
-    public function consultAsrhRapidAnswers()
-    {
-        return $this->hasMany(ConsultAsrhRapidAnswer::class, 'lib_rapid_questionnaire_id', 'id');
-    }
 }
