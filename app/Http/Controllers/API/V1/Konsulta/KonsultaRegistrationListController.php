@@ -72,6 +72,15 @@ class KonsultaRegistrationListController extends Controller
                     $q->where('barangay_code', $request->barangay_code);
                 });
             })
+            ->when(isset($request->start_date) && ! isset($request->end_date), function ($q) use ($request) {
+                $q->where('assigned_date', '>=', $request->start_date);
+            })
+            ->when(! isset($request->start_date) && isset($request->end_date), function ($q) use ($request) {
+                $q->where('assigned_date', '<=', $request->end_date);
+            })
+            ->when(isset($request->start_date) && isset($request->end_date), function ($q) use ($request) {
+                $q->whereBetween('assigned_date', [$request->start_date, $request->end_date]);
+            })
             ->allowedFilters(['philhealth_id', 'effectivity_year'])
             ->allowedIncludes('assignedStatus', 'packageType', 'membershipType')
             ->defaultSort('last_name', 'first_name', 'middle_name', 'birthdate', '-effectivity_year')
