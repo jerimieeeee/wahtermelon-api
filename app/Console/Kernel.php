@@ -29,10 +29,10 @@ class Kernel extends ConsoleKernel
 
         })*/
         $schedule->command('eclaims:status')
-        ->weeklyOn(6, '15:16') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
+        ->weeklyOn(6, '15:31') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
         ->timezone('Asia/Manila'); // Set the timezone to Asia/Manila
 
-        $schedule->command('clean:household-folders')->dailyAt('15:15')->timezone('Asia/Manila');
+        $schedule->command('clean:household-folders')->dailyAt('15:30')->timezone('Asia/Manila');
     }
 
     /**
