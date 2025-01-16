@@ -64,7 +64,7 @@ class UserController extends Controller
                 ->whereIsActive(1);
             })
             ->when(isset($request->aja_flag), function ($q) use ($request) {
-                $q->where('aja_flag', 1)
+                $q->where('aja_flag', $request->aja_flag)
                 ->whereIsActive(1);
             })
             ->where('facility_code',auth()->user()->facility_code)
