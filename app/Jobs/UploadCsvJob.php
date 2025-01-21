@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Medicine\MedicineList;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Barangay;
@@ -18,6 +19,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 {
@@ -58,8 +60,9 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     $row[$key] = number_format((float) $value, 0, '', ''); // Convert to full number as text
                 }
             }
-            $randomUser = User::query()->where('facility_code', 'DOH000000000048882')->where('is_active', 1)->where('designation_code', '!=', 'MD')->inRandomOrder()->first();
-
+            list($last_name, $first_name) = explode(',', $row['ENCODER']);
+            //$randomUser = User::query()->where('facility_code', 'DOH000000000048882')->where('is_active', 1)->where('designation_code', '!=', 'MD')->inRandomOrder()->first();
+            $randomUser = User::query()->where('last_name', $last_name)->where('first_name', trim($first_name))->where('facility_code', 'DOH000000000048882')->first();
             //dd($randomUser->konsultaCredential->accreditation_number);
             //dd($row);
             $row['BIRTHDATE'] = Carbon::parse($row['BIRTHDATE'])->format('Y-m-d');
@@ -128,6 +131,26 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                 //dd('social');
             }
 
+            if ($patient->patientHistory->isEmpty()) {
+                $patient->patientHistory()->create([
+                    'facility_code' => 'DOH000000000048882',
+                    'user_id' => $randomUser->id,
+                    'patient_id' => $patient->id,
+                    'medical_history_id' => 20,
+                    'category' => 1
+                ]);
+            }
+
+            if ($patient->familyHistory->isEmpty()) {
+                $patient->patientHistory()->create([
+                    'facility_code' => 'DOH000000000048882',
+                    'user_id' => $randomUser->id,
+                    'patient_id' => $patient->id,
+                    'medical_history_id' => 20,
+                    'category' => 2
+                ]);
+            }
+
             //dd($patient->householdFolder->id);
             if ($patient->householdFolder === null) {
                 $barangay = Barangay::query()->where('psgc_10_digit_code', 'LIKE', '%'.$row['ADDRESS'])->first();
@@ -168,8 +191,8 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
 
             if (!$consult) {
                 $patientVitals = new PatientVitalsService();
-                $years = Carbon::parse($patient->birthdate)->diffInYears($row['VITALS DATE 1st']);
-                $months = Carbon::parse($patient->birthdate)->diffInMonths($row['VITALS DATE 1st']);
+                $years = Carbon::parse($patient->birthdate)->diffInYears($row['VITALS DATE 1st'], true);
+                $months = Carbon::parse($patient->birthdate)->diffInMonths($row['VITALS DATE 1st'], true);
                 //dd(['Years' => $years, 'Months' => $months, 'Birthdate' => $patient, 'Vitals Date' => $row['VITALS DATE 1st']]);
                 $bp1 = explode('/',$row['BP1']);
                 $bp2 = explode('/',$row['BP2']);
@@ -267,8 +290,9 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     'management_code' => $row['MGMT/COUNSELLING'],
                 ]);
 
-                if (Str::contains($row['FINAL DIAGNOSIS'], ';')) {
-                    $icd10s = array_map('trim', explode(';', $row['FINAL DIAGNOSIS'])); // Split and trim
+                if (Str::contains($row['FINAL DIAGNOSIS'], [';', ','])) {
+                    //$icd10s = array_map('trim', explode(';', $row['FINAL DIAGNOSIS'])); // Split and trim
+                    $icd10s = array_map('trim', preg_split('/[;,]/', $row['FINAL DIAGNOSIS']));
                     foreach ($icd10s as $icd10) {
                         $finalDx = $notes->finaldx()->create([
                             'facility_code' => 'DOH000000000048882',
@@ -284,7 +308,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     ]);
                 }
 
-                $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15'];
+                $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15', 'HEENT11'];
                 foreach ($physicalExams as $pe)
                     $notes->physicalExam()->create([
                         'facility_code' => 'DOH000000000048882',
@@ -292,7 +316,190 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                         'pe_id' => $pe
                     ]);
 
-                //dd($finalDx);
+                if($consult->prescription()->doesntExist() && $row['MEDICINE LIST ID'] != 'NA') {
+                    $medicineList = explode(',', $row['MEDICINE LIST ID']);
+                    $dispenseList = explode(',', $row['DISPENSE QUANTITY']);
+                    foreach ($medicineList as $key => $medicineId) {
+                        // dd($medicineId);
+                        $data = MedicineList::query()
+                        ->select(
+                            "facility_code",
+                            "brand_name",
+                            "medicine_code",
+                            "konsulta_medicine_code",
+                            "added_medicine",
+                            "dosage_quantity",
+                            "dosage_uom",
+                            "dose_regimen",
+                            "instruction_quantity",
+                            "medicine_purpose",
+                            "purpose_other",
+                            "duration_intake",
+                            "duration_frequency",
+                            "quantity",
+                            "quantity_preparation",
+                            "medicine_route_code",
+                        )
+                        ->find($medicineId);
+                        /* if(!$data) {
+                            Log::warning("Medicine ID not found", [
+                                'medicine_id' => $medicineId,
+                                'row' => $row,
+                            ]);
+                            continue;
+                        } */
+                        $prescription = $data->toArray();
+                        $prescriptionData = array_filter($prescription, function ($value) {
+                            return $value !== null && $value !== "";
+                        });
+                        $prescriptionData['user_id'] = $randomUser->id;
+                        $prescriptionData['patient_id'] = $patient->id;
+                        //$prescriptionData['consult_id'] = $consult->id;
+                        $prescriptionData['prescribed_by'] = '9b0665bf-f899-4b1e-bbdb-b2d7da0d880e';
+                        $prescriptionData['prescription_date'] = $row['PRESCRIPTION DATE'];
+                        $prescribeMedicine = $consult->prescription()->create($prescriptionData);
+
+                        $dispenseMedicine = [
+                            'facility_code' => 'DOH000000000048882',
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'dispensing_date' => $row['DISPENSING DATE'],
+                            'dispense_quantity' => $dispenseList[$key],
+                            'remarks' => 'NA'
+                        ];
+                        $prescribeMedicine->dispensing()->create($dispenseMedicine);
+                    }
+                }
+
+                $laboratories = array_map('trim', explode('/', $row['LABORATORY']));
+                foreach ($laboratories as $lab) {
+                    $lab = match ($lab) {
+                        'CHEM' => 'BCHM',
+                        'UA' => 'URN',
+                        'SE' => 'FCAL',
+                        'CXR' => 'CXRAY',
+                        default => $lab,
+                    };
+
+                    $labRequest = $consult->consultLaboratory()->create([
+                        'facility_code' => 'DOH000000000048882',
+                        'consult_id' => $consult->id,
+                        'user_id' => $randomUser->id,
+                        'patient_id' => $patient->id,
+                        'request_date' => $row['LABORATORY DATE'],
+                        'lab_code' => $lab,
+                        'recommendation_code' => 'Y',
+                        'request_status_code' => 'RQ'
+                    ]);
+
+                    if ($lab === 'CBC') {
+                        $labRequest->cbc()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'consult_id' => $consult->id,
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'laboratory_date' => $row['LABORATORY DATE'],
+                            'lab_status_code' => 'D',
+                            'hemoglobin' => $row['CBC: HGB'],
+                            'hematocrit' => $row['CBC: HCT'],
+                            'rbc' => $row['CBC: RBC'],
+                            'wbc' => $row['CBC: WBC'],
+                            'neutrophils' => $row['CBC: SEG'],
+                            'lymphocytes' => $row['CBC: LYM'],
+                            'monocytes' => $row['CBC: MON'],
+                            'platelets' => $row['CBC: PLT'],
+                        ]);
+                    }
+
+                    if ($lab === 'BCHM') {
+                        $labRequest->bloodchem()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'consult_id' => $consult->id,
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'laboratory_date' => $row['LABORATORY DATE'],
+                            'lab_status_code' => 'D',
+                            'fbs' => $row['CHEM: FBS'],
+                            'creatinine' => $row['CHEM: CREA'],
+                            'ldl' => $row['CHEM: LDL'],
+                            'hdl' => $row['CHEM: HDL'],
+                            'cholesterol' => $row['CHEM: TC'],
+                            'triglycerides' => $row['CHEM: TG'],
+                        ]);
+                    }
+
+                    if ($lab === 'URN') {
+                        $labRequest->urinalysis()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'consult_id' => $consult->id,
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'laboratory_date' => $row['LABORATORY DATE'],
+                            'lab_status_code' => 'D',
+                            'gravity' => $row['UA: GRAVITY'],
+                            'appearance' => $row['UA: APPEARANCE'],
+                            'color' => $row['UA: COLOR'],
+                            'glucose' => $row['UA: GLUCOSE'],
+                            'proteins' => $row['UA: PROTEIN'],
+                            'ph' => $row['UA: PH'],
+                            'rb_cells' => $row['UA: RBC'],
+                            'wb_cells' => $row['UA: WBC'],
+                            'bacteria' => $row['UA: BACTERIA'],
+                        ]);
+                    }
+
+                    if ($lab === 'FCAL') {
+                        $labRequest->fecalysis()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'consult_id' => $consult->id,
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'laboratory_date' => $row['LABORATORY DATE'],
+                            'lab_status_code' => 'D',
+                            'color_code' => $row['SE: COLOR'] == 'BROWN' ? 1 : 5,
+                            'consistency_code' => $row['SE: CONSISTENCY'] == 'SOFT' ? 1 : 4,
+                            'blood_code' => $row['SE: BLOOD'] == 'ABSENT' ? 'A' : 'P',
+                            'rbc' => $row['SE: RBC'],
+                            'wbc' => $row['SE: WBC'],
+                            'ova' => $row['SE: OVA'],
+                            'parasite' => $row['SE: PARASITE'],
+                        ]);
+                    }
+
+                    if ($lab === 'ECG') {
+                        $labRequest->ecg()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'consult_id' => $consult->id,
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'laboratory_date' => $row['LABORATORY DATE'],
+                            'lab_status_code' => 'D',
+                            'findings_code' => 1,
+                        ]);
+                    }
+
+                    if ($lab === 'CXRAY') {
+                        if ($row['CXR'] === 'NORMAL') {
+                            $findingsCode = 1;
+                        }
+                        if ($row['CXR'] === 'BRONCHITIS') {
+                            $findingsCode = 99;
+                        }
+                        if ($row['CXR'] === 'PNEUMONIA' || $row['CXR'] === 'PNEUMONIA, BASAL ') {
+                            $findingsCode = 2;
+                        }
+                        $labRequest->chestXray()->create([
+                            'facility_code' => 'DOH000000000048882',
+                            'consult_id' => $consult->id,
+                            'user_id' => $randomUser->id,
+                            'patient_id' => $patient->id,
+                            'laboratory_date' => $row['LABORATORY DATE'],
+                            'lab_status_code' => 'D',
+                            'findings_code' => $findingsCode,
+                            'remarks_findings' => $row['CXR'],
+                        ]);
+                    }
+                }
 
             }
         }

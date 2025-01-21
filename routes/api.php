@@ -38,6 +38,7 @@ Route::prefix('v1')->group(function () {
     Route::post('reset-password', [\App\Http\Controllers\API\Auth\ChangePasswordController::class, 'passwordResetProcess'])->middleware('guest');
 
     Route::post('import-data', [\App\Http\Controllers\API\V1\Import\ImportController::class, 'importCsv']);
+    Route::post('import-data-specific', [\App\Http\Controllers\API\V1\Import\ImportController::class, 'importCsvSpecific']);
 
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
         ->middleware('auth:api')
