@@ -705,80 +705,80 @@ class ChildCareReportService
             ->orderBy('name', 'ASC');
     }
 
-/*    public function get_overweight_obese($request)
-    {
-        return DB::table('patient_vitals')
-            ->selectRaw("
-                        COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'M'
-                                AND patient_weight_for_age IN ('Obese', 'Overweight')
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) AS 'male_obese_overweight',
-                        COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'F'
-                                AND patient_weight_for_age IN ('Obese', 'Overweight')
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) AS 'female_obese_overweight',
-                        COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'M'
-                                AND patient_weight_for_age IN ('Obese', 'Overweight')
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) + COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'F'
-                                AND patient_weight_for_age IN ('Obese', 'Overweight')
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) AS 'male_female_obese_overweight',
-                        COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'M'
-                                AND patient_weight_for_age = 'Normal'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) AS 'male_normal',
-                        COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'F'
-                                AND patient_weight_for_age = 'Normal'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) AS 'female_normal',
-                        COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'M'
-                                AND patient_weight_for_age = 'Normal'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) + COUNT(
-                            DISTINCT CASE
-                                WHEN patients.gender = 'F'
-                                AND patient_weight_for_age = 'Normal'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
-                                ELSE NULL
-                            END
-                        ) AS 'male_female_normal'
-                    ")
-            ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
-            ->join('users', 'patient_vitals.user_id', '=', 'users.id')
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vitals.facility_code', 'patient_vitals.patient_id');
-            })
-            ->whereBetween(DB::raw('DATE(vitals_date)'), [$request->start_date, $request->end_date]);
-    }*/
+    /*    public function get_overweight_obese($request)
+        {
+            return DB::table('patient_vitals')
+                ->selectRaw("
+                            COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patient_weight_for_age IN ('Obese', 'Overweight')
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) AS 'male_obese_overweight',
+                            COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patient_weight_for_age IN ('Obese', 'Overweight')
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) AS 'female_obese_overweight',
+                            COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patient_weight_for_age IN ('Obese', 'Overweight')
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) + COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patient_weight_for_age IN ('Obese', 'Overweight')
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) AS 'male_female_obese_overweight',
+                            COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patient_weight_for_age = 'Normal'
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) AS 'male_normal',
+                            COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patient_weight_for_age = 'Normal'
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) AS 'female_normal',
+                            COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patient_weight_for_age = 'Normal'
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) + COUNT(
+                                DISTINCT CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patient_weight_for_age = 'Normal'
+                                    AND TIMESTAMPDIFF(MONTH, patients.birthdate, vitals_date) BETWEEN 0 AND 59  THEN patients.id
+                                    ELSE NULL
+                                END
+                            ) AS 'male_female_normal'
+                        ")
+                ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
+                ->join('users', 'patient_vitals.user_id', '=', 'users.id')
+                ->tap(function ($query) use ($request) {
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vitals.facility_code', 'patient_vitals.patient_id');
+                })
+                ->whereBetween(DB::raw('DATE(vitals_date)'), [$request->start_date, $request->end_date]);
+        }*/
 
     public function get_complimentary_feeding($request, $patient_gender)
     {
@@ -810,7 +810,7 @@ class ChildCareReportService
                 ['bfed_month3', '=', '1'],
                 ['bfed_month4', '=', '1'],
             ])
-            ->whereNotNull('comp_fed_date')
+                ->whereNotNull('comp_fed_date')
             )
             ->havingRaw('(age_month BETWEEN 6 AND 11)')
             ->orderBy('name', 'ASC');

@@ -18,7 +18,7 @@ class AnimalBiteReportPreExposureNameListService
 
     public function get_ab_pre_exp_prophylaxis_name_list($request)
     {
-        return DB::table('patient_ab_pre_exposures')
+        return DB::table('patient_abs')
             ->selectRaw("
             	        municipalities.psgc_10_digit_code AS municipality_code,
 	                    barangays.psgc_10_digit_code AS barangay_code,
@@ -32,7 +32,7 @@ class AnimalBiteReportPreExposureNameListService
                         patients.birthdate,
                         DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service
                     ")
-            ->join('patient_abs', 'patient_ab_pre_exposures.patient_id', '=', 'patient_abs.patient_id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
             ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
             ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
@@ -152,7 +152,7 @@ class AnimalBiteReportPreExposureNameListService
 
     public function get_ab_pre_exp_prophylaxis_others($request)
     {
-        return DB::table('patient_ab_pre_exposures')
+        return DB::table('patient_abs')
             ->selectRaw("
                         municipalities.name AS municipality_name,
                         barangays.name AS barangay_name,
@@ -325,7 +325,7 @@ class AnimalBiteReportPreExposureNameListService
                             END
                         ) AS 'total_biting_animal'
                     ")
-            ->join('patient_abs', 'patient_ab_pre_exposures.patient_id', '=', 'patient_abs.patient_id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
             ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
             ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')

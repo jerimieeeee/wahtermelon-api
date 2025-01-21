@@ -201,15 +201,12 @@ class DentalReportService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
-//            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-//            ->whereYear('consult_date', $request->year)
-//            ->whereMonth('consult_date', $request->month)
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
-            });;
+            });
     }
 
     public function get_dmft($request, $gender)
