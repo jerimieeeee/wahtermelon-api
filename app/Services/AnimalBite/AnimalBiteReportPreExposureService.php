@@ -18,7 +18,7 @@ class AnimalBiteReportPreExposureService
 
     public function get_ab_pre_exp_prophylaxis($request)
     {
-        return DB::table('patient_ab_pre_exposures')
+        return DB::table('patient_abs')
             ->selectRaw("
                         municipalities.name AS municipality_name,
                         municipalities.psgc_10_digit_code AS municipality_code,
@@ -193,17 +193,17 @@ class AnimalBiteReportPreExposureService
                             END
                         ) AS 'total_biting_animal'
                     ")
-            ->join('patient_abs', 'patient_ab_pre_exposures.patient_id', '=', 'patient_abs.patient_id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
             ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
-            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
+            ->leftJoin('patients', 'patient_abs.patient_id', '=', 'patients.id')
+            ->leftJoin('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
-            ->join('users', 'patient_ab_pre_exposures.user_id', '=', 'users.id')
+            ->join('users', 'patient_abs.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
             })
@@ -247,7 +247,7 @@ class AnimalBiteReportPreExposureService
 
     public function get_ab_pre_exp_prophylaxis_others($request)
     {
-        return DB::table('patient_ab_pre_exposures')
+        return DB::table('patient_abs')
             ->selectRaw("
                         municipalities.name AS municipality_name,
                         barangays.name AS barangay_name,
@@ -414,11 +414,11 @@ class AnimalBiteReportPreExposureService
                             END
                         ) AS 'total_biting_animal'
                     ")
-            ->join('patient_abs', 'patient_ab_pre_exposures.patient_id', '=', 'patient_abs.patient_id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
             ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
-            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
+            ->leftJoin('patients', 'patient_abs.patient_id', '=', 'patients.id')
+            ->leftJoin('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
