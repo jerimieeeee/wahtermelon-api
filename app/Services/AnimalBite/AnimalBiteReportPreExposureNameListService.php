@@ -63,7 +63,7 @@ class AnimalBiteReportPreExposureNameListService
                 $q->whereIn('patients.gender', ['M', 'F']);
             })
             ->when($request->indicator == 'less_than_15', function ($q) use ($request) {
-                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) > 15");
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) < 15");
             })
             ->when($request->indicator == 'greater_than_15', function ($q) use ($request) {
                 $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 15");
@@ -195,7 +195,7 @@ class AnimalBiteReportPreExposureNameListService
                 $q->whereIn('patients.gender', ['M', 'F']);
             })
             ->when($request->indicator == 'less_than_15', function ($q) use ($request) {
-                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) > 15");
+                $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) < 15");
             })
             ->when($request->indicator == 'greater_than_15', function ($q) use ($request) {
                 $q->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 15");
@@ -280,7 +280,7 @@ class AnimalBiteReportPreExposureNameListService
                 ]);
             })
             ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
-                $q->whereIn('household_folders.barangay_code', [$request->code]);
+                $q->whereIn('barangays.psgc_10_digit_code', [$request->code]);
             })
             ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
                 $q->whereIn('municipalities.psgc_10_digit_code', [$request->code]);
