@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class EclaimsUploadController extends Controller
 {
@@ -35,7 +36,11 @@ class EclaimsUploadController extends Controller
                 $q->where('program_desc', $request->program_desc);
             })
             ->when(isset($request->pStatus), function ($q) use ($request) {
-                $q->where('pStatus', $request->pStatus);
+                if($request->pStatus == 'TRANSMITTED') {
+                    $q->whereNotNull('pTransmissionControlNumber');
+                } else {
+                    $q->where('pStatus', $request->pStatus);
+                }
             })
             ->when(isset($request->filter['search']), function ($q) use ($request, $columns) {
                 $q->whereHas('patient', function ($q) use ($request, $columns) {
@@ -47,7 +52,20 @@ class EclaimsUploadController extends Controller
                     $q->where('code', $request->code);
                 });
             })
-            ->with(['patient', 'patient.philhealthLatest', 'caserate.attendant', 'caserate'])
+            ->when(isset($request->start_date) && ! isset($request->end_date), function ($q) use ($request) {
+                $q->where('pTransmissionDate', '>=', $request->start_date);
+            })
+            ->when(! isset($request->start_date) && isset($request->end_date), function ($q) use ($request) {
+                $q->where('pTransmissionDate', '<=', $request->end_date);
+            })
+            ->when(isset($request->start_date) && isset($request->end_date), function ($q) use ($request) {
+                $q->whereBetween('pTransmissionDate', [$request->start_date, $request->end_date]);
+            })
+            ->with(['patient', 'patient.philhealthLatest', 'caserate', 'caserate.attendant',
+                'caserate.patientAb', 'caserate.patientAb.abPostExposure',
+                'caserate.patientCc',
+                'caserate.patientMc', 'caserate.patientMc.prenatal', 'caserate.patientMc.postRegister',
+                'caserate.patientTb', 'caserate.patientTb.tbCaseHolding'])
             ->defaultSort('-created_at')
             ->allowedSorts('created_at');
 

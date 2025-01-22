@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports\AnimalBite;
 
 use App\Http\Controllers\Controller;
+use App\Services\AnimalBite\AnimalBiteReportPreExposureNameListService;
 use App\Services\AnimalBite\ReportAnimalBiteCohortNameListService;
 use App\Services\AnimalBite\ReportAnimalBitePreExposureNameListService;
 use App\Services\Morbidity\ReportMorbidityNameListService;
@@ -13,9 +14,9 @@ class AnimalBitePreExposureNameListReportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ReportAnimalBitePreExposureNameListService $nameListService)
+    public function index(Request $request, AnimalBiteReportPreExposureNameListService $nameListService)
     {
-        $namelist = $nameListService->get_report_namelist($request)->get();
+        $namelist = $nameListService->get_ab_pre_exp_prophylaxis_name_list($request)->get();
 
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
