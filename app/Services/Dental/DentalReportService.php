@@ -175,7 +175,8 @@ class DentalReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEARs, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
@@ -183,6 +184,7 @@ class DentalReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
+                                AND is_pregnant = 1
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
                                 1
                             ELSE
@@ -191,6 +193,7 @@ class DentalReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
+                                AND is_pregnant = 1
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
                                 1
                             ELSE

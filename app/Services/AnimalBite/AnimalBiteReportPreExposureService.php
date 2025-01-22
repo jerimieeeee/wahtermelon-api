@@ -18,7 +18,7 @@ class AnimalBiteReportPreExposureService
 
     public function get_ab_pre_exp_prophylaxis($request)
     {
-        return DB::table('patient_abs')
+        return DB::table('patient_ab_exposures')
             ->selectRaw("
                         municipalities.name AS municipality_name,
                         municipalities.psgc_10_digit_code AS municipality_code,
@@ -193,28 +193,22 @@ class AnimalBiteReportPreExposureService
                             END
                         ) AS 'total_biting_animal'
                     ")
-            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
-            ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
-            ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
-            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
+            ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_ab_exposures.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
+            ->leftJoin('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
+            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
-            ->join('users', 'patient_abs.user_id', '=', 'users.id')
+            ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
             })
-/*            ->when($request->others == 1, function ($q) use ($request) {
-                $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
-            })
-            ->when($request->others == 0, function ($q) use ($request) {
-                $q->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
-            })*/
-            ->whereNull('patient_ab_pre_exposures.deleted_at')
             ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->where('settings_catchment_barangays.year', $request->year)
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
                     "{$request->year}-01-01", // January 1st of the requested year
@@ -247,10 +241,12 @@ class AnimalBiteReportPreExposureService
 
     public function get_ab_pre_exp_prophylaxis_others($request)
     {
-        return DB::table('patient_abs')
+        return DB::table('patient_ab_exposures')
             ->selectRaw("
                         municipalities.name AS municipality_name,
+                        municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
+                        barangays.psgc_10_digit_code AS barangay_code,
                         settings_catchment_barangays.population,
                         SUM(
                             CASE
@@ -414,11 +410,11 @@ class AnimalBiteReportPreExposureService
                             END
                         ) AS 'total_biting_animal'
                     ")
-            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
-            ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
-            ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
-            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
+            ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_ab_exposures.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
+            ->leftJoin('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
+            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
@@ -426,16 +422,10 @@ class AnimalBiteReportPreExposureService
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_abs.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
             })
-            /*            ->when($request->others == 1, function ($q) use ($request) {
-                            $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
-                        })
-                        ->when($request->others == 0, function ($q) use ($request) {
-                            $q->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
-                        })*/
-            ->whereNull('patient_ab_pre_exposures.deleted_at')
             ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->where('settings_catchment_barangays.year', $request->year)
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
                     "{$request->year}-01-01", // January 1st of the requested year
@@ -468,11 +458,10 @@ class AnimalBiteReportPreExposureService
 
     public function get_previous_quarter_cat2_cat3($request)
     {
-        return DB::table('patient_abs')
+        return DB::table('patient_ab_exposures')
             ->selectRaw("
                         municipalities.name AS municipality_name,
                         barangays.name AS barangay_name,
-                        settings_catchment_barangays.population,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1
@@ -485,11 +474,9 @@ class AnimalBiteReportPreExposureService
                             END
                         ) AS 'total_cat2_and_cat3_previous_quarter'
                     ")
-            ->leftJoin('patient_ab_pre_exposures', 'patient_abs.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
-            ->lefTJoin('patient_ab_post_exposures', 'patient_abs.id', '=', 'patient_ab_post_exposures.patient_ab_id')
-            ->leftJoin('patient_ab_exposures', 'patient_abs.id', '=', 'patient_ab_exposures.patient_ab_id')
-            ->join('patients', 'patient_abs.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_abs.patient_id', '=', 'household_members.patient_id')
+            ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
+            ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
@@ -497,10 +484,10 @@ class AnimalBiteReportPreExposureService
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_abs.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
             })
             ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
-            ->whereNull('patient_ab_exposures.deleted_at')
+            ->where('settings_catchment_barangays.year', $request->year)
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
@@ -535,7 +522,6 @@ class AnimalBiteReportPreExposureService
             ->selectRaw("
                         municipalities.name AS municipality_name,
                         barangays.name AS barangay_name,
-                        settings_catchment_barangays.population,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1
@@ -558,9 +544,10 @@ class AnimalBiteReportPreExposureService
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_abs.facility_code', 'patient_abs.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
             })
-            ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->where('settings_catchment_barangays.year', $request->year)
             ->whereNull('patient_ab_exposures.deleted_at')
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year

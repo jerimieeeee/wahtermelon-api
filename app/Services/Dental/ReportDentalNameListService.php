@@ -227,6 +227,7 @@ class ReportDentalNameListService
             // pregnant 10 to 14 years BOHC
             ->when($request->params == 'pregnant_women_10_14_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
+                    ->where('is_pregnant', 1)
                     ->whereIn('service_id',
                         [7, 4]
                     )
@@ -235,6 +236,7 @@ class ReportDentalNameListService
             // pregnant 15 to 19 years BOHC
             ->when($request->params == 'pregnant_women_15_19_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
+                    ->where('is_pregnant', 1)
                     ->whereIn('service_id',
                         [7, 4]
                     )
@@ -243,6 +245,7 @@ class ReportDentalNameListService
             // pregnant 20 to 49 years BOHC
             ->when($request->params == 'pregnant_women_20_49_years_bohc', function ($query) use ($request) {
                 $query->where('patients.gender', 'F')
+                    ->where('is_pregnant', 1)
                     ->whereIn('service_id',
                         [7, 4]
                     )
