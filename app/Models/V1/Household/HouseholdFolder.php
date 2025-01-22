@@ -71,6 +71,11 @@ class HouseholdFolder extends Model
         return $this->hasOne(HouseholdEnvironmental::class, 'household_folder_id', 'id');
     }
 
+    public function householdEnvironmentals()
+    {
+        return $this->hasMany(HouseholdEnvironmental::class);
+    }
+
     public function barangays()
     {
         return $this->belongsTo(Barangay::class, 'barangay_code', 'psgc_10_digit_code')

@@ -26,12 +26,14 @@ class Kernel extends ConsoleKernel
             foreach ($claims as $claim) {
                 EclaimsStatusJob::dispatch($claim);
             }
+
         })*/
         $schedule->command('eclaims:status')
-        ->weeklyOn(6, '20:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
+        // ->weeklyOn(2, '14:00') // Every Saturday at 8:00 PM (6 is Saturday, 20:00 is 8:00 PM)
+        ->dailyAt('15:00') // Every day at 8:00 PM
         ->timezone('Asia/Manila'); // Set the timezone to Asia/Manila
 
-        $schedule->command('clean:household-folders')->dailyAt('12:00')->timezone('Asia/Manila');
+        $schedule->command('household:clean')->dailyAt('15:00')->timezone('Asia/Manila');
     }
 
     /**
