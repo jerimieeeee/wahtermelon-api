@@ -2,8 +2,6 @@
 
 namespace App\Services\AnimalBite;
 
-use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
-use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Support\Facades\DB;
 
@@ -461,6 +459,9 @@ class AnimalBiteReportPreExposureService
         return DB::table('patient_ab_exposures')
             ->selectRaw("
                         municipalities.name AS municipality_name,
+                        municipalities.psgc_10_digit_code AS municipality_code,
+                        barangays.name AS barangay_name,
+                        barangays.psgc_10_digit_code AS barangay_code,
                         barangays.name AS barangay_name,
                         SUM(
                             CASE
@@ -521,6 +522,9 @@ class AnimalBiteReportPreExposureService
         return DB::table('patient_ab_exposures')
             ->selectRaw("
                         municipalities.name AS municipality_name,
+                        municipalities.psgc_10_digit_code AS municipality_code,
+                        barangays.name AS barangay_name,
+                        barangays.psgc_10_digit_code AS barangay_code,
                         barangays.name AS barangay_name,
                         SUM(
                             CASE
