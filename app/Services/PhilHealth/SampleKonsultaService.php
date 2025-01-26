@@ -124,9 +124,9 @@ class SampleKonsultaService
         $service = new SampleSoapService();
         if ($save) {
             $fileName = 'Konsulta/'.$credential->facility_code.'/'.$tranche.$credential->accreditation_number.'_'.date('Ymd').'_'.$transmittalNumber.'.xml.enc';
-            //Storage::disk('spaces')->put($fileName, $service->encryptData($xml));
-            //$xmlEnc = Storage::disk('spaces')->get($fileName);
-            try {
+            Storage::disk('spaces')->put($fileName, $service->encryptData($xml));
+            $xmlEnc = Storage::disk('spaces')->get($fileName);
+            /* try {
                 // Check if the storage disk is available
                 if (!Storage::disk('spaces')->exists('')) {
                     throw new \Exception('Storage disk is not accessible.');
@@ -141,7 +141,7 @@ class SampleKonsultaService
                 // Log the error and prevent further execution
                 Log::error('Error accessing storage disk: ' . $e->getMessage());
                 return false;
-            }
+            } */
         }
 
         $report = $service->soapMethod('validateReport', ['pReport' => $xmlEnc ?? $service->encryptData($xml), 'pReportTagging' => $tranche]);
@@ -150,7 +150,7 @@ class SampleKonsultaService
             if ($effectivityYear === null) {
                 $effectivityYear = date('Y');
             }
-            $this->saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, '', $report, ! empty($report->success) ? 'V' : 'F', $effectivityYear);
+            $this->saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $fileName, $report, ! empty($report->success) ? 'V' : 'F', $effectivityYear);
         }
 
         //return $report;
