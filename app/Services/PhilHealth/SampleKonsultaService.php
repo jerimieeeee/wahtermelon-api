@@ -21,6 +21,7 @@ use App\Models\V1\PhilHealth\PhilhealthCredential;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ArrayToXml\ArrayToXml;
 
@@ -97,7 +98,7 @@ class SampleKonsultaService
             $result = new ArrayToXml($array, $root, true, 'UTF-8');
             $xml = $result->dropXmlDeclaration()->toXml();
 
-            return $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save, $effectivityYear, $credential);
+            $this->storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save, $effectivityYear, $credential);
             // return $xml;
         });
 
@@ -105,21 +106,43 @@ class SampleKonsultaService
 
     public function saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, $xmlUrl, $report, $status, $effectivityYear)
     {
+        $randomUser = User::query()
+            ->where('facility_code', 'DOH000000000048882')
+            ->where('is_active', 1)
+            ->where('designation_code', '!=', 'MD')
+            ->whereIn('id', ['9b0662cd-29d5-401d-81da-118bdefacb3a', '9b54822e-f4d2-44db-b44a-a8011570837a'])
+            ->inRandomOrder()->first();
+
         KonsultaTransmittal::updateOrCreate(
             ['transmittal_number' => $transmittalNumber],
-            ['user_id' => '9b0662cd-29d5-401d-81da-118bdefacb3a', 'facility_code' => 'DOH000000000048882', 'total_enlistment' => $enlistmentCount, 'tranche' => $tranche, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report, 'effectivity_year' => $effectivityYear]
+            ['user_id' => $randomUser->id, 'facility_code' => 'DOH000000000048882', 'total_enlistment' => $enlistmentCount, 'tranche' => $tranche, 'total_profile' => $profileCount, 'total_soap' => $soapCount, 'xml_url' => $xmlUrl, 'xml_status' => $status, 'xml_errors' => $report, 'effectivity_year' => $effectivityYear]
         );
     }
 
     public function storeXml($transmittalNumber, $xml, $tranche, $enlistmentCount, $profileCount, $soapCount, $save = false, $effectivityYear = null, $credential = null)
     {
         $service = new SampleSoapService();
-        /* if ($save) {
-            $fileName = '';
+        if ($save) {
             $fileName = 'Konsulta/'.$credential->facility_code.'/'.$tranche.$credential->accreditation_number.'_'.date('Ymd').'_'.$transmittalNumber.'.xml.enc';
-            Storage::disk('spaces')->put($fileName, $service->encryptData($xml));
-            $xmlEnc = Storage::disk('spaces')->get($fileName);
-        } */
+            //Storage::disk('spaces')->put($fileName, $service->encryptData($xml));
+            //$xmlEnc = Storage::disk('spaces')->get($fileName);
+            try {
+                // Check if the storage disk is available
+                if (!Storage::disk('spaces')->exists('')) {
+                    throw new \Exception('Storage disk is not accessible.');
+                }
+
+                // Attempt to save the file
+                Storage::disk('spaces')->put($fileName, $service->encryptData($xml));
+
+                // Attempt to retrieve the saved file
+                $xmlEnc = Storage::disk('spaces')->get($fileName);
+            } catch (\Exception $e) {
+                // Log the error and prevent further execution
+                Log::error('Error accessing storage disk: ' . $e->getMessage());
+                return false;
+            }
+        }
 
         $report = $service->soapMethod('validateReport', ['pReport' => $xmlEnc ?? $service->encryptData($xml), 'pReportTagging' => $tranche]);
 
@@ -130,7 +153,7 @@ class SampleKonsultaService
             $this->saveTransmittal($transmittalNumber, $tranche, $enlistmentCount, $profileCount, $soapCount, '', $report, ! empty($report->success) ? 'V' : 'F', $effectivityYear);
         }
 
-        return $report;
+        //return $report;
     }
 
     public function enlistments($transmittalNumber = '', $patientId = [], $save = false, $revalidate = false, $effectivityYear = null, $tranche = 1)

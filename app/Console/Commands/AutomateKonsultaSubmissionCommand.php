@@ -51,7 +51,7 @@ class AutomateKonsultaSubmissionCommand extends Command
 
         $this->info('Konsulta submission jobs dispatched.'); */
 
-        $data = PatientPhilhealth::query()
+        /* $data = PatientPhilhealth::query()
             ->whereEffectivityYear('2024')
             ->withWhereHas('konsultaRegistration', fn ($query) => $query->whereEffectivityYear('2024'))
             ->withWhereHas('patient.patientHistory')
@@ -63,20 +63,64 @@ class AutomateKonsultaSubmissionCommand extends Command
                 ->whereHas('finalDiagnosis');
             })
             ->whereIn('membership_type_id', ['MM', 'DD'])
-            ->take(1000)
+            //->take(100)
             ->get()
             ->toArray();
-
+        //dd(count($data));
         // Chunk the data and create jobs
         $jobs = [];
-        foreach (array_chunk($data, 500) as $chunk) {
+        foreach (array_chunk($data, 50) as $chunk) {
             $jobs[] = new ProcessKonsultaSubmissionJob($chunk);
         }
 
         // Dispatch the batch
         $batch = Bus::batch($jobs)->dispatch();
 
-        $this->info('Konsulta submission jobs dispatched.');
+        $this->info('Konsulta submission jobs dispatched.'); */
+
+        $take = $this->ask('Enter the number of records to process (default: 100)', 100);
+        $tranche = $this->ask('Enter the tranche (default: 2)', 2);
+        $save = $this->ask('Enter the save flag status (default: 1)', 1);
+        $year = $this->ask('Enter the target year for processing (default: 2024)', 2024);
+
+        $this->info("Processing Konsulta submissions with batch size: {$take}");
+        $this->info("Parameters: tranche={$tranche}, save={$save}, year={$year}");
+
+        // Fetch the data
+        $data = PatientPhilhealth::query()
+            ->whereEffectivityYear($year)
+            ->withWhereHas('konsultaRegistration', fn($query) => $query->whereEffectivityYear($year))
+            ->withWhereHas('patient.patientHistory')
+            ->withWhereHas('patient.consult', function ($q) use ($year) {
+                $q->whereNull('transmittal_number')
+                    ->where('is_konsulta', 1)
+                    ->where('facility_code', 'DOH000000000048882')
+                    ->whereYear('consult_date', $year)
+                    ->wherePtGroup('cn')
+                    ->whereHas('finalDiagnosis');
+            })
+            ->whereIn('membership_type_id', ['MM', 'DD'])
+            ->take($take)
+            ->get()
+            ->toArray();
+
+        $this->info("Retrieved " . count($data) . " records for processing.");
+
+        if (empty($data)) {
+            $this->warn('No records found to process.');
+            return;
+        }
+
+        // Create jobs
+        $jobs = [];
+        foreach (array_chunk($data, $take/2) as $chunk) {
+            $jobs[] = new ProcessKonsultaSubmissionJob($chunk, $tranche, $save, $year);
+        }
+
+        // Dispatch the batch
+        $batch = Bus::batch($jobs)->dispatch();
+
+        $this->info('Konsulta submission jobs dispatched successfully.');
 
     }
 }
