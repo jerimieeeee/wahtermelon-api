@@ -17,6 +17,10 @@ class ProcessKonsultaSubmissionJob implements ShouldQueue, ShouldBeUniqueUntilPr
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, Batchable;
 
     protected $data;
+    protected $tranche;
+    protected $save;
+    protected $year;
+
 
     public $timeout = 10000;
     /**
@@ -35,9 +39,12 @@ class ProcessKonsultaSubmissionJob implements ShouldQueue, ShouldBeUniqueUntilPr
     /**
      * Create a new job instance.
      */
-    public function __construct(array $data)
+    public function __construct(array $data, int $tranche, int $save, $year)
     {
         $this->data = $data;
+        $this->tranche = $tranche;
+        $this->save = $save;
+        $this->year = $year;
     }
 
     public function uniqueId()
@@ -55,7 +62,14 @@ class ProcessKonsultaSubmissionJob implements ShouldQueue, ShouldBeUniqueUntilPr
         foreach ($this->data as $patient) {
             try {
                 Log::info("Processing patient ID: {$patient['patient_id']}");
-                $konsultaService->createXml('', [$patient['patient_id']], 2, 1, 0, '2024');
+                $konsultaService->createXml(
+                    '',
+                    [$patient['patient_id']],
+                    $this->tranche,
+                    $this->save,
+                    0,
+                    $this->year
+                );
                 gc_collect_cycles();
                 Log::info("Successfully processed patient ID: {$patient['patient_id']}");
             } catch (\Exception $e) {
