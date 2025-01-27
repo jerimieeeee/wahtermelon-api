@@ -47,11 +47,6 @@ class ProcessKonsultaSubmissionJob implements ShouldQueue, ShouldBeUniqueUntilPr
         $this->year = $year;
     }
 
-    public function uniqueId()
-    {
-        return md5(json_encode($this->data));
-    }
-
     /**
      * Execute the job.
      */
