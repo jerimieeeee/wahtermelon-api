@@ -778,6 +778,11 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('m1', 'index');
                 });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\ChildCareReport2018NamelistController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
         });
         Route::prefix('maternal-care')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MaternalCareReport2018Controller::class)
