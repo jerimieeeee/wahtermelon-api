@@ -111,9 +111,18 @@ class AutomateKonsultaSubmissionCommand extends Command
             return;
         }
 
+
+        // Define minimum and maximum chunk sizes
+        $minChunkSize = 1; // Minimum number of records per chunk
+        $maxChunkSize = 1000; // Maximum number of records per chunk
+
+        // Calculate dynamic chunk size
+        $totalRecords = $take;
+        $chunkSize = (int) max($minChunkSize, min($maxChunkSize, ceil($totalRecords / 10))); // Adjust divisor as needed
+
         // Create jobs
         $jobs = [];
-        foreach (array_chunk($data, $take/2) as $chunk) {
+        foreach (array_chunk($data, $chunkSize) as $chunk) {
             $jobs[] = new ProcessKonsultaSubmissionJob($chunk, $tranche, $save, $year);
         }
 
