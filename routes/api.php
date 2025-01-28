@@ -1464,4 +1464,15 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    Route::prefix('patient-services')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Patient\PatientServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('service', 'index');
+                Route::post('service', 'store');
+                Route::get('service/{patientService}', 'show');
+                Route::put('service/{patientService}', 'update');
+            });
+    });
+
 });

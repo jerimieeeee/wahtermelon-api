@@ -586,4 +586,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('asrh-client-type', [\App\Http\Controllers\API\V1\Libraries\LibAsrhClientTypeController::class, 'index'])->name('asrh-client-type.index');
     Route::get('asrh-client-type/{asrhClientType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhClientTypeController::class, 'show'])->name('asrh-client-type.show');
+
+    Route::get('services', [\App\Http\Controllers\API\V1\Libraries\LibServiceController::class, 'index'])->name('services.index');
+    Route::get('services/{service}', [\App\Http\Controllers\API\V1\Libraries\LibServiceController::class, 'show'])->name('services.show');
 });
