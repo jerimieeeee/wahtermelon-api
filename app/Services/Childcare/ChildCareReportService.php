@@ -2970,7 +2970,7 @@ class ChildCareReportService
 
     public function get_sick_infant_children($request)
     {
-        return DB::table('consult_notes_final_dxes')
+        return DB::table('consults')
             ->selectRaw("
                         SUM(
                             CASE
@@ -3702,13 +3702,13 @@ class ChildCareReportService
                     $request->start_date, $request->end_date,
                     $request->start_date, $request->end_date
             ])
-            ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
-            ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
-            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
-            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
+            ->join('consult_notes', 'consults.id', '=', 'consult_notes.consult_id')
+            ->join('consult_notes_final_dxes', 'consult_notes.id', '=', 'consult_notes_final_dxes.notes_id')
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('medicine_prescriptions', 'consults.id', '=', 'medicine_prescriptions.consult_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consult_notes.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             });
     }
 }

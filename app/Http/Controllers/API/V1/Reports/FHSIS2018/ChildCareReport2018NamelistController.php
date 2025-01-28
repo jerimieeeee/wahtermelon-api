@@ -27,28 +27,46 @@ class ChildCareReport2018NamelistController extends Controller
      * @queryParam year date to view.
      * @queryParam month date to view.
      */
-    public function index(Request $request, ChildCareReportNameListService $childCareReportService, CategoryFilterService $categoryFilterService)
+    public function index(Request $request, ChildCareReportNameListService $nameListService)
     {
-/*        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-
-        // Projected Population
-        $projected_population = $categoryFilterService->get_projected_population()->get();
-
-        // Vaccines
-        $vaccines = $childCareReportService->get_vaccines_report_namelist($request)->get();
-        $vaccines = $vaccines->paginate($perPage);
-
-        return [
-            // GET CATCHMENT POPULATION
-            'projected_population' => $projected_population,
-
-            // CPAB with pagination
-            'data' => $vaccines,
-        ];*/
-
-        $namelist = $childCareReportService->get_vaccines_report_namelist($request)->get();
-
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
+        $data = null;
+
+        //Return Vaccines
+        if (in_array($request->indicator, [
+                'BCG',
+                'HEPB',
+                'HEPBV',
+                'PENTA',
+                'OPV',
+                'IPV',
+                'PCV',
+                'MCV',
+                'TDGR1',
+                'MRGR',
+                'TDGR7',
+                'MRGR7',
+            ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_vaccines_report_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //Breastfed
+        if (in_array($request->indicator, [
+            'male_init_bfed',
+            'female_init_bfed',
+            'male_female_init_bfed',
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->init_breastfeeding($request);
+
+            $data = $query->get();
+        }
 
         // Check if search term is provided
         if ($request->has('search')) {
@@ -58,7 +76,7 @@ class ChildCareReport2018NamelistController extends Controller
             $keywords = explode(' ', $searchTerm);
 
             // Filter the namelist collection based on each keyword
-            $filteredNamelist = $namelist->filter(function ($item) use ($keywords) {
+            $filteredNamelist = $data->filter(function ($item) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     if (stripos($item->last_name, $keyword) !== false ||
                         stripos($item->middle_name, $keyword) !== false ||
@@ -70,7 +88,7 @@ class ChildCareReport2018NamelistController extends Controller
             });
         } else {
             // If no search term provided, use the original namelist
-            $filteredNamelist = $namelist;
+            $filteredNamelist = $data;
         }
 
         // Count the total number of items in the filtered namelist

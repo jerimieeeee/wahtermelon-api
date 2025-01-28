@@ -488,13 +488,12 @@ class MaternalCareReportService
                 $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->when($facility == 'ALL', fn ($query) => $query->whereIn('delivery_location_code', ['BHS', 'DOHAM', 'HC', 'HOSP', 'HOSPP', 'LYIN', 'LYINP'])
-                ->havingRaw('year(date_of_service) = ? AND month(date_of_service) = ?', [$request->year, $request->month])
             )
-            ->groupBy('patient_id')
             ->when($facility == 'PUBLIC-HF', fn ($query) => $query->whereIn('delivery_location_code', ['BHS', 'HC', 'HOSP', 'LYINP', 'DOHAM']))
             ->when($facility == 'PRIVATE-HF', fn ($query) => $query->whereIn('delivery_location_code', ['HOSPP', 'LYIN']))
             ->when($facility == 'NON-HF', fn ($query) => $query->whereIn('delivery_location_code', ['OTHERS', 'HOME']))
             ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
+            ->groupBy('patient_id')
             ->orderBy('name', 'ASC');
     }
 

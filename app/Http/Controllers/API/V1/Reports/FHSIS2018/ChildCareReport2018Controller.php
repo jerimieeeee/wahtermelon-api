@@ -31,7 +31,7 @@ class ChildCareReport2018Controller extends Controller
         //Projected Population
         $projected_population = $categoryFilterService->get_projected_population()->get();
 
-/*        //CPAB
+        //CPAB
         $cpab = $childCareReportService->get_cpab($request)->get();
 
         //CC Vaccines
@@ -50,7 +50,7 @@ class ChildCareReport2018Controller extends Controller
         $vitals = $childCareReportService->get_vitals($request)->get();
 
         //deworming
-        $deworming = $childCareReportService->get_deworming($request)->get();*/
+        $deworming = $childCareReportService->get_deworming($request)->get();
 
 //        //sick_infant_children
         $sick_infant_children = $childCareReportService->get_sick_infant_children($request)->get();
@@ -58,13 +58,13 @@ class ChildCareReport2018Controller extends Controller
         return [
             'projected_population' => $projected_population,
             'data' => [
-/*                'cpab' => $cpab,
+                'cpab' => $cpab,
                 'vaccines' => $cc_vaccines,
                 'init_bfed' => $init_bfed,
                 'ccdev_services' => $ccdev_services,
                 'bfed' => $bfed,
                 'vitals' => $vitals,
-                'deworm' => $deworming,*/
+                'deworm' => $deworming,
                 'sick_infant_children' => $sick_infant_children,
             ]
         ];

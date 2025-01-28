@@ -172,8 +172,10 @@ class AnimalBiteReportPreExposureNameListService
                         DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service
                     ")
             ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
+            ->leftJoin('patient_ab_pre_exposures', 'patient_ab_exposures.patient_id', '=', 'patient_ab_pre_exposures.patient_id')
+            ->leftJoin('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
-            ->join('household_members', 'patient_ab_exposures.patient_id', '=', 'household_members.patient_id')
+            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
@@ -280,7 +282,7 @@ class AnimalBiteReportPreExposureNameListService
                 ]);
             })
             ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
-                $q->whereIn('barangays.psgc_10_digit_code', [$request->code]);
+                $q->whereIn('municipalities.psgc_10_digit_code', [$request->code]);
             })
             ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
                 $q->whereIn('municipalities.psgc_10_digit_code', [$request->code]);
