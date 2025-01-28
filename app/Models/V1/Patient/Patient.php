@@ -143,6 +143,13 @@ class Patient extends Model
             ->latest('effectivity_year');
     }
 
+    public function philhealthCurrentYear()
+    {
+        return $this->hasOne(PatientPhilhealth::class, 'patient_id', 'id')
+            ->where('effectivity_year', now()->year)
+            ->latest('effectivity_year');
+    }
+
     public function patientHistory()
     {
         return $this->hasMany(PatientHistory::class, 'patient_id', 'id')
