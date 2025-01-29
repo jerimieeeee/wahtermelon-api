@@ -91,13 +91,16 @@ class AutomateKonsultaSubmissionCommand extends Command
             ->whereEffectivityYear($year)
             ->withWhereHas('konsultaRegistration', fn($query) => $query->whereEffectivityYear($year))
             ->withWhereHas('patient.patientHistory')
-            ->withWhereHas('patient.consult', function ($q) use ($year) {
-                $q->whereNull('transmittal_number')
-                    ->where('is_konsulta', 1)
-                    ->where('facility_code', 'DOH000000000048882')
-                    ->whereYear('consult_date', $year)
-                    ->wherePtGroup('cn')
-                    ->whereHas('finalDiagnosis');
+            ->when($tranche == 1, fn ($query) => $query->whereNull('transmittal_number'))
+            ->when($tranche == 2, function ($query) use($year){
+                $query->withWhereHas('patient.consult', function ($q) use ($year) {
+                    $q->whereNull('transmittal_number')
+                        ->where('is_konsulta', 1)
+                        ->where('facility_code', 'DOH000000000048882')
+                        ->whereYear('consult_date', $year)
+                        ->wherePtGroup('cn')
+                        ->whereHas('finalDiagnosis');
+                });
             })
             ->whereIn('membership_type_id', ['MM', 'DD'])
             ->take($take)
