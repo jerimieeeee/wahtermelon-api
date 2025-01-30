@@ -31,6 +31,7 @@ class ConsultAsrhRapidRequest extends FormRequest
             'consent_flag' => ['nullable', 'boolean'],
             'notes' => ['nullable', 'string'],
             //'status' => ['nullable', 'in:done,refused'],
+            'algorithm_remarks' => ['nullable', 'string'],
             'refused_flag' => ['nullable', 'boolean'],
             'done_flag' => ['nullable', 'boolean'],
             'done_date' => ['nullable', 'date', 'date_format:Y-m-d'],

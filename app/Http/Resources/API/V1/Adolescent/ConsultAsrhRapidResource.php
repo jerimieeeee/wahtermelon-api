@@ -33,6 +33,7 @@ class ConsultAsrhRapidResource extends JsonResource
             'notes' => $this->notes,
             'answers' => ConsultAsrhRapidAnswerResource::collection($this->whenLoaded('answers')),
             'comprehensive' => $this->whenLoaded('comprehensive'),
+            'algorithm_remarks' => $this->algorithm_remarks,
             'refused_flag' => $this->refused_flag,
             'done_flag' => $this->done_flag,
             'done_date' => $this->done_date?->format('Y-m-d'),
