@@ -30,7 +30,10 @@ class ConsultAsrhRapidRequest extends FormRequest
             'other_client_type' => ['required_if:lib_asrh_client_type_code,99', 'string', 'max:255'],
             'consent_flag' => ['nullable', 'boolean'],
             'notes' => ['nullable', 'string'],
-            'status' => ['nullable', 'in:done,refused'],
+            //'status' => ['nullable', 'in:done,refused'],
+            'refused_flag' => ['nullable', 'boolean'],
+            'done_flag' => ['nullable', 'boolean'],
+            'done_date' => ['nullable', 'date', 'date_format:Y-m-d'],
         ];
     }
 }
