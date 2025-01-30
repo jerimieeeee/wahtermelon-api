@@ -84,9 +84,23 @@ class ConsultAsrhRapidController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ConsultAsrhRapidRequest $request, ConsultAsrhRapid $consultAsrhRapid)
     {
-        //
+        $validatedData = $request->validated();
+        if ($validatedData['client_type'] == 'walk-in') {
+            $validatedData['lib_asrh_client_type_code'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_client_type_code', $validatedData) && $validatedData['lib_asrh_client_type_code'] != '99') {
+            $validatedData['other_client_type'] = null;
+        }
+
+        $consultAsrhRapid->update($validatedData);
+
+        return response()->json([
+            'message' => 'Consult ASRH Rapid updated successfully',
+            'data' => $consultAsrhRapid
+        ], 200);
     }
 
     /**

@@ -1447,6 +1447,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('rapid', 'index');
                 Route::get('rapid/{consultAsrhRapid}', 'show');
                 Route::post('rapid', 'store');
+                Route::put('rapid/{consultAsrhRapid}', 'update');
             });
         Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhRapidAnswerController::class)
             ->middleware(('auth:api'))
