@@ -24,6 +24,7 @@ class ConsultAsrhRapidRequest extends FormRequest
         return [
             'patient_id' => ['required', 'exists:patients,id'],
             'refer_to_user_id' => ['nullable', 'exists:users,id'],
+            'referral_date' => ['required_with:refer_to_user_id', 'date', 'date_format:Y-m-d'],
             'assessment_date' => ['required', 'date', 'date_format:Y-m-d'],
             'client_type' => ['required', 'string', 'max:255'],
             'lib_asrh_client_type_code' => ['required_if:client_type,referred', 'exists:lib_asrh_client_types,code'],

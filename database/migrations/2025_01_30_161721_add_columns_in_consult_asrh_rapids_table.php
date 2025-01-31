@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('consult_asrh_rapids', function (Blueprint $table) {
             $table->dropColumn('status');
+            $table->date('referral_date')->nullable()->after('refer_to_user_id');
             $table->text('algorithm_remarks')->nullable()->after('notes');
             $table->boolean('refused_flag')->default(false)->after('algorithm_remarks');
             $table->boolean('done_flag')->default(false)->after('refused_flag');
@@ -27,6 +28,7 @@ return new class extends Migration
     {
         Schema::table('consult_asrh_rapids', function (Blueprint $table) {
             $table->enum('status', ['done', 'refused'])->nullable(1)->after('notes');
+            $table->dropColumn('referral_date');
             $table->dropColumn('algorithm_remarks');
             $table->dropColumn('refused_flag');
             $table->dropColumn('done_flag');

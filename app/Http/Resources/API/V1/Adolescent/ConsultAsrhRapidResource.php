@@ -24,6 +24,7 @@ class ConsultAsrhRapidResource extends JsonResource
             'user' => $this->whenLoaded('user'),
             'refer_to_user_id' => $this->when(! $this->relationLoaded('referToUser'), $this->refer_to_user_id),
             'refer_to_user' => $this->whenLoaded('referToUser'),
+            'referral_date' => $this->referral_date,
             'assessment_date' => $this->assessment_date?->format('Y-m-d'),
             'client_type' => $this->client_type,
             'lib_asrh_client_type_code' => $this->when(! $this->relationLoaded('clientType'), $this->lib_asrh_client_type_code),
