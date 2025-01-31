@@ -33,6 +33,26 @@ class ChildCareReport2018NamelistController extends Controller
 
         $data = null;
 
+        //CPAB
+        if ($request->indicator == 'cpab') {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_cpab_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //FIC & CIC
+        if (in_array($request->indicator, [
+            'fic',
+            'cic'
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_fic_cic_namelist($request);
+
+            $data = $query->get();
+        }
+
         //Return Vaccines
         if (in_array($request->indicator, [
                 'BCG',
@@ -63,7 +83,91 @@ class ChildCareReport2018NamelistController extends Controller
         ])
         ) {
             // If the condition is true, fetch the data
-            $query = $nameListService->init_breastfeeding($request);
+            $query = $nameListService->init_breastfeeding_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //Vitals
+        if (in_array($request->indicator, [
+            'stunted',
+            'wasted',
+            'overweight_obese',
+            'normal',
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_vitals_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //Childcare Services
+        if (in_array($request->indicator, [
+            'lbw_iron',
+            'vit_a',
+            'vit_a_2nd_3rd',
+            'mnp',
+            'mnp2',
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_ccdev_services_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //BFED
+        if (in_array($request->indicator, [
+            'ebf',
+            'comp_fed',
+            'comp_fed_stop_bfed'
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_bfed_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //DEWORMING
+        if (in_array($request->indicator, [
+            'deworming_1_to_19',
+            'deworming_1_to_4',
+            'deworming_5_to_49',
+            'deworming_10_to_19'
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_deworming_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //SICK INFANT AND CHILDREN
+        if (in_array($request->indicator, [
+            'sick_infant',
+            'sick_children',
+            'diarrhea',
+            'pneumonia'
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_sick_infant_children_namelist($request);
+
+            $data = $query->get();
+        }
+
+        //SICK INFANT AND CHILDREN WITH MEDS
+        if (in_array($request->indicator, [
+            'sick_infant_with_vit_a',
+            'sick_children_with_vit_a',
+            'diarrhea_with_ors_zinc',
+            'pneumonia_with_treatment'
+        ])
+        ) {
+            // If the condition is true, fetch the data
+            $query = $nameListService->get_sick_infant_children_with_meds_namelist($request);
 
             $data = $query->get();
         }
@@ -92,7 +196,12 @@ class ChildCareReport2018NamelistController extends Controller
         }
 
         // Count the total number of items in the filtered namelist
-        $totalItems = $filteredNamelist->count();
+        if (is_null($filteredNamelist)) {
+            // Handle the case when $filteredNamelist is null
+            $totalItems = 0;
+        } else {
+            $totalItems = $filteredNamelist->count();
+        }
 
         // Calculate the last page
         $lastPage = ceil($totalItems / $perPage);
@@ -100,6 +209,8 @@ class ChildCareReport2018NamelistController extends Controller
         // Paginate the filtered namelist
         $page = $request->has('page') ? $request->input('page') : 1;
         $offset = ($page - 1) * $perPage;
+
+        $filteredNamelist = $filteredNamelist ?? collect();
         $data = $filteredNamelist->slice($offset, $perPage)->values();
 
         return [
