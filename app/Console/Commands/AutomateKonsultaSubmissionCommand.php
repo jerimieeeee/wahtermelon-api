@@ -89,7 +89,7 @@ class AutomateKonsultaSubmissionCommand extends Command
         // Fetch the data
         $data = PatientPhilhealth::query()
             ->whereEffectivityYear($year)
-            ->withWhereHas('konsultaRegistration', fn($query) => $query->whereEffectivityYear($year))
+            ->withWhereHas('konsultaRegistration', fn($query) => $query->whereEffectivityYear($year)->whereFacility_code('DOH000000000048882'))
             ->withWhereHas('patient.patientHistory')
             ->when($tranche == 1, fn ($query) => $query->whereNull('transmittal_number'))
             ->when($tranche == 2, function ($query) use($year){

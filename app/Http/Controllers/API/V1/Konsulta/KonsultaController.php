@@ -169,7 +169,7 @@ class KonsultaController extends Controller
 //            ->whereIn('membership_type_id', ['MM', 'DD'])
         $data = QueryBuilder::for(PatientPhilhealth::class)
             ->whereEffectivityYear($request->effectivity_year)
-            ->withWhereHas('konsultaRegistration', fn ($query) => $query->whereEffectivityYear($request->effectivity_year))
+            ->withWhereHas('konsultaRegistration', fn ($query) => $query->whereEffectivityYear($request->effectivity_year)->whereFacility_code(auth()->user()->facility_code))
             ->withWhereHas('patient.patientHistory')
             ->when(isset($request->search), function ($q) use ($request, $columns) {
                 $q->whereHas('patient', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
