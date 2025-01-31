@@ -28,9 +28,13 @@ class ConsultAsrhComprehensive extends Model
 
     protected $casts = [
         'assessment_date' => 'date:Y-m-d',
+        'done_date' => 'date:Y-m-d',
+        'referral_date' => 'date:Y-m-d',
         'risky_behavior' => 'boolean',
         'seriously_injured' => 'boolean',
         'consent_flag' => 'boolean',
+        'refused_flag' => 'boolean',
+        'done_flag' => 'boolean',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

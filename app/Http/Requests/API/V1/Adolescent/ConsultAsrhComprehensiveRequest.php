@@ -37,7 +37,10 @@ class ConsultAsrhComprehensiveRequest extends FormRequest
             'spirituality_notes' => ['nullable', 'string'],
             'risky_behavior' => ['nullable', 'boolean'],
             'seriously_injured' => ['nullable', 'boolean'],
-            'status' => ['nullable', 'in:done,refused'],
+            'refused_flag' => ['nullable', 'boolean'],
+            'done_flag' => ['nullable', 'boolean'],
+            'done_date' => ['required_if:done_flag,1', 'date', 'date_format:Y-m-d'],
+            'referral_date' => ['nullable', 'date', 'date_format:Y-m-d'],
         ];
     }
 }

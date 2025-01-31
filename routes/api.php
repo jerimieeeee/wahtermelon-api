@@ -1462,6 +1462,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('comprehensive', 'index');
                 Route::get('comprehensive/{consultAsrhComprehensive}', 'show');
                 Route::post('comprehensive', 'store');
+                Route::put('comprehensive/{consultAsrhComprehensive}', 'update');
             });
     });
 

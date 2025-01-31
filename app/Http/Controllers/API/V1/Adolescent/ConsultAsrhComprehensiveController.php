@@ -58,9 +58,14 @@ class ConsultAsrhComprehensiveController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ConsultAsrhComprehensiveRequest $request, ConsultAsrhComprehensive $consultAsrhComprehensive)
     {
-        //
+        $consultAsrhComprehensive->update($request->validated());
+
+        return response()->json([
+            'message' => 'Consult ASRH Comprehensive updated successfully',
+            'data' => $consultAsrhComprehensive
+        ], 200);
     }
 
     /**
