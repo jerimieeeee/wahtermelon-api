@@ -242,6 +242,6 @@ class DentalReportService
             ->whereIn('dental_tooth_conditions.tooth_number', ['D', 'M', 'F'])
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
-            });;
+            });
     }
 }

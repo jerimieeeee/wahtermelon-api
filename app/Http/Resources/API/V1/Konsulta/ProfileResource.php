@@ -32,38 +32,38 @@ class ProfileResource extends JsonResource
         $physicalExam = Consult::query()
             ->selectRaw("
                 consults.patient_id, consult_notes.id, consult_date,
-                GROUP_CONCAT(CASE
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'SKIN'
                     THEN konsulta_pe_id
-                END) as skin,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as skin,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'HEENT'
                     THEN konsulta_pe_id
-                END) as heent,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as heent,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'CHEST'
                     THEN konsulta_pe_id
-                END) as chest,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as chest,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'HEART'
                     THEN konsulta_pe_id
-                END) as heart,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as heart,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'ABDOMEN'
                     THEN konsulta_pe_id
-                END) as abdomen,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as abdomen,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'NEURO'
                     THEN konsulta_pe_id
-                END) as neuro,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as neuro,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'RECTAL'
                     THEN konsulta_pe_id
-                END) as rectal,
-                GROUP_CONCAT(CASE
+                END), ',', 1) as rectal,
+                SUBSTRING_INDEX(GROUP_CONCAT(CASE
                     WHEN category_id = 'GENITOURINARY'
                     THEN konsulta_pe_id
-                END) as genitourinary
+                END), ',', 1) as genitourinary
             ")
             ->join('consult_notes', fn ($join) => $join->on('consults.id', '=', 'consult_notes.consult_id')->select('notes_id', 'consult_id'))
             ->join('consult_notes_pes', fn ($join) => $join->on('consult_notes.id', '=', 'consult_notes_pes.notes_id')->select('notes_id', 'pe_id'))

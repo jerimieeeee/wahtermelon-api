@@ -391,17 +391,6 @@ class MaternalCareReport2018Controller extends Controller
         $no_of_pregnancy_outcome_preterm_20_49 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'PRE-TERM', '20', '49')->get();
 
         /////////////////////
-        //NO. OF DELIVERIES TYPE OF DELIVERY PRETERM
-        //NO. OF PREGNANCY OUTCOME PRETERM AGE 10-14 YEARS
-        $no_of_pregnancy_outcome_preterm_10_14 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'PRE-TERM', '10', '14')->get();
-
-        //NO. OF PREGNANCY OUTCOME PRETERM AGE 15-19 YEAR
-        $no_of_pregnancy_outcome_preterm_15_19 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'PRE-TERM', '15', '19')->get();
-
-        //NO. OF PREGNANCY OUTCOME PRETERM AGE 20-49 YEAR
-        $no_of_pregnancy_outcome_preterm_20_49 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'PRE-TERM', '20', '49')->get();
-
-        /////////////////////
         //NO. OF DELIVERIES TYPE OF DELIVERY FETAL DEATH
         //NO. OF PREGNANCY OUTCOME FETAL DEATH AGE 10-14 YEARS
         $no_of_pregnancy_outcome_fetal_death_10_14 = $maternalCareReportService->get_no_of_pregnancy_outcome($request, 'FETAL-DEATH', '10', '14')->get();
