@@ -14,6 +14,7 @@ class LibAsrhAlgorithmPivotSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('lib_asrh_algorithm_pivot')->truncate();
         DB::table('lib_asrh_algorithm_pivot')->upsert([
             ['id' => Str::ulid(), 'lib_rapid_questionnaire_id' => 1, 'lib_asrh_algorithm_code' => 'G2'],
             ['id' => Str::ulid(), 'lib_rapid_questionnaire_id' => 1, 'lib_asrh_algorithm_code' => 'G3'],
