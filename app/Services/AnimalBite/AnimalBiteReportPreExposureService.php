@@ -462,7 +462,6 @@ class AnimalBiteReportPreExposureService
                         municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
                         barangays.psgc_10_digit_code AS barangay_code,
-                        barangays.name AS barangay_name,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1
@@ -473,19 +472,9 @@ class AnimalBiteReportPreExposureService
                                 WHEN category_id = 3 THEN 1
                                 ELSE 0
                             END
-                        ) AS 'total_cat2_and_cat3_previous_quarter',
-                        SUM(
-                            CASE
-                                WHEN patient_ab_post_exposures.day0_date IS NOT NULL
-                                AND patient_ab_post_exposures.day3_date IS NOT NULL
-                                AND patient_ab_post_exposures.day7_date IS NOT NULL
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'pep_completed_previous'
+                        ) AS 'total_cat2_and_cat3'
                     ")
             ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
-            ->leftJoin('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
@@ -493,12 +482,12 @@ class AnimalBiteReportPreExposureService
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
-            ->join('users', 'patient_abs.user_id', '=', 'users.id')
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
-            })
+            ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
             ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
             ->where('settings_catchment_barangays.year', $request->year)
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
+            })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
@@ -535,7 +524,6 @@ class AnimalBiteReportPreExposureService
                         municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
                         barangays.psgc_10_digit_code AS barangay_code,
-                        barangays.name AS barangay_name,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1
@@ -546,19 +534,9 @@ class AnimalBiteReportPreExposureService
                                 WHEN category_id = 3 THEN 1
                                 ELSE 0
                             END
-                        ) AS 'total_cat2_and_cat3_previous_quarter',
-                        SUM(
-                            CASE
-                                WHEN patient_ab_post_exposures.day0_date IS NOT NULL
-                                AND patient_ab_post_exposures.day3_date IS NOT NULL
-                                AND patient_ab_post_exposures.day7_date IS NOT NULL
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'pep_completed_previous'
+                        ) AS 'total_cat2_and_cat3'
                     ")
             ->join('patient_abs', 'patient_ab_exposures.patient_ab_id', '=', 'patient_abs.id')
-            ->leftJoin('patient_ab_post_exposures', 'patient_ab_exposures.patient_ab_id', '=', 'patient_ab_post_exposures.patient_ab_id')
             ->join('patients', 'patient_ab_exposures.patient_id', '=', 'patients.id')
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
@@ -566,13 +544,12 @@ class AnimalBiteReportPreExposureService
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
             ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
-            ->join('users', 'patient_abs.user_id', '=', 'users.id')
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
-            })
-            ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
+            ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
             ->where('settings_catchment_barangays.year', $request->year)
-            ->whereNull('patient_ab_exposures.deleted_at')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
+            })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
