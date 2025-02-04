@@ -570,7 +570,7 @@ class AnimalBiteReportPreExposureService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
             })
-            ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
+            ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
             ->where('settings_catchment_barangays.year', $request->year)
             ->whereNull('patient_ab_exposures.deleted_at')
             ->when($request->quarter == 1, function ($q) use ($request) {
