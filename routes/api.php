@@ -951,6 +951,13 @@ Route::prefix('v1')->group(function () {
                     Route::get('m1-underlying-name-list', 'index');
                 });
         });
+        Route::prefix('masterlist')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\Masterlist\MasterlistReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('cc', 'index');
+                });
+        });
     });
 
     Route::prefix('tbdots')->group(function () {
