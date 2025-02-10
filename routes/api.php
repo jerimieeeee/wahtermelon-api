@@ -955,7 +955,7 @@ Route::prefix('v1')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\Masterlist\MasterlistReportController::class)
                 ->middleware('auth:api')
                 ->group(function () {
-                    Route::get('cc', 'index');
+                    Route::get('list', 'index');
                 });
         });
     });
