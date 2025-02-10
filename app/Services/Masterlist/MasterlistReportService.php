@@ -21,7 +21,7 @@ class MasterlistReportService
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         patients.birthdate,
                         patients.gender,
-                        consults.consult_date AS date_of_service,
+                        DATE_FORMAT(consults.consult_date, '%Y-%m-%d') AS date_of_service,
                         CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address
                     ")
             ->join('patients', 'consults.patient_id', '=', 'patients.id')
