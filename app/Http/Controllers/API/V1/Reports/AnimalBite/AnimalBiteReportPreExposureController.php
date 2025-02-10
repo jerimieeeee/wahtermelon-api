@@ -18,9 +18,16 @@ class AnimalBiteReportPreExposureController extends Controller
         //Projected Population
         $total_population = $categoryFilterService->get_projected_population()->get();
 
+        //PART 1
         $part1 = $animalbite->get_ab_pre_exp_prophylaxis($request)->get();
+
+        //PART 1 OTHERS
         $part1_others = $animalbite->get_ab_pre_exp_prophylaxis_others($request)->get();
+
+        //PART 2
         $part2 = $animalbite->get_previous_quarter_cat2_cat3($request)->get();
+
+        //PART 2 OTHERS
         $part2_others = $animalbite->get_previous_quarter_cat2_cat3_others($request)->get();
 
         if (auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) {

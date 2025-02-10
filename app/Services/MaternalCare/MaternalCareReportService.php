@@ -344,8 +344,17 @@ class MaternalCareReportService
             ->join('patients', 'patient_mc.patient_id', '=', 'patients.id')
             ->leftJoin('facilities', 'patient_mc_post_registrations.barangay_code', '=', 'facilities.barangay_code')
             ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code', 'patient_mc.patient_id');
+            ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
+                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
+            })
+            ->when($request->category == 'fac', function ($q) {
+                $q->whereIn('patient_mc_post_registrations.barangay_code', $this->get_catchment_barangays());
+            })
+            ->when($request->category == 'muncity', function ($q) use ($request) {
+                $q->where('municipalities.psgc_10_digit_code', explode(',', $request->code));
+            })
+            ->when($request->category == 'brgys', function ($q) use ($request) {
+                $q->whereIn('patient_mc_post_registrations.barangay_code', explode(',', $request->code));
             })
             ->whereIn('outcome_code', ['FDU', 'FDUF', 'LSCSF', 'LSCSM', 'NSDF', 'NSDM', 'SB', 'SBF', 'TWIN'])
             ->whereBetween(DB::raw('DATE(delivery_date)'), [$request->start_date, $request->end_date])
