@@ -30,8 +30,26 @@ class MasterlistReportController extends Controller
     public function index(Request $request, MasterlistReportService $masterlistReportService)
     {
 
-       //CPAB
-        $masterlist = $masterlistReportService->get_master_list($request)->get();
+        //Maternal Care
+        if (
+            $request->program === 'mc'
+        ) {
+            // If the condition is true, fetch the data
+            $query = $masterlistReportService->get_maternal_care_master_list($request);
+
+            $masterlist = $query->get();
+        }
+
+        //Family Planning
+        if (
+            $request->program === 'fp'
+        ) {
+            // If the condition is true, fetch the data
+            $query = $masterlistReportService->get_fp_method_master_list($request);
+
+            $masterlist = $query->get();
+        }
+
 
         return $masterlist;
     }
