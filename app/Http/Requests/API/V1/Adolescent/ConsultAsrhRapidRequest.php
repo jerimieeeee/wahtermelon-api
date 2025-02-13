@@ -35,7 +35,7 @@ class ConsultAsrhRapidRequest extends FormRequest
             'algorithm_remarks' => ['nullable', 'string'],
             'refused_flag' => ['nullable', 'boolean'],
             'done_flag' => ['nullable', 'boolean'],
-            'done_date' => ['nullable', 'date', 'date_format:Y-m-d'],
+            'done_date' => ['required_if:done_flag,1', 'date', 'date_format:Y-m-d'],
         ];
     }
 }

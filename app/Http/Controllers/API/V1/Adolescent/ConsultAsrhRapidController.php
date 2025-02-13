@@ -39,6 +39,11 @@ class ConsultAsrhRapidController extends Controller
     public function store(ConsultAsrhRapidRequest $request)
     {
         $validatedData = $request->validated();
+
+        if ($validatedData['done_flag'] == 0) {
+            $validatedData['done_date'] = null;
+        }
+
         if ($validatedData['client_type'] == 'walk-in') {
             $validatedData['lib_asrh_client_type_code'] = null;
         }
@@ -87,6 +92,10 @@ class ConsultAsrhRapidController extends Controller
     public function update(ConsultAsrhRapidRequest $request, ConsultAsrhRapid $consultAsrhRapid)
     {
         $validatedData = $request->validated();
+        if ($validatedData['done_flag'] == 0) {
+            $validatedData['done_date'] = null;
+        }
+
         if ($validatedData['client_type'] == 'walk-in') {
             $validatedData['lib_asrh_client_type_code'] = null;
         }

@@ -30,6 +30,9 @@ class ConsultAsrhComprehensiveController extends Controller
     public function store(ConsultAsrhComprehensiveRequest $request)
     {
         $validatedData = $request->validated();
+        if ($validatedData['done_flag'] == 0) {
+            $validatedData['done_date'] = null;
+        }
         $consultAsrhComprehensive = ConsultAsrhComprehensive::updateOrCreate(
             [
                 'consult_asrh_rapid_id' => $validatedData['consult_asrh_rapid_id'],
@@ -60,7 +63,11 @@ class ConsultAsrhComprehensiveController extends Controller
      */
     public function update(ConsultAsrhComprehensiveRequest $request, ConsultAsrhComprehensive $consultAsrhComprehensive)
     {
-        $consultAsrhComprehensive->update($request->validated());
+        $validatedData = $request->validated();
+        if ($validatedData['done_flag'] == 0) {
+            $validatedData['done_date'] = null;
+        }
+        $consultAsrhComprehensive->update($validatedData);
 
         return response()->json([
             'message' => 'Consult ASRH Comprehensive updated successfully',
