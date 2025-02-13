@@ -20,6 +20,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
@@ -210,10 +211,44 @@ class KonsultaController extends Controller
      *
      * @apiResourceModel App\Models\V1\Konsulta\KonsultaTransmittal paginate=15
      */
-    public function validatedXml(Request $request): ResourceCollection
+    public function validatedXml(Request $request)
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $columns = ['last_name', 'first_name', 'middle_name'];
+        if ($request->reconcillation) {
+            $data = QueryBuilder::for(KonsultaTransmittal::class)
+            ->leftJoin('consults as c', function ($join) {
+                $join->on('konsulta_transmittals.transmittal_number', '=', 'c.transmittal_number')
+                     ->where('konsulta_transmittals.tranche', '=', 2);
+            })
+            ->leftJoin('patient_philhealth as pp', function ($join) {
+                $join->on('konsulta_transmittals.transmittal_number', '=', 'pp.transmittal_number')
+                     ->where('konsulta_transmittals.tranche', '=', 1);
+            })
+            ->leftJoin('patients as p', function ($join) {
+                $join->on('p.id', '=', DB::raw('COALESCE(c.patient_id, pp.patient_id)'));
+            })
+            ->leftJoin('patient_philhealth as main_pp', function ($join) {
+                $join->on('main_pp.patient_id', '=', 'p.id')
+                     ->where('main_pp.effectivity_year', '=', DB::raw('konsulta_transmittals.effectivity_year'));
+            })
+            ->select([
+                'p.case_number',
+                'p.id as patient_id',
+                DB::raw('COALESCE(pp.philhealth_id, main_pp.philhealth_id) as philhealth_id'),
+                'pp.enlistment_date',
+                'konsulta_transmittals.id as transmittal_id',
+                'konsulta_transmittals.transmittal_number',
+                'konsulta_transmittals.tranche',
+                'konsulta_transmittals.xml_status',
+                DB::raw('COALESCE(c.consult_date, NULL) as consult_date'),
+
+
+
+            ])
+            ->get();
+            return $data;
+        }
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
             ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
