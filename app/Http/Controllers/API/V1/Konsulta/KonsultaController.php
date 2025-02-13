@@ -215,8 +215,17 @@ class KonsultaController extends Controller
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
         $columns = ['last_name', 'first_name', 'middle_name'];
-        if ($request->reconcillation) {
+        /* if ($request->reconcillation) {
             $data = QueryBuilder::for(KonsultaTransmittal::class)
+            ->when($request->filter['tranche'] == 1 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
+                $query->whereHas('patientPhilhealth', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
+            ->when($request->filter['tranche'] == 2 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
+                $query->whereHas('patientConsult', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
+            ->when(isset($request->effectivity_year) && !empty($request->effectivity_year), function ($query) use($request) {
+                $query->where('konsulta_transmittals.effectivity_year', $request->effectivity_year);
+            })
             ->leftJoin('consults as c', function ($join) {
                 $join->on('konsulta_transmittals.transmittal_number', '=', 'c.transmittal_number')
                      ->where('konsulta_transmittals.tranche', '=', 2);
@@ -248,9 +257,26 @@ class KonsultaController extends Controller
             ])
             ->get();
             return $data;
-        }
+        } */
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
+            ->when($request->reconcillation, function ($query) {
+                $query->leftJoin('consults as c', function ($join) {
+                    $join->on('konsulta_transmittals.transmittal_number', '=', 'c.transmittal_number')
+                         ->where('konsulta_transmittals.tranche', '=', 2);
+                })
+                ->leftJoin('patient_philhealth as pp', function ($join) {
+                    $join->on('konsulta_transmittals.transmittal_number', '=', 'pp.transmittal_number')
+                         ->where('konsulta_transmittals.tranche', '=', 1);
+                })
+                ->leftJoin('patients as p', function ($join) {
+                    $join->on('p.id', '=', DB::raw('COALESCE(c.patient_id, pp.patient_id)'));
+                })
+                ->leftJoin('patient_philhealth as main_pp', function ($join) {
+                    $join->on('main_pp.patient_id', '=', 'p.id')
+                         ->where('main_pp.effectivity_year', '=', DB::raw('konsulta_transmittals.effectivity_year'));
+                });
+            })
             ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
             ->when($request->filter['tranche'] == 1 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
                 $query->whereHas('patientPhilhealth', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
@@ -259,12 +285,14 @@ class KonsultaController extends Controller
                 $query->whereHas('patientConsult', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
             })
             ->when(isset($request->effectivity_year) && !empty($request->effectivity_year), function ($query) use($request) {
-                $query->whereEffectivityYear($request->effectivity_year);
+                // $query->whereEffectivityYear($request->effectivity_year);
+                $query->where('konsulta_transmittals.effectivity_year', $request->effectivity_year);
             })
             ->allowedIncludes('facility', 'user')
             ->allowedFilters('tranche', 'xml_status')
-            ->defaultSort('created_at')
-            ->allowedSorts(['created_at']);
+            ->defaultSort('konsulta_transmittals.created_at')
+            ->allowedSorts(['konsulta_transmittals.created_at']);
+            return $data->paginate($perPage)->withQueryString();
         if ($perPage === 'all') {
             return KonsultaTransmittalResource::collection($data->get());
         }
