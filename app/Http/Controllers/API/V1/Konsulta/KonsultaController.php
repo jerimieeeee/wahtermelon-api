@@ -276,6 +276,43 @@ class KonsultaController extends Controller
                     $join->on('main_pp.patient_id', '=', 'p.id')
                          ->where('main_pp.effectivity_year', '=', DB::raw('konsulta_transmittals.effectivity_year'));
                 });
+                $query->addSelect([
+                    'konsulta_transmittals.*',
+                    'p.case_number',
+                    'c.consult_date',
+                    'main_pp.philhealth_id',
+                    'main_pp.enlistment_date',
+                    DB::raw("CASE
+                        WHEN konsulta_transmittals.tranche = 2 AND EXISTS (
+                            SELECT 1 FROM consult_laboratories cl
+                            WHERE cl.consult_id = c.id
+                            AND cl.deleted_at IS NULL
+                            AND (
+                                EXISTS (SELECT 1 FROM consult_laboratory_fbs WHERE consult_laboratory_fbs.consult_id = cl.consult_id AND consult_laboratory_fbs.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_rbs WHERE consult_laboratory_rbs.consult_id = cl.consult_id AND consult_laboratory_rbs.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_cbcs WHERE consult_laboratory_cbcs.consult_id = cl.consult_id AND consult_laboratory_cbcs.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_creatinines WHERE consult_laboratory_creatinines.consult_id = cl.consult_id AND consult_laboratory_creatinines.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_chest_xrays WHERE consult_laboratory_chest_xrays.consult_id = cl.consult_id AND consult_laboratory_chest_xrays.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_ecgs WHERE consult_laboratory_ecgs.consult_id = cl.consult_id AND consult_laboratory_ecgs.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_hba1cs WHERE consult_laboratory_hba1cs.consult_id = cl.consult_id AND consult_laboratory_hba1cs.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_papsmears WHERE consult_laboratory_papsmears.consult_id = cl.consult_id AND consult_laboratory_papsmears.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_ppds WHERE consult_laboratory_ppds.consult_id = cl.consult_id AND consult_laboratory_ppds.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_sputum WHERE consult_laboratory_sputum.consult_id = cl.consult_id AND consult_laboratory_sputum.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_fecalysis WHERE consult_laboratory_fecalysis.consult_id = cl.consult_id AND consult_laboratory_fecalysis.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_lipid_profiles WHERE consult_laboratory_lipid_profiles.consult_id = cl.consult_id AND consult_laboratory_lipid_profiles.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_urinalysis WHERE consult_laboratory_urinalysis.consult_id = cl.consult_id AND consult_laboratory_urinalysis.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_oral_glucose WHERE consult_laboratory_oral_glucose.consult_id = cl.consult_id AND consult_laboratory_oral_glucose.deleted_at IS NULL) OR
+                                EXISTS (SELECT 1 FROM consult_laboratory_fecal_occults WHERE consult_laboratory_fecal_occults.consult_id = cl.consult_id AND consult_laboratory_fecal_occults.deleted_at IS NULL)
+                            )
+                        ) THEN 'Yes' ELSE 'No' END AS with_laboratory"),
+                    DB::raw("CASE
+                        WHEN konsulta_transmittals.tranche = 2 AND EXISTS (
+                            SELECT 1 FROM medicine_prescriptions mp
+                            WHERE mp.consult_id = c.id
+                            AND mp.deleted_at IS NULL
+                        )
+                        THEN DATE_FORMAT(c.consult_date, '%Y-%m-%d') ELSE NULL END AS epress_date"),
+                ]);
             })
             ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
             ->when($request->filter['tranche'] == 1 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
@@ -292,7 +329,7 @@ class KonsultaController extends Controller
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('konsulta_transmittals.created_at')
             ->allowedSorts(['konsulta_transmittals.created_at']);
-            return $data->paginate($perPage)->withQueryString();
+            // return $data->paginate($perPage)->withQueryString();
         if ($perPage === 'all') {
             return KonsultaTransmittalResource::collection($data->get());
         }
