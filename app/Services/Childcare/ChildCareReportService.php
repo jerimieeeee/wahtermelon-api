@@ -25,471 +25,1767 @@ class ChildCareReportService
             ->havingRaw('COUNT(vaccine_id) >= 2');
     }
 
-    public function get_vaccines($request, $vaccine_id, $vaccine_seq, $patient_gender)
+    public function get_cpab($request)
     {
-        return DB::table(function ($query) use ($request, $vaccine_id, $patient_gender, $vaccine_seq) {
+        return DB::table(function ($query) use ($request) {
             $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            patients.birthdate,
-                            vaccine_date AS date_of_service,
-                            vaccine_id,
-                            status_id,
-                            (
-                                SELECT
-                                    COUNT(*)
-                                FROM
-                                    patient_vaccines pv
-                                WHERE
-                                    pv.patient_id = patient_vaccines.patient_id
-                                    AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                    AND pv.vaccine_date <= patient_vaccines.vaccine_date) AS vaccine_seq,
-                            municipality_code,
-                            barangay_code
+                    patients.gender,
+                    CONCAT(patients.last_name, ', ', patients.first_name) as name,
+                    patients.birthdate,
+                    patients.birthdate AS date_of_service
+                ")
+                ->from('patient_ccdevs')
+                ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+                ->join('users', 'patient_ccdevs.user_id', '=', 'users.id')
+                ->joinSub($this->get_mother_vaccine(), 'mother_vaccine', function ($join) {
+                    $join->on('mother_vaccine.patient_id', '=', 'patient_ccdevs.mothers_id');
+                })
+                ->tap(function ($query) use ($request) {
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ccdevs.facility_code', 'patient_ccdevs.patient_id');
+                })
+                ->whereBetween('patients.birthdate', [$request->start_date, $request->end_date]);
+        }, 'subquery') // Alias for the subquery
+        ->selectRaw("
+                SUM(gender = 'M') AS male_cpab,
+                SUM(gender = 'F') AS female_cpab,
+                SUM(gender IN ('M', 'F')) AS male_female_cpab
+            ")
+            ->whereBetween('date_of_service', [
+                $request->start_date,
+                $request->end_date
+            ]);
+    }
+
+    public function get_fic_cic($request)
+    {
+        return DB::table(function ($query) use ($request) {
+            $query->selectRaw("
+                        patients.gender,
+                        SUM(
+                            CASE
+                                WHEN vaccine_id = 'BCG' THEN 1
+                                ELSE 0
+                            END
+                        ) AS BCG,
+                        SUM(
+                            CASE
+                                WHEN vaccine_id = 'PENTA' THEN 1
+                                ELSE 0
+                            END
+                        ) AS PENTA,
+                        SUM(
+                            CASE
+                                WHEN vaccine_id = 'OPV' THEN 1
+                                ELSE 0
+                            END
+                        ) AS OPV,
+                        SUM(
+                            CASE
+                                WHEN vaccine_id = 'MCV' THEN 1
+                                ELSE 0
+                            END
+                        ) AS MCV,
+                        MAX(vaccine_date) AS date_of_service,
+                        SUBSTRING_INDEX(
+                            GROUP_CONCAT(
+                                status_id
+                                ORDER BY
+                                    vaccine_date DESC
+                            ),
+                            ',',
+                            1
+                        ) AS status_id,
+                        TIMESTAMPDIFF(MONTH, patients.birthdate, MAX(vaccine_date)) AS age_month
+                    ")
+                ->from('patient_vaccines')
+                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
+                ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
+                ->whereIn('patients.gender', ['M', 'F'])
+                ->whereIn('patient_vaccines.vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
+                ->tap(function ($query) use ($request) {
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
+                })
+                ->groupBy('patient_vaccines.patient_id', 'patients.gender')
+                ->havingRaw('
+                            BCG >= 1
+                            AND PENTA >=3
+                            AND OPV >=3
+                            AND MCV >=2
+                            AND age_month >= 0
+                            AND status_id = 1'
+                         );
+        })
+            ->selectRaw("
+                        SUM(
+                            gender = 'M'
+                            AND age_month < 13
+                        ) AS male_fic,
+                        SUM(
+                            gender = 'F'
+                            AND age_month < 13
+                        ) AS female_fic,
+                        SUM(
+                        age_month < 13
+                        ) AS male_female_fic,
+                        SUM(
+                            gender = 'M'
+                            AND age_month BETWEEN 13 AND 23
+                        ) AS male_cic,
+                        SUM(
+                            gender = 'F'
+                            AND age_month BETWEEN 13 AND 23
+                        ) AS female_cic,
+                        SUM(
+                        age_month BETWEEN 13 AND 23
+                        ) AS male_female_cic
+            ")
+            ->whereBetween('date_of_service', [
+                $request->start_date,
+                $request->end_date
+            ]);
+    }
+
+    public function get_vaccines($request)
+    {
+        return DB::table(function ($query) use ($request) {
+            $query->selectRaw("
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'BCG'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_bcg',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'BCG'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_bcg',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'BCG'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'BCG'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_bcg',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPB'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_hepb',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPB'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_hepb',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPB'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPB'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_hepb',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPBV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_hepbv',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPBV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_hepbv',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPBV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'HEPBV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_hepbv',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_penta1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_penta1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_penta1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_penta2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_penta2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_penta2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_penta3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_penta3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PENTA'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_penta3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_opv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_opv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_opv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_opv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_opv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_opv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_opv3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_opv3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'OPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_opv3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_ipv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_ipv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_ipv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_ipv2_routine',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_ipv2_routine',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_ipv2_routine',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_ipv2_catch_up',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_ipv2_catch_up',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'IPV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_ipv2_catch_up',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_pcv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_pcv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_pcv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_pcv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_pcv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_pcv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_pcv3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_pcv3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'PCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 3 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_pcv3',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'M'
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_mcv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_mcv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_mcv1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_mcv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_mcv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MCV'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 2 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_mcv2',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR1'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_tdgr1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR1'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_tdgr1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR1'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR1'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_tdgr1',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_mrgr',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_mrgr',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_mrgr',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR7'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_tdgr7',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR7'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_tdgr7',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR7'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'TDGR7'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_tdgr7',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR7'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_mrgr7',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR7'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_mrgr7',
+                            SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR7'
+                                    AND patients.gender = 'M'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patient_vaccines.vaccine_id = 'MRGR7'
+                                    AND patients.gender = 'F'
+                                    AND patient_vaccines.status_id = 1
+                                    AND (
+                                        SELECT
+                                            COUNT(*)
+                                        FROM
+                                            patient_vaccines pv
+                                        WHERE
+                                            pv.patient_id = patient_vaccines.patient_id
+                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                    ) = 1 THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_mrgr7'
                 ")
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
                 ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
-                /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
-                }) */
-                /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-                }) */
                 ->tap(function ($query) use ($request) {
                     // the last argument is for query if the user is not for provincial report
                     $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
                 })
-                ->whereStatusId('1')
-                ->whereVaccineId($vaccine_id)
-                ->where('patients.gender', $patient_gender)
-                ->whereBetween(DB::raw('DATE(vaccine_date)'), [$request->start_date, $request->end_date])
-//                ->havingRaw('vaccine_seq = ? AND YEAR(date_of_service) = ? AND MONTH(date_of_service) = ?', [$vaccine_seq, $request->year, $request->month]);
-                ->havingRaw('vaccine_seq = ?' , [$vaccine_seq]);
-
+//                ->whereStatusId('1')
+                ->whereBetween('patient_vaccines.vaccine_date', [$request->start_date, $request->end_date]);
         });
     }
 
-    public function get_cpab($request, $patient_gender)
-    {
-        return DB::table('patient_ccdevs')
-            ->selectRaw("
-	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
-	                    patients.birthdate,
-                        patients.birthdate AS date_of_service,
-	                    municipality_code,
-	                    barangay_code
-                    ")
-            ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
-            ->join('users', 'patient_ccdevs.user_id', '=', 'users.id')
-            ->joinSub($this->get_mother_vaccine(), 'mother_vaccine', function ($join) {
-                $join->on('mother_vaccine.patient_id', '=', 'patient_ccdevs.mothers_id');
-            })
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_ccdevs.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_ccdevs.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ccdevs.facility_code', 'patient_ccdevs.patient_id');
-            })
-//            ->whereYear('patients.birthdate', $request->year)
-//            ->whereMonth('patients.birthdate', $request->month)
-            ->whereBetween(DB::raw('DATE(patients.birthdate)'), [$request->start_date, $request->end_date])
-            ->where('patients.gender', $patient_gender)
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_ipv2($request, $patient_gender, $vaccine_seq, $age_year)
-    {
-        return DB::table(function ($query) use ($request, $patient_gender) {
-            $query->selectRaw("
-                            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                            patients.birthdate AS birthdate,
-                            vaccine_date AS date_of_service,
-                            vaccine_id,
-                            status_id,
-                            (
-                                SELECT
-                                    COUNT(*)
-                                FROM
-                                    patient_vaccines pv
-                                WHERE
-                                    pv.patient_id = patient_vaccines.patient_id
-                                    AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                    AND pv.vaccine_date <= patient_vaccines.vaccine_date) AS vaccine_seq,
-                            TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) AS age_year,
-                            municipality_code,
-                            barangay_code
-                    ")
-                ->from('patient_vaccines')
-                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-                ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
-                /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
-                }) */
-                /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                    $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-                }) */
-                ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
-                })
-                ->whereVaccineId('IPV')
-                ->where('patients.gender', $patient_gender)
-                ->whereStatusId('1');
-        })
-            ->selectRaw('
-                        name,
-                        birthdate,
-                        date_of_service,
-                        vaccine_seq,
-                        age_year,
-                        municipality_code,
-                        barangay_code
-            ')
-            ->whereBetween(DB::raw('DATE(date_of_service)'), [$request->start_date, $request->end_date])
-            ->havingRaw('(vaccine_seq = ?) AND (age_year = ?)', [$vaccine_seq, $age_year])
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_fic_cic($request, $patient_gender, $immunization_status)
-    {
-        return DB::table('patient_vaccines')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        SUM(
-                            CASE WHEN vaccine_id = 'BCG' THEN
-                                1
-                            ELSE
-                                0
-                            END) AS 'BCG',
-                        SUM(
-                            CASE WHEN vaccine_id = 'PENTA' THEN
-                                1
-                            ELSE
-                                0
-                            END) AS 'PENTA',
-                        SUM(
-                            CASE WHEN vaccine_id = 'OPV' THEN
-                                1
-                            ELSE
-                                0
-                            END) AS 'OPV',
-                        SUM(
-                            CASE WHEN vaccine_id = 'MCV' THEN
-                                1
-                            ELSE
-                                0
-                            END) AS 'MCV',
-                        MAX(vaccine_date) AS date_of_service,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(status_id ORDER BY vaccine_date DESC), ',', 1), ',', - 1) AS status_id,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, MAX(vaccine_date)) AS age_month
-                    ")
-            ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-            ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_vaccines.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_vaccines.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
-            })
-            ->where('patients.gender', $patient_gender)
-            ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
-            ->groupBy('patient_vaccines.patient_id')
-            ->when($immunization_status == 'FIC', function ($query) use ($request) {
-                $query->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13 AND status_id = 1 AND date_of_service BETWEEN ? AND ?', [$request->start_date, $request->end_date]);
-            })
-            ->when($immunization_status == 'CIC', function ($query) use ($request) {
-                $query->havingRaw('(BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month BETWEEN 13 AND 23) AND status_id = 1 AND date_of_service BETWEEN ? AND ?', [$request->start_date, $request->end_date]);
-            })
-            ->when($immunization_status == 'COMPLETED', function ($query) use ($request) {
-                $query->havingRaw('BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24 AND status_id = 1 AND date_of_service BETWEEN ? AND ?', [$request->start_date, $request->end_date]);
-            })
-            ->orderBy('name', 'ASC');
-    }
-
-    public function init_breastfeeding($request, $patient_gender)
+    public function init_breastfeeding($request)
     {
         return DB::table('patient_mc_post_registrations')
             ->selectRaw("
-	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
-	                    patients.birthdate,
-                        breastfed_date AS date_of_service,
-                        municipalities_brgy.municipality_code AS municipality_code,
-                        municipalities_brgy.barangay_code
-                    ")
-            ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
-            ->join('patient_ccdevs', 'patient_mc.patient_id', '=', 'patient_ccdevs.mothers_id')
-            ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
-            ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_mc.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_mc_post_registrations.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code', 'patient_mc.patient_id');
-            })
-            ->whereBreastfeeding(1)
-            ->where('patients.gender', $patient_gender)
-//            ->whereYear('breastfed_date', $request->year)
-//            ->whereMonth('breastfed_date', $request->month)
-            ->whereBetween(DB::raw('DATE(breastfed_date)'), [$request->start_date, $request->end_date])
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_lbw_iron($request, $patient_gender)
-    {
-        return DB::table(function ($query) use ($request, $patient_gender) {
-            $query->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birth_weight,
-                        patients.birthdate AS birthdate,
-                        service_date AS date_of_service,
-                        service_id,
-                        status_id,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
-                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
-                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
-                                        YEAR), service_date) MONTH), service_date) AS days,
-                        municipality_code,
-                        barangay_code
-                    ")
-                ->from('consult_ccdev_services')
-                ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
-                ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
-                ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
-                /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
-                }) */
-                /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-                }) */
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_init_bfed',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_init_bfed',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_init_bfed'
+                ")
+                ->join('patient_mc', 'patient_mc_post_registrations.patient_mc_id', '=', 'patient_mc.id')
+                ->join('patient_ccdevs', 'patient_mc.patient_id', '=', 'patient_ccdevs.mothers_id')
+                ->join('patients', 'patient_ccdevs.patient_id', '=', 'patients.id')
+                ->join('users', 'patient_mc_post_registrations.user_id', '=', 'users.id')
                 ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_services.facility_code', 'consult_ccdev_services.patient_id');
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_mc_post_registrations.facility_code', 'patient_mc.patient_id');
                 })
-                ->whereServiceId('IRON')
-                ->where('patients.gender', $patient_gender)
-                ->whereStatusId('1')
-                ->groupBy('patients.id', 'service_id', 'service_date', 'status_id', 'birth_weight', 'municipality_code', 'barangay_code');
-        })
-            ->selectRaw('
-                        name,
-                        birth_weight,
-                        birthdate,
-                        date_of_service,
-                        service_id,
-                        status_id,
-                        age_month,
-                        days,
-                        municipality_code,
-                        barangay_code
-            ')
-            ->whereBetween(DB::raw('DATE(date_of_service)'), [$request->start_date, $request->end_date])
-            ->havingRaw('(birth_weight < 2.5) AND (age_month BETWEEN 1 AND 3 AND days <= 29)')
-            ->orderBy('name', 'ASC');
+                ->whereBreastfeeding(1)
+                ->whereBetween('patient_mc_post_registrations.breastfed_date', [$request->start_date, $request->end_date]);
     }
 
-    public function get_vit_a_1st($request, $patient_gender)
+    public function get_ccdev_services($request)
     {
-        return DB::table(function ($query) use ($request, $patient_gender) {
-            $query->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate AS birthdate,
-                        service_date AS date_of_service,
-                        service_id,
-                        status_id,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
-                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
-                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
-                                        YEAR), service_date) MONTH), service_date) AS days,
-                        municipality_code,
-                        barangay_code
-                    ")
-                ->from('consult_ccdev_services')
-                ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
-                ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
-                ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
-                /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
-                }) */
-                /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-                }) */
-                ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_services.facility_code', 'consult_ccdev_services.patient_id');
-                })
-                ->whereServiceId('VITA')
-                ->where('patients.gender',$patient_gender)
-                ->whereStatusId('1')
-                ->groupBy('patients.id', 'service_id', 'service_date', 'status_id', 'birth_weight', 'municipality_code', 'barangay_code');
-        })
-            ->selectRaw('
-                        name,
-                        birthdate,
-                        date_of_service,
-                        service_id,
-                        status_id,
-                        age_month,
-                        days,
-                        municipality_code,
-                        barangay_code
-            ')
-            ->whereBetween(DB::raw('DATE(date_of_service)'), [$request->start_date, $request->end_date])
-            ->havingRaw('(age_month BETWEEN 6 AND 11 AND days <= 29)')
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_vit_a_2nd_3rd($request, $patient_gender)
-    {
-        return DB::table(function ($query) use ($request, $patient_gender) {
-            $query->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        birth_weight,
-                        patients.birthdate AS birthdate,
-                        service_date AS date_of_service,
-                        service_id,
-                        status_id,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) AS age_month,
-                        TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
-                                    YEAR), INTERVAL TIMESTAMPDIFF(MONTH, DATE_ADD(patients.birthdate, INTERVAL TIMESTAMPDIFF(YEAR, patients.birthdate, service_date)
-                                        YEAR), service_date) MONTH), service_date) AS days,
-                        municipality_code,
-                        barangay_code
-                    ")
-                ->from('consult_ccdev_services')
-                ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
-                ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
-                ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
-                /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                    $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_services.patient_id');
-                }) */
-                /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                    $q->where('consult_ccdev_services.facility_code', auth()->user()->facility_code);
-                }) */
-                ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_services.facility_code', 'consult_ccdev_services.patient_id');
-                })
-                ->whereIn('service_id', ['VITA2', 'VITA3'])
-                ->where('patients.gender', $patient_gender)
-                ->whereStatusId('1')
-                ->groupBy('patients.id', 'service_id', 'service_date', 'status_id', 'birth_weight', 'municipality_code', 'barangay_code');
-        })
-            ->selectRaw('
-                        name,
-                        birthdate,
-                        date_of_service,
-                        service_id,
-                        status_id,
-                        age_month,
-                        days,
-                        municipality_code,
-                        barangay_code
-            ')
-            ->whereServiceId('VITA3')
-            ->whereBetween(DB::raw('DATE(date_of_service)'), [$request->start_date, $request->end_date])
-            ->havingRaw('(age_month BETWEEN 12 AND 59 AND days <= 29)')
-
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_deworming($request, $patient_gender, $param1, $param2)
-    {
-        return DB::table('medicine_prescriptions')
+        return DB::table('consult_ccdev_services')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1) AS date_of_service,
-                        TIMESTAMPDIFF(YEAR, patients.birthdate, SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(prescription_date ORDER BY prescription_date ASC), ',', 2), ',', - 1)) AS age,
-                        municipality_code,
-                        barangay_code
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'IRON'
+                                AND patient_ccdevs.birth_weight < 2.5
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 1 AND 3
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_lbw_iron',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'IRON'
+                                AND patient_ccdevs.birth_weight < 2.5
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 1 AND 3
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_lbw_iron',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'IRON'
+                                AND patient_ccdevs.birth_weight < 2.5
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 1 AND 3
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'IRON'
+                                AND patient_ccdevs.birth_weight < 2.5
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 1 AND 3
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_lbw_iron',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'VITA'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'VITA'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'VITA'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'VITA'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id IN('VITA2', 'VITA3')
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 59
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_vit_a_2nd_3rd',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id IN('VITA2', 'VITA3')
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 59
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_vit_a_2nd_3rd',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id IN('VITA2', 'VITA3')
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 59
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id IN('VITA2', 'VITA3')
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 59
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_vit_a_2nd_3rd',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'MNP'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                AND quantity >= 90
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_mnp',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'MNP'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                AND quantity >= 90
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_mnp',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'MNP'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                AND quantity >= 90
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'MNP'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 6 AND 11
+                                AND quantity >= 90
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_mnp',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'MNP2'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 23
+                                AND quantity >= 180
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_mnp2',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'MNP2'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 23
+                                AND quantity >= 180
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_mnp2',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND service_id = 'MNP2'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 23
+                                AND quantity >= 180
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND service_id = 'MNP2'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, service_date) BETWEEN 12 AND 23
+                                AND quantity >= 180
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_mnp2'
                     ")
-            ->join('patients', 'medicine_prescriptions.patient_id', '=', 'patients.id')
-            ->join('users', 'medicine_prescriptions.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'medicine_prescriptions.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('medicine_prescriptions.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'medicine_prescriptions.facility_code', 'medicine_prescriptions.patient_id');
-            })
-            ->whereIn('konsulta_medicine_code', ['ALBED0000000006SUS1400195BOTTL', 'ALBED0000000006SUS1400231BOTTL', 'ALBED0000000006SUS1400379BOTTL', 'ALBED0000000006SUS1400469BOTTL', 'ALBED0000000034TAB490000000000'])
-            ->where('patients.gender',$patient_gender)
-            ->groupBy('medicine_prescriptions.patient_id', 'municipality_code', 'barangay_code')
-            ->havingRaw('(age BETWEEN ? AND ?) AND (COUNT(medicine_prescriptions.patient_id) >= 2) AND DATE(date_of_service) BETWEEN ? AND ?', [$param1, $param2, $request->start_date, $request->end_date])
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_sick_infant_children($request, $patient_gender, $param1, $param2)
-    {
-        return DB::table('consult_notes_final_dxes')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-           	            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
-                        municipality_code,
-                        barangay_code
-                    ")
-            ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
-            ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
-            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consult_notes.patient_id');
-            })
-//            ->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code)
-            ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
-            ->where('patients.gender',$patient_gender)
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->havingRaw('(age_month BETWEEN ? AND ?) ', [$param1, $param2])
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_diarrhea_pneumonia($request, $disease, $patient_gender)
-    {
-        return DB::table('consult_notes_final_dxes')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-           	            DATE_FORMAT(consult_date, '%Y-%m-%d') AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
-                        municipality_code,
-                        barangay_code
-                    ")
-            ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
-            ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
-            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consult_notes.patient_id');
-            })
-            ->where('patients.gender',$patient_gender)
-            ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-            ->when($disease == 'DIARRHEA', fn ($query) => $query->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
-                ->havingRaw('(age_month BETWEEN 0 AND 59)'))
-            ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
-                ->havingRaw('(age_month BETWEEN 0 AND 59)'))
-            ->orderBy('name', 'ASC');
+                    ->join('patients', 'consult_ccdev_services.patient_id', '=', 'patients.id')
+                    ->join('patient_ccdevs', 'consult_ccdev_services.patient_id', '=', 'patient_ccdevs.patient_id')
+                    ->join('users', 'consult_ccdev_services.user_id', '=', 'users.id')
+                    ->tap(function ($query) use ($request) {
+                        $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_services.facility_code', 'consult_ccdev_services.patient_id');
+                    })
+                    ->whereStatusId('1')
+                    ->whereBetween('service_date', [
+                        $request->start_date . ' 00:00:00', // Start of the day
+                        $request->end_date . ' 23:59:59'    // End of the day
+                    ]);
     }
 
     public function get_mnp($request, $service, $patient_gender)
@@ -517,7 +1813,10 @@ class ChildCareReportService
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_services.facility_code', 'consult_ccdev_services.patient_id');
             })
             ->where('patients.gender', $patient_gender)
-            ->whereBetween(DB::raw('DATE(service_date)'), [$request->start_date, $request->end_date])
+            ->whereBetween('service_date', [
+                $request->start_date . ' 00:00:00', // Start of the day
+                $request->end_date . ' 23:59:59'    // End of the day
+            ])
             ->whereStatusId('1')
             ->when($service == 'MNP', fn ($query) => $query->whereServiceId('MNP')
                 ->havingRaw('(age_month BETWEEN 6 AND 11) AND (quantity >= 90)'))
@@ -527,281 +1826,1122 @@ class ChildCareReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function get_sick_infant_children_with_vit_a($request, $patient_gender, $age_month)
-    {
-        return DB::table('consult_notes_final_dxes')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
-                        municipality_code,
-                        barangay_code
-                    ")
-            ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
-            ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
-            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
-            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consult_notes.patient_id');
-            })
-            ->where('patients.gender', $patient_gender)
-            ->whereBetween(DB::raw('DATE(prescription_date)'), [$request->start_date, $request->end_date])
-            ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4', 'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'])
-            ->when($age_month == 6, fn ($query) => $query->whereIn('konsulta_medicine_code', ['RETA10000001103CAP310000000000'])
-                ->havingRaw('(age_month BETWEEN 6 AND 11)')
-            )
-            ->when($age_month == 12, fn ($query) => $query->whereIn('konsulta_medicine_code', ['VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000'])
-                ->havingRaw('(age_month BETWEEN 12 AND 59)')
-            )
-            ->groupBy('patients.id', 'age_month', 'prescription_date', 'municipality_code', 'barangay_code')
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_diarrhea_ors_and_ors_with_zinc($request, $patient_gender, $medicine)
-    {
-        return DB::table('consult_notes_final_dxes')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
-                        municipality_code,
-                        barangay_code
-                    ")
-            ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
-            ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
-            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
-            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            ->whereIn('icd10_code', ['A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1', 'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3'])
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_notes.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consult_notes.patient_id');
-            })
-            ->where('patients.gender', $patient_gender)
-            ->whereBetween(DB::raw('DATE(prescription_date)'), [$request->start_date, $request->end_date])
-            ->when($medicine == 'ORS', fn ($query) => $query->whereIn('konsulta_medicine_code', ['ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01', 'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01', 'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'])
-                ->havingRaw('(age_month BETWEEN 0 AND 59)')
-            )
-            ->when($medicine == 'ORS WITH ZINC', fn ($query) => $query->whereIn('konsulta_medicine_code', ['ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01', 'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01', 'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'])
-                ->whereIn('konsulta_medicine_code', ['ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL', 'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'])
-                ->havingRaw('(age_month BETWEEN 0 AND 59)')
-            )
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_ebf($request, $patient_gender)
+    public function get_bfed($request)
     {
         return DB::table('consult_ccdev_breastfeds')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) AS date_of_service,
-                        municipality_code,
-                        barangay_code
-                    ")
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_ebf',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_ebf',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND DATE_ADD(DATE_ADD(patients.birthdate, INTERVAL 5 MONTH), INTERVAL 29 DAY) BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_ebf',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) BETWEEN 6 AND 11
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_comp_feeding',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) BETWEEN 6 AND 11
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_comp_feeding',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) BETWEEN 6 AND 11
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) BETWEEN 6 AND 11
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_comp_feeding',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND ebf_date IS NULL
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) >= 6
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_comp_feeding_stop_bfed',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND ebf_date IS NULL
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) >= 6
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_comp_feeding_stop_bfed',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND ebf_date IS NULL
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) >= 6
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND bfed_month1 = 1
+                                AND bfed_month2 = 1
+                                AND bfed_month3 = 1
+                                AND bfed_month4 = 1
+                                AND ebf_date IS NULL
+                                AND comp_fed_date IS NOT NULL
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) >= 6
+                                AND comp_fed_date BETWEEN ? AND ?
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_comp_feeding_stop_bfed'
+                    ", [
+                        //bindings for male_ebf
+                        $request->start_date, $request->end_date,
+                        //bindings for female_ebf
+                        $request->start_date, $request->end_date,
+                        //bindings for male_female_ebf
+                        $request->start_date, $request->end_date,
+                        $request->start_date, $request->end_date,
+                        //bindings for male_comp_feeding
+                        $request->start_date, $request->end_date,
+                        //bindings for female_comp_feeding
+                        $request->start_date, $request->end_date,
+                        //bindings for male_female_comp_feeding
+                        $request->start_date, $request->end_date,
+                        $request->start_date, $request->end_date,
+                        //bindings for male_comp_feeding_stop_bfed
+                        $request->start_date, $request->end_date,
+                        //bindings for female_comp_feeding_stop_bfed
+                        $request->start_date, $request->end_date,
+                        //bindings for male_female_comp_feeding_stop_bfed
+                        $request->start_date, $request->end_date,
+                        $request->start_date, $request->end_date
+            ])
             ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
             ->join('users', 'consult_ccdev_breastfeds.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
-            }) */
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_breastfeds.facility_code', 'consult_ccdev_breastfeds.patient_id');
-            })
-            ->where('patients.gender', $patient_gender)
-            ->where(fn ($query) => $query->where([
-                ['bfed_month1', '=', '1'],
-                ['bfed_month2', '=', '1'],
-                ['bfed_month3', '=', '1'],
-                ['bfed_month4', '=', '1'],
-            ])
-            )
-            ->havingRaw('date_of_service BETWEEN ? AND ?', [$request->start_date, $request->end_date])
-            ->orderBy('name', 'ASC');
+            });
     }
 
-    public function get_pneumonia_with_treatment($request, $patient_gender, $disease)
-    {
-        return DB::table('consult_notes_final_dxes')
-            ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        prescription_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, consult_date) AS age_month,
-                        municipality_code,
-                        barangay_code
-                    ")
-            ->join('consult_notes', 'consult_notes_final_dxes.notes_id', '=', 'consult_notes.id')
-            ->join('patients', 'consult_notes.patient_id', '=', 'patients.id')
-            ->join('consults', 'consult_notes.consult_id', '=', 'consults.id')
-            ->join('medicine_prescriptions', 'consult_notes.patient_id', '=', 'medicine_prescriptions.patient_id')
-            ->join('users', 'consult_notes_final_dxes.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consults.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_notes_final_dxes.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_notes_final_dxes.facility_code', 'consults.patient_id');
-            })
-            ->where('patients.gender',$patient_gender)
-            ->whereIn('icd10_code', ['B05.2', 'J10', 'J11', 'J17.1', 'J10.0', 'J10.1', 'J10.8'])
-            ->whereBetween(DB::raw('DATE(prescription_date)'), [$request->start_date, $request->end_date])
-            ->when($disease == 'PNEUMONIA', fn ($query) => $query->whereIn('konsulta_medicine_code', ['AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000', 'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01', 'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'])
-                ->havingRaw('(age_month BETWEEN 0 AND 59)')
-            )
-            ->orderBy('name', 'ASC');
-    }
-
-    public function get_overweight_obese($request, $patient_gender, $class)
+    public function get_vitals($request)
     {
         return DB::table('patient_vitals')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        DATE_FORMAT(SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(vitals_date ORDER BY vitals_date DESC), ',', 1), ',', - 1), '%Y-%m-%d') AS date_of_service,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(patient_weight_for_age ORDER BY vitals_date DESC), ',', 1), ',', - 1) AS weight_for_age,
-                        SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(patient_age_months ORDER BY vitals_date DESC), ',', 1), ',', - 1) AS patient_age_months,
-                        municipality_code,
-                        barangay_code
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_height_for_age = 'Stunted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_stunted',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_height_for_age = 'Stunted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_stunted',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_height_for_age = 'Stunted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_height_for_age = 'Stunted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_stunted',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_height_for_age = 'Wasted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_wasted',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_height_for_age = 'Wasted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_wasted',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_height_for_age = 'Wasted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_height_for_age = 'Wasted'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_wasted',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_weight_for_age IN('Obese', 'Overweight')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_overweight_obese',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_weight_for_age IN('Obese', 'Overweight')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_overweight_obese',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_weight_for_age IN('Obese', 'Overweight')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_weight_for_age IN('Obese', 'Overweight')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_overweight_obese',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_weight_for_age = 'Normal'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_normal',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_weight_for_age = 'Normal'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_normal',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patient_weight_for_age = 'Normal'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patient_weight_for_age = 'Normal'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_normal'
                     ")
             ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
             ->join('users', 'patient_vitals.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_vitals.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_vitals.facility_code', auth()->user()->facility_code);
-            }) */
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vitals.facility_code', 'patient_vitals.patient_id');
             })
-            ->where('patients.gender', $patient_gender)
-            ->when($class == 'Obese', fn ($query) => $query->whereIn('patient_weight_for_age', ['Obese', 'Overweight'])
-                ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND date_of_service BETWEEN ? AND ?', [$request->start_date, $request->end_date])
-            )
-            ->when($class == 'Normal', fn ($query) => $query->whereIn('patient_weight_for_age', ['Normal'])
-                ->havingRaw('(patient_age_months BETWEEN 0 AND 59) AND date_of_service BETWEEN ? AND ?', [$request->start_date, $request->end_date])
-            )
-            ->groupBy('patient_vitals.patient_id', 'municipality_code', 'barangay_code')
-            ->orderBy('name', 'ASC');
+//            ->whereBetween(DB::raw('DATE(vitals_date)'), [$request->start_date, $request->end_date]);
+            ->whereBetween('vitals_date', [
+                $request->start_date . ' 00:00:00', // Start of the day
+                $request->end_date . ' 23:59:59'    // End of the day
+            ]);
+//            ->whereBetween('vitals_date', [$request->start_date, $request->end_date]);
     }
 
-    public function get_complimentary_feeding($request, $patient_gender)
+    public function get_deworming($request)
     {
-        return DB::table('consult_ccdev_breastfeds')
+        return DB::table('medicine_prescriptions')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        comp_fed_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) AS age_month,
-                        municipality_code,
-                        barangay_code
-                    ")
-            ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
-            ->join('users', 'consult_ccdev_breastfeds.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
-            }) */
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_breastfeds.facility_code', 'consult_ccdev_breastfeds.patient_id');
-            })
-            ->where('patients.gender', $patient_gender)
-            ->whereBetween(DB::raw('DATE(comp_fed_date)'), [$request->start_date, $request->end_date])
-            ->where(fn ($query) => $query->where([
-                ['bfed_month1', '=', '1'],
-                ['bfed_month2', '=', '1'],
-                ['bfed_month3', '=', '1'],
-                ['bfed_month4', '=', '1'],
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_deworming_1_to_19',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_deworming_1_to_19',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_deworming_1_to_19',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 4
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_deworming_1_to_4',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 4
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_deworming_1_to_4',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 4
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 1 AND 4
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_deworming_1_to_4',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 5 AND 9
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_deworming_5_to_9',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 5 AND 9
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_deworming_5_to_9',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 5 AND 9
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 5 AND 9
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_deworming_5_to_9',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 10 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_deworming_10_to_19',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 10 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_deworming_10_to_19',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 10 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, medicine_prescriptions.prescription_date) BETWEEN 10 AND 19
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_deworming_10_to_19'
+            ")
+            ->join('patients', 'medicine_prescriptions.patient_id', '=', 'patients.id')
+            ->join('users', 'medicine_prescriptions.user_id', '=', 'users.id')
+            ->whereIn('konsulta_medicine_code', [
+                'ALBED0000000006SUS1400195BOTTL',
+                'ALBED0000000006SUS1400231BOTTL',
+                'ALBED0000000006SUS1400379BOTTL',
+                'ALBED0000000006SUS1400469BOTTL',
+                'ALBED0000000034TAB490000000000'
             ])
-            ->whereNotNull('comp_fed_date')
-            )
-            ->havingRaw('(age_month BETWEEN 6 AND 11)')
-            ->orderBy('name', 'ASC');
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'medicine_prescriptions.facility_code', 'medicine_prescriptions.patient_id');
+            })
+            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date])
+            ;
     }
 
-    public function get_complimentary_feeding_stop_bfed($request, $patient_gender)
+    public function get_sick_infant_children($request)
     {
-        return DB::table('consult_ccdev_breastfeds')
+        return DB::table('consults')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        comp_fed_date AS date_of_service,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, comp_fed_date) AS age_month,
-                        municipality_code,
-                        barangay_code
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_sick_infant',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_sick_infant',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_sick_infant',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_sick_children',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_sick_children',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_sick_children',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_diarrhea',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_diarrhea',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_diarrhea',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_pneumonia',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_pneumonia',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_pneumonia'
                     ")
-            ->join('patients', 'consult_ccdev_breastfeds.patient_id', '=', 'patients.id')
-            ->join('users', 'consult_ccdev_breastfeds.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'consult_ccdev_breastfeds.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('consult_ccdev_breastfeds.facility_code', auth()->user()->facility_code);
-            }) */
+            ->join('consult_notes', 'consults.id', '=', 'consult_notes.consult_id')
+            ->join('consult_notes_final_dxes', 'consult_notes.id', '=', 'consult_notes_final_dxes.notes_id')
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ccdev_breastfeds.facility_code', 'consult_ccdev_breastfeds.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
-            ->whereBetween(DB::raw('DATE(comp_fed_date)'), [$request->start_date, $request->end_date])
-            ->whereNull('ebf_date')
-            ->whereNotNull('comp_fed_date')
-            ->havingRaw('(age_month >= 6)')
-            ->where('patients.gender', $patient_gender)
-            ->orderBy('name', 'ASC');
+            ->whereBetween('consult_date', [
+                $request->start_date . ' 00:00:00', // Start of the day
+                $request->end_date . ' 23:59:59'    // End of the day
+            ]);
     }
 
-    public function get_stunted_wasted($request, $patient_gender, $class)
+    public function get_sick_infant_children_with_meds($request)
     {
-        return DB::table('patient_vitals')
+        return DB::table('consults')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        patients.birthdate,
-                        DATE_FORMAT(vitals_date, '%Y-%m-%d') AS date_of_service,
-                        patient_age_months,
-                        patient_height_for_age AS height_for_age,
-                        municipality_code,
-                        barangay_code
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_sick_infant_with_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_sick_infant_with_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_sick_infant_with_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_sick_children_with_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_sick_children_with_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                                )
+                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_sick_children_with_vit_a',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_diarrhea_with_ors',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_diarrhea_with_ors',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_diarrhea_with_ors',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL',
+                                'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_diarrhea_with_ors_zinc',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL',
+                                'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_diarrhea_with_ors_zinc',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL',
+                                'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                'B05'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'ZINCX0000001335OD00000231BOTTL', 'ZINCX0000001336SYRUP00469BOTTL',
+                                'ZINCX0000001344SYRUP00201BOTTL', 'ZINCX0000001344SYRUP00469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_diarrhea_with_ors_zinc',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000',
+                                'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01',
+                                'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_pneumonia_with_treatment',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000',
+                                'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01',
+                                'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_pneumonia_with_treatment',
+                        SUM(
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000',
+                                'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01',
+                                'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
+                                AND icd10_code IN
+                                (
+                                'B05.2', 'J10', 'J11', 'J17.1',
+                                'J10.0', 'J10.1', 'J10.8'
+                                )
+                                AND konsulta_medicine_code IN
+                                (
+                                'AMOX50005700015CAPSU0000000000', 'AMOX50005700047CAPSU0000000000',
+                                'AMOX50005700142SUS1400195DRO01', 'AMOX50005700142SUS1400231DRO01',
+                                'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_pneumonia_with_treatment'
                     ")
-            ->join('patients', 'patient_vitals.patient_id', '=', 'patients.id')
-            ->join('users', 'patient_vitals.user_id', '=', 'users.id')
-            /* ->joinSub($this->categoryFilterService->getAllBrgyMunicipalitiesPatient(), 'municipalities_brgy', function ($join) {
-                $join->on('municipalities_brgy.patient_id', '=', 'patient_vitals.patient_id');
-            }) */
-            /* ->when(auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL, function ($q) {
-                $q->where('patient_vitals.facility_code', auth()->user()->facility_code);
-            }) */
+            ->join('consult_notes', 'consults.id', '=', 'consult_notes.consult_id')
+            ->join('consult_notes_final_dxes', 'consult_notes.id', '=', 'consult_notes_final_dxes.notes_id')
+            ->join('patients', 'consults.patient_id', '=', 'patients.id')
+            ->leftJoin('medicine_prescriptions', 'consults.id', '=', 'medicine_prescriptions.consult_id')
+            ->join('users', 'consults.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vitals.facility_code', 'patient_vitals.patient_id');
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
-            ->where('patients.gender', $patient_gender)
-            ->whereBetween(DB::raw('DATE(vitals_date)'), [$request->start_date, $request->end_date])
-            ->when($class == 'Stunted', fn ($query) => $query->whereIn('patient_height_for_age', ['Stunted'])
-                ->havingRaw('(patient_age_months BETWEEN 0 AND 59)')
-            )
-            ->when($class == 'Wasted', fn ($query) => $query->wherePatientHeightForAge($class)
-                ->havingRaw('(patient_age_months BETWEEN 0 AND 59)')
-            )
-            ->orderBy('name', 'ASC');
+            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date]);
     }
 }

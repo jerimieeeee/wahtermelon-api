@@ -162,14 +162,14 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                 ])->householdMember()->create(['patient_id' => $patient->id, 'user_id' => $randomUser->id, 'family_role_code' => $row['FAMILY ROLE']]);
             }
 
-            if ($patient->philhealthLatest === null) {
+            if ($patient->philhealthCurrentYear()->doesntExist()) {
                 $philhealthTransactionDate = Carbon::parse($row['ENLISTMENT DATE'])->format('Ym');
                 $row['ENLISTMENT DATE'] = Carbon::parse($row['ENLISTMENT DATE'])->format('Y-m-d');
                 $row['EFFECTIVITY YEAR'] = Carbon::parse($row['ENLISTMENT DATE'])->format('Y');
 
                 $philhealthPrefix = $randomUser->konsultaCredential->accreditation_number . $philhealthTransactionDate;
                 $philhealthTransactionNumber = IdGenerator::generate(['table' => 'patient_philhealth', 'field' => 'transaction_number', 'length' => 21, 'prefix' => $philhealthPrefix, 'reset_on_prefix_change' => true]);
-                $patient->philhealthLatest()->create([
+                $philhealthData = [
                     'facility_code' => 'DOH000000000048882',
                     'transaction_number' => $philhealthTransactionNumber,
                     'patient_id' => $patient->id,
@@ -181,7 +181,19 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     'package_type_id' => 'K',
                     'membership_type_id' => $row['MEMBERSHIP TYPE'],
                     'membership_category_id' => $row['MEMBERSHIP CATEGORY'],
-                ]);
+                ];
+                if ($row['MEMBERSHIP TYPE'] === 'DD') {
+                    $philhealthData['member_pin'] = $row['MM PIN'];
+                    $philhealthData['member_last_name'] = $row['MM LAST NAME'];
+                    $philhealthData['member_first_name'] = $row['MM FIRST NAME'];
+                    $philhealthData['member_middle_name'] = $row['MM MIDDLE NAME'];
+                    $philhealthData['member_suffix_name'] = $row['MM SUFFIX'];
+                    $philhealthData['member_birthdate'] = $row['MM BIRTHDATE'];
+                    $philhealthData['member_gender'] = $row['MM SEX'];
+                    $philhealthData['member_relation_id'] = $row['MM RELATION TO DD'];
+                }
+
+                $patient->philhealthLatest()->create($philhealthData);
             }
 
             //dd($row);
@@ -272,6 +284,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     'patient_id' => $patient->id,
                     'complaint' => $row['COMPLAINT NOTES'],
                     'history' => $row['HISTORY NOTES'],
+                    'physical_exam' => $row['PE REMARKS'],
                     'general_survey_code' => $row['GENERAL SURVEY'],
                 ]);
 
@@ -308,7 +321,7 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                     ]);
                 }
 
-                $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15'];
+                $physicalExams = ['ABDOMEN12', 'CHEST06', 'GENITOURINARY01', 'HEART05', 'NEURO06', 'RECTAL01', 'SKIN15', 'HEENT11'];
                 foreach ($physicalExams as $pe)
                     $notes->physicalExam()->create([
                         'facility_code' => 'DOH000000000048882',
@@ -341,13 +354,13 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                             "medicine_route_code",
                         )
                         ->find($medicineId);
-                        /* if(!$data) {
+                        if(!$data) {
                             Log::warning("Medicine ID not found", [
                                 'medicine_id' => $medicineId,
                                 'row' => $row,
                             ]);
                             continue;
-                        } */
+                        }
                         $prescription = $data->toArray();
                         $prescriptionData = array_filter($prescription, function ($value) {
                             return $value !== null && $value !== "";
@@ -400,14 +413,14 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                             'patient_id' => $patient->id,
                             'laboratory_date' => $row['LABORATORY DATE'],
                             'lab_status_code' => 'D',
-                            'hemoglobin' => $row['CBC: HGB'],
-                            'hematocrit' => $row['CBC: HCT'],
-                            'rbc' => $row['CBC: RBC'],
-                            'wbc' => $row['CBC: WBC'],
-                            'neutrophils' => $row['CBC: SEG'],
-                            'lymphocytes' => $row['CBC: LYM'],
-                            'monocytes' => $row['CBC: MON'],
-                            'platelets' => $row['CBC: PLT'],
+                            'hemoglobin' => round((float)$row['CBC: HGB'],2),
+                            'hematocrit' => round((float)$row['CBC: HCT'],2),
+                            'rbc' => round((float)$row['CBC: RBC'],2),
+                            'wbc' => round((float)$row['CBC: WBC'],2),
+                            'neutrophils' => round((float)$row['CBC: SEG'],2),
+                            'lymphocytes' => round((float)$row['CBC: LYM'],2),
+                            'monocytes' => round((float)$row['CBC: MON'],2),
+                            'platelets' => round((float)$row['CBC: PLT'],2),
                         ]);
                     }
 
@@ -419,12 +432,12 @@ class UploadCsvJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
                             'patient_id' => $patient->id,
                             'laboratory_date' => $row['LABORATORY DATE'],
                             'lab_status_code' => 'D',
-                            'fbs' => $row['CHEM: FBS'],
-                            'creatinine' => $row['CHEM: CREA'],
-                            'ldl' => $row['CHEM: LDL'],
-                            'hdl' => $row['CHEM: HDL'],
-                            'cholesterol' => $row['CHEM: TC'],
-                            'triglycerides' => $row['CHEM: TG'],
+                            'fbs' => round((float)$row['CHEM: FBS'],2),
+                            'creatinine' => round((float)$row['CHEM: CREA'],2),
+                            'ldl' => round((float)$row['CHEM: LDL'],2),
+                            'hdl' => round((float)$row['CHEM: HDL'],2),
+                            'cholesterol' => round((float)$row['CHEM: TC'],2),
+                            'triglycerides' => round((float)$row['CHEM: TG'],2),
                         ]);
                     }
 

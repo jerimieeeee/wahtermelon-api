@@ -55,6 +55,7 @@ class DailyServiceReportService
             'consultNotes.complaints.libComplaints',
             'consultNotes.initialdx.diagnosis',
             'consultNotes.finaldx.libIcd10',
+            'consultNotes.finaldx.user.designation',
             'prescription',
             'prescription.konsultaMedicine',
             'prescription.medicine',

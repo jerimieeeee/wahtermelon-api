@@ -74,18 +74,16 @@ class EclaimsStatusCommand extends Command
         EclaimsUpload::query()
             ->whereIn('pStatus', ['IN PROCESS', 'VOUCHERING', 'WITH VOUCHER'])
             ->whereNotNull('pClaimSeriesLhio')
-            //->where('pClaimSeriesLhio','240401070294507')
-            //->where('pClaimSeriesLhio','240404070172907')
             ->chunk(100, function ($eclaims) {
-                $jobs = $eclaims->map(function ($claim) {
-                    return new EclaimsStatusJob($claim);
-                })->toArray();
+            $jobs = $eclaims->map(function ($claim) {
+                return new EclaimsStatusJob($claim);
+            })->toArray();
 
-                $batch = Bus::batch($jobs)
-                    ->name('Eclaims Status Batch')
-                    ->dispatch();
+            $batch = Bus::batch($jobs)
+                ->name('Eclaims Status Batch')
+                ->dispatch();
 
-                $this->info("Batch ID: {$batch->id} dispatched successfully.");
+            $this->info("Batch ID: {$batch->id} dispatched successfully.");
             });
     }
 

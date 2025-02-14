@@ -38,6 +38,7 @@ Route::prefix('v1')->group(function () {
     Route::post('reset-password', [\App\Http\Controllers\API\Auth\ChangePasswordController::class, 'passwordResetProcess'])->middleware('guest');
 
     Route::post('import-data', [\App\Http\Controllers\API\V1\Import\ImportController::class, 'importCsv']);
+    Route::post('import-data-specific', [\App\Http\Controllers\API\V1\Import\ImportController::class, 'importCsvSpecific']);
 
     Route::controller(\App\Http\Controllers\API\V1\UserController::class)
         ->middleware('auth:api')
@@ -777,6 +778,11 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('m1', 'index');
                 });
+            Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\ChildCareReport2018NamelistController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('name-list', 'index');
+                });
         });
         Route::prefix('maternal-care')->group(function () {
             Route::controller(\App\Http\Controllers\API\V1\Reports\FHSIS2018\MaternalCareReport2018Controller::class)
@@ -943,6 +949,13 @@ Route::prefix('v1')->group(function () {
                 ->middleware('auth:api')
                 ->group(function () {
                     Route::get('m1-underlying-name-list', 'index');
+                });
+        });
+        Route::prefix('masterlist')->group(function () {
+            Route::controller(\App\Http\Controllers\API\V1\Reports\Masterlist\MasterlistReportController::class)
+                ->middleware('auth:api')
+                ->group(function () {
+                    Route::get('list', 'index');
                 });
         });
     });

@@ -175,7 +175,8 @@ class DentalReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
-                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
+                                AND is_pregnant = 1
+                                AND TIMESTAMPDIFF(YEARs, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0
@@ -183,6 +184,7 @@ class DentalReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
+                                AND is_pregnant = 1
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 15 AND 19 THEN
                                 1
                             ELSE
@@ -191,6 +193,7 @@ class DentalReportService
                         SUM(
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
+                                AND is_pregnant = 1
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 49 THEN
                                 1
                             ELSE
@@ -201,15 +204,12 @@ class DentalReportService
             ->leftJoin('dental_oral_health_conditions', 'consults.id', '=', 'dental_oral_health_conditions.consult_id')
             ->leftJoin('dental_tooth_services', 'consults.id', '=', 'dental_tooth_services.consult_id')
             ->leftJoin('dental_services', 'consults.id', '=', 'dental_services.consult_id')
-//            ->leftJoin('dental_tooth_conditions', 'consults.id', '=', 'dental_tooth_conditions.consult_id')
             ->join('users', 'consults.user_id', '=', 'users.id')
             ->wherePtGroup('dn')
             ->whereBetween(DB::raw('DATE(consult_date)'), [$request->start_date, $request->end_date])
-//            ->whereYear('consult_date', $request->year)
-//            ->whereMonth('consult_date', $request->month)
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
-            });;
+            });
     }
 
     public function get_dmft($request, $gender)
@@ -242,6 +242,6 @@ class DentalReportService
             ->whereIn('dental_tooth_conditions.tooth_number', ['D', 'M', 'F'])
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
-            });;
+            });
     }
 }
