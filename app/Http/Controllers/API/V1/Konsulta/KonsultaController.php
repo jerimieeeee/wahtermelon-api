@@ -314,7 +314,7 @@ class KonsultaController extends Controller
                         THEN DATE_FORMAT(c.consult_date, '%Y-%m-%d') ELSE NULL END AS epress_date"),
                 ]);
             })
-            ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
+            ->when((isset($request->start_date) && !empty($request->start_date)) && (isset($request->end_date) && !empty($request->end_date)), fn ($query) => $query->whereRaw('DATE(konsulta_transmittals.updated_at) BETWEEN ? AND ?', [$request->start_date, $request->end_date]))
             ->when($request->filter['tranche'] == 1 && (isset($request->search) && !empty($request->search)), function ($query) use($columns, $request){
                 $query->whereHas('patientPhilhealth', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
             })
