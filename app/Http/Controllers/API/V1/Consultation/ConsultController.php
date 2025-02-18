@@ -44,7 +44,7 @@ class ConsultController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        /* $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         $consult = QueryBuilder::for(Consult::class)
             ->when($request->filled('pt_group') && !($request->pt_group == 'dn' && $request->filled('not_consult_id')), function ($q) use ($request) {
@@ -126,7 +126,81 @@ class ConsultController extends Controller
             return ConsultResource::collection($consult->get());
         }
 
-        return ConsultResource::collection($consult->paginate($perPage)->withQueryString());
+        return ConsultResource::collection($consult->paginate($perPage)->withQueryString()); */
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $facilityCode = auth()->user()->facility_code; // Extract auth info before query
+
+        $consult = QueryBuilder::for(Consult::class)
+            // Apply `pt_group` filter & eager load relationships only when necessary
+            ->when($request->filled('pt_group') && !($request->pt_group == 'dn' && $request->filled('not_consult_id')), function ($q) use ($request) {
+                $q->where('pt_group', $request->pt_group);
+                if ($request->pt_group === 'dn') {
+                    $q->with([
+                        'dentalMedicalSocials',
+                        'dentalSurgicalHistory',
+                        'dentalHospitalizationHistory',
+                        'dentalService.service',
+                        'dentalToothService.toothService',
+                        'consultToothCondition',
+                        'latestToothCondition',
+                        'dentalOralHealthCondition'
+                    ]);
+                }
+            })
+            // Filter by multiple fields in one `when` to reduce query overhead
+            ->when($request->only(['patient_id', 'consult_done', 'id', 'physician_id', 'is_konsulta']), function ($q) use ($request) {
+                foreach (['patient_id', 'consult_done', 'id', 'physician_id', 'is_konsulta'] as $field) {
+                    if ($request->filled($field)) {
+                        $q->where($field, $request->$field);
+                    }
+                }
+            })
+            // Apply facility code filter when no specific patient, ID, or physician filter is given
+            ->when(!$request->hasAny(['patient_id', 'id', 'physician_id']), function ($q) use ($facilityCode) {
+                $q->where('facility_code', $facilityCode);
+            })
+            // Exclude specific consult ID & apply conditional `pt_group` filter
+            ->when($request->filled('not_consult_id'), function ($q) use ($request) {
+                $q->where('id', '!=', $request->not_consult_id)
+                ->when($request->pt_group === 'dn', fn ($query) => $query->whereIn('pt_group', ['dn', 'cn']));
+            })
+            // Conditional eager loading for `todays_patient`
+            ->when($request->filled('todays_patient'), fn ($q) => $q->with(['user', 'patient', 'physician']))
+            ->when(!$request->filled('todays_patient'), function ($q) {
+                $q->with([
+                    'user',
+                    'patient',
+                    'physician',
+                    'vitals',
+                    'consultNotes.complaints.libComplaints',
+                    'consultNotes.physicalExam.libPhysicalExam',
+                    'consultNotes.physicalExamRemarks',
+                    'consultNotes.initialdx.diagnosis',
+                    'consultNotes.finaldx.libIcd10',
+                    'management.libManagement',
+                    'facility',
+                    'prescription' => function ($query) {
+                        $query->with([
+                            'konsultaMedicine.generic',
+                            'medicine',
+                            'dosageUom',
+                            'doseRegimen',
+                            'medicinePurpose',
+                            'durationFrequency',
+                            'medicineRoute',
+                            'quantityPreparation',
+                            'dispensing'
+                        ]);
+                    }
+                ]);
+            })
+            ->defaultSort($request->sort ?? 'consult_date')
+            ->allowedSorts(['consult_date']);
+
+        // Optimize pagination handling
+        return $perPage === 'all'
+            ? ConsultResource::collection($consult->get())
+            : ConsultResource::collection($consult->paginate($perPage)->withQueryString());
     }
 
     /**
