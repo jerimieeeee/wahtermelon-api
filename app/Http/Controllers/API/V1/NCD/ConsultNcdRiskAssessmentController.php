@@ -75,21 +75,30 @@ class ConsultNcdRiskAssessmentController extends Controller
             ->defaultSort('assessment_date')
             ->allowedSorts('assessment_date');
 
+        // Fetch all ConsultNcdRiskAssessment records
+        $consultNcdRiskAssessments = $consultNcdRiskAssessment->get();
+
         // Handle NCD Risk Stratification if consult_id or patient_id is provided
         if (!empty($request->consult_id) || !empty($request->patient_id)) {
-            $data = $ncdRiskStratificationChartService->getRiskStratificationChart($request);
-            if (!empty($data)) {
-                return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessment->get())
-                    ->additional(['risk_stratification' => $data]);
+            // Initialize an array to hold risk stratification data for each record
+            $riskStratificationData = [];
+
+            // Loop through each ConsultNcdRiskAssessment record
+            foreach ($consultNcdRiskAssessments as $record) {
+                // Fetch risk stratification data for the current record
+                $data = $ncdRiskStratificationChartService->getRiskStratificationChart($request);
+
+                // Add the risk stratification data to the array, keyed by the record ID
+                $riskStratificationData[$record->id] = $data;
             }
+
+            // Return the ConsultNcdRiskAssesompsmentResource collection with additional risk stratification data
+            return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessments)
+                ->additional(['risk_stratification' => $riskStratificationData]);
         }
 
-        // Handle pagination
-        if ($perPage === 'all') {
-            return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessment->get());
-        }
-
-        return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessment->paginate($perPage)->withQueryString());
+// If no specific consult_id or patient_id is provided, return the collection without additional data
+        return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessments);
     }
 
     /**
