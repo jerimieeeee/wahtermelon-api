@@ -12,7 +12,7 @@ class NcdRiskStratificationChartService
      */
     public function getRiskStratificationChart($request)
     {
-        $consultNcdRiskAssessment = ConsultNcdRiskAssessment::where('patient_id', $request->patient_id)->first();
+        $consultNcdRiskAssessment = ConsultNcdRiskAssessment::where('consult_id', $request->consult_id)->first();
 
         if (! empty($consultNcdRiskAssessment->id)) {
             $totalCholesterol = 0;

@@ -49,9 +49,9 @@ class MasterlistReportService
     {
         return DB::table('patient_fp_methods')
             ->selectRaw("
-                        patients.gender,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
                         TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date) AS age,
+                        patients.gender,
                         CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
                         patients.birthdate AS birthdate,
                         DATE_FORMAT(patient_fp_methods.enrollment_date, '%Y-%m-%d') AS date_of_registration,
@@ -77,6 +77,28 @@ class MasterlistReportService
                 $request->start_date . ' 00:00:00', // Start of the day
                 $request->end_date . ' 23:59:59'    // End of the day
             ])
+            ->orderBy('name', 'ASC');
+    }
+
+    public function get_bloodtype_master_list($request)
+    {
+        return DB::table('patients')
+            ->selectRaw("
+                        patients.gender,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date) AS age,
+                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
+                        patients.birthdate AS birthdate
+                    ")
+            ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
+            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
+            ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
+            })
             ->orderBy('name', 'ASC');
     }
 }

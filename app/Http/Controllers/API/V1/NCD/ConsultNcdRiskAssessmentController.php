@@ -7,6 +7,7 @@ use App\Http\Requests\API\V1\NCD\ConsultNcdRiskAssessmentRequest;
 use App\Http\Resources\API\V1\NCD\ConsultNcdRiskAssessmentResource;
 use App\Models\V1\NCD\ConsultNcdRiskAssessment;
 use App\Models\V1\NCD\PatientNcd;
+use App\Services\NCD\NcdRiskStratificationChartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -43,8 +44,11 @@ class ConsultNcdRiskAssessmentController extends Controller
      */
     public function index(Request $request): JsonResponse|ConsultNcdRiskAssessmentResource|ResourceCollection
     {
+        // Initialize NCD Risk Stratification Service
+        $ncdRiskStratificationChartService = new NcdRiskStratificationChartService();
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
+        // Base query for ConsultNcdRiskAssessment
         $consultNcdRiskAssessment = QueryBuilder::for(ConsultNcdRiskAssessment::class)
             ->when(isset($request->patient_id), function ($q) use ($request) {
                 $q->where('patient_id', $request->patient_id);
@@ -55,8 +59,7 @@ class ConsultNcdRiskAssessmentController extends Controller
             ->when(isset($request->id), function ($q) use ($request) {
                 $q->where('id', '=', $request->id);
             })
-            ->with(
-
+            ->with([
                 'riskScreeningGlucose',
                 'riskScreeningLipid',
                 'riskScreeningKetones',
@@ -68,10 +71,20 @@ class ConsultNcdRiskAssessmentController extends Controller
                 'ncdRecordDiagnosis',
                 'ncdRecordTargetOrgan',
                 'ncdRecordCounselling'
-            )
+            ])
             ->defaultSort('assessment_date')
             ->allowedSorts('assessment_date');
 
+        // Handle NCD Risk Stratification if consult_id is provided
+        if (!empty($request->consult_id)) {
+            $data = $ncdRiskStratificationChartService->getRiskStratificationChart($request);
+            if (!empty($data)) {
+                return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessment->get())
+                    ->additional(['risk_stratification' => $data]);
+            }
+        }
+
+        // Handle pagination
         if ($perPage === 'all') {
             return ConsultNcdRiskAssessmentResource::collection($consultNcdRiskAssessment->get());
         }
