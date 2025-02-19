@@ -76,7 +76,7 @@ class ConsultNcdRiskAssessmentController extends Controller
             ->allowedSorts('assessment_date');
 
         // Handle NCD Risk Stratification if patient_id is provided
-        if (!empty($request->patient_id)) {
+        if (!empty($request->patient_id) || !empty($request->consult_id)) {
             $data = $ncdRiskStratificationChartService->getRiskStratificationChart($request);
             if (!empty($data)) {
                 $consultNcdRiskAssessments = $consultNcdRiskAssessment->get();
