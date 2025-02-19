@@ -178,7 +178,7 @@ class NcdReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function hypertensive_adult_old_new_case($request, $patient_gender, $age, $case)
+    public function hypertensive_adult_old_new_case($request, $patient_gender, $age)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -191,23 +191,16 @@ class NcdReportService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ncd_risk_assessment.facility_code', 'consult_ncd_risk_assessment.patient_id');
             })
-            // OLD CASE
             ->when($age == 'normal', function ($q) use ($request) {
-                $q->whereBetween('age', [20, 59])
-                    ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date]);
-//                    ->whereYear('assessment_date', $request->year)
-//                    ->whereMonth('assessment_date', $request->month);
+                $q->whereBetween('age', [20, 59]);
             })
             ->when($age == 'senior', function ($q) use ($request) {
-                $q->where('age', '>=', '60')
-                    ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date]);
-//                    ->whereYear('assessment_date', $request->year)
-//                    ->whereMonth('assessment_date', $request->month);
+                $q->where('age', '>=', '60');
             })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
-            ->whereYear('assessment_date', $request->year)
-            ->whereMonth('assessment_date', $request->month)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
             ->whereRaisedBp(1)
+            ->whereHypertensiveOldCase(0)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
