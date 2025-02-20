@@ -53,9 +53,26 @@ class RouteServiceProvider extends ServiceProvider
             /* return Limit::perMinute(120)
                 //->by($request->user()?->id ?: $request->ip());
                 ->by($request->user()?->id ?? $request->ip() . ':' . $request->userAgent()); */
-            return [
+            /* return [
                 Limit::perMinute(600)->by($request->user()?->id ?: $request->ip()),
                 Limit::perHour(20000)->by($request->user()?->id ?: $request->ip()),
+            ]; */
+            // For authenticated users
+            if ($request->user()) {
+                return [
+                    // Individual user limit
+                    Limit::perMinute(600)->by($request->user()->id),
+                    // Additional shared IP limit for authenticated users
+                    Limit::perMinute(6000)->by('auth:api:' . $request->ip())
+                ];
+            }
+
+            // For unauthenticated users behind shared IPs
+            return [
+                Limit::perMinute(3000)->by($request->ip()),
+                Limit::perSecond(100)->by($request->ip()),
+                // Add a decay rate for sustained high traffic
+                Limit::perHour(30000)->by($request->ip())
             ];
         });
     }
