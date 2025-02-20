@@ -178,7 +178,7 @@ class NcdReportService
             ->orderBy('name', 'ASC');
     }
 
-    public function hypertensive_adult_old_new_case($request, $patient_gender, $age)
+    public function hypertensive_adult_old_new_case($request, $patient_gender, $age, $type)
     {
         return DB::table('consult_ncd_risk_assessment')
             ->selectRaw("
@@ -197,10 +197,15 @@ class NcdReportService
             ->when($age == 'senior', function ($q) use ($request) {
                 $q->where('age', '>=', '60');
             })
+            ->when($type == 'old', function ($q) use ($request) {
+                $q->whereHypertensiveOldCase(1);
+            })
+            ->when($type == 'new', function ($q) use ($request) {
+                $q->whereHypertensiveOldCase(0);
+            })
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
             ->whereRaisedBp(1)
-            ->whereHypertensiveOldCase(0)
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }
@@ -214,9 +219,8 @@ class NcdReportService
                         assessment_date AS date_of_service
                     ")
             ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
-            ->join('consult_ncd_risk_screening_glucose', 'consult_ncd_risk_assessment.patient_id', '=', 'consult_ncd_risk_screening_glucose.patient_id')
-            ->join('users', 'consult_ncd_risk_assessment.user_id', '=', 'users.id')
-            ->where('consult_ncd_risk_assessment.facility_code', auth()->user()->facility_code)
+            ->join('consult_ncd_risk_screening_glucose', 'consult_ncd_risk_assessment.id', '=', 'consult_ncd_risk_screening_glucose.consult_ncd_risk_id')
+            ->join('users', 'consult_ncd_risk_screening_glucose.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ncd_risk_assessment.facility_code', 'consult_ncd_risk_assessment.patient_id');
             })
@@ -227,10 +231,41 @@ class NcdReportService
                 $q->where('age', '>=', '60');
             })
             ->where('patients.gender', $patient_gender)
-            ->whereRaisedBloodGlucose(1)
+            ->where('consult_ncd_risk_screening_glucose.raised_blood_glucose', '=', 1)
             ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
-//            ->whereYear('assessment_date', $request->year)
-//            ->whereMonth('assessment_date', $request->month)
+            ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
+            ->orderBy('name', 'ASC');
+    }
+
+    public function diabetes_adult_old_new_case($request, $patient_gender, $age, $type)
+    {
+        return DB::table('consult_ncd_risk_assessment')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        patients.birthdate,
+                        assessment_date AS date_of_service
+                    ")
+            ->join('patients', 'consult_ncd_risk_assessment.patient_id', '=', 'patients.id')
+            ->join('consult_ncd_risk_screening_glucose', 'consult_ncd_risk_assessment.id', '=', 'consult_ncd_risk_screening_glucose.consult_ncd_risk_id')
+            ->join('users', 'consult_ncd_risk_screening_glucose.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_ncd_risk_assessment.facility_code', 'consult_ncd_risk_assessment.patient_id');
+            })
+            ->when($age == 'normal', function ($q) use ($request) {
+                $q->whereBetween('age', [20, 59]);
+            })
+            ->when($age == 'senior', function ($q) use ($request) {
+                $q->where('age', '>=', '60');
+            })
+            ->when($type == 'old', function ($q) use ($request) {
+                $q->whereDiabetesOldCase(1);
+            })
+            ->when($type == 'new', function ($q) use ($request) {
+                $q->whereDiabetesOldCase(0);
+            })
+            ->where('patients.gender', $patient_gender)
+            ->where('consult_ncd_risk_screening_glucose.raised_blood_glucose', '=', 1)
+            ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
             ->groupBy('consult_ncd_risk_assessment.patient_id', 'assessment_date')
             ->orderBy('name', 'ASC');
     }

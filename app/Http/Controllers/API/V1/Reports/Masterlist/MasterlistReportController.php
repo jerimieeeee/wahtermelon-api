@@ -29,28 +29,37 @@ class MasterlistReportController extends Controller
      */
     public function index(Request $request, MasterlistReportService $masterlistReportService)
     {
+        // Number of items per page
+        $perPage = 50; // You can change this value as needed
 
-        //Maternal Care
-        if (
-            $request->program === 'mc'
-        ) {
+        // Maternal Care
+        if ($request->program === 'mc') {
             // If the condition is true, fetch the data
             $query = $masterlistReportService->get_maternal_care_master_list($request);
 
-            $masterlist = $query->get();
+            // Paginate the results
+            $masterlist = $query->paginate($perPage);
         }
 
-        //Family Planning
-        if (
-            $request->program === 'fp'
-        ) {
+        // Family Planning
+        if ($request->program === 'fp') {
             // If the condition is true, fetch the data
             $query = $masterlistReportService->get_fp_method_master_list($request);
 
-            $masterlist = $query->get();
+            // Paginate the results
+            $masterlist = $query->paginate($perPage);
         }
 
+        // Blood Type
+        if ($request->program === 'bt') {
+            // If the condition is true, fetch the data
+            $query = $masterlistReportService->get_bloodtype_master_list($request);
 
+            // Paginate the results
+            $masterlist = $query->paginate($perPage);
+        }
+
+        // Return the paginated results
         return $masterlist;
     }
 

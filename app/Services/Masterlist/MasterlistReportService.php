@@ -84,13 +84,12 @@ class MasterlistReportService
     {
         return DB::table('patients')
             ->selectRaw("
-                        patients.gender,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-                        TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date) AS age,
-                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
-                        patients.birthdate AS birthdate
-                    ")
-            ->join('patients', 'patient_fp_methods.patient_id', '=', 'patients.id')
+            patients.gender,
+            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+            CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
+            patients.birthdate AS birthdate,
+            blood_type_code
+        ")
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
@@ -99,6 +98,31 @@ class MasterlistReportService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
             })
-            ->orderBy('name', 'ASC');
+            ->whereNotIn('blood_type_code', ['', 'NA']) // Exclude empty and 'NA' values
+            ->when($request->blood_type_code === 'ab_positive', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'AB+');
+            })
+            ->when($request->blood_type_code === 'ab_negative', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'AB-');
+            })
+            ->when($request->blood_type_code === 'a_positive', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'A+');
+            })
+            ->when($request->blood_type_code === 'a_negative', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'A-');
+            })
+            ->when($request->blood_type_code === 'b_positive', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'B+');
+            })
+            ->when($request->blood_type_code === 'b_negative', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'B-');
+            })
+            ->when($request->blood_type_code === 'o_negative', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'O-');
+            })
+            ->when($request->blood_type_code === 'o_positive', function ($q) use ($request) {
+                $q->where('blood_type_code', '=', 'O+');
+            })
+            ->orderBy('blood_type_code', 'ASC');
     }
 }
