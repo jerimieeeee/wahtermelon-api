@@ -84,12 +84,12 @@ class MasterlistReportService
     {
         return DB::table('patients')
             ->selectRaw("
-            patients.gender,
-            CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
-            CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
-            patients.birthdate AS birthdate,
-            blood_type_code
-        ")
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        patients.gender,
+                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
+                        patients.birthdate AS birthdate,
+                        blood_type_code
+                ")
             ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
             ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
