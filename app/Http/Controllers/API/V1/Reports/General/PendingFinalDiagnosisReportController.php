@@ -47,7 +47,7 @@ class PendingFinalDiagnosisReportController extends Controller
 
 //        return $query2;
 
-        $query2 = PreviousFinalDxResource::collection($query2);
+//        $query2 = PreviousFinalDxResource::collection($query2);
 
 //        $data = $query->paginate($perPage);
 

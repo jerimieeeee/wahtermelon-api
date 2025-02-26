@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports\FHSIS2018;
 
 use App\Http\Controllers\Controller;
-use App\Services\TBDots\TBDotsReportService;
+use App\Services\TBDots\MasterlistReportService;
 use App\Services\ReportFilter\CategoryFilterService;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class TBDotsReport2018Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, TBDotsReportService $tbdotsReportService, CategoryFilterService $categoryFilterService)
+    public function index(Request $request, MasterlistReportService $tbdotsReportService, CategoryFilterService $categoryFilterService)
     {
         $projected_population = $categoryFilterService->get_projected_population()->get();
 
