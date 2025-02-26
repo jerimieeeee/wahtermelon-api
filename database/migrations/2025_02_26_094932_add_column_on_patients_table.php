@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patients', function (Blueprint $table) {
-            $table->char('vaccine_status', 10)->after('consent_flag')->nullable()->index();
+            $table->char('immunization_status', 10)->after('consent_flag')->nullable()->index();
+            $table->date('immunization_date')->after('immunization_status')->nullable()->index();
         });
     }
 
@@ -22,8 +23,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patients', function (Blueprint $table) {
-            $table->dropIndex(['vaccine_status']);
-            $table->dropColumn('vaccine_status');
+            $table->dropIndex(['immunization_status']);
+            $table->dropIndex(['immunization_date']);
+            $table->dropColumn('immunization_status');
+            $table->dropColumn('immunization_date');
         });
     }
 };

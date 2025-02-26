@@ -162,7 +162,33 @@ class ChildCareReportNameListService
 
     public function get_fic_cic_namelist($request)
     {
-        return DB::table(function ($query) use ($request) {
+        return DB::table('patients')
+            ->selectRaw("
+                        patient_id,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        patients.last_name,
+                        patients.first_name,
+                        patients.middle_name,
+                        patients.birthdate
+                    ")
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
+            })
+            ->when($request->indicator == 'fic', function ($q) use ($request) {
+                $q->whereIn('patients.gender', explode(',', $request->gender))
+                    ->where('immunization_status', 'FIC');
+            })
+            ->when($request->indicator == 'cic', function ($q) use ($request) {
+                $q->whereIn('patients.gender', explode(',', $request->gender))
+                    ->where('immunization_status', 'CIC');
+            })
+            ->whereBetween('immunization_date', [
+                $request->start_date,
+                $request->end_date
+            ]);
+
+/*        return DB::table(function ($query) use ($request) {
             $query->selectRaw("
                         patients.gender,
                         patient_vaccines.patient_id AS patient_id,
@@ -245,7 +271,7 @@ class ChildCareReportNameListService
         ->whereBetween('date_of_service', [
             $request->start_date,
             $request->end_date
-        ]);
+        ]);*/
     }
 
     public function init_breastfeeding_namelist($request)
