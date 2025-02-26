@@ -113,7 +113,7 @@ class ChildCareReportService
                             AND MCV >=2
                             AND age_month >= 0
                             AND status_id = 1'
-                         );
+                );
         })
             ->selectRaw("
                         SUM(
