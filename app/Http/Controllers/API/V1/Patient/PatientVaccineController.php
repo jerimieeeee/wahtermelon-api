@@ -42,23 +42,18 @@ class PatientVaccineController extends Controller
      */
     public function index(Request $request)
     {
-        $patientvax = new PatientVaccineService();
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
-            ->when(isset($request->patient_id), function ($query) use ($request) {
-                return $query->wherePatientId($request->patient_id);
-            });
+        $query = PatientVaccine::query()->with([
+            'vaccines:vaccine_id,vaccine_name,vaccine_desc',
+            'patient'
+        ])
+        ->when(isset($request->patient_id), function ($query) use ($request) {
+            return $query->wherePatientId($request->patient_id);
+        });
 
         $vaccines = QueryBuilder::for($query)
             ->defaultSort('-vaccine_date', '-vaccine_id')
             ->allowedSorts(['vaccine_date', 'vaccine_id']);
-
-        if (isset($request->patient_id)) {
-            $data = $patientvax->get_fic_cic($request->patient_id)->first();
-
-            return PatientVaccineResource::collection($vaccines->get())
-                ->additional(['status' => $data]);
-        }
 
         if ($perPage == 'all') {
             return PatientVaccineResource::collection($vaccines->first());

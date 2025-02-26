@@ -30,7 +30,8 @@ class PatientVaccine extends Model
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'patient_id');
+        return $this->belongsTo(Patient::class, 'patient_id', 'id')
+            ->select(['id', 'immunization_status', 'immunization_date']);
     }
 
     public function vaccines(): BelongsTo
