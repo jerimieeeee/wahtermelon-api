@@ -22,7 +22,7 @@ class LibNcdAnswerSeeder extends Seeder
         LibNcdAnswer::upsert([
             ['id' => 'Y', 'desc' => 'Yes'],
             ['id' => 'N', 'desc' => 'No'],
-            ['id' => 'X', 'desc' => 'Unknown'],
+            // ['id' => 'X', 'desc' => 'Unknown'],
             //   ['id' => 'NA', 'desc' => 'Not Applicable'],
         ], ['id']);
     }

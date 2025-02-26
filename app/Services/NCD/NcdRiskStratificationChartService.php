@@ -10,13 +10,35 @@ class NcdRiskStratificationChartService
     /**
      * @return mixed
      */
-    public function getRiskStratificationChart($request)
+    public function getRiskStratificationChart($request, $consultNcdRiskAssessment = null)
     {
-        $consultNcdRiskAssessment = ConsultNcdRiskAssessment::where('patient_id', $request->patient_id)->first();
+        // If a specific ConsultNcdRiskAssessment is provided, use it
+        if ($consultNcdRiskAssessment) {
+            $consultNcdRiskAssessments = collect([$consultNcdRiskAssessment]);
+        } else {
+            // Otherwise, fetch all ConsultNcdRiskAssessment records based on the request
+            $consultNcdRiskAssessments = ConsultNcdRiskAssessment::where(function ($query) use ($request) {
+                if (isset($request->consult_id)) {
+                    $query->where('consult_id', $request->consult_id);
+                }
+                if (isset($request->patient_id)) {
+                    $query->where('patient_id', $request->patient_id);
+                }
+            })->get();
+        }
 
-        if (! empty($consultNcdRiskAssessment->id)) {
+        // If no records are found, return null
+        if ($consultNcdRiskAssessments->isEmpty()) {
+            return null;
+        }
+
+        // Fetch risk stratification data for each record
+        $riskStrats = [];
+        foreach ($consultNcdRiskAssessments as $consultNcdRiskAssessment) {
             $totalCholesterol = 0;
             $age = 40;
+
+            // Calculate total cholesterol
             if ($consultNcdRiskAssessment->location == 2) {
                 $totalCholesterol = round($consultNcdRiskAssessment->riskScreeningLipid->total_cholesterol ?? 0);
                 if ($totalCholesterol > 8) {
@@ -26,26 +48,19 @@ class NcdRiskStratificationChartService
                 }
             }
 
-            if ($consultNcdRiskAssessment->smoking == 1) {
-                $smoking = 0;
-            } elseif ($consultNcdRiskAssessment->smoking == 2) {
-                $smoking = 0;
-            } elseif ($consultNcdRiskAssessment->smoking == 3) {
-                $smoking = 1;
-            } elseif ($consultNcdRiskAssessment->smoking == 4) {
-                $smoking = 1;
-            } elseif ($consultNcdRiskAssessment->smoking == 5) {
-                $smoking = 1;
-            }
+            // Determine smoking status
+            $smoking = match ($consultNcdRiskAssessment->smoking) {
+                3, 4, 5 => 1,
+                default => 0,
+            };
 
-            if ($consultNcdRiskAssessment->presence_diabetes == 'Y') {
-                $presence_diabetes = 1;
-            } elseif ($consultNcdRiskAssessment->presence_diabetes == 'N') {
-                $presence_diabetes = 0;
-            } elseif ($consultNcdRiskAssessment->presence_diabetes == 'X') {
-                $presence_diabetes = 0;
-            }
+            // Determine presence of diabetes
+            $presence_diabetes = match ($consultNcdRiskAssessment->presence_diabetes) {
+                'Y' => 1,
+                default => 0,
+            };
 
+            // Determine age group
             if ($consultNcdRiskAssessment->age >= 20 && $consultNcdRiskAssessment->age <= 49) {
                 $age = 40;
             } elseif ($consultNcdRiskAssessment->age >= 50 && $consultNcdRiskAssessment->age <= 59) {
@@ -56,23 +71,19 @@ class NcdRiskStratificationChartService
                 $age = 70;
             }
 
-            if ($consultNcdRiskAssessment->avg_systolic <= 139) {
-                $sbp = 120;
-            } elseif ($consultNcdRiskAssessment->avg_systolic >= 140 && $consultNcdRiskAssessment->avg_systolic <= 159) {
-                $sbp = 140;
-            } elseif ($consultNcdRiskAssessment->avg_systolic >= 160 && $consultNcdRiskAssessment->avg_systolic <= 179) {
-                $sbp = 160;
-            } elseif ($consultNcdRiskAssessment->avg_systolic >= 180) {
-                $sbp = 180;
-            } else {
-                $sbp = 'N/A';
-            }
-            if ($consultNcdRiskAssessment->location == 2) {
-                $location = 'facility';
-            } else {
-                $location = 'community';
-            }
+            // Determine systolic blood pressure (SBP)
+            $sbp = match (true) {
+                $consultNcdRiskAssessment->avg_systolic <= 139 => 120,
+                $consultNcdRiskAssessment->avg_systolic >= 140 && $consultNcdRiskAssessment->avg_systolic <= 159 => 140,
+                $consultNcdRiskAssessment->avg_systolic >= 160 && $consultNcdRiskAssessment->avg_systolic <= 179 => 160,
+                $consultNcdRiskAssessment->avg_systolic >= 180 => 180,
+                default => 'N/A',
+            };
 
+            // Determine location
+            $location = $consultNcdRiskAssessment->location == 2 ? 'facility' : 'community';
+
+            // Fetch risk stratification data
             $riskStrat = LibNcdRiskStratificationChart::query()
                 ->join('lib_ncd_risk_stratifications', 'lib_ncd_risk_stratification_charts.color', '=', 'lib_ncd_risk_stratifications.risk_color')
                 ->where('type', '=', $location)
@@ -84,7 +95,12 @@ class NcdRiskStratificationChartService
                 ->where('cholesterol', '=', $totalCholesterol)
                 ->first();
 
-            return $riskStrat;
+            // Attach the risk stratification data to the current record
+            if ($riskStrat) {
+                $riskStrats[$consultNcdRiskAssessment->id] = $riskStrat;
+            }
         }
+
+        return $riskStrats;
     }
 }

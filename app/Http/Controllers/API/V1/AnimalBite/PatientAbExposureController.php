@@ -60,6 +60,7 @@ class PatientAbExposureController extends Controller
     public function update(PatientAbExposureRequest $request, PatientAbExposure $patientAbExposure)
     {
         $patientAbExposure->update($request->validated());
+        PatientAb::query()->findOrFail($request->patient_ab_id)->update($request->only(['exposure_date', 'consult_date']));
 
         $query = QueryBuilder::for(PatientAb::class)
             ->where('id', $request->patient_ab_id)
