@@ -50,7 +50,30 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(120)->by($request->user()?->id ?: $request->ip());
+            /* return Limit::perMinute(120)
+                //->by($request->user()?->id ?: $request->ip());
+                ->by($request->user()?->id ?? $request->ip() . ':' . $request->userAgent()); */
+            /* return [
+                Limit::perMinute(600)->by($request->user()?->id ?: $request->ip()),
+                Limit::perHour(20000)->by($request->user()?->id ?: $request->ip()),
+            ]; */
+            // For authenticated users
+            if ($request->user()) {
+                return [
+                    // Individual user limit
+                    Limit::perMinute(1000)->by($request->user()->id),
+                    // Additional shared IP limit for authenticated users
+                    Limit::perMinute(10000)->by('auth:api:' . $request->ip())
+                ];
+            }
+
+            // For unauthenticated users behind shared IPs
+            return [
+                Limit::perMinute(6000)->by($request->ip()),
+                Limit::perSecond(500)->by($request->ip()),
+                // Add a decay rate for sustained high traffic
+                Limit::perHour(100000)->by($request->ip())
+            ];
         });
     }
 }
