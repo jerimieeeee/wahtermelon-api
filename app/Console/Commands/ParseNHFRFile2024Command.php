@@ -211,6 +211,12 @@ class ParseNHFRFile2024Command extends Command
                 case '0402103073':
                     $data['barangay_code'] = '0402103093';
                     break;
+                case '1999908003':
+                    $data['barangay_code'] = '1999904007';
+                    break;
+                case '1999906008':
+                    $data['barangay_code'] = '1999908010';
+                    break;
             }
             $municipality = Municipality::query()
                 ->select('municipalities.id', 'municipalities.psgc_10_digit_code AS municipality_code', 'provinces.psgc_10_digit_code AS province_code', 'regions.psgc_10_digit_code AS region_code')
@@ -223,6 +229,17 @@ class ParseNHFRFile2024Command extends Command
                 })
                 ->where('barangays.psgc_10_digit_code', $data['barangay_code'])
                 ->first();
+            if(!$barangay) {
+                $barangayCode = substr($data['barangay_code'], 0, 2) . substr($data['barangay_code'], 3);
+                $barangay = Barangay::query()
+                ->select('psgc_10_digit_code AS barangay_code', 'municipality_code', 'province_code', 'region_code')
+                ->joinSub($municipality, 'municipality', function (JoinClause $join) {
+                    $join->on('barangays.geographic_id', '=', 'municipality.id');
+                })
+                ->where('barangays.code', $barangayCode)
+                ->first();
+                //dd('Barangay not found: ' . $modifiedValue);
+            }
 
             if(!isset($barangay->region_code)) {
                 dd($data['barangay_code']);
