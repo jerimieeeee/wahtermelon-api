@@ -29,6 +29,7 @@ class ChildCareReportNameListService
     {
         return DB::table('patient_ccdevs')
             ->selectRaw("
+                        patient_ccdevs.patient_id AS patient_id,
 	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
 	                    patients.birthdate,
                         patients.birthdate AS date_of_service,
