@@ -218,6 +218,7 @@ class DatabaseSeeder extends Seeder
             LibAsrhAlgorithmSeeder::class,
             LibAsrhAlgorithmPivotSeeder::class,
             LibServiceSeeder::class,
+            LibAsrhRefusalReasonSeeder::class,
         ]);
     }
 }

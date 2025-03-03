@@ -589,4 +589,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('services', [\App\Http\Controllers\API\V1\Libraries\LibServiceController::class, 'index'])->name('services.index');
     Route::get('services/{service}', [\App\Http\Controllers\API\V1\Libraries\LibServiceController::class, 'show'])->name('services.show');
+
+    Route::get('refusal-reason', [\App\Http\Controllers\API\V1\Libraries\LibAsrhRefusalReasonController::class, 'index'])->name('refusal-reason.index');
+    Route::get('refusal-reason/{refusalReason}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhRefusalReasonController::class, 'show'])->name('refusal-reason.show');
 });
