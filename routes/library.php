@@ -598,4 +598,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('gender-identity', [\App\Http\Controllers\API\V1\Libraries\LibGenderIdentityController::class, 'index'])->name('gender-identity.index');
     Route::get('gender-identity/{genderIdentity}', [\App\Http\Controllers\API\V1\Libraries\LibGenderIdentityController::class, 'show'])->name('gender-identity.show');
+
+    Route::get('living-arrangement', [\App\Http\Controllers\API\V1\Libraries\LibAsrhLivingArrangementTypeController::class, 'index'])->name('living-arrangement.index');
+    Route::get('living-arrangement/{livingArrangementType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhLivingArrangementTypeController::class, 'show'])->name('living-arrangement.show');
 });

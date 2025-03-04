@@ -219,6 +219,7 @@ class DatabaseSeeder extends Seeder
             LibAsrhRefusalReasonSeeder::class,
             LibAsrhConsentTypeSeeder::class,
             LibGenderIdentitySeeder::class,
+            LibAsrhLivingArrangementTypeSeeder::class,
         ]);
     }
 }
