@@ -595,4 +595,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('consent-type', [\App\Http\Controllers\API\V1\Libraries\LibAsrhConsentTypeController::class, 'index'])->name('consent-type.index');
     Route::get('consent-type/{consentType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhConsentTypeController::class, 'show'])->name('consent-type.show');
+
+    Route::get('gender-identity', [\App\Http\Controllers\API\V1\Libraries\LibGenderIdentityController::class, 'index'])->name('gender-identity.index');
+    Route::get('gender-identity/{genderIdentity}', [\App\Http\Controllers\API\V1\Libraries\LibGenderIdentityController::class, 'show'])->name('gender-identity.show');
 });

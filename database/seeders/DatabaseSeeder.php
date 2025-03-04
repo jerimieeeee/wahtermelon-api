@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\V1\Libraries\LibRapidQuestionaire;
-use App\Models\V1\Libraries\LibService;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -220,6 +218,7 @@ class DatabaseSeeder extends Seeder
             LibServiceSeeder::class,
             LibAsrhRefusalReasonSeeder::class,
             LibAsrhConsentTypeSeeder::class,
+            LibGenderIdentitySeeder::class,
         ]);
     }
 }
