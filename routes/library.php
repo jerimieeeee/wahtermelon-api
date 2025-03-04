@@ -592,4 +592,7 @@ Route::prefix('v1/libraries')->group(function () {
 
     Route::get('refusal-reason', [\App\Http\Controllers\API\V1\Libraries\LibAsrhRefusalReasonController::class, 'index'])->name('refusal-reason.index');
     Route::get('refusal-reason/{refusalReason}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhRefusalReasonController::class, 'show'])->name('refusal-reason.show');
+
+    Route::get('consent-type', [\App\Http\Controllers\API\V1\Libraries\LibAsrhConsentTypeController::class, 'index'])->name('consent-type.index');
+    Route::get('consent-type/{consentType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhConsentTypeController::class, 'show'])->name('consent-type.show');
 });
