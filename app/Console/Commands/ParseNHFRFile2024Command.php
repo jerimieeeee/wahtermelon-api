@@ -55,7 +55,7 @@ class ParseNHFRFile2024Command extends Command
             $time = $start->diffAsCarbonInterval(now());
             $this->newLine();
             $this->info("Processed in $time");
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->error($exception->getMessage());
         }
     }
