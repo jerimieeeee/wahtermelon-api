@@ -41,6 +41,7 @@ class PatientRequest extends FormRequest
             'birthdate' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'mothers_name' => 'required',
             'gender' => 'required',
+            'lib_gender_identity_code' => 'nullable|exists:lib_gender_identities,code',
             'mobile_number' => 'required|min:11|max:13',
             'pwd_type_code' => 'exists:lib_pwd_types,code',
             'indegenous_flag' => 'boolean',
