@@ -40,6 +40,7 @@ class ConsultAsrhRapidResource extends JsonResource
             'refused_flag' => $this->refused_flag,
             'lib_asrh_refusal_reason_id' =>$this->when(! $this->relationLoaded('refusalReason'), $this->lib_asrh_consent_type_id),
             'refusal_reason' => $this->whenLoaded('refusalReason'),
+            'refusal_reason_other' => $this->refusal_reason_other,
             'done_flag' => $this->done_flag,
             'done_date' => $this->done_date?->format('Y-m-d'),
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
