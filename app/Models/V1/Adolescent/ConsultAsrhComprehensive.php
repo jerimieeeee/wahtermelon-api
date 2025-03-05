@@ -3,6 +3,8 @@
 namespace App\Models\V1\Adolescent;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibAsrhConsentType;
+use App\Models\V1\Libraries\LibAsrhRefusalReason;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
@@ -34,6 +36,7 @@ class ConsultAsrhComprehensive extends Model
         'seriously_injured' => 'boolean',
         'consent_flag' => 'boolean',
         'refused_flag' => 'boolean',
+        'self_harm' => 'boolean',
         'done_flag' => 'boolean',
     ];
 
@@ -60,5 +63,15 @@ class ConsultAsrhComprehensive extends Model
     public function consultRapid()
     {
         return $this->belongsTo(ConsultAsrhRapid::class);
+    }
+
+    public function consentType()
+    {
+        return $this->belongsTo(LibAsrhConsentType::class, 'lib_asrh_consent_type_id');
+    }
+
+    public function refusalReason()
+    {
+        return $this->belongsTo(LibAsrhRefusalReason::class, 'lib_asrh_refusal_reason_id');
     }
 }

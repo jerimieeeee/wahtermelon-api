@@ -33,6 +33,25 @@ class ConsultAsrhComprehensiveController extends Controller
         if ($validatedData['done_flag'] == 0) {
             $validatedData['done_date'] = null;
         }
+
+        if ($validatedData['consent_flag'] == 0) {
+            $validatedData['lib_asrh_consent_type_id'] = null;
+            $validatedData['consent_type_other'] = null;
+        }
+
+        if ($validatedData['refused_flag'] == 0) {
+            $validatedData['lib_asrh_refusal_reason_id'] = null;
+            $validatedData['refusal_reason_other'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_refusal_reason_id', $validatedData) && $validatedData['lib_asrh_refusal_reason_id'] != 99) {
+            $validatedData['refusal_reason_other'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_consent_type_id', $validatedData) && $validatedData['lib_asrh_consent_type_id'] != 99) {
+            $validatedData['consent_type_other'] = null;
+        }
+
         $consultAsrhComprehensive = ConsultAsrhComprehensive::updateOrCreate(
             [
                 'consult_asrh_rapid_id' => $validatedData['consult_asrh_rapid_id'],
@@ -67,6 +86,25 @@ class ConsultAsrhComprehensiveController extends Controller
         if ($validatedData['done_flag'] == 0) {
             $validatedData['done_date'] = null;
         }
+
+        if ($validatedData['consent_flag'] == 0) {
+            $validatedData['lib_asrh_consent_type_id'] = null;
+            $validatedData['consent_type_other'] = null;
+        }
+
+        if ($validatedData['refused_flag'] == 0) {
+            $validatedData['lib_asrh_refusal_reason_id'] = null;
+            $validatedData['refusal_reason_other'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_refusal_reason_id', $validatedData) && $validatedData['lib_asrh_refusal_reason_id'] != 99) {
+            $validatedData['refusal_reason_other'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_consent_type_id', $validatedData) && $validatedData['lib_asrh_consent_type_id'] != 99) {
+            $validatedData['consent_type_other'] = null;
+        }
+
         $consultAsrhComprehensive->update($validatedData);
 
         return response()->json([
