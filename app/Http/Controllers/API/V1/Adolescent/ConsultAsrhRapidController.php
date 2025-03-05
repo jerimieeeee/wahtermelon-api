@@ -52,6 +52,15 @@ class ConsultAsrhRapidController extends Controller
             $validatedData['other_client_type'] = null;
         }
 
+        if ($validatedData['refused_flag'] == 0) {
+            $validatedData['lib_asrh_refusal_reason_id'] = null;
+            $validatedData['refusal_reason_other'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_refusal_reason_id', $validatedData) && $validatedData['lib_asrh_refusal_reason_id'] != 99) {
+            $validatedData['refusal_reason_other'] = null;
+        }
+
         $consultAsrhRapid = ConsultAsrhRapid::updateOrCreate(
             [
             'patient_id' => $validatedData['patient_id'],
@@ -106,6 +115,10 @@ class ConsultAsrhRapidController extends Controller
 
         if ($validatedData['refused_flag'] == 0) {
             $validatedData['lib_asrh_refusal_reason_id'] = null;
+            $validatedData['refusal_reason_other'] = null;
+        }
+
+        if (array_key_exists('lib_asrh_refusal_reason_id', $validatedData) && $validatedData['lib_asrh_refusal_reason_id'] != 99) {
             $validatedData['refusal_reason_other'] = null;
         }
 
