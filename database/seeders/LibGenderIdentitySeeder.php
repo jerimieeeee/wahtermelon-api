@@ -14,12 +14,10 @@ class LibGenderIdentitySeeder extends Seeder
     public function run(): void
     {
         LibGenderIdentity::upsert([
-            ['code' => 'M', 'desc' => 'Male', 'sequence' => 1],
-            ['code' => 'F', 'desc' => 'Female', 'sequence' => 2],
-            ['code' => 'L', 'desc' => 'Lesbian', 'sequence' => 3],
-            ['code' => 'G', 'desc' => 'Gay', 'sequence' => 4],
-            ['code' => 'B', 'desc' => 'Bisexual', 'sequence' => 5],
-            ['code' => 'T', 'desc' => 'Transgender', 'sequence' => 6]
+            ['code' => 'L', 'desc' => 'Lesbian', 'sequence' => 1],
+            ['code' => 'G', 'desc' => 'Gay', 'sequence' => 2],
+            ['code' => 'B', 'desc' => 'Bisexual', 'sequence' => 3],
+            ['code' => 'T', 'desc' => 'Transgender', 'sequence' => 4]
         ], ['code']);
     }
 }
