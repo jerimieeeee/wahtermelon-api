@@ -88,7 +88,7 @@ class PatientVaccineController extends Controller
 
             if ($data && !is_null($data->immunization_status)) {
                 Patient::where('id', $request->patient_id)
-                    ->update(['vaccine_status' => $data->immunization_status]);
+                    ->update(['immunization_status' => $data->immunization_status]);
             }
 
         });
