@@ -38,7 +38,7 @@ class ConsultAsrhRapidResource extends JsonResource
             'lib_asrh_living_arrangement_type_id' => $this->when(! $this->relationLoaded('livingArrangementType'), $this->lib_asrh_living_arrangement_type_id),
             'living_arrangement' => $this->whenLoaded('livingArrangementType'),
             'refused_flag' => $this->refused_flag,
-            'lib_asrh_refusal_reason_id' =>$this->when(! $this->relationLoaded('refusalReason'), $this->lib_asrh_consent_type_id),
+            'lib_asrh_refusal_reason_id' =>$this->when(! $this->relationLoaded('refusalReason'), $this->lib_asrh_refusal_reason_id),
             'refusal_reason' => $this->whenLoaded('refusalReason'),
             'refusal_reason_other' => $this->refusal_reason_other,
             'done_flag' => $this->done_flag,
