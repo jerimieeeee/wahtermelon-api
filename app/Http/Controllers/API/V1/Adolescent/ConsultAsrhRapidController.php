@@ -104,6 +104,11 @@ class ConsultAsrhRapidController extends Controller
             $validatedData['other_client_type'] = null;
         }
 
+        if ($validatedData['refused_flag'] == 0) {
+            $validatedData['lib_asrh_refusal_reason_id'] = null;
+            $validatedData['refusal_reason_other'] = null;
+        }
+
         $consultAsrhRapid->update($validatedData);
 
         return response()->json([

@@ -33,7 +33,10 @@ class ConsultAsrhRapidRequest extends FormRequest
             'notes' => ['nullable', 'string'],
             //'status' => ['nullable', 'in:done,refused'],
             'algorithm_remarks' => ['nullable', 'string'],
+            'lib_asrh_living_arrangement_type_id' => ['required', 'exists:lib_asrh_living_arrangement_types,id'],
             'refused_flag' => ['nullable', 'boolean'],
+            'lib_asrh_refusal_reason_id' => ['required_if:refused_flag,1', 'exists:lib_asrh_refusal_reasons,id'],
+            'refusal_reason_other' => ['required_if:lib_asrh_refusal_reason_id,99', 'string'],
             'done_flag' => ['nullable', 'boolean'],
             'done_date' => ['required_if:done_flag,1', 'date', 'date_format:Y-m-d'],
         ];

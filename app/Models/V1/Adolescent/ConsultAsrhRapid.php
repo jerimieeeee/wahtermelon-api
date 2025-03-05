@@ -3,6 +3,8 @@
 namespace App\Models\V1\Adolescent;
 
 use App\Models\User;
+use App\Models\V1\Libraries\LibAsrhLivingArrangementType;
+use App\Models\V1\Libraries\LibAsrhRefusalReason;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
@@ -34,6 +36,10 @@ class ConsultAsrhRapid extends Model
     protected $casts = [
         'assessment_date' => 'date:Y-m-d',
         'done_date' => 'date:Y-m-d',
+        'referral_date' => 'date:Y-m-d',
+        'consent_flag' => 'boolean',
+        'refused_flag' => 'boolean',
+        'done_flag' => 'boolean',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -69,6 +75,16 @@ class ConsultAsrhRapid extends Model
     public function referToUser()
     {
         return $this->belongsTo(User::class, 'refer_to_user_id');
+    }
+
+    public function refusalReason()
+    {
+        return $this->belongsTo(LibAsrhRefusalReason::class, 'lib_asrh_refusal_reason_id');
+    }
+
+    public function livingArrangementType()
+    {
+        return $this->belongsTo(LibAsrhLivingArrangementType::class, 'lib_asrh_living_arrangement_type_id');
     }
 
 }
