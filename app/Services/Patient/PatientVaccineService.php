@@ -15,6 +15,7 @@ class PatientVaccineService
                             PENTA,
                             OPV,
                             MCV,
+                            immunization_date,
                             fic_cic_vaccines.status_id,
                             age_month
                 ")
@@ -26,6 +27,7 @@ class PatientVaccineService
                 ->groupBy('patient_vaccines.patient_id', 'patient_vaccines.vaccine_date', 'vaccine_id', 'status_id');
             })
             ->selectRaw('
+                        immunization_date,
                        CASE
                             WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month < 13
                             THEN "FIC"
@@ -34,6 +36,7 @@ class PatientVaccineService
                             WHEN BCG >= 1 AND PENTA >=3 AND OPV >=3 AND MCV >=2 AND age_month >= 24
                             THEN "COMPLETED"
                             END AS immunization_status
+
             ')
             ->wherePatientId($patient_id);
     }
@@ -56,7 +59,7 @@ class PatientVaccineService
         ->selectRaw("
                     patient_id,
                     birthdate,
-                    MAX(vaccine_date) AS vaccine_date,
+                    MAX(vaccine_date) AS immunization_date,
                     TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month,
                     SUM(
                         CASE WHEN vaccine_id = 'BCG' THEN

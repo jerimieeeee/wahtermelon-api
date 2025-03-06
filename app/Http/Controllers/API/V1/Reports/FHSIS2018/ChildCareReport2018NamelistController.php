@@ -162,6 +162,7 @@ class ChildCareReport2018NamelistController extends Controller
         if (in_array($request->indicator, [
             'sick_infant_with_vit_a',
             'sick_children_with_vit_a',
+            'diarrhea_with_ors',
             'diarrhea_with_ors_zinc',
             'pneumonia_with_treatment'
         ])
