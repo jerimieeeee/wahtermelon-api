@@ -2627,211 +2627,167 @@ class ChildCareReportService
     {
         return DB::table('consults')
             ->selectRaw("
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'male_sick_infant_with_vit_a',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'F'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'female_sick_infant_with_vit_a',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) + SUM(
-                            CASE
-                                WHEN patients.gender = 'F'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'male_female_sick_infant_with_vit_a',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'male_sick_children_with_vit_a',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'F'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'female_sick_children_with_vit_a',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) + SUM(
-                            CASE
-                                WHEN patients.gender = 'F'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                                'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                                )
-                                AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'male_female_sick_children_with_vit_a',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05'
-                                )
-                                AND konsulta_medicine_code IN
-                                (
-                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
-                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
-                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
-                                )
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'male_diarrhea_with_ors',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'F'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05'
-                                )
-                                AND konsulta_medicine_code IN
-                                (
-                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
-                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
-                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
-                                )
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'female_diarrhea_with_ors',
-                        SUM(
-                            CASE
-                                WHEN patients.gender = 'M'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05'
-                                )
-                                AND konsulta_medicine_code IN
-                                (
-                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
-                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
-                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
-                                )
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) + SUM(
-                            CASE
-                                WHEN patients.gender = 'F'
-                                AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59
-                                AND icd10_code IN
-                                (
-                                'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                                'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                                'B05'
-                                )
-                                AND konsulta_medicine_code IN
-                                (
-                                'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
-                                'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
-                                'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
-                                )
-                                THEN 1
-                                ELSE 0
-                            END
-                        ) AS 'male_female_diarrhea_with_ors',
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'M'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                            AND icd10_code IN
+                            (
+                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                            'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                            'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                            )
+                            AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS male_sick_infant_with_vit_a,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'F'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                            AND icd10_code IN
+                            (
+                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                            'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                            'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                            )
+                            AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS female_sick_infant_with_vit_a,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'M'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                            AND icd10_code IN ('A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                               'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                               'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                               'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9')
+                            AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                            THEN patients.id
+                            ELSE NULL
+                        END)
+                        +
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'F'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
+                            AND icd10_code IN ('A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                               'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                               'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                               'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9')
+                            AND konsulta_medicine_code = 'RETA10000001103CAP310000000000'
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS male_female_sick_infant_with_vit_a,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'M'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN
+                            (
+                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                            'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                            'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                            )
+                            AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS male_sick_children_with_vit_a,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'F'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN
+                            (
+                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                            'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                            'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
+                            )
+                            AND konsulta_medicine_code IN('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS female_sick_children_with_vit_a,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'M'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN ('A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                               'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                               'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                               'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9')
+                            AND konsulta_medicine_code IN ('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                            THEN patients.id
+                            ELSE NULL
+                        END)
+                        +
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'F'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN ('A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                               'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                                               'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
+                                               'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9')
+                            AND konsulta_medicine_code IN ('VITAA0000000294CAP310000000000', 'RETA10000000294CAP310000000000')
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS male_female_sick_children_with_vit_a,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'M'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN
+                            (
+                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                            'B05'
+                            )
+                            AND konsulta_medicine_code IN
+                            (
+                            'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                            'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                            'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                            )
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS male_diarrhea_with_ors,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'F'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN
+                            (
+                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                            'B05'
+                            )
+                            AND konsulta_medicine_code IN
+                            (
+                            'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                            'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                            'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01'
+                            )
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS female_diarrhea_with_ors,
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'M'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN ('A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                               'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3', 'B05')
+                            AND konsulta_medicine_code IN ('ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                                           'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                                           'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01')
+                            THEN patients.id
+                            ELSE NULL
+                        END)
+                        +
+                        COUNT(DISTINCT CASE
+                            WHEN patients.gender = 'F'
+                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 12 AND 59
+                            AND icd10_code IN ('A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
+                                               'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3', 'B05')
+                            AND konsulta_medicine_code IN ('ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
+                                                           'ORAL20000000000POW2701323SAC01', 'ORAL20000000000POW2701426SAC01',
+                                                           'ORAL20000000000SOL3200020BOTTL', 'ORAL20000000483POW2700000SAC01')
+                            THEN patients.id
+                            ELSE NULL
+                        END) AS male_female_diarrhea_with_ors,
                         SUM(
                             CASE
                                 WHEN patients.gender = 'M'

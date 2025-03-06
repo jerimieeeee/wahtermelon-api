@@ -636,6 +636,7 @@ class ChildCareReportNameListService
                         'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
                     ]);
             })
-            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date]);
+            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date])
+            ->groupBy('medicine_prescriptions.patient_id');
     }
 }
