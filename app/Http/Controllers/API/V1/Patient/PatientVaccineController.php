@@ -135,10 +135,10 @@ class PatientVaccineController extends Controller
 
         PatientVaccine::findorfail($id)->update($request->all());
 
-        $data = $patientvax->get_fic_cic($id)->first();
+        $data = $patientvax->get_fic_cic($request->patient_id)->first();
 
         if ($data && !is_null($data->immunization_status)) {
-            Patient::where('id', $id)
+            Patient::where('id', $request->patient_id)
                 ->update([
                     'immunization_status' => $data->immunization_status,
                     'immunization_date' => $data->immunization_date
