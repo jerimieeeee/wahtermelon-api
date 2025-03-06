@@ -596,8 +596,8 @@ class ChildCareReportNameListService
                     ->whereRaw('TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 0 AND 59')
                     ->whereIn('consult_notes_final_dxes.icd10_code', [
                         'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                        'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1',
-                        'P78.3', 'B05'
+                        'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
+                        'B05'
                     ])
                     ->whereIn('konsulta_medicine_code', [
                         'ORAL20000000000POW2701273SAC01', 'ORAL20000000000POW2701279SAC01',
