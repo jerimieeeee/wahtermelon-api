@@ -17,7 +17,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -639,7 +639,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -764,7 +764,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                     consults.patient_id AS patient_id,
-                    CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                    CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                     patients.last_name,
                     patients.first_name,
                     patients.middle_name,
@@ -925,7 +925,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -1332,7 +1332,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -1400,7 +1400,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -1493,7 +1493,7 @@ class DentalConsolidatedOHSNamelistService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,

@@ -59,6 +59,15 @@ class MasterlistReportController extends Controller
             $masterlist = $query->paginate($perPage);
         }
 
+        // Senior
+        if ($request->program === 'sn') {
+            // If the condition is true, fetch the data
+            $query = $masterlistReportService->get_senior_masterlist($request);
+
+            // Paginate the results
+            $masterlist = $query->paginate($perPage);
+        }
+
         // Return the paginated results
         return $masterlist;
     }

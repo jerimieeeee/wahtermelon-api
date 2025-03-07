@@ -45,7 +45,7 @@ class ReportMortalityUnderlyingNameListService
         return DB::table('patient_death_records')
             ->selectRaw("
                         patient_death_records.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
