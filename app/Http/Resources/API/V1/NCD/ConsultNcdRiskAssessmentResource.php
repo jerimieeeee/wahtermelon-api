@@ -56,6 +56,8 @@ class ConsultNcdRiskAssessmentResource extends JsonResource
             'systolic_2nd' => $this->systolic_2nd,
             'gender' => $this->gender,
             'age' => $this->age,
+            'hypertensive_old_case' => $this->hypertensive_old_case,
+            'diabetes_old_case' => $this->diabetes_old_case,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
             'riskScreeningGlucose' => $this->whenLoaded('riskScreeningGlucose'),
@@ -69,7 +71,7 @@ class ConsultNcdRiskAssessmentResource extends JsonResource
             'ncdRecordCounselling' => $this->whenLoaded('ncdRecordCounselling'),
             'riskCasdt2' => $this->whenLoaded('riskCasdt2'),
             'eye_complaints' => $this->whenLoaded('riskCasdt2Vision'),
-            'riskStrat' => $this->whenLoaded('riskStrat'),
+            'risk_stratification' => $this->risk_stratification,
         ];
     }
 }

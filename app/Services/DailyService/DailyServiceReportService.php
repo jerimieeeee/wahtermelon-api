@@ -45,7 +45,7 @@ class DailyServiceReportService
     public function get_daily_service_consultation($request)
     {
         return Consult::with([
-            'user',
+            'user.designation',
             'patient',
             'consultNotes',
             'patient.householdFolder',

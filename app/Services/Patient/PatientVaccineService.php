@@ -23,7 +23,7 @@ class PatientVaccineService
                     $join->on('fic_cic_vaccines.patient_id', '=', 'patient_vaccines.patient_id');
                 })
                 ->whereIn('vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
-                ->groupBy('patient_vaccines.patient_id', 'vaccine_date', 'vaccine_id', 'status_id');
+                ->groupBy('patient_vaccines.patient_id', 'patient_vaccines.vaccine_date', 'vaccine_id', 'status_id');
             })
             ->selectRaw('
                        CASE
@@ -56,6 +56,7 @@ class PatientVaccineService
         ->selectRaw("
                     patient_id,
                     birthdate,
+                    MAX(vaccine_date) AS vaccine_date,
                     TIMESTAMPDIFF(MONTH, birthdate, MAX(vaccine_date)) AS age_month,
                     SUM(
                         CASE WHEN vaccine_id = 'BCG' THEN

@@ -56,7 +56,7 @@ class ChildCareReportService
             ]);
     }
 
-    public function get_fic_cic($request)
+/*    public function get_fic_cic($request)
     {
         return DB::table(function ($query) use ($request) {
             $query->selectRaw("
@@ -100,7 +100,6 @@ class ChildCareReportService
                 ->from('patient_vaccines')
                 ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
                 ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
-                ->whereIn('patients.gender', ['M', 'F'])
                 ->whereIn('patient_vaccines.vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
                 ->tap(function ($query) use ($request) {
                     $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
@@ -113,7 +112,7 @@ class ChildCareReportService
                             AND MCV >=2
                             AND age_month >= 0
                             AND status_id = 1'
-                         );
+                );
         })
             ->selectRaw("
                         SUM(
@@ -143,7 +142,81 @@ class ChildCareReportService
                 $request->start_date,
                 $request->end_date
             ]);
-    }
+    }*/
+
+        public function get_fic_cic($request)
+        {
+            return DB::table('patients')
+                ->selectRaw("
+                            SUM(
+                                CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patients.immunization_status = 'FIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_fic',
+                            SUM(
+                                CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patients.immunization_status = 'FIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_fic',
+                            SUM(
+                                CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patients.immunization_status = 'FIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patients.immunization_status = 'FIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_fic',
+                            SUM(
+                                CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patients.immunization_status = 'CIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_cic',
+                            SUM(
+                                CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patients.immunization_status = 'CIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'female_cic',
+                            SUM(
+                                CASE
+                                    WHEN patients.gender = 'M'
+                                    AND patients.immunization_status = 'CIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) + SUM(
+                                CASE
+                                    WHEN patients.gender = 'F'
+                                    AND patients.immunization_status = 'CIC'
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ) AS 'male_female_cic'
+                    ")
+                ->join('users', 'patients.user_id', '=', 'users.id')
+                ->tap(function ($query) use ($request) {
+                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
+                })
+                ->whereBetween('immunization_date', [$request->start_date, $request->end_date]);
+        }
 
     public function get_vaccines($request)
     {

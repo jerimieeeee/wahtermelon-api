@@ -46,7 +46,9 @@ class PatientAbExposureRequest extends FormRequest
             'tandok_name' => 'nullable',
             'tandok_date' => 'nullable',
             'tandok_addresss' => 'nullable',
-            'remarks' => 'nullable'
+            'remarks' => 'nullable',
+            'consult_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
+            'exposure_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
         ];
     }
 }

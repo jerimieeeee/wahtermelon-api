@@ -176,7 +176,7 @@ class DentalReportService
                             CASE WHEN patients.gender = 'F'
                                 AND service_id IN(7, 4)
                                 AND is_pregnant = 1
-                                AND TIMESTAMPDIFF(YEARs, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 14 THEN
                                 1
                             ELSE
                                 0

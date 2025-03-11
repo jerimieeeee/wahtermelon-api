@@ -52,12 +52,40 @@ class NcdReport2018Controller extends Controller
         $assessed_female_hypertensive = $ncdReportService->hypertensive_adult($request, 'F', 'normal')->get();
         $assessed_female_hypertensive_senior = $ncdReportService->hypertensive_adult($request, 'F', 'senior')->get();
 
+        //Risk-Assessed PHILPEN Hypertensive Old Case
+        $assessed_male_hypertensive_old_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'M', 'normal', 'old')->get();
+        $assessed_male_hypertensive_senior_old_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'M', 'senior', 'old')->get();
+
+        $assessed_female_hypertensive_old_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'F', 'normal', 'old')->get();
+        $assessed_female_hypertensive_senior_old_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'F', 'senior', 'old')->get();
+
+        //Risk-Assessed PHILPEN Hypertensive New Case
+        $assessed_male_hypertensive_new_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'M', 'normal', 'new')->get();
+        $assessed_male_hypertensive_senior_new_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'M', 'senior', 'new')->get();
+
+        $assessed_female_hypertensive_new_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'F', 'normal', 'new')->get();
+        $assessed_female_hypertensive_senior_new_case = $ncdReportService->hypertensive_adult_old_new_case($request, 'F', 'senior', 'new')->get();
+
         //Risk-Assessed PHILPEN Type 2 Diabetes
         $assessed_male_diabetes = $ncdReportService->diabetes_adult($request, 'M', 'normal')->get();
         $assessed_male_diabetes_senior = $ncdReportService->diabetes_adult($request, 'M', 'senior')->get();
 
         $assessed_female_diabetes = $ncdReportService->diabetes_adult($request, 'F', 'normal')->get();
         $assessed_female_diabetes_senior = $ncdReportService->diabetes_adult($request, 'F', 'senior')->get();
+
+        //Risk-Assessed PHILPEN Type 2 Diabetes Old Case
+        $assessed_male_diabetes_old_case = $ncdReportService->diabetes_adult_old_new_case($request, 'M', 'normal', 'old')->get();
+        $assessed_male_diabetes_senior_old_case = $ncdReportService->diabetes_adult_old_new_case($request, 'M', 'senior', 'old')->get();
+
+        $assessed_female_diabetes_old_case = $ncdReportService->diabetes_adult_old_new_case($request, 'F', 'normal', 'old')->get();
+        $assessed_female_diabetes_senior_old_case = $ncdReportService->diabetes_adult_old_new_case($request, 'F', 'senior', 'old')->get();
+
+        //Risk-Assessed PHILPEN Type 2 Diabetes New Case
+        $assessed_male_diabetes_new_case = $ncdReportService->diabetes_adult_old_new_case($request, 'M', 'normal', 'new')->get();
+        $assessed_male_diabetes_senior_new_case = $ncdReportService->diabetes_adult_old_new_case($request, 'M', 'senior', 'new')->get();
+
+        $assessed_female_diabetes_new_case = $ncdReportService->diabetes_adult_old_new_case($request, 'F', 'normal', 'new')->get();
+        $assessed_female_diabetes_senior_new_case = $ncdReportService->diabetes_adult_old_new_case($request, 'F', 'senior', 'new')->get();
 
         //Senior Citizen with PPV vaccine
         $male_senior_ppv = $ncdReportService->senior_ppv($request, 'M')->get();
@@ -112,6 +140,20 @@ class NcdReport2018Controller extends Controller
             'assessed_male_hypertensive' => $assessed_male_hypertensive,
             'assessed_male_hypertensive_senior' => $assessed_male_hypertensive_senior,
 
+            //Risk-Assessed PHILPEN Hypertensive Old Case
+            'assessed_male_hypertensive_old_case' => $assessed_male_hypertensive_old_case,
+            'assessed_male_hypertensive_senior_old_case' => $assessed_male_hypertensive_senior_old_case,
+
+            'assessed_female_hypertensive_old_case' => $assessed_female_hypertensive_old_case,
+            'assessed_female_hypertensive_senior_old_case' => $assessed_female_hypertensive_senior_old_case,
+
+            //Risk-Assessed PHILPEN Hypertensive New Case
+            'assessed_male_hypertensive_new_case' => $assessed_male_hypertensive_new_case,
+            'assessed_male_hypertensive_senior_new_case' => $assessed_male_hypertensive_senior_new_case,
+
+            'assessed_female_hypertensive_new_case' => $assessed_female_hypertensive_new_case,
+            'assessed_female_hypertensive_senior_new_case' => $assessed_female_hypertensive_senior_new_case,
+
             'assessed_female_hypertensive' => $assessed_female_hypertensive,
             'assessed_female_hypertensive_senior' => $assessed_female_hypertensive_senior,
 
@@ -121,6 +163,20 @@ class NcdReport2018Controller extends Controller
 
             'assessed_female_diabetes' => $assessed_female_diabetes,
             'assessed_female_diabetes_senior' => $assessed_female_diabetes_senior,
+
+            //Risk-Assessed PHILPEN Type 2 Diabetes Old Case
+            'assessed_male_diabetes_old_case' => $assessed_male_diabetes_old_case,
+            'assessed_male_diabetes_senior_old_case' => $assessed_male_diabetes_senior_old_case,
+
+            'assessed_female_diabetes_old_case' => $assessed_female_diabetes_old_case,
+            'assessed_female_diabetes_senior_old_case' => $assessed_female_diabetes_senior_old_case,
+
+            //Risk-Assessed PHILPEN Type 2 Diabetes New Case
+            'assessed_male_diabetes_new_case' => $assessed_male_diabetes_new_case,
+            'assessed_male_diabetes_senior_new_case' => $assessed_male_diabetes_senior_new_case,
+
+            'assessed_female_diabetes_new_case' => $assessed_female_diabetes_new_case,
+            'assessed_female_diabetes_senior_new_case' => $assessed_female_diabetes_senior_new_case,
 
             //Senior Citizen with PPV vaccine
             'male_senior_ppv' => $male_senior_ppv,

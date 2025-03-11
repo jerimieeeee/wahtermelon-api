@@ -27,7 +27,6 @@ class PatientAbRequest extends FormRequest
             'exposure_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'ab_treatment_outcome_id' => 'nullable|exists:lib_ab_outcomes,id',
             'date_outcome' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
-            'ab_treatment_outcome_id' => 'nullable|exists:lib_ab_outcomes,id',
             'manifestations' => 'nullable',
             'date_onset' => 'nullable|date|date_format:Y-m-d|before:tomorrow',
             'date_died' => 'nullable|date|date_format:Y-m-d|before:tomorrow',

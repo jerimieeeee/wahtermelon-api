@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Patient\PatientVaccineRequest;
 use App\Http\Requests\API\V1\Patient\PatientVaccineUpdateRequest;
 use App\Http\Resources\API\V1\Patient\PatientVaccineResource;
+use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientVaccine;
 use App\Services\Patient\PatientVaccineService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -40,23 +42,18 @@ class PatientVaccineController extends Controller
      */
     public function index(Request $request)
     {
-        $patientvax = new PatientVaccineService();
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
-        $query = PatientVaccine::query()->with(['vaccines:vaccine_id,vaccine_name,vaccine_desc'])
-            ->when(isset($request->patient_id), function ($query) use ($request) {
-                return $query->wherePatientId($request->patient_id);
-            });
+        $query = PatientVaccine::query()->with([
+            'vaccines:vaccine_id,vaccine_name,vaccine_desc',
+            'patient'
+        ])
+        ->when(isset($request->patient_id), function ($query) use ($request) {
+            return $query->wherePatientId($request->patient_id);
+        });
 
         $vaccines = QueryBuilder::for($query)
             ->defaultSort('-vaccine_date', '-vaccine_id')
             ->allowedSorts(['vaccine_date', 'vaccine_id']);
-
-        if (isset($request->patient_id)) {
-            $data = $patientvax->get_fic_cic($request->patient_id)->first();
-
-            return PatientVaccineResource::collection($vaccines->get())
-                ->additional(['status' => $data]);
-        }
 
         if ($perPage == 'all') {
             return PatientVaccineResource::collection($vaccines->first());
@@ -76,11 +73,25 @@ class PatientVaccineController extends Controller
      */
     public function store(PatientVaccineRequest $request): JsonResponse
     {
-        $vaccine = $request->input('vaccines');
-        foreach ($vaccine as $value) {
-            PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
-                ['patient_id' => $request->input('patient_id'), 'user_id' => $request->input('user_id')] + $value);
-        }
+        DB::transaction(function() use ($request) {
+
+            $patientvax = new PatientVaccineService();
+
+            $vaccine = $request->input('vaccines');
+
+            foreach ($vaccine as $value) {
+                PatientVaccine::updateOrCreate(['patient_id' => $request->patient_id, 'vaccine_id' => $value['vaccine_id'], 'vaccine_date' => $value['vaccine_date']],
+                    ['patient_id' => $request->input('patient_id'), 'user_id' => $request->input('user_id')] + $value);
+            }
+
+            $data = $patientvax->get_fic_cic($request->patient_id)->first();
+
+            if ($data && !is_null($data->immunization_status)) {
+                Patient::where('id', $request->patient_id)
+                    ->update(['immunization_status' => $data->immunization_status]);
+            }
+
+        });
 
         $patientvaccines = PatientVaccine::where('patient_id', '=', $request->patient_id)->orderBy('vaccine_date', 'ASC')->get();
 
