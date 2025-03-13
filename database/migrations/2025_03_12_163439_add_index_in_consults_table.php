@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('consults', function (Blueprint $table) {
             // $table->index('transmittal_number');
-            $table->index('pt_group');
-            $table->index('is_konsulta');
+            // $table->index('pt_group');
+            // $table->index('is_konsulta');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
     {
         Schema::table('consults', function (Blueprint $table) {
             // $table->dropIndex(['transmittal_number']);
-            $table->dropIndex(['pt_group']);
-            $table->dropIndex(['is_konsulta']);
+            // $table->dropIndex(['pt_group']);
+            // $table->dropIndex(['is_konsulta']);
         });
     }
 };
