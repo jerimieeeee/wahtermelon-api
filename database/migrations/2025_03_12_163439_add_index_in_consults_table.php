@@ -15,7 +15,6 @@ return new class extends Migration
             $table->index('transmittal_number');
             $table->index('pt_group');
             $table->index('is_konsulta');
-            $table->index('consult_done');
         });
     }
 
@@ -28,7 +27,6 @@ return new class extends Migration
             $table->dropIndex(['transmittal_number']);
             $table->dropIndex(['pt_group']);
             $table->dropIndex(['is_konsulta']);
-            $table->dropIndex(['consult_done']);
         });
     }
 };
