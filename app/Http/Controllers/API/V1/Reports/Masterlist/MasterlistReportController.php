@@ -30,7 +30,7 @@ class MasterlistReportController extends Controller
     public function index(Request $request, MasterlistReportService $masterlistReportService)
     {
         // Number of items per page
-        $perPage = $request->per_page ?? 100000;
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
         // Maternal Care
         if ($request->program === 'mc') {
