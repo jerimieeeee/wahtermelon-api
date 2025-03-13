@@ -18,7 +18,7 @@ class MasterlistReportService
     {
         return DB::table('patient_mc_pre_registrations')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         TIMESTAMPDIFF(YEAR, patients.birthdate, pre_registration_date) AS age,
                         CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
                         patients.birthdate AS birthdate,
@@ -49,7 +49,7 @@ class MasterlistReportService
     {
         return DB::table('patient_fp_methods')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date) AS age,
                         patients.gender,
                         CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
@@ -84,7 +84,7 @@ class MasterlistReportService
     {
         return DB::table('patients')
             ->selectRaw("
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.gender,
                         CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
                         patients.birthdate AS birthdate,
@@ -123,6 +123,37 @@ class MasterlistReportService
             ->when($request->blood_type_code === 'o_positive', function ($q) use ($request) {
                 $q->where('blood_type_code', '=', 'O+');
             })
+            ->orderBy('blood_type_code', 'ASC');
+    }
+
+    public function get_senior_masterlist($request)
+    {
+        return DB::table('patients')
+            ->selectRaw("
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
+                        patients.gender,
+                        CONCAT(household_folders.address, ',', ' ', barangays.name, ',', ' ', municipalities.name) AS address,
+                        patients.birthdate AS birthdate,
+                        TIMESTAMPDIFF(YEAR, patients.birthdate, NOW()) AS age
+                ")
+            ->join('household_members', 'patients.id', '=', 'household_members.patient_id')
+            ->join('household_folders', 'household_members.household_folder_id', '=', 'household_folders.id')
+            ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
+            ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
+            })
+            ->when($request->gender === 'M', function ($q) use ($request) {
+                $q->where('gender', '=', 'M');
+            })
+            ->when($request->gender === 'F', function ($q) use ($request) {
+                $q->where('gender', '=', 'F');
+            })
+            ->when($request->gender === 'ALL', function ($q) use ($request) {
+                $q->whereIn('gender', ['M', 'F']);
+            })
+            ->havingRaw('age >= 60')
             ->orderBy('blood_type_code', 'ASC');
     }
 }

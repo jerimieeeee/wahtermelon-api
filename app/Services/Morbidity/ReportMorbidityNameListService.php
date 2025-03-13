@@ -46,7 +46,7 @@ class ReportMorbidityNameListService
             ->selectRaw("
                         consult_notes.patient_id AS patient_id,
                         consult_notes.consult_id AS consult_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,

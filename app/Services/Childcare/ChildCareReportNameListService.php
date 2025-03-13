@@ -30,7 +30,7 @@ class ChildCareReportNameListService
         return DB::table('patient_ccdevs')
             ->selectRaw("
                         patient_ccdevs.patient_id AS patient_id,
-	                    CONCAT(patients.last_name, ',', ' ', patients.first_name) as name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
 	                    patients.birthdate,
                         patients.birthdate AS date_of_service,
 	                    municipality_code,
@@ -56,7 +56,7 @@ class ChildCareReportNameListService
         return DB::table('patient_vaccines')
             ->selectRaw("
                         patient_vaccines.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -280,7 +280,7 @@ class ChildCareReportNameListService
         return DB::table('patient_mc_post_registrations')
             ->selectRaw("
                         patient_mc.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -311,7 +311,7 @@ class ChildCareReportNameListService
         return DB::table('consult_ccdev_services')
             ->selectRaw("
                         consult_ccdev_services.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ', ', patients.first_name, ', ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -364,7 +364,7 @@ class ChildCareReportNameListService
         return DB::table('consult_ccdev_breastfeds')
             ->selectRaw("
                         consult_ccdev_breastfeds.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ', ', patients.first_name, ', ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -409,7 +409,7 @@ class ChildCareReportNameListService
         return DB::table('patient_vitals')
             ->selectRaw("
                         patient_vitals.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -448,7 +448,7 @@ class ChildCareReportNameListService
         return DB::table('medicine_prescriptions')
             ->selectRaw("
                         medicine_prescriptions.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -490,7 +490,7 @@ class ChildCareReportNameListService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -553,7 +553,7 @@ class ChildCareReportNameListService
         return DB::table('consults')
             ->selectRaw("
                         consults.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
+                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
                         patients.middle_name,
@@ -636,6 +636,7 @@ class ChildCareReportNameListService
                         'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
                     ]);
             })
-            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date]);
+            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date])
+            ->groupBy('medicine_prescriptions.patient_id');
     }
 }
