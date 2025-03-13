@@ -30,7 +30,7 @@ class MasterlistReportController extends Controller
     public function index(Request $request, MasterlistReportService $masterlistReportService)
     {
         // Number of items per page
-        $perPage = 50; // You can change this value as needed
+        $perPage = $request->per_page ?? 100000;
 
         // Maternal Care
         if ($request->program === 'mc') {
@@ -54,6 +54,15 @@ class MasterlistReportController extends Controller
         if ($request->program === 'bt') {
             // If the condition is true, fetch the data
             $query = $masterlistReportService->get_bloodtype_master_list($request);
+
+            // Paginate the results
+            $masterlist = $query->paginate($perPage);
+        }
+
+        // Senior
+        if ($request->program === 'sn') {
+            // If the condition is true, fetch the data
+            $query = $masterlistReportService->get_senior_masterlist($request);
 
             // Paginate the results
             $masterlist = $query->paginate($perPage);

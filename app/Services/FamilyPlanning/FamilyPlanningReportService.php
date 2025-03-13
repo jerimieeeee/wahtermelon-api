@@ -321,7 +321,7 @@ class FamilyPlanningReportService
         ->join('users', 'patient_fp_methods.user_id', '=', 'users.id')
         ->whereNull('patient_fp_methods.deleted_at')
         ->tap(function ($query) use ($request) {
-            $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_fp_methods.facility_code', 'patient_fp_methods.patient_id');
+            $this->categoryFilterService->applyCategoryFilter($query,   $request, 'patient_fp_methods.facility_code', 'patient_fp_methods.patient_id');
         })
         ->groupBy('method_code');
     }

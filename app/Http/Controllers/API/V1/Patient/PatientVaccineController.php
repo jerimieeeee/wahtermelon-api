@@ -88,7 +88,10 @@ class PatientVaccineController extends Controller
 
             if ($data && !is_null($data->immunization_status)) {
                 Patient::where('id', $request->patient_id)
-                    ->update(['immunization_status' => $data->immunization_status]);
+                        ->update([
+                            'immunization_status' => $data->immunization_status,
+                            'immunization_date' => $data->immunization_date
+                        ]);
             }
 
         });
@@ -128,7 +131,19 @@ class PatientVaccineController extends Controller
      */
     public function update(PatientVaccineUpdateRequest $request, $id): JsonResponse
     {
+        $patientvax = new PatientVaccineService();
+
         PatientVaccine::findorfail($id)->update($request->all());
+
+        $data = $patientvax->get_fic_cic($request->patient_id)->first();
+
+        if ($data && !is_null($data->immunization_status)) {
+            Patient::where('id', $request->patient_id)
+                ->update([
+                    'immunization_status' => $data->immunization_status,
+                    'immunization_date' => $data->immunization_date
+                ]);
+        }
 
         return response()->json('Vaccine Successfully Updated');
     }

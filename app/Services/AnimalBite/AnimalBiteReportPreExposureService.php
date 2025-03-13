@@ -489,9 +489,6 @@ class AnimalBiteReportPreExposureService
             })
             ->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
             ->where('settings_catchment_barangays.year', $request->year)
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
-            })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
@@ -555,9 +552,6 @@ class AnimalBiteReportPreExposureService
             })
             ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
             ->where('settings_catchment_barangays.year', $request->year)
-            ->tap(function ($query) use ($request) {
-                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
-            })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
