@@ -38,7 +38,7 @@ class MasterlistReportController extends Controller
             $query = $masterlistReportService->get_maternal_care_master_list($request);
 
             // Paginate the results
-            $masterlist = $query->paginate($perPage);
+            $masterlist = $query;
         }
 
         // Family Planning
@@ -47,7 +47,7 @@ class MasterlistReportController extends Controller
             $query = $masterlistReportService->get_fp_method_master_list($request);
 
             // Paginate the results
-            $masterlist = $query->paginate($perPage);
+            $masterlist = $query;
         }
 
         // Blood Type
@@ -56,7 +56,7 @@ class MasterlistReportController extends Controller
             $query = $masterlistReportService->get_bloodtype_master_list($request);
 
             // Paginate the results
-            $masterlist = $query->paginate($perPage);
+            $masterlist = $query;
         }
 
         // Senior
@@ -65,11 +65,15 @@ class MasterlistReportController extends Controller
             $query = $masterlistReportService->get_senior_masterlist($request);
 
             // Paginate the results
-            $masterlist = $query->paginate($perPage);
+            $masterlist = $query;
+        }
+
+        if ($perPage === 'all') {
+            return $masterlist->get();
         }
 
         // Return the paginated results
-        return $masterlist;
+        return $masterlist->paginate($perPage)->withQueryString();
     }
 
     /*
