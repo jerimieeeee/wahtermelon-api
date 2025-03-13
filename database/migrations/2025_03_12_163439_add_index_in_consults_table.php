@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('consults', function (Blueprint $table) {
-            $table->index('transmittal_number');
-            $table->index('pt_group');
-            $table->index('is_konsulta');
+            // $table->index('transmittal_number');
+            // $table->index('pt_group');
+            // $table->index('is_konsulta');
         });
     }
 
@@ -24,9 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('consults', function (Blueprint $table) {
-            $table->dropIndex(['transmittal_number']);
-            $table->dropIndex(['pt_group']);
-            $table->dropIndex(['is_konsulta']);
+            // $table->dropIndex(['transmittal_number']);
+            // $table->dropIndex(['pt_group']);
+            // $table->dropIndex(['is_konsulta']);
         });
     }
 };
