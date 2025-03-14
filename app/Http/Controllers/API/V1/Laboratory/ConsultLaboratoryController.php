@@ -44,7 +44,11 @@ class ConsultLaboratoryController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+        $columns = ['last_name', 'first_name', 'middle_name'];
         $query = ConsultLaboratory::query()
+            ->when(isset($request->search), function ($q) use ($request, $columns) {
+                $q->whereHas('patient', fn ($q) => $q->orSearch($columns, 'LIKE', $request->search));
+            })
             ->when(isset($request->patient_id), function ($query) use ($request) {
                 return $query->wherePatientId($request->patient_id);
             })
