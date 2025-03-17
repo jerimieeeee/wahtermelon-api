@@ -337,7 +337,7 @@ class KonsultaController extends Controller
             ->defaultSort('konsulta_transmittals.created_at')
             ->allowedSorts(['konsulta_transmittals.created_at']);
             // return $data->paginate($perPage)->withQueryString();
-            return $data->count();
+            // return $data->count();
         if ($perPage === 'all') {
             return KonsultaTransmittalResource::collection($data->get());
         }
