@@ -203,6 +203,7 @@ class NcdReportService
             ->when($type == 'new', function ($q) use ($request) {
                 $q->whereHypertensiveOldCase(0);
             })
+            ->whereRaisedBp(1)
             ->where('consult_ncd_risk_assessment.gender', $patient_gender)
             ->whereBetween(DB::raw('DATE(assessment_date)'), [$request->start_date, $request->end_date])
             ->whereRaisedBp(1)
