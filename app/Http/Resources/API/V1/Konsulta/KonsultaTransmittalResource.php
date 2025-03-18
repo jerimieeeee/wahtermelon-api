@@ -39,6 +39,12 @@ class KonsultaTransmittalResource extends JsonResource
                     ->select('id', 'patient_id', 'transmittal_number', 'consult_date');
             }]);
         }
+        if ($request->reconcillation) {
+            $patient = $patient->where('case_number', $this->case_number)->first();
+            $registration_date = date('m-d-Y', strtotime($patient->philhealth->first()->enlistment_date));
+            $fpe_date = date('m-d-Y', strtotime($patient->philhealth->first()->enlistment_date));
+            $philhealth_id = $patient->philhealth->first()->philhealth_id;
+        }
         return [
             'id' => $this->id,
             'facility_code' => $this->when(! $this->relationLoaded('facility'), $this->facility_code),
@@ -48,13 +54,15 @@ class KonsultaTransmittalResource extends JsonResource
             'transmittal_number' => $this->transmittal_number,
             'effectivity_year' => $this->effectivity_year,
             'case_number' => $this->case_number,
-            'philhealth_id' => $this->philhealth_id,
-            'registration_date' => $this->enlistment_date ? (is_string($this->enlistment_date) ? date('m-d-Y', strtotime($this->enlistment_date)) : $this->enlistment_date->format('m-d-Y')) : null,
-            'fpe_date' => $this->enlistment_date ? (is_string($this->enlistment_date) ? date('m-d-Y', strtotime($this->enlistment_date)) : $this->enlistment_date->format('m-d-Y')) : null,
+            'philhealth_id' => $philhealth_id ?? null,
+            // 'registration_date' => $this->enlistment_date ? (is_string($this->enlistment_date) ? date('m-d-Y', strtotime($this->enlistment_date)) : $this->enlistment_date->format('m-d-Y')) : null,
+            // 'fpe_date' => $this->enlistment_date ? (is_string($this->enlistment_date) ? date('m-d-Y', strtotime($this->enlistment_date)) : $this->enlistment_date->format('m-d-Y')) : null,
+            'registration_date' => $registration_date ?? null,
+            'fpe_date' => $fpe_date ?? null,
             'ekas_date' => $this->consult_date ? (is_string($this->consult_date) ? date('m-d-Y', strtotime($this->consult_date)) : $this->consult_date->format('m-d-Y')) : null,
             'with_laboratory' => $this->with_laboratory,
             'epress_date' => $this->epress_date ? (is_string($this->epress_date) ? date('m-d-Y', strtotime($this->epress_date)) : $this->epress_date->format('m-d-Y')) : null,
-            'patient' => $patient,
+            'patient' => isset($request->reconcillation) ? [$patient] : $patient,
             'tranche' => $this->tranche,
             'total_enlistment' => $this->total_enlistment,
             'total_profile' => $this->total_profile,

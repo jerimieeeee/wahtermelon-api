@@ -86,7 +86,10 @@ class AnimalBitePreExposureNameListReportController extends Controller
 
         //Return catchment
         if (
-            $request->indicator === 'total_cat2_and_cat3_previous_quarter'
+           in_array($request->indicator, [
+               'total_cat2_and_cat3_previous_quarter',
+               'pep_completed_previous',
+                   ])
             && $request->type === 'catchment'
         ) {
             // If the condition is true, fetch the data
@@ -97,7 +100,10 @@ class AnimalBitePreExposureNameListReportController extends Controller
 
         //Return non-catchment
         if (
-            $request->indicator === 'total_cat2_and_cat3_previous_quarter'
+            in_array($request->indicator, [
+                'total_cat2_and_cat3_previous_quarter',
+                'pep_completed_previous',
+            ])
             && $request->type === 'non-catchment'
         ) {
             // If the condition is true, fetch the data
