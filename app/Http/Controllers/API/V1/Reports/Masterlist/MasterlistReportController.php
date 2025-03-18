@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports\Masterlist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Reports\MasterlistResource;
 use App\Services\Childcare\ChildCareReportService;
 use App\Services\Masterlist\MasterlistReportService;
 use App\Services\ReportFilter\CategoryFilterService;
@@ -29,51 +30,26 @@ class MasterlistReportController extends Controller
      */
     public function index(Request $request, MasterlistReportService $masterlistReportService)
     {
-        // Number of items per page
         $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
 
-        // Maternal Care
-        if ($request->program === 'mc') {
-            // If the condition is true, fetch the data
-            $query = $masterlistReportService->get_maternal_care_master_list($request);
+        // Map the program code to the corresponding method
+        $methods = [
+            'mc' => 'get_maternal_care_master_list',
+            'fp' => 'get_fp_method_master_list',
+            'bt' => 'get_bloodtype_master_list',
+            'sn' => 'get_senior_masterlist',
+        ];
 
-            // Paginate the results
-            $masterlist = $query;
+        // Determine the method to call based on the requested program
+        $method = $methods[$request->program] ?? null;
+
+        if ($method) {
+            $query = $masterlistReportService->$method($request);
+
+            return $perPage === 'all'
+                ? MasterlistResource::collection($query->get())
+                : MasterlistResource::collection($query->paginate($perPage)->withQueryString());
         }
-
-        // Family Planning
-        if ($request->program === 'fp') {
-            // If the condition is true, fetch the data
-            $query = $masterlistReportService->get_fp_method_master_list($request);
-
-            // Paginate the results
-            $masterlist = $query;
-        }
-
-        // Blood Type
-        if ($request->program === 'bt') {
-            // If the condition is true, fetch the data
-            $query = $masterlistReportService->get_bloodtype_master_list($request);
-
-            // Paginate the results
-            $masterlist = $query;
-        }
-
-        // Senior
-        if ($request->program === 'sn') {
-            // If the condition is true, fetch the data
-            $query = $masterlistReportService->get_senior_masterlist($request);
-
-            // Paginate the results
-            $masterlist = $query;
-        }
-
-        if ($perPage === 'all') {
-            return $masterlist->get();
-        }
-
-        // Return the paginated results
-        return $masterlist->paginate($perPage)->withQueryString();
     }
 
     /*
