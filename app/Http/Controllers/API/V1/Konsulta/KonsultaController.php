@@ -258,9 +258,12 @@ class KonsultaController extends Controller
             ->get();
             return $data;
         } */
+        $mainPhilhealth = PatientPhilhealth::query()->selectRaw('id, philhealth_id, effectivity_year, enlistment_date, MAX(transmittal_number) as transmittal_number, MAX(patient_id) as patient_id')
+            ->whereNotNull('transmittal_number')
+            ->groupBy('philhealth_id', 'effectivity_year');
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
-            ->when($request->reconcillation, function ($query) {
+            ->when($request->reconcillation, function ($query) use($mainPhilhealth){
                 $query->leftJoin('consults as c', function ($join) {
                     $join->on('konsulta_transmittals.transmittal_number', '=', 'c.transmittal_number')
                          ->where('konsulta_transmittals.tranche', '=', 2);
@@ -272,10 +275,14 @@ class KonsultaController extends Controller
                 ->leftJoin('patients as p', function ($join) {
                     $join->on('p.id', '=', DB::raw('COALESCE(c.patient_id, pp.patient_id)'));
                 })
-                ->leftJoin('patient_philhealth as main_pp', function ($join) {
+                ->leftJoinSub($mainPhilhealth, 'main_pp', function ($join) {
+                    $join->on('main_pp.patient_id', '=', 'p.id')
+                         ->whereColumn('main_pp.effectivity_year', 'konsulta_transmittals.effectivity_year');
+                })
+                /* ->leftJoin('patient_philhealth as main_pp', function ($join) {
                     $join->on('main_pp.patient_id', '=', 'p.id')
                          ->where('main_pp.effectivity_year', '=', DB::raw('konsulta_transmittals.effectivity_year'));
-                });
+                }) */;
                 $query->addSelect([
                     'konsulta_transmittals.*',
                     'p.case_number',
@@ -330,6 +337,7 @@ class KonsultaController extends Controller
             ->defaultSort('konsulta_transmittals.created_at')
             ->allowedSorts(['konsulta_transmittals.created_at']);
             // return $data->paginate($perPage)->withQueryString();
+            // return $data->count();
         if ($perPage === 'all') {
             return KonsultaTransmittalResource::collection($data->get());
         }
