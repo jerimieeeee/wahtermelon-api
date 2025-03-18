@@ -258,12 +258,13 @@ class KonsultaController extends Controller
             ->get();
             return $data;
         } */
-        $mainPhilhealth = PatientPhilhealth::query()->selectRaw('id, philhealth_id, effectivity_year, enlistment_date, MAX(transmittal_number) as transmittal_number, MAX(patient_id) as patient_id')
+        /* $mainPhilhealth = PatientPhilhealth::query()
+            ->selectRaw('id, philhealth_id, effectivity_year, enlistment_date, transmittal_number as transmittal_number, patient_id as patient_id')
             ->whereNotNull('transmittal_number')
-            ->groupBy('philhealth_id', 'effectivity_year');
+            ->groupBy('philhealth_id', 'effectivity_year'); */
         $data = QueryBuilder::for(KonsultaTransmittal::class)
             //->whereNull('konsulta_transaction_number')
-            ->when($request->reconcillation, function ($query) use($mainPhilhealth){
+            ->when($request->reconcillation, function ($query) {
                 $query->leftJoin('consults as c', function ($join) {
                     $join->on('konsulta_transmittals.transmittal_number', '=', 'c.transmittal_number')
                          ->where('konsulta_transmittals.tranche', '=', 2);
@@ -275,10 +276,10 @@ class KonsultaController extends Controller
                 ->leftJoin('patients as p', function ($join) {
                     $join->on('p.id', '=', DB::raw('COALESCE(c.patient_id, pp.patient_id)'));
                 })
-                ->leftJoinSub($mainPhilhealth, 'main_pp', function ($join) {
-                    $join->on('main_pp.patient_id', '=', 'p.id')
-                         ->whereColumn('main_pp.effectivity_year', 'konsulta_transmittals.effectivity_year');
-                })
+                // ->leftJoinSub($mainPhilhealth, 'main_pp', function ($join) {
+                //     $join->on('main_pp.patient_id', '=', 'p.id')
+                //          ->whereColumn('main_pp.effectivity_year', 'konsulta_transmittals.effectivity_year');
+                // })
                 /* ->leftJoin('patient_philhealth as main_pp', function ($join) {
                     $join->on('main_pp.patient_id', '=', 'p.id')
                          ->where('main_pp.effectivity_year', '=', DB::raw('konsulta_transmittals.effectivity_year'));
@@ -287,8 +288,8 @@ class KonsultaController extends Controller
                     'konsulta_transmittals.*',
                     'p.case_number',
                     'c.consult_date',
-                    'main_pp.philhealth_id',
-                    'main_pp.enlistment_date',
+                    // 'main_pp.philhealth_id',
+                    // 'main_pp.enlistment_date',
                     DB::raw("CASE
                         WHEN konsulta_transmittals.tranche = 2 AND EXISTS (
                             SELECT 1 FROM consult_laboratories cl
@@ -336,6 +337,7 @@ class KonsultaController extends Controller
             ->allowedFilters('tranche', 'xml_status')
             ->defaultSort('konsulta_transmittals.created_at')
             ->allowedSorts(['konsulta_transmittals.created_at']);
+            // return $data->get();
             // return $data->paginate($perPage)->withQueryString();
             // return $data->count();
         if ($perPage === 'all') {
