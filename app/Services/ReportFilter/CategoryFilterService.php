@@ -30,7 +30,8 @@ class CategoryFilterService
                         facility_code,
                         barangay_code
                     ')
-            ->whereFacilityCode(auth()->user()->facility_code);
+            ->whereFacilityCode(auth()->user()->facility_code)
+            ->groupBy('barangay_code');
 
         return $result->pluck('barangay_code');
     }

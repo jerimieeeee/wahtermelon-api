@@ -2,9 +2,9 @@
 
 namespace App\Services\AnimalBite;
 
-use App\Models\V1\Libraries\LibNcdRiskStratificationChart;
-use App\Models\V1\NCD\ConsultNcdRiskAssessment;
+use App\Models\V1\Barangay\SettingsCatchmentBarangay;
 use App\Services\ReportFilter\CategoryFilterService;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 
 class AnimalBiteReportPreExposureNameListService
@@ -42,7 +42,6 @@ class AnimalBiteReportPreExposureNameListService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_ab_exposures.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
@@ -55,10 +54,13 @@ class AnimalBiteReportPreExposureNameListService
                     $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
                 });
             })
-            ->where('settings_catchment_barangays.year', function($query) {
-                $query->selectRaw('MAX(year)')
-                    ->from('settings_catchment_barangays')
-                    ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $catchment = SettingsCatchmentBarangay::query()
+                    ->whereFacilityCode(auth()->user()->facility_code)
+                    ->where('year', $request->year);
+                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                    $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
+                });
             })
             ->when($request->indicator == 'male', function ($q) use ($request) {
                 $q->where('patients.gender', 'M');
@@ -188,7 +190,6 @@ class AnimalBiteReportPreExposureNameListService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_abs.user_id', '=', 'users.id')
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
@@ -201,10 +202,13 @@ class AnimalBiteReportPreExposureNameListService
                         $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
                     });
             })
-            ->where('settings_catchment_barangays.year', function($query) {
-                $query->selectRaw('MAX(year)')
-                    ->from('settings_catchment_barangays')
-                    ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $catchment = SettingsCatchmentBarangay::query()
+                    ->whereFacilityCode(auth()->user()->facility_code)
+                    ->where('year', $request->year);
+                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                    $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
+                });
             })
             ->when($request->indicator == 'male', function ($q) use ($request) {
                 $q->where('patients.gender', 'M');
@@ -333,7 +337,6 @@ class AnimalBiteReportPreExposureNameListService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_abs.user_id', '=', 'users.id')
             ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
                 $q->when($request->type == 'catchment', function ($q) use ($request) {
@@ -343,10 +346,13 @@ class AnimalBiteReportPreExposureNameListService
                     $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
                 });
             })
-            ->where('settings_catchment_barangays.year', function($query) {
-                $query->selectRaw('MAX(year)')
-                    ->from('settings_catchment_barangays')
-                    ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $catchment = SettingsCatchmentBarangay::query()
+                    ->whereFacilityCode(auth()->user()->facility_code)
+                    ->where('year', $request->year);
+                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                    $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
+                });
             })
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
@@ -417,13 +423,15 @@ class AnimalBiteReportPreExposureNameListService
             ->join('barangays', 'household_folders.barangay_code', '=', 'barangays.psgc_10_digit_code')
             ->join('municipalities', 'barangays.geographic_id', '=', 'municipalities.id')
             ->join('provinces', 'municipalities.geographic_id', '=', 'provinces.id')
-            ->join('settings_catchment_barangays', 'barangays.psgc_10_digit_code', '=', 'settings_catchment_barangays.barangay_code')
             ->join('users', 'patient_abs.user_id', '=', 'users.id')
             ->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays())
-            ->where('settings_catchment_barangays.year', function($query) {
-                $query->selectRaw('MAX(year)')
-                    ->from('settings_catchment_barangays')
-                    ->where('settings_catchment_barangays.facility_code', auth()->user()->facility_code);
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $catchment = SettingsCatchmentBarangay::query()
+                    ->whereFacilityCode(auth()->user()->facility_code)
+                    ->where('year', $request->year);
+                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                    $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
+                });
             })
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_abs.patient_id');
