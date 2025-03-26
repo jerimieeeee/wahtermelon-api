@@ -3,6 +3,7 @@
 namespace App\Models\V1\Adolescent;
 
 use App\Models\User;
+use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Libraries\LibAsrhLivingArrangementType;
 use App\Models\V1\Libraries\LibAsrhRefusalReason;
 use App\Models\V1\Patient\Patient;
@@ -85,6 +86,12 @@ class ConsultAsrhRapid extends Model
     public function livingArrangementType()
     {
         return $this->belongsTo(LibAsrhLivingArrangementType::class, 'lib_asrh_living_arrangement_type_id');
+    }
+
+    public function consult()
+    {
+        return $this->belongsTo(Consult::class, 'patient_id', 'patient_id')
+            ->where('consults.pt_group', '=', 'cn');
     }
 
 }
