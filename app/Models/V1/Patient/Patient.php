@@ -13,6 +13,7 @@ use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Libraries\LibGenderIdentity;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
@@ -451,5 +452,10 @@ class Patient extends Model
     public function consultpe()
     {
         return $this->hasMany(ConsultNotes::class, 'patient_id', 'id');
+    }
+
+    public function genderIdentity()
+    {
+        return $this->belongsTo(LibGenderIdentity::class, 'lib_gender_identity_code', 'code');
     }
 }

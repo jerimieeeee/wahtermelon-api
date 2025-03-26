@@ -1453,4 +1453,41 @@ Route::prefix('v1')->group(function () {
             });
     });
 
+    Route::prefix('asrh')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhRapidController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('rapid', 'index');
+                Route::get('rapid/{consultAsrhRapid}', 'show');
+                Route::post('rapid', 'store');
+                Route::put('rapid/{consultAsrhRapid}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhRapidAnswerController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('rapid-answer', 'index');
+                Route::post('rapid-answer', 'store');
+                Route::put('rapid-answer/{consultAsrhRapidAnswer}', 'update');
+            });
+        Route::controller(App\Http\Controllers\API\V1\Adolescent\ConsultAsrhComprehensiveController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('comprehensive', 'index');
+                Route::get('comprehensive/{consultAsrhComprehensive}', 'show');
+                Route::post('comprehensive', 'store');
+                Route::put('comprehensive/{consultAsrhComprehensive}', 'update');
+            });
+    });
+
+    Route::prefix('patient-services')->group(function () {
+        Route::controller(App\Http\Controllers\API\V1\Patient\PatientServiceController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('service', 'index');
+                Route::post('service', 'store');
+                Route::get('service/{patientService}', 'show');
+                Route::put('service/{patientService}', 'update');
+            });
+    });
+
 });

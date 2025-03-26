@@ -63,6 +63,10 @@ class UserController extends Controller
                 $q->where('attendant_'.$request->attendant_flag.'_flag', 1)
                 ->whereIsActive(1);
             })
+            ->when(isset($request->aja_flag), function ($q) use ($request) {
+                $q->where('aja_flag', $request->aja_flag)
+                ->whereIsActive(1);
+            })
             ->where('facility_code',auth()->user()->facility_code)
             ->with(['facility', 'facility.province', 'facility.municipality', 'facility.barangay', 'designation', 'employer'])
             ->allowedIncludes('suffixName')
