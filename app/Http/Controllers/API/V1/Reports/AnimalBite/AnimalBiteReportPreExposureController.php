@@ -32,17 +32,17 @@ class AnimalBiteReportPreExposureController extends Controller
 
         if (auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL) {
             $part1 = $part1->groupBy('barangay_name');
-            $part1_others = $part1_others->groupBy('municipality_name');
             $part2 = $part2->groupBy('barangay_name');
+            $part1_others = $part1_others->groupBy('municipality_name');
             $part2_others = $part2_others->groupBy('municipality_name');
         }
 
         // Apply groupBy for municipality_name only if reports_flag is 1
         if (auth()->user()->reports_flag == 1) {
             $part1 = $part1->groupBy('municipality_name');
-            $part1_others = $part1_others->groupBy('municipality_name');
             $part2 = $part2->groupBy('municipality_name');
-            $part2_others = $part2_others->groupBy('municipality_name');
+            $part1_others = $part1_others->groupBy('province_name');
+            $part2_others = $part2_others->groupBy('province_name');
         }
 
         return [

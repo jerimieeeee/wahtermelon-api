@@ -33,7 +33,7 @@ class ParseVaccineStatusCommand extends Command
         $getFicCic = DB::table(function ($query) use($patientvax) {
             $query->selectRaw("
                             fic_cic_vaccines.patient_id AS patient_id,
-                            fic_cic_vaccines.vaccine_date AS vaccine_date,
+                            fic_cic_vaccines.immunization_date AS vaccine_date,
                             BCG,
                             PENTA,
                             OPV,
