@@ -209,13 +209,16 @@ class AnimalBiteReportPreExposureService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
             })
-            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+            ->when(in_array(auth()->user()->reports_flag, [0, 1, NULL]), function ($q) use ($request) {
                 $catchment = SettingsCatchmentBarangay::query()
                     ->whereFacilityCode(auth()->user()->facility_code)
                     ->where('year', $request->year);
-                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                $q->leftJoinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
                     $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
                 });
+            })
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $q->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
             })
             ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
                 $q->where('provinces.psgc_10_digit_code', auth()->user()->facility->province_code);
@@ -436,19 +439,19 @@ class AnimalBiteReportPreExposureService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
             })
-            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
-                $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
-            })
-            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
-                $q->whereNot('provinces.psgc_10_digit_code', auth()->user()->facility->province_code);
-            })
-            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+            ->when(in_array(auth()->user()->reports_flag, [0, 1, NULL]), function ($q) use ($request) {
                 $catchment = SettingsCatchmentBarangay::query()
                     ->whereFacilityCode(auth()->user()->facility_code)
                     ->where('year', $request->year);
-                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                $q->leftJoinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
                     $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
                 });
+            })
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $q->whereNot('municipalities.psgc_10_digit_code', auth()->user()->facility->municipality_code);
+            })
+            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
+                $q->whereNot('provinces.psgc_10_digit_code', auth()->user()->facility->province_code);
             })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $q->whereBetween(DB::raw('DATE(consult_date)'), [
@@ -523,19 +526,19 @@ class AnimalBiteReportPreExposureService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
             })
+            ->when(in_array(auth()->user()->reports_flag, [0, 1, NULL]), function ($q) use ($request) {
+                $catchment = SettingsCatchmentBarangay::query()
+                    ->whereFacilityCode(auth()->user()->facility_code)
+                    ->where('year', $request->year);
+                $q->leftJoinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                    $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
+                });
+            })
             ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
                 $q->whereIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
             })
             ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
                 $q->where('provinces.psgc_10_digit_code', auth()->user()->facility->province_code);
-            })
-            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
-                $catchment = SettingsCatchmentBarangay::query()
-                    ->whereFacilityCode(auth()->user()->facility_code)
-                    ->where('year', $request->year);
-                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
-                    $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
-                });
             })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
@@ -611,19 +614,19 @@ class AnimalBiteReportPreExposureService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_ab_exposures.facility_code', 'patient_ab_exposures.patient_id');
             })
-            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
-                $q->whereNotIn('settings_catchment_barangays.barangay_code', $this->categoryFilterService->get_catchment_barangays());
-            })
-            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
-                $q->whereNot('provinces.psgc_10_digit_code', auth()->user()->facility->province_code);
-            })
-            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+            ->when(in_array(auth()->user()->reports_flag, [0, 1, NULL]), function ($q) use ($request) {
                 $catchment = SettingsCatchmentBarangay::query()
                     ->whereFacilityCode(auth()->user()->facility_code)
                     ->where('year', $request->year);
-                $q->joinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
+                $q->leftJoinSub($catchment, 'settings_catchment_barangays', function(JoinClause $join) {
                     $join->on('settings_catchment_barangays.barangay_code', '=', 'household_folders.barangay_code');
                 });
+            })
+            ->when((auth()->user()->reports_flag == 0 || auth()->user()->reports_flag == NULL), function ($q) use ($request) {
+                $q->whereNot('municipalities.psgc_10_digit_code', auth()->user()->facility->municipality_code);
+            })
+            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
+                $q->whereNot('provinces.psgc_10_digit_code', auth()->user()->facility->province_code);
             })
             ->when($request->quarter == 1, function ($q) use ($request) {
                 $previousYear = $request->year - 1;  // Calculate the previous year
