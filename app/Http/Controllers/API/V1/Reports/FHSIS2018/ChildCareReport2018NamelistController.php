@@ -134,8 +134,8 @@ class ChildCareReport2018NamelistController extends Controller
         if (in_array($request->indicator, [
             'deworming_1_to_19',
             'deworming_1_to_4',
-            'deworming_5_to_49',
-            'deworming_10_to_19'
+            'deworming_5_to_9',
+            'deworming_10_to_19',
         ])
         ) {
             // If the condition is true, fetch the data

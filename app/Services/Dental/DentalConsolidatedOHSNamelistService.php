@@ -722,7 +722,7 @@ class DentalConsolidatedOHSNamelistService
                 ->whereRaw("TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 10 AND 19")
                 ->whereRaw("(is_pregnant IS NULL OR is_pregnant = 0)");
             })
-            ->when($request->indicator == 'total', function ($q) use ($request) {
+            ->when($request->indicator == 'all_age', function ($q) use ($request) {
                 $q->when($request->params == 'temp_decayed', function ($q) use ($request) {
                     $q->where('tooth_condition', 'D');
                 })

@@ -188,98 +188,13 @@ class ChildCareReportNameListService
                 $request->start_date,
                 $request->end_date
             ]);
-
-/*        return DB::table(function ($query) use ($request) {
-            $query->selectRaw("
-                        patients.gender,
-                        patient_vaccines.patient_id AS patient_id,
-                        CONCAT(patients.last_name, ',', ' ', patients.first_name, ',', ' ', patients.middle_name) AS name,
-                        patients.last_name,
-                        patients.first_name,
-                        patients.middle_name,
-                        patients.birthdate,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'BCG' THEN 1
-                                ELSE 0
-                            END
-                        ) AS BCG,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'PENTA' THEN 1
-                                ELSE 0
-                            END
-                        ) AS PENTA,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'OPV' THEN 1
-                                ELSE 0
-                            END
-                        ) AS OPV,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'MCV' THEN 1
-                                ELSE 0
-                            END
-                        ) AS MCV,
-                        MAX(vaccine_date) AS date_of_service,
-                        SUBSTRING_INDEX(
-                            GROUP_CONCAT(
-                                status_id
-                                ORDER BY
-                                    vaccine_date DESC
-                            ),
-                            ',',
-                            1
-                        ) AS status_id,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, MAX(vaccine_date)) AS age_month
-                    ")
-                ->from('patient_vaccines')
-                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-                ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
-                ->whereIn('patients.gender', ['M', 'F'])
-                ->whereIn('patient_vaccines.vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
-                ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
-                })
-                ->groupBy('patient_vaccines.patient_id')
-                ->havingRaw('
-                            BCG >= 1
-                            AND PENTA >=3
-                            AND OPV >=3
-                            AND MCV >=2
-                            AND age_month >= 0
-                            AND status_id = 1
-                ');
-        })
-        ->selectRaw("
-                    patient_id,
-                    name,
-                    last_name,
-                    first_name,
-                    middle_name,
-                    birthdate,
-                    age_month
-        ")
-        ->when($request->indicator == 'fic', function ($q) use ($request) {
-            $q->whereIn('gender', explode(',', $request->gender))
-                ->where('age_month', '<', 13);
-        })
-        ->when($request->indicator == 'cic', function ($q) use ($request) {
-            $q->whereIn('gender', explode(',', $request->gender))
-                ->whereBetween('age_month', [13, 23]);
-        })
-        ->whereBetween('date_of_service', [
-            $request->start_date,
-            $request->end_date
-        ]);*/
     }
 
     public function init_breastfeeding_namelist($request)
     {
         return DB::table('patient_mc_post_registrations')
             ->selectRaw("
-                        patient_mc.patient_id AS patient_id,
+                        patient_ccdevs.patient_id AS patient_id,
                         CONCAT(patients.last_name, ',', ' ', patients.first_name, ', ', patients.middle_name) AS name,
                         patients.last_name,
                         patients.first_name,
@@ -351,7 +266,6 @@ class ChildCareReportNameListService
                 ->where('consult_ccdev_services.quantity', '>=', 180)
                 ->whereRaw('TIMESTAMPDIFF(MONTH, patients.birthdate, consult_ccdev_services.service_date) BETWEEN 12 AND 23');
         })
-//        ->whereRaw('TIMESTAMPDIFF(DAY, patients.birthdate, consult_ccdev_services.service_date) <= 29')
         ->where('consult_ccdev_services.status_id', '1')
         ->whereBetween('consult_ccdev_services.service_date', [
             $request->start_date . ' 00:00:00', // Start of the day
@@ -482,6 +396,7 @@ class ChildCareReportNameListService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'medicine_prescriptions.facility_code', 'medicine_prescriptions.patient_id');
             })
+            ->whereNull('medicine_prescriptions.deleted_at')
             ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date]);
     }
 
@@ -636,6 +551,7 @@ class ChildCareReportNameListService
                         'AMOX50005700209SUS1400379BOTTL', 'AMOX50005700209SUS1400469BOTTL'
                     ]);
             })
+            ->whereNull('medicine_prescriptions.deleted_at')
             ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date])
             ->groupBy('medicine_prescriptions.patient_id');
     }
