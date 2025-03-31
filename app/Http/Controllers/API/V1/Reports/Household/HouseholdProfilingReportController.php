@@ -237,8 +237,8 @@ class HouseholdProfilingReportController extends Controller
             'summary_household_non_4ps' => $summary_household_non_4ps,
 
             //Summary Household Family
-            'summary_household_family_4ps' => $summary_household_family_4ps,
-            'summary_household_family_non_4ps' => $summary_household_family_non_4ps,
+            'summary_household_family_4ps' => $summary_household_family_4ps[0],
+            'summary_household_family_non_4ps' => $summary_household_family_non_4ps[0],
 
             //Water Source 4PS
             'water_source_level1_4ps' => $water_source_level1_4ps,

@@ -141,6 +141,7 @@ class ConsultController extends Controller
                         'dentalHospitalizationHistory',
                         'dentalService.service',
                         'dentalToothService.toothService',
+                        'dentalToothService.consult',
                         'consultToothCondition',
                         'latestToothCondition',
                         'dentalOralHealthCondition'

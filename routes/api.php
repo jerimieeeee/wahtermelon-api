@@ -1323,6 +1323,20 @@ Route::prefix('v1')->group(function () {
                 // Route::post('eclaims-xml', 'store');
             });
 
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsRthController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-rth', 'index');
+                Route::post('eclaims-rth', 'store');
+                Route::post('create-rth-required-xml', 'createRequiredXml');
+            });
+        Route::controller(\App\Http\Controllers\API\V1\Eclaims\EclaimsRthDocumentController::class)
+            ->middleware(('auth:api'))
+            ->group(function () {
+                Route::get('eclaims-rth-doc', 'index');
+                Route::post('eclaims-rth-doc', 'store');
+                Route::delete('eclaims-rth-doc/{eclaimsDoc}', 'destroy');
+            });
     });
 
     Route::prefix('gbv-report')->group(function () {
