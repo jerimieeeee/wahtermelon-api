@@ -7322,7 +7322,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_infant_temp_decayed_tooth,
+                            END) AS female_infant_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7330,7 +7330,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_1_year_old_temp_decayed_tooth,
+                            END) AS male_1_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7339,7 +7339,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_1_year_old_temp_decayed_tooth,
+                            END) AS female_1_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7347,7 +7347,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_2_year_old_temp_decayed_tooth,
+                            END) AS male_2_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7356,7 +7356,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_2_year_old_temp_decayed_tooth,
+                            END) AS female_2_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7364,7 +7364,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_3_year_old_temp_decayed_tooth,
+                            END) AS male_3_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7373,7 +7373,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_3_year_old_temp_decayed_tooth,
+                            END) AS female_3_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7381,7 +7381,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_4_year_old_temp_decayed_tooth,
+                            END) AS male_4_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7390,7 +7390,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_4_year_old_temp_decayed_tooth,
+                            END) AS female_4_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7398,7 +7398,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_total_underfive_temp_decayed_tooth,
+                            END) AS male_total_underfive_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7407,7 +7407,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_total_underfive_temp_decayed_tooth,
+                            END) AS female_total_underfive_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7415,7 +7415,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_5_year_old_temp_decayed_tooth,
+                            END) AS male_5_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7424,7 +7424,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_5_year_old_temp_decayed_tooth,
+                            END) AS female_5_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7432,7 +7432,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_6_year_old_temp_decayed_tooth,
+                            END) AS male_6_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7441,7 +7441,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_6_year_old_temp_decayed_tooth,
+                            END) AS female_6_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7449,7 +7449,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_7_year_old_temp_decayed_tooth,
+                            END) AS male_7_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7458,7 +7458,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_7_year_old_temp_decayed_tooth,
+                            END) AS female_7_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7466,7 +7466,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_8_year_old_temp_decayed_tooth,
+                            END) AS male_8_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7475,7 +7475,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_8_year_old_temp_decayed_tooth,
+                            END) AS female_8_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7483,7 +7483,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_9_year_old_temp_decayed_tooth,
+                            END) AS male_9_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7492,7 +7492,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_9_year_old_temp_decayed_tooth,
+                            END) AS female_9_year_old_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7500,7 +7500,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_total_school_age_temp_decayed_tooth,
+                            END) AS male_total_school_age_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7509,7 +7509,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_total_school_age_temp_decayed_tooth,
+                            END) AS female_total_school_age_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7517,7 +7517,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_adolescent_temp_decayed_tooth,
+                            END) AS male_adolescent_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7526,7 +7526,41 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_adolescent_temp_decayed_tooth,
+                            END) AS female_adolescent_temp_decayed_tooth,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS male_adult_temp_decayed_tooth,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS female_adult_temp_decayed_tooth,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS male_senior_temp_decayed_tooth,
+                        SUM(
+                            CASE WHEN tooth_condition = 'D'
+                                AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) >= 60 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS female_senior_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'M'
@@ -7534,7 +7568,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_male_all_age_temp_decayed_tooth,
+                            END) AS male_all_age_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'D'
                                 AND patients.gender = 'F'
@@ -7543,7 +7577,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_female_all_age_temp_decayed_tooth,
+                            END) AS female_all_age_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
@@ -7768,6 +7802,23 @@ class DentalConsolidatedOHSReportService
                         SUM(
                             CASE WHEN tooth_condition = 'F'
                                 AND patients.gender = 'M'
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS male_adult_temp_filled_tooth,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'F'
+                                AND (is_pregnant IS NULL OR is_pregnant = 0)
+                                AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 20 AND 59 THEN
+                                1
+                            ELSE
+                                0
+                            END) AS female_adult_temp_filled_tooth,
+                        SUM(
+                            CASE WHEN tooth_condition = 'F'
+                                AND patients.gender = 'M'
                                 AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN
                                 1
                             ELSE
@@ -7788,7 +7839,7 @@ class DentalConsolidatedOHSReportService
                                 1
                             ELSE
                                 0
-                            END) AStooth_grand_total_temp_decayed_tooth,
+                            END) AS grand_total_temp_decayed_tooth,
                         SUM(
                             CASE WHEN tooth_condition = 'M'
                             AND TIMESTAMPDIFF(YEAR, patients.birthdate, consult_date) BETWEEN 0 AND 19 THEN

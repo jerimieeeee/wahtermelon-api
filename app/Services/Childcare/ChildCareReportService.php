@@ -56,167 +56,79 @@ class ChildCareReportService
             ]);
     }
 
-/*    public function get_fic_cic($request)
+    public function get_fic_cic($request)
     {
-        return DB::table(function ($query) use ($request) {
-            $query->selectRaw("
-                        patients.gender,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'BCG' THEN 1
-                                ELSE 0
-                            END
-                        ) AS BCG,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'PENTA' THEN 1
-                                ELSE 0
-                            END
-                        ) AS PENTA,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'OPV' THEN 1
-                                ELSE 0
-                            END
-                        ) AS OPV,
-                        SUM(
-                            CASE
-                                WHEN vaccine_id = 'MCV' THEN 1
-                                ELSE 0
-                            END
-                        ) AS MCV,
-                        MAX(vaccine_date) AS date_of_service,
-                        SUBSTRING_INDEX(
-                            GROUP_CONCAT(
-                                status_id
-                                ORDER BY
-                                    vaccine_date DESC
-                            ),
-                            ',',
-                            1
-                        ) AS status_id,
-                        TIMESTAMPDIFF(MONTH, patients.birthdate, MAX(vaccine_date)) AS age_month
-                    ")
-                ->from('patient_vaccines')
-                ->join('patients', 'patient_vaccines.patient_id', '=', 'patients.id')
-                ->join('users', 'patient_vaccines.user_id', '=', 'users.id')
-                ->whereIn('patient_vaccines.vaccine_id', ['BCG', 'PENTA', 'OPV', 'MCV'])
-                ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
-                })
-                ->groupBy('patient_vaccines.patient_id', 'patients.gender')
-                ->havingRaw('
-                            BCG >= 1
-                            AND PENTA >=3
-                            AND OPV >=3
-                            AND MCV >=2
-                            AND age_month >= 0
-                            AND status_id = 1'
-                );
-        })
+        return DB::table('patients')
             ->selectRaw("
                         SUM(
-                            gender = 'M'
-                            AND age_month < 13
-                        ) AS male_fic,
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patients.immunization_status = 'FIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_fic',
                         SUM(
-                            gender = 'F'
-                            AND age_month < 13
-                        ) AS female_fic,
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patients.immunization_status = 'FIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_fic',
                         SUM(
-                        age_month < 13
-                        ) AS male_female_fic,
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patients.immunization_status = 'FIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patients.immunization_status = 'FIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_fic',
                         SUM(
-                            gender = 'M'
-                            AND age_month BETWEEN 13 AND 23
-                        ) AS male_cic,
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patients.immunization_status = 'CIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_cic',
                         SUM(
-                            gender = 'F'
-                            AND age_month BETWEEN 13 AND 23
-                        ) AS female_cic,
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patients.immunization_status = 'CIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'female_cic',
                         SUM(
-                        age_month BETWEEN 13 AND 23
-                        ) AS male_female_cic
-            ")
-            ->whereBetween('date_of_service', [
-                $request->start_date,
-                $request->end_date
-            ]);
-    }*/
-
-        public function get_fic_cic($request)
-        {
-            return DB::table('patients')
-                ->selectRaw("
-                            SUM(
-                                CASE
-                                    WHEN patients.gender = 'M'
-                                    AND patients.immunization_status = 'FIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) AS 'male_fic',
-                            SUM(
-                                CASE
-                                    WHEN patients.gender = 'F'
-                                    AND patients.immunization_status = 'FIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) AS 'female_fic',
-                            SUM(
-                                CASE
-                                    WHEN patients.gender = 'M'
-                                    AND patients.immunization_status = 'FIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) + SUM(
-                                CASE
-                                    WHEN patients.gender = 'F'
-                                    AND patients.immunization_status = 'FIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) AS 'male_female_fic',
-                            SUM(
-                                CASE
-                                    WHEN patients.gender = 'M'
-                                    AND patients.immunization_status = 'CIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) AS 'male_cic',
-                            SUM(
-                                CASE
-                                    WHEN patients.gender = 'F'
-                                    AND patients.immunization_status = 'CIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) AS 'female_cic',
-                            SUM(
-                                CASE
-                                    WHEN patients.gender = 'M'
-                                    AND patients.immunization_status = 'CIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) + SUM(
-                                CASE
-                                    WHEN patients.gender = 'F'
-                                    AND patients.immunization_status = 'CIC'
-                                    THEN 1
-                                    ELSE 0
-                                END
-                            ) AS 'male_female_cic'
-                    ")
-                ->join('users', 'patients.user_id', '=', 'users.id')
-                ->tap(function ($query) use ($request) {
-                    $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
-                })
-                ->whereBetween('immunization_date', [$request->start_date, $request->end_date]);
-        }
+                            CASE
+                                WHEN patients.gender = 'M'
+                                AND patients.immunization_status = 'CIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) + SUM(
+                            CASE
+                                WHEN patients.gender = 'F'
+                                AND patients.immunization_status = 'CIC'
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS 'male_female_cic'
+                ")
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->tap(function ($query) use ($request) {
+                $this->categoryFilterService->applyCategoryFilter($query, $request, 'patients.facility_code', 'patients.id');
+            })
+            ->whereBetween('immunization_date', [$request->start_date, $request->end_date]);
+    }
 
     public function get_vaccines($request)
     {
@@ -1608,7 +1520,7 @@ class ChildCareReportService
                     // the last argument is for query if the user is not for provincial report
                     $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vaccines.facility_code', 'patient_vaccines.patient_id');
                 })
-//                ->whereStatusId('1')
+                ->whereNull('patient_vaccines.deleted_at')
                 ->whereBetween('patient_vaccines.vaccine_date', [$request->start_date, $request->end_date]);
         });
     }
@@ -2228,6 +2140,7 @@ class ChildCareReportService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'patient_vitals.facility_code', 'patient_vitals.patient_id');
             })
+            ->whereBetween(DB::raw('patient_age_months'), [0, 59])
 //            ->whereBetween(DB::raw('DATE(vitals_date)'), [$request->start_date, $request->end_date]);
             ->whereBetween('vitals_date', [
                 $request->start_date . ' 00:00:00', // Start of the day
@@ -2377,8 +2290,8 @@ class ChildCareReportService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'medicine_prescriptions.facility_code', 'medicine_prescriptions.patient_id');
             })
-            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date])
-            ;
+            ->whereNull('medicine_prescriptions.deleted_at')
+            ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date]);
     }
 
     public function get_sick_infant_children($request)
@@ -2984,6 +2897,7 @@ class ChildCareReportService
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'consults.facility_code', 'consults.patient_id');
             })
+            ->whereNull('medicine_prescriptions.deleted_at')
             ->whereBetween('medicine_prescriptions.prescription_date', [$request->start_date, $request->end_date]);
     }
 }

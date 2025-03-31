@@ -62,6 +62,14 @@ class AnimalBiteReportPreExposureNameListService
                         $q->where('municipalities.psgc_10_digit_code', $request->code);
                     });
             })
+            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
+                $q->when($request->type == 'catchment', function ($q) use ($request) {
+                    $q->where('municipalities.psgc_10_digit_code', $request->code);
+                })
+                    ->when($request->type == 'non-catchment', function ($q) use ($request) {
+                        $q->where('provinces.psgc_10_digit_code', $request->code);
+                    });
+            })
             ->when($request->indicator == 'male', function ($q) use ($request) {
                 $q->where('patients.gender', 'M');
             })
@@ -202,6 +210,14 @@ class AnimalBiteReportPreExposureNameListService
                 })
                     ->when($request->type == 'non-catchment', function ($q) use ($request) {
                         $q->where('municipalities.psgc_10_digit_code', $request->code);
+                    });
+            })
+            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
+                $q->when($request->type == 'catchment', function ($q) use ($request) {
+                    $q->where('municipalities.psgc_10_digit_code', $request->code);
+                })
+                    ->when($request->type == 'non-catchment', function ($q) use ($request) {
+                        $q->where('provinces.psgc_10_digit_code', $request->code);
                     });
             })
             ->when($request->indicator == 'male', function ($q) use ($request) {
@@ -345,6 +361,14 @@ class AnimalBiteReportPreExposureNameListService
                         $q->where('municipalities.psgc_10_digit_code', $request->code);
                     });
             })
+            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
+                $q->when($request->type == 'catchment', function ($q) use ($request) {
+                    $q->where('municipalities.psgc_10_digit_code', $request->code);
+                })
+                    ->when($request->type == 'non-catchment', function ($q) use ($request) {
+                        $q->where('provinces.psgc_10_digit_code', $request->code);
+                    });
+            })
             ->when($request->indicator == 'total_cat2_and_cat3_previous_quarter', function ($q) use ($request) {
                 $q->whereIn('patient_ab_exposures.category_id', [2, 3]);
             })
@@ -424,6 +448,14 @@ class AnimalBiteReportPreExposureNameListService
                 })
                     ->when($request->type == 'non-catchment', function ($q) use ($request) {
                         $q->where('municipalities.psgc_10_digit_code', $request->code);
+                    });
+            })
+            ->when((auth()->user()->reports_flag == 1), function ($q) use ($request) {
+                $q->when($request->type == 'catchment', function ($q) use ($request) {
+                    $q->where('municipalities.psgc_10_digit_code', $request->code);
+                })
+                    ->when($request->type == 'non-catchment', function ($q) use ($request) {
+                        $q->where('provinces.psgc_10_digit_code', $request->code);
                     });
             })
             ->when($request->indicator == 'total_cat2_and_cat3_previous_quarter', function ($q) use ($request) {
