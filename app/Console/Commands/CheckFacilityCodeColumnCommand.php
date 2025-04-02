@@ -121,6 +121,10 @@ class CheckFacilityCodeColumnCommand extends Command
         while (true) {
             $facilityCode = $this->ask($question);
 
+            if ($type === 'old') {
+                return $facilityCode;
+            }
+
             // Validate the facility code
             if ($this->validateFacilityCode($facilityCode, $type)) {
                 return $facilityCode;
