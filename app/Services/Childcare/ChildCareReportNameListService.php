@@ -74,14 +74,12 @@ class ChildCareReportNameListService
                     });
                     $q->whereRaw("
                               (
-                                SELECT
-                                    COUNT(*)
-                                FROM
-                                    patient_vaccines pv
-                                WHERE
-                                    pv.patient_id = patient_vaccines.patient_id
-                                    AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                    AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                SELECT COUNT(*)
+                                FROM patient_vaccines pv
+                                WHERE pv.patient_id = patient_vaccines.patient_id
+                                AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                             ) = 2
                     ")
                     ->when($request->gender == 'male', function ($q) use ($request) {
@@ -107,14 +105,12 @@ class ChildCareReportNameListService
                     ->where('patient_vaccines.status_id', 1)
                     ->whereRaw("
                               (
-                                SELECT
-                                    COUNT(*)
-                                FROM
-                                    patient_vaccines pv
-                                WHERE
-                                    pv.patient_id = patient_vaccines.patient_id
-                                    AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                    AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                SELECT COUNT(*)
+                                FROM patient_vaccines pv
+                                WHERE pv.patient_id = patient_vaccines.patient_id
+                                AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                             ) = ?
                 ", [$request->sequence]);
             })
@@ -124,14 +120,12 @@ class ChildCareReportNameListService
                     ->where('patient_vaccines.status_id', 1)
                     ->whereRaw("
                               (
-                                SELECT
-                                    COUNT(*)
-                                FROM
-                                    patient_vaccines pv
-                                WHERE
-                                    pv.patient_id = patient_vaccines.patient_id
-                                    AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                    AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                SELECT COUNT(*)
+                                FROM patient_vaccines pv
+                                WHERE pv.patient_id = patient_vaccines.patient_id
+                                AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                             ) = ?
                 ", [$request->sequence]);
             })
@@ -141,14 +135,12 @@ class ChildCareReportNameListService
                     ->where('patient_vaccines.status_id', 1)
                     ->whereRaw("
                               (
-                                SELECT
-                                    COUNT(*)
-                                FROM
-                                    patient_vaccines pv
-                                WHERE
-                                    pv.patient_id = patient_vaccines.patient_id
-                                    AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                    AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                SELECT COUNT(*)
+                                FROM patient_vaccines pv
+                                WHERE pv.patient_id = patient_vaccines.patient_id
+                                AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                             ) = ?
                 ", [$request->sequence]);
             })

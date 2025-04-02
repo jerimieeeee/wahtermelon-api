@@ -233,14 +233,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -251,14 +249,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -269,14 +265,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -286,14 +280,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -304,14 +296,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -322,14 +312,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -340,14 +328,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -357,14 +343,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -375,14 +359,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -393,14 +375,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -411,14 +391,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -428,14 +406,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -446,14 +422,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -464,14 +438,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -482,14 +454,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -499,14 +469,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -517,14 +485,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -535,14 +501,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -553,14 +517,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -570,14 +532,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -588,14 +548,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -606,14 +564,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -624,14 +580,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -641,14 +595,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -659,14 +611,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -677,14 +627,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -695,14 +643,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -712,14 +658,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -731,14 +675,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -750,14 +692,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -769,14 +709,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -787,14 +725,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) <= 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -806,14 +742,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -825,14 +759,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -844,14 +776,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -862,14 +792,12 @@ class ChildCareReportService
                                     AND patient_vaccines.status_id = 1
                                     AND TIMESTAMPDIFF(YEAR, patients.birthdate, vaccine_date) > 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -880,14 +808,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -898,14 +824,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -916,14 +840,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -933,14 +855,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -951,14 +871,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -969,14 +887,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -987,14 +903,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -1004,14 +918,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -1022,14 +934,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -1040,14 +950,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -1058,14 +966,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -1075,14 +981,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 3 THEN 1
                                     ELSE 0
                                 END
@@ -1092,14 +996,12 @@ class ChildCareReportService
                                     WHEN patient_vaccines.vaccine_id = 'MCV'
                                     AND patients.gender = 'M'
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1110,14 +1012,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1128,14 +1028,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1145,14 +1043,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1163,14 +1059,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -1181,14 +1075,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -1199,14 +1091,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -1216,14 +1106,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 2 THEN 1
                                     ELSE 0
                                 END
@@ -1234,14 +1122,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1252,14 +1138,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1270,14 +1154,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1287,14 +1169,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1305,14 +1185,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1323,14 +1201,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1341,14 +1217,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1358,14 +1232,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1376,14 +1248,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1394,14 +1264,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1412,14 +1280,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1429,14 +1295,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1447,14 +1311,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1465,14 +1327,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1483,14 +1343,12 @@ class ChildCareReportService
                                     AND patients.gender = 'M'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
@@ -1500,14 +1358,12 @@ class ChildCareReportService
                                     AND patients.gender = 'F'
                                     AND patient_vaccines.status_id = 1
                                     AND (
-                                        SELECT
-                                            COUNT(*)
-                                        FROM
-                                            patient_vaccines pv
-                                        WHERE
-                                            pv.patient_id = patient_vaccines.patient_id
-                                            AND pv.vaccine_id = patient_vaccines.vaccine_id
-                                            AND pv.vaccine_date <= patient_vaccines.vaccine_date
+                                        SELECT COUNT(*)
+                                        FROM patient_vaccines pv
+                                        WHERE pv.patient_id = patient_vaccines.patient_id
+                                        AND pv.vaccine_id = patient_vaccines.vaccine_id
+                                        AND COALESCE(pv.vaccine_date, '0000-01-01') <=
+                                        COALESCE(patient_vaccines.vaccine_date, '0000-01-01')
                                     ) = 1 THEN 1
                                     ELSE 0
                                 END
