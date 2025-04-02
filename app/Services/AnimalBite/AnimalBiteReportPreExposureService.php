@@ -27,6 +27,7 @@ class AnimalBiteReportPreExposureService
                         municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
                         barangays.psgc_10_digit_code AS barangay_code,
+                        CONCAT(municipalities.name, ',', ' ', provinces.name) AS mun_province_name,
                         settings_catchment_barangays.population,
                         SUM(
                             CASE
@@ -263,6 +264,7 @@ class AnimalBiteReportPreExposureService
                         municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
                         barangays.psgc_10_digit_code AS barangay_code,
+                        CONCAT(municipalities.name, ',', ' ', provinces.name) AS mun_province_name,
                         settings_catchment_barangays.population,
                         SUM(
                             CASE
@@ -493,6 +495,7 @@ class AnimalBiteReportPreExposureService
                         municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
                         barangays.psgc_10_digit_code AS barangay_code,
+                        CONCAT(municipalities.name, ',', ' ', provinces.name) AS mun_province_name,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1
@@ -581,6 +584,7 @@ class AnimalBiteReportPreExposureService
                         municipalities.psgc_10_digit_code AS municipality_code,
                         barangays.name AS barangay_name,
                         barangays.psgc_10_digit_code AS barangay_code,
+                        CONCAT(municipalities.name, ',', ' ', provinces.name) AS mun_province_name,
                         SUM(
                             CASE
                                 WHEN category_id = 2 THEN 1

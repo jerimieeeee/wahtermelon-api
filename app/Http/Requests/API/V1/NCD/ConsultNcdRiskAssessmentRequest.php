@@ -83,7 +83,6 @@ class ConsultNcdRiskAssessmentRequest extends FormRequest
             'diastolic_1st' => 'required|numeric',
             'systolic_2nd' => 'required|numeric',
             'diastolic_2nd' => 'required|numeric',
-            'diastolic_2nd' => 'required|numeric',
             'hypertensive_old_case' => 'nullable|boolean',
             'diabetes_old_case' => 'nullable|boolean',
             // 'gender' => 'required',
