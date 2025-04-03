@@ -34,6 +34,7 @@ class LibPtGroupSeeder extends Seeder
             ['id' => 'fp',  'desc' => 'Family Planning'],
             ['id' => 'at',  'desc' => 'Adolescent'],
             ['id' => 'gbv',  'desc' => 'Gender Based Violence'],
+            ['id' => 'asrh',  'desc' => 'Adolescent Sexual and Reproductive Health'],
         ], ['id']);
     }
 }

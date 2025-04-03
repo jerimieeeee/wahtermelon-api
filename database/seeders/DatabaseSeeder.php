@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -208,6 +209,17 @@ class DatabaseSeeder extends Seeder
             LibFeedbackQuestionSeeder::class,
             LibMortalityCauseSeeder::class,
             LibAbCategorySeeder::class,
+            LibRapidQuestionnaireSeeder::class,
+            LibComprehensiveSeeder::class,
+            LibComprehensiveQuestionnaireSeeder::class,
+            LibAsrhClientTypeSeeder::class,
+            LibAsrhAlgorithmSeeder::class,
+            LibAsrhAlgorithmPivotSeeder::class,
+            LibServiceSeeder::class,
+            LibAsrhRefusalReasonSeeder::class,
+            LibAsrhConsentTypeSeeder::class,
+            LibGenderIdentitySeeder::class,
+            LibAsrhLivingArrangementTypeSeeder::class,
         ]);
     }
 }

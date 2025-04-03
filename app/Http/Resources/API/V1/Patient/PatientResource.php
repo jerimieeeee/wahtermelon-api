@@ -31,6 +31,8 @@ class PatientResource extends JsonResource
             'birthdate' => $this->birthdate->format('Y-m-d'),
             'mothers_name' => $this->mothers_name,
             'gender' => $this->gender,
+            'lib_gender_identity_code' => $this->when(! $this->relationLoaded('genderIdentity'), $this->lib_gender_identity_code),
+            'gender_identity' => $this->whenLoaded('genderIdentity'),
             'mobile_number' => $this->mobile_number,
             'pwd_type_code' => $this->when(! $this->relationLoaded('pwdType'), $this->pwd_type_code),
             'pwd_types' => $this->whenLoaded('pwdType'),

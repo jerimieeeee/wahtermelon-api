@@ -158,6 +158,10 @@ class UserUpdateRequest extends FormRequest
             $rules['attendant_cv_flag'] = 'boolean|nullable';
         }
 
+        if (request()->has('aja_flag') && $this->input('aja_flag') !== $user->aja_flag) {
+            $rules['aja_flag'] = 'boolean|nullable';
+        }
+
         return $rules;
     }
 
