@@ -62,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'attendant_ml_flag' => 'boolean',
         'attendant_fp_flag' => 'boolean',
         'attendant_cv_flag' => 'boolean',
+        'aja_flag' => 'boolean',
     ];
 
     public function setPasswordAttribute($value)

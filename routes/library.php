@@ -574,4 +574,31 @@ Route::prefix('v1/libraries')->group(function () {
     Route::get('mortality-death-type', [\App\Http\Controllers\API\V1\Libraries\LibMortalityDeathTypeController::class, 'index'])->name('mortality-death-place.index');
     Route::get('mortality-cause', [\App\Http\Controllers\API\V1\Libraries\LibMortalityCauseController::class, 'index'])->name('mortality-cause.index');
 
+    //Adolescent
+    Route::get('rapid-questionnaire', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionnaireController::class, 'index'])->name('repid-questionnaire.index');
+    Route::get('rapid-questionnaire/{rapidQuestionnaire}', [\App\Http\Controllers\API\V1\Libraries\LibRapidQuestionnaireController::class, 'show'])->name('repid-questionnaire.show');
+
+    Route::get('comprehensive', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveController::class, 'index'])->name('comprehensive.index');
+    Route::get('comprehensive/{comprehensive}', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveController::class, 'show'])->name('comprehensive.show');
+
+    Route::get('comprehensive-questionnaire', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveQuestionnaireController::class, 'index'])->name('comprehensive-questionnaire.index');
+    Route::get('comprehensive-questionnaire/{comprehensiveQuestionnaire}', [\App\Http\Controllers\API\V1\Libraries\LibComprehensiveQuestionnaireController::class, 'show'])->name('comprehensive-questionnaire.show');
+
+    Route::get('asrh-client-type', [\App\Http\Controllers\API\V1\Libraries\LibAsrhClientTypeController::class, 'index'])->name('asrh-client-type.index');
+    Route::get('asrh-client-type/{asrhClientType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhClientTypeController::class, 'show'])->name('asrh-client-type.show');
+
+    Route::get('services', [\App\Http\Controllers\API\V1\Libraries\LibServiceController::class, 'index'])->name('services.index');
+    Route::get('services/{service}', [\App\Http\Controllers\API\V1\Libraries\LibServiceController::class, 'show'])->name('services.show');
+
+    Route::get('refusal-reason', [\App\Http\Controllers\API\V1\Libraries\LibAsrhRefusalReasonController::class, 'index'])->name('refusal-reason.index');
+    Route::get('refusal-reason/{refusalReason}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhRefusalReasonController::class, 'show'])->name('refusal-reason.show');
+
+    Route::get('consent-type', [\App\Http\Controllers\API\V1\Libraries\LibAsrhConsentTypeController::class, 'index'])->name('consent-type.index');
+    Route::get('consent-type/{consentType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhConsentTypeController::class, 'show'])->name('consent-type.show');
+
+    Route::get('gender-identity', [\App\Http\Controllers\API\V1\Libraries\LibGenderIdentityController::class, 'index'])->name('gender-identity.index');
+    Route::get('gender-identity/{genderIdentity}', [\App\Http\Controllers\API\V1\Libraries\LibGenderIdentityController::class, 'show'])->name('gender-identity.show');
+
+    Route::get('living-arrangement', [\App\Http\Controllers\API\V1\Libraries\LibAsrhLivingArrangementTypeController::class, 'index'])->name('living-arrangement.index');
+    Route::get('living-arrangement/{livingArrangementType}', [\App\Http\Controllers\API\V1\Libraries\LibAsrhLivingArrangementTypeController::class, 'show'])->name('living-arrangement.show');
 });
