@@ -128,7 +128,11 @@ class ReportFamilyPlanningNameListService
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereNotNull('dropout_date')
-                            ->whereRaw("DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-',LPAD(?, 2, '0'))",
+                            ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <> DATE_FORMAT(dropout_date, '%Y-%m')")
+                            ->whereRaw("DATE_FORMAT(dropout_date, '%Y-%m') <= CONCAT(?, '-',LPAD(?, 2, '0'))",
+                                [$request->year, $request->month]
+                            )
+                            ->whereRaw("DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0'))",
                                 [$request->year, $request->month]
                             );
                     });
@@ -137,27 +141,18 @@ class ReportFamilyPlanningNameListService
             ->when($request->client_code == 'new_acceptor_present_month', function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
                     $query->whereClientCode('NA')
-                        ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date)"), $request->age)
                         ->where(function($query) use ($request) {
                             $query->whereNull('dropout_date')
                                 ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-',LPAD(?, 2, '0'))",
                                     [$request->year, $request->month]
                                 );
                         })
+                        ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date)"), $request->age)
                         ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-',LPAD(?, 2, '0'))",
                             [$request->year, $request->month]
                         );
                 });
             })
-//            ->when($request->client_code == 'dropout_present_month', function($query) use ($request) {
-//                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, dropout_date)"), $request->age);
-//            })
-//            ->when($request->client_code !== 'dropout_present_month', function($query) use ($request) {
-//                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age);
-//            })
-//            ->when($request->client_code == 'new_acceptor_present_month', function($query) use ($request) {
-//                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date)"), $request->age);
-//            })
             ->whereMethodCode($request->method)
             //->where('patient_fp_methods.facility_code', auth()->user()->facility_code)
             ->tap(function ($query) use ($request) {
