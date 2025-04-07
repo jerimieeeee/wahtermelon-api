@@ -69,30 +69,30 @@ class ReportFamilyPlanningNameListService
                             })
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                     })
-                        ->orWhere(function ($query) use ($request) {
-                            $query->whereClientCode('NA')
-                                ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
-                                ->where(function($query) use($request){
-                                    $query->whereNull('dropout_date')
-                                        ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
-                                })
-                                ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <=
-                                CONCAT(IF(? <= 2, ? - 1, ?), '-', LPAD(IF(? <= 2, ? + 10, ? - 2), 2, '0'))",
-                                    [$request->month, $request->year, $request->year,
-                                        $request->month, $request->month, $request->month]
-                                );
-                        })
-                        ->orWhere(function ($query) use ($request) {
-                            $query->whereIn('client_code', ['CC', 'CM', 'RS'])
-                                ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
-                                ->where(function($query) use($request) {
-                                    $query->whereNull('dropout_date')
-                                        ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
-                                })
-                                ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(IF(? = 1, ? - 1, ?), '-', LPAD(IF(? = 1, 12, ? - 1), 2, '0'))",
-                                    [$request->month, $request->year, $request->year, $request->month, $request->month]
-                                );
-                        });
+                    ->orWhere(function ($query) use ($request) {
+                        $query->whereClientCode('NA')
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
+                            ->where(function($query) use($request){
+                                $query->whereNull('dropout_date')
+                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
+                            })
+                            ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <=
+                            CONCAT(IF(? <= 2, ? - 1, ?), '-', LPAD(IF(? <= 2, ? + 10, ? - 2), 2, '0'))",
+                                [$request->month, $request->year, $request->year,
+                                    $request->month, $request->month, $request->month]
+                            );
+                    })
+                    ->orWhere(function ($query) use ($request) {
+                        $query->whereIn('client_code', ['CC', 'CM', 'RS'])
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
+                            ->where(function($query) use($request) {
+                                $query->whereNull('dropout_date')
+                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
+                            })
+                            ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(IF(? = 1, ? - 1, ?), '-', LPAD(IF(? = 1, 12, ? - 1), 2, '0'))",
+                                [$request->month, $request->year, $request->year, $request->month, $request->month]
+                            );
+                    });
                 });
             })
             ->when($request->client_code == 'new_acceptor_previous_month', function ($q) use ($request) {
