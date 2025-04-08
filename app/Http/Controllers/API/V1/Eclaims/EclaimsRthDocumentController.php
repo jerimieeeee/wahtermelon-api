@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Http\Controllers\API\V1\Eclaims;
+
+use App\Classes\PhilHealthEClaimsEncryptor;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Eclaims\EclaimsRthDocumentRequest;
+use App\Http\Resources\API\V1\Eclaims\EclaimsRthDocumentResource;
+use App\Models\V1\Eclaims\EclaimsRthDocument;
+use App\Models\V1\PhilHealth\PhilhealthCredential;
+use App\Services\PhilHealth\SoapService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\QueryBuilder;
+
+class EclaimsRthDocumentController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $query = QueryBuilder::for(EclaimsRthDocument::class)
+            ->where('pClaimSeriesLhio', $request->pClaimSeriesLhio)
+            ->where('required', $request->required);
+        /* ->when(isset($request->pClaimSeriesLhio), function ($q) use ($request) {
+            $q->where('pClaimSeriesLhio', $request->pClaimSeriesLhio);
+        }); */
+
+        return EclaimsRthDocumentResource::collection($query->get());
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(EclaimsRthDocumentRequest $request)
+    {
+        if ($request->hasFile('doc')) {
+            $creds = PhilhealthCredential::where('facility_code', auth()->user()->facility_code)
+                ->where('program_code', $request->program_desc != 'cc' ? $request->program_desc : 'mc')
+                ->first();
+
+            $service = new SoapService();
+
+            $file = $request->file('doc');
+
+            $publicKeyFileName = file_get_contents(storage_path('philhealth/pnpki_philhealth_eclaims_auth_cert.pem')); //Storage::get('public/pnpki_philhealth_eclaims_auth_cert.pem');
+            $encryptor = new PhilHealthEClaimsEncryptor();
+            $encryptor->setPublicKeyFileName($publicKeyFileName);
+            $encryptor->setLoggingEnabled(true);
+            $encryptor->setPassword1UsingHexStr('');
+            $encryptor->setPassword2UsingHexStr('');
+            $encryptor->setIVUsingHexStr('');
+
+            $fileName = '';
+            $name = '';
+            $extension = $file->getClientOriginalExtension();
+            if ($request->doc_type_code === 'OTH') {
+                $origFileName = $file->getClientOriginalName();
+                if($request->required == 'Y') {
+                    $name = $request->doc_type_code.'_required_'.$origFileName.'.enc';
+                } else {
+                    $name = $request->doc_type_code.'_'.$origFileName.'.enc';
+                }
+            } else {
+                if($request->required == 'Y') {
+                    $name = $request->doc_type_code.'_required.'.$extension.'.enc';
+                } else {
+                    $name = $request->doc_type_code.'.'.$extension.'.enc';
+                }
+            }
+            $fileName = 'Eclaims/'.auth()->user()->facility_code.'/'.$request->pClaimSeriesLhio.'/'.$name;
+
+            $uxFileToEncrypt = $file;
+            $uxMimeType = $file->getMimeType();
+            $uxSaveFileName = storage_path('philhealth/uploads/').$request->pClaimSeriesLhio.'-'.$name;
+
+            $encryptor->encryptImageFile($uxFileToEncrypt, $uxMimeType, $uxSaveFileName);
+
+            Storage::disk('spaces')->put($fileName, file_get_contents($uxSaveFileName), ['visibility' => 'public', 'ContentType' => 'application/octet-stream']);
+            $url = Storage::disk('spaces')->url($fileName);
+
+            if ($request->doc_type_code === 'OTH') {
+                $data = EclaimsRthDocument::updateOrCreate(['pClaimSeriesLhio' => $request->pClaimSeriesLhio, 'doc_url' => $url], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => $request->required, 'doc_type_code' => $request->doc_type_code]);
+            } else {
+                $data = EclaimsRthDocument::updateOrCreate(['pClaimSeriesLhio' => $request->pClaimSeriesLhio, 'doc_type_code' => $request->doc_type_code], ['patient_id' => $request->patient_id, 'doc_url' => $url, 'required' => $request->required]);
+            }
+
+            return json_encode(['data' => $data, 'mesage' => 'successfully uploaded'], 201);
+            // return $url = Storage::disk('spaces')->url($fileName);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(EclaimsRthDocument $eclaimsDoc): JsonResponse
+    {
+        // return $eclaimsDoc->get();
+        $eclaimsDoc->deleteOrFail();
+
+        return response()->json(['status' => 'Successfully deleted!'], 200);
+    }
+}

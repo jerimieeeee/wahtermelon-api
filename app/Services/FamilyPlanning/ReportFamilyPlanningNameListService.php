@@ -62,33 +62,36 @@ class ReportFamilyPlanningNameListService
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereClientCode('CU')
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
                             ->where(function($query) use ($request) {
                                 $query->whereNull('dropout_date')
-                                ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
+                                    ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                             })
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                     })
                     ->orWhere(function ($query) use ($request) {
                         $query->whereClientCode('NA')
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
                             ->where(function($query) use($request){
                                 $query->whereNull('dropout_date')
                                     ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                             })
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <=
-                                CONCAT(IF(? <= 2, ? - 1, ?), '-', LPAD(IF(? <= 2, ? + 10, ? - 2), 2, '0'))",
+                            CONCAT(IF(? <= 2, ? - 1, ?), '-', LPAD(IF(? <= 2, ? + 10, ? - 2), 2, '0'))",
                                 [$request->month, $request->year, $request->year,
-                                $request->month, $request->month, $request->month]
+                                    $request->month, $request->month, $request->month]
                             );
                     })
                     ->orWhere(function ($query) use ($request) {
                         $query->whereIn('client_code', ['CC', 'CM', 'RS'])
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
                             ->where(function($query) use($request) {
                                 $query->whereNull('dropout_date')
                                     ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-', LPAD(?, 2, '0'))", [$request->year, $request->month]);
                             })
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(IF(? = 1, ? - 1, ?), '-', LPAD(IF(? = 1, 12, ? - 1), 2, '0'))",
                                 [$request->month, $request->year, $request->year, $request->month, $request->month]
-                        );
+                            );
                     });
                 });
             })
@@ -96,17 +99,18 @@ class ReportFamilyPlanningNameListService
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereClientCode('NA')
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
                             ->where(function($query) use ($request) {
                                 $query->whereNull('dropout_date')
                                     ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(IF(? = 1, ? - 1, ?), '-',
                                             LPAD(IF(? = 1, 12, ? - 1), 2, '0'))",
-                                    [$request->month, $request->year, $request->year, $request->month, $request->month]
-                                );
+                                        [$request->month, $request->year, $request->year, $request->month, $request->month]
+                                    );
                             })
                             ->whereRaw("IF(? = 1, (MONTH(enrollment_date) = 12 AND YEAR(enrollment_date) = ? - 1),
                                 (MONTH(enrollment_date) = ? - 1 AND YEAR(enrollment_date) = ?))",
                                 [$request->month, $request->year, $request->month, $request->year]
-                        );
+                            );
                     });
                 });
             })
@@ -114,6 +118,7 @@ class ReportFamilyPlanningNameListService
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereIn('client_code', ['CC', 'CM', 'RS'])
+                            ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age)
                             ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0'))",
                                 [$request->year, $request->month]);
                     });
@@ -123,7 +128,11 @@ class ReportFamilyPlanningNameListService
                 $q->where(function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereNotNull('dropout_date')
-                            ->whereRaw("DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-',LPAD(?, 2, '0'))",
+                            ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') <> DATE_FORMAT(dropout_date, '%Y-%m')")
+                            ->whereRaw("DATE_FORMAT(dropout_date, '%Y-%m') <= CONCAT(?, '-',LPAD(?, 2, '0'))",
+                                [$request->year, $request->month]
+                            )
+                            ->whereRaw("DATE_FORMAT(dropout_date, '%Y-%m') = CONCAT(?, '-', LPAD(?, 2, '0'))",
                                 [$request->year, $request->month]
                             );
                     });
@@ -136,18 +145,13 @@ class ReportFamilyPlanningNameListService
                             $query->whereNull('dropout_date')
                                 ->orWhereRaw("DATE_FORMAT(dropout_date, '%Y-%m') >= CONCAT(?, '-',LPAD(?, 2, '0'))",
                                     [$request->year, $request->month]
+                                );
+                        })
+                        ->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, enrollment_date)"), $request->age)
+                        ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-',LPAD(?, 2, '0'))",
+                            [$request->year, $request->month]
                         );
-                    })
-                    ->whereRaw("DATE_FORMAT(enrollment_date, '%Y-%m') = CONCAT(?, '-',LPAD(?, 2, '0'))",
-                        [$request->year, $request->month]
-                    );
                 });
-            })
-            ->when($request->client_code == 'dropout_present_month', function($query) use ($request) {
-                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, dropout_date)"), $request->age);
-            })
-            ->when($request->client_code !== 'dropout_present_month', function($query) use ($request) {
-                $query->whereBetween(DB::raw("TIMESTAMPDIFF(YEAR, patients.birthdate, NOW())"), $request->age);
             })
             ->whereMethodCode($request->method)
             //->where('patient_fp_methods.facility_code', auth()->user()->facility_code)

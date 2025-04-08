@@ -622,7 +622,7 @@ class LibIcd10Seeder extends Seeder
             ['icd10_code' => 'B34.3', 'icd10_desc' => 'Parvovirus infection, unspecified'],
             ['icd10_code' => 'B34.4', 'icd10_desc' => 'Papovavirus infection, unspecified'],
             ['icd10_code' => 'B34.8', 'icd10_desc' => 'Other viral infections of unspecified site'],
-            ['icd10_code' => 'B34.9', 'icd10_desc' => 'Viral infection, unspecified (ACUTE VIRAL INFECTION, SYSTEMATIC VIRAL INFECTION, VIRAL DISEASE)'],
+            ['icd10_code' => 'B34.9', 'icd10_desc' => 'Viral infection, unspecified (ACUTE VIRAL INFECTION, SYSTEMIC VIRAL INFECTION, VIRAL DISEASE)'],
             ['icd10_code' => 'B35', 'icd10_desc' => 'Dermatophytosis'],
             ['icd10_code' => 'B35.0', 'icd10_desc' => 'Tinea barbae and tinea capitis'],
             ['icd10_code' => 'B35.1', 'icd10_desc' => 'Tinea unguium'],
