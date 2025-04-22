@@ -2154,19 +2154,6 @@ class ChildCareReportService
     {
         return DB::table('consults')
             ->selectRaw("
-                        COUNT(DISTINCT CASE
-                            WHEN patients.gender = 'M'
-                            AND TIMESTAMPDIFF(MONTH, patients.birthdate, consults.consult_date) BETWEEN 6 AND 11
-                            AND icd10_code IN
-                            (
-                            'A06', 'A06.0', 'A06.1', 'A09', 'E86.0', 'E86.1',
-                            'E86.2', 'E86.9', 'K52.9', 'K58.0', 'K58.9', 'K59.1', 'P78.3',
-                            'B05', 'B05.0', 'B05.1', 'B05.2', 'B05.3', 'B05.4',
-                            'B05.8', 'B05.9', 'B06', 'B06.0', 'B06.8', 'B06.9'
-                            )
-                            THEN patients.id
-                            ELSE NULL
-                        END) AS male_sick_infant_with_vit_a,
                         SUM(
                             CASE
                                 WHEN patients.gender = 'M'

@@ -11,6 +11,7 @@ use App\Models\V1\Medicine\MedicineDispensing;
 use App\Models\V1\Medicine\MedicinePrescription;
 use App\Models\V1\Patient\Patient;
 use App\Models\V1\Patient\PatientPhilhealth;
+use App\Models\V1\Patient\PatientSocialHistory;
 use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\Patient\PatientSurgicalHistory;
 use App\Models\V1\Patient\PatientHospitalizationHistory;

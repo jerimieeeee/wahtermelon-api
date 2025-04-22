@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Reports\Adolescent;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\V1\Reports\AdolescentMasterlisttResource;
 use App\Services\Adolescent\AdolescentMasterlistService;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,16 @@ class AdolescentMasterlistController extends Controller
      */
     public function index(Request $request, AdolescentMasterlistService $adolescentMasterlistService)
     {
+        $perPage = $request->per_page ?? self::ITEMS_PER_PAGE;
+
         $re = $adolescentMasterlistService->get_adolescent_masterlist($request);
 
-        return $re;
+//        return $re;
+
+        // Optimize pagination handling
+        return $perPage === 'all'
+            ? AdolescentMasterlisttResource::collection($re->get($request))
+            : AdolescentMasterlisttResource::collection($re->paginate($perPage)->withQueryString());
     }
 
     /**

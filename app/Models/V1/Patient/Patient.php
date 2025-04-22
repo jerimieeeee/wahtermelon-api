@@ -3,6 +3,7 @@
 namespace App\Models\V1\Patient;
 
 use App\Models\User;
+use App\Models\V1\Adolescent\ConsultAsrhRapid;
 use App\Models\V1\Childcare\ConsultCcdevService;
 use App\Models\V1\Consultation\Consult;
 use App\Models\V1\Consultation\ConsultNotes;
@@ -13,7 +14,9 @@ use App\Models\V1\Consultation\ConsultNotesPe;
 use App\Models\V1\Household\HouseholdFolder;
 use App\Models\V1\Household\HouseholdMember;
 use App\Models\V1\Laboratory\ConsultLaboratory;
+use App\Models\V1\Libraries\LibEducation;
 use App\Models\V1\Libraries\LibGenderIdentity;
+use App\Models\V1\Libraries\LibOccupation;
 use App\Models\V1\Libraries\LibPwdType;
 use App\Models\V1\Libraries\LibReligion;
 use App\Models\V1\Libraries\LibSuffixName;
@@ -257,6 +260,7 @@ class Patient extends Model
                         'patient_respiratory_rate',
                         'vitals_date'
             )
+            ->latest()
             ->groupBy('vitals_date')
             ->orderBy('vitals_date');
     }
@@ -457,5 +461,15 @@ class Patient extends Model
     public function genderIdentity()
     {
         return $this->belongsTo(LibGenderIdentity::class, 'lib_gender_identity_code', 'code');
+    }
+
+    public function education()
+    {
+        return $this->belongsTo(LibEducation::class, 'education_code', 'code');
+    }
+
+    public function occupation()
+    {
+        return $this->belongsTo(LibOccupation::class, 'occupation_code', 'code');
     }
 }

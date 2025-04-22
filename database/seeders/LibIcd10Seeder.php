@@ -8143,7 +8143,7 @@ class LibIcd10Seeder extends Seeder
             ['icd10_code' => 'R49.1', 'icd10_desc' => 'Aphonia'],
             ['icd10_code' => 'R49.2', 'icd10_desc' => 'Hypernasality and hyponasality'],
             ['icd10_code' => 'R49.8', 'icd10_desc' => 'Other and unspecified voice disturbances'],
-            ['icd10_code' => 'R50', 'icd10_desc' => 'Fever of uniknown origin'],
+            ['icd10_code' => 'R50', 'icd10_desc' => 'Fever of unknown origin'],
             ['icd10_code' => 'R50.0', 'icd10_desc' => 'Fever with chills'],
             ['icd10_code' => 'R50.1', 'icd10_desc' => 'Persistent fever'],
             ['icd10_code' => 'R50.8', 'icd10_desc' => 'FEVER WITH CHILLS (FEVER WITH RIGORS) (PERSISTENT FEVER) (PERSISTENT PYREXIA)'],

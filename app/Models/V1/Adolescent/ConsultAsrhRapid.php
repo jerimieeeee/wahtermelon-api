@@ -4,9 +4,11 @@ namespace App\Models\V1\Adolescent;
 
 use App\Models\User;
 use App\Models\V1\Consultation\Consult;
+use App\Models\V1\Libraries\LibAsrhClientType;
 use App\Models\V1\Libraries\LibAsrhLivingArrangementType;
 use App\Models\V1\Libraries\LibAsrhRefusalReason;
 use App\Models\V1\Patient\Patient;
+use App\Models\V1\Patient\PatientVitals;
 use App\Models\V1\PSGC\Facility;
 use App\Traits\FilterByFacility;
 use App\Traits\FilterByUser;
@@ -15,6 +17,7 @@ use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ConsultAsrhRapid extends Model
 {
@@ -60,7 +63,7 @@ class ConsultAsrhRapid extends Model
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 
     public function answers()
@@ -94,4 +97,38 @@ class ConsultAsrhRapid extends Model
             ->where('consults.pt_group', '=', 'cn');
     }
 
+    public function clientTypes()
+    {
+        return $this->belongsTo(LibAsrhClientType::class, 'lib_asrh_client_type_code', 'code');
+    }
+
+    public function vitalsAsrh()
+    {
+        return $this->hasOne(PatientVitals::class, 'patient_id', 'patient_id')
+            ->select([
+                'vitals_date',
+                'patient_height',
+                'patient_weight',
+                'patient_bmi',
+                'patient_bmi_class',
+                'bp_systolic',
+                'bp_diastolic',
+                'patient_heart_rate'
+            ])
+            ->whereRaw("DATE_FORMAT(vitals_date, '%Y-%m-%d') = ?", [
+                $this->assessment_date?->format('Y-m-d')
+            ])
+            ->orderBy('vitals_date', 'desc')->latest();
+    }
+
+    public function answersQuestion3()
+    {
+        return $this->hasOne(ConsultAsrhRapidAnswer::class)
+            ->select([
+                'consult_asrh_rapid_id',
+                'lib_rapid_questionnaire_id',
+                'answer'
+            ])
+            ->where('lib_rapid_questionnaire_id', '=', '3');
+    }
 }

@@ -22,11 +22,22 @@ class AdolescentMasterlistService
     {
         return ConsultAsrhRapid::with([
             'patient.genderIdentity',
+            'patient.menstrualHistory',
+            'patient.vitals',
+//            'vitalsAsrh',
             'livingArrangementType',
             'consult',
             'consult.consultNotes',
             'consult.consultNotes.complaints.libComplaints',
+            'consult.consultNotes.physicalExam.libPhysicalExam',
+            'consult.consultNotes.finaldx.libIcd10',
             'patient.householdFolder.barangay',
+            'patient.education',
+            'patient.socialHistory',
+            'patient.pregnancyHistory',
+            'clientTypes',
+            'comprehensive',
+            'answersQuestion3'
         ])
         ->tap(function ($query) use ($request) {
             $this->categoryFilterService->applyCategoryFilter($query, $request, 'consult_asrh_rapids.facility_code', 'consult_asrh_rapids.patient_id');
