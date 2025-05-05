@@ -2143,6 +2143,7 @@ class ChildCareReportService
                 'ALBED0000000006SUS1400469BOTTL',
                 'ALBED0000000034TAB490000000000'
             ])
+            ->havingRaw('(COUNT(medicine_prescriptions.patient_id) >= 2)')
             ->tap(function ($query) use ($request) {
                 $this->categoryFilterService->applyCategoryFilter($query, $request, 'medicine_prescriptions.facility_code', 'medicine_prescriptions.patient_id');
             })

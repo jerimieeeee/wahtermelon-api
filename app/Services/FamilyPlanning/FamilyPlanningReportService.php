@@ -198,7 +198,6 @@ class FamilyPlanningReportService
                             ELSE
                                 0
                             END) AS 'dropout_present_month_10_to_14',
-
                         SUM(
                             CASE WHEN dropout_date IS NOT NULL
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))
@@ -209,7 +208,6 @@ class FamilyPlanningReportService
                             ELSE
                                 0
                             END) AS 'dropout_present_month_15_to_19',
-
                         SUM(
                             CASE WHEN dropout_date IS NOT NULL
                                 AND DATE_FORMAT(enrollment_date, '%Y-%m') <= CONCAT(?, '-', LPAD(?, 2, '0'))
