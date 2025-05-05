@@ -110,7 +110,7 @@ class SampleKonsultaService
             ->where('facility_code', 'DOH000000000048882')
             ->where('is_active', 1)
             ->where('designation_code', '!=', 'MD')
-            ->whereIn('id', ['9b0662cd-29d5-401d-81da-118bdefacb3a', '9b54822e-f4d2-44db-b44a-a8011570837a'])
+            ->whereIn('id', ['9b0662cd-29d5-401d-81da-118bdefacb3a', '9b54822e-f4d2-44db-b44a-a8011570837a', '9b0662eb-5d19-4641-b73d-6a289570b115'])
             ->inRandomOrder()->first();
 
         KonsultaTransmittal::updateOrCreate(
