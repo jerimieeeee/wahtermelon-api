@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Services\ReportFilter\CategoryFilterService;
 
-class AdolescentMasterlistService
+class   AdolescentMasterlistService
 {
     protected $categoryFilterService;
 

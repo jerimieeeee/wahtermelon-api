@@ -1499,16 +1499,16 @@ Route::prefix('v1')->group(function () {
                 Route::post('comprehensive', 'store');
                 Route::put('comprehensive/{consultAsrhComprehensive}', 'update');
             });
-        Route::controller(App\Http\Controllers\API\V1\Reports\Adolescent\AdolescentMasterlistController::class)
-            ->middleware(('auth:api'))
-            ->group(function () {
-                Route::get('masterlist', 'index');
-            });
-        Route::controller(App\Http\Controllers\API\V1\Reports\Adolescent\AdolescentReportController::class)
-            ->middleware(('auth:api'))
-            ->group(function () {
-                Route::get('report', 'index');
-            });
+//        Route::controller(App\Http\Controllers\API\V1\Reports\Adolescent\AdolescentMasterlistController::class)
+//            ->middleware(('auth:api'))
+//            ->group(function () {
+//                Route::get('masterlist', 'index');
+//            });
+//        Route::controller(App\Http\Controllers\API\V1\Reports\Adolescent\AdolescentReportController::class)
+//            ->middleware(('auth:api'))
+//            ->group(function () {
+//                Route::get('report', 'index');
+//            });
     });
 
     Route::prefix('patient-services')->group(function () {

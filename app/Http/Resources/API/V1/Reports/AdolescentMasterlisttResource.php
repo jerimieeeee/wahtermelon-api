@@ -32,8 +32,8 @@ class AdolescentMasterlisttResource extends JsonResource
             'client_type' => $this->clientTypes->desc ?? null,
             'education' => $this->patient->education->education_desc,
             'occupation' => $this->patient->occupation->occupation_desc,
-            'complaint' => $this->consult->consultNotes->complaints,
-            'history_of_current_illness' => $this->consult->consultNotes->history,
+            'complaint' => $this->consult?->consultNotes->complaints,
+            'history_of_current_illness' => $this->consult?->consultNotes->history,
             'alcohol_use' => isset($this->patient->socialHistory->alcohol) ? ($this->patient->socialHistory->alcohol === 'Y' ? 'YES' : 'NO') : null,
             'tobacco_vape_use' => isset($this->patient->socialHistory->smoking) ? ($this->patient->socialHistory->smoking === 'Y' ? 'YES' : 'NO') : null,
             'illicit_drug_use' => isset($this->patient->socialHistory->illicit_drugs) ? ($this->patient->socialHistory->illicit_drugs === 'Y' ? 'YES' : 'NO') : null,
@@ -69,9 +69,9 @@ class AdolescentMasterlisttResource extends JsonResource
                 ? $this->vitalsAsrh->bp_systolic . '/' . $this->vitalsAsrh->bp_diastolic
                 : null,
             'heart_rate' => $this->vitalsAsrh->patient_heart_rate ?? null,
-            'physical_exam' => $this->consult->consultNotes->physicalExam ?? null,
-            'diagnosis' => $this->consult->consultNotes->finaldx ?? null,
-            'management' => $this->consult->consultNotes->plan ?? null,
+            'physical_exam' => $this->consult?->consultNotes->physicalExam ?? null,
+            'diagnosis' => $this->consult?->consultNotes->finaldx ?? null,
+            'management' => $this->consult?->consultNotes->plan ?? null,
         ];
     }
 }
