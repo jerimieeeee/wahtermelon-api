@@ -45,7 +45,7 @@ class AdolescentMasterlisttResource extends JsonResource
             'abuse_history' => isset($this->answersQuestion3)
                 ? ($this->answersQuestion3->answer === '1'
                     ? 'YES'
-                    : (in_array(optional($this->consult->consultNotes->finaldx->first())->icd10_code, ['T74.1', 'T74.2', 'T74.3']) ? 'YES' : 'NO'))
+                    : (in_array(optional($this->consult?->consultNotes->finaldx->first())->icd10_code, ['T74.1', 'T74.2', 'T74.3']) ? 'YES' : 'NO'))
                 : 'NO',
             'menarche' => $this->patient->menstrualHistory->menarche ?? null,
             'interval_of_menses' => $this->patient->menstrualHistory->cycle ?? null,
