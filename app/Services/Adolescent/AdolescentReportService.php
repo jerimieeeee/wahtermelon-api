@@ -73,7 +73,7 @@ class AdolescentReportService
                 $request->end_date . ' 23:59:59',    // End of the day
                 //male_15_to_19_registered
                 $request->start_date . ' 00:00:00', // Start of the day
-                $request->end_date . ' 23:59:59',    // End of the day
+                $request->end_date . ' 23:59:58',    // End of the day
                 //female_10_to_14_registered
                 $request->start_date . ' 00:00:00', // Start of the day
                 $request->end_date . ' 23:59:59',    // End of the day
